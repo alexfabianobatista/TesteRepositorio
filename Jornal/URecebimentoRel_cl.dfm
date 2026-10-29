@@ -1,0 +1,129 @@
+object DMRecebimentoRel: TDMRecebimentoRel
+  OldCreateOrder = False
+  Left = 515
+  Top = 325
+  Height = 150
+  Width = 215
+  object QRRecebimentoJornal: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9
+      #9'R.NUM_ANO,                '
+      #9'C.NOME,           '
+      #9'R.DT_VENCIMENTO,                      '
+      #9'R.VAL_TOTAL,'
+      #9'CI.DESC_CIDADE,'
+      #9'I1.VAL_PAGO VALOR_PARCELA1,'
+      #9'I1.DT_PAGAMENTO DT_PAGAMENTO_PARCELA1,'
+      #9'I2.VAL_PAGO VALOR_PARCELA2,'
+      #9'I2.DT_PAGAMENTO DT_PAGAMENTO_PARCELA2,'
+      #9'I3.VAL_PAGO VALOR_PARCELA3,'
+      #9'I3.DT_PAGAMENTO DT_PAGAMENTO_PARCELA3,'
+      #9'I4.VAL_PAGO VALOR_PARCELA4,'
+      #9'I4.DT_PAGAMENTO DT_PAGAMENTO_PARCELA4,'
+      '  CV.COD_VENDEDOR,'
+      '  CV.NOME AS VENDEDOR'
+      'FROM'
+      #9'TB_RECEBIMENTO_JORNAL R '
+      #9'INNER JOIN TB_CADASTRO C'
+      #9'ON R.COD_CADASTRO = C.COD_CADASTRO'
+      #9'LEFT JOIN TB_CIDADE CI'
+      #9'ON C.COD_CIDADE = CI.COD_CIDADE'
+      '  LEFT JOIN TB_VENDEDOR CV'
+      '  ON R.COD_VENDEDOR = CV.COD_VENDEDOR'
+      #9'INNER JOIN TB_RECEBIMENTO_JORNAL_ITEM I1'
+      
+        #9'ON R.COD_RECEBIMENTO_JORNAL = I1.COD_RECEBIMENTO_JORNAL AND I1.' +
+        'NUM_PARCELA = 1'
+      #9'INNER JOIN TB_RECEBIMENTO_JORNAL_ITEM I2'
+      
+        #9'ON R.COD_RECEBIMENTO_JORNAL = I2.COD_RECEBIMENTO_JORNAL AND I2.' +
+        'NUM_PARCELA = 2'
+      #9'INNER JOIN TB_RECEBIMENTO_JORNAL_ITEM I3'
+      
+        #9'ON R.COD_RECEBIMENTO_JORNAL = I3.COD_RECEBIMENTO_JORNAL AND I3.' +
+        'NUM_PARCELA = 3'
+      #9'INNER JOIN TB_RECEBIMENTO_JORNAL_ITEM I4'
+      
+        #9'ON R.COD_RECEBIMENTO_JORNAL = I4.COD_RECEBIMENTO_JORNAL AND I4.' +
+        'NUM_PARCELA = 4'
+      'WHERE'#9
+      #9'(:DT_INI IS NULL '
+      #9'AND'
+      #9':DT_FIM IS NULL'
+      #9'OR'
+      #9'R.DT_VENCIMENTO BETWEEN :DT_INI AND :DT_FIM)'
+      'ORDER BY DT_VENCIMENTO')
+    Variables.Data = {
+      0300000002000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494D0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000F000000070000004E554D5F414E4F010000000000040000004E4F4D
+      450100000000000D00000044545F56454E43494D454E544F0100000000000900
+      000056414C5F544F54414C0100000000000E00000056414C4F525F5041524345
+      4C41310100000000001500000044545F504147414D454E544F5F50415243454C
+      41310100000000000E00000056414C4F525F50415243454C4132010000000000
+      1500000044545F504147414D454E544F5F50415243454C41320100000000000E
+      00000056414C4F525F50415243454C41330100000000001500000044545F5041
+      47414D454E544F5F50415243454C41330100000000000E00000056414C4F525F
+      50415243454C41340100000000001500000044545F504147414D454E544F5F50
+      415243454C41340100000000000B000000444553435F43494441444501000000
+      00000800000056454E4445444F520100000000000C000000434F445F56454E44
+      45444F52010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 16
+    object QRRecebimentoJornalNUM_ANO: TIntegerField
+      FieldName = 'NUM_ANO'
+      Required = True
+    end
+    object QRRecebimentoJornalNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+    object QRRecebimentoJornalDT_VENCIMENTO: TDateTimeField
+      FieldName = 'DT_VENCIMENTO'
+      Required = True
+    end
+    object QRRecebimentoJornalVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      Required = True
+    end
+    object QRRecebimentoJornalDESC_CIDADE: TStringField
+      FieldName = 'DESC_CIDADE'
+      Required = True
+      Size = 50
+    end
+    object QRRecebimentoJornalVALOR_PARCELA1: TFloatField
+      FieldName = 'VALOR_PARCELA1'
+    end
+    object QRRecebimentoJornalDT_PAGAMENTO_PARCELA1: TDateTimeField
+      FieldName = 'DT_PAGAMENTO_PARCELA1'
+    end
+    object QRRecebimentoJornalVALOR_PARCELA2: TFloatField
+      FieldName = 'VALOR_PARCELA2'
+    end
+    object QRRecebimentoJornalDT_PAGAMENTO_PARCELA2: TDateTimeField
+      FieldName = 'DT_PAGAMENTO_PARCELA2'
+    end
+    object QRRecebimentoJornalVALOR_PARCELA3: TFloatField
+      FieldName = 'VALOR_PARCELA3'
+    end
+    object QRRecebimentoJornalDT_PAGAMENTO_PARCELA3: TDateTimeField
+      FieldName = 'DT_PAGAMENTO_PARCELA3'
+    end
+    object QRRecebimentoJornalVALOR_PARCELA4: TFloatField
+      FieldName = 'VALOR_PARCELA4'
+    end
+    object QRRecebimentoJornalDT_PAGAMENTO_PARCELA4: TDateTimeField
+      FieldName = 'DT_PAGAMENTO_PARCELA4'
+    end
+    object QRRecebimentoJornalVENDEDOR: TStringField
+      FieldName = 'VENDEDOR'
+      Size = 40
+    end
+    object QRRecebimentoJornalCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+  end
+end

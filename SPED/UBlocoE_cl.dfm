@@ -1,0 +1,1010 @@
+object DmBlocoE: TDmBlocoE
+  OldCreateOrder = False
+  Left = 616
+  Top = 245
+  Height = 232
+  Width = 449
+  object QReg111: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_LIVRO_LCTO.*'
+      'FROM'
+      '  TB_LIVRO_LCTO'
+      'WHERE'
+      '  TB_LIVRO_LCTO.NUM_ANO = :NUM_ANO'
+      'AND'
+      '  TB_LIVRO_LCTO.NUM_MES = :NUM_MES'
+      'AND'
+      '  TB_LIVRO_LCTO.COD_FILIAL = :COD_FILIAL'
+      '/*'
+      'AND'
+      '  TB_LIVRO_LCTO.COD_GIA <> 68'
+      '*/')
+    Variables.Data = {
+      0300000003000000080000003A4E554D5F414E4F030000000000000000000000
+      080000003A4E554D5F4D45530300000000000000000000000B0000003A434F44
+      5F46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000A000000070000004E554D5F414E4F010000000000070000004E554D
+      5F4D45530100000000000A000000434F445F46494C49414C0100000000000C00
+      0000434F445F4F5045524143414F0100000000000B00000056414C5F494D504F
+      53544F01000000000009000000444553435F4C43544F01000000000010000000
+      444553435F434F4D504C454D454E544F0100000000000E000000434F445F4C49
+      56524F5F4C43544F01000000000007000000434F445F47494101000000000008
+      000000444553435F474941010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 24
+    object QReg111NUM_ANO: TIntegerField
+      FieldName = 'NUM_ANO'
+      Required = True
+    end
+    object QReg111NUM_MES: TIntegerField
+      FieldName = 'NUM_MES'
+      Required = True
+    end
+    object QReg111COD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QReg111COD_OPERACAO: TIntegerField
+      FieldName = 'COD_OPERACAO'
+    end
+    object QReg111VAL_IMPOSTO: TFloatField
+      FieldName = 'VAL_IMPOSTO'
+      Required = True
+    end
+    object QReg111DESC_LCTO: TStringField
+      FieldName = 'DESC_LCTO'
+      Required = True
+      Size = 60
+    end
+    object QReg111DESC_COMPLEMENTO: TStringField
+      FieldName = 'DESC_COMPLEMENTO'
+      Size = 60
+    end
+    object QReg111COD_LIVRO_LCTO: TIntegerField
+      FieldName = 'COD_LIVRO_LCTO'
+      Required = True
+    end
+    object QReg111COD_GIA: TIntegerField
+      FieldName = 'COD_GIA'
+    end
+    object QReg111DESC_GIA: TStringField
+      FieldName = 'DESC_GIA'
+      Size = 30
+    end
+  end
+  object QReg116: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  IND_ORIGEM,'
+      '  COD_RECEITA,'
+      '  DT_VENCIMENTO_RECOLHIMENTO,'
+      '  NUM_PROCESSO,'
+      '  IND_PROCESSO,'
+      '  DESC_PROCESSO'
+      'FROM'
+      '  TB_LIVRO_FISCAL'
+      'WHERE'
+      '  NUM_ANO = :NUM_ANO'
+      'AND'
+      '  NUM_MES = :NUM_MES'
+      'AND'
+      '  COD_FILIAL = :COD_FILIAL')
+    Variables.Data = {
+      0300000003000000080000003A4E554D5F414E4F030000000000000000000000
+      080000003A4E554D5F4D45530300000000000000000000000B0000003A434F44
+      5F46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000A000000494E445F4F524947454D0100000000000B000000
+      434F445F524543454954410100000000001A00000044545F56454E43494D454E
+      544F5F5245434F4C48494D454E544F0100000000000C0000004E554D5F50524F
+      434553534F0100000000000C000000494E445F50524F434553534F0100000000
+      000D000000444553435F50524F434553534F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 80
+    Top = 24
+    object QReg116COD_RECEITA: TIntegerField
+      FieldName = 'COD_RECEITA'
+    end
+    object QReg116DT_VENCIMENTO_RECOLHIMENTO: TDateTimeField
+      FieldName = 'DT_VENCIMENTO_RECOLHIMENTO'
+    end
+    object QReg116NUM_PROCESSO: TStringField
+      FieldName = 'NUM_PROCESSO'
+    end
+    object QReg116IND_PROCESSO: TIntegerField
+      FieldName = 'IND_PROCESSO'
+    end
+    object QReg116DESC_PROCESSO: TStringField
+      FieldName = 'DESC_PROCESSO'
+      Size = 100
+    end
+    object QReg116IND_ORIGEM: TStringField
+      FieldName = 'IND_ORIGEM'
+      Size = 3
+    end
+  end
+  object QReg510: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      
+        #9'cast(DECODE(I.COD_CFOP, NULL, DECODE(F.COD_ESTADO, N.COD_ESTADO' +
+        ', decode(I.COD_CFOP, null, O_N.NUM_NATUREZA_EST_NOVO, I.COD_CFOP' +
+        '), decode(I.COD_CFOP, null, O_N.NUM_NATUREZA_INT_NOVO, I.COD_CFO' +
+        'P)), I.COD_CFOP) as number(4)) + 0.00 AS NUM_CFOP,'
+      
+        #9'DECODE(I.COD_CST_IPI, null, DECODE(N.IND_ENTRADA_SAIDA, '#39'S'#39', '#39'5' +
+        '2'#39', '#39'02'#39'), I.COD_CST_IPI) AS COD_CST_IPI,'
+      
+        #9'SUM(CASE WHEN (I.COD_CST_IPI IN ('#39'00'#39', '#39'50'#39')) THEN I.VAL_IPI EL' +
+        'SE 0 END) AS VAL_IPI,'
+      #9'SUM(VAL_TOTAL) AS VAL_TOTAL'
+      'FROM'
+      #9'TB_NOTA_ITEM I'
+      'INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'INNER JOIN TB_OPERACAO O_N ON N.COD_OPERACAO = O_N.COD_OPERACAO'
+      'LEFT JOIN TB_OPERACAO O_I ON I.COD_OPERACAO = O_I.COD_OPERACAO'
+      'INNER JOIN TB_FILIAL F ON N.COD_FILIAL = F.COD_FILIAL'
+      
+        'INNER JOIN TB_SERIE S ON (N.COD_SERIE = S.COD_SERIE AND N.COD_FI' +
+        'LIAL = S.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = S.COD_SERIE_MODELO)'
+      'WHERE'
+      
+        '  N.IND_SITUACAO = '#39'2'#39' -- O padr'#227'o no C100 era "<> '#39'1'#39'", mas aqu' +
+        'i '#233' diferente. Tem que ignorar as canceladas, pois elas n'#227'o tem ' +
+        'C170'
+      'AND'
+      '  O_N.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  (O_N.NUM_LIVROS <> 10 or O_N.NUM_LIVROS is null)'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      '  N.DT_RECEBIMENTO between :DATA_INI AND :DATA_FIN'
+      'AND'
+      '  S.COD_SERIE_MODELO <> '#39'06'#39
+      'GROUP BY'
+      
+        #9'cast(DECODE(I.COD_CFOP, NULL, DECODE(F.COD_ESTADO, N.COD_ESTADO' +
+        ', decode(I.COD_CFOP, null, O_N.NUM_NATUREZA_EST_NOVO, I.COD_CFOP' +
+        '), decode(I.COD_CFOP, null, O_N.NUM_NATUREZA_INT_NOVO, I.COD_CFO' +
+        'P)), I.COD_CFOP) as number(4)) + 0.00,'
+      
+        #9'DECODE(I.COD_CST_IPI, null, DECODE(N.IND_ENTRADA_SAIDA, '#39'S'#39', '#39'5' +
+        '2'#39', '#39'02'#39'), I.COD_CST_IPI)')
+    Variables.Data = {
+      03000000030000000B0000003A434F445F46494C49414C030000000000000000
+      000000090000003A444154415F494E490C000000000000000000000009000000
+      3A444154415F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000004000000080000004E554D5F43464F500100000000000B000000434F
+      445F4353545F4950490100000000000700000056414C5F495049010000000000
+      0900000056414C5F544F54414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 304
+    Top = 24
+    object QReg510NUM_CFOP: TFloatField
+      FieldName = 'NUM_CFOP'
+    end
+    object QReg510COD_CST_IPI: TStringField
+      FieldName = 'COD_CST_IPI'
+      Size = 2
+    end
+    object QReg510VAL_IPI: TFloatField
+      FieldName = 'VAL_IPI'
+    end
+    object QReg510VAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+  end
+  object QReg520: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      
+        '  LIV.VAL_CR_ICM - SUM(NVL(CASE WHEN LCTO.COD_OPERACAO IN (5,4) ' +
+        'THEN LCTO.VAL_IMPOSTO END,0)) AS VAL_CR_ICM, -- diminui cr'#233'ditos' +
+        ' lan'#231'ados'
+      
+        '  LIV.VAL_DB_ICM - SUM(NVL(CASE WHEN LCTO.COD_OPERACAO IN (12,10' +
+        ') THEN LCTO.VAL_IMPOSTO END,0)) AS VAL_DB_ICM, --diminui d'#233'bitos' +
+        ' lan'#231'ados  '
+      '  NVL(LIV.VAL_SALDO_CREDOR,0) AS VAL_SALDO_CREDOR,'
+      
+        '  (CASE WHEN(SUM(LIV.VAL_SALDO_CREDOR) <= 0) THEN SUM(LIV.VAL_DB' +
+        '_ICM - LIV.VAL_CR_ICM) ELSE 0 END) AS VAL_SALDO_DEVEDOR,  '
+      
+        '  (SELECT SUM(VAL_IMPOSTO) FROM TB_LIVRO_LCTO_IPI LAN WHERE LAN.' +
+        'COD_OPERACAO IN (5,4) AND LIV.NUM_ANO = LAN.NUM_ANO AND LIV.NUM_' +
+        'MES = LAN.NUM_MES AND LIV.COD_FILIAL = LAN.COD_FILIAL AND LIV.NU' +
+        'M_DECENDIO = LAN.NUM_DECENDIO) AS VAL_OUTROS_CREDITOS,'
+      
+        '  (SELECT SUM(VAL_IMPOSTO) FROM TB_LIVRO_LCTO_IPI LAN WHERE LAN.' +
+        'COD_OPERACAO IN (12,10) AND LIV.NUM_ANO = LAN.NUM_ANO AND LIV.NU' +
+        'M_MES = LAN.NUM_MES AND LIV.COD_FILIAL = LAN.COD_FILIAL AND LIV.' +
+        'NUM_DECENDIO = LAN.NUM_DECENDIO) AS VAL_OUTROS_DEBITOS,  '
+      
+        '  (SELECT (CASE WHEN(SUM(X.VAL_SALDO_CREDOR) > 0) THEN SUM(X.VAL' +
+        '_SALDO_CREDOR) ELSE 0 END) FROM TB_LIVRO_FISCAL_IPI X WHERE X.NU' +
+        'M_ANO = DECODE(LIV.NUM_MES, 1, LIV.NUM_ANO-1, LIV.NUM_ANO) AND X' +
+        '.NUM_MES = DECODE(LIV.NUM_MES, 1, 12, LIV.NUM_MES-1) AND X.COD_F' +
+        'ILIAL = LIV.COD_FILIAL) AS VAL_SALDO_ANTERIOR'
+      'FROM'
+      '  TB_LIVRO_FISCAL_IPI LIV'
+      '  LEFT JOIN TB_LIVRO_LCTO_IPI LCTO ON'
+      '    LIV.COD_FILIAL = LCTO.COD_FILIAL'
+      '    AND LIV.NUM_MES = LCTO.NUM_MES'
+      '    AND LIV.NUM_ANO = LCTO.NUM_ANO'
+      'WHERE'
+      '  LIV.NUM_ANO = :NUM_ANO'
+      'AND'
+      '  LIV.NUM_MES = :NUM_MES'
+      'AND'
+      '  LIV.COD_FILIAL = :COD_FILIAL'
+      'GROUP BY'
+      '  LIV.VAL_CR_ICM,'
+      '  LIV.VAL_DB_ICM,'
+      '  LIV.VAL_SALDO_CREDOR,'
+      '  LIV.NUM_ANO,'
+      '  LIV.NUM_MES,'
+      '  LIV.COD_FILIAL,'
+      '  LIV.NUM_DECENDIO'
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      '/*SELECT'
+      
+        '  LIV.VAL_CR_ICM - NVL(SUM(CASE WHEN LCTO.COD_OPERACAO IN (5,4) ' +
+        'THEN LCTO.VAL_IMPOSTO END),0) AS VAL_CR_ICM, -- diminui cr'#233'ditos' +
+        ' lan'#231'ados'
+      
+        '  LIV.VAL_DB_ICM - NVL(SUM(CASE WHEN LCTO.COD_OPERACAO IN (12,10' +
+        ') THEN LCTO.VAL_IMPOSTO END),0) AS VAL_DB_ICM, --diminui d'#233'bitos' +
+        ' lan'#231'ados  '
+      
+        '  (CASE WHEN(LIV.VAL_SALDO_CREDOR > 0) THEN LIV.VAL_SALDO_CREDOR' +
+        ' ELSE 0 END) AS VAL_SALDO_CREDOR,'
+      
+        '  (CASE WHEN(LIV.VAL_SALDO_CREDOR <= 0) THEN LIV.VAL_DB_ICM - LI' +
+        'V.VAL_CR_ICM ELSE 0 END) AS VAL_SALDO_DEVEDOR,  '
+      '  '
+      
+        '  (SELECT VAL_IMPOSTO FROM TB_LIVRO_LCTO_IPI LAN WHERE LAN.COD_O' +
+        'PERACAO IN (5,4) AND LIV.NUM_ANO = LAN.NUM_ANO AND LIV.NUM_MES =' +
+        ' LAN.NUM_MES AND LIV.COD_FILIAL = LAN.COD_FILIAL AND LIV.NUM_DEC' +
+        'ENDIO = LAN.NUM_DECENDIO) AS VAL_OUTROS_CREDITOS,'
+      
+        '  (SELECT VAL_IMPOSTO FROM TB_LIVRO_LCTO_IPI LAN WHERE LAN.COD_O' +
+        'PERACAO IN (12,10) AND LIV.NUM_ANO = LAN.NUM_ANO AND LIV.NUM_MES' +
+        ' = LAN.NUM_MES AND LIV.COD_FILIAL = LAN.COD_FILIAL AND LIV.NUM_D' +
+        'ECENDIO = LAN.NUM_DECENDIO) AS VAL_OUTROS_DEBITOS,  '
+      
+        '  (SELECT (CASE WHEN(X.VAL_SALDO_CREDOR > 0) THEN X.VAL_SALDO_CR' +
+        'EDOR ELSE 0 END) FROM TB_LIVRO_FISCAL_IPI X WHERE X.NUM_ANO = DE' +
+        'CODE(LIV.NUM_MES, 1, LIV.NUM_ANO-1, LIV.NUM_ANO) AND X.NUM_MES =' +
+        ' DECODE(LIV.NUM_MES, 1, 12, LIV.NUM_MES-1) AND X.COD_FILIAL = LI' +
+        'V.COD_FILIAL) AS VAL_SALDO_ANTERIOR'
+      'FROM'
+      '  TB_LIVRO_FISCAL_IPI LIV'
+      '  LEFT JOIN TB_LIVRO_LCTO_IPI LCTO ON'
+      '    LIV.COD_FILIAL = LCTO.COD_FILIAL'
+      '    AND LIV.NUM_MES = LCTO.NUM_MES'
+      '    AND LIV.NUM_ANO = LCTO.NUM_ANO'
+      'WHERE'
+      '  LIV.NUM_ANO = :NUM_ANO'
+      'AND'
+      '  LIV.NUM_MES = :NUM_MES'
+      'AND'
+      '  LIV.COD_FILIAL = :COD_FILIAL'
+      'GROUP BY'
+      '  LIV.VAL_CR_ICM,'
+      '  LIV.VAL_DB_ICM,'
+      '  LIV.VAL_SALDO_CREDOR,'
+      '  LCTO.COD_OPERACAO,'
+      '  LCTO.VAL_IMPOSTO,'
+      '  LIV.NUM_ANO,'
+      '  LIV.NUM_MES,'
+      '  LIV.COD_FILIAL,'
+      '  VAL_IMPOSTO,'
+      '  LIV.NUM_DECENDIO*/')
+    Variables.Data = {
+      03000000030000000B0000003A434F445F46494C49414C030000000000000000
+      000000080000003A4E554D5F414E4F030000000000000000000000080000003A
+      4E554D5F4D4553030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000070000000A00000056414C5F43525F49434D0100000000000A000000
+      56414C5F44425F49434D0100000000001000000056414C5F53414C444F5F4352
+      45444F520100000000001100000056414C5F53414C444F5F44455645444F5201
+      00000000001300000056414C5F4F5554524F535F4352454449544F5301000000
+      00001200000056414C5F4F5554524F535F44454249544F530100000000001200
+      000056414C5F53414C444F5F414E544552494F52010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 360
+    Top = 24
+    object QReg520VAL_CR_ICM: TFloatField
+      FieldName = 'VAL_CR_ICM'
+      Required = True
+    end
+    object QReg520VAL_DB_ICM: TFloatField
+      FieldName = 'VAL_DB_ICM'
+      Required = True
+    end
+    object QReg520VAL_SALDO_CREDOR: TFloatField
+      FieldName = 'VAL_SALDO_CREDOR'
+    end
+    object QReg520VAL_SALDO_DEVEDOR: TFloatField
+      FieldName = 'VAL_SALDO_DEVEDOR'
+    end
+    object QReg520VAL_OUTROS_CREDITOS: TFloatField
+      FieldName = 'VAL_OUTROS_CREDITOS'
+    end
+    object QReg520VAL_OUTROS_DEBITOS: TFloatField
+      FieldName = 'VAL_OUTROS_DEBITOS'
+    end
+    object QReg520VAL_SALDO_ANTERIOR: TFloatField
+      FieldName = 'VAL_SALDO_ANTERIOR'
+    end
+  end
+  object QReg200: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DISTINCT'
+      '  COD_ESTADO'
+      'FROM'
+      '('
+      '  SELECT'
+      '    DISTINCT'
+      '    C.COD_ESTADO'
+      '  FROM'
+      '    TB_NOTA_ITEM I'
+      '  INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      '  INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO = O.COD_OPERACAO'
+      
+        '  INNER JOIN TB_SERIE ON (N.COD_SERIE = TB_SERIE.COD_SERIE AND T' +
+        'B_SERIE.COD_FILIAL = N.COD_FILIAL'
+      #9'AND TB_SERIE.COD_SERIE_MODELO = N.COD_SERIE_MODELO)'
+      '  INNER JOIN TB_FILIAL F ON F.COD_FILIAL = N.COD_FILIAL'
+      
+        '  INNER JOIN TB_CADASTRO CAD ON CAD.COD_CADASTRO = N.COD_CADASTR' +
+        'O'
+      '  INNER JOIN TB_CIDADE C ON C.COD_CIDADE = CAD.COD_CIDADE'
+      '  WHERE'
+      '    N.IND_SITUACAO <> '#39'1'#39
+      '  AND'
+      '    O.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '    (O.NUM_LIVROS <> 10 or O.NUM_LIVROS is null)'
+      '  AND'
+      '    N.COD_FILIAL = :COD_FILIAL'
+      '  AND'
+      '    N.DT_RECEBIMENTO between :DATA_INI AND :DATA_FIN'
+      '  AND'
+      '    TB_SERIE.COD_SERIE_MODELO <> '#39'06'#39
+      '  AND'
+      '    N.IND_ST = '#39'S'#39
+      '  '
+      '  UNION ALL'
+      '  '
+      '  SELECT'
+      '    DISTINCT'
+      '    C.COD_ESTADO'
+      '  FROM'
+      '    TB_FILIAL F'
+      '  INNER JOIN TB_CIDADE C ON C.COD_CIDADE = F.COD_CIDADE'
+      '  WHERE'
+      '    F.IND_ST = '#39'S'#39
+      '  AND'
+      '    F.COD_FILIAL = :COD_FILIAL'
+      ')'
+      'ORDER BY'
+      '  COD_ESTADO')
+    Variables.Data = {
+      03000000030000000B0000003A434F445F46494C49414C030000000000000000
+      000000090000003A444154415F494E490C000000000000000000000009000000
+      3A444154415F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {04000000010000000A000000434F445F45535441444F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 136
+    Top = 24
+    object QReg200COD_ESTADO: TStringField
+      FieldName = 'COD_ESTADO'
+      Size = 2
+    end
+  end
+  object QReg210: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  IND_MOV_ST,'
+      '  VL_SLD_CRED_ANT_ST,'
+      '  VL_DEVOL_ST,'
+      '  VL_RESSARC_ST,'
+      '  VL_AJ_CREDITOS_ST,'
+      '  VL_OUT_DEB_ST,'
+      '  VL_AJ_DEBITOS_ST,'
+      '  VL_DEDUCOES_ST,'
+      '  DEB_ESP_ST,'
+      '  SUM(VL_OUT_CRED_ST) AS VL_OUT_CRED_ST,'
+      '  SUM(VL_RETENCAO_ST) AS VL_RETENCAO_ST,  '
+      '  SUM(VL_SLD_DEV_ANT_ST) AS VL_SLD_DEV_ANT_ST,'
+      '  SUM(VL_ICMS_RECOL_ST) AS VL_ICMS_RECOL_ST,'
+      '  SUM(VL_SLD_CRED_ST_TRANSPORTAR) AS VL_SLD_CRED_ST_TRANSPORTAR'
+      'FROM ('
+      'SELECT'
+      '  '#39'1'#39' AS IND_MOV_ST,'
+      '  0.00 AS VL_SLD_CRED_ANT_ST,'
+      '  0.00 AS VL_DEVOL_ST,'
+      '  0.00 AS VL_RESSARC_ST,  '
+      '  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'1'#39','#39'2'#39') THEN'
+      '      SUM(I.VAL_ICMS_SUBST)'
+      '    ELSE'
+      '      0'
+      '  END AS VL_OUT_CRED_ST,'
+      '  '
+      '  0.00 AS VL_AJ_CREDITOS_ST,'
+      '  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST)'
+      '    ELSE'
+      '      0'
+      '  END AS VL_RETENCAO_ST,  '
+      '  '
+      '  0.00 AS VL_OUT_DEB_ST,'
+      '  0.00 AS VL_AJ_DEBITOS_ST,'
+      '  --SUM(I.VAL_ICMS_SUBST) AS VL_SLD_DEV_ANT_ST,  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST)'
+      '    ELSE'
+      '      0'
+      '  END AS VL_SLD_DEV_ANT_ST,  '
+      '  0.00 AS VL_DEDUCOES_ST,'
+      '  --SUM(I.VAL_ICMS_SUBST) AS VL_ICMS_RECOL_ST,'
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST)'
+      '    ELSE'
+      '      0'
+      '  END AS VL_ICMS_RECOL_ST,  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'1'#39','#39'2'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST)'
+      '    ELSE'
+      '      0'
+      '  END VL_SLD_CRED_ST_TRANSPORTAR,  '
+      '  0.00 AS DEB_ESP_ST'
+      'FROM'
+      '  TB_NOTA_ITEM I'
+      'INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO = O.COD_OPERACAO'
+      
+        'INNER JOIN TB_SERIE ON (N.COD_SERIE = TB_SERIE.COD_SERIE AND TB_' +
+        'SERIE.COD_FILIAL = N.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO)'
+      'INNER JOIN TB_FILIAL F ON F.COD_FILIAL = N.COD_FILIAL'
+      'INNER JOIN TB_CADASTRO CAD ON CAD.COD_CADASTRO = N.COD_CADASTRO'
+      'INNER JOIN TB_CIDADE C ON C.COD_CIDADE = CAD.COD_CIDADE'
+      
+        'INNER JOIN TB_TRIBUTACAO T ON I.COD_TRIBUTACAO = T.COD_TRIBUTACA' +
+        'O'
+      'WHERE'
+      '  N.IND_SITUACAO = '#39'2'#39
+      'AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  (O.NUM_LIVROS <> 10 or O.NUM_LIVROS is null)'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      '  N.DT_RECEBIMENTO between :DATA_INI AND :DATA_FIN'
+      'AND'
+      '  C.COD_ESTADO = :COD_ESTADO'
+      'AND'
+      '  TB_SERIE.COD_SERIE_MODELO <> '#39'06'#39
+      'AND'
+      '  N.IND_ST = '#39'S'#39
+      'AND'
+      '  ('#39'D'#39' NOT IN (O.IND_VENDAS,O.IND_COMPRAS) OR  '
+      
+        '  DECODE(CAD.COD_ESTADO,F.COD_ESTADO,O.NUM_NATUREZA_EST_NOVO,O.N' +
+        'UM_NATUREZA_INT_NOVO) NOT IN (1201,'
+      '1203,'
+      '1204,'
+      '1205,'
+      '1206,'
+      '1207,'
+      '1208,'
+      '1209,'
+      '5201,'
+      '5205,'
+      '5206,'
+      '5207,'
+      '5208,'
+      '5209,'
+      '5210 ))'
+      'AND'
+      
+        '  (T.DESC_SITUACAO_TRIB IN ('#39'010'#39','#39'030'#39','#39'060'#39','#39'070'#39','#39'510'#39') OR T.' +
+        'DESC_CSOSN IN ('#39'201'#39','#39'202'#39','#39'203'#39','#39'500'#39'))'
+      'GROUP BY'
+      '  '#39'1'#39' ,'
+      '  0.00, '
+      '  0.00, '
+      '  0.00, '
+      
+        '  SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_N' +
+        'OVO,NUM_NATUREZA_INT_NOVO),1,1),'
+      '  0.00,'
+      
+        '  SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_N' +
+        'OVO,NUM_NATUREZA_INT_NOVO),1,1),'
+      '  0.00,'
+      '  0.00,'
+      
+        '  SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_N' +
+        'OVO,NUM_NATUREZA_INT_NOVO),1,1),  '
+      '  0.00,'
+      '  --SUM(I.VAL_ICMS_SUBST) AS VL_ICMS_RECOL_ST,'
+      
+        '  SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_N' +
+        'OVO,NUM_NATUREZA_INT_NOVO),1,1),  '
+      
+        '  SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_N' +
+        'OVO,NUM_NATUREZA_INT_NOVO),1,1),'
+      '  0.00'
+      ')'
+      'GROUP BY'
+      '  IND_MOV_ST,'
+      '  VL_SLD_CRED_ANT_ST,'
+      '  VL_DEVOL_ST,'
+      '  VL_RESSARC_ST,'
+      '  VL_AJ_CREDITOS_ST,'
+      '  VL_OUT_DEB_ST,'
+      '  VL_AJ_DEBITOS_ST,'
+      '  VL_DEDUCOES_ST,'
+      '  DEB_ESP_ST'
+      ''
+      ''
+      '/*'
+      'SELECT'
+      '  '#39'1'#39' AS IND_MOV_ST,'
+      '  0.00 AS VL_SLD_CRED_ANT_ST,'
+      '  0.00 AS VL_DEVOL_ST,'
+      '  0.00 AS VL_RESSARC_ST,  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'1'#39','#39'2'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST) '
+      '  END AS VL_OUT_CRED_ST,'
+      '  0.00 AS VL_AJ_CREDITOS_ST,'
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST) '
+      '  END AS VL_RETENCAO_ST,  '
+      '  0.00 AS VL_OUT_DEB_ST,'
+      '  0.00 AS VL_AJ_DEBITOS_ST,'
+      '  --SUM(I.VAL_ICMS_SUBST) AS VL_SLD_DEV_ANT_ST,  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST) '
+      '  END AS VL_SLD_DEV_ANT_ST,  '
+      '  0.00 AS VL_DEDUCOES_ST,'
+      '  --SUM(I.VAL_ICMS_SUBST) AS VL_ICMS_RECOL_ST,'
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'5'#39','#39'6'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST) '
+      '  END AS VL_ICMS_RECOL_ST,  '
+      '  CASE '
+      
+        '    WHEN SUBSTR(DECODE(F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZ' +
+        'A_EST_NOVO,NUM_NATUREZA_INT_NOVO),1,1) IN ('#39'1'#39','#39'2'#39') THEN    '
+      '      SUM(I.VAL_ICMS_SUBST) '
+      '  END VL_SLD_CRED_ST_TRANSPORTAR,  '
+      '  0.00 AS DEB_ESP_ST'
+      'FROM'
+      '  TB_NOTA_ITEM I'
+      'INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO = O.COD_OPERACAO'
+      
+        'INNER JOIN TB_SERIE ON (N.COD_SERIE = TB_SERIE.COD_SERIE AND TB_' +
+        'SERIE.COD_FILIAL = N.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO)'
+      'INNER JOIN TB_FILIAL F ON F.COD_FILIAL = N.COD_FILIAL'
+      'INNER JOIN TB_CADASTRO CAD ON CAD.COD_CADASTRO = N.COD_CADASTRO'
+      'INNER JOIN TB_CIDADE C ON C.COD_CIDADE = CAD.COD_CIDADE'
+      
+        'INNER JOIN TB_TRIBUTACAO T ON I.COD_TRIBUTACAO = T.COD_TRIBUTACA' +
+        'O'
+      'WHERE'
+      '  N.IND_SITUACAO <> '#39'1'#39
+      'AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  (O.NUM_LIVROS <> 10 or O.NUM_LIVROS is null)'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      '  N.DT_RECEBIMENTO between :DATA_INI AND :DATA_FIN'
+      'AND'
+      '  C.COD_ESTADO = :COD_ESTADO'
+      'AND'
+      '  TB_SERIE.COD_SERIE_MODELO <> '#39'06'#39
+      'AND'
+      '  N.IND_ST = '#39'S'#39
+      'AND'
+      '  ('#39'D'#39' NOT IN (O.IND_VENDAS,O.IND_COMPRAS) OR  '
+      
+        '  DECODE(CAD.COD_ESTADO,F.COD_ESTADO,O.NUM_NATUREZA_EST_NOVO,O.N' +
+        'UM_NATUREZA_INT_NOVO) NOT IN (1201,'
+      '1203,'
+      '1204,'
+      '1205,'
+      '1206,'
+      '1207,'
+      '1208,'
+      '1209,'
+      '5201,'
+      '5205,'
+      '5206,'
+      '5207,'
+      '5208,'
+      '5209,'
+      '5210 ))'
+      'AND'
+      
+        '  (T.DESC_SITUACAO_TRIB IN ('#39'010'#39','#39'030'#39','#39'060'#39','#39'070'#39') OR T.DESC_C' +
+        'SOSN IN ('#39'201'#39','#39'202'#39','#39'203'#39','#39'500'#39'))'
+      'GROUP BY'
+      
+        '  F.COD_ESTADO,CAD.COD_ESTADO,O.NUM_NATUREZA_EST_NOVO,NUM_NATURE' +
+        'ZA_INT_NOVO'
+      '*/')
+    Variables.Data = {
+      03000000040000000B0000003A434F445F46494C49414C030000000000000000
+      000000090000003A444154415F494E490C000000000000000000000009000000
+      3A444154415F46494E0C00000000000000000000000B0000003A434F445F4553
+      5441444F050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000E0000000A000000494E445F4D4F565F535401000000000012000000
+      564C5F534C445F435245445F414E545F53540100000000000B000000564C5F44
+      45564F4C5F53540100000000000D000000564C5F524553534152435F53540100
+      000000000E000000564C5F4F55545F435245445F535401000000000011000000
+      564C5F414A5F4352454449544F535F53540100000000000D000000564C5F4F55
+      545F4445425F535401000000000010000000564C5F414A5F44454249544F535F
+      535401000000000011000000564C5F534C445F4445565F414E545F5354010000
+      00000010000000564C5F49434D535F5245434F4C5F53540100000000001A0000
+      00564C5F534C445F435245445F53545F5452414E53504F525441520100000000
+      000A0000004445425F4553505F53540100000000000E000000564C5F52455445
+      4E43414F5F53540100000000000E000000564C5F44454455434F45535F535401
+      0000000000}
+    Session = DMOracle.DBCemapa
+    Left = 192
+    Top = 24
+    object QReg210IND_MOV_ST: TStringField
+      FieldName = 'IND_MOV_ST'
+      Size = 1
+    end
+    object QReg210VL_SLD_CRED_ANT_ST: TFloatField
+      FieldName = 'VL_SLD_CRED_ANT_ST'
+    end
+    object QReg210VL_DEVOL_ST: TFloatField
+      FieldName = 'VL_DEVOL_ST'
+    end
+    object QReg210VL_RESSARC_ST: TFloatField
+      FieldName = 'VL_RESSARC_ST'
+    end
+    object QReg210VL_OUT_CRED_ST: TFloatField
+      FieldName = 'VL_OUT_CRED_ST'
+    end
+    object QReg210VL_AJ_CREDITOS_ST: TFloatField
+      FieldName = 'VL_AJ_CREDITOS_ST'
+    end
+    object QReg210VL_RETENCAO_ST: TFloatField
+      FieldName = 'VL_RETENCAO_ST'
+    end
+    object QReg210VL_OUT_DEB_ST: TFloatField
+      FieldName = 'VL_OUT_DEB_ST'
+    end
+    object QReg210VL_AJ_DEBITOS_ST: TFloatField
+      FieldName = 'VL_AJ_DEBITOS_ST'
+    end
+    object QReg210VL_SLD_DEV_ANT_ST: TFloatField
+      FieldName = 'VL_SLD_DEV_ANT_ST'
+    end
+    object QReg210VL_DEDUCOES_ST: TFloatField
+      FieldName = 'VL_DEDUCOES_ST'
+    end
+    object QReg210VL_ICMS_RECOL_ST: TFloatField
+      FieldName = 'VL_ICMS_RECOL_ST'
+    end
+    object QReg210VL_SLD_CRED_ST_TRANSPORTAR: TFloatField
+      FieldName = 'VL_SLD_CRED_ST_TRANSPORTAR'
+    end
+    object QReg210DEB_ESP_ST: TFloatField
+      FieldName = 'DEB_ESP_ST'
+    end
+  end
+  object QReg250: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  N.COD_RECEITA_OBRIGACAO_ICMS,'
+      '  N.DT_VENCIMENTO_OBRIGACAO_ICMS,'
+      '  N.COD_OBRIGACAO_ICMS,'
+      '  N.NUM_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.IND_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.DESC_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.DESC_COMPL_OBRIGACAO_ICMS,'
+      
+        '  EXTRACT(MONTH FROM N.DT_RECEBIMENTO) || EXTRACT(YEAR FROM N.DT' +
+        '_RECEBIMENTO) AS NUM_MES_ANO_REFERENCIA,'
+      '  SUM(I.VAL_ICMS_SUBST) AS VAL_OR'
+      'FROM'
+      '  TB_NOTA_ITEM I'
+      'INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO = O.COD_OPERACAO'
+      
+        'INNER JOIN TB_SERIE ON (N.COD_SERIE = TB_SERIE.COD_SERIE AND TB_' +
+        'SERIE.COD_FILIAL = N.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO)'
+      'INNER JOIN TB_FILIAL F ON F.COD_FILIAL = N.COD_FILIAL'
+      'INNER JOIN TB_CADASTRO CAD ON CAD.COD_CADASTRO = N.COD_CADASTRO'
+      'INNER JOIN TB_CIDADE C ON C.COD_CIDADE = CAD.COD_CIDADE'
+      'WHERE'
+      '  N.IND_SITUACAO <> '#39'1'#39
+      'AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  (O.NUM_LIVROS <> 10 or O.NUM_LIVROS is null)'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      '  N.DT_RECEBIMENTO between :DATA_INI AND :DATA_FIN'
+      'AND'
+      '  C.COD_ESTADO = :COD_ESTADO'
+      'AND'
+      '  TB_SERIE.COD_SERIE_MODELO <> '#39'06'#39
+      'AND'
+      '  N.IND_ST = '#39'S'#39
+      'AND'
+      '  N.COD_RECEITA_OBRIGACAO_ICMS IS NOT NULL'
+      'GROUP BY'
+      '  N.COD_RECEITA_OBRIGACAO_ICMS,'
+      '  N.DT_VENCIMENTO_OBRIGACAO_ICMS,'
+      '  N.COD_OBRIGACAO_ICMS,'
+      '  N.NUM_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.IND_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.DESC_PROCESSO_OBRIGACAO_ICMS,'
+      '  N.DESC_COMPL_OBRIGACAO_ICMS,'
+      
+        '  EXTRACT(MONTH FROM N.DT_RECEBIMENTO) || EXTRACT(YEAR FROM N.DT' +
+        '_RECEBIMENTO)')
+    Variables.Data = {
+      03000000040000000B0000003A434F445F46494C49414C030000000000000000
+      000000090000003A444154415F494E490C000000000000000000000009000000
+      3A444154415F46494E0C00000000000000000000000B0000003A434F445F4553
+      5441444F050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000090000001A000000434F445F524543454954415F4F42524947414341
+      4F5F49434D530100000000001C00000044545F56454E43494D454E544F5F4F42
+      5249474143414F5F49434D5301000000000012000000434F445F4F4252494741
+      43414F5F49434D530100000000001B0000004E554D5F50524F434553534F5F4F
+      425249474143414F5F49434D530100000000001B000000494E445F50524F4345
+      53534F5F4F425249474143414F5F49434D530100000000001C00000044455343
+      5F50524F434553534F5F4F425249474143414F5F49434D530100000000001900
+      0000444553435F434F4D504C5F4F425249474143414F5F49434D530100000000
+      000600000056414C5F4F52010000000000160000004E554D5F4D45535F414E4F
+      5F5245464552454E434941010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 248
+    Top = 24
+    object QReg250COD_RECEITA_OBRIGACAO_ICMS: TStringField
+      FieldName = 'COD_RECEITA_OBRIGACAO_ICMS'
+    end
+    object QReg250DT_VENCIMENTO_OBRIGACAO_ICMS: TDateTimeField
+      FieldName = 'DT_VENCIMENTO_OBRIGACAO_ICMS'
+    end
+    object QReg250COD_OBRIGACAO_ICMS: TStringField
+      FieldName = 'COD_OBRIGACAO_ICMS'
+      Size = 3
+    end
+    object QReg250NUM_PROCESSO_OBRIGACAO_ICMS: TStringField
+      FieldName = 'NUM_PROCESSO_OBRIGACAO_ICMS'
+    end
+    object QReg250IND_PROCESSO_OBRIGACAO_ICMS: TIntegerField
+      FieldName = 'IND_PROCESSO_OBRIGACAO_ICMS'
+    end
+    object QReg250DESC_PROCESSO_OBRIGACAO_ICMS: TStringField
+      FieldName = 'DESC_PROCESSO_OBRIGACAO_ICMS'
+      Size = 100
+    end
+    object QReg250DESC_COMPL_OBRIGACAO_ICMS: TStringField
+      FieldName = 'DESC_COMPL_OBRIGACAO_ICMS'
+      Size = 100
+    end
+    object QReg250NUM_MES_ANO_REFERENCIA: TStringField
+      FieldName = 'NUM_MES_ANO_REFERENCIA'
+      Size = 80
+    end
+    object QReg250VAL_OR: TFloatField
+      FieldName = 'VAL_OR'
+    end
+  end
+  object QReg530: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT DISTINCT'
+      '  CASE '
+      '    WHEN LCTO.COD_OPERACAO IN (5,4) THEN '#39'1'#39
+      '    WHEN LCTO.COD_OPERACAO IN (12,10) THEN '#39'0'#39' '
+      '  END AS IND_AJ,'
+      '  LCTO.VAL_IMPOSTO AS VL_AJ,'
+      '  CASE'
+      '    WHEN LCTO.COD_OPERACAO = 4 THEN'
+      '        '#39'001'#39' -- Estorno de d'#233'bito'
+      '    WHEN LCTO.COD_OPERACAO = 10 THEN'
+      '        '#39'101'#39' -- Estorno de cr'#233'dito'
+      '    WHEN LCTO.COD_OPERACAO = 5 THEN'
+      '        '#39'099'#39' -- Outros cr'#233'ditos'
+      '    WHEN LCTO.COD_OPERACAO = 12 THEN'
+      '        '#39'199'#39' -- Outros d'#233'bitos'
+      '    WHEN LCTO.COD_OPERACAO = 11 THEN'
+      '        '#39'103'#39' -- Ressarcimento de cr'#233'dito'
+      '    ELSE'
+      '        LPAD(LCTO.COD_OPERACAO,3,0)'
+      '  END AS COD_AJ,'
+      '  LCTO.DESC_LCTO AS DESCR_AJ,'
+      '  CASE'
+      
+        '    WHEN ((SELECT COUNT(*) FROM TB_LIVRO_LCTO_IPI_ITEM WHERE TB_' +
+        'LIVRO_LCTO_IPI_ITEM.COD_LIVRO_LCTO_IPI = LCTO.COD_LIVRO_LCTO_IPI' +
+        ') > 0) THEN'
+      '        3 -- Documentos'
+      '    ELSE'
+      '        9 -- Outros'
+      '  END AS IND_DOC,'
+      '  LCTO.COD_LIVRO_LCTO_IPI'
+      'FROM'
+      '  TB_LIVRO_LCTO_IPI LCTO'
+      
+        '    INNER JOIN TB_LIVRO_LCTO LIVRO ON LCTO.NUM_ANO = LIVRO.NUM_A' +
+        'NO'
+      '    AND LIVRO.NUM_MES = LCTO.NUM_MES'
+      '    AND LIVRO.COD_FILIAL = LCTO.COD_FILIAL'
+      'WHERE'
+      '  LIVRO.NUM_ANO = :NUM_ANO'
+      'AND'
+      '  LIVRO.NUM_MES = :NUM_MES'
+      'AND'
+      '  LIVRO.COD_FILIAL = :COD_FILIAL')
+    Variables.Data = {
+      0300000003000000080000003A4E554D5F414E4F050000000000000000000000
+      080000003A4E554D5F4D45530500000000000000000000000B0000003A434F44
+      5F46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000006000000494E445F414A01000000000005000000564C5F41
+      4A01000000000006000000434F445F414A010000000000080000004445534352
+      5F414A01000000000007000000494E445F444F4301000000000012000000434F
+      445F4C4956524F5F4C43544F5F495049010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 80
+    object QReg530IND_AJ: TStringField
+      FieldName = 'IND_AJ'
+      Size = 1
+    end
+    object QReg530VL_AJ: TFloatField
+      FieldName = 'VL_AJ'
+      Required = True
+    end
+    object QReg530DESCR_AJ: TStringField
+      FieldName = 'DESCR_AJ'
+      Required = True
+      Size = 60
+    end
+    object QReg530COD_AJ: TStringField
+      FieldName = 'COD_AJ'
+      Size = 3
+    end
+    object QReg530IND_DOC: TFloatField
+      FieldName = 'IND_DOC'
+    end
+    object QReg530COD_LIVRO_LCTO_IPI: TIntegerField
+      FieldName = 'COD_LIVRO_LCTO_IPI'
+      Required = True
+    end
+  end
+  object QReg531: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '    N.COD_CADASTRO AS COD_PART,'
+      '    N.COD_SERIE_MODELO AS COD_MOD,'
+      '    N.COD_SERIE AS SERIE,'
+      '    NULL AS SUB,'
+      '    N.NUM_NOTA AS NUM_DOC,'
+      
+        '    DECODE (N.IND_ENTRADA_SAIDA, '#39'E'#39', N.DT_RECEBIMENTO, N.DT_EMI' +
+        'SSAO) AS DT_DOC,'
+      '    I.COD_PRODUTO AS COD_ITEM,'
+      '    LI.VAL_AJUSTE AS VL_AJ_ITEM,'
+      '    N.DESC_CHAVE_ACESSO'
+      'FROM'
+      '    TB_NOTA_ITEM I'
+      '        INNER JOIN TB_LIVRO_LCTO_IPI_ITEM LI'
+      '            ON I.COD_NOTA_ITEM = LI.COD_NOTA_ITEM'
+      '        INNER JOIN TB_NOTA_CAB N'
+      '            ON I.COD_NOTA_CAB = N.COD_NOTA_CAB'
+      'WHERE'
+      '    LI.COD_LIVRO_LCTO_IPI = :COD_LIVRO_LCTO_IPI')
+    Variables.Data = {
+      0300000001000000130000003A434F445F4C4956524F5F4C43544F5F49504903
+      0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000900000008000000434F445F5041525401000000000007000000434F
+      445F4D4F44010000000000050000005345524945010000000000030000005355
+      42010000000000070000004E554D5F444F430100000000000600000044545F44
+      4F4301000000000008000000434F445F4954454D0100000000000A000000564C
+      5F414A5F4954454D01000000000011000000444553435F43484156455F414345
+      53534F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 80
+    Top = 80
+    object QReg531COD_PART: TIntegerField
+      FieldName = 'COD_PART'
+      Required = True
+    end
+    object QReg531COD_MOD: TStringField
+      FieldName = 'COD_MOD'
+      Size = 2
+    end
+    object QReg531SERIE: TStringField
+      FieldName = 'SERIE'
+      Required = True
+      Size = 3
+    end
+    object QReg531SUB: TStringField
+      FieldName = 'SUB'
+      Size = 1
+    end
+    object QReg531NUM_DOC: TIntegerField
+      FieldName = 'NUM_DOC'
+      Required = True
+    end
+    object QReg531DT_DOC: TDateTimeField
+      FieldName = 'DT_DOC'
+    end
+    object QReg531VL_AJ_ITEM: TFloatField
+      FieldName = 'VL_AJ_ITEM'
+      Required = True
+    end
+    object QReg531DESC_CHAVE_ACESSO: TStringField
+      FieldName = 'DESC_CHAVE_ACESSO'
+      Size = 47
+    end
+    object QReg531COD_ITEM: TFloatField
+      FieldName = 'COD_ITEM'
+    end
+  end
+end

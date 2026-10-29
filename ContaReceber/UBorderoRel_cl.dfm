@@ -1,0 +1,87 @@
+object DMBorderoRel: TDMBorderoRel
+  OldCreateOrder = False
+  Left = 465
+  Top = 246
+  Height = 150
+  Width = 215
+  object QRBordero: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'B.COD_BORDERO,'
+      #9'B.VAL_JUROS,'
+      #9'B.DT_BORDERO,'
+      #9'B.IND_SITUACAO,'#9
+      #9'C.DESC_CONTA_CORRENTE,'
+      #9'CR.NUM_TITULO,'
+      #9'CR.NUM_PARCELA,'
+      #9'CR.VAL_TITULO,'
+      #9'CA.NOME'
+      'FROM'
+      #9'TB_BORDERO B LEFT JOIN TB_CONTA_RECEBER_CAB CR'
+      #9'ON B.COD_BORDERO = CR.COD_BORDERO'
+      #9'LEFT JOIN TB_CADASTRO CA'
+      #9'ON CR.COD_CADASTRO = CA.COD_CADASTRO'
+      #9'LEFT JOIN TB_CONTA_CORRENTE C'
+      #9'ON CR.COD_CONTA_CORRENTE = C.COD_CONTA_CORRENTE'
+      'WHERE'
+      #9'B.DT_BORDERO BETWEEN :DT_INICIAL AND :DT_FINAL'
+      #9'AND'
+      #9'B.IND_SITUACAO = :IND_SITUACAO'
+      'ORDER BY'
+      #9'B.COD_BORDERO,'
+      #9'CA.NOME'
+      #9
+      #9)
+    Variables.Data = {
+      03000000030000000B0000003A44545F494E494349414C0C0000000700000078
+      6F091C01010100000000090000003A44545F46494E414C0C0000000700000078
+      6F091C010101000000000D0000003A494E445F534954554143414F0500000008
+      0000004645434841444F0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000090000000B000000434F445F424F524445524F010000000000090000
+      0056414C5F4A55524F530100000000000A00000044545F424F524445524F0100
+      000000000C000000494E445F534954554143414F010000000000130000004445
+      53435F434F4E54415F434F5252454E54450100000000000A0000004E554D5F54
+      4954554C4F0100000000000B0000004E554D5F50415243454C41010000000000
+      0A00000056414C5F544954554C4F010000000000040000004E4F4D4501000000
+      0000}
+    Session = DMOracle.DBCemapa
+    Left = 32
+    Top = 24
+    object QRBorderoCOD_BORDERO: TIntegerField
+      FieldName = 'COD_BORDERO'
+      Required = True
+    end
+    object QRBorderoVAL_JUROS: TFloatField
+      FieldName = 'VAL_JUROS'
+      DisplayFormat = '#,##0.00'
+    end
+    object QRBorderoDT_BORDERO: TDateTimeField
+      FieldName = 'DT_BORDERO'
+      Required = True
+    end
+    object QRBorderoIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Size = 10
+    end
+    object QRBorderoDESC_CONTA_CORRENTE: TStringField
+      FieldName = 'DESC_CONTA_CORRENTE'
+      Size = 30
+    end
+    object QRBorderoNUM_TITULO: TFloatField
+      FieldName = 'NUM_TITULO'
+    end
+    object QRBorderoNUM_PARCELA: TIntegerField
+      FieldName = 'NUM_PARCELA'
+    end
+    object QRBorderoVAL_TITULO: TFloatField
+      FieldName = 'VAL_TITULO'
+      DisplayFormat = '#,##0.00'
+    end
+    object QRBorderoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+  end
+end

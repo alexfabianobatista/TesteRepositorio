@@ -1,0 +1,4632 @@
+object FImportacaoNfe: TFImportacaoNfe
+  Left = 49
+  Top = 15
+  Width = 1300
+  Height = 735
+  Caption = 'Importa'#231#227'o de NF-e'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnResize = FormResize
+  DesignSize = (
+    1292
+    704)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 685
+    Width = 1292
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end>
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Top = 8
+    Width = 1275
+    Height = 625
+    ActivePage = TabSheet1
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'Carregar Arquivo XML'
+      OnShow = TabSheet1Show
+      DesignSize = (
+        1267
+        597)
+      object lblNaoAut: TLabel
+        Left = 8
+        Top = 220
+        Width = 123
+        Height = 13
+        Caption = 'NF-e n'#227'o foi validada'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Visible = False
+      end
+      object Label1: TLabel
+        Left = 8
+        Top = 138
+        Width = 61
+        Height = 13
+        Caption = 'Arquivo XML'
+      end
+      object sbCarregaArquivo: TSpeedButton
+        Left = 1239
+        Top = 153
+        Width = 24
+        Height = 23
+        Anchors = [akTop, akRight]
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000120B0000120B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+          55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+          55555575555555775F55509999999901055557F55555557F75F5001111111101
+          105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+          01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+          8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+          0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+          0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+          05555555575FF777755555555500055555555555557775555555}
+        NumGlyphs = 2
+        OnClick = sbCarregaArquivoClick
+      end
+      object Label50: TLabel
+        Left = 8
+        Top = 178
+        Width = 84
+        Height = 13
+        Caption = 'Chave de Acesso'
+      end
+      object Label51: TLabel
+        Left = 645
+        Top = 246
+        Width = 75
+        Height = 13
+        Caption = 'N'#250'mero da NFe'
+      end
+      object MEArquivoXML: TMaskEdit
+        Left = 8
+        Top = 154
+        Width = 1227
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 0
+        OnChange = MEArquivoXMLChange
+        OnKeyDown = MEArquivoXMLKeyDown
+      end
+      object btConsultaNota: TButton
+        Left = 1084
+        Top = 181
+        Width = 148
+        Height = 25
+        Anchors = [akTop, akRight]
+        Caption = 'Consultar Situa'#231#227'o da NF-e'
+        Enabled = False
+        TabOrder = 3
+        OnClick = btConsultaNotaClick
+      end
+      object ListBox3: TListBox
+        Left = 8
+        Top = 24
+        Width = 1251
+        Height = 85
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        ItemHeight = 13
+        Items.Strings = (
+          'Este assistente ir'#225' ajud'#225'-lo a importar o arquivo XML da NF-e.'
+          
+            'Por favor leia as instru'#231#245'es de cada tela e siga os passos corre' +
+            'tamente.'
+          ''
+          'Para come'#231'ar, carregue o arquivo XML da NF-e.'
+          
+            'Caso deseje consultar o status da NF-e na SEFAZ, clique no bot'#227'o' +
+            ' Consultar Situa'#231#227'o da NF-e.'
+          'Para continuar clique em avan'#231'ar.')
+        TabOrder = 10
+      end
+      object DBGInfXmlSefa: TDBGrid
+        Left = 8
+        Top = 292
+        Width = 1225
+        Height = 297
+        Anchors = [akLeft, akTop, akRight]
+        DataSource = DsInfXmlSefa
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 9
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        OnDrawColumnCell = DBGProdutoAusenteDrawColumnCell
+        OnKeyDown = DBGProdutoAusenteKeyDown
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'NUM_NOTA'
+            Title.Caption = 'Nota'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NUM_SERIE'
+            Title.Caption = 'S'#233'rie'
+            Width = 32
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DT_EMISSAO'
+            Title.Caption = 'Emiss'#227'o'
+            Width = 77
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESC_NOME'
+            Title.Caption = 'Fornecedor'
+            Width = 313
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESC_CNPJ'
+            Title.Caption = 'CNPJ'
+            Width = 105
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESC_CHAVE_ACESSO'
+            Title.Caption = 'Chave de Acesso'
+            Width = 273
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COD_FILIAL'
+            Title.Caption = 'Filial'
+            Width = 33
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'VAL_TOTAL'
+            Title.Caption = 'Valor Total'
+            Width = 85
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'TIPO_NFE'
+            Title.Caption = 'Tipo'
+            Width = 55
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'SITUACAO_NOTA'
+            Title.Caption = 'Situa'#231#227'o'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'IND_SITUACAO'
+            Title.Caption = 'Status'
+            Visible = True
+          end>
+      end
+      object BTBaixarInfXmlSefa: TBitBtn
+        Left = 966
+        Top = 260
+        Width = 265
+        Height = 25
+        Anchors = [akTop, akRight]
+        Caption = 'Baixar Informa'#231#245'es de Notas Emitidas para a Filial'
+        TabOrder = 8
+        OnClick = BTBaixarInfXmlSefaClick
+      end
+      inline FmDatas1: TFmDatas
+        Left = 456
+        Top = 234
+        Width = 185
+        Height = 53
+        TabOrder = 5
+        inherited GroupBox1: TGroupBox
+          Left = 5
+          Top = 1
+          Height = 51
+          Caption = ''
+          inherited Label1: TLabel
+            Top = 8
+          end
+          inherited Label2: TLabel
+            Top = 8
+          end
+          inherited MeDtInicial: TMaskEdit
+            Top = 24
+          end
+          inherited MeDtFinal: TMaskEdit
+            Top = 24
+          end
+        end
+      end
+      object GroupBox5: TGroupBox
+        Left = 8
+        Top = 235
+        Width = 449
+        Height = 51
+        TabOrder = 4
+        object Label49: TLabel
+          Left = 280
+          Top = 8
+          Width = 30
+          Height = 13
+          Caption = 'Status'
+        end
+        inline FmFilial1: TFmFilial
+          Left = 8
+          Top = 10
+          Width = 265
+          Height = 37
+          TabOrder = 0
+          inherited MeFilial: TMaskEdit
+            OnExit = FmFilial1MeFilialExit
+          end
+        end
+        object CBSituacao: TComboBox
+          Left = 280
+          Top = 24
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          ItemIndex = 1
+          TabOrder = 1
+          Text = 'N'#227'o Importada'
+          Items.Strings = (
+            ''
+            'N'#227'o Importada'
+            'Xml Baixado'
+            'Importada')
+        end
+      end
+      object BTBuscarInfXmlSefa: TBitBtn
+        Left = 748
+        Top = 260
+        Width = 105
+        Height = 25
+        Caption = 'Buscar'
+        TabOrder = 7
+        OnClick = BTBuscarInfXmlSefaClick
+      end
+      object MeChaveAcesso: TMaskEdit
+        Left = 8
+        Top = 194
+        Width = 321
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        MaxLength = 44
+        TabOrder = 1
+        OnChange = MeChaveAcessoChange
+        OnExit = MeChaveAcessoExit
+      end
+      inline FmFilial2: TFmFilial
+        Left = 335
+        Top = 180
+        Width = 386
+        Height = 37
+        TabOrder = 2
+        inherited MeFilial: TMaskEdit
+          OnChange = MeChaveAcessoChange
+        end
+        inherited EdFilial: TEdit
+          Width = 310
+        end
+      end
+      object EdNumNFe: TEdit
+        Left = 643
+        Top = 263
+        Width = 101
+        Height = 21
+        TabOrder = 6
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Cadastrar Fornecedor'
+      ImageIndex = 1
+      DesignSize = (
+        1267
+        597)
+      object Label2: TLabel
+        Left = 8
+        Top = 86
+        Width = 27
+        Height = 13
+        Caption = 'CNPJ'
+      end
+      object Label3: TLabel
+        Left = 8
+        Top = 126
+        Width = 28
+        Height = 13
+        Caption = 'Nome'
+      end
+      object Label4: TLabel
+        Left = 8
+        Top = 166
+        Width = 40
+        Height = 13
+        Caption = 'Fantasia'
+      end
+      object Label5: TLabel
+        Left = 8
+        Top = 206
+        Width = 54
+        Height = 13
+        Caption = 'Logradouro'
+      end
+      object Label6: TLabel
+        Left = 1138
+        Top = 206
+        Width = 37
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'N'#250'mero'
+      end
+      object Label7: TLabel
+        Left = 8
+        Top = 246
+        Width = 27
+        Height = 13
+        Caption = 'Bairro'
+      end
+      object Label8: TLabel
+        Left = 962
+        Top = 246
+        Width = 47
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'Munic'#237'pio'
+      end
+      object Label9: TLabel
+        Left = 834
+        Top = 246
+        Width = 61
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'C'#243'digo IBGE'
+      end
+      object Label10: TLabel
+        Left = 8
+        Top = 286
+        Width = 14
+        Height = 13
+        Caption = 'UF'
+      end
+      object Label11: TLabel
+        Left = 80
+        Top = 286
+        Width = 21
+        Height = 13
+        Caption = 'CEP'
+      end
+      object Label12: TLabel
+        Left = 273
+        Top = 286
+        Width = 22
+        Height = 13
+        Caption = 'Pa'#237's'
+      end
+      object Label13: TLabel
+        Left = 176
+        Top = 286
+        Width = 61
+        Height = 13
+        Caption = 'C'#243'digo IBGE'
+      end
+      object Label14: TLabel
+        Left = 400
+        Top = 286
+        Width = 42
+        Height = 13
+        Caption = 'Telefone'
+      end
+      object Label15: TLabel
+        Left = 528
+        Top = 286
+        Width = 87
+        Height = 13
+        Caption = 'Inscri'#231#227'o Estadual'
+      end
+      object MECNPJ: TMaskEdit
+        Left = 8
+        Top = 102
+        Width = 1250
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        EditMask = '00.000\.000\/0000-00;0;_'
+        MaxLength = 18
+        TabOrder = 0
+      end
+      object MENome: TMaskEdit
+        Left = 8
+        Top = 142
+        Width = 1251
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 1
+      end
+      object MEFantasia: TMaskEdit
+        Left = 8
+        Top = 182
+        Width = 1251
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 2
+      end
+      object MELogradouro: TMaskEdit
+        Left = 8
+        Top = 222
+        Width = 1123
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 3
+      end
+      object MENumero: TMaskEdit
+        Left = 1137
+        Top = 222
+        Width = 121
+        Height = 21
+        Anchors = [akTop, akRight]
+        TabOrder = 4
+      end
+      object MEBairro: TMaskEdit
+        Left = 8
+        Top = 262
+        Width = 819
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 5
+      end
+      object MEMunicipio: TMaskEdit
+        Left = 962
+        Top = 262
+        Width = 297
+        Height = 21
+        Anchors = [akTop, akRight]
+        TabOrder = 7
+      end
+      object MECodigoMunIBGE: TMaskEdit
+        Left = 834
+        Top = 262
+        Width = 121
+        Height = 21
+        Anchors = [akTop, akRight]
+        TabOrder = 6
+      end
+      object MEUF: TMaskEdit
+        Left = 8
+        Top = 302
+        Width = 65
+        Height = 21
+        TabOrder = 8
+      end
+      object MECEP: TMaskEdit
+        Left = 80
+        Top = 302
+        Width = 89
+        Height = 21
+        TabOrder = 9
+      end
+      object MEPais: TMaskEdit
+        Left = 273
+        Top = 302
+        Width = 120
+        Height = 21
+        TabOrder = 11
+      end
+      object MECodigoPaisIBGE: TMaskEdit
+        Left = 176
+        Top = 302
+        Width = 89
+        Height = 21
+        TabOrder = 10
+      end
+      object MEFone: TMaskEdit
+        Left = 400
+        Top = 302
+        Width = 119
+        Height = 21
+        EditMask = '!\(99\)9999-9999;0;_'
+        MaxLength = 13
+        TabOrder = 12
+      end
+      object MEInscricao: TMaskEdit
+        Left = 528
+        Top = 302
+        Width = 731
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 13
+      end
+      object ListBox2: TListBox
+        Left = 8
+        Top = 24
+        Width = 1250
+        Height = 49
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        ItemHeight = 13
+        Items.Strings = (
+          '* N'#227'o existe um cadastro de fornecedor com este CNPJ no sistema.'
+          '* O sistema ir'#225' cadastrar este fornecedor automaticamente.'
+          
+            '* Por favor confira se os dados est'#227'o corretos e clique em avan'#231 +
+            'ar.')
+        TabOrder = 14
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Produtos n'#227'o Encotrados'
+      ImageIndex = 3
+      OnShow = TabSheet4Show
+      DesignSize = (
+        1267
+        597)
+      object Label24: TLabel
+        Left = 1134
+        Top = 576
+        Width = 126
+        Height = 13
+        Anchors = [akRight, akBottom]
+        Caption = '* Campos Obrigat'#243'rios'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label35: TLabel
+        Left = 836
+        Top = 241
+        Width = 104
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'Produtos Cadastrados'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label36: TLabel
+        Left = 962
+        Top = 241
+        Width = 97
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'Produtos Vinculados'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
+      object ListBox4: TListBox
+        Left = 8
+        Top = 24
+        Width = 1251
+        Height = 65
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clDefault
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ItemHeight = 13
+        Items.Strings = (
+          
+            '* Os produtos listados abaixo est'#227'o inativos ou n'#227'o est'#227'o cadast' +
+            'rados no sistema.'
+          '* Use esta tela para cadastrar os produtos automaticamente.'
+          
+            '* Ap'#243's fazer o cadastro dos produtos clique em avan'#231'ar para cont' +
+            'inuar a importa'#231#227'o.')
+        ParentFont = False
+        TabOrder = 0
+      end
+      object GroupBox1: TGroupBox
+        Left = 1075
+        Top = 104
+        Width = 185
+        Height = 137
+        Anchors = [akTop, akRight]
+        Caption = 'Comparar produtos por:'
+        TabOrder = 2
+        object cbNCM: TCheckBox
+          Left = 8
+          Top = 24
+          Width = 57
+          Height = 17
+          Caption = 'NCM'
+          Checked = True
+          State = cbChecked
+          TabOrder = 0
+          OnClick = cbNCMClick
+        end
+        object cbFabricante: TCheckBox
+          Left = 8
+          Top = 48
+          Width = 129
+          Height = 17
+          Caption = 'C'#243'digo do Fabricante'
+          Checked = True
+          State = cbChecked
+          TabOrder = 1
+          OnClick = cbFabricanteClick
+        end
+        object cbCodBarras: TCheckBox
+          Left = 8
+          Top = 72
+          Width = 105
+          Height = 17
+          Caption = 'C'#243'digo de Barras'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+          OnClick = cbCodBarrasClick
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 820
+        Top = 257
+        Width = 241
+        Height = 111
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Vincular produto a outro produto do sistema'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 4
+        TabStop = True
+        DesignSize = (
+          241
+          111)
+        object Label22: TLabel
+          Left = 8
+          Top = 24
+          Width = 86
+          Height = 13
+          Caption = 'Produto vinculado'
+        end
+        object btVincularProduto: TBitBtn
+          Left = 151
+          Top = 64
+          Width = 39
+          Height = 38
+          Anchors = [akTop, akRight]
+          TabOrder = 0
+          OnClick = btVincularProdutoClick
+          Glyph.Data = {
+            36180000424D3618000000000000360000002800000040000000200000000100
+            18000000000000180000120B0000120B00000000000000000000FFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAEB
+            D262C77B45BB6346B76347B46347B06370BF85D6ECDCFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEF0
+            EFEEEEEEE7E7E7E7E7E7E7E7E7E7E7E7EFEFEFF0F2F0FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8FDC
+            A211BE3B0AC13609BE350ABA350CB83615AD3B90CEA0FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBED
+            ECD9D9D9D8D8D8D7D7D7D7D7D7D7D7D7D9D9D9EBECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DC
+            9800C32F00CA3000CB3000CC3000CC3002BC2F82CF96FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DD
+            9800C22F00C93000CA3000CC3000CC3002BD2F82D196FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+            9800C22F00C63000C93000CB3000CC3002BF2F82D396FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+            9801BF2F00C33000C63000C93000CB3001C02F81D596FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D5D5D5D6D6D6D6D6D6D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+            9801BD2F01C03000C33000C63000C93001C12F81D796FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D5D5D5D5D5D5D6D6D6D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF82DD
+            9802BB2F01BE3001C03000C43000C63001C12F81D996FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+            EDD5D5D5D5D5D5D5D5D5D5D5D5D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF84DE
+            9A04BA3002BA2F02BD2F01C03000C33000C02F80DB96FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECEE
+            ECD5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5ECEEECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8EE0
+            A116BC3D08BA3302BA2F01BE3001C03001BF2F80DC96FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECED
+            ECD6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5ECEEECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            DFF3E4BFEBCABCE9C7BAE9C6B8E8C4B7E8C3B6E8C2B3E8C0B2E8BEB0E8BD6BD6
+            8426C04B1BBC4108BA3202BB2F01BD3001BF2F50D270A0E5B1A0E4B1A1E3B1A1
+            E1B1A1DFB1A2DEB1A2DDB1A3DCB2A6D9B3D8EDDEFFFFFFFFFFFFFFFFFFFFFFFF
+            F1F3F1EBEDEBEAEDEAEBECEBEBECEBEBECEBEAECEBEAECEBEBEDECEBEDECEEEE
+            EED9D9D9D7D7D7D5D5D5D5D5D5D5D5D5D5D5D5EBEBEBEBEEECEBEEECEBEDEBEA
+            EDEBEAEDEBEAEDEBEAECEBEAECEBEAECEAF1F3F1FFFFFFFFFFFFFFFFFFFFFFFF
+            86D79A64CB7D5DC07658C07252BF6D4DBF6949BF6543BF613DBE5D37BE5834C0
+            5631C0532CBF4E1EBD4309BA3302BA2F01BE2F01BF2F01BE2F01BF2F01BF2F01
+            BE2F02BC2F02BB2F02BA2F03B82F08AD306BBE80FFFFFFFFFFFFFFFFFFFFFFFF
+            EFEFEFE0E0E0DEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDCDCDCDBDBDBDADADAD9D9
+            D9D9D9D9D9D9D9D8D8D8D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5
+            D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5EFEFEFFFFFFFFFFFFFFFFFFFFFFFFF
+            6FD38775CB8A71BF856BBF8065BE7C5FBE7759BE7253BE6D4CBE6946BE6440BE
+            5F3ABF5A34BF552DBF5120BD4509BA3402BA2F01BD3001C03000C33000C53000
+            C93000CB3000CC3000CC3000CC3001C12F42B15FFFFFFFFFFFFFFFFFFFFFFFFF
+            E5E5E5E1E1E1DFDFDFDFDFDFDFDFDFDEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDBDB
+            DBDADADAD9D9D9D9D9D9D8D8D8D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D6D6D6D6
+            D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6E5E5E5FFFFFFFFFFFFFFFFFFFFFFFF
+            74D48B7ECB917AC18C74C0876DBF8268BF7D61BF795BBE7455BE6F50BE6A4ABF
+            6643BF613DBF5C37BF5730C05222BE480ABA3402BA2F01BD3001C03000C33000
+            C63000C93000CB3000CC3000CC3000C32F42B55FFFFFFFFFFFFFFFFFFFFFFFFF
+            E5E5E5E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCDCDC
+            DCDCDCDCDADADADADADAD9D9D9D8D8D8D6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D6
+            D6D6D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+            79D68F86CF9782C3927CC28E75C2886FC1836AC18063C07A5DC07657C07151C0
+            6C4BC06745C0623FC05E39C15832C15424BE490ABA3502BA2F02BD2F01BF3000
+            C33000C53000C83000CA3000CB3000C42F41B85FFFFFFFFFFFFFFFFFFFFFFFFF
+            E6E6E6E2E2E2E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDEDEDEDDDDDDDCDC
+            DCDCDCDCDCDCDCDBDBDBDADADADADADAD9D9D9D6D6D6D5D5D5D5D5D5D5D5D5D5
+            D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+            7ED7948DD19E89C59983C4947DC38F78C28A71C2866BC18165C17C5FC07759C0
+            7353C06E4DC06947C06441C15F3AC15B34C25624BF490BBA3602BA2F02BD2F01
+            C03000C33000C63000C83000CB3000C52F40BB5FFFFFFFFFFFFFFFFFFFFFFFFF
+            E7E7E7E3E3E3E2E2E2E1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDDDD
+            DDDCDCDCDCDCDCDCDCDCDBDBDBDBDBDBDADADAD9D9D9D6D6D6D5D5D5D5D5D5D5
+            D5D5D5D5D5D6D6D6D6D6D6D6D6D6D6D6D6E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+            86D79A87D49A82C9947DC89077C78C72C7876DC58267C47E62C47A5CC3765AC4
+            745AC27455C16F4FC16B48C16542C1613CC35C32C3551FBE4508BA3302BA2F01
+            BD2F01BF2F00C12F00C22F00C32F03BF305DC677FFFFFFFFFFFFFFFFFFFFFFFF
+            EBEBEBE2E2E2E1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDFDFDFDEDEDEDEDE
+            DEDEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDBDBDBDADADAD8D8D8D5D5D5D5D5D5D5
+            D5D5D5D5D5D5D5D5D5D5D5D5D5D5D6D6D6EDEDEDFFFFFFFFFFFFFFFFFFFFFFFF
+            C5EACEC0EBCABDE9C7BBE8C6B8E8C4B6E8C2B5E7C1B2E6BFB0E6BDAFE6BC82D9
+            975CC5765EC27557C27150C26C4AC26740C35F69D5829CE3AD91E0A48CE0A08B
+            E0A08BE0A08BE1A08BE0A08BDF9F8DDCA1CCECD4FFFFFFFFFFFFFFFFFFFFFFFF
+            EBEDECEAEBEAE9EBE9EAECEAEAECEAEAECEAEAECEAEAECEBEAECEBEAECEBEEEE
+            EEDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCDBDBDBECECECEBEDEBECEDEDECEDECEC
+            EDECECEDECECEDECECEDECECEDECECEDECEEF1EFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA9E4
+            B761C47966C27C5FC27858C27252C26E46C2649AE1ABFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+            EBDFDFDFDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCEBEDEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFACE4
+            BA68C57F6EC38368C37E62C3795BC3754EC36A9EE2AEFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBED
+            EBDFDFDFDFDFDFDFDFDFDFDFDFDEDEDEDCDCDCECEDECFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFE5
+            BD6FC78576C58970C58569C48063C47B56C470A1E2B0FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+            EAE0E0E0E1E1E1E0E0E0DFDFDFDFDFDFDDDDDDEBECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB2E6
+            BF77C88B7EC79077C68C72C5866BC5825DC676A4E3B3FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+            EAE1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFEBECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5E6
+            C17ECA9186C89680C79179C68C73C68864C67CA7E3B5FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+            EAE1E1E1E2E2E2E1E1E1E1E1E1E1E1E1DFDFDFEBECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB8E7
+            C385CD978ECA9C87C99881C8937BC78E6BC882AAE4B8FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9EB
+            EAE2E2E2E2E2E2E2E2E2E1E1E1E1E1E1DFDFDFEAECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBE8
+            C68CCE9D95CCA38FCB9F89C99983C89572C988ADE5BAFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9EB
+            EAE3E3E3E3E3E3E2E2E2E2E2E2E1E1E1E1E1E1EAECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBEE8
+            C894D0A39ECFAA97CDA592CBA08BCA9B7ACA8DB0E5BCFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEB
+            EAE3E3E3E4E4E4E3E3E3E3E3E3E2E2E2E1E1E1EBECEBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBAE8
+            C59CDAABA3D8B09CD6AA97D5A790D3A17CD391BBEAC6FFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEB
+            EAE5E5E5E5E5E5E4E4E4E4E4E4E3E3E3E2E2E2EAECEAFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCEEA
+            D595DAA68ADA9D86D99A83D8977DD79389D89CD4EFDBFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBEE
+            ECEDEDEDE9E9E9E8E8E8E8E8E8E8E8E8EFEFEFEFF2EFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+          NumGlyphs = 2
+        end
+        object MEProdutoVinculado: TMaskEdit
+          Left = 8
+          Top = 40
+          Width = 225
+          Height = 21
+          TabStop = False
+          Anchors = [akLeft, akTop, akRight]
+          Color = clBtnFace
+          Enabled = False
+          TabOrder = 2
+        end
+        object btDesvincularProduto: TBitBtn
+          Left = 193
+          Top = 64
+          Width = 39
+          Height = 38
+          Anchors = [akTop, akRight]
+          TabOrder = 1
+          OnClick = btDesvincularProdutoClick
+          Glyph.Data = {
+            36180000424D3618000000000000360000002800000040000000200000000100
+            18000000000000180000120B0000120B00000000000000000000FFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFDFDFDF1F3F7EFF0F1EEF2F8EFF2F8EFF2F8EFF2F8EFF2
+            F8EFF2F8EFF2F8EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F8EF
+            EFF0F4F5F7FEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFEFEFEFBFBFBFAFAFAFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB
+            FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF9F9F9FC
+            FCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFE6E8EC5E87C64879C74F7BC24F7BC24F7AC2507AC15079
+            C15078C05178BF5078BE5177BD5177BD5177BD5276BB5176BA5275B95275B947
+            71C48A97B4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF7F7F7D8D8D8D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4
+            D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D3D3D3D3D3D3D2D2D2DD
+            DDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFD6DCE7257CF61876FF1B74FF1B74FF1A74FF1B73FF1C70
+            FF1D6FFF1D70FF1D70FF1E6CFB1E6CF91F6BF71E6CFB206AF82068F32167F01A
+            69FF6181C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF3F3F3D6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5
+            D5D5D5D5D5D5D5D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D4D4D4D7
+            D7D7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDEE2EA337BEE2272F22470EA2371EB236FEA246FE9256E
+            E6266CE4256CE5246BE4276AE22769DF2669E02667E02767DD2967DB2965D724
+            66EB728EC5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D2D2
+            D2D2D2D2D2D2D2D2D2D2D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D0D0D0D3D3D3DB
+            DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDDE2EA307CF12073F52274F4226FE7285CAF2469DB2372
+            F12470F02564CB2859AF256CE4256DEA256CE7295AB2295CBB266AE62867DB22
+            69EE708DC6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D4D4D4D2D2D2CACACAD0D0D0D4D4D4D4D4
+            D4CECECECACACAD2D2D2D3D3D3D3D3D3CACACACCCCCCD2D2D2D1D1D1D3D3D3DB
+            DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDDE2EA307DF11F74F72176F9236DE230599B2568D22172
+            F42272F52962BF30589D246BE3246FEF246CE82F59A02D5BAE246AE82869DD22
+            6BF0708EC6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D5D5D5D1D1D1C8C8C8CFCFCFD4D4D4D4D4
+            D4CDCDCDC8C8C8D2D2D2D4D4D4D3D3D3C9C9C9CACACAD2D2D2D1D1D1D3D3D3DB
+            DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDDE2EA337FF11F76F81F77FB2270E63161AC266BD72172
+            F52172F62A66C83160AC246BE42470EF226CE8315FAF2E60B8236CE8276AE021
+            6CF2708EC7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D7D7D7D5D5D5D5D5D5D2D2D2CBCBCBD0D0D0D4D4D4D4D4
+            D4CECECECBCBCBD2D2D2D4D4D4D2D2D2CBCBCBCCCCCCD2D2D2D1D1D1D4D4D4DB
+            DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDDE2EA3681F12378F82177FB2270E73163AD266DD91F74
+            F62173F62B68CA3361AD226DE62270F1226EEB3261B02F62BA226DEA266BE221
+            6DF47090C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D8D8D8D5D5D5D5D5D5D2D2D2CBCBCBD1D1D1D4D4D4D5D5
+            D5CFCFCFCBCBCBD2D2D2D4D4D4D3D3D3CCCCCCCDCDCDD3D3D3D2D2D2D4D4D4DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDEE2EA3982F1267AF8247AFA2572E73465AF256EDB1E75
+            F91F75F92B69CC3463B0226FE82171F1226FED3363B22F63BD226EEC266CE31F
+            6EF67090CAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D8D8D8D6D6D6D6D6D6D3D3D3CCCCCCD1D1D1D5D5D5D5D5
+            D5CFCFCFCCCCCCD3D3D3D4D4D4D3D3D3CCCCCCCDCDCDD3D3D3D2D2D2D4D4D4DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDEE2EA3B84F1297CF9277BFB2874E73868B1276FDD1E76
+            FB1E76FB2B6BCE3566B32170EB2072F42170EE3464B53064BF216EEE256DE41F
+            6FF86F91CAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D9D9D9D7D7D7D7D7D7D4D4D4CDCDCDD1D1D1D5D5D5D5D5
+            D5D0D0D0CDCDCDD3D3D3D4D4D4D3D3D3CDCDCDCECECED3D3D3D2D2D2D4D4D4DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDEE3EA3E86F12C7EF92A7DFB2B76E93C6BB22A72DD2078
+            FA1E76FC2B6DD13668B52171ED2073F62071F03566B73068C12070EF246EE71E
+            70FA6F92CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5D9D9D9D7D7D7D7D7D7D4D4D4CECECED2D2D2D5D5D5D5D5
+            D5D0D0D0CECECED3D3D3D4D4D4D3D3D3CECECECECECED3D3D3D3D3D3D4D4D4DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDEE3EA4188F12F80F92D80FB2E79E9406EB52E74DE2379
+            FA2178FC2D6FD23869B82072EF1F75F82072F23669BA326AC42070F1246FEA1D
+            72FA6F92CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DADADAD8D8D8D8D8D8D5D5D5CFCFCFD3D3D3D6D6D6D6D6
+            D6D1D1D1CECECED3D3D3D5D5D5D4D4D4CECECECFCFCFD4D4D4D3D3D3D4D4D4DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3EA4489F13382F93182FB327AE94371B63176E0277C
+            FB247BFC3172D23B6EBA2173F01E75FA1F73F4386CBD326CC61F71F32370EB1D
+            73FA6E92CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DBDBDBD9D9D9D9D9D9D6D6D6D0D0D0D4D4D4D7D7D7D6D6
+            D6D1D1D1CFCFCFD4D4D4D5D5D5D4D4D4CFCFCFD0D0D0D4D4D4D3D3D3D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3EA468AF13683F93482FB347DE94774B83478DF2A7D
+            FB277CFC3473D33E70BB2475F01F76FB1E74F6396DBF336DC91E72F42371EC1C
+            74FB6E93CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DBDBDBD9D9D9D9D9D9D6D6D6D1D1D1D4D4D4D7D7D7D7D7
+            D7D2D2D2D0D0D0D4D4D4D5D5D5D4D4D4D0D0D0D0D0D0D4D4D4D3D3D3D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3EA498DF13986FA3684FB377EEA4A77B9377AE02D7D
+            FB2A7EFD3876D54272BD2677F02278FA2075F63A70C1336FCB1D73F72272EF1C
+            75FB6E93CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DCDCDCDADADAD9D9D9D7D7D7D2D2D2D5D5D5D7D7D7D7D7
+            D7D3D3D3D1D1D1D5D5D5D6D6D6D5D5D5D0D0D0D1D1D1D4D4D4D4D4D4D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3EA4C8FF13C88FA3986FB3A81EA4F7ABB3A7CE02F80
+            FA2D7FFD3B78D64676BF2978F0247AFA2377F63E72C33671CD1C74F92273F11B
+            77FC6E94CEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DCDCDCDADADADADADAD7D7D7D3D3D3D6D6D6D8D8D8D8D8
+            D8D4D4D4D2D2D2D5D5D5D6D6D6D5D5D5D1D1D1D1D1D1D4D4D4D4D4D4D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3EA4F90F14089FA3C88FC3D81EA537BB83D7DDF3382
+            FA3082FD3E7AD34B78BB2C7AF0287CFC2678F54374C03A74CA1E75F92174F31A
+            78FC6D95CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DCDCDCDBDBDBDBDBDBD8D8D8D3D3D3D6D6D6D9D9D9D9D9
+            D9D4D4D4D3D3D3D6D6D6D7D7D7D5D5D5D2D2D2D2D2D2D5D5D5D4D4D4D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFDFE3E95192F1438AFA408AF93E84EE4A77C03E80E63784
+            FB3484FB3B7ADA4175C32F7DF42C7EF92A7CF83A71C73472D22378FA2476F21A
+            79FD6C95D2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF5F5F5DCDCDCDBDBDBDBDBDBD9D9D9D3D3D3D7D7D7DADADAD9D9
+            D9D5D5D5D2D2D2D7D7D7D7D7D7D7D7D7D1D1D1D2D2D2D6D6D6D5D5D5D5D5D5DC
+            DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFE3E7ED5798F54891FF468DFB438CFC3E89F63F8AFC3E88
+            FD3B87FB3786FA3482F63584FC3382FA3081FC2C7DF72B7CF82A7DFB287BF91F
+            7FFF7099D3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF7F7F7DEDEDEDDDDDDDCDCDCDCDCDCDADADADBDBDBDBDBDBDADA
+            DADADADAD8D8D8D9D9D9D9D9D9D9D9D9D7D7D7D7D7D7D7D7D7D6D6D6D6D6D6DD
+            DDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFECEEF25A95E44A8EF2488BEF478AF0438CF24288F04185
+            F03F84F03C84F13985F23882F03680EF337FF12F80F32D7EF32C7BF02A79F11E
+            7FF97894BBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFF9F9F9DDDDDDDCDCDCDBDBDBDBDBDBDBDBDBDADADADADADAD9D9
+            D9D9D9D9D9D9D9D8D8D8D7D7D7D7D7D7D7D7D7D6D6D6D6D6D6D5D5D5D5D5D5DB
+            DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFDBE3ED98ADCF4278CA3976D23874CE3672CE3470CE3270CD2F6E
+            CD2E6DCE2E6CCD2D6BCC2B6ACB2A69CB2968CA2866C92666C92565C92563C81D
+            65D64F71ACB5B7BEEBEBEBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFF5F5F5E4E4E4D3D3D3D3D3D3D2D2D2D2D2D2D1D1D1D1D1D1D0D0D0D0D0
+            D0D0D0D0D0D0D0CFCFCFCFCFCFCFCFCFCECECECECECECECECECECECECECECED0
+            D0D0E6E6E6F8F8F8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFF90ABCE3B8BF2367FEE327CEC2F7BED2C78ED2876ED2473EC2071
+            EB1D6FEC1E6EEA1F6DE6216CE4216BE22269DF2367DD2365DA2464D82664D627
+            61D22363DE2466E1C2C4C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFE2E2E2D9D9D9D7D7D7D6D6D6D6D6D6D5D5D5D4D4D4D4D4D4D3D3D3D2D2
+            D2D2D2D2D1D1D1D1D1D1D1D1D1D1D1D1D0D0D0D0D0D0D0D0D0D0D0D0CFCFCFD0
+            D0D0D1D1D1EAEAEAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFF8DADD84097FF408BFF3C89FF3787FE3484FE3082FE2C7FFF287D
+            FD247AFC2178FC1F77FB2175F82274F52272F22370F1246EEE256DEC266CE928
+            6AE5246BF12169EABDC5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFE4E4E4DDDDDDDCDCDCDBDBDBDADADADADADAD9D9D9D8D8D8D7D7D7D6D6
+            D6D6D6D6D5D5D5D5D5D5D5D5D5D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D3D3D3D4
+            D4D4D2D2D2ECECECFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFF8BAAD6499BFF4592FF408FFF3C8DFF398AFF3588FF3086FF2C83
+            FF2E7CF42A7AF32578F52176F21C77FE1976FF1D73FD1E72FB1F71F91F70F620
+            6EF31E6DF92369E9B6C5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFE3E3E3DEDEDEDDDDDDDCDCDCDBDBDBDBDBDBDADADAD9D9D9D9D9D9D7D7
+            D7D6D6D6D5D5D5D4D4D4D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D4D4D4D4D4D4D4
+            D4D4D2D2D2ECECECFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFC8D2E19EB5D6A1B6D7A0B5D69FB5D79EB4D79CB3D8A3B7D58AA6
+            D12C7AEF2472EC256FE4226DE9487ACE9BB1D196AFD795ADD495ADD495ACD395
+            ACD293ABD397ABD0E1E5EBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFF0F0F0E6E6E6E7E7E7E7E7E7E7E7E7E6E6E6E6E6E6E7E7E7E2E2E2D5D5
+            D5D4D4D4D2D2D2D3D3D3D5D5D5E5E5E5E5E5E5E5E5E5E4E4E4E4E4E4E4E4E4E4
+            E4E4E4E4E4F6F6F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFCFDFDF8F9FBFAFAFBFAFAFBF9FAFBF9FAFBF9FAFCFCFCFDE0E3
+            E83C85EE1E74F91E6DEB1D6CF76E88BBFBFBFCFAFBFCF9FAFBF9FAFBF9FAFBF9
+            FAFBF9FAFBFAFAFCFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFEFEFEFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFEFEFEF6F6F6D9D9
+            D9D5D5D5D2D2D2D4D4D4D8D8D8FEFEFEFEFEFEFDFDFDFDFDFDFDFDFDFDFDFDFD
+            FDFDFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDCE1
+            E94890F43186FF247CFF157AFF6086C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F5DCDC
+            DCD9D9D9D7D7D7D5D5D5D7D7D7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3F5
+            F8C3CDDDBCC8DABCC9DCB3C4DBD0D6DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCEEEE
+            EEECECECEDEDEDEBEBEBF1F1F1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+          NumGlyphs = 2
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 8
+        Top = 253
+        Width = 809
+        Height = 339
+        Caption = 'Cadastrar produto no sistema'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 3
+        DesignSize = (
+          809
+          339)
+        object Label23: TLabel
+          Left = 18
+          Top = 26
+          Width = 33
+          Height = 13
+          Caption = 'C'#243'digo'
+        end
+        object Label26: TLabel
+          Left = 139
+          Top = 67
+          Width = 6
+          Height = 13
+          Caption = '*'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -12
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label27: TLabel
+          Left = 475
+          Top = 26
+          Width = 76
+          Height = 13
+          Caption = 'Tipo de Produto'
+        end
+        object Label28: TLabel
+          Left = 97
+          Top = 26
+          Width = 103
+          Height = 13
+          Caption = 'Descri'#231#227'o do Produto'
+        end
+        object Label29: TLabel
+          Left = 16
+          Top = 146
+          Width = 97
+          Height = 13
+          Caption = 'CST do IPI Entradas'
+        end
+        object Label30: TLabel
+          Left = 412
+          Top = 146
+          Width = 89
+          Height = 13
+          Caption = 'CST do IPI Sa'#237'das'
+        end
+        object Label31: TLabel
+          Left = 16
+          Top = 185
+          Width = 101
+          Height = 13
+          Caption = 'CST do PIS Entradas'
+        end
+        object Label32: TLabel
+          Left = 412
+          Top = 185
+          Width = 93
+          Height = 13
+          Caption = 'CST do PIS Sa'#237'das'
+        end
+        object Label33: TLabel
+          Left = 16
+          Top = 225
+          Width = 123
+          Height = 13
+          Caption = 'CST do COFINS Entradas'
+        end
+        object Label34: TLabel
+          Left = 412
+          Top = 225
+          Width = 100
+          Height = 13
+          Caption = 'CST COFINS Sa'#237'das'
+        end
+        object Label37: TLabel
+          Left = 649
+          Top = 26
+          Width = 55
+          Height = 13
+          Caption = 'C'#243'd. Barras'
+        end
+        object Label25: TLabel
+          Left = 512
+          Top = 67
+          Width = 6
+          Height = 13
+          Anchors = [akTop, akRight]
+          Caption = '*'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -12
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object QRLMaragemAtacado: TLabel
+          Left = 518
+          Top = 298
+          Width = 92
+          Height = 13
+          Caption = '% Margem Atacado'
+          Visible = False
+        end
+        object Label48: TLabel
+          Left = 17
+          Top = 67
+          Width = 90
+          Height = 13
+          Anchors = [akTop, akRight]
+          Caption = 'N'#250'mero Fabricante'
+        end
+        object Label52: TLabel
+          Left = 16
+          Top = 263
+          Width = 126
+          Height = 13
+          Caption = 'ClassTrib. IBS/CBS Venda'
+        end
+        object Label53: TLabel
+          Left = 412
+          Top = 262
+          Width = 131
+          Height = 13
+          Caption = 'ClassTrib. IBS/CBS Compra'
+        end
+        inline FmClasse1: TFmClasse
+          Left = 144
+          Top = 67
+          Width = 361
+          Height = 37
+          TabOrder = 4
+          TabStop = True
+          OnEnter = FmClasse1Enter
+          inherited Label1: TLabel
+            Left = 0
+          end
+          inherited MeClasse: TMaskEdit
+            Width = 50
+          end
+          inherited BtClasse: TBitBtn
+            Left = 53
+          end
+          inherited EdClasse: TEdit
+            Left = 81
+            Width = 285
+          end
+        end
+        inline FmTributacao1: TFmTributacao
+          Left = 520
+          Top = 67
+          Width = 275
+          Height = 37
+          TabOrder = 5
+          TabStop = True
+          OnEnter = FmTributacao1Enter
+          inherited Label1: TLabel
+            Left = 0
+            Anchors = [akTop, akRight]
+          end
+          inherited EdTributacao: TEdit
+            Width = 199
+          end
+        end
+        object btCompletaProduto: TBitBtn
+          Left = 642
+          Top = 301
+          Width = 161
+          Height = 34
+          Caption = '&Confirmar Produto'
+          TabOrder = 15
+          OnClick = btCompletaProdutoClick
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000120B0000120B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+            555555555555555555555555555555555555555555FF55555555555559055555
+            55555555577FF5555555555599905555555555557777F5555555555599905555
+            555555557777FF5555555559999905555555555777777F555555559999990555
+            5555557777777FF5555557990599905555555777757777F55555790555599055
+            55557775555777FF5555555555599905555555555557777F5555555555559905
+            555555555555777FF5555555555559905555555555555777FF55555555555579
+            05555555555555777FF5555555555557905555555555555777FF555555555555
+            5990555555555555577755555555555555555555555555555555}
+          NumGlyphs = 2
+        end
+        object MeCodigoProduto: TMaskEdit
+          Left = 17
+          Top = 41
+          Width = 66
+          Height = 21
+          Hint = 'Em branco ir'#225' utilizar o sequ'#234'ncial do sistema.'
+          EditMask = '99999999;0;_'
+          MaxLength = 8
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+        end
+        object cbTipoProduto: TComboBox
+          Left = 475
+          Top = 41
+          Width = 161
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 2
+          Text = 'COMERCIAL'
+          Items.Strings = (
+            'COMERCIAL'
+            'AGRICOLA'
+            'AGUA'
+            'ARROZ'
+            'COM. ARROZ'
+            'CONGELADO'
+            'CONSUMO'
+            'ENERGIA'
+            'FERRAMENTA'
+            'FOMENTO'
+            'GAS'
+            'IMOBILIZADO'
+            'INSUMOS'
+            'INDUSTRIAL'
+            'MAT. PRIMA'
+            'PATRIMONIO'
+            'PE'#199'A'
+            'SERVI'#199'O'
+            'SEGURAN'#199'A'
+            'VEICULO')
+        end
+        object MeDescricaoProduto: TMaskEdit
+          Left = 97
+          Top = 41
+          Width = 371
+          Height = 21
+          TabOrder = 1
+        end
+        object DBLCCstIpiEntrada: TDBLookupComboBox
+          Left = 16
+          Top = 162
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_IPI'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstIpiEntrada
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 7
+          OnCloseUp = DBLCCstIpiEntradaCloseUp
+        end
+        object DBLCCstIpiSaida: TDBLookupComboBox
+          Left = 412
+          Top = 162
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_IPI'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstIpiSaida
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 8
+          OnCloseUp = DBLCCstIpiSaidaCloseUp
+        end
+        object DBLCCstPisEntrada: TDBLookupComboBox
+          Left = 16
+          Top = 201
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_PIS'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstPisEntrada
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 9
+          OnCloseUp = DBLCCstPisEntradaCloseUp
+        end
+        object DBLCCstPisSaida: TDBLookupComboBox
+          Left = 412
+          Top = 201
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_PIS'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstPisSaida
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 10
+          OnCloseUp = DBLCCstPisSaidaCloseUp
+        end
+        object DBLCCstCofinsEntrada: TDBLookupComboBox
+          Left = 16
+          Top = 241
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_COFINS'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstCofinsEntrada
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 11
+          OnCloseUp = DBLCCstCofinsEntradaCloseUp
+        end
+        object DBLCCstCofinsSaida: TDBLookupComboBox
+          Left = 412
+          Top = 241
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CST_COFINS'
+          ListField = 'DESC_COMPLETA'
+          ListSource = DMNfe.DSCstCofinsSaida
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 12
+          OnCloseUp = DBLCCstCofinsSaidaCloseUp
+        end
+        object MeDescCodBarra: TMaskEdit
+          Left = 649
+          Top = 41
+          Width = 144
+          Height = 21
+          TabOrder = 3
+        end
+        inline FmMarca1: TFmMarca
+          Left = 17
+          Top = 103
+          Width = 780
+          Height = 37
+          TabOrder = 6
+          inherited EdMarca: TEdit
+            Width = 702
+          end
+        end
+        object MeMargemAtacado: TMaskEdit
+          Left = 530
+          Top = 313
+          Width = 63
+          Height = 21
+          TabOrder = 16
+          Visible = False
+        end
+        object MENumFabricante: TMaskEdit
+          Left = 16
+          Top = 81
+          Width = 113
+          Height = 21
+          TabOrder = 17
+        end
+        object DBLCCClasTribIBSCBSVenda: TDBLookupComboBox
+          Left = 16
+          Top = 277
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CLASS_TRIB'
+          ListField = 'DESCRICAO'
+          ListSource = DMProduto.DSClassTribIBSCBS
+          TabOrder = 13
+          OnDropDown = DBLCCClasTribIBSCBSDropDown
+        end
+        object DBLCCClasTribIBSCBSCompra: TDBLookupComboBox
+          Left = 412
+          Top = 277
+          Width = 385
+          Height = 21
+          KeyField = 'COD_CLASS_TRIB'
+          ListField = 'DESCRICAO'
+          ListSource = DMProduto.DSClassTribIBSCBS
+          TabOrder = 14
+          OnDropDown = DBLCCClasTribIBSCBSDropDown
+        end
+      end
+      object DBGProdutoAusente: TDBGrid
+        Left = 8
+        Top = 104
+        Width = 1053
+        Height = 137
+        Anchors = [akLeft, akTop, akRight]
+        DataSource = DSProdutoAusente
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        OnDrawColumnCell = DBGProdutoAusenteDrawColumnCell
+        OnKeyDown = DBGProdutoAusenteKeyDown
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'desc_produto'
+            ReadOnly = True
+            Title.Caption = 'Produto'
+            Width = 521
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'num_fabricante'
+            ReadOnly = True
+            Title.Caption = 'Fabricante'
+            Width = 149
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'num_genero_ncm'
+            ReadOnly = True
+            Title.Caption = 'NCM'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cfop'
+            ReadOnly = True
+            Title.Caption = 'CFOP'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'desc_cod_barra'
+            ReadOnly = True
+            Title.Caption = 'Cod Barras'
+            Visible = True
+          end>
+      end
+      object Panel1: TPanel
+        Left = 821
+        Top = 242
+        Width = 13
+        Height = 11
+        Anchors = [akTop, akRight]
+        Color = clMoneyGreen
+        TabOrder = 5
+      end
+      object Panel2: TPanel
+        Left = 947
+        Top = 242
+        Width = 13
+        Height = 11
+        Anchors = [akTop, akRight]
+        Color = clGradientActiveCaption
+        TabOrder = 6
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Vincular Produtos'
+      ImageIndex = 2
+      OnShow = TabSheet3Show
+      DesignSize = (
+        1267
+        597)
+      object Label19: TLabel
+        Left = 8
+        Top = 79
+        Width = 142
+        Height = 13
+        Caption = 'Itens do arquivo XML da NF-e'
+      end
+      object Label20: TLabel
+        Left = 370
+        Top = 79
+        Width = 142
+        Height = 13
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Itens cadastrados da empresa'
+      end
+      object Label21: TLabel
+        Left = 8
+        Top = 372
+        Width = 189
+        Height = 13
+        Anchors = [akLeft, akBottom]
+        Caption = 'Itens que ir'#227'o compor a nota de entrada'
+      end
+      object qtItens: TLabel
+        Left = 441
+        Top = 79
+        Width = 134
+        Height = 13
+        Alignment = taRightJustify
+        Anchors = [akTop]
+        AutoSize = False
+        Caption = 'qtItens'
+      end
+      object qtItensVinc: TLabel
+        Left = 1124
+        Top = 374
+        Width = 134
+        Height = 13
+        Alignment = taRightJustify
+        Anchors = [akRight, akBottom]
+        AutoSize = False
+      end
+      object DBGrid1: TDBGrid
+        Left = 8
+        Top = 96
+        Width = 690
+        Height = 242
+        Anchors = [akLeft, akTop, akBottom]
+        DataSource = DataSource1
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        ParentShowHint = False
+        ReadOnly = True
+        ShowHint = False
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        OnDrawColumnCell = DBGrid1DrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'cprod'
+            Title.Caption = 'C'#243'digo'
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'produto'
+            Title.Caption = 'Produto'
+            Width = 470
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ncm'
+            Title.Caption = 'NCM'
+            Width = 55
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cfop'
+            Title.Caption = 'CFOP'
+            Visible = True
+          end>
+      end
+      object DBGrid2: TDBGrid
+        Left = 699
+        Top = 120
+        Width = 569
+        Height = 216
+        Anchors = [akTop, akRight, akBottom]
+        DataSource = DataSource2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+        ParentFont = False
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        OnCellClick = DBGrid2CellClick
+        OnDrawColumnCell = DBGrid2DrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'CHECADO'
+            Title.Caption = '*'
+            Width = 20
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COD_PRODUTO'
+            Title.Caption = 'C'#243'digo'
+            Width = 45
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'PRODUTO'
+            Title.Caption = 'Produto'
+            Width = 241
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NCM'
+            Width = 63
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESC_MARCA'
+            Title.Caption = 'Marca'
+            Width = 85
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NUM_FABRICANTE'
+            Title.Caption = 'Cod.Fabricante'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'QT_ESTOQUE'
+            Title.Caption = 'Qtd. Estoque'
+            Width = 90
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COD_TRIBUTACAO'
+            Title.Caption = 'Tributa'#231#227'o'
+            Width = 55
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESC_UNIDADE'
+            Title.Caption = 'Un. Medida'
+            Visible = True
+          end>
+      end
+      object btRemover: TBitBtn
+        Left = 1078
+        Top = 568
+        Width = 180
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'Remover Item'
+        TabOrder = 3
+        OnClick = btRemoverClick
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000130B0000130B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          333333333333333333333333333333333333333FFF33FF333FFF339993370733
+          999333777FF37FF377733339993000399933333777F777F77733333399970799
+          93333333777F7377733333333999399933333333377737773333333333990993
+          3333333333737F73333333333331013333333333333777FF3333333333910193
+          333333333337773FF3333333399000993333333337377737FF33333399900099
+          93333333773777377FF333399930003999333337773777F777FF339993370733
+          9993337773337333777333333333333333333333333333333333333333333333
+          3333333333333333333333333333333333333333333333333333}
+        NumGlyphs = 2
+      end
+      object ListBox1: TListBox
+        Left = 8
+        Top = 8
+        Width = 1250
+        Height = 59
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        ItemHeight = 13
+        Items.Strings = (
+          
+            '* Os produtos listados abaixo possuem mais de um cadastro com o ' +
+            'mesmo NCM no sistema.'
+          
+            '* O quadro '#224' esquerda lista os produtos do arquivo XML da NF-e e' +
+            ' deve ser relacionado com o quadro '#224' direita que lista os produt' +
+            'os ja '
+          '   cadastrados da sua empresa.'
+          
+            '* Caso algum produto n'#227'o esteja aparecendo nesta lista '#233' porque ' +
+            'ele foi automaticamente relacionado pelo sistema.')
+        TabOrder = 4
+      end
+      object DBGrid3: TDBGrid
+        Left = 8
+        Top = 389
+        Width = 1251
+        Height = 172
+        Anchors = [akLeft, akRight, akBottom]
+        DataSource = DMNfe.dsProdutoNcmDuplicado
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 2
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'codigo'
+            Title.Caption = 'C'#243'digo'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ncm'
+            Title.Caption = 'NCM'
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'desc_produto_xml'
+            Title.Caption = 'Produto XML'
+            Width = 500
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'desc_produto_bd'
+            Title.Caption = 'Produto Cadastrado'
+            Width = 500
+            Visible = True
+          end>
+      end
+      object MEProcurar: TMaskEdit
+        Left = 710
+        Top = 96
+        Width = 238
+        Height = 21
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 5
+        Text = 'Busca por nome'
+        OnChange = MEProcurarChange
+        OnClick = MEProcurarClick
+        OnEnter = MEProcurarEnter
+        OnExit = MEProcurarExit
+      end
+      object MeProcurarFabricante: TMaskEdit
+        Left = 1076
+        Top = 96
+        Width = 181
+        Height = 21
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 6
+        Text = 'Busca por n'#250'mero do fabricante'
+        OnChange = MeProcurarFabricanteChange
+        OnClick = MeProcurarFabricanteClick
+        OnEnter = MeProcurarFabricanteEnter
+        OnExit = MeProcurarFabricanteExit
+      end
+      object btSalvaItemBD: TBitBtn
+        Left = 591
+        Top = 342
+        Width = 113
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = 'Cadastrar Item'
+        TabOrder = 7
+        OnClick = btSalvaItemBDClick
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000120B0000120B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          333333FFFFFFFFFFFFF33000077777770033377777777777773F000007888888
+          00037F3337F3FF37F37F00000780088800037F3337F77F37F37F000007800888
+          00037F3337F77FF7F37F00000788888800037F3337777777337F000000000000
+          00037F3FFFFFFFFFFF7F00000000000000037F77777777777F7F000FFFFFFFFF
+          00037F7F333333337F7F000FFFFFFFFF00037F7F333333337F7F000FFFFFFFFF
+          00037F7F333333337F7F000FFFFFFFFF00037F7F333333337F7F000FFFFFFFFF
+          00037F7F333333337F7F000FFFFFFFFF07037F7F33333333777F000FFFFFFFFF
+          0003737FFFFFFFFF7F7330099999999900333777777777777733}
+        NumGlyphs = 2
+      end
+      object RGNCM: TRadioGroup
+        Left = 944
+        Top = 336
+        Width = 314
+        Height = 32
+        Anchors = [akRight, akBottom]
+        Columns = 2
+        ItemIndex = 0
+        Items.Strings = (
+          'Manter NCM do produto'
+          'Atualizar para NCM do XML')
+        TabOrder = 8
+      end
+      object MeProcuraCodProduto: TMaskEdit
+        Left = 952
+        Top = 96
+        Width = 120
+        Height = 21
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 9
+        Text = 'Busca por Cod. produto'
+        OnChange = MeProcuraCodProdutoChange
+        OnEnter = MeProcuraCodProdutoEnter
+        OnExit = MeProcuraCodProdutoExit
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Finalizar'
+      ImageIndex = 4
+      DesignSize = (
+        1267
+        597)
+      object Label16: TLabel
+        Left = 1060
+        Top = 136
+        Width = 69
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'CFOP para ST'
+      end
+      inline FmSerie1: TFmSerie
+        Left = 8
+        Top = 98
+        Width = 1251
+        Height = 37
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 0
+        inherited Label1: TLabel
+          Left = 1
+        end
+        inherited MeSerie: TMaskEdit
+          OnChange = FmSerie1MeSerieChange
+          OnExit = FmSerie1MeSerieExit
+        end
+        inherited EdSerie: TEdit
+          Width = 1145
+        end
+      end
+      inline FmOperacao1: TFmOperacao
+        Left = 8
+        Top = 138
+        Width = 1045
+        Height = 37
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 1
+        inherited Label1: TLabel
+          Left = 1
+        end
+        inherited MeOperacao: TMaskEdit
+          OnChange = FmOperacao1MeOperacaoChange
+          OnExit = FmOperacao1MeOperacaoExit
+        end
+        inherited BtOperacao: TBitBtn
+          OnClick = FmOperacao1BtOperacaoClick
+        end
+        inherited EdOperacao: TEdit
+          Width = 1033
+        end
+      end
+      object btConcluir: TBitBtn
+        Left = 1114
+        Top = 568
+        Width = 145
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = '&Concluir'
+        Enabled = False
+        ModalResult = 1
+        TabOrder = 5
+        OnClick = btConcluirClick
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000120B0000120B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+          555555555555555555555555555555555555555555FF55555555555559055555
+          55555555577FF5555555555599905555555555557777F5555555555599905555
+          555555557777FF5555555559999905555555555777777F555555559999990555
+          5555557777777FF5555557990599905555555777757777F55555790555599055
+          55557775555777FF5555555555599905555555555557777F5555555555559905
+          555555555555777FF5555555555559905555555555555777FF55555555555579
+          05555555555555777FF5555555555557905555555555555777FF555555555555
+          5990555555555555577755555555555555555555555555555555}
+        NumGlyphs = 2
+      end
+      object ListBox5: TListBox
+        Left = 8
+        Top = 24
+        Width = 1250
+        Height = 59
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        ItemHeight = 13
+        Items.Strings = (
+          
+            '* Ao finalizar a nota voc'#234' voltar'#225' para a tela de cadastro da no' +
+            'ta de compra.'
+          
+            '* Por favor verifique se os dados est'#227'o corretos, voc'#234' poder'#225' al' +
+            'terar os dados da nota conforme precisar.'
+          '* Depois basta confirmar a nota normalmente.')
+        TabOrder = 6
+      end
+      object meCfopST: TMaskEdit
+        Left = 1059
+        Top = 152
+        Width = 96
+        Height = 21
+        Anchors = [akTop, akRight]
+        Color = clBtnFace
+        Enabled = False
+        EditMask = '!9999;0;_'
+        MaxLength = 4
+        TabOrder = 2
+        OnChange = meCfopSTChange
+      end
+      object cbCfopST: TCheckBox
+        Left = 1059
+        Top = 176
+        Width = 122
+        Height = 33
+        Anchors = [akTop, akRight]
+        Caption = 'Cadastrar CFOP para Importa'#231#245'es Futuras'
+        Checked = True
+        Enabled = False
+        State = cbChecked
+        TabOrder = 4
+        Visible = False
+        WordWrap = True
+      end
+      object pMensagem: TPanel
+        Left = 906
+        Top = 505
+        Width = 353
+        Height = 57
+        Anchors = [akRight, akBottom]
+        BevelInner = bvLowered
+        TabOrder = 7
+        Visible = False
+        object Label17: TLabel
+          Left = 13
+          Top = 16
+          Width = 189
+          Height = 13
+          Caption = 'Esta nota possui Substitui'#231#227'o Tribut'#225'ria.'
+        end
+        object Label18: TLabel
+          Left = 13
+          Top = 32
+          Width = 329
+          Height = 13
+          Caption = 
+            'Por favor informe um CFOP de Substitui'#231#227'o Tribut'#225'ria para prosse' +
+            'guir.'
+        end
+      end
+      inline FmOC1: TFmOC
+        Left = 8
+        Top = 184
+        Width = 1045
+        Height = 37
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 3
+        inherited EdOrdemCompra: TEdit
+          Width = 969
+        end
+      end
+    end
+    object TabSheet6: TTabSheet
+      Caption = 'Produtos n'#227'o Encontrados Aristides'
+      ImageIndex = 5
+      object PCProdutosAristides: TPageControl
+        Left = 0
+        Top = 168
+        Width = 1265
+        Height = 425
+        ActivePage = TabSheet7
+        MultiLine = True
+        Style = tsFlatButtons
+        TabOrder = 0
+        OnChange = PCProdutosAristidesChange
+        object TabSheet7: TTabSheet
+          Caption = 'Informa'#231#245'es Gerais'
+          DesignSize = (
+            1257
+            394)
+          object Label38: TLabel
+            Left = 88
+            Top = -1
+            Width = 21
+            Height = 13
+            Caption = 'Tipo'
+          end
+          object Label39: TLabel
+            Left = 0
+            Top = 200
+            Width = 112
+            Height = 13
+            Caption = 'CST de IPI de Entradas'
+          end
+          object Label40: TLabel
+            Left = 392
+            Top = 200
+            Width = 89
+            Height = 13
+            Caption = 'CST de IPI Sa'#237'das'
+          end
+          object Label41: TLabel
+            Left = 0
+            Top = 238
+            Width = 101
+            Height = 13
+            Caption = 'CST de PIS Entradas'
+          end
+          object Label42: TLabel
+            Left = 392
+            Top = 238
+            Width = 93
+            Height = 13
+            Caption = 'CST de PIS Sa'#237'das'
+          end
+          object Label43: TLabel
+            Left = 0
+            Top = 276
+            Width = 113
+            Height = 13
+            Caption = 'CST de Cofins Entradas'
+          end
+          object Label44: TLabel
+            Left = 392
+            Top = 276
+            Width = 105
+            Height = 13
+            Caption = 'CST de Cofins Sa'#237'das'
+          end
+          object Label46: TLabel
+            Left = 1
+            Top = 40
+            Width = 37
+            Height = 13
+            Caption = 'Produto'
+          end
+          object DBPanel2: TDBPanel
+            Left = 1
+            Top = 0
+            Width = 72
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            CodigoTabStop = True
+            DataField = 'cod_produto'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'cod_produto'
+            ForeignKey = False
+            LCaption = 'C'#243'digo'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBComboBox1: TDBComboBox
+            Left = 88
+            Top = 14
+            Width = 289
+            Height = 21
+            Style = csDropDownList
+            DataField = 'ind_tipo_produto'
+            DataSource = DSProdutoAusente
+            ItemHeight = 13
+            Items.Strings = (
+              'COMERCIAL'
+              'AGRICOLA'
+              'AGUA'
+              'ARROZ'
+              'COM. ARROZ'
+              'CONGELADO'
+              'CONSUMO'
+              'ENERGIA'
+              'FERRAMENTA'
+              'FOMENTO'
+              'GAS'
+              'IMOBILIZADO'
+              'INSUMOS'
+              'INDUSTRIAL'
+              'MAT. PRIMA'
+              'PATRIMONIO'
+              'PE'#199'A'
+              'SERVI'#199'O'
+              'SEGURAN'#199'A'
+              'VEICULO')
+            TabOrder = 1
+          end
+          object DBPanel3: TDBPanel
+            Left = 608
+            Top = 0
+            Width = 121
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 4
+            CodigoTabStop = True
+            DataField = 'num_genero_ncm'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'num_genero_ncm'
+            ForeignKey = False
+            LCaption = 'NCM'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBPanel4: TDBPanel
+            Left = 0
+            Top = 120
+            Width = 377
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 6
+            CodigoTabStop = True
+            DataField = 'cod_classe'
+            DataSource = DSProdutoAusente
+            DefineByForm = DBPanel4DefineByForm
+            fkCache = False
+            fkCampo = 'desc_classe'
+            fkChave = 'cod_classe'
+            fkTabela = 'tb_classe'
+            ForeignKey = True
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+              55555575555555775F55509999999901055557F55555557F75F5001111111101
+              105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+              01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+              8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+              0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+              0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+              05555555575FF777755555555500055555555555557775555555}
+            LCaption = 'C'#243'digo da Classe'
+            OnCodigoChange = DBPanel4CodigoChange
+            ReadOnly = False
+            Required = True
+            ValidateOnExit = False
+            VisibleComponents = [dbpcCodigo, dbpcBusca, dbpcDescricao]
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBPanel5: TDBPanel
+            Left = 392
+            Top = 120
+            Width = 337
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 7
+            CodigoTabStop = True
+            DataField = 'cod_tributacao'
+            DataSource = DSProdutoAusente
+            DefineByForm = DBPanel5DefineByForm
+            fkCache = False
+            fkCampo = 'DESC_TRIBUTACAO'
+            fkChave = 'cod_tributacao'
+            fkTabela = 'TB_TRIBUTACAO'
+            ForeignKey = True
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+              55555575555555775F55509999999901055557F55555557F75F5001111111101
+              105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+              01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+              8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+              0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+              0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+              05555555575FF777755555555500055555555555557775555555}
+            LCaption = 'Tributa'#231#227'o'
+            OnCodigoChange = DBPanel5CodigoChange
+            ReadOnly = False
+            Required = True
+            ValidateOnExit = False
+            VisibleComponents = [dbpcCodigo, dbpcBusca, dbpcDescricao]
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBPanel6: TDBPanel
+            Left = 0
+            Top = 160
+            Width = 377
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 8
+            CodigoTabStop = True
+            DataField = 'cod_marca'
+            DataSource = DSProdutoAusente
+            DefineByForm = DBPanel6DefineByForm
+            fkCache = False
+            fkCampo = 'DESC_MARCA'
+            fkChave = 'cod_marca'
+            fkTabela = 'TB_MARCA'
+            ForeignKey = True
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+              55555575555555775F55509999999901055557F55555557F75F5001111111101
+              105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+              01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+              8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+              0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+              0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+              05555555575FF777755555555500055555555555557775555555}
+            LCaption = 'Marca'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            VisibleComponents = [dbpcCodigo, dbpcBusca, dbpcDescricao]
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBLCCstIpiEnt: TDBLookupComboBox
+            Left = 0
+            Top = 216
+            Width = 377
+            Height = 21
+            DataField = 'cod_cst_ipi'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_IPI'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstIpiEntrada
+            TabOrder = 10
+          end
+          object DBLCCstIpiSaid: TDBLookupComboBox
+            Left = 392
+            Top = 216
+            Width = 337
+            Height = 21
+            DataField = 'cod_cst_ipi_saida'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_IPI'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstIpiSaida
+            TabOrder = 11
+          end
+          object DBLCCstPisEtn: TDBLookupComboBox
+            Left = 0
+            Top = 254
+            Width = 377
+            Height = 21
+            DataField = 'cod_cst_pis'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_PIS'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstPisEntrada
+            TabOrder = 12
+          end
+          object DBLCCstPisSaid: TDBLookupComboBox
+            Left = 392
+            Top = 254
+            Width = 337
+            Height = 21
+            DataField = 'cod_cst_pis_saida'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_PIS'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstPisSaida
+            TabOrder = 13
+          end
+          object DBLCCstCofinsEnt: TDBLookupComboBox
+            Left = 0
+            Top = 292
+            Width = 377
+            Height = 21
+            DataField = 'cod_cst_cofins'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_COFINS'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstCofinsEntrada
+            TabOrder = 14
+          end
+          object DBLCCstCofinsSaid: TDBLookupComboBox
+            Left = 392
+            Top = 292
+            Width = 337
+            Height = 21
+            DataField = 'cod_cst_cofins_saida'
+            DataSource = DSProdutoAusente
+            KeyField = 'COD_CST_COFINS'
+            ListField = 'DESC_COMPLETA'
+            ListSource = DMNfe.DSCstCofinsSaida
+            TabOrder = 15
+          end
+          object DBPanel7: TDBPanel
+            Left = 392
+            Top = 160
+            Width = 337
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 9
+            CharCase = ecUpperCase
+            CodigoTabStop = True
+            DataField = 'desc_cod_barra'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'desc_cod_barra'
+            ForeignKey = False
+            LCaption = 'C'#243'digo de Barras'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object btConfirmarProdutoAristides: TBitBtn
+            Left = 0
+            Top = 319
+            Width = 185
+            Height = 25
+            Caption = 'Confirmar Produto'
+            TabOrder = 17
+            OnClick = btConfirmarProdutoAristidesClick
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              555555555555555555555555555555555555555555FF55555555555559055555
+              55555555577FF5555555555599905555555555557777F5555555555599905555
+              555555557777FF5555555559999905555555555777777F555555559999990555
+              5555557777777FF5555557990599905555555777757777F55555790555599055
+              55557775555777FF5555555555599905555555555557777F5555555555559905
+              555555555555777FF5555555555559905555555555555777FF55555555555579
+              05555555555555777FF5555555555557905555555555555777FF555555555555
+              5990555555555555577755555555555555555555555555555555}
+            NumGlyphs = 2
+          end
+          object DBPanel10: TDBPanel
+            Left = 393
+            Top = 0
+            Width = 64
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+            CharCase = ecUpperCase
+            CodigoTabStop = True
+            DataField = 'cod_lote_tipo'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'cod_lote_tipo'
+            ForeignKey = False
+            LCaption = 'Tamanho'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object GroupBox4: TGroupBox
+            Left = 747
+            Top = 9
+            Width = 218
+            Height = 111
+            Anchors = [akLeft, akTop, akRight]
+            Caption = 'Vincular produto a outro produto do sistema'
+            Color = clBtnFace
+            ParentColor = False
+            TabOrder = 16
+            TabStop = True
+            DesignSize = (
+              218
+              111)
+            object Label45: TLabel
+              Left = 8
+              Top = 24
+              Width = 86
+              Height = 13
+              Caption = 'Produto vinculado'
+            end
+            object BitBtn1: TBitBtn
+              Left = 128
+              Top = 64
+              Width = 39
+              Height = 38
+              Anchors = [akTop, akRight]
+              TabOrder = 0
+              OnClick = btVincularProdutoClick
+              Glyph.Data = {
+                36180000424D3618000000000000360000002800000040000000200000000100
+                18000000000000180000120B0000120B00000000000000000000FFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAEB
+                D262C77B45BB6346B76347B46347B06370BF85D6ECDCFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEF0
+                EFEEEEEEE7E7E7E7E7E7E7E7E7E7E7E7EFEFEFF0F2F0FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8FDC
+                A211BE3B0AC13609BE350ABA350CB83615AD3B90CEA0FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBED
+                ECD9D9D9D8D8D8D7D7D7D7D7D7D7D7D7D9D9D9EBECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DC
+                9800C32F00CA3000CB3000CC3000CC3002BC2F82CF96FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DD
+                9800C22F00C93000CA3000CC3000CC3002BD2F82D196FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+                9800C22F00C63000C93000CB3000CC3002BF2F82D396FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5ECEDECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+                9801BF2F00C33000C63000C93000CB3001C02F81D596FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D5D5D5D6D6D6D6D6D6D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF81DE
+                9801BD2F01C03000C33000C63000C93001C12F81D796FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D5D5D5D5D5D5D6D6D6D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF82DD
+                9802BB2F01BE3001C03000C43000C63001C12F81D996FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEF
+                EDD5D5D5D5D5D5D5D5D5D5D5D5D6D6D6D6D6D6ECEEECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF84DE
+                9A04BA3002BA2F02BD2F01C03000C33000C02F80DB96FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECEE
+                ECD5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5ECEEECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8EE0
+                A116BC3D08BA3302BA2F01BE3001C03001BF2F80DC96FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECED
+                ECD6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5ECEEECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                DFF3E4BFEBCABCE9C7BAE9C6B8E8C4B7E8C3B6E8C2B3E8C0B2E8BEB0E8BD6BD6
+                8426C04B1BBC4108BA3202BB2F01BD3001BF2F50D270A0E5B1A0E4B1A1E3B1A1
+                E1B1A1DFB1A2DEB1A2DDB1A3DCB2A6D9B3D8EDDEFFFFFFFFFFFFFFFFFFFFFFFF
+                F1F3F1EBEDEBEAEDEAEBECEBEBECEBEBECEBEAECEBEAECEBEBEDECEBEDECEEEE
+                EED9D9D9D7D7D7D5D5D5D5D5D5D5D5D5D5D5D5EBEBEBEBEEECEBEEECEBEDEBEA
+                EDEBEAEDEBEAEDEBEAECEBEAECEBEAECEAF1F3F1FFFFFFFFFFFFFFFFFFFFFFFF
+                86D79A64CB7D5DC07658C07252BF6D4DBF6949BF6543BF613DBE5D37BE5834C0
+                5631C0532CBF4E1EBD4309BA3302BA2F01BE2F01BF2F01BE2F01BF2F01BF2F01
+                BE2F02BC2F02BB2F02BA2F03B82F08AD306BBE80FFFFFFFFFFFFFFFFFFFFFFFF
+                EFEFEFE0E0E0DEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDCDCDCDBDBDBDADADAD9D9
+                D9D9D9D9D9D9D9D8D8D8D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5
+                D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5EFEFEFFFFFFFFFFFFFFFFFFFFFFFFF
+                6FD38775CB8A71BF856BBF8065BE7C5FBE7759BE7253BE6D4CBE6946BE6440BE
+                5F3ABF5A34BF552DBF5120BD4509BA3402BA2F01BD3001C03000C33000C53000
+                C93000CB3000CC3000CC3000CC3001C12F42B15FFFFFFFFFFFFFFFFFFFFFFFFF
+                E5E5E5E1E1E1DFDFDFDFDFDFDFDFDFDEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDBDB
+                DBDADADAD9D9D9D9D9D9D8D8D8D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D6D6D6D6
+                D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6D6E5E5E5FFFFFFFFFFFFFFFFFFFFFFFF
+                74D48B7ECB917AC18C74C0876DBF8268BF7D61BF795BBE7455BE6F50BE6A4ABF
+                6643BF613DBF5C37BF5730C05222BE480ABA3402BA2F01BD3001C03000C33000
+                C63000C93000CB3000CC3000CC3000C32F42B55FFFFFFFFFFFFFFFFFFFFFFFFF
+                E5E5E5E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCDCDC
+                DCDCDCDCDADADADADADAD9D9D9D8D8D8D6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D6
+                D6D6D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+                79D68F86CF9782C3927CC28E75C2886FC1836AC18063C07A5DC07657C07151C0
+                6C4BC06745C0623FC05E39C15832C15424BE490ABA3502BA2F02BD2F01BF3000
+                C33000C53000C83000CA3000CB3000C42F41B85FFFFFFFFFFFFFFFFFFFFFFFFF
+                E6E6E6E2E2E2E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDEDEDEDDDDDDDCDC
+                DCDCDCDCDCDCDCDBDBDBDADADADADADAD9D9D9D6D6D6D5D5D5D5D5D5D5D5D5D5
+                D5D5D6D6D6D6D6D6D6D6D6D6D6D6D5D5D5E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+                7ED7948DD19E89C59983C4947DC38F78C28A71C2866BC18165C17C5FC07759C0
+                7353C06E4DC06947C06441C15F3AC15B34C25624BF490BBA3602BA2F02BD2F01
+                C03000C33000C63000C83000CB3000C52F40BB5FFFFFFFFFFFFFFFFFFFFFFFFF
+                E7E7E7E3E3E3E2E2E2E1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDEDEDEDDDD
+                DDDCDCDCDCDCDCDCDCDCDBDBDBDBDBDBDADADAD9D9D9D6D6D6D5D5D5D5D5D5D5
+                D5D5D5D5D5D6D6D6D6D6D6D6D6D6D6D6D6E6E6E6FFFFFFFFFFFFFFFFFFFFFFFF
+                86D79A87D49A82C9947DC89077C78C72C7876DC58267C47E62C47A5CC3765AC4
+                745AC27455C16F4FC16B48C16542C1613CC35C32C3551FBE4508BA3302BA2F01
+                BD2F01BF2F00C12F00C22F00C32F03BF305DC677FFFFFFFFFFFFFFFFFFFFFFFF
+                EBEBEBE2E2E2E1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFDFDFDFDEDEDEDEDE
+                DEDEDEDEDDDDDDDCDCDCDCDCDCDCDCDCDBDBDBDADADAD8D8D8D5D5D5D5D5D5D5
+                D5D5D5D5D5D5D5D5D5D5D5D5D5D5D6D6D6EDEDEDFFFFFFFFFFFFFFFFFFFFFFFF
+                C5EACEC0EBCABDE9C7BBE8C6B8E8C4B6E8C2B5E7C1B2E6BFB0E6BDAFE6BC82D9
+                975CC5765EC27557C27150C26C4AC26740C35F69D5829CE3AD91E0A48CE0A08B
+                E0A08BE0A08BE1A08BE0A08BDF9F8DDCA1CCECD4FFFFFFFFFFFFFFFFFFFFFFFF
+                EBEDECEAEBEAE9EBE9EAECEAEAECEAEAECEAEAECEAEAECEBEAECEBEAECEBEEEE
+                EEDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCDBDBDBECECECEBEDEBECEDEDECEDECEC
+                EDECECEDECECEDECECEDECECEDECECEDECEEF1EFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA9E4
+                B761C47966C27C5FC27858C27252C26E46C2649AE1ABFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+                EBDFDFDFDFDFDFDEDEDEDDDDDDDDDDDDDCDCDCEBEDEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFACE4
+                BA68C57F6EC38368C37E62C3795BC3754EC36A9EE2AEFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBED
+                EBDFDFDFDFDFDFDFDFDFDFDFDFDEDEDEDCDCDCECEDECFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFE5
+                BD6FC78576C58970C58569C48063C47B56C470A1E2B0FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+                EAE0E0E0E1E1E1E0E0E0DFDFDFDFDFDFDDDDDDEBECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB2E6
+                BF77C88B7EC79077C68C72C5866BC5825DC676A4E3B3FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+                EAE1E1E1E1E1E1E1E1E1E0E0E0DFDFDFDFDFDFEBECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5E6
+                C17ECA9186C89680C79179C68C73C68864C67CA7E3B5FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEC
+                EAE1E1E1E2E2E2E1E1E1E1E1E1E1E1E1DFDFDFEBECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB8E7
+                C385CD978ECA9C87C99881C8937BC78E6BC882AAE4B8FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9EB
+                EAE2E2E2E2E2E2E2E2E2E1E1E1E1E1E1DFDFDFEAECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBE8
+                C68CCE9D95CCA38FCB9F89C99983C89572C988ADE5BAFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9EB
+                EAE3E3E3E3E3E3E2E2E2E2E2E2E1E1E1E1E1E1EAECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBEE8
+                C894D0A39ECFAA97CDA592CBA08BCA9B7ACA8DB0E5BCFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEB
+                EAE3E3E3E4E4E4E3E3E3E3E3E3E2E2E2E1E1E1EBECEBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBAE8
+                C59CDAABA3D8B09CD6AA97D5A790D3A17CD391BBEAC6FFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEB
+                EAE5E5E5E5E5E5E4E4E4E4E4E4E3E3E3E2E2E2EAECEAFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCEEA
+                D595DAA68ADA9D86D99A83D8977DD79389D89CD4EFDBFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBEE
+                ECEDEDEDE9E9E9E8E8E8E8E8E8E8E8E8EFEFEFEFF2EFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+              NumGlyphs = 2
+            end
+            object MEProdutoVinculadoAristides: TMaskEdit
+              Left = 8
+              Top = 40
+              Width = 201
+              Height = 21
+              TabStop = False
+              Anchors = [akLeft, akTop, akRight]
+              Color = clBtnFace
+              Enabled = False
+              TabOrder = 2
+            end
+            object BitBtn2: TBitBtn
+              Left = 170
+              Top = 64
+              Width = 39
+              Height = 38
+              Anchors = [akTop, akRight]
+              TabOrder = 1
+              OnClick = btDesvincularProdutoClick
+              Glyph.Data = {
+                36180000424D3618000000000000360000002800000040000000200000000100
+                18000000000000180000120B0000120B00000000000000000000FFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFDFDFDF1F3F7EFF0F1EEF2F8EFF2F8EFF2F8EFF2F8EFF2
+                F8EFF2F8EFF2F8EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F7EFF2F8EF
+                EFF0F4F5F7FEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFEFEFEFBFBFBFAFAFAFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB
+                FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF9F9F9FC
+                FCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFE6E8EC5E87C64879C74F7BC24F7BC24F7AC2507AC15079
+                C15078C05178BF5078BE5177BD5177BD5177BD5276BB5176BA5275B95275B947
+                71C48A97B4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF7F7F7D8D8D8D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4
+                D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D3D3D3D3D3D3D2D2D2DD
+                DDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFD6DCE7257CF61876FF1B74FF1B74FF1A74FF1B73FF1C70
+                FF1D6FFF1D70FF1D70FF1E6CFB1E6CF91F6BF71E6CFB206AF82068F32167F01A
+                69FF6181C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF3F3F3D6D6D6D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5
+                D5D5D5D5D5D5D5D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D4D4D4D7
+                D7D7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDEE2EA337BEE2272F22470EA2371EB236FEA246FE9256E
+                E6266CE4256CE5246BE4276AE22769DF2669E02667E02767DD2967DB2965D724
+                66EB728EC5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D2D2
+                D2D2D2D2D2D2D2D2D2D2D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D0D0D0D3D3D3DB
+                DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDDE2EA307CF12073F52274F4226FE7285CAF2469DB2372
+                F12470F02564CB2859AF256CE4256DEA256CE7295AB2295CBB266AE62867DB22
+                69EE708DC6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D4D4D4D2D2D2CACACAD0D0D0D4D4D4D4D4
+                D4CECECECACACAD2D2D2D3D3D3D3D3D3CACACACCCCCCD2D2D2D1D1D1D3D3D3DB
+                DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDDE2EA307DF11F74F72176F9236DE230599B2568D22172
+                F42272F52962BF30589D246BE3246FEF246CE82F59A02D5BAE246AE82869DD22
+                6BF0708EC6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D7D7D7D4D4D4D5D5D5D1D1D1C8C8C8CFCFCFD4D4D4D4D4
+                D4CDCDCDC8C8C8D2D2D2D4D4D4D3D3D3C9C9C9CACACAD2D2D2D1D1D1D3D3D3DB
+                DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDDE2EA337FF11F76F81F77FB2270E63161AC266BD72172
+                F52172F62A66C83160AC246BE42470EF226CE8315FAF2E60B8236CE8276AE021
+                6CF2708EC7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D7D7D7D5D5D5D5D5D5D2D2D2CBCBCBD0D0D0D4D4D4D4D4
+                D4CECECECBCBCBD2D2D2D4D4D4D2D2D2CBCBCBCCCCCCD2D2D2D1D1D1D4D4D4DB
+                DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDDE2EA3681F12378F82177FB2270E73163AD266DD91F74
+                F62173F62B68CA3361AD226DE62270F1226EEB3261B02F62BA226DEA266BE221
+                6DF47090C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D8D8D8D5D5D5D5D5D5D2D2D2CBCBCBD1D1D1D4D4D4D5D5
+                D5CFCFCFCBCBCBD2D2D2D4D4D4D3D3D3CCCCCCCDCDCDD3D3D3D2D2D2D4D4D4DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDEE2EA3982F1267AF8247AFA2572E73465AF256EDB1E75
+                F91F75F92B69CC3463B0226FE82171F1226FED3363B22F63BD226EEC266CE31F
+                6EF67090CAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D8D8D8D6D6D6D6D6D6D3D3D3CCCCCCD1D1D1D5D5D5D5D5
+                D5CFCFCFCCCCCCD3D3D3D4D4D4D3D3D3CCCCCCCDCDCDD3D3D3D2D2D2D4D4D4DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDEE2EA3B84F1297CF9277BFB2874E73868B1276FDD1E76
+                FB1E76FB2B6BCE3566B32170EB2072F42170EE3464B53064BF216EEE256DE41F
+                6FF86F91CAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D9D9D9D7D7D7D7D7D7D4D4D4CDCDCDD1D1D1D5D5D5D5D5
+                D5D0D0D0CDCDCDD3D3D3D4D4D4D3D3D3CDCDCDCECECED3D3D3D2D2D2D4D4D4DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDEE3EA3E86F12C7EF92A7DFB2B76E93C6BB22A72DD2078
+                FA1E76FC2B6DD13668B52171ED2073F62071F03566B73068C12070EF246EE71E
+                70FA6F92CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5D9D9D9D7D7D7D7D7D7D4D4D4CECECED2D2D2D5D5D5D5D5
+                D5D0D0D0CECECED3D3D3D4D4D4D3D3D3CECECECECECED3D3D3D3D3D3D4D4D4DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDEE3EA4188F12F80F92D80FB2E79E9406EB52E74DE2379
+                FA2178FC2D6FD23869B82072EF1F75F82072F23669BA326AC42070F1246FEA1D
+                72FA6F92CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DADADAD8D8D8D8D8D8D5D5D5CFCFCFD3D3D3D6D6D6D6D6
+                D6D1D1D1CECECED3D3D3D5D5D5D4D4D4CECECECFCFCFD4D4D4D3D3D3D4D4D4DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3EA4489F13382F93182FB327AE94371B63176E0277C
+                FB247BFC3172D23B6EBA2173F01E75FA1F73F4386CBD326CC61F71F32370EB1D
+                73FA6E92CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DBDBDBD9D9D9D9D9D9D6D6D6D0D0D0D4D4D4D7D7D7D6D6
+                D6D1D1D1CFCFCFD4D4D4D5D5D5D4D4D4CFCFCFD0D0D0D4D4D4D3D3D3D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3EA468AF13683F93482FB347DE94774B83478DF2A7D
+                FB277CFC3473D33E70BB2475F01F76FB1E74F6396DBF336DC91E72F42371EC1C
+                74FB6E93CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DBDBDBD9D9D9D9D9D9D6D6D6D1D1D1D4D4D4D7D7D7D7D7
+                D7D2D2D2D0D0D0D4D4D4D5D5D5D4D4D4D0D0D0D0D0D0D4D4D4D3D3D3D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3EA498DF13986FA3684FB377EEA4A77B9377AE02D7D
+                FB2A7EFD3876D54272BD2677F02278FA2075F63A70C1336FCB1D73F72272EF1C
+                75FB6E93CDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DCDCDCDADADAD9D9D9D7D7D7D2D2D2D5D5D5D7D7D7D7D7
+                D7D3D3D3D1D1D1D5D5D5D6D6D6D5D5D5D0D0D0D1D1D1D4D4D4D4D4D4D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3EA4C8FF13C88FA3986FB3A81EA4F7ABB3A7CE02F80
+                FA2D7FFD3B78D64676BF2978F0247AFA2377F63E72C33671CD1C74F92273F11B
+                77FC6E94CEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DCDCDCDADADADADADAD7D7D7D3D3D3D6D6D6D8D8D8D8D8
+                D8D4D4D4D2D2D2D5D5D5D6D6D6D5D5D5D1D1D1D1D1D1D4D4D4D4D4D4D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3EA4F90F14089FA3C88FC3D81EA537BB83D7DDF3382
+                FA3082FD3E7AD34B78BB2C7AF0287CFC2678F54374C03A74CA1E75F92174F31A
+                78FC6D95CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DCDCDCDBDBDBDBDBDBD8D8D8D3D3D3D6D6D6D9D9D9D9D9
+                D9D4D4D4D3D3D3D6D6D6D7D7D7D5D5D5D2D2D2D2D2D2D5D5D5D4D4D4D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFDFE3E95192F1438AFA408AF93E84EE4A77C03E80E63784
+                FB3484FB3B7ADA4175C32F7DF42C7EF92A7CF83A71C73472D22378FA2476F21A
+                79FD6C95D2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF5F5F5DCDCDCDBDBDBDBDBDBD9D9D9D3D3D3D7D7D7DADADAD9D9
+                D9D5D5D5D2D2D2D7D7D7D7D7D7D7D7D7D1D1D1D2D2D2D6D6D6D5D5D5D5D5D5DC
+                DCDCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFE3E7ED5798F54891FF468DFB438CFC3E89F63F8AFC3E88
+                FD3B87FB3786FA3482F63584FC3382FA3081FC2C7DF72B7CF82A7DFB287BF91F
+                7FFF7099D3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF7F7F7DEDEDEDDDDDDDCDCDCDCDCDCDADADADBDBDBDBDBDBDADA
+                DADADADAD8D8D8D9D9D9D9D9D9D9D9D9D7D7D7D7D7D7D7D7D7D6D6D6D6D6D6DD
+                DDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFECEEF25A95E44A8EF2488BEF478AF0438CF24288F04185
+                F03F84F03C84F13985F23882F03680EF337FF12F80F32D7EF32C7BF02A79F11E
+                7FF97894BBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFF9F9F9DDDDDDDCDCDCDBDBDBDBDBDBDBDBDBDADADADADADAD9D9
+                D9D9D9D9D9D9D9D8D8D8D7D7D7D7D7D7D7D7D7D6D6D6D6D6D6D5D5D5D5D5D5DB
+                DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFDBE3ED98ADCF4278CA3976D23874CE3672CE3470CE3270CD2F6E
+                CD2E6DCE2E6CCD2D6BCC2B6ACB2A69CB2968CA2866C92666C92565C92563C81D
+                65D64F71ACB5B7BEEBEBEBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFF5F5F5E4E4E4D3D3D3D3D3D3D2D2D2D2D2D2D1D1D1D1D1D1D0D0D0D0D0
+                D0D0D0D0D0D0D0CFCFCFCFCFCFCFCFCFCECECECECECECECECECECECECECECED0
+                D0D0E6E6E6F8F8F8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF90ABCE3B8BF2367FEE327CEC2F7BED2C78ED2876ED2473EC2071
+                EB1D6FEC1E6EEA1F6DE6216CE4216BE22269DF2367DD2365DA2464D82664D627
+                61D22363DE2466E1C2C4C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFE2E2E2D9D9D9D7D7D7D6D6D6D6D6D6D5D5D5D4D4D4D4D4D4D3D3D3D2D2
+                D2D2D2D2D1D1D1D1D1D1D1D1D1D1D1D1D0D0D0D0D0D0D0D0D0D0D0D0CFCFCFD0
+                D0D0D1D1D1EAEAEAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF8DADD84097FF408BFF3C89FF3787FE3484FE3082FE2C7FFF287D
+                FD247AFC2178FC1F77FB2175F82274F52272F22370F1246EEE256DEC266CE928
+                6AE5246BF12169EABDC5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFE4E4E4DDDDDDDCDCDCDBDBDBDADADADADADAD9D9D9D8D8D8D7D7D7D6D6
+                D6D6D6D6D5D5D5D5D5D5D5D5D5D4D4D4D4D4D4D4D4D4D3D3D3D3D3D3D3D3D3D4
+                D4D4D2D2D2ECECECFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF8BAAD6499BFF4592FF408FFF3C8DFF398AFF3588FF3086FF2C83
+                FF2E7CF42A7AF32578F52176F21C77FE1976FF1D73FD1E72FB1F71F91F70F620
+                6EF31E6DF92369E9B6C5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFE3E3E3DEDEDEDDDDDDDCDCDCDBDBDBDBDBDBDADADAD9D9D9D9D9D9D7D7
+                D7D6D6D6D5D5D5D4D4D4D5D5D5D5D5D5D5D5D5D5D5D5D5D5D5D4D4D4D4D4D4D4
+                D4D4D2D2D2ECECECFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFC8D2E19EB5D6A1B6D7A0B5D69FB5D79EB4D79CB3D8A3B7D58AA6
+                D12C7AEF2472EC256FE4226DE9487ACE9BB1D196AFD795ADD495ADD495ACD395
+                ACD293ABD397ABD0E1E5EBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFF0F0F0E6E6E6E7E7E7E7E7E7E7E7E7E6E6E6E6E6E6E7E7E7E2E2E2D5D5
+                D5D4D4D4D2D2D2D3D3D3D5D5D5E5E5E5E5E5E5E5E5E5E4E4E4E4E4E4E4E4E4E4
+                E4E4E4E4E4F6F6F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFCFDFDF8F9FBFAFAFBFAFAFBF9FAFBF9FAFBF9FAFCFCFCFDE0E3
+                E83C85EE1E74F91E6DEB1D6CF76E88BBFBFBFCFAFBFCF9FAFBF9FAFBF9FAFBF9
+                FAFBF9FAFBFAFAFCFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFEFEFEFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFEFEFEF6F6F6D9D9
+                D9D5D5D5D2D2D2D4D4D4D8D8D8FEFEFEFEFEFEFDFDFDFDFDFDFDFDFDFDFDFDFD
+                FDFDFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDCE1
+                E94890F43186FF247CFF157AFF6086C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F5F5DCDC
+                DCD9D9D9D7D7D7D5D5D5D7D7D7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3F5
+                F8C3CDDDBCC8DABCC9DCB3C4DBD0D6DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCEEEE
+                EEECECECEDEDEDEBEBEBF1F1F1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+              NumGlyphs = 2
+            end
+          end
+          object DBMDescProduto: TDBMemo
+            Left = 1
+            Top = 56
+            Width = 728
+            Height = 57
+            DataField = 'desc_produto'
+            DataSource = DSProdutoAusente
+            TabOrder = 5
+            OnKeyPress = DBMDescProdutoKeyPress
+          end
+          object btExcluirProdutoAristides: TBitBtn
+            Left = 189
+            Top = 319
+            Width = 185
+            Height = 25
+            Caption = 'Excluir Produto'
+            TabOrder = 18
+            OnClick = btExcluirProdutoAristidesClick
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              333333333333333333333333333333333333333FFF33FF333FFF339993370733
+              999333777FF37FF377733339993000399933333777F777F77733333399970799
+              93333333777F7377733333333999399933333333377737773333333333990993
+              3333333333737F73333333333331013333333333333777FF3333333333910193
+              333333333337773FF3333333399000993333333337377737FF33333399900099
+              93333333773777377FF333399930003999333337773777F777FF339993370733
+              9993337773337333777333333333333333333333333333333333333333333333
+              3333333333333333333333333333333333333333333333333333}
+            NumGlyphs = 2
+          end
+          object DBPanel1: TDBPanel
+            Left = 472
+            Top = 0
+            Width = 121
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+            CodigoTabStop = True
+            DataField = 'val_varejo'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'val_varejo'
+            ForeignKey = False
+            LCaption = 'Vlr. Varejo'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+        end
+        object TabSheet8: TTabSheet
+          Caption = 'Outras Configura'#231#245'es'
+          ImageIndex = 1
+          object GBGenero: TGroupBox
+            Left = 1
+            Top = 1
+            Width = 80
+            Height = 149
+            Caption = 'G'#234'nero'
+            TabOrder = 0
+            object cbMasculino: TCheckBox
+              Left = 8
+              Top = 16
+              Width = 68
+              Height = 17
+              Caption = 'Masculino'
+              TabOrder = 0
+              OnClick = cbMasculinoClick
+            end
+            object cbFeminino: TCheckBox
+              Left = 8
+              Top = 36
+              Width = 65
+              Height = 17
+              Caption = 'Feminino'
+              TabOrder = 1
+              OnClick = cbFemininoClick
+            end
+            object cbUnissex: TCheckBox
+              Left = 8
+              Top = 57
+              Width = 60
+              Height = 17
+              Caption = 'Unissex'
+              TabOrder = 2
+              OnClick = cbUnissexClick
+            end
+            object cbAdulto: TCheckBox
+              Left = 8
+              Top = 78
+              Width = 53
+              Height = 17
+              Caption = 'Adulto'
+              TabOrder = 3
+              OnClick = cbAdultoClick
+            end
+            object cbInfantil: TCheckBox
+              Left = 8
+              Top = 99
+              Width = 53
+              Height = 17
+              Caption = 'Infantil'
+              TabOrder = 4
+              OnClick = cbInfantilClick
+            end
+            object cbBebe: TCheckBox
+              Left = 8
+              Top = 120
+              Width = 48
+              Height = 17
+              Caption = 'Beb'#234
+              TabOrder = 5
+              OnClick = cbBebeClick
+            end
+          end
+          object GBSalto: TGroupBox
+            Left = 83
+            Top = 1
+            Width = 207
+            Height = 149
+            Caption = 'Salto'
+            TabOrder = 1
+            object cbAlto: TCheckBox
+              Left = 8
+              Top = 24
+              Width = 42
+              Height = 17
+              Caption = 'Alto'
+              TabOrder = 0
+              OnClick = cbAltoClick
+            end
+            object cbBaixo: TCheckBox
+              Left = 8
+              Top = 48
+              Width = 48
+              Height = 17
+              Caption = 'Baixo'
+              TabOrder = 1
+              OnClick = cbBaixoClick
+            end
+            object cbMedio: TCheckBox
+              Left = 8
+              Top = 72
+              Width = 49
+              Height = 17
+              Caption = 'M'#233'dio'
+              TabOrder = 2
+              OnClick = cbMedioClick
+            end
+            object cbRasteira: TCheckBox
+              Left = 8
+              Top = 96
+              Width = 62
+              Height = 17
+              Caption = 'Rasteira'
+              TabOrder = 3
+              OnClick = cbRasteiraClick
+            end
+            object cbGrosso: TCheckBox
+              Left = 8
+              Top = 120
+              Width = 57
+              Height = 17
+              Caption = 'Grosso'
+              TabOrder = 4
+              OnClick = cbGrossoClick
+            end
+            object cbFino: TCheckBox
+              Left = 70
+              Top = 24
+              Width = 49
+              Height = 17
+              Caption = 'Fino'
+              TabOrder = 5
+              OnClick = cbFinoClick
+            end
+            object cbAnabela: TCheckBox
+              Left = 70
+              Top = 48
+              Width = 65
+              Height = 17
+              Caption = 'Anabela'
+              TabOrder = 6
+              OnClick = cbAnabelaClick
+            end
+            object cbFachete: TCheckBox
+              Left = 70
+              Top = 72
+              Width = 57
+              Height = 17
+              Caption = 'Fachete'
+              TabOrder = 7
+              OnClick = cbFacheteClick
+            end
+            object cbEncapado: TCheckBox
+              Left = 70
+              Top = 96
+              Width = 71
+              Height = 17
+              Caption = 'Encapado'
+              TabOrder = 8
+              OnClick = cbEncapadoClick
+            end
+            object cbCortica: TCheckBox
+              Left = 70
+              Top = 120
+              Width = 57
+              Height = 17
+              Caption = 'Corti'#231'a'
+              TabOrder = 9
+              OnClick = cbCorticaClick
+            end
+            object cbAcrilico: TCheckBox
+              Left = 141
+              Top = 24
+              Width = 59
+              Height = 17
+              Caption = 'Acr'#237'lico'
+              TabOrder = 10
+              OnClick = cbAcrilicoClick
+            end
+            object cbLatex: TCheckBox
+              Left = 141
+              Top = 48
+              Width = 57
+              Height = 17
+              Caption = 'Latex'
+              TabOrder = 11
+              OnClick = cbLatexClick
+            end
+            object cbBorracha: TCheckBox
+              Left = 141
+              Top = 72
+              Width = 64
+              Height = 17
+              Caption = 'Borracha'
+              TabOrder = 12
+              OnClick = cbBorrachaClick
+            end
+            object cbPVC: TCheckBox
+              Left = 141
+              Top = 96
+              Width = 41
+              Height = 17
+              Caption = 'PVC'
+              TabOrder = 13
+              OnClick = cbPVCClick
+            end
+            object cbTR: TCheckBox
+              Left = 141
+              Top = 120
+              Width = 40
+              Height = 17
+              Caption = 'TR'
+              TabOrder = 14
+              OnClick = cbTRClick
+            end
+          end
+          object GBMaterial: TGroupBox
+            Left = 1
+            Top = 153
+            Width = 289
+            Height = 121
+            Caption = 'Material'
+            TabOrder = 2
+            object cbCouro: TCheckBox
+              Left = 8
+              Top = 24
+              Width = 65
+              Height = 17
+              Caption = 'Couro'
+              TabOrder = 0
+              OnClick = cbCouroClick
+            end
+            object cbSintetico: TCheckBox
+              Left = 8
+              Top = 48
+              Width = 65
+              Height = 17
+              Caption = 'Sint'#233'tico'
+              TabOrder = 1
+              OnClick = cbSinteticoClick
+            end
+            object cbSwed: TCheckBox
+              Left = 8
+              Top = 72
+              Width = 57
+              Height = 17
+              Caption = 'Swed'
+              TabOrder = 2
+              OnClick = cbSwedClick
+            end
+            object cbMicrofibra: TCheckBox
+              Left = 8
+              Top = 96
+              Width = 67
+              Height = 17
+              Caption = 'Microfibra'
+              TabOrder = 3
+              OnClick = cbMicrofibraClick
+            end
+            object cbVerniz: TCheckBox
+              Left = 99
+              Top = 24
+              Width = 51
+              Height = 17
+              Caption = 'Verniz'
+              TabOrder = 4
+              OnClick = cbVernizClick
+            end
+            object cbLona: TCheckBox
+              Left = 99
+              Top = 48
+              Width = 47
+              Height = 17
+              Caption = 'Lona'
+              TabOrder = 5
+              OnClick = cbLonaClick
+            end
+            object cbTecido: TCheckBox
+              Left = 99
+              Top = 72
+              Width = 54
+              Height = 17
+              Caption = 'Tecido'
+              TabOrder = 6
+              OnClick = cbTecidoClick
+            end
+            object cbGliter: TCheckBox
+              Left = 99
+              Top = 96
+              Width = 45
+              Height = 17
+              Caption = 'Gliter'
+              TabOrder = 7
+              OnClick = cbGliterClick
+            end
+            object cbCamurca: TCheckBox
+              Left = 177
+              Top = 24
+              Width = 73
+              Height = 17
+              Caption = 'Camur'#231'a'
+              TabOrder = 8
+              OnClick = cbCamurcaClick
+            end
+            object cbNobuk: TCheckBox
+              Left = 177
+              Top = 48
+              Width = 57
+              Height = 17
+              Caption = 'Nobuk'
+              TabOrder = 9
+              OnClick = cbNobukClick
+            end
+            object cbElastico: TCheckBox
+              Left = 177
+              Top = 72
+              Width = 65
+              Height = 17
+              Caption = 'El'#225'stico'
+              TabOrder = 10
+              OnClick = cbElasticoClick
+            end
+            object cbPlastico: TCheckBox
+              Left = 177
+              Top = 96
+              Width = 65
+              Height = 17
+              Caption = 'Pl'#225'stico'
+              TabOrder = 11
+              OnClick = cbPlasticoClick
+            end
+          end
+          object DBRadioGroup9: TDBRadioGroup
+            Left = 292
+            Top = 1
+            Width = 81
+            Height = 149
+            Caption = 'Solado'
+            DataField = 'IND_SOLADO'
+            DataSource = DSProdutoAusente
+            Items.Strings = (
+              'Flat Form'
+              'Meia Pata'
+              'Anabela'
+              'EVA')
+            TabOrder = 3
+            Values.Strings = (
+              'FLAT FORM'
+              'MEIA PATA'
+              'ANABELA'
+              'EVA')
+          end
+          object DBRadioGroup10: TDBRadioGroup
+            Left = 375
+            Top = 1
+            Width = 80
+            Height = 149
+            Caption = 'Bico'
+            DataField = 'IND_BICO'
+            DataSource = DSProdutoAusente
+            Items.Strings = (
+              'Fino'
+              'Redondo'
+              'Quadrado'
+              'Peep Toe'
+              'Navio'
+              'Oval')
+            TabOrder = 4
+            Values.Strings = (
+              'FINO'
+              'REDONDO'
+              'QUADRADO'
+              'PEEP TOE'
+              'NAVIO'
+              'OVAL')
+          end
+          object DBRadioGroup12: TDBRadioGroup
+            Left = 292
+            Top = 153
+            Width = 163
+            Height = 121
+            Caption = 'Enfeite'
+            Columns = 2
+            DataField = 'IND_ENFEITE'
+            DataSource = DSProdutoAusente
+            Items.Strings = (
+              'Pedraria'
+              'La'#231'o'
+              'Fivela'
+              'Barbicacho'
+              'Flor'
+              'Metal'
+              'Pl'#225'stico')
+            TabOrder = 5
+            Values.Strings = (
+              'PEDRARIA'
+              'LACO'
+              'FIVELA'
+              'BARBICACHO'
+              'FLOR'
+              'METAL'
+              'PLASTICO')
+          end
+          object btConfirmarProdutoAristidesConfig: TBitBtn
+            Left = 0
+            Top = 319
+            Width = 185
+            Height = 25
+            Caption = 'Confirmar Configura'#231#227'o'
+            TabOrder = 9
+            OnClick = btConfirmarProdutoAristidesConfigClick
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              555555555555555555555555555555555555555555FF55555555555559055555
+              55555555577FF5555555555599905555555555557777F5555555555599905555
+              555555557777FF5555555559999905555555555777777F555555559999990555
+              5555557777777FF5555557990599905555555777757777F55555790555599055
+              55557775555777FF5555555555599905555555555557777F5555555555559905
+              555555555555777FF5555555555559905555555555555777FF55555555555579
+              05555555555555777FF5555555555557905555555555555777FF555555555555
+              5990555555555555577755555555555555555555555555555555}
+            NumGlyphs = 2
+          end
+          object DBPanel8: TDBPanel
+            Left = 0
+            Top = 281
+            Width = 454
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 7
+            CharCase = ecUpperCase
+            CodigoTabStop = True
+            DataField = 'desc_time'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'desc_time'
+            ForeignKey = False
+            LCaption = 'Time'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object DBPanel9: TDBPanel
+            Left = 457
+            Top = 281
+            Width = 506
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 8
+            CharCase = ecUpperCase
+            CodigoTabStop = True
+            DataField = 'desc_esporte'
+            DataSource = DSProdutoAusente
+            fkCache = False
+            fkChave = 'desc_esporte'
+            ForeignKey = False
+            LCaption = 'Esporte'
+            ReadOnly = False
+            Required = False
+            ValidateOnExit = False
+            WidthCodigo = 20.000000000000000000
+          end
+          object GBConfig: TGroupBox
+            Left = 457
+            Top = 1
+            Width = 506
+            Height = 273
+            Caption = 'Mais Configura'#231#245'es'
+            TabOrder = 6
+            object cbBoneca: TCheckBox
+              Left = 16
+              Top = 24
+              Width = 65
+              Height = 17
+              Caption = 'Boneca'
+              TabOrder = 0
+              OnClick = cbBonecaClick
+            end
+            object cbDorsai: TCheckBox
+              Left = 104
+              Top = 24
+              Width = 57
+              Height = 17
+              Caption = 'Dorsai'
+              TabOrder = 8
+              OnClick = cbDorsaiClick
+            end
+            object cbSlipper: TCheckBox
+              Left = 188
+              Top = 24
+              Width = 59
+              Height = 17
+              Caption = 'Slipper'
+              TabOrder = 16
+              OnClick = cbSlipperClick
+            end
+            object cbEsportiva: TCheckBox
+              Left = 277
+              Top = 24
+              Width = 73
+              Height = 17
+              Caption = 'Esportiva'
+              TabOrder = 24
+              OnClick = cbEsportivaClick
+            end
+            object cbIate: TCheckBox
+              Left = 356
+              Top = 24
+              Width = 49
+              Height = 17
+              Caption = 'Iate'
+              TabOrder = 32
+              OnClick = cbIateClick
+            end
+            object cbSlipon: TCheckBox
+              Left = 356
+              Top = 152
+              Width = 57
+              Height = 17
+              Caption = 'Slipon'
+              TabOrder = 36
+              OnClick = cbSliponClick
+            end
+            object cbIndoorSalao: TCheckBox
+              Left = 356
+              Top = 215
+              Width = 97
+              Height = 17
+              Caption = 'Indoor/Sal'#227'o'
+              TabOrder = 38
+              OnClick = cbIndoorSalaoClick
+            end
+            object cbCampo: TCheckBox
+              Left = 16
+              Top = 56
+              Width = 57
+              Height = 17
+              Caption = 'Campo'
+              TabOrder = 1
+              OnClick = cbCampoClick
+            end
+            object cbSuicoSociety: TCheckBox
+              Left = 104
+              Top = 56
+              Width = 89
+              Height = 17
+              Caption = 'Sui'#231'o/Society'
+              TabOrder = 9
+              OnClick = cbSuicoSocietyClick
+            end
+            object cbTiraTornozelo: TCheckBox
+              Left = 190
+              Top = 56
+              Width = 89
+              Height = 17
+              Caption = 'Tira Tornozelo'
+              TabOrder = 17
+              OnClick = cbTiraTornozeloClick
+            end
+            object cbSalome: TCheckBox
+              Left = 277
+              Top = 56
+              Width = 57
+              Height = 17
+              Caption = 'Salom'#233
+              TabOrder = 25
+              OnClick = cbSalomeClick
+            end
+            object cbDedo: TCheckBox
+              Left = 356
+              Top = 56
+              Width = 49
+              Height = 17
+              Caption = 'Dedo'
+              TabOrder = 33
+              OnClick = cbDedoClick
+            end
+            object cbGaspea: TCheckBox
+              Left = 277
+              Top = 183
+              Width = 65
+              Height = 17
+              Caption = 'Gaspea'
+              TabOrder = 29
+              OnClick = cbGaspeaClick
+            end
+            object cbTiraX: TCheckBox
+              Left = 356
+              Top = 247
+              Width = 57
+              Height = 17
+              Caption = 'Tira X'
+              TabOrder = 39
+              OnClick = cbTiraXClick
+            end
+            object cb2Tiras: TCheckBox
+              Left = 16
+              Top = 88
+              Width = 65
+              Height = 17
+              Caption = '2 Tiras'
+              TabOrder = 2
+              OnClick = cb2TirasClick
+            end
+            object cbMule: TCheckBox
+              Left = 104
+              Top = 88
+              Width = 49
+              Height = 17
+              Caption = 'Mule'
+              TabOrder = 10
+              OnClick = cbMuleClick
+            end
+            object cbCoturno: TCheckBox
+              Left = 188
+              Top = 88
+              Width = 65
+              Height = 17
+              Caption = 'Coturno'
+              TabOrder = 18
+              OnClick = cbCoturnoClick
+            end
+            object cbMontaria: TCheckBox
+              Left = 277
+              Top = 88
+              Width = 65
+              Height = 17
+              Caption = 'Montaria'
+              TabOrder = 26
+              OnClick = cbMontariaClick
+            end
+            object cbOpenboot: TCheckBox
+              Left = 356
+              Top = 88
+              Width = 73
+              Height = 17
+              Caption = 'Openboot'
+              TabOrder = 34
+              OnClick = cbOpenbootClick
+            end
+            object cbAnkleboot: TCheckBox
+              Left = 277
+              Top = 215
+              Width = 73
+              Height = 17
+              Caption = 'Ankleboot'
+              TabOrder = 30
+              OnClick = cbAnklebootClick
+            end
+            object cbOver: TCheckBox
+              Left = 433
+              Top = 24
+              Width = 56
+              Height = 17
+              Caption = 'Over'
+              TabOrder = 40
+              OnClick = cbOverClick
+            end
+            object cbCanoMedio: TCheckBox
+              Left = 16
+              Top = 120
+              Width = 81
+              Height = 17
+              Caption = 'Cano M'#233'dio'
+              TabOrder = 3
+              OnClick = cbCanoMedioClick
+            end
+            object cbMangaLonga: TCheckBox
+              Left = 16
+              Top = 215
+              Width = 89
+              Height = 17
+              Caption = 'Manga Longa'
+              TabOrder = 6
+              OnClick = cbMangaLongaClick
+            end
+            object cbMangaCurta: TCheckBox
+              Left = 104
+              Top = 215
+              Width = 81
+              Height = 17
+              Caption = 'Manga Curta'
+              TabOrder = 14
+              OnClick = cbMangaCurtaClick
+            end
+            object cbTermica: TCheckBox
+              Left = 188
+              Top = 215
+              Width = 65
+              Height = 17
+              Caption = 'T'#233'rmica'
+              TabOrder = 22
+              OnClick = cbTermicaClick
+            end
+            object cbProtecaoSolar: TCheckBox
+              Left = 356
+              Top = 183
+              Width = 93
+              Height = 17
+              Caption = 'Prote'#231#227'o Solar'
+              TabOrder = 37
+              OnClick = cbProtecaoSolarClick
+            end
+            object cbLargo: TCheckBox
+              Left = 277
+              Top = 247
+              Width = 57
+              Height = 17
+              Caption = 'Largo'
+              TabOrder = 31
+              OnClick = cbLargoClick
+            end
+            object cbEstreito: TCheckBox
+              Left = 433
+              Top = 56
+              Width = 58
+              Height = 17
+              Caption = 'Estreito'
+              TabOrder = 41
+              OnClick = cbEstreitoClick
+            end
+            object cbMedioConfig: TCheckBox
+              Left = 104
+              Top = 120
+              Width = 57
+              Height = 17
+              Caption = 'M'#233'dio'
+              TabOrder = 11
+              OnClick = cbMedioConfigClick
+            end
+            object cb2Alcas: TCheckBox
+              Left = 188
+              Top = 120
+              Width = 57
+              Height = 17
+              Caption = '2 Al'#231'as'
+              TabOrder = 19
+              OnClick = cb2AlcasClick
+            end
+            object cbTransversal: TCheckBox
+              Left = 277
+              Top = 120
+              Width = 81
+              Height = 17
+              Caption = 'Transversal'
+              TabOrder = 27
+              OnClick = cbTransversalClick
+            end
+            object cbBau: TCheckBox
+              Left = 356
+              Top = 120
+              Width = 41
+              Height = 17
+              Caption = 'Ba'#250
+              TabOrder = 35
+              OnClick = cbBauClick
+            end
+            object cbNotebook: TCheckBox
+              Left = 16
+              Top = 152
+              Width = 73
+              Height = 17
+              Caption = 'Notebook'
+              TabOrder = 4
+              OnClick = cbNotebookClick
+            end
+            object cbFesta: TCheckBox
+              Left = 104
+              Top = 152
+              Width = 49
+              Height = 17
+              Caption = 'Festa'
+              TabOrder = 12
+              OnClick = cbFestaClick
+            end
+            object cbClutch: TCheckBox
+              Left = 188
+              Top = 152
+              Width = 57
+              Height = 17
+              Caption = 'Clutch'
+              TabOrder = 20
+              OnClick = cbClutchClick
+            end
+            object cbEscolar: TCheckBox
+              Left = 16
+              Top = 183
+              Width = 65
+              Height = 17
+              Caption = 'Escolar'
+              TabOrder = 5
+              OnClick = cbEscolarClick
+            end
+            object cbViagem: TCheckBox
+              Left = 104
+              Top = 183
+              Width = 65
+              Height = 17
+              Caption = 'Viagem'
+              TabOrder = 13
+              OnClick = cbViagemClick
+            end
+            object cb2Rodas: TCheckBox
+              Left = 16
+              Top = 247
+              Width = 65
+              Height = 17
+              Caption = '2 Rodas'
+              TabOrder = 7
+              OnClick = cb2RodasClick
+            end
+            object cb4Rodas: TCheckBox
+              Left = 104
+              Top = 247
+              Width = 65
+              Height = 17
+              Caption = '4 Rodas'
+              TabOrder = 15
+              OnClick = cb4RodasClick
+            end
+            object cb5Rodas: TCheckBox
+              Left = 188
+              Top = 247
+              Width = 65
+              Height = 17
+              Caption = '5 Rodas'
+              TabOrder = 23
+              OnClick = cb5RodasClick
+            end
+            object cb360: TCheckBox
+              Left = 188
+              Top = 183
+              Width = 49
+              Height = 17
+              Caption = '360'
+              TabOrder = 21
+              OnClick = cb360Click
+            end
+            object cbKit: TCheckBox
+              Left = 277
+              Top = 152
+              Width = 41
+              Height = 17
+              Caption = 'Kit'
+              TabOrder = 28
+              OnClick = cbKitClick
+            end
+            object cbChunky: TCheckBox
+              Left = 433
+              Top = 88
+              Width = 62
+              Height = 17
+              Caption = 'Chunky'
+              TabOrder = 42
+              OnClick = cbChunkyClick
+            end
+            object cbSneaker: TCheckBox
+              Left = 433
+              Top = 120
+              Width = 62
+              Height = 17
+              Caption = 'Sneaker'
+              TabOrder = 43
+              OnClick = cbSneakerClick
+            end
+            object cbOxford: TCheckBox
+              Left = 433
+              Top = 152
+              Width = 62
+              Height = 17
+              Caption = 'Oxford'
+              TabOrder = 44
+              OnClick = cbOxfordClick
+            end
+          end
+        end
+        object TabSheet9: TTabSheet
+          Caption = 'Numera'#231#245'es'
+          ImageIndex = 2
+          object Label47: TLabel
+            Left = 374
+            Top = 174
+            Width = 55
+            Height = 13
+            Caption = 'Quantidade'
+          end
+          object SBProdutoLoteItemRemover: TSpeedButton
+            Left = 373
+            Top = 70
+            Width = 105
+            Height = 41
+            Caption = 'Remover'
+            Glyph.Data = {
+              F6060000424DF606000000000000360000002800000018000000180000000100
+              180000000000C0060000C40E0000C40E00000000000000000000FFFFFFC1E0FB
+              349DF51D91F31C91F31E92F31E92F31E92F31E92F31E92F31D92F30D8BF3A3D3
+              F9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFC2E1FB0072F12697F45AAFF75BB0F659AEF659AEF659AEF659AEF659AEF6
+              65B5F72B98F30081F17BBFF7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF349DF52896F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFF349CF52193F30A89F37DC0F8FFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1B91F35CAFF6FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2F9AF52194F32695F5128DF27F
+              C1F9F9FCFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1D92F35CAFF6
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2F9AF52094
+              F32A98F52395F51890F380C1F8F6FAFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFF2B98F42194F32A98F52A98F52194F41D91F380C2F7F3F9FEFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFF309AF4108BF31F93F41E92F41F93F4168EF3178FF3
+              84C3F8F3F9FEFFFFFFFFFFFFFFFFFFFFFFFF1E92F35AAFF6FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCBE6FC309CF53B9FF53DA0F53C
+              A0F541A3F52997F42395F4C3E1FBFFFFFFFFFFFFFFFFFFFFFFFF1E92F35AAFF6
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6EC
+              FDD8ECFDD9ECFDD9ECFDE4F2FD84C3F9108BF3B9DCFCFFFFFFFFFFFFFFFFFFFF
+              FFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9ACEFA0F8BF3BBDDFCFFFF
+              FFFFFFFFFFFFFFFFFFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF97CDFA
+              0F8CF3BCDDFCFFFFFFFFFFFFFFFFFFFFFFFF1E92F35AAFF6FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5D6FAFFFFFFFF
+              FFFFFFFFFF97CCFA0082F3AFD8FAFFFFFFFFFFFFDEDDFCFFFFFF1E92F35AAFF6
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000
+              E60000E72E2BEDFFFFFFFFFFFF7DC0F856ADF7FFFFFFE7E3FD0605EA0000E65D
+              5AF01E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFD6D4FB0000E72521ED0F08EA413CEFFFFFFFFAFFFFFEFFFFDFDAFC1F19
+              EB1611EB201BEB1C17EB1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFF2E29ED1009EA201AED0D08EA504CEFFFFDFE
+              D7D4FB2C27EC120DEA201BEC0701EAA4A2F71E92F35AAFF6FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF403CEE0E08EA1F
+              1AEC120CEB4D4AEF413DEE100BEA1D17EC110BEA7E7CF4FFFFFF1E92F35AAFF6
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFF514CF0120DEB221DEC1610EB1813EB201BEC1913EC8380F4FFFFFFFF
+              FFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFCFCFF4D4AF01611EB2520ED241FEC0E09EA8C89
+              F5FFFFFFFFFFFFFFFFFF1E92F35AAFF6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD4D3FC413DEF1913EB241FED
+              241FEC1510EB6460F1FEFEFFFFFFFFFFFFFF1D92F35CAFF6FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD9D8FC2C27ED10
+              0BEA201BEC0E09EB1510EB211CEC0C06EA4F4BF0FFFFFFFFFFFF1B91F45CAFF6
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E2
+              FD1F19EB110CEA1C17EB1913EC8C8AF56461F20D06EA1F19EC0D08EA403CEEFF
+              FFFF349DF52896F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF0605EA1610EA1F19ED110CEA8381F4FFFFFFFEFEFF4F4BEF0D08
+              EA221DED0803EA6D6AF3C2E1FB0072F12696F44EAAF748A6F548A6F548A6F548
+              A6F549A7F52997F3FAFFFEE4E0FC0000E6201BEC0801EB7F7BF4FFFFFFFFFFFF
+              FFFFFFFFFFFF413CEF0904EA1B16EB100AEAFFFFFFC1E0FB359DF52796F42C99
+              F42B98F42B98F42B98F42D99F40988F2B5DBFBFFFFFF5C59F11C16EBA4A2F7FF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6C69F2110CEACFCEFA}
+            OnClick = SBProdutoLoteItemRemoverClick
+          end
+          object DBGrid4: TDBGrid
+            Left = 16
+            Top = 16
+            Width = 337
+            Height = 217
+            DataSource = DsProdutoLoteItem
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWindowText
+            TitleFont.Height = -11
+            TitleFont.Name = 'MS Sans Serif'
+            TitleFont.Style = []
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'COD_PRODUTO_LOTE_ITEM'
+                Title.Caption = 'C'#243'digo'
+                Width = 56
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'COD_PRODUTO'
+                Title.Caption = 'C'#243'd.Produto'
+                Width = 73
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'COD_LOTE_TIPO'
+                Title.Caption = 'Numera'#231#227'o'
+                Width = 69
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'QT_QUANTIDADE'
+                Title.Caption = 'Quantidade'
+                Width = 75
+                Visible = True
+              end>
+          end
+          object DBEProdutoLoteItemQuantia: TDBEdit
+            Left = 374
+            Top = 190
+            Width = 121
+            Height = 21
+            DataField = 'QT_QUANTIDADE'
+            DataSource = DsProdutoLoteItem
+            TabOrder = 2
+            OnExit = DBEProdutoLoteItemQuantiaExit
+          end
+          object DBPProdutoLoteItemNumero: TDBPanel
+            Left = 374
+            Top = 128
+            Width = 81
+            Height = 37
+            BevelOuter = bvNone
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            CodigoTabStop = True
+            DataField = 'COD_LOTE_TIPO'
+            DataSource = DsProdutoLoteItem
+            DefineByForm = DBPProdutoLoteItemNumeroDefineByForm
+            fkCache = False
+            fkCampo = 'DESC_LOTE'
+            fkChave = 'COD_LOTE_TIPO'
+            fkTabela = 'TB_LOTE_TIPO'
+            ForeignKey = True
+            Glyph.Data = {
+              36180000424D3618000000000000360000002800000040000000200000000100
+              18000000000000180000120B0000120B00000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFEAEAF39090B5BABAC9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFF4F4F4C3C3C3D8D8D8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF8888B90000DA20207CBDBDCBFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFC1C1C19696968B8B8BD9D9D9FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFC8C8CE2F2FA50000E91A1A7DB7B7C8FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFDEDEDE9B9B9B9A9A9A888888D6D6D6FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFD3D3D53131A5202EFA111185B2B2C2FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFE4E4E49C9C9CACACAC888888D3D3D3FFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFD3D3D73232AC414DFF10108BABABB9FFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFE4E4E49E9E9EB9B9B9888888CECECEFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6D6DB3636AC535DFF101093A9A9B5FFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE7E7E79F9F9FC0C0C08B8B8BCCCCCCFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE0E0E43D3DAE6069FF0F0FA5B1B1
+              B6FFFFFFFFFFFFFFFFFFD9D9D9CECED1E0E0E1FFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEDEDEDA2A2A2C4C4C48F8F8FD0D0
+              D0FFFFFFFFFFFFFFFFFFE7E7E7E1E1E1ECECECFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E3E74545B31E38FF4650
+              9EF2F2F2C0C1C3BCBCC2C4C4BFCDCBC5C2C2C2AFAFB6C2C2C5FEFEFEFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFA6A6A6AEAEAEA3A3
+              A3F7F7F7D9D9D9D6D6D6D9D9D9DEDEDED9D9D9CFCFCFDADADAFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9E9ED8989C1BDBD
+              D8C2C4BED9D5C9F7F6DEFCFBEAFDFCEDFCFBE9FAF8E1DCDCD5AFB1B6F8F8F8FF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2F2F2C3C3C3DDDD
+              DDD8D8D8E3E3E3F3F3F3F9F9F9F9F9F9F8F8F8F5F5F5E7E7E7CFCFCFFBFBFBFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F9BCBC
+              CEE5E4C5FDFCF1FDFDEEFDFBE7FCFBE6FDFBE8FEFDF2FCFBECEBE8D7AAABB0FB
+              FBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFAFAD9D9
+              D9E6E6E6FBFBFBFAFAFAF8F8F8F7F7F7F8F8F8FBFBFBF9F9F9EDEDEDCBCBCBFC
+              FCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB9B9B6D5D1
+              B8FCFBE8FDFCE2FAF8DDFAF8DEFAF8DEFAF8DEFBF9DDFDFCE8FAF8DFCECEC3D6
+              D6D8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD3D3D3DDDD
+              DDF8F8F8F7F7F7F5F5F5F4F4F4F4F4F4F4F4F4F5F5F5F8F8F8F4F4F4DDDDDDE6
+              E6E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4F5F5B5B7B8EDEB
+              C0FDFBDFFAF7D7F9F7D8F9F7D8F9F7D8FAF7D7F9F7D7FAF9DEFBFAE3EAE9C5B1
+              B1B5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9F9F9D2D2D2E8E8
+              E8F6F6F6F3F3F3F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F4F4F4F6F6F6E9E9E9CF
+              CFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEAEAECBCB9B2F7F3
+              C4FBF8D5F8F6D0F8F6D1F9F6D0F9F6D0F8F6D0F8F6D3F8F7D7FCFBDDECE7BDC2
+              C2C4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2F2F2D2D2D2ECEC
+              ECF2F2F2F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F1F1F1F2F2F2F5F5F5E6E6E6D9
+              D9D9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBEBEEBCBCB3F6F2
+              BDF9F7CCF7F4C9F7F5C8F7F4C9F8F4C7F7F4C8F7F5D2F9F5D2FBFAD7EAE7B7C6
+              C4C6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3F3F3D3D3D3EAEA
+              EAEFEFEFEEEEEEEEEEEEEEEEEEEDEDEDEEEEEEF0F0F0F0F0F0F3F3F3E4E4E4DB
+              DBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F7B6B6B6EFEA
+              B1FAF7C5F6F4C6F7F3C8F7F3CBF7F4CDF9F5D3F8F5D2F8F6D2FAF6CEEAE6BBBE
+              BFC5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9F9F9D2D2D2E4E4
+              E4EEEEEEECECECEDEDEDEEEEEEEEEEEEF1F1F1F0F0F0F1F1F1F0F0F0E5E5E5D8
+              D8D8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC3C4C9D3D1
+              AAFEF9C7FAF9D6F8F5D6F9F6DDF8F8E4F8F8E1F8F6DCFEFCDDFBF6C3CAC5B1D3
+              D4D6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDBDBDBD9D9
+              D9F0F0F0F3F3F3F2F2F2F4F4F4F6F6F6F5F5F5F3F3F3F6F6F6EDEDEDD6D6D6E4
+              E4E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2F2F2B7B8
+              BAD3D1A8F9F7E4FFFFF3FFFFF7FFFFF6FEFEF4FFFFF0F2F2D0D7D2ABBBBDC2FB
+              FBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7D3D3
+              D3D8D8D8F6F6F6FCFCFCFDFDFDFDFDFDFCFCFCFCFCFCEEEEEEDADADAD6D6D6FD
+              FDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE3E4
+              E6BBBBBBB7B596DFDDCBEBEAE6ECECE8EBEBE6DDDBBFB9B69AC0C0C4F5F5F6FF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEEEE
+              EED5D5D5C9C9C9E6E6E6F1F1F1F2F2F2F1F1F1E2E2E2CBCBCBD8D8D8F9F9F9FF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFF6F6F6CBCCCEACACA79F9F97A2A295A4A495B2B2B0CCCCCFFCFCFDFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFF9F9F9E0E0E0CACACAC1C1C1C1C1C1C2C2C2CFCFCFE0E0E0FDFDFDFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFF2F2F3D9D9D9D9D9DADADADBF6F6F6FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFF7F7F7E7E7E7E7E7E7E8E8E8F9F9F9FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+            LCaption = 'Numera'#231#227'o'
+            ReadOnly = False
+            Required = True
+            ValidateOnExit = False
+            VisibleComponents = [dbpcCodigo, dbpcBusca]
+            WidthCodigo = 20.000000000000000000
+          end
+          object BtnProdutoLoteInserir: TBitBtn
+            Left = 373
+            Top = 16
+            Width = 105
+            Height = 41
+            Caption = 'Inserir'
+            TabOrder = 3
+            OnClick = BtnProdutoLoteInserirClick
+            Glyph.Data = {
+              56080000424D560800000000000036000000280000001A0000001A0000000100
+              18000000000020080000C40E0000C40E00000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFF6F6F6B4B4B4AAAAAAAB
+              ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAFAFAF
+              AFAFAFCECECEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              FFFFFFF8F8F85656564040406767676464646464646464646464646464646464
+              646464646464646565656565655151514D4D4D3E3E3E979797FFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFF6B6B6B4C4C4CF5F5F5FCFCFCFA
+              FAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFAFBFBFBEEEEEE
+              C1C1C19C9C9C2A2A2AE4E4E4FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E1E1E1222222F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDCDCDCD4D4D45454548A8A8AFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFDEDEDE212121FFFFFFE6E6E6B9B9B9BD
+              BDBDBCBCBCBDBDBDBBBBBBBCBCBCBDBDBDBDBDBDBDBDBDBBBBBBC0C0C0FFFFFF
+              E0E0E0CCCCCC5C5C5C8B8B8BFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FFFFFFDBDBDBADADADBBBBBBCECFCFCECFCFCFD0D0C4C5C5B9B9
+              B9B3B3B3B3B3B3B2B2B2ABABABFFFFFFDFDFDFCCCCCC5A5A5A8B8B8BFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FDFDFDFDFDFDEEEEEEE6
+              E7E75F5353624747847677A9A6A6F2F2F2F4F4F4ECECECEBEBEBEFEFEFFFFFFF
+              DEDEDECDCDCD5A5A5A8B8B8BFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FBFBFBFFFFFFFFFFFF6E62623063622BAEAB3B66644731351B17
+              21E5E5E6FFFFFFFFFFFFFFFFFFFFFFFFDEDEDECCCCCC5A5A5A8B8B8BFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FFFFFFDADADAB8B9B965
+              4E4E31939218FFFF11FFFF08FFFF8F7A2A181C2F8E8E92BBBBBBA5A5A5FFFFFF
+              E0E0E0CCCCCC5A5A5A8B8B8BFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FFFFFFE0E0E0CFCFCF898080414B4B0FFFFF1AF7F6A3B649EAAC
+              008C7626363A499A9BA0CECECDFFFFFFDFDFDFCCCCCC5A5A5A8B8B8BFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FCFCFCFFFFFFFDFDFDC4
+              C4C44521240EFFFFB2D28CEFC361C7A211D5A7008D7721303343C4C4C8FFFFFF
+              DDDDDDCDCDCD5A5A5A8B8B8BFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FCFCFCFFFFFFEAEAEAF7F8F727232AA4965FFFE26FDFC971E3D1
+              84C39B00D4A8008B7424161D34E0DFDFF8F8F8CBCBCB5A5A5A8B8B8BFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FFFFFFD1D1D1A9A9A9BE
+              BEBEA5A5A61E1F2BA6985EF2D974DFC96DE3D085C5A211DFAE009B822311182D
+              AEAEB2E0E0DF5B5B5B8B8B8BFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FFFFFFEBEBEBC6C6C6C9C9C9DDDDDD98999D33353EA7975BF3DA
+              73DEC872E0CA72C6A419E0AF008E79252B3042B1B2B66362628C8C8CFFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FBFBFBFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFA7A8AC303239A6985DFBE274DDC875DEC970C6A315D7A900
+              8C7620494D5C424447929292FFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FEFEFEF3F3F3C8C8C8CDCDCDCBCBCBD4D4D4FFFFFFABACAF1318
+              26BCAB67FCE274DEC973E1CD7DC59E05D3A6008E7825262D40969698FFFFFFFF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FFFFFFC7C7C7B7B7B7BC
+              BCBCBBBBBBB7B7B7DDDDDDFFFFFFBEBEBF0F1320AC9D60F4DA73DFCA6FE3CF83
+              C6A10CDBAB00967D261D2137D2D3D5FFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFF
+              E0E0E0232323FFFFFFCBCBCBBCBCBCBFBFBFBFBFBFBBBBBBDEDEDEFFFFFFFFFF
+              FFACACAE2A2B35A6985BF0D873DEC971E0CB77C7A417DFAE00937B22262B3EC0
+              C1C6FFFFFFFFFFFF0000FFFFFFFFFFFFE0E0E0232323FFFFFFCBCBCBBCBCBCBF
+              BFBFBFBFBFBBBBBBDEDEDEFFFFFFFFFFFFFFFFFFA6A7AC32343BA6985CF8DD73
+              DDC874DFC96FC6A318DAAC008A7420363A48C9C9CDFFFFFF0000FFFFFFFFFFFF
+              DEDEDE222222FFFFFFC7C7C7B5B5B5B9B9B9B8B8B8B4B4B4DADADAFFFFFFFFFF
+              FFFFFFFFFFFFFFA8A9AD20232EB2A463FDE174DEC974E0CC76C6A00BD4A80085
+              6F1A54575EF6F6F70000FFFFFFFFFFFFDFDFDF222222FBFBFBFAFAFAD1D1D1D3
+              D3D3D3D3D3DBDBDBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB6B6B8151825
+              B4A463F8DE73DFC971E2D082D9AF08987B10353841EFEFEF0000FFFFFFFFFFFF
+              FFFFFF686868525252FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFFCFCFCFBFBFBFBFB
+              FBFBFBFBFBFBFBFCFCFCFFFFFFB8B8B9252935AB9D63F4DB73F4DC74A99E7224
+              2B46D0D1D2FFFFFF0000FFFFFFFFFFFFFFFFFFF3F3F35050504444446E6E6E6A
+              6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6B6B6B6B6B6A
+              37373B2E2E33918652998B52222637CACACAFFFFFFFFFFFF0000FFFFFFFFFFFF
+              FFFFFFFFFFFFF1F1F1B0B0B0A7A7A7A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6A6
+              A6A6A6A6A6A6A6A6A6A6A6A6A6A9A9A9B7B7B7B2B2B361636B575A65D2D2D2FF
+              FFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFAFAF9F9F9F9FFFFFFFFFFFFFFFFFFFFFFFF0000}
+          end
+        end
+      end
+      object DBGProdutoAusenteAristides: TDBGrid
+        Left = 0
+        Top = 8
+        Width = 969
+        Height = 145
+        DataSource = DSProdutoAusente
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
+        OnDrawColumnCell = DBGProdutoAusenteAristidesDrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'cprod'
+            Title.Caption = 'C'#243'digo do Produto XML'
+            Width = 120
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cod_produto'
+            Title.Caption = 'C'#243'digo Produto'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'desc_produto'
+            Title.Caption = 'Produto'
+            Width = 384
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cod_lote_tipo'
+            Title.Caption = 'Tamanho'
+            Width = 50
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'num_fabricante'
+            Title.Caption = 'N'#250'mero Fabricante'
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'num_genero_ncm'
+            Title.Caption = 'NCM'
+            Width = 65
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'desc_cod_barra'
+            Title.Caption = 'C'#243'digo de Barras'
+            Width = 130
+            Visible = True
+          end>
+      end
+    end
+  end
+  object btnVoltar: TBitBtn
+    Left = 1090
+    Top = 649
+    Width = 89
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = '&Voltar'
+    TabOrder = 2
+    OnClick = btVoltarClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333333333333333333333333333333333333333333333333333333333
+      3333333333333FF3333333333333003333333333333F77F33333333333009033
+      333333333F7737F333333333009990333333333F773337FFFFFF330099999000
+      00003F773333377777770099999999999990773FF33333FFFFF7330099999000
+      000033773FF33777777733330099903333333333773FF7F33333333333009033
+      33333333337737F3333333333333003333333333333377333333333333333333
+      3333333333333333333333333333333333333333333333333333333333333333
+      3333333333333333333333333333333333333333333333333333}
+    NumGlyphs = 2
+  end
+  object btnAvancar: TBitBtn
+    Left = 1194
+    Top = 649
+    Width = 89
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = '&Avancar'
+    TabOrder = 3
+    OnClick = btAvancarClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333333333333333333333333333333333333333333333333333333333
+      3333333333333333333333333333333333333333333FF3333333333333003333
+      3333333333773FF3333333333309003333333333337F773FF333333333099900
+      33333FFFFF7F33773FF30000000999990033777777733333773F099999999999
+      99007FFFFFFF33333F7700000009999900337777777F333F7733333333099900
+      33333333337F3F77333333333309003333333333337F77333333333333003333
+      3333333333773333333333333333333333333333333333333333333333333333
+      3333333333333333333333333333333333333333333333333333}
+    Layout = blGlyphRight
+    NumGlyphs = 2
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Arquivos XML|*.xml'
+    Left = 848
+    Top = 632
+  end
+  object XMLDocument1: TXMLDocument
+    Left = 888
+    Top = 632
+    DOMVendorDesc = 'MSXML'
+  end
+  object DataSource1: TDataSource
+    DataSet = DMNfe.cdsProdutoXML
+    Left = 928
+    Top = 632
+  end
+  object DataSource2: TDataSource
+    DataSet = DMNfe.cdsProdutoBD
+    Left = 968
+    Top = 632
+  end
+  object ILChecks: TImageList
+    Left = 768
+    Top = 632
+    Bitmap = {
+      494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00000000000000000000000000FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000C8D0D400C8D0
+      D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0
+      D400C8D0D400FFFFFF0000000000000000000000000080808000C8D0D400C8D0
+      D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0
+      D400C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF000000000000000000000000000000000000000000FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF000000000000000000FFFFFF00000000000000000000000000FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF0000000000FFFFFF00FFFFFF00FFFFFF00000000000000000000000000FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000000000000000FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000000FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF000000000000000000000000008080800040404000FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040004040
+      4000404040004040400040404000404040004040400040404000404040004040
+      4000C8D0D400FFFFFF0000000000000000000000000080808000404040004040
+      4000404040004040400040404000404040004040400040404000404040004040
+      4000C8D0D400FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000808080008080
+      8000808080008080800080808000808080008080800080808000808080008080
+      800080808000FFFFFF0000000000000000000000000080808000808080008080
+      8000808080008080800080808000808080008080800080808000808080008080
+      800080808000FFFFFF0000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFFF00000000
+      8003800300000000800380030000000080038003000000008003800300000000
+      8003800300000000800380030000000080038003000000008003800300000000
+      8003800300000000800380030000000080038003000000008003800300000000
+      8003800300000000FFFFFFFF0000000000000000000000000000000000000000
+      000000000000}
+  end
+  object DSProdutoAusente: TDataSource
+    DataSet = DMNfe.cdsProdutoAusente
+    OnDataChange = DSProdutoAusenteDataChange
+    Left = 1008
+    Top = 632
+  end
+  object DsProdutoLoteItem: TDataSource
+    DataSet = DMNfe.QProdutoLoteItem
+    Left = 808
+    Top = 635
+  end
+  object DsInfXmlSefa: TDataSource
+    DataSet = DMNfe.QInfXmlSefaCons
+    OnDataChange = DsInfXmlSefaDataChange
+    Left = 728
+    Top = 632
+  end
+end

@@ -1,0 +1,692 @@
+object DmBlocoG: TDmBlocoG
+  OldCreateOrder = False
+  Left = 823
+  Top = 231
+  Height = 265
+  Width = 465
+  object QReg110: TOracleDataSet1
+    SQL.Strings = (
+      
+        'SELECT SUM(VAL_TOTAL) AS VAL_TOTAL,  VAL_CRED_ANT, VAL_CREDITO, ' +
+        'DT_GERADO_CIAP FROM'
+      'TB_CONTROLE_CREDITO_ICMS,'
+      '('
+      'Select distinct'
+      '  TB_CONHECIMENTO.COD_CONHECIMENTO + 0.00 AS COD_CONHECIMENTO,'
+      '  TB_CONHECIMENTO.COD_CADASTRO + 0.00 AS COD_CADASTRO,'
+      '  TB_SERIE.COD_SERIE_MODELO,'
+      '  TB_CONHECIMENTO.IND_SITUACAO,'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_SERIE.COD_SERIE,'
+      '  TB_CONHECIMENTO.NUM_CONHECIMENTO + 0.00 AS NUM_CONHECIMENTO,'
+      '  TB_CONHECIMENTO.DT_EMISSAO,'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO,'
+      '  TB_CONHECIMENTO.VAL_FRETE,  '
+      
+        '  DECODE(TB_CONHECIMENTO.PERC_DESCONTO_FRETE,0,0,TB_CONHECIMENTO' +
+        '.VAL_FRETE * TB_CONHECIMENTO.PERC_DESCONTO_FRETE / 100) as VAL_D' +
+        'ESCONTO,'
+      '  TB_CONHECIMENTO.DESC_CHAVE_ACESSO_CTE,'
+      '  TB_CONHECIMENTO.DESC_CHAVE_ACESSO_REF,'
+      '  1 as TIPO_PAGAMENTO,'
+      
+        '  NVL(TB_CONHECIMENTO.VAL_FRETE,0) + NVL(TB_CONHECIMENTO.VAL_PED' +
+        'AGIO,0) + NVL(TB_CONHECIMENTO.VAL_SEGURO,0) AS VAL_TOTAL,'
+      
+        '  DECODE(VAL_ICMS,0,0,TB_CONHECIMENTO.VAL_FRETE + NVL(TB_CONHECI' +
+        'MENTO.VAL_SEGURO,0)) AS VAL_BASE_CALCULO,'
+      '  TB_CONHECIMENTO.VAL_ICMS,'
+      
+        '  DECODE(VAL_ICMS,0,TB_CONHECIMENTO.VAL_PEDAGIO + TB_CONHECIMENT' +
+        'O.VAL_SEGURO,TB_CONHECIMENTO.VAL_FRETE + TB_CONHECIMENTO.VAL_PED' +
+        'AGIO + TB_CONHECIMENTO.VAL_SEGURO) AS VAL_NAO_TRIBUTADO,'
+      '  '#39#39' AS IND_TIPO_CTE,'
+      '  0 AS VAL_PIS,'
+      '  0 AS VAL_COFINS,'
+      '  TB_OPERACAO.IND_TIPO_OPERACAO,'
+      '  TB_OPERACAO.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ' AS CST_ICMS,'
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA AS ALIQ_ICMS,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, TB_O' +
+        'PERACAO.NUM_NATUREZA_EST_NOVO, TB_OPERACAO.NUM_NATUREZA_INT_NOVO' +
+        ') as number(4)) + 0.00 AS CFOP,'
+      '  '#39'C'#39' as TIPO,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CONHE' +
+        'CIMENTO.COD_UF_ORIGEM)'
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CONHECIMENTO.COD_CIDADE_ORIGEM) AS COD_MUN_ORIG,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CONHE' +
+        'CIMENTO.COD_UF_DESTINO)'
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CONHECIMENTO.COD_CIDADE_DESTINO) AS COD_MUN_DEST'
+      'FROM'
+      '  TB_CONHECIMENTO,'
+      '  TB_CADASTRO,'
+      '  TB_OPERACAO,'
+      '  TB_TRIBUTACAO,'
+      '  TB_FILIAL,'
+      '  TB_SERIE'
+      'WHERE'
+      '  TB_CONHECIMENTO.COD_SERIE = TB_SERIE.COD_SERIE'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_FILIAL = TB_SERIE.COD_FILIAL'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_OPERACAO = TB_OPERACAO.COD_OPERACAO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_TRIBUTACAO = TB_TRIBUTACAO.COD_TRIBUTACAO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_FILIAL = TB_FILIAL.COD_FILIAL'
+      '  AND'
+      '  TB_CADASTRO.COD_CADASTRO = TB_CONHECIMENTO.COD_CADASTRO'
+      '  AND'
+      '  TB_CONHECIMENTO.IND_SITUACAO <> '#39'1'#39
+      '  AND'
+      '  TB_OPERACAO.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO >= :DT_INICIAL'
+      '  AND'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO <= :DT_FINAL'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_FILIAL = :COD_FILIAL'
+      ''
+      'union all'
+      ''
+      'Select distinct'
+      
+        '  TB_CONHECIMENTO_FRETE.COD_CONHECIMENTO_FRETE + 0.00 AS COD_CON' +
+        'HECIMENTO,'
+      '  TB_CONHECIMENTO_FRETE.COD_CADASTRO + 0.00,'
+      
+        '  decode(TB_SERIE.NUM_SERIE_FISCAL, null, '#39'08'#39', TB_SERIE.COD_SER' +
+        'IE_MODELO),'
+      '  TB_CONHECIMENTO_FRETE.IND_SITUACAO,'
+      
+        '  decode(TB_SERIE.NUM_SERIE_FISCAL, null, 8, TB_SERIE.NUM_SERIE_' +
+        'FISCAL),'
+      '  TB_SERIE.COD_SERIE,'
+      '  TB_CONHECIMENTO_FRETE.NUM_FRETE + 0.00 AS NUM_CONHECIMENTO,'
+      '  TB_CONHECIMENTO_FRETE.DT_EMISSAO_CONHECIMENTO AS DT_EMISSAO,'
+      '  TB_CONHECIMENTO_FRETE.DT_RECEBIMENTO,'
+      '  TB_CONHECIMENTO_FRETE.VAL_FRETE,'
+      '  TB_CONHECIMENTO_FRETE.VAL_DESCONTO,'
+      '  NULL AS DESC_CHAVE_ACESSO_CTE,'
+      '  '#39#39' AS DESC_CHAVE_ACESSP_REF,  '
+      '  1 as TIPO_PAGAMENTO,'
+      
+        '  TB_CONHECIMENTO_FRETE.VAL_FRETE + TB_CONHECIMENTO_FRETE.VAL_PE' +
+        'DAGIO AS VAL_TOTAL,'
+      
+        '  DECODE(TB_CONHECIMENTO_FRETE.VAL_ICMS,0,0,TB_CONHECIMENTO_FRET' +
+        'E.VAL_FRETE)  AS VAL_BASE_CALCULO,'
+      '  TB_CONHECIMENTO_FRETE.VAL_ICMS,'
+      
+        '  DECODE(TB_CONHECIMENTO_FRETE.VAL_ICMS,0,TB_CONHECIMENTO_FRETE.' +
+        'VAL_FRETE + TB_CONHECIMENTO_FRETE.VAL_PEDAGIO,TB_CONHECIMENTO_FR' +
+        'ETE.VAL_PEDAGIO)  AS VAL_NAO_TRIBUTADO,'
+      '  '#39#39' AS IND_TIPO_CTE,'
+      '  TB_CONHECIMENTO_FRETE.VAL_PIS,'
+      '  TB_CONHECIMENTO_FRETE.VAL_COFINS,'
+      '  TB_OPERACAO.IND_TIPO_OPERACAO,'
+      '  TB_OPERACAO.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ' AS CST_ICMS,'
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA AS ALIQ_ICMS,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, TB_O' +
+        'PERACAO.NUM_NATUREZA_EST_NOVO, TB_OPERACAO.NUM_NATUREZA_INT_NOVO' +
+        ') as number(4)) + 0.00 AS CFOP,'
+      '  '#39'F'#39','
+      '  '#39#39' AS COD_MUN_ORIG,'
+      '  '#39#39' AS COD_MUN_DEST'
+      'FROM'
+      '  TB_CONHECIMENTO_FRETE'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CONHECIMENTO_FRETE.COD_CADASTRO = T' +
+        'B_CADASTRO.COD_CADASTRO'
+      
+        'INNER JOIN TB_TRIBUTACAO ON TB_CONHECIMENTO_FRETE.COD_TRIBUTACAO' +
+        ' = TB_TRIBUTACAO.COD_TRIBUTACAO'
+      
+        'INNER JOIN TB_OPERACAO ON TB_CONHECIMENTO_FRETE.COD_OPERACAO = T' +
+        'B_OPERACAO.COD_OPERACAO'
+      
+        'INNER JOIN TB_FILIAL ON TB_CONHECIMENTO_FRETE.COD_FILIAL = TB_FI' +
+        'LIAL.COD_FILIAL'
+      
+        'LEFT JOIN TB_SERIE ON TB_CONHECIMENTO_FRETE.COD_SERIE = TB_SERIE' +
+        '.COD_SERIE AND TB_CONHECIMENTO_FRETE.COD_FILIAL = TB_SERIE.COD_F' +
+        'ILIAL'
+      'WHERE'
+      '  TB_CONHECIMENTO_FRETE.IND_SITUACAO <> '#39'1'#39
+      'AND'
+      '  TB_OPERACAO.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  TB_CONHECIMENTO_FRETE.DT_RECEBIMENTO >= :DT_INICIAL'
+      'AND'
+      '  TB_CONHECIMENTO_FRETE.DT_RECEBIMENTO <= :DT_FINAL'
+      'AND'
+      '  TB_CONHECIMENTO_FRETE.COD_FILIAL = :COD_FILIAL'
+      ''
+      'union all'
+      ''
+      'SELECT distinct'
+      '  N.COD_NOTA_CAB + 0.00,'
+      '  N.COD_CADASTRO + 0.00,'
+      '--  '#39'07'#39','
+      '  TB_SERIE.COD_SERIE_MODELO,'
+      '  N.IND_SITUACAO,'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_SERIE.COD_SERIE,'
+      '  N.NUM_NOTA,'
+      '  N.DT_EMISSAO,'
+      '  N.DT_RECEBIMENTO,'
+      '  cast(0 as number(1)),'
+      '  N.VAL_DESCONTO,'
+      '  N.DESC_CHAVE_ACESSO_CTE,'
+      '  '#39#39' DESC_CHAVE_ACESSO_REF,'
+      '  cast(1 as number(1)),'
+      '  SUM(I.VAL_TOTAL + I.VAL_DESPESAS - I.VAL_DESCONTO),'
+      '  SUM(I.VAL_ICM_BASE),'
+      '  SUM(I.VAL_ICM),'
+      
+        '  SUM(I.VAL_TOTAL + I.VAL_DESPESAS - I.VAL_DESCONTO) - SUM(I.VAL' +
+        '_ICM_BASE),'
+      '  '#39#39' AS IND_TIPO_CTE,'
+      '  SUM(I.VAL_PIS),'
+      '  SUM(I.VAL_CONFINS),'
+      '  O.IND_TIPO_OPERACAO,'
+      '  O.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ' AS CST_ICMS,'
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, O.NU' +
+        'M_NATUREZA_EST_NOVO, O.NUM_NATUREZA_INT_NOVO) as number(4)) + 0.' +
+        '00,'
+      '  '#39'N'#39','
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CADAS' +
+        'TRO.COD_ESTADO)  '
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CADASTRO.COD_CIDADE)  AS COD_MUN_ORIG,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_FILIA' +
+        'L.COD_ESTADO)  '
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_FILIAL.COD_CIDADE) AS COD_MUN_DEST'
+      'FROM'
+      '  TB_NOTA_ITEM I'
+      'INNER JOIN TB_NOTA_CAB N ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO = O.COD_OPERACAO'
+      
+        'INNER JOIN TB_SERIE ON (N.COD_SERIE = TB_SERIE.COD_SERIE AND TB_' +
+        'SERIE.COD_FILIAL = N.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO)'
+      
+        'INNER JOIN TB_TRIBUTACAO ON I.COD_TRIBUTACAO = TB_TRIBUTACAO.COD' +
+        '_TRIBUTACAO'
+      'INNER JOIN TB_FILIAL ON N.COD_FILIAL = TB_FILIAL.COD_FILIAL'
+      
+        'INNER JOIN TB_CADASTRO ON N.COD_CADASTRO = TB_CADASTRO.COD_CADAS' +
+        'TRO'
+      'WHERE'
+      '  N.IND_SITUACAO <> '#39'1'#39
+      'AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  O.NUM_LIVROS = 10'
+      'AND'
+      
+        '  TB_SERIE.COD_SERIE_MODELO IN ('#39'07'#39','#39'08'#39', '#39'8B'#39', '#39'09'#39', '#39'10'#39', '#39'11' +
+        #39', '#39'26'#39', '#39'27'#39', '#39'57'#39')'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      '  N.DT_RECEBIMENTO between :DT_INICIAL AND :DT_FINAL'
+      'GROUP BY'
+      '  N.COD_NOTA_CAB,'
+      '  N.COD_CADASTRO,'
+      '  TB_SERIE.COD_SERIE_MODELO,'
+      '  TB_SERIE.COD_SERIE,'
+      '  N.IND_SITUACAO,'
+      '  N.COD_SERIE,'
+      '  N.NUM_NOTA,'
+      '  N.DT_EMISSAO,'
+      '  N.DT_RECEBIMENTO,'
+      '  cast(0 as number(1)),'
+      '  N.VAL_DESCONTO,'
+      '  N.DESC_CHAVE_ACESSO_CTE,'
+      '  cast(1 as number(1)),'
+      '  '#39#39','
+      '  O.IND_TIPO_OPERACAO,'
+      '  O.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ','
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, O.NU' +
+        'M_NATUREZA_EST_NOVO, O.NUM_NATUREZA_INT_NOVO) as number(4)),'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_FILIAL.COD_CIDADE,'
+      '  TB_FILIAL.COD_ESTADO,'
+      '  TB_CADASTRO.COD_CIDADE,'
+      '  TB_CADASTRO.COD_ESTADO'
+      ''
+      'union all'
+      ''
+      'SELECT distinct'
+      '  N.COD_NOTA_CAB + 0.00,'
+      '  N.COD_TRANSPORTADOR + 0.00,'
+      '  TB_SERIE.COD_SERIE_MODELO,'
+      '  N.IND_SITUACAO,'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_SERIE.COD_SERIE,'
+      '  N.NUM_CONHECIMENTO_FRETE,'
+      '  N.DT_EMISSAO_CF,'
+      '  NVL(N.DT_RECEBIMENTO,N.DT_EMISSAO_CF) AS DT_RECEBIMENTO,'
+      '  N.VAL_FRETE,'
+      '  cast(0 as number(1)),  '
+      '  N.DESC_CHAVE_ACESSO_CTE, '
+      '  '#39#39' DESC_CHAVE_ACESSO_REF,'
+      '  cast(1 as number(1)),'
+      '  N.VAL_FRETE,  '
+      '  N.VAL_ICM_BASE_FRETE,  '
+      '  N.VAL_ICM_FRETE,'
+      '  N.VAL_FRETE - N.VAL_ICM_BASE_FRETE,  '
+      '  '#39#39' AS IND_TIPO_CTE,'
+      '  0, --PIS: ver'
+      '  0, --COFINS: ver'
+      '  O.IND_TIPO_OPERACAO,'
+      '  O.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ' AS CST_ICMS,'
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, O.NU' +
+        'M_NATUREZA_EST_NOVO, O.NUM_NATUREZA_INT_NOVO) as number(4)) + 0.' +
+        '00,'
+      '  '#39'I'#39', -- Incluso'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_FILIA' +
+        'L.COD_ESTADO)  '
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_FILIAL.COD_CIDADE) AS COD_MUN_ORIG,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CADAS' +
+        'TRO.COD_ESTADO)  '
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CADASTRO.COD_CIDADE) AS COD_MUN_DEST'
+      'FROM'
+      '  TB_NOTA_CAB N'
+      'INNER JOIN TB_OPERACAO O ON N.COD_OPERACAO_CF = O.COD_OPERACAO'
+      
+        'INNER JOIN TB_SERIE ON (N.COD_SERIE_CF = TB_SERIE.COD_SERIE AND ' +
+        'TB_SERIE.COD_FILIAL = N.COD_FILIAL '
+      #9'AND N.COD_SERIE_MODELO_CF = TB_SERIE.COD_SERIE_MODELO)'
+      
+        'INNER JOIN TB_TRIBUTACAO ON N.COD_TRIBUTACAO_FRETE = TB_TRIBUTAC' +
+        'AO.COD_TRIBUTACAO'
+      'INNER JOIN TB_FILIAL ON N.COD_FILIAL = TB_FILIAL.COD_FILIAL'
+      
+        'INNER JOIN TB_CADASTRO ON N.COD_TRANSPORTADOR = TB_CADASTRO.COD_' +
+        'CADASTRO'
+      
+        'INNER JOIN TB_OPERACAO O_NOTA ON N.COD_OPERACAO = O_NOTA.COD_OPE' +
+        'RACAO'
+      
+        'INNER JOIN TB_SERIE TB_SERIE_NOTA ON (N.COD_SERIE = TB_SERIE_NOT' +
+        'A.COD_SERIE AND TB_SERIE_NOTA.COD_FILIAL = N.COD_FILIAL'
+      #9'AND N.COD_SERIE_MODELO = TB_SERIE_NOTA.COD_SERIE_MODELO)'
+      
+        'INNER JOIN TB_CADASTRO TB_CADASTRO_NOTA ON N.COD_TRANSPORTADOR =' +
+        ' TB_CADASTRO_NOTA.COD_CADASTRO'
+      'WHERE'
+      '  N.IND_SITUACAO <> '#39'1'#39
+      'AND'
+      '  O_NOTA.IND_LIVRO_FISCAL = '#39'S'#39
+      'AND'
+      '  (O_NOTA.NUM_LIVROS <> 10 or O_NOTA.NUM_LIVROS is null)'
+      'AND'
+      '  N.COD_FILIAL = :COD_FILIAL'
+      'AND'
+      
+        '  --NVL(N.DT_EMISSAO_CF -- comentado porque a Nelci Cgs pediu. V' +
+        'anessa 22/03/2017'
+      '  --  , N.DT_RECEBIMENTO) BETWEEN :DT_INICIAL AND :DT_FINAL'
+      '  N.DT_RECEBIMENTO BETWEEN :DT_INICIAL AND :DT_FINAL'
+      '--and'
+      
+        '--  ((N.IND_ENTRADA_SAIDA = '#39'E'#39' and N.DT_RECEBIMENTO between :DT' +
+        '_INICIAL and :DT_FINAL)'
+      '--or'
+      
+        '--  (N.IND_ENTRADA_SAIDA = '#39'S'#39' and N.DT_EMISSAO between :DT_INIC' +
+        'IAL and :DT_FINAL))'
+      'AND'
+      '  TB_SERIE_NOTA.COD_SERIE_MODELO <> '#39'06'#39
+      'AND'
+      '  N.NUM_CONHECIMENTO_FRETE IS NOT NULL'
+      'AND'
+      '  N.IND_ENTRADA_SAIDA = '#39'E'#39
+      'AND'
+      '  N.IND_TIPO_FRETE = '#39'FOB'#39
+      'AND'
+      
+        '  TB_SERIE.COD_SERIE_MODELO IN ('#39'07'#39','#39'08'#39', '#39'8B'#39', '#39'09'#39', '#39'10'#39', '#39'11' +
+        #39', '#39'26'#39', '#39'27'#39', '#39'57'#39')  '
+      '  '
+      ''
+      'union all'
+      '/* UTILIZADO PARA PEGAR CT-E. - 11/10/2013 */'
+      'Select distinct'
+      '  TB_CONHECIMENTO.COD_CONHECIMENTO + 0.00 AS COD_CONHECIMENTO,'
+      '  TB_CONHECIMENTO.COD_CADASTRO_TOMADOR + 0.00 AS COD_CADASTRO,'
+      '  TB_SERIE.COD_SERIE_MODELO,  '
+      '  TB_CONHECIMENTO.IND_SITUACAO,'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_SERIE.COD_SERIE,'
+      '  TB_CONHECIMENTO.NUM_CONHECIMENTO + 0.00 AS NUM_CONHECIMENTO,'
+      '  TB_CONHECIMENTO.DT_EMISSAO,'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO,'
+      '  TB_CONHECIMENTO.VAL_FRETE,  '
+      
+        '  DECODE(TB_CONHECIMENTO.PERC_DESCONTO_FRETE,0,0,TB_CONHECIMENTO' +
+        '.VAL_FRETE * TB_CONHECIMENTO.PERC_DESCONTO_FRETE / 100) as VAL_D' +
+        'ESCONTO,'
+      '  TB_CONHECIMENTO.DESC_CHAVE_ACESSO_CTE,'
+      '  TB_CONHECIMENTO.DESC_CHAVE_ACESSO_REF,'
+      '  1 as TIPO_PAGAMENTO,'
+      
+        '  TB_CONHECIMENTO.VAL_FRETE + TB_CONHECIMENTO.VAL_PEDAGIO + TB_C' +
+        'ONHECIMENTO.VAL_SEGURO AS VAL_TOTAL,'
+      
+        '  DECODE(VAL_ICMS,0,0,TB_CONHECIMENTO.VAL_FRETE + NVL(TB_CONHECI' +
+        'MENTO.VAL_SEGURO,0)) AS VAL_BASE_CALCULO,'
+      '  TB_CONHECIMENTO.VAL_ICMS,'
+      
+        '  DECODE(VAL_ICMS,0,TB_CONHECIMENTO.VAL_PEDAGIO + TB_CONHECIMENT' +
+        'O.VAL_SEGURO,TB_CONHECIMENTO.VAL_FRETE + TB_CONHECIMENTO.VAL_PED' +
+        'AGIO + TB_CONHECIMENTO.VAL_SEGURO) AS VAL_NAO_TRIBUTADO,'
+      
+        '  CAST(NVL(TB_CONHECIMENTO.IND_TIPO_CTE,'#39#39')AS VARCHAR2(1)) AS IN' +
+        'D_TIPO_CTE,'
+      '  0 AS VAL_PIS,'
+      '  0 AS VAL_COFINS,'
+      '  TB_OPERACAO.IND_TIPO_OPERACAO,'
+      '  TB_OPERACAO.IND_EMITE,'
+      
+        '  NVL(TB_TRIBUTACAO.DESC_SITUACAO_TRIB,TB_TRIBUTACAO.DESC_CSOSN)' +
+        ' AS CST_ICMS,'
+      '  TB_TRIBUTACAO.PERC_ALIQUOTA AS ALIQ_ICMS,'
+      
+        '  cast(DECODE(TB_CADASTRO.COD_ESTADO, TB_FILIAL.COD_ESTADO, TB_O' +
+        'PERACAO.NUM_NATUREZA_EST_NOVO, TB_OPERACAO.NUM_NATUREZA_INT_NOVO' +
+        ') as number(4)) + 0.00 AS CFOP,'
+      '  '#39'C'#39' as TIPO,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CONHE' +
+        'CIMENTO.COD_UF_ORIGEM)'
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CONHECIMENTO.COD_CIDADE_ORIGEM) AS COD_MUN_ORIG,'
+      
+        '  (SELECT COD_UF_IBGE FROM TB_ESTADO WHERE COD_ESTADO = TB_CONHE' +
+        'CIMENTO.COD_UF_DESTINO)'
+      
+        '    || (SELECT COD_CIDADE_IBGE FROM TB_CIDADE WHERE COD_CIDADE =' +
+        ' TB_CONHECIMENTO.COD_CIDADE_DESTINO) AS COD_MUN_DEST'
+      'FROM'
+      '  TB_CONHECIMENTO,'
+      '  TB_CADASTRO,'
+      '  TB_OPERACAO,'
+      '  TB_TRIBUTACAO,'
+      '  TB_FILIAL,'
+      '  TB_SERIE'
+      'WHERE'
+      '  TB_CONHECIMENTO.COD_SERIE = TB_SERIE.COD_SERIE'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_FILIAL = TB_SERIE.COD_FILIAL'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_OPERACAO = TB_OPERACAO.COD_OPERACAO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_TRIBUTACAO = TB_TRIBUTACAO.COD_TRIBUTACAO'
+      '  AND'
+      '  TB_CONHECIMENTO.COD_FILIAL = TB_FILIAL.COD_FILIAL'
+      '  and'
+      
+        '  TB_CADASTRO.COD_CADASTRO = TB_CONHECIMENTO.COD_CADASTRO_TOMADO' +
+        'R'
+      '  AND'
+      '  TB_CONHECIMENTO.IND_SITUACAO <> '#39'1'#39
+      '  AND'
+      '  TB_OPERACAO.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      
+        '  TB_SERIE.COD_SERIE_MODELO IN ('#39'07'#39','#39'08'#39', '#39'8B'#39', '#39'09'#39', '#39'10'#39', '#39'11' +
+        #39', '#39'26'#39', '#39'27'#39', '#39'57'#39')    '
+      '  AND'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO >= :DT_INICIAL'
+      '  AND'
+      '  TB_CONHECIMENTO.DT_RECEBIMENTO <= :DT_FINAL'
+      '  and'
+      '  TB_CONHECIMENTO.COD_FILIAL = :COD_FILIAL'
+      '),'
+      
+        '(select SUM(VAL_CREDITO) AS VAL_CRED_ANT FROM tb_controle_credit' +
+        'o_icms WHERE DT_GERADO_CIAP < :DT_INICIAL)'
+      'WHERE DT_GERADO_CIAP BETWEEN :DT_INICIAL AND :DT_FINAL'
+      'GROUP BY VAL_CREDITO, DT_GERADO_CIAP, VAL_CRED_ANT')
+    Variables.Data = {
+      03000000030000000B0000003A44545F494E494349414C0C0000000000000000
+      000000090000003A44545F46494E414C0C00000000000000000000000B000000
+      3A434F445F46494C49414C050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000B00000056414C5F4352454449544F0100000000000E0000
+      0044545F47455241444F5F434941500100000000000900000056414C5F544F54
+      414C0100000000000C00000056414C5F435245445F414E54010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 24
+    object QReg110VAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+    object QReg110VAL_CREDITO: TFloatField
+      FieldName = 'VAL_CREDITO'
+      Required = True
+    end
+    object QReg110DT_GERADO_CIAP: TDateTimeField
+      FieldName = 'DT_GERADO_CIAP'
+      Required = True
+    end
+    object QReg110VAL_CRED_ANT: TFloatField
+      FieldName = 'VAL_CRED_ANT'
+    end
+  end
+  object QReg125: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT item.cod_patrimonio_item, '
+      '        cont.val_credito, '
+      '        cont.cod_controle_credito_icms, '
+      '        item.val_icms, '
+      '        item.dt_aquisicao,'
+      '        item.cod_nota_cab_entrada'
+      'FROM tb_controle_credito_icms cont, tb_patrimonio_item item'
+      'where item.cod_patrimonio_item = cont.cod_patrimonio_item'
+      'and dt_gerado_ciap between :dt_inicial and :dt_final')
+    Variables.Data = {
+      03000000020000000B0000003A44545F494E494349414C0C0000000000000000
+      000000090000003A44545F46494E414C0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000013000000434F445F50415452494D4F4E494F5F4954454D01
+      00000000000B00000056414C5F4352454449544F01000000000019000000434F
+      445F434F4E54524F4C455F4352454449544F5F49434D53010000000000080000
+      0056414C5F49434D530100000000000C00000044545F41515549534943414F01
+      000000000014000000434F445F4E4F54415F4341425F454E5452414441010000
+      000000}
+    Session = DMOracle.DBCemapa
+    Left = 112
+    Top = 24
+    object QReg125COD_PATRIMONIO_ITEM: TIntegerField
+      FieldName = 'COD_PATRIMONIO_ITEM'
+      Required = True
+    end
+    object QReg125VAL_CREDITO: TFloatField
+      FieldName = 'VAL_CREDITO'
+      Required = True
+    end
+    object QReg125COD_CONTROLE_CREDITO_ICMS: TIntegerField
+      FieldName = 'COD_CONTROLE_CREDITO_ICMS'
+      Required = True
+    end
+    object QReg125VAL_ICMS: TFloatField
+      FieldName = 'VAL_ICMS'
+    end
+    object QReg125DT_AQUISICAO: TDateTimeField
+      FieldName = 'DT_AQUISICAO'
+      Required = True
+    end
+    object QReg125COD_NOTA_CAB_ENTRADA: TIntegerField
+      FieldName = 'COD_NOTA_CAB_ENTRADA'
+    end
+  end
+  object QReg130: TOracleDataSet1
+    SQL.Strings = (
+      
+        'SELECT DECODE(tb_nota_cab.ind_entrada_saida,'#39'E'#39', 1,'#39'S'#39', 2) emite' +
+        'nte, '
+      '        tb_nota_cab.cod_cadastro, '
+      '        tb_nota_cab.cod_serie,'
+      '        tb_nota_cab.cod_serie_modelo,'
+      '        tb_nota_cab.num_nota,'
+      '        tb_nota_cab.dt_emissao,'
+      '        tb_nota_cab.desc_chave_acesso,'
+      '        tb_cadastro.nome'
+      'FROM tb_nota_cab, tb_cadastro'
+      'where tb_nota_cab.cod_nota_cab = :cod_nota'
+      'and tb_nota_cab.cod_cadastro = tb_cadastro.cod_cadastro')
+    Variables.Data = {
+      0300000001000000090000003A434F445F4E4F54410300000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {
+      040000000800000008000000454D4954454E54450100000000000C000000434F
+      445F434144415354524F01000000000009000000434F445F5345524945010000
+      00000010000000434F445F53455249455F4D4F44454C4F010000000000080000
+      004E554D5F4E4F54410100000000000A00000044545F454D495353414F010000
+      00000011000000444553435F43484156455F41434553534F0100000000000400
+      00004E4F4D45010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 24
+    object QReg130EMITENTE: TFloatField
+      FieldName = 'EMITENTE'
+    end
+    object QReg130COD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QReg130COD_SERIE: TStringField
+      FieldName = 'COD_SERIE'
+      Required = True
+      Size = 3
+    end
+    object QReg130COD_SERIE_MODELO: TStringField
+      FieldName = 'COD_SERIE_MODELO'
+      Size = 2
+    end
+    object QReg130NUM_NOTA: TIntegerField
+      FieldName = 'NUM_NOTA'
+      Required = True
+    end
+    object QReg130DT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QReg130DESC_CHAVE_ACESSO: TStringField
+      FieldName = 'DESC_CHAVE_ACESSO'
+      Size = 47
+    end
+    object QReg130NOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+  end
+  object QReg140: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT TB_PRODUTO.COD_PRODUTO,'
+      '       TB_PRODUTO.DESC_PRODUTO,'
+      '       TB_NOTA_ITEM.QT_QUANTIDADE,'
+      '       TB_PRODUTO.DESC_UNIDADE,'
+      '       TB_PATRIMONIO_ITEM.VAL_ICMS,'
+      '       TB_NOTA_ITEM.VAL_ICMS_SUBST,'
+      '       0 AS VAL_ICMS_FRETE,'
+      '       TB_NOTA_ITEM.VAL_ICMS_DIFERENCIAL '
+      'FROM TB_NOTA_ITEM, TB_PRODUTO, TB_PATRIMONIO_ITEM'
+      'WHERE TB_NOTA_ITEM.COD_PRODUTO = TB_PRODUTO.COD_PRODUTO'
+      'AND TB_NOTA_ITEM.COD_NOTA_CAB = :COD_NOTA'
+      
+        'AND TB_NOTA_ITEM.COD_NOTA_CAB = TB_PATRIMONIO_ITEM.COD_NOTA_CAB_' +
+        'ENTRADA'
+      'ORDER BY COD_NOTA_ITEM')
+    Variables.Data = {
+      0300000001000000090000003A434F445F4E4F54410300000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {
+      04000000080000000B000000434F445F50524F4455544F0100000000000C0000
+      00444553435F50524F4455544F0100000000000D00000051545F5155414E5449
+      444144450100000000000C000000444553435F554E4944414445010000000000
+      0800000056414C5F49434D530100000000000E00000056414C5F49434D535F53
+      554253540100000000000E00000056414C5F49434D535F465245544501000000
+      00001400000056414C5F49434D535F4449464552454E4349414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 248
+    Top = 24
+    object QReg140COD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QReg140DESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QReg140QT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QReg140DESC_UNIDADE: TStringField
+      FieldName = 'DESC_UNIDADE'
+      Size = 3
+    end
+    object QReg140VAL_ICMS: TFloatField
+      FieldName = 'VAL_ICMS'
+    end
+    object QReg140VAL_ICMS_SUBST: TFloatField
+      FieldName = 'VAL_ICMS_SUBST'
+    end
+    object QReg140VAL_ICMS_FRETE: TFloatField
+      FieldName = 'VAL_ICMS_FRETE'
+    end
+    object QReg140VAL_ICMS_DIFERENCIAL: TFloatField
+      FieldName = 'VAL_ICMS_DIFERENCIAL'
+    end
+  end
+end

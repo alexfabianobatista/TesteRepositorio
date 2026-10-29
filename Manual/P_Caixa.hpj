@@ -1,0 +1,30 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Caixa.hlp
+
+[FILES]
+P_Caixa.rtf
+
+[MAP]
+Botão_Click=13
+Cadastro_de_Caixa=2
+Cadastro_de_Detalhamento_de_Caixa=8
+Cadastro_de_Histórico=11
+Contabiliza_Caixa=16
+Forma_Operação_Sistema=14
+Menu_Caixa=1
+Movimentação_de_Caixa_por_Histórico=15
+Relação_de_Fluxo_de_Caixa=7
+Relação_de_Movimento_de_Caixa_Sintético=5
+Relação_de_Movimento_de_Caixa=4
+Relação_de_Movimentos_e_Saldos=3
+Relação_do_Resumo_de_Lançamentos=6
+Relatório_do_Detalhamento_de_Caixa=9
+Relatório_do_Histórico=12
+Saldo=10
+
+[BAGGAGE]
+P_Caixa.rtf

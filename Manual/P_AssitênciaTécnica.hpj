@@ -1,0 +1,27 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_AssitênciaTécnica.hlp
+
+[FILES]
+P_AssitênciaTécnica.rtf
+
+[MAP]
+Botão_Click=8
+Cadastro_de_Contratos_Mensais=10
+Cadastro_de_Ordem_de_Serviço=2
+Cadastro_de_Pecas=13
+Forma_Operação_Sistema=9
+Gera_Contas_a_Receber=11
+Menu_Assistência_Técnica=1
+Relação_de_Ordens_de_Serviço_em_Aberto=7
+Relação_de_Recibos=6
+Relação_de_Resumo_Analítico=4
+Relação_de_Resumo_Sintético=3
+Relação_Média_de_Dias=5
+Relatório_de_Contratos_Mensais=12
+
+[BAGGAGE]
+P_AssitênciaTécnica.rtf

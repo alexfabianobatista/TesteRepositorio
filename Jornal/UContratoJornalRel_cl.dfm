@@ -1,0 +1,181 @@
+object DMContratoJornalRel: TDMContratoJornalRel
+  OldCreateOrder = False
+  Left = 268
+  Top = 55
+  Height = 150
+  Width = 215
+  object QRContratoJornal: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  CJI.NUM_EDICAO,'
+      '  CJI.DT_EDICAO,'
+      '  CJI.COD_CONTA_RECEBER_CAB,'
+      '  CJI.IND_TIPO,'
+      '  CJ.COD_CONTRATO_JORNAL,'
+      '  CJ.COD_FILIAL || '#39' - '#39' || F.DESC_FILIAL FILIAL,'
+      
+        '  CJ.COD_CADASTRO || '#39' - '#39' || NVL(C.DESC_FANTASIA,C.NOME) CADAST' +
+        'RO,'
+      '  CJ.DT_CONTRATO,'
+      '  CJ.VAL_CONTRATO,'
+      '  CJ.COD_VENDEDOR || '#39' - '#39' || V.NOME VENDEDOR,'
+      '  CJ.IND_SITUACAO,'
+      '  CR.IND_SITUACAO SITUACAO_CR,'
+      '  CR.VAL_TITULO VAL_CR,'
+      '  CR.DT_VENCIMENTO,'
+      '  CR.VAL_ORIGINAL'
+      'FROM'
+      '  TB_CONTRATO_JORNAL_ITEM CJI'
+      'INNER JOIN'
+      '  TB_CONTRATO_JORNAL CJ'
+      'ON'
+      '  CJI.COD_CONTRATO_JORNAL = CJ.COD_CONTRATO_JORNAL'
+      'LEFT JOIN'
+      '  TB_CONTA_RECEBER_CAB CR'
+      'ON'
+      '  CJI.COD_CONTA_RECEBER_CAB = CR.COD_CONTA_RECEBER_CAB'
+      'LEFT JOIN'
+      '  TB_FILIAL F'
+      'ON'
+      '  CJ.COD_FILIAL = F.COD_FILIAL'
+      'LEFT JOIN'
+      '  TB_CADASTRO C'
+      'ON'
+      '  CJ.COD_CADASTRO = C.COD_CADASTRO'
+      'LEFT JOIN'
+      '  TB_VENDEDOR V'
+      'ON'
+      '  CJ.COD_VENDEDOR = V.COD_VENDEDOR'
+      'WHERE'
+      '  (:FILIAL IS NULL OR CJ.COD_FILIAL = :FILIAL)'
+      'AND'
+      '  (:CADASTRO IS NULL OR CJ.COD_CADASTRO = :CADASTRO)'
+      'AND'
+      '  (:VENDEDOR IS NULL OR CJ.COD_VENDEDOR = :VENDEDOR)'
+      'AND'
+      '  (:SITUACAO IS NULL OR CJ.IND_SITUACAO = :SITUACAO)'
+      'AND'
+      '  (:SITUACAO_CR IS NULL OR CR.IND_SITUACAO = :SITUACAO_CR)'
+      'AND'
+      '  (:N_SITUACAO_CR IS NULL OR CR.IND_SITUACAO <> :N_SITUACAO_CR)'
+      'AND'
+      '  (:TIPO IS NULL OR CJI.IND_TIPO = :TIPO)'
+      'AND'
+      '  (:EDICAO IS NULL OR CJI.NUM_EDICAO = :EDICAO)'
+      'AND'
+      
+        '  (:COM_EDICAO IS NULL OR :COM_EDICAO IN (SELECT NUM_EDICAO FROM' +
+        ' TB_CONTRATO_JORNAL_ITEM WHERE COD_CONTRATO_JORNAL = CJ.COD_CONT' +
+        'RATO_JORNAL))'
+      'AND'
+      
+        '  (:DT_INICIO_CONTRATO IS NULL OR CJ.DT_CONTRATO >= :DT_INICIO_C' +
+        'ONTRATO)'
+      'AND'
+      
+        '  (:DT_FIM_CONTRATO IS NULL OR CJ.DT_CONTRATO <= :DT_FIM_CONTRAT' +
+        'O)'
+      'AND'
+      
+        '  (:DT_INICIO_VENCTO IS NULL OR CR.DT_VENCIMENTO >= :DT_INICIO_V' +
+        'ENCTO)'
+      'AND'
+      '  (:DT_FIM_VENCTO IS NULL OR CR.DT_VENCIMENTO <= :DT_FIM_VENCTO)'
+      'ORDER BY'
+      '  C.NOME,'
+      '  CJ.COD_CONTRATO_JORNAL'
+      '')
+    Variables.Data = {
+      030000000D000000070000003A46494C49414C03000000000000000000000009
+      0000003A434144415354524F030000000000000000000000090000003A56454E
+      4445444F52030000000000000000000000070000003A45444943414F03000000
+      0000000000000000090000003A534954554143414F0300000000000000000000
+      00130000003A44545F494E4943494F5F434F4E545241544F0C00000000000000
+      00000000100000003A44545F46494D5F434F4E545241544F0C00000000000000
+      00000000110000003A44545F494E4943494F5F56454E43544F0C000000000000
+      00000000000E0000003A44545F46494D5F56454E43544F0C0000000000000000
+      0000000B0000003A434F4D5F45444943414F0300000000000000000000000C00
+      00003A534954554143414F5F43520500000000000000000000000E0000003A4E
+      5F534954554143414F5F4352050000000000000000000000050000003A544950
+      4F050000000000000000000000}
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000F0000000B00000044545F434F4E545241544F0100000000000C0000
+      0056414C5F434F4E545241544F0100000000000600000046494C49414C010000
+      00000008000000434144415354524F0100000000000800000056454E4445444F
+      520100000000000A0000004E554D5F45444943414F0100000000000900000044
+      545F45444943414F01000000000015000000434F445F434F4E54415F52454345
+      4245525F4341420100000000000B000000534954554143414F5F435201000000
+      00000600000056414C5F43520100000000000D00000044545F56454E43494D45
+      4E544F01000000000013000000434F445F434F4E545241544F5F4A4F524E414C
+      0100000000000C00000056414C5F4F524947494E414C01000000000008000000
+      494E445F5449504F0100000000000C000000494E445F534954554143414F0100
+      00000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    OnCalcFields = QRContratoJornalCalcFields
+    Left = 48
+    Top = 8
+    object QRContratoJornalNUM_EDICAO: TIntegerField
+      FieldName = 'NUM_EDICAO'
+      Required = True
+    end
+    object QRContratoJornalDT_EDICAO: TDateTimeField
+      FieldName = 'DT_EDICAO'
+    end
+    object QRContratoJornalCOD_CONTA_RECEBER_CAB: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_CAB'
+    end
+    object QRContratoJornalFILIAL: TStringField
+      FieldName = 'FILIAL'
+      Size = 93
+    end
+    object QRContratoJornalCADASTRO: TStringField
+      FieldName = 'CADASTRO'
+      Size = 93
+    end
+    object QRContratoJornalCOD_CONTRATO_JORNAL: TIntegerField
+      FieldName = 'COD_CONTRATO_JORNAL'
+      Required = True
+    end
+    object QRContratoJornalDT_CONTRATO: TDateTimeField
+      FieldName = 'DT_CONTRATO'
+      Required = True
+    end
+    object QRContratoJornalVAL_CONTRATO: TFloatField
+      FieldName = 'VAL_CONTRATO'
+      DisplayFormat = '#,##0.00'
+    end
+    object QRContratoJornalVENDEDOR: TStringField
+      FieldName = 'VENDEDOR'
+      Size = 83
+    end
+    object QRContratoJornalSITUACAO_CR: TStringField
+      FieldName = 'SITUACAO_CR'
+      Size = 13
+    end
+    object QRContratoJornalVAL_CR: TFloatField
+      FieldName = 'VAL_CR'
+      DisplayFormat = '#,##0.00'
+    end
+    object QRContratoJornalDT_VENCIMENTO: TDateTimeField
+      FieldName = 'DT_VENCIMENTO'
+    end
+    object QRContratoJornalVAL_ORIGINAL: TFloatField
+      FieldName = 'VAL_ORIGINAL'
+      DisplayFormat = '#,##0.00'
+    end
+    object QRContratoJornalIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 1
+    end
+    object QRContratoJornalIND_SITUACAO: TIntegerField
+      FieldName = 'IND_SITUACAO'
+    end
+    object QRContratoJornaldesc_situacao: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_situacao'
+      Calculated = True
+    end
+  end
+end

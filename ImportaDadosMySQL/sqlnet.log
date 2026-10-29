@@ -1,0 +1,190 @@
+
+
+***********************************************************************
+Fatal NI connect error 12170.
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 23-JUL-2011 16:16:22
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12535
+    TNS-12535: TNS:operação sofreu timeout
+    ns secondary err code: 12560
+    nt main err code: 505
+    TNS-00505: Operação sofreu timeout
+    nt secondary err code: 60
+    nt OS err code: 0
+  Client address: <unknown>
+
+
+***********************************************************************
+Fatal NI connect error 12545, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localserver)(PORT=1521))(CONNECT_DATA=(SID=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARLON-PC)(USER=Marlon))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 27-JUN-2013 21:21:35
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12545
+    TNS-12545: A conexão falhou porque o objeto ou host de destino não existe
+    ns secondary err code: 12560
+    nt main err code: 515
+    TNS-00515: A conexão falhou porque o objeto ou host de destino não existe
+    nt secondary err code: 1004
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12545, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localserver)(PORT=1521))(CONNECT_DATA=(SID=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARLON-PC)(USER=Marlon))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 28-JUN-2013 14:40:56
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12545
+    TNS-12545: A conexão falhou porque o objeto ou host de destino não existe
+    ns secondary err code: 12560
+    nt main err code: 515
+    TNS-00515: A conexão falhou porque o objeto ou host de destino não existe
+    nt secondary err code: 1004
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12545, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localserver)(PORT=1521))(CONNECT_DATA=(SID=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARLON-PC)(USER=Marlon))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 28-JUN-2013 14:41:13
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12545
+    TNS-12545: A conexão falhou porque o objeto ou host de destino não existe
+    ns secondary err code: 12560
+    nt main err code: 515
+    TNS-00515: A conexão falhou porque o objeto ou host de destino não existe
+    nt secondary err code: 1004
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:01:10
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:01:18
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:02:10
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:02:16
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:02:56
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(Sid=orcl)(CID=(PROGRAM=C:\Program?Files\Borland\Delphi7\Bin\delphi32.exe)(HOST=MARCOSBASSI-PC)(USER=MARCOSBASSI))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 10.2.0.3.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 10.2.0.3.0 - Production
+  Time: 02-SET-2016 15:03:01
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:não há listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: Não há listener
+    nt secondary err code: 61
+    nt OS err code: 0

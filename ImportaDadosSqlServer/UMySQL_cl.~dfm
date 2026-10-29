@@ -1,0 +1,20 @@
+object DMMySQL: TDMMySQL
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Left = 458
+  Top = 350
+  Height = 203
+  Width = 347
+  object ZConnection1: TZConnection
+    ControlsCodePage = cGET_ACP
+    AutoEncodeStrings = False
+    HostName = 'localhost'
+    Port = 3306
+    Database = 'metaltruck'
+    User = 'root'
+    Password = 'sicredi'
+    Protocol = 'mysql'
+    Left = 32
+    Top = 32
+  end
+end

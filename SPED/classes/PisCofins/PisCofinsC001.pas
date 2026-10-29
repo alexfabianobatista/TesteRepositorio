@@ -1,0 +1,33 @@
+unit PisCofinsC001;
+
+interface
+
+uses Arquivo, Registro, Controls;
+
+type
+  TPisCofinsC001 = class(TRegistro)
+  private
+  public
+    IND_MOV: Integer; //C(1)
+
+    procedure grava;
+  end;
+
+implementation
+
+uses UFuncoes;
+
+{ TPisCofinsC001 }
+
+procedure TPisCofinsC001.grava;
+begin
+  inherited;
+
+  addCampo(bloco + registro);
+  addCampo(IND_MOV, 1);
+
+  gravaLinha(arquivoPadrao, TRegistro(Self));
+  afterGravacao;
+end;
+
+end.

@@ -1,0 +1,2858 @@
+object DmVidracaria: TDmVidracaria
+  OldCreateOrder = False
+  Left = 467
+  Top = 165
+  Height = 470
+  Width = 800
+  object QForno: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '    TB_ACOMPANHAMENTO_PEDIDO.DT_FORNO >= :DT_FORNO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_FORNO DESC')
+    Variables.Data = {
+      0300000001000000090000003A44545F464F524E4F0C00000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 16
+    Top = 16
+    object QFornoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+    end
+    object QFornoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QFornoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QCorte: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_CORTE >= :DT_CORTE'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_CORTE DESC')
+    Variables.Data = {
+      0300000001000000090000003A44545F434F5254450C00000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 16
+    object QCorteCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QCorteCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QCorteNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QMarcacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_MARCACAO >= :DT_MARCACAO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_MARCACAO DESC')
+    Variables.Data = {
+      03000000010000000C0000003A44545F4D4152434143414F0C00000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 128
+    Top = 16
+    object QMarcacaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QMarcacaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QMarcacaoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QUsinagem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_USINAGEM >= :DT_USINAGEM'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_USINAGEM DESC')
+    Variables.Data = {
+      03000000010000000C0000003A44545F5553494E4147454D0C00000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 192
+    Top = 16
+    object QUsinagemCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QUsinagemCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QUsinagemNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QAcompanhamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  A.*,'
+      '  ROWNUM AS NUM_LINHA'
+      'FROM'
+      '('
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_ACOMPANHAMENTO_PEDIDO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_CALCULO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_CORTE,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_USINAGEM,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_MARCACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_FORNO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_EMBARQUE,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_CONFERENCIA,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_LAVACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_LAPIDACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.IND_FURACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_EMBARQUE,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_CORTE,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_USINAGEM,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_MARCACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_FORNO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_CONFERENCIA,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_LAVACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_LAPIDACAO,'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_FURACAO,'
+      '  TB_MATERIAL.COD_PECA,'
+      
+        '  DECODE(TB_MATERIAL.VAL_LARGURA,'#39#39',TB_PEDIDO_ITEM.QT_PEDIDO,TB_' +
+        'MATERIAL.VAL_LARGURA) AS VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      
+        '  DECODE(TB_MATERIAL.VAL_ALTURA,'#39#39',TB_PEDIDO_ITEM.NUM_FABRICANTE' +
+        ',TB_MATERIAL.IND_TIPO) AS IND_TIPO,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO,'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') AS IND_QUEBRA,'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL), 0, '#39#39', '#39'R'#39' || (SELECT COUN' +
+        'T(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_MATERIAL = TB_MATERIA' +
+        'L.COD_MATERIAL)) AS DESC_QUEBRAS,'
+      '  TB_PEDIDO_CAB.DT_BAIXA_VIDRACARIA,'
+      '  TB_MATERIAL.DESC_SERVICO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '  (:COD_PEDIDO_CAB IS NULL'
+      '    OR'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB =:COD_PEDIDO_CAB)'
+      'ORDER BY'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      ') A'
+      'ORDER BY'
+      '  ROWNUM')
+    Variables.Data = {
+      03000000010000000F0000003A434F445F50454449444F5F4341420300000000
+      00000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000001E0000000B000000494E445F43414C43554C4F010000000000090000
+      00494E445F434F5254450100000000000C000000494E445F5553494E4147454D
+      0100000000000C000000494E445F4D4152434143414F01000000000009000000
+      494E445F464F524E4F0100000000000C000000494E445F454D42415251554501
+      00000000000B00000044545F454D42415251554501000000000019000000434F
+      445F41434F4D50414E48414D454E544F5F50454449444F010000000000080000
+      0044545F434F5254450100000000000B00000044545F5553494E4147454D0100
+      000000000B00000044545F4D4152434143414F0100000000000800000044545F
+      464F524E4F01000000000008000000434F445F504543410100000000000B0000
+      0056414C5F4C4152475552410100000000000A00000056414C5F414C54555241
+      01000000000008000000494E445F5449504F0100000000000D0000004E4F4D45
+      5F434144415354524F010000000000090000004E554D5F4C494E484101000000
+      00000A000000494E445F5155454252410100000000000C000000444553435F51
+      5545425241530100000000001300000044545F42414958415F56494452414341
+      5249410100000000000C000000444553435F5345525649434F0100000000000F
+      000000494E445F434F4E464552454E4349410100000000000E00000044545F43
+      4F4E464552454E4349410100000000000B000000494E445F4C41564143414F01
+      00000000000D000000494E445F4C415049444143414F0100000000000B000000
+      494E445F4655524143414F0100000000000A00000044545F4C41564143414F01
+      00000000000C00000044545F4C415049444143414F0100000000000A00000044
+      545F4655524143414F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 64
+    object QAcompanhamentoCOD_ACOMPANHAMENTO_PEDIDO: TIntegerField
+      FieldName = 'COD_ACOMPANHAMENTO_PEDIDO'
+      Required = True
+    end
+    object QAcompanhamentoIND_CALCULO: TStringField
+      FieldName = 'IND_CALCULO'
+      Size = 1
+    end
+    object QAcompanhamentoIND_CORTE: TStringField
+      FieldName = 'IND_CORTE'
+      Size = 1
+    end
+    object QAcompanhamentoIND_USINAGEM: TStringField
+      FieldName = 'IND_USINAGEM'
+      Size = 1
+    end
+    object QAcompanhamentoIND_MARCACAO: TStringField
+      FieldName = 'IND_MARCACAO'
+      Size = 1
+    end
+    object QAcompanhamentoIND_FORNO: TStringField
+      FieldName = 'IND_FORNO'
+      Size = 1
+    end
+    object QAcompanhamentoIND_EMBARQUE: TStringField
+      FieldName = 'IND_EMBARQUE'
+      Size = 1
+    end
+    object QAcompanhamentoDT_EMBARQUE: TDateTimeField
+      FieldName = 'DT_EMBARQUE'
+    end
+    object QAcompanhamentoDT_CORTE: TDateTimeField
+      DisplayWidth = 25
+      FieldName = 'DT_CORTE'
+    end
+    object QAcompanhamentoDT_USINAGEM: TDateTimeField
+      FieldName = 'DT_USINAGEM'
+    end
+    object QAcompanhamentoDT_MARCACAO: TDateTimeField
+      FieldName = 'DT_MARCACAO'
+    end
+    object QAcompanhamentoDT_FORNO: TDateTimeField
+      FieldName = 'DT_FORNO'
+    end
+    object QAcompanhamentoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QAcompanhamentoVAL_LARGURA: TFloatField
+      FieldName = 'VAL_LARGURA'
+    end
+    object QAcompanhamentoVAL_ALTURA: TFloatField
+      FieldName = 'VAL_ALTURA'
+    end
+    object QAcompanhamentoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+    object QAcompanhamentoIND_QUEBRA: TStringField
+      FieldName = 'IND_QUEBRA'
+      Size = 1
+    end
+    object QAcompanhamentoNUM_LINHA: TFloatField
+      FieldName = 'NUM_LINHA'
+    end
+    object QAcompanhamentoDESC_QUEBRAS: TStringField
+      FieldName = 'DESC_QUEBRAS'
+      Size = 41
+    end
+    object QAcompanhamentoDT_BAIXA_VIDRACARIA: TDateTimeField
+      FieldName = 'DT_BAIXA_VIDRACARIA'
+    end
+    object QAcompanhamentoDESC_SERVICO: TStringField
+      FieldName = 'DESC_SERVICO'
+      Size = 12
+    end
+    object QAcompanhamentoIND_CONFERENCIA: TStringField
+      FieldName = 'IND_CONFERENCIA'
+      Size = 1
+    end
+    object QAcompanhamentoDT_CONFERENCIA: TDateTimeField
+      FieldName = 'DT_CONFERENCIA'
+    end
+    object QAcompanhamentoIND_LAVACAO: TStringField
+      FieldName = 'IND_LAVACAO'
+      Size = 1
+    end
+    object QAcompanhamentoIND_LAPIDACAO: TStringField
+      FieldName = 'IND_LAPIDACAO'
+      Size = 1
+    end
+    object QAcompanhamentoIND_FURACAO: TStringField
+      FieldName = 'IND_FURACAO'
+      Size = 1
+    end
+    object QAcompanhamentoDT_LAVACAO: TDateTimeField
+      FieldName = 'DT_LAVACAO'
+    end
+    object QAcompanhamentoDT_LAPIDACAO: TDateTimeField
+      FieldName = 'DT_LAPIDACAO'
+    end
+    object QAcompanhamentoDT_FURACAO: TDateTimeField
+      FieldName = 'DT_FURACAO'
+    end
+    object QAcompanhamentoIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 21
+    end
+  end
+  object QExportaPedido: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  '#39'N'#39' AS IND_EXPORTADO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO > '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> 2'
+      '  AND'
+      '  TB_MATERIAL.IND_EXPORTADO <> '#39'S'#39
+      '  AND'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') <> '#39'S'#39
+      '  AND'
+      '  (:COD_PRODUTO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO = :COD_PRODUTO)'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.DESC_FANTASIA,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_MATERIAL.IND_EXPORTADO'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB')
+    Variables.Data = {
+      03000000010000000C0000003A434F445F50524F4455544F0300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000050000000E000000434F445F50454449444F5F434142010000000000
+      14000000444553435F434F4D504C454D454E544F5F4F42530100000000000400
+      00004E4F4D450100000000000D000000494E445F4558504F525441444F010000
+      0000000C000000444553435F50524F4455544F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 168
+    Top = 208
+    object QExportaPedidoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QExportaPedidoDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QExportaPedidoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QExportaPedidoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QExportaPedidoIND_EXPORTADO: TStringField
+      FieldName = 'IND_EXPORTADO'
+      Size = 1
+    end
+  end
+  object DspExportaPedido: TDataSetProvider
+    DataSet = QExportaPedido
+    Left = 168
+    Top = 256
+  end
+  object CdExportaPedido: TClientDataSet
+    Aggregates = <>
+    Filter = 'IND_EXPORTADO <> '#39'N'#39
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_PRODUTO'
+        ParamType = ptInput
+      end>
+    ProviderName = 'DspExportaPedido'
+    Left = 168
+    Top = 304
+    object CdExportaPedidoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object CdExportaPedidoDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object CdExportaPedidoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object CdExportaPedidoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object CdExportaPedidoIND_EXPORTADO: TStringField
+      FieldName = 'IND_EXPORTADO'
+      Size = 1
+    end
+  end
+  object QExportarItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CLASSE.DESC_CLASSE,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_CADASTRO.DESC_FANTASIA,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_PRODUTO.DESC_COMPLEMENTO,'
+      '  TB_PRODUTO.DESC_OBSERVACAO,'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') AS IND_QUEBRA,'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      '  TB_MATERIAL.VAL_AMOLADURA,'
+      '  TB_MATERIAL.IND_TIPO,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM,'
+      '  TB_MATERIAL.COD_DESENHO_EXPORTACAO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PEDIDO_ITEM.COD_PRODUTO = TB_PRODUTO' +
+        '.COD_PRODUTO'
+      
+        'INNER JOIN TB_CLASSE ON TB_PRODUTO.COD_CLASSE = TB_CLASSE.COD_CL' +
+        'ASSE'
+      '  :SUBST'
+      'ORDER BY'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM')
+    Variables.Data = {0300000001000000060000003A5355425354010000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000100000000E000000434F445F50454449444F5F434142010000000000
+      0B000000444553435F434C41535345010000000000040000004E4F4D45010000
+      00000014000000444553435F434F4D504C454D454E544F5F4F42530100000000
+      0008000000434F445F504543410100000000000B00000056414C5F4C41524755
+      52410100000000000A00000056414C5F414C545552410100000000000D000000
+      56414C5F414D4F4C414455524101000000000008000000494E445F5449504F01
+      00000000000C000000444553435F50524F4455544F0100000000001000000044
+      4553435F434F4D504C454D454E544F0100000000000D000000444553435F4641
+      4E54415349410100000000000A000000494E445F515545425241010000000000
+      0F000000434F445F50454449444F5F4954454D0100000000000F000000444553
+      435F4F42534552564143414F01000000000016000000434F445F444553454E48
+      4F5F4558504F52544143414F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 376
+    Top = 184
+    object QExportarItemDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QExportarItemDESC_CLASSE: TStringField
+      FieldName = 'DESC_CLASSE'
+      Size = 30
+    end
+    object QExportarItemNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QExportarItemDESC_FANTASIA: TStringField
+      FieldName = 'DESC_FANTASIA'
+      Size = 30
+    end
+    object QExportarItemDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QExportarItemDESC_COMPLEMENTO: TStringField
+      FieldName = 'DESC_COMPLEMENTO'
+      Size = 50
+    end
+    object QExportarItemIND_QUEBRA: TStringField
+      FieldName = 'IND_QUEBRA'
+      Size = 1
+    end
+    object QExportarItemCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QExportarItemVAL_LARGURA: TFloatField
+      FieldName = 'VAL_LARGURA'
+    end
+    object QExportarItemVAL_ALTURA: TFloatField
+      FieldName = 'VAL_ALTURA'
+    end
+    object QExportarItemVAL_AMOLADURA: TIntegerField
+      FieldName = 'VAL_AMOLADURA'
+    end
+    object QExportarItemIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 5
+    end
+    object QExportarItemCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QExportarItemCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+      Required = True
+    end
+    object QExportarItemDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 200
+    end
+    object QExportarItemCOD_DESENHO_EXPORTACAO: TStringField
+      FieldName = 'COD_DESENHO_EXPORTACAO'
+      Size = 8
+    end
+  end
+  object QExportaReposicao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  '#39'N'#39' AS IND_EXPORTADO,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO > '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> 2'
+      '  AND'
+      '  TB_MATERIAL.IND_EXPORTADO <> '#39'S'#39
+      '  AND'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') = '#39'S'#39
+      '  AND'
+      '  (:COD_PRODUTO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO = :COD_PRODUTO)'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB')
+    Variables.Data = {
+      03000000010000000C0000003A434F445F50524F4455544F0300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000E000000434F445F50454449444F5F434142010000000000
+      040000004E4F4D450100000000000D000000494E445F4558504F525441444F01
+      00000000000C000000444553435F50524F4455544F0100000000000800000043
+      4F445F504543410100000000000F000000434F445F50454449444F5F4954454D
+      010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 288
+    Top = 208
+    object QExportaReposicaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QExportaReposicaoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QExportaReposicaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QExportaReposicaoIND_EXPORTADO: TStringField
+      FieldName = 'IND_EXPORTADO'
+      Size = 1
+    end
+    object QExportaReposicaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QExportaReposicaoCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+      Required = True
+    end
+  end
+  object DspExportaReposicao: TDataSetProvider
+    DataSet = QExportaReposicao
+    Left = 288
+    Top = 256
+  end
+  object CdExportaReposicao: TClientDataSet
+    Aggregates = <>
+    Filter = 'IND_EXPORTADO <> '#39'N'#39
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_PRODUTO'
+        ParamType = ptInput
+      end>
+    ProviderName = 'DspExportaReposicao'
+    Left = 288
+    Top = 304
+    object CdExportaReposicaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object CdExportaReposicaoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object CdExportaReposicaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object CdExportaReposicaoIND_EXPORTADO: TStringField
+      FieldName = 'IND_EXPORTADO'
+      Size = 1
+    end
+    object CdExportaReposicaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object CdExportaReposicaoCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+      Required = True
+    end
+  end
+  object QSerie: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DISTINCT'
+      '  NUM_SERIE'
+      'FROM'
+      '  TB_MATERIAL'
+      'WHERE'
+      '  NUM_SERIE IS NOT NULL'
+      'ORDER BY'
+      '  NUM_SERIE DESC')
+    QBEDefinition.QBEFieldDefs = {0400000001000000090000004E554D5F5345524945010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 376
+    Top = 232
+    object QSerieNUM_SERIE: TIntegerField
+      FieldName = 'NUM_SERIE'
+    end
+  end
+  object QQuebra: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_MATERIAL_QUEBRA.COD_MATERIAL_QUEBRA,'
+      '  TB_MATERIAL_QUEBRA.DT_QUEBRA,'
+      '  TB_MATERIAL_QUEBRA.COD_MATERIAL,'
+      '  TB_MATERIAL_QUEBRA.DT_REPOSICAO,'
+      '  TB_MATERIAL_QUEBRA.DESC_TIPO,'
+      
+        '  (SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA X WHERE X.COD_MATERIA' +
+        'L = TB_MATERIAL_QUEBRA.COD_MATERIAL) AS QT_TOTAL_QUEBRAS'
+      'FROM'
+      '  TB_MATERIAL_QUEBRA'
+      
+        'INNER JOIN TB_MATERIAL ON TB_MATERIAL.COD_MATERIAL = TB_MATERIAL' +
+        '_QUEBRA.COD_MATERIAL'
+      'WHERE'
+      '  TB_MATERIAL.COD_PEDIDO_ITEM = :COD_PEDIDO_ITEM'
+      'AND'
+      '  TB_MATERIAL_QUEBRA.DT_REPOSICAO IS NULL')
+    Variables.Data = {
+      0300000001000000100000003A434F445F50454449444F5F4954454D03000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000013000000434F445F4D4154455249414C5F51554542524101
+      00000000000900000044545F5155454252410100000000000C000000434F445F
+      4D4154455249414C0100000000000C00000044545F5245504F534943414F0100
+      0000000009000000444553435F5449504F0100000000001000000051545F544F
+      54414C5F51554542524153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 376
+    Top = 280
+    object QQuebraCOD_MATERIAL_QUEBRA: TFloatField
+      FieldName = 'COD_MATERIAL_QUEBRA'
+      Required = True
+    end
+    object QQuebraDT_QUEBRA: TDateTimeField
+      FieldName = 'DT_QUEBRA'
+      Required = True
+    end
+    object QQuebraCOD_MATERIAL: TFloatField
+      FieldName = 'COD_MATERIAL'
+      Required = True
+    end
+    object QQuebraDT_REPOSICAO: TDateTimeField
+      FieldName = 'DT_REPOSICAO'
+    end
+    object QQuebraDESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Size = 15
+    end
+    object QQuebraQT_TOTAL_QUEBRAS: TFloatField
+      FieldName = 'QT_TOTAL_QUEBRAS'
+    end
+  end
+  object QQuebraSetor: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL_QUEBRA'
+      
+        'INNER JOIN TB_MATERIAL ON TB_MATERIAL.COD_MATERIAL = TB_MATERIAL' +
+        '_QUEBRA.COD_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '  (:DT_QUEBRA IS NULL'
+      '   OR'
+      '    TB_MATERIAL_QUEBRA.DT_QUEBRA >= :DT_QUEBRA)'
+      'AND'
+      '  TB_MATERIAL_QUEBRA.DESC_TIPO = :DESC_TIPO'
+      'AND'
+      '  TB_MATERIAL_QUEBRA.DT_REPOSICAO IS NULL'
+      'ORDER BY'
+      '  TB_MATERIAL_QUEBRA.DT_QUEBRA DESC')
+    Variables.Data = {
+      03000000020000000A0000003A44545F5155454252410C000000000000000000
+      00000A0000003A444553435F5449504F050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000D0000004E4F4D455F4341444153
+      54524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 440
+    Top = 280
+    object QQuebraSetorCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QQuebraSetorCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QQuebraSetorNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QRProducao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PRODUTO.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  COUNT(*) AS QT_PECAS,'
+      '  SUM(TB_PEDIDO_ITEM.QT_PEDIDO) as QT_AREA,'
+      '  :DESC_TIPO AS DESC_TIPO,'
+      '  :DATA_INI AS DATA_INI,'
+      '  :DATA_FIN AS DATA_FIN'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      '  :SUBST'
+      '  and'
+      '  (TB_MATERIAL.VAL_LARGURA IS NOT NULL'
+      '   AND'
+      '    TB_MATERIAL.VAL_LARGURA > 0'
+      '    AND'
+      '     TB_PRODUTO.DESC_UNIDADE <> '#39'KIT'#39')'
+      'GROUP BY'
+      '  TB_PRODUTO.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO')
+    Variables.Data = {
+      0300000004000000060000003A53554253540100000000000000000000000A00
+      00003A444553435F5449504F050000000000000000000000090000003A444154
+      415F494E49050000000000000000000000090000003A444154415F46494E0500
+      00000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000070000000B000000434F445F50524F4455544F0100000000000C0000
+      00444553435F50524F4455544F0100000000000800000051545F504543415301
+      00000000000700000051545F4152454101000000000009000000444553435F54
+      49504F01000000000008000000444154415F494E490100000000000800000044
+      4154415F46494E010000000000}
+    Session = DMOracle.DBCemapa
+    OnCalcFields = QRProducaoCalcFields
+    Left = 449
+    Top = 11
+    object QRProducaoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QRProducaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QRProducaoQT_PECAS: TFloatField
+      FieldName = 'QT_PECAS'
+      DisplayFormat = '#,###,##0'
+    end
+    object QRProducaoQT_AREA: TFloatField
+      FieldName = 'QT_AREA'
+      DisplayFormat = '#,###,##0.00'
+    end
+    object QRProducaoDESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Size = 4000
+    end
+    object QRProducaoqt_pecas_quebra: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'qt_pecas_quebra'
+      Calculated = True
+    end
+    object QRProducaoqt_area_quebra: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'qt_area_quebra'
+      Calculated = True
+    end
+    object QRProducaoDATA_INI: TStringField
+      FieldName = 'DATA_INI'
+      Size = 4000
+    end
+    object QRProducaoDATA_FIN: TStringField
+      FieldName = 'DATA_FIN'
+      Size = 4000
+    end
+  end
+  object QRPedidoMaterial: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  A.*,'
+      '  ROWNUM AS NUM_LINHA'
+      'FROM'
+      '('
+      'SELECT'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_MATERIAL.VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      '  SUBSTR(TB_MATERIAL.IND_TIPO, 1, 1) AS IND_TIPO,'
+      '  TB_MATERIAL.QT_ACABAMENTO,'
+      '  TB_MATERIAL.QT_ACABAMENTO / 1000 AS QT_ACABAMENTO_M2,'
+      '  TB_MATERIAL.QT_CANTO,'
+      
+        '  DECODE(TB_MATERIAL.DESC_SERVICO, '#39'TEMPERA'#39', '#39#39', TB_MATERIAL.DE' +
+        'SC_SERVICO) AS DESC_SERVICO,'
+      
+        '  DECODE(TB_MATERIAL.DESC_ACABAMENTO, '#39'LAPIDADO'#39', '#39#39', TB_MATERIA' +
+        'L.DESC_ACABAMENTO) AS DESC_ACABAMENTO,'
+      
+        '  DECODE(TB_MATERIAL.DESC_FORMA, '#39'RETANGULAR'#39', '#39#39', TB_MATERIAL.D' +
+        'ESC_FORMA) AS DESC_FORMA,'
+      
+        '  DECODE(TB_MATERIAL.DESC_CANTO, '#39'RETO'#39', '#39#39', TB_MATERIAL.DESC_CA' +
+        'NTO) AS DESC_CANTO,'
+      
+        '  DECODE(TB_MATERIAL.DESC_ESPECIFICACAO, '#39'NORMAL'#39', '#39#39', TB_MATERI' +
+        'AL.DESC_ESPECIFICACAO) AS DESC_ESPECIFICACAO,'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') AS IND_REPOSICAO,'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39#39', '#39'R'#39' || (SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE ' +
+        'Q.COD_MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS ' +
+        'NULL)) AS DESC_REPOSICAO,'
+      '  TB_CADASTRO.COD_CADASTRO,'
+      '  TB_CADASTRO.DESC_FANTASIA,'
+      '  TB_PRODUTO.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_PEDIDO_CAB.DT_EMISSAO,'
+      '  TB_PEDIDO_CAB.DT_ENTREGA,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_PEDIDO_ITEM.VAL_UNITARIO,'
+      '  TB_PEDIDO_ITEM.COD_TRIBUTACAO,'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_OBSERVACAO,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS2,'
+      
+        '  DECODE(TB_PEDIDO_CAB.IND_TIPO_PAGAMENTO,'#39'A PRAZO'#39',TB_PRAZO_VEN' +
+        'CIMENTO.DESC_PRAZO_VENCIMENTO,TB_PEDIDO_CAB.IND_TIPO_PAGAMENTO) ' +
+        'AS DESC_PRAZO_VENCIMENTO,'
+      '  TB_PEDIDO_ITEM.QT_PEDIDO,'
+      
+        '  (TB_PRODUTO.NUM_METROS_CUBICOS * TB_PEDIDO_ITEM.QT_PEDIDO) AS ' +
+        'QT_VOLUME,'
+      
+        '  (TB_PEDIDO_ITEM.VAL_UNITARIO * TB_PEDIDO_ITEM.QT_PEDIDO) AS VA' +
+        'L_TOTAL'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'LEFT JOIN TB_PRAZO_VENCIMENTO ON TB_PEDIDO_CAB.COD_PRAZO_VENCIME' +
+        'NTO = TB_PRAZO_VENCIMENTO.COD_PRAZO_VENCIMENTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB IN ( :PEDIDOS )'
+      'ORDER BY'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      ') A'
+      'ORDER BY'
+      '  ROWNUM')
+    Variables.Data = {
+      0300000001000000080000003A50454449444F53010000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000001F0000000B000000434F445F50524F4455544F0100000000000C0000
+      00444553435F50524F4455544F01000000000008000000434F445F5045434101
+      00000000000B00000056414C5F4C4152475552410100000000000A0000005641
+      4C5F414C5455524101000000000008000000494E445F5449504F010000000000
+      0D00000051545F41434142414D454E544F0100000000000800000051545F4341
+      4E544F0100000000000C000000444553435F5345525649434F0100000000000F
+      000000444553435F41434142414D454E544F0100000000000A00000044455343
+      5F464F524D410100000000000A000000444553435F43414E544F010000000000
+      12000000444553435F4553504543494649434143414F0100000000000D000000
+      494E445F5245504F534943414F0100000000000E000000444553435F5245504F
+      534943414F0100000000000C000000434F445F434144415354524F0100000000
+      000D000000444553435F46414E54415349410100000000000A00000044545F45
+      4D495353414F0100000000000A00000044545F454E5452454741010000000000
+      14000000444553435F434F4D504C454D454E544F5F4F42530100000000000C00
+      000056414C5F554E49544152494F0100000000000E000000434F445F54524942
+      55544143414F0100000000000E000000434F445F50454449444F5F4341420100
+      00000000090000004E554D5F4C494E48410100000000000F000000444553435F
+      4F42534552564143414F01000000000015000000444553435F434F4D504C454D
+      454E544F5F4F42533201000000000015000000444553435F5052415A4F5F5645
+      4E43494D454E544F0100000000000900000051545F50454449444F0100000000
+      000900000051545F564F4C554D450100000000000900000056414C5F544F5441
+      4C0100000000001000000051545F41434142414D454E544F5F4D320100000000
+      00}
+    Session = DMOracle.DBCemapa
+    Left = 529
+    Top = 15
+    object QRPedidoMaterialCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QRPedidoMaterialVAL_LARGURA: TFloatField
+      FieldName = 'VAL_LARGURA'
+    end
+    object QRPedidoMaterialVAL_ALTURA: TFloatField
+      FieldName = 'VAL_ALTURA'
+    end
+    object QRPedidoMaterialIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 1
+    end
+    object QRPedidoMaterialQT_ACABAMENTO: TFloatField
+      FieldName = 'QT_ACABAMENTO'
+    end
+    object QRPedidoMaterialQT_CANTO: TIntegerField
+      FieldName = 'QT_CANTO'
+    end
+    object QRPedidoMaterialDESC_SERVICO: TStringField
+      FieldName = 'DESC_SERVICO'
+      Size = 12
+    end
+    object QRPedidoMaterialDESC_ACABAMENTO: TStringField
+      FieldName = 'DESC_ACABAMENTO'
+      Size = 14
+    end
+    object QRPedidoMaterialDESC_FORMA: TStringField
+      FieldName = 'DESC_FORMA'
+      Size = 10
+    end
+    object QRPedidoMaterialDESC_CANTO: TStringField
+      FieldName = 'DESC_CANTO'
+      Size = 10
+    end
+    object QRPedidoMaterialDESC_ESPECIFICACAO: TStringField
+      FieldName = 'DESC_ESPECIFICACAO'
+      Size = 8
+    end
+    object QRPedidoMaterialIND_REPOSICAO: TStringField
+      FieldName = 'IND_REPOSICAO'
+      Size = 1
+    end
+    object QRPedidoMaterialDESC_REPOSICAO: TStringField
+      FieldName = 'DESC_REPOSICAO'
+      Size = 41
+    end
+    object QRPedidoMaterialCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QRPedidoMaterialDESC_FANTASIA: TStringField
+      FieldName = 'DESC_FANTASIA'
+      Size = 30
+    end
+    object QRPedidoMaterialCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QRPedidoMaterialDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QRPedidoMaterialDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+    end
+    object QRPedidoMaterialDT_ENTREGA: TDateTimeField
+      FieldName = 'DT_ENTREGA'
+    end
+    object QRPedidoMaterialDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QRPedidoMaterialVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+    end
+    object QRPedidoMaterialCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+    end
+    object QRPedidoMaterialCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QRPedidoMaterialDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 60
+    end
+    object QRPedidoMaterialDESC_COMPLEMENTO_OBS2: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS2'
+      Size = 60
+    end
+    object QRPedidoMaterialDESC_PRAZO_VENCIMENTO: TStringField
+      FieldName = 'DESC_PRAZO_VENCIMENTO'
+      Size = 30
+    end
+    object QRPedidoMaterialQT_PEDIDO: TFloatField
+      FieldName = 'QT_PEDIDO'
+      Required = True
+    end
+    object QRPedidoMaterialQT_VOLUME: TFloatField
+      FieldName = 'QT_VOLUME'
+    end
+    object QRPedidoMaterialNUM_LINHA: TFloatField
+      FieldName = 'NUM_LINHA'
+    end
+    object QRPedidoMaterialVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+    object QRPedidoMaterialQT_ACABAMENTO_M2: TFloatField
+      FieldName = 'QT_ACABAMENTO_M2'
+    end
+  end
+  object QPedidoMaterialParam: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  '#39'N'#39' AS IND_SELECIONADO'
+      'FROM'
+      '  TB_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_PE' +
+        'DIDO_ITEM.COD_PEDIDO_CAB'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO >= '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> '#39'2'#39
+      '  AND'
+      '  (:COD_PRODUTO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO = :COD_PRODUTO)'
+      '  AND'
+      '  TB_PEDIDO_CAB.DT_BAIXA_VIDRACARIA IS NULL'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB'
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      '/*'
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  '#39'N'#39' AS IND_SELECIONADO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO > '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> 2'
+      '  AND'
+      '  TB_MATERIAL.IND_EXPORTADO <> '#39'S'#39
+      '  AND'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') <> '#39'S'#39
+      '  AND'
+      '  (:COD_PRODUTO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO = :COD_PRODUTO)'
+      '  AND'
+      '  TB_PEDIDO_CAB.DT_BAIXA_VIDRACARIA IS NULL'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_MATERIAL.IND_EXPORTADO'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB'
+      '*/')
+    Variables.Data = {
+      03000000010000000C0000003A434F445F50524F4455544F0300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000050000000C000000444553435F50524F4455544F0100000000001400
+      0000444553435F434F4D504C454D454E544F5F4F42530100000000000E000000
+      434F445F50454449444F5F434142010000000000040000004E4F4D4501000000
+      00000F000000494E445F53454C4543494F4E41444F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 529
+    Top = 63
+    object QPedidoMaterialParamCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QPedidoMaterialParamDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QPedidoMaterialParamNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QPedidoMaterialParamIND_SELECIONADO: TStringField
+      FieldName = 'IND_SELECIONADO'
+      Size = 1
+    end
+  end
+  object DspPedidoMaterialParam: TDataSetProvider
+    DataSet = QPedidoMaterialParam
+    Left = 529
+    Top = 111
+  end
+  object CdPedidoMaterialParam: TClientDataSet
+    Aggregates = <>
+    Filter = 'IND_SELECIONADO <> '#39'N'#39
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_PRODUTO'
+        ParamType = ptInput
+      end>
+    ProviderName = 'DspPedidoMaterialParam'
+    Left = 529
+    Top = 159
+    object CdPedidoMaterialParamCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object CdPedidoMaterialParamDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object CdPedidoMaterialParamNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object CdPedidoMaterialParamIND_SELECIONADO: TStringField
+      FieldName = 'IND_SELECIONADO'
+      Size = 1
+    end
+  end
+  object QEmbarquePedidoParam: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  '#39'N'#39' AS IND_SELECIONADO'
+      'FROM '
+      '  TB_PEDIDO_CAB'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO >= '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> '#39'2'#39
+      '  AND'
+      '  (:COD_CADASTRO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_CAB.COD_CADASTRO = :COD_CADASTRO)'
+      '  AND'
+      '  TB_PEDIDO_CAB.DT_BAIXA_VIDRACARIA IS NULL'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB '
+      ''
+      ''
+      ''
+      ''
+      ''
+      ''
+      '/*'
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  '#39'N'#39' AS IND_SELECIONADO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.DT_EMISSAO > '#39'01/01/2010'#39
+      '  AND'
+      '  TB_PEDIDO_CAB.IND_SITUACAO <> 2'
+      '  AND'
+      '  TB_MATERIAL.IND_EXPORTADO <> '#39'S'#39
+      '  AND'
+      
+        '  DECODE((SELECT COUNT(*) FROM TB_MATERIAL_QUEBRA Q WHERE Q.COD_' +
+        'MATERIAL = TB_MATERIAL.COD_MATERIAL AND Q.DT_REPOSICAO IS NULL),' +
+        ' 0, '#39'N'#39', '#39'S'#39') <> '#39'S'#39
+      '  AND'
+      '  (:COD_CADASTRO IS NULL'
+      '  OR'
+      '  TB_PEDIDO_CAB.COD_CADASTRO = :COD_CADASTRO)'
+      '  AND'
+      '  TB_PEDIDO_CAB.DT_BAIXA_VIDRACARIA IS NULL'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_MATERIAL.IND_EXPORTADO'
+      ''
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB'
+      '*/')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F434144415354524F03000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000050000000C000000444553435F50524F4455544F0100000000001400
+      0000444553435F434F4D504C454D454E544F5F4F42530100000000000E000000
+      434F445F50454449444F5F434142010000000000040000004E4F4D4501000000
+      00000F000000494E445F53454C4543494F4E41444F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 665
+    Top = 119
+    object QEmbarquePedidoParamCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QEmbarquePedidoParamDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QEmbarquePedidoParamNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QEmbarquePedidoParamIND_SELECIONADO: TStringField
+      FieldName = 'IND_SELECIONADO'
+      Size = 1
+    end
+  end
+  object DspEmbarquePedidoParam: TDataSetProvider
+    DataSet = QEmbarquePedidoParam
+    Left = 665
+    Top = 167
+  end
+  object CdEmbarquePedidoParam: TClientDataSet
+    Aggregates = <>
+    Filter = 'IND_SELECIONADO <> '#39'N'#39
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_CADASTRO'
+        ParamType = ptInput
+      end>
+    ProviderName = 'DspEmbarquePedidoParam'
+    Left = 665
+    Top = 215
+    object CdEmbarquePedidoParamCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object CdEmbarquePedidoParamDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object CdEmbarquePedidoParamNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object CdEmbarquePedidoParamIND_SELECIONADO: TStringField
+      FieldName = 'IND_SELECIONADO'
+      Size = 1
+    end
+  end
+  object QREmbarquePedido: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COUNT(TB_PEDIDO_ITEM.COD_PRODUTO) AS QTD_ITEM,'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.COD_CADASTRO,'
+      
+        '  DECODE(TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'#39#39',TB_PRODUTO.DESC_P' +
+        'RODUTO,TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS) AS DESC_COMPLEMENTO_O' +
+        'BS,'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO,'
+      '  TB_PEDIDO_ITEM.QT_PEDIDO,'
+      '  TB_PEDIDO_ITEM.VAL_ICMS_SUBST,'
+      '  TB_PEDIDO_ITEM.VAL_IPI,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_CADASTRO.DESC_FANTASIA,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_MATERIAL.VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      '  TB_MATERIAL.IND_TIPO,'
+      
+        '  (TB_PRODUTO.NUM_METROS_CUBICOS * TB_PEDIDO_ITEM.QT_PEDIDO) AS ' +
+        'QT_PESO,'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM,'
+      '  TB_PRODUTO.DESC_COMPLEMENTO,'
+      
+        '  SUM((Tb_pedido_item.QT_PEDIDO-Tb_pedido_item.QT_CANCELADO) * T' +
+        'b_pedido_item.VAL_UNITARIO'
+      
+        '    - DECODE(Tb_pedido_item.PERC_DESCONTO, null, 0, Tb_pedido_it' +
+        'em.PERC_DESCONTO * (Tb_pedido_item.VAL_UNITARIO * (Tb_pedido_ite' +
+        'm.QT_PEDIDO-Tb_pedido_item.QT_CANCELADO)) / 100)'
+      
+        '    - DECODE(Tb_pedido_item.PERC_DESCONTO1, null, 0, Tb_pedido_i' +
+        'tem.PERC_DESCONTO1 * (Tb_pedido_item.VAL_UNITARIO * (Tb_pedido_i' +
+        'tem.QT_PEDIDO-Tb_pedido_item.QT_CANCELADO)) / 100)'
+      
+        '    - DECODE(Tb_pedido_item.PERC_DESCONTO2, null, 0, Tb_pedido_i' +
+        'tem.PERC_DESCONTO2 * (Tb_pedido_item.VAL_UNITARIO * (Tb_pedido_i' +
+        'tem.QT_PEDIDO-Tb_pedido_item.QT_CANCELADO)) / 100)'
+      
+        '    + decode(cod_empresa,'#39'TEMPERFOZ'#39',0,DECODE(Tb_pedido_item.PER' +
+        'C_ACRESCIMO, null, 0, Tb_pedido_item.PERC_ACRESCIMO * (Tb_pedido' +
+        '_item.VAL_UNITARIO * (Tb_pedido_item.QT_PEDIDO-Tb_pedido_item.QT' +
+        '_CANCELADO)) / 100))'
+      
+        '    + NVL(TB_PEDIDO_ITEM.VAL_ICMS_SUBST, 0) + NVL(TB_PEDIDO_ITEM' +
+        '.VAL_IPI, 0)'
+      '  ) AS VAL_TOTAL,'
+      '  TB_PEDIDO_ITEM.VAL_UNITARIO'
+      'FROM'
+      '  tb_param_sistema,'
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB IN ( :PEDIDOS )'
+      'GROUP BY'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_CAB.COD_CADASTRO,'
+      '  TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS,'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO,'
+      '  TB_PEDIDO_ITEM.QT_PEDIDO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_CADASTRO.NOME,'
+      '  TB_CADASTRO.DESC_FANTASIA,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_MATERIAL.VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      '  TB_MATERIAL.IND_TIPO,'
+      '  (TB_PRODUTO.NUM_METROS_CUBICOS * TB_PEDIDO_ITEM.QT_PEDIDO),'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM, '
+      '  TB_PRODUTO.DESC_COMPLEMENTO,'
+      '  TB_PEDIDO_ITEM.VAL_UNITARIO,'
+      '  TB_PEDIDO_ITEM.VAL_ICMS_SUBST,'
+      '  TB_PEDIDO_ITEM.VAL_IPI'
+      'ORDER BY'
+      '  TB_PEDIDO_CAB.COD_CADASTRO,'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO,'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM')
+    Variables.Data = {
+      0300000001000000080000003A50454449444F53010000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000140000000B000000434F445F50524F4455544F0100000000000C0000
+      00444553435F50524F4455544F01000000000008000000434F445F5045434101
+      00000000000B00000056414C5F4C4152475552410100000000000A0000005641
+      4C5F414C5455524101000000000008000000494E445F5449504F010000000000
+      0C000000434F445F434144415354524F0100000000000D000000444553435F46
+      414E544153494101000000000014000000444553435F434F4D504C454D454E54
+      4F5F4F42530100000000000E000000434F445F50454449444F5F434142010000
+      0000000900000051545F50454449444F010000000000040000004E4F4D450100
+      000000000700000051545F5045534F0100000000000F000000434F445F504544
+      49444F5F4954454D01000000000010000000444553435F434F4D504C454D454E
+      544F0100000000000900000056414C5F544F54414C0100000000000C00000056
+      414C5F554E49544152494F010000000000080000005154445F4954454D010000
+      0000000E00000056414C5F49434D535F53554253540100000000000700000056
+      414C5F495049010000000000}
+    Session = DMOracle.DBCemapa
+    OnCalcFields = QREmbarquePedidoCalcFields
+    Left = 665
+    Top = 15
+    object QREmbarquePedidoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QREmbarquePedidoCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+    end
+    object QREmbarquePedidoDESC_COMPLEMENTO_OBS: TStringField
+      FieldName = 'DESC_COMPLEMENTO_OBS'
+      Size = 60
+    end
+    object QREmbarquePedidoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QREmbarquePedidoQT_PEDIDO: TFloatField
+      FieldName = 'QT_PEDIDO'
+      Required = True
+    end
+    object QREmbarquePedidoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object QREmbarquePedidoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QREmbarquePedidoDESC_FANTASIA: TStringField
+      FieldName = 'DESC_FANTASIA'
+      Size = 30
+    end
+    object QREmbarquePedidoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QREmbarquePedidoVAL_LARGURA: TFloatField
+      FieldName = 'VAL_LARGURA'
+    end
+    object QREmbarquePedidoVAL_ALTURA: TFloatField
+      FieldName = 'VAL_ALTURA'
+    end
+    object QREmbarquePedidoIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 5
+    end
+    object QREmbarquePedidoQT_PESO: TFloatField
+      FieldName = 'QT_PESO'
+    end
+    object QREmbarquePedidoCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+      Required = True
+    end
+    object QREmbarquePedidoDESC_COMPLEMENTO: TStringField
+      FieldName = 'DESC_COMPLEMENTO'
+      Size = 150
+    end
+    object QREmbarquePedidoVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+    object QREmbarquePedidoVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+    end
+    object QREmbarquePedidoQTD_ITEM: TFloatField
+      FieldName = 'QTD_ITEM'
+    end
+    object QREmbarquePedidoind_marcacao: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'ind_marcacao'
+      Size = 1
+      Calculated = True
+    end
+    object QREmbarquePedidoind_corte: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'ind_corte'
+      Size = 1
+      Calculated = True
+    end
+    object QREmbarquePedidoind_conferencia: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'ind_conferencia'
+      Size = 1
+      Calculated = True
+    end
+    object QREmbarquePedidoind_forno: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'ind_forno'
+      Size = 1
+      Calculated = True
+    end
+  end
+  object QControle_ES: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  ROWID,'
+      '  TB_CONTROLE_ES.*'
+      'FROM '
+      '  TB_CONTROLE_ES'
+      'WHERE'
+      '  TB_CONTROLE_ES.COD_CONTROLE_ES =:PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_CONTROLE_ES'
+    SequenceField.Sequence = 'SQCONTROLE_ES'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000F000000434F445F434F4E54524F4C455F45530100000000
+      000B000000494E445F454E545241444101000000000009000000494E445F5341
+      4944410100000000000F000000434F445F50454449444F5F4954454D01000000
+      0000}
+    Session = DMOracle.DBCemapa
+    Left = 544
+    Top = 272
+    object QControle_ESCOD_CONTROLE_ES: TIntegerField
+      FieldName = 'COD_CONTROLE_ES'
+      Required = True
+    end
+    object QControle_ESIND_ENTRADA: TStringField
+      FieldName = 'IND_ENTRADA'
+      Required = True
+      Size = 1
+    end
+    object QControle_ESIND_SAIDA: TStringField
+      FieldName = 'IND_SAIDA'
+      Size = 1
+    end
+    object QControle_ESCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+    end
+  end
+  object QRControle_ES: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_MATERIAL.VAL_LARGURA,'
+      '  TB_MATERIAL.VAL_ALTURA,'
+      '  TB_MATERIAL.IND_TIPO,'
+      
+        '  TB_CADASTRO.NOME || '#39'-'#39' || TB_PEDIDO_CAB.DESC_COMPLEMENTO_OBS ' +
+        'AS NOME,'
+      '  TB_CONTROLE_ES.IND_ENTRADA,'
+      '  TB_CONTROLE_ES.IND_SAIDA'
+      'FROM'
+      '  TB_EMBARQUE_ITEM,'
+      '  TB_PEDIDO_CAB,'
+      '  TB_MATERIAL,'
+      '  TB_CADASTRO,'
+      '  TB_CONTROLE_ES'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_EMBARQUE_ITEM.COD_PEDIDO_CAB'
+      '  AND'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MATERIAL.COD_PEDIDO'
+      '  AND'
+      '  TB_PEDIDO_CAB.COD_CADASTRO = TB_CADASTRO.COD_CADASTRO'
+      '  AND'
+      '  TB_MATERIAL.COD_PEDIDO_ITEM = TB_CONTROLE_ES.COD_PEDIDO_ITEM'
+      '  AND'
+      '  TB_EMBARQUE_ITEM.COD_EMBARQUE =:COD_EMBARQUE')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F454D42415251554503000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000080000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000B00000056414C5F4C4152475552
+      410100000000000A00000056414C5F414C545552410100000000000800000049
+      4E445F5449504F010000000000040000004E4F4D450100000000000B00000049
+      4E445F454E545241444101000000000009000000494E445F5341494441010000
+      000000}
+    Session = DMOracle.DBCemapa
+    Left = 632
+    Top = 272
+    object QRControle_ESCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QRControle_ESCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QRControle_ESVAL_LARGURA: TFloatField
+      FieldName = 'VAL_LARGURA'
+    end
+    object QRControle_ESVAL_ALTURA: TFloatField
+      FieldName = 'VAL_ALTURA'
+    end
+    object QRControle_ESIND_TIPO: TStringField
+      FieldName = 'IND_TIPO'
+      Size = 5
+    end
+    object QRControle_ESNOME: TStringField
+      FieldName = 'NOME'
+      Size = 111
+    end
+    object QRControle_ESIND_ENTRADA: TStringField
+      FieldName = 'IND_ENTRADA'
+      Required = True
+      Size = 1
+    end
+    object QRControle_ESIND_SAIDA: TStringField
+      FieldName = 'IND_SAIDA'
+      Size = 1
+    end
+  end
+  object DSControle_ES: TDataSource
+    DataSet = QRControle_ES
+    Left = 632
+    Top = 336
+  end
+  object QEmbarque: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '     TB_ACOMPANHAMENTO_PEDIDO.DT_EMBARQUE >= :DT_EMBARQUE'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_EMBARQUE DESC')
+    Variables.Data = {
+      03000000010000000C0000003A44545F454D4241525155450C00000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000D0000004E4F4D455F4341444153
+      54524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 264
+    Top = 16
+    object QEmbarqueCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QEmbarqueCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QEmbarqueNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QControleBaixa: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ESTOQUE_BAIXAR.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_ESTOQUE.QT_QUANTIDADE,'
+      '  TB_ESTOQUE.COD_LOTE_TIPO,'
+      '  TB_LOTE_TIPO.DESC_LOTE'
+      'FROM'
+      '  TB_ESTOQUE_BAIXAR,'
+      '  TB_PRODUTO,'
+      '  TB_ESTOQUE,'
+      '  TB_LOTE_TIPO'
+      'WHERE'
+      '  TB_ESTOQUE_BAIXAR.COD_PRODUTO = TB_PRODUTO.COD_PRODUTO'
+      '  AND'
+      '  TB_ESTOQUE.COD_PRODUTO = TB_PRODUTO.COD_PRODUTO'
+      '  AND'
+      '  TB_ESTOQUE.COD_LOTE_TIPO = TB_LOTE_TIPO.COD_LOTE_TIPO'
+      '  AND'
+      '  TB_ESTOQUE.QT_QUANTIDADE > 0'
+      '  AND'
+      '  TB_ESTOQUE_BAIXAR.COD_PRODUTO_BAIXA =:COD_PRODUTO')
+    Variables.Data = {
+      03000000010000000C0000003A434F445F50524F4455544F0300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000050000000D000000434F445F4C4F54455F5449504F0100000000000B
+      000000434F445F50524F4455544F0100000000000C000000444553435F50524F
+      4455544F0100000000000D00000051545F5155414E5449444144450100000000
+      0009000000444553435F4C4F5445010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 720
+    Top = 272
+    object QControleBaixaCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QControleBaixaDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QControleBaixaQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QControleBaixaCOD_LOTE_TIPO: TIntegerField
+      FieldName = 'COD_LOTE_TIPO'
+      Required = True
+    end
+    object QControleBaixaDESC_LOTE: TStringField
+      FieldName = 'DESC_LOTE'
+    end
+  end
+  object QRRastreamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_MATERIAL.COD_PEDIDO,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_MATERIAL.COD_LOTE_RASTREADO,'
+      '  TB_LOTE_TIPO.DESC_LOTE,'
+      '  TB_NOTA_CAB.COD_CADASTRO,'
+      '  TB_CADASTRO.NOME'
+      'FROM'
+      '  TB_LOTE_TIPO,'
+      '  TB_MATERIAL,'
+      '  TB_NOTA_CAB,'
+      '  TB_NOTA_ITEM,'
+      '  TB_CADASTRO'
+      'WHERE'
+      '  TB_LOTE_TIPO.COD_LOTE_TIPO = TB_MATERIAL.COD_LOTE_RASTREADO '
+      '  AND'
+      '  TB_MATERIAL.COD_LOTE_RASTREADO = TB_NOTA_ITEM.COD_LOTE_TIPO'
+      '  AND'
+      '  TB_NOTA_CAB.COD_NOTA_CAB = TB_NOTA_ITEM.COD_NOTA_CAB'
+      '  AND'
+      '  TB_NOTA_CAB.COD_CADASTRO = TB_CADASTRO.COD_CADASTRO'
+      '  AND'
+      '  TB_NOTA_CAB.IND_ENTRADA_SAIDA = '#39'E'#39
+      '  AND'
+      '  TB_NOTA_CAB.IND_SITUACAO = 2'
+      '  AND'
+      '  (:COD_LOTE IS NULL'
+      '   OR'
+      '    TB_MATERIAL.COD_LOTE_RASTREADO =:COD_LOTE)'
+      '  AND'
+      '  (:COD_PECA IS NULL'
+      '   OR'
+      '    TB_MATERIAL.COD_PECA =:COD_PECA)'
+      '  '
+      '')
+    Variables.Data = {
+      0300000002000000090000003A434F445F4C4F54450300000000000000000000
+      00090000003A434F445F50454341050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000009000000444553435F4C4F54450100000000000A00000043
+      4F445F50454449444F01000000000008000000434F445F504543410100000000
+      000C000000434F445F434144415354524F010000000000040000004E4F4D4501
+      000000000012000000434F445F4C4F54455F52415354524541444F0100000000
+      00}
+    Session = DMOracle.DBCemapa
+    Left = 720
+    Top = 335
+    object QRRastreamentoCOD_PEDIDO: TIntegerField
+      FieldName = 'COD_PEDIDO'
+      Required = True
+    end
+    object QRRastreamentoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QRRastreamentoDESC_LOTE: TStringField
+      FieldName = 'DESC_LOTE'
+    end
+    object QRRastreamentoNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object QRRastreamentoCOD_LOTE_RASTREADO: TIntegerField
+      FieldName = 'COD_LOTE_RASTREADO'
+    end
+    object QRRastreamentoCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+  end
+  object QLaminado: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '     TB_ACOMPANHAMENTO_PEDIDO.DT_LAMINADO >= :DT_LAMINADO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_LAMINADO DESC')
+    Variables.Data = {
+      03000000010000000C0000003A44545F4C414D494E41444F0C00000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 168
+    Top = 64
+    object QLaminadoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QLaminadoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QLaminadoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QConferencia: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '      TB_ACOMPANHAMENTO_PEDIDO.DT_CONFERENCIA >= :DT_CONFERENCIA'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_CONFERENCIA DESC')
+    Variables.Data = {
+      03000000010000000F0000003A44545F434F4E464552454E4349410C00000000
+      00000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000008000000434F445F504543410100000000000D0000004E4F
+      4D455F434144415354524F0100000000000E000000434F445F50454449444F5F
+      434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 259
+    Top = 64
+    object QConferenciaCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QConferenciaCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QConferenciaNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QRQuebra: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_MATERIAL_QUEBRA.DESC_TIPO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  SUM(TB_PEDIDO_ITEM.QT_PEDIDO)AS QT_QUEBRA'
+      'FROM'
+      '  TB_PEDIDO_ITEM,'
+      '  TB_PRODUTO,'
+      '  TB_MATERIAL_QUEBRA,'
+      '  TB_MATERIAL'
+      'WHERE'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO = TB_PRODUTO.COD_PRODUTO'
+      '  AND'
+      '  TB_MATERIAL.COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      '  AND'
+      '  TB_MATERIAL.COD_MATERIAL = TB_MATERIAL_QUEBRA.COD_MATERIAL'
+      '  AND'
+      '  (:DT_QUEBRA_I IS NULL'
+      '   OR'
+      
+        '    TO_CHAR(TB_MATERIAL_QUEBRA.DT_QUEBRA,'#39'DD/MM/YYYY'#39') >= :DT_QU' +
+        'EBRA_I)'
+      '  AND'
+      '  (:DT_QUEBRA_F IS NULL'
+      '   OR'
+      
+        '    TO_CHAR(TB_MATERIAL_QUEBRA.DT_QUEBRA,'#39'DD/MM/YYYY'#39') <= :DT_QU' +
+        'EBRA_F)'
+      '  AND'
+      '  (:DESC_TIPO IS NULL'
+      '   OR'
+      '    TB_MATERIAL_QUEBRA.DESC_TIPO = :DESC_TIPO)'
+      'GROUP BY'
+      '  TB_MATERIAL_QUEBRA.DESC_TIPO,'
+      '  TB_PRODUTO.DESC_PRODUTO'
+      'ORDER BY'
+      '  TB_MATERIAL_QUEBRA.DESC_TIPO,'
+      '  TB_PRODUTO.DESC_PRODUTO'
+      '')
+    Variables.Data = {
+      03000000030000000A0000003A444553435F5449504F05000000000000000000
+      00000C0000003A44545F5155454252415F490C00000000000000000000000C00
+      00003A44545F5155454252415F460C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000009000000444553435F5449504F0100000000000C00000044
+      4553435F50524F4455544F0100000000000900000051545F5155454252410100
+      00000000}
+    Session = DMOracle.DBCemapa
+    Left = 440
+    Top = 342
+    object QRQuebraDESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Size = 15
+    end
+    object QRQuebraDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QRQuebraQT_QUEBRA: TFloatField
+      FieldName = 'QT_QUEBRA'
+    end
+  end
+  object QFuracao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '    TB_ACOMPANHAMENTO_PEDIDO.DT_FURACAO >= :DT_FURACAO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_FURACAO DESC')
+    Variables.Data = {
+      03000000010000000B0000003A44545F4655524143414F0C0000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000D0000004E4F4D455F4341444153
+      54524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 327
+    Top = 16
+    object QFuracaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QFuracaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QFuracaoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QLapidacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB            ON TB_PEDIDO_CAB.COD_PEDIDO_' +
+        'CAB             = TB_MATERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO              ON TB_CADASTRO.COD_CADASTRO ' +
+        '                = TB_PEDIDO_CAB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM           ON TB_PEDIDO_ITEM.COD_PEDIDO' +
+        '_ITEM           = TB_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '     TB_ACOMPANHAMENTO_PEDIDO.DT_LAPIDACAO >= :DT_LAPIDACAO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_LAPIDACAO DESC')
+    Variables.Data = {
+      03000000010000000D0000003A44545F4C415049444143414F0C000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000D0000004E4F4D455F4341444153
+      54524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 329
+    Top = 65
+    object QLapidacaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QLapidacaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QLapidacaoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object Qlavacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_ACOMPANHAMENTO_PEDIDO.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_PECA,'
+      '  TB_CADASTRO.DESC_FANTASIA AS NOME_CADASTRO'
+      'FROM '
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_CAB            ON TB_PEDIDO_CAB.COD_PEDIDO_' +
+        'CAB             = TB_MATERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO              ON TB_CADASTRO.COD_CADASTRO ' +
+        '                = TB_PEDIDO_CAB.COD_CADASTRO'
+      
+        'INNER JOIN TB_PEDIDO_ITEM           ON TB_PEDIDO_ITEM.COD_PEDIDO' +
+        '_ITEM           = TB_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_ACOMPANHAMENTO_PEDIDO ON TB_ACOMPANHAMENTO_PEDIDO.' +
+        'COD_PEDIDO_ITEM = TB_PEDIDO_ITEM.COD_PEDIDO_ITEM'
+      'WHERE'
+      '     TB_ACOMPANHAMENTO_PEDIDO.DT_LAVACAO >= :DT_LAVACAO'
+      'ORDER BY'
+      '  TB_ACOMPANHAMENTO_PEDIDO.DT_LAVACAO DESC')
+    Variables.Data = {
+      03000000010000000B0000003A44545F4C41564143414F0C0000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000E000000434F445F50454449444F5F434142010000000000
+      08000000434F445F504543410100000000000D0000004E4F4D455F4341444153
+      54524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 327
+    Top = 114
+    object QlavacaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QlavacaoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 6
+    end
+    object QlavacaoNOME_CADASTRO: TStringField
+      FieldName = 'NOME_CADASTRO'
+      Size = 30
+    end
+  end
+  object QRastreamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  ROWID,'
+      '  TB_RASTREAMENTO.COD_RASTREAMENTO,'
+      '  TB_RASTREAMENTO.COD_CHAPA,'
+      '  TB_RASTREAMENTO.COD_LOTE,'
+      '  TB_RASTREAMENTO.COD_PECA,'
+      '  TB_RASTREAMENTO.DESC_CALCULO,'
+      '  TB_RASTREAMENTO.DT_BAIXA'
+      'FROM'
+      'TB_RASTREAMENTO')
+    SequenceField.Field = 'COD_RASTREAMENTO'
+    SequenceField.Sequence = 'SQ_RASTREAMENTO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000010000000434F445F524153545245414D454E544F01000000
+      000009000000434F445F434841504101000000000008000000434F445F4C4F54
+      4501000000000008000000434F445F504543410100000000000C000000444553
+      435F43414C43554C4F0100000000000800000044545F42414958410100000000
+      00}
+    Session = DMOracle.DBCemapa
+    Left = 171
+    Top = 379
+    object QRastreamentoCOD_RASTREAMENTO: TIntegerField
+      FieldName = 'COD_RASTREAMENTO'
+      Required = True
+    end
+    object QRastreamentoCOD_CHAPA: TIntegerField
+      FieldName = 'COD_CHAPA'
+      Required = True
+    end
+    object QRastreamentoCOD_LOTE: TIntegerField
+      FieldName = 'COD_LOTE'
+    end
+    object QRastreamentoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Size = 6
+    end
+    object QRastreamentoDESC_CALCULO: TStringField
+      FieldName = 'DESC_CALCULO'
+      Size = 100
+    end
+    object QRastreamentoDT_BAIXA: TDateTimeField
+      FieldName = 'DT_BAIXA'
+    end
+  end
+  object QDesenhoExportacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB,'
+      '  TB_MATERIAL.COD_MATERIAL,'
+      '  TB_PRODUTO.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      
+        '  /*ROWNUM AS SEQ, DESTA FORMA '#201' RETORNADA A SEQUENCIA ANTES DA ' +
+        'ORDENA'#199#195'O*/'
+      '  RANK() OVER (ORDER BY TB_PEDIDO_ITEM.COD_PEDIDO_ITEM ASC) SEQ,'
+      '  TB_MATERIAL.COD_DESENHO_EXPORTACAO'
+      'FROM'
+      '  TB_PEDIDO_CAB'
+      '  INNER JOIN TB_PEDIDO_ITEM ON'
+      '    TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_PEDIDO_ITEM.COD_PEDIDO_CAB'
+      '  INNER JOIN TB_MATERIAL ON'
+      '    TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MATERIAL.COD_PEDIDO'
+      '  AND'
+      '    TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB_MATERIAL.COD_PEDIDO_ITEM'
+      '  INNER JOIN TB_PRODUTO ON'
+      '    TB_PEDIDO_ITEM.COD_PRODUTO = TB_PRODUTO.COD_PRODUTO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = :COD_PEDIDO_CAB'
+      'ORDER BY '
+      '  COD_PEDIDO_ITEM')
+    Variables.Data = {
+      03000000010000000F0000003A434F445F50454449444F5F4341420300000000
+      00000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000C000000444553435F50524F4455544F0100000000000C00
+      0000434F445F4D4154455249414C0100000000000B000000434F445F50524F44
+      55544F0100000000000300000053455101000000000016000000434F445F4445
+      53454E484F5F4558504F52544143414F0100000000000E000000434F445F5045
+      4449444F5F434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 200
+    object QDesenhoExportacaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object QDesenhoExportacaoCOD_MATERIAL: TFloatField
+      FieldName = 'COD_MATERIAL'
+      Required = True
+    end
+    object QDesenhoExportacaoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QDesenhoExportacaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QDesenhoExportacaoSEQ: TFloatField
+      FieldName = 'SEQ'
+    end
+    object QDesenhoExportacaoCOD_DESENHO_EXPORTACAO: TStringField
+      FieldName = 'COD_DESENHO_EXPORTACAO'
+      Size = 8
+    end
+  end
+  object dspDesenhoExportacao: TDataSetProvider
+    DataSet = QDesenhoExportacao
+    Left = 40
+    Top = 264
+  end
+  object cdsDesenhoExportacao: TClientDataSet
+    Aggregates = <>
+    Filter = 'COD_DESENHO_EXPORTACAO <> '#39#39
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_PEDIDO_CAB'
+        ParamType = ptInput
+      end>
+    ProviderName = 'dspDesenhoExportacao'
+    Left = 40
+    Top = 328
+    object cdsDesenhoExportacaoCOD_PEDIDO_CAB: TIntegerField
+      FieldName = 'COD_PEDIDO_CAB'
+      Required = True
+    end
+    object cdsDesenhoExportacaoCOD_MATERIAL: TFloatField
+      FieldName = 'COD_MATERIAL'
+      Required = True
+    end
+    object cdsDesenhoExportacaoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object cdsDesenhoExportacaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object cdsDesenhoExportacaoSEQ: TFloatField
+      FieldName = 'SEQ'
+    end
+    object cdsDesenhoExportacaoCOD_DESENHO_EXPORTACAO: TStringField
+      FieldName = 'COD_DESENHO_EXPORTACAO'
+      Size = 8
+    end
+  end
+  object QREmbarquePedidoResumo: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COUNT(TB_PEDIDO_ITEM.COD_PRODUTO) AS QTD_ITEM,'
+      '  sum(TB_PEDIDO_ITEM.QT_PEDIDO) as metragem,'
+      
+        '  sum(TB_PRODUTO.NUM_METROS_CUBICOS * TB_PEDIDO_ITEM.QT_PEDIDO) ' +
+        'AS QT_PESO,'
+      '  TB_PEDIDO_ITEM.COD_PRODUTO,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_PRODUTO.DESC_COMPLEMENTO'
+      'FROM'
+      '  TB_MATERIAL'
+      
+        'INNER JOIN TB_PEDIDO_ITEM ON TB_PEDIDO_ITEM.COD_PEDIDO_ITEM = TB' +
+        '_MATERIAL.COD_PEDIDO_ITEM'
+      
+        'INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_PEDIDO_ITEM' +
+        '.COD_PRODUTO'
+      
+        'INNER JOIN TB_PEDIDO_CAB ON TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_MA' +
+        'TERIAL.COD_PEDIDO'
+      
+        'INNER JOIN TB_CADASTRO ON TB_CADASTRO.COD_CADASTRO = TB_PEDIDO_C' +
+        'AB.COD_CADASTRO'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB IN ( :PEDIDOS )'
+      
+        'GROUP BY TB_PEDIDO_ITEM.COD_PRODUTO, TB_PRODUTO.DESC_PRODUTO, TB' +
+        '_PRODUTO.DESC_COMPLEMENTO'
+      'ORDER BY'
+      '  TB_PRODUTO.DESC_PRODUTO'
+      '')
+    Variables.Data = {
+      0300000001000000080000003A50454449444F53010000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000B000000434F445F50524F4455544F0100000000000C0000
+      00444553435F50524F4455544F0100000000000700000051545F5045534F0100
+      0000000010000000444553435F434F4D504C454D454E544F0100000000000800
+      00005154445F4954454D010000000000080000004D4554524147454D01000000
+      0000}
+    Session = DMOracle.DBCemapa
+    Left = 665
+    Top = 71
+    object QREmbarquePedidoResumoQTD_ITEM: TFloatField
+      FieldName = 'QTD_ITEM'
+    end
+    object QREmbarquePedidoResumoMETRAGEM: TFloatField
+      FieldName = 'METRAGEM'
+    end
+    object QREmbarquePedidoResumoQT_PESO: TFloatField
+      FieldName = 'QT_PESO'
+    end
+    object QREmbarquePedidoResumoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QREmbarquePedidoResumoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QREmbarquePedidoResumoDESC_COMPLEMENTO: TStringField
+      FieldName = 'DESC_COMPLEMENTO'
+      Size = 150
+    end
+  end
+  object QRel_Rastreamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  TB_RASTREAMENTO.COD_RASTREAMENTO,'
+      '  TB_RASTREAMENTO.COD_CHAPA,'
+      '  TB_RASTREAMENTO.COD_LOTE,'
+      '  TB_RASTREAMENTO.COD_PECA,'
+      '  TB_RASTREAMENTO.DT_BAIXA,'
+      '  TB_PRODUTO.DESC_PRODUTO,'
+      '  TB_LOTE_TIPO.DESC_LOTE'
+      'FROM'
+      '  TB_RASTREAMENTO,'
+      '  TB_PRODUTO,'
+      '  TB_LOTE_TIPO'
+      'WHERE'
+      '  TB_RASTREAMENTO.COD_CHAPA = TB_PRODUTO.COD_PRODUTO'
+      'AND'
+      '  TB_PRODUTO.COD_LOTE_TIPO = TB_LOTE_TIPO.COD_LOTE_TIPO(+)'
+      'AND'
+      '  (:COD_LOTE IS NULL'
+      '   OR TB_RASTREAMENTO.COD_LOTE = :COD_LOTE)'
+      'AND'
+      '  (:COD_CHAPA IS NULL'
+      '   OR TB_RASTREAMENTO.COD_CHAPA = :COD_CHAPA)'
+      'ORDER BY'
+      '  COD_RASTREAMENTO'
+      '')
+    Variables.Data = {
+      0300000002000000090000003A434F445F4C4F54450300000000000000000000
+      000A0000003A434F445F4348415041030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000700000010000000434F445F524153545245414D454E544F01000000
+      000009000000434F445F434841504101000000000008000000434F445F4C4F54
+      4501000000000008000000434F445F504543410100000000000800000044545F
+      42414958410100000000000C000000444553435F50524F4455544F0100000000
+      0009000000444553435F4C4F5445010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 287
+    Top = 362
+    object QRel_RastreamentoCOD_RASTREAMENTO: TIntegerField
+      FieldName = 'COD_RASTREAMENTO'
+      Required = True
+    end
+    object QRel_RastreamentoCOD_CHAPA: TIntegerField
+      FieldName = 'COD_CHAPA'
+      Required = True
+    end
+    object QRel_RastreamentoCOD_LOTE: TIntegerField
+      FieldName = 'COD_LOTE'
+    end
+    object QRel_RastreamentoCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Size = 6
+    end
+    object QRel_RastreamentoDT_BAIXA: TDateTimeField
+      FieldName = 'DT_BAIXA'
+    end
+    object QRel_RastreamentoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QRel_RastreamentoDESC_LOTE: TStringField
+      FieldName = 'DESC_LOTE'
+    end
+  end
+  object QVinculaPecasPedido: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_ITEM,'
+      '  TB_PEDIDO_ITEM.QT_PEDIDO,'
+      '  TB_PEDIDO_ITEM.NUM_FABRICANTE'
+      'FROM'
+      '  TB_PEDIDO_ITEM'
+      'WHERE  '
+      '  TB_PEDIDO_ITEM.COD_PEDIDO_CAB = :COD_PEDIDO_CAB')
+    Variables.Data = {
+      03000000010000000F0000003A434F445F50454449444F5F4341420300000000
+      00000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000F000000434F445F50454449444F5F4954454D0100000000
+      000900000051545F50454449444F0100000000000E0000004E554D5F46414252
+      4943414E5445010000000000}
+    Session = DMOracle.DBCemapa
+    OnCalcFields = QVinculaPecasPedidoCalcFields
+    Left = 536
+    Top = 336
+    object QVinculaPecasPedidoCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+      Required = True
+    end
+    object QVinculaPecasPedidoQT_PEDIDO: TFloatField
+      FieldName = 'QT_PEDIDO'
+      Required = True
+    end
+    object QVinculaPecasPedidoNUM_FABRICANTE: TStringField
+      FieldName = 'NUM_FABRICANTE'
+      Size = 15
+    end
+    object QVinculaPecasPedidoval_largura: TIntegerField
+      FieldKind = fkCalculated
+      FieldName = 'val_largura'
+      Calculated = True
+    end
+    object QVinculaPecasPedidoval_altura: TIntegerField
+      FieldKind = fkCalculated
+      FieldName = 'val_altura'
+      Calculated = True
+    end
+    object QVinculaPecasPedidoind_tipo: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'ind_tipo'
+      Size = 5
+      Calculated = True
+    end
+  end
+  object QMaterialCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DISTINCT(TB_MATERIAL.COD_PECA),'
+      '  TB_MATERIAL.COD_PEDIDO,'
+      '  TB_MATERIAL.IND_REPOSICAO,'
+      '  TB_MATERIAL.COD_PEDIDO_ITEM,'
+      '  TB_MATERIAL.NUM_SERIE,'
+      '  TB_MATERIAL.COD_MATERIAL'
+      'FROM'
+      '  TB_PEDIDO_CAB,'
+      '  TB_PEDIDO_ITEM,'
+      '  TB_MATERIAL,'
+      '  TB_ACOMPANHAMENTO_PEDIDO  '
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_PEDIDO_ITEM.COD_PEDIDO_CAB'
+      '  AND'
+      '  TB_MATERIAL.COD_PEDIDO = TB_PEDIDO_CAB.COD_PEDIDO_CAB'
+      '  AND'
+      
+        '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_ACOMPANHAMENTO_PEDIDO.COD_PE' +
+        'DIDO_CAB'
+      '  AND'
+      '  TB_MATERIAL.COD_PECA = :COD_PECA'
+      '  AND'
+      '  TB_MATERIAL.NUM_SERIE = :NUM_SERIE'
+      '')
+    Variables.Data = {
+      0300000002000000090000003A434F445F504543410300000000000000000000
+      000A0000003A4E554D5F5345524945030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000008000000434F445F504543410100000000000A000000434F
+      445F50454449444F0100000000000D000000494E445F5245504F534943414F01
+      00000000000F000000434F445F50454449444F5F4954454D0100000000000900
+      00004E554D5F53455249450100000000000C000000434F445F4D415445524941
+      4C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 64
+    Top = 120
+    object QMaterialConsCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QMaterialConsCOD_PEDIDO: TIntegerField
+      FieldName = 'COD_PEDIDO'
+      Required = True
+    end
+    object QMaterialConsIND_REPOSICAO: TStringField
+      FieldName = 'IND_REPOSICAO'
+      Size = 6
+    end
+    object QMaterialConsCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+    end
+    object QMaterialConsNUM_SERIE: TIntegerField
+      FieldName = 'NUM_SERIE'
+    end
+    object QMaterialConsCOD_MATERIAL: TFloatField
+      FieldName = 'COD_MATERIAL'
+      Required = True
+    end
+  end
+  object QAcompanhamentoCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_ACOMPANHAMENTO_PEDIDO,'
+      '  IND_CALCULO,'
+      '  IND_CORTE,'
+      '  IND_USINAGEM,'
+      '  IND_MARCACAO,'
+      '  IND_FORNO,'
+      '  IND_EMBARQUE,'
+      '  IND_LAMINADO,'
+      '  IND_FURACAO,'
+      '  IND_LAPIDACAO,'
+      '  IND_LAVACAO,'
+      '  IND_CONFERENCIA'
+      'FROM'
+      '  TB_ACOMPANHAMENTO_PEDIDO'
+      'WHERE'
+      '  COD_PEDIDO_ITEM = :COD_PEDIDO_ITEM')
+    Variables.Data = {
+      0300000001000000100000003A434F445F50454449444F5F4954454D03000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000C00000019000000434F445F41434F4D50414E48414D454E544F5F50
+      454449444F0100000000000B000000494E445F43414C43554C4F010000000000
+      09000000494E445F434F5254450100000000000C000000494E445F5553494E41
+      47454D0100000000000C000000494E445F4D4152434143414F01000000000009
+      000000494E445F464F524E4F0100000000000C000000494E445F454D42415251
+      55450100000000000C000000494E445F4C414D494E41444F0100000000000B00
+      0000494E445F4655524143414F0100000000000D000000494E445F4C41504944
+      4143414F0100000000000B000000494E445F4C41564143414F0100000000000F
+      000000494E445F434F4E464552454E434941010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 160
+    Top = 120
+    object QAcompanhamentoConsCOD_ACOMPANHAMENTO_PEDIDO: TIntegerField
+      FieldName = 'COD_ACOMPANHAMENTO_PEDIDO'
+      Required = True
+    end
+    object QAcompanhamentoConsIND_CALCULO: TStringField
+      FieldName = 'IND_CALCULO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_CORTE: TStringField
+      FieldName = 'IND_CORTE'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_USINAGEM: TStringField
+      FieldName = 'IND_USINAGEM'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_MARCACAO: TStringField
+      FieldName = 'IND_MARCACAO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_FORNO: TStringField
+      FieldName = 'IND_FORNO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_EMBARQUE: TStringField
+      FieldName = 'IND_EMBARQUE'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_LAMINADO: TStringField
+      FieldName = 'IND_LAMINADO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_FURACAO: TStringField
+      FieldName = 'IND_FURACAO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_LAPIDACAO: TStringField
+      FieldName = 'IND_LAPIDACAO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_LAVACAO: TStringField
+      FieldName = 'IND_LAVACAO'
+      Size = 1
+    end
+    object QAcompanhamentoConsIND_CONFERENCIA: TStringField
+      FieldName = 'IND_CONFERENCIA'
+      Size = 1
+    end
+  end
+  object QRMaterial: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DISTINCT(TB_MATERIAL.COD_PECA),'
+      '  TB_MATERIAL.COD_PEDIDO,'
+      '  TB_MATERIAL.IND_REPOSICAO,'
+      '  TB_MATERIAL.COD_PEDIDO_ITEM,'
+      '  TB_MATERIAL.NUM_SERIE,'
+      '  TB_MATERIAL.COD_MATERIAL'
+      'FROM'
+      '  TB_PEDIDO_CAB,'
+      '  TB_PEDIDO_ITEM,'
+      '  TB_MATERIAL'
+      'WHERE'
+      '  TB_PEDIDO_CAB.COD_PEDIDO_CAB = TB_PEDIDO_ITEM.COD_PEDIDO_CAB'
+      '  AND'
+      '  TB_MATERIAL.COD_PEDIDO = TB_PEDIDO_CAB.COD_PEDIDO_CAB   '
+      '  AND'
+      '  TB_MATERIAL.COD_PECA = :COD_PECA'
+      '  AND'
+      '  TB_MATERIAL.NUM_SERIE = :NUM_SERIE'
+      '')
+    Variables.Data = {
+      0300000002000000090000003A434F445F504543410300000000000000000000
+      000A0000003A4E554D5F5345524945030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000008000000434F445F504543410100000000000A000000434F
+      445F50454449444F0100000000000D000000494E445F5245504F534943414F01
+      00000000000F000000434F445F50454449444F5F4954454D0100000000000900
+      00004E554D5F53455249450100000000000C000000434F445F4D415445524941
+      4C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 376
+    object QRMaterialCOD_PECA: TStringField
+      FieldName = 'COD_PECA'
+      Required = True
+      Size = 8
+    end
+    object QRMaterialCOD_PEDIDO: TIntegerField
+      FieldName = 'COD_PEDIDO'
+      Required = True
+    end
+    object QRMaterialIND_REPOSICAO: TStringField
+      FieldName = 'IND_REPOSICAO'
+      Size = 6
+    end
+    object QRMaterialCOD_PEDIDO_ITEM: TIntegerField
+      FieldName = 'COD_PEDIDO_ITEM'
+    end
+    object QRMaterialNUM_SERIE: TIntegerField
+      FieldName = 'NUM_SERIE'
+    end
+    object QRMaterialCOD_MATERIAL: TFloatField
+      FieldName = 'COD_MATERIAL'
+      Required = True
+    end
+  end
+end

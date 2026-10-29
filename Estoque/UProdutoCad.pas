@@ -1,0 +1,9309 @@
+unit UProdutoCad;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCADSIMPLES, Menus, Db, ComCtrls, StdCtrls, Mask, Buttons, ExtCtrls,
+  DBCtrls, Grids, DBGrids, ImgList, OracleNavigator, DBDirceu, ExtDlgs, jpeg, variants,
+  ActnList, DBPanel, IdBaseComponent, IdComponent, IdTCPConnection,
+  IdTCPClient, IdHTTP, FileCtrl, UFmNcm;
+
+type
+  TFProdutoCad = class(TFTCadSimples)
+    ProdutoporClasse1: TMenuItem;
+    Produto1: TMenuItem;
+    ListadePreos1: TMenuItem;
+    Etiquetas1: TMenuItem;
+    RegistrodeInventrio1: TMenuItem;
+    PageControl1: TPageControl;
+    TSProdutos: TTabSheet;
+    TSBaixaEstoque: TTabSheet;
+    GBDadosProduto: TGroupBox;
+    Label20: TLabel;
+    DBText3: TDBText;
+    Label21: TLabel;
+    DBText4: TDBText;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    DBGrid1: TDBGrid;
+    BaixasnoEstqoue1: TMenuItem;
+    EtiquetasPequenas1: TMenuItem;
+    ProdutosPromoo1: TMenuItem;
+    ProdutosSemEstoque1: TMenuItem;
+    EstoquePorClasse1: TMenuItem;
+    EtiquetasCodBarras1: TMenuItem;
+    ChecarEstoqueCMovimentao1: TMenuItem;
+    EstoquePClasseEmbalagem1: TMenuItem;
+    ProdutosComEstoqueNegativo1: TMenuItem;
+    PosiodeEstoque1: TMenuItem;
+    EntradaSaida1: TMenuItem;
+    PosioparaCompra1: TMenuItem;
+    VendasporClasseSinttico1: TMenuItem;
+    MovimentoPorFornecedor1: TMenuItem;
+    ImpressoEtiquetaCodBarra1: TMenuItem;
+    ComposiodeEstoque1: TMenuItem;
+    MovimentoEstoque1: TMenuItem;
+    MeNumFabricante: TMaskEdit;
+    Label39: TLabel;
+    ControledeMovProduto1: TMenuItem;
+    ProdutosporMarca1: TMenuItem;
+    Rel1: TMenuItem;
+    EtiquetaMdiaCodBarra1: TMenuItem;
+    DsEstoqueBaixa: TDataSource;
+    TabSheet1: TTabSheet;
+    MECaminhoImagem: TMaskEdit;
+    OPDImagem: TOpenPictureDialog;
+    imgProduto: TImage;
+    lblImagemNaoCadastrada: TLabel;
+    Bevel1: TBevel;
+    btnProcurar: TBitBtn;
+    btnIncluirImagem: TBitBtn;
+    btnExcluirImagem: TBitBtn;
+    Label42: TLabel;
+    DSImagemProduto: TDataSource;
+    VendaspGrupodeClasses1: TMenuItem;
+    TbPrecos: TTabSheet;
+    Label44: TLabel;
+    DBEdit16: TDBEdit;
+    DSProdutoPreco: TDataSource;
+    Label45: TLabel;
+    DBEdit17: TDBEdit;
+    GroupBox4: TGroupBox;
+    OracleNavigator2: TOracleNavigator;
+    BtProdutoPreco: TSpeedButton;
+    BtProdutoPrecoAlterar: TSpeedButton;
+    DBDirceu6: TDBDirceu;
+    DBDirceu7: TDBDirceu;
+    DBGrid2: TDBGrid;
+    ProdutossemMovimentao1: TMenuItem;
+    Opes1: TMenuItem;
+    AtualizaPreoTodososProdutos1: TMenuItem;
+    Timer1: TTimer;
+    SBProduto: TScrollBox;
+    Label7: TLabel;
+    Label14: TLabel;
+    Label29: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    DBComboBox1: TDBComboBox;
+    DBComboBox2: TDBComboBox;
+    DBComboBox3: TDBComboBox;
+    TabSheet2: TTabSheet;
+    MovEstoqueEntradaSaida: TMenuItem;
+    AtualizaPreodeVendaporCusto1: TMenuItem;
+    Pesagem1: TMenuItem;
+    TSCustoMarca: TTabSheet;
+    DSProdutoMarca: TDataSource;
+    ProdutopMarca1: TMenuItem;
+    PCustoMarca: TPanel;
+    Label67: TLabel;
+    LblValProdutoMarca: TLabel;
+    BtMarca2: TSpeedButton;
+    DBGProdutoMarca: TDBGrid;
+    ONProdutoMarca: TOracleNavigator;
+    DBECodMarca: TDBEdit;
+    DBEValProdutoMarca: TDBEdit;
+    DBEDescMarca: TDBEdit;
+    LblValCustoProdutoMarca: TLabel;
+    DBEValCustoProdutoMarca: TDBEdit;
+    AtualizaPreoporMarca1: TMenuItem;
+    ProdutoServiopMotor1: TMenuItem;
+    ProdutosporLocalizao1: TMenuItem;
+    EstoqueporLote1: TMenuItem;
+    TsProdutosRelacionados: TTabSheet;
+    DBGrid3: TDBGrid;
+    OracleNavigator3: TOracleNavigator;
+    DsProdutoRelacionado: TDataSource;
+    ProdutoscvalordiferentedaMargem1: TMenuItem;
+    EnviarEMailcomPromoes1: TMenuItem;
+    EtiquetaProdutosemEstoque1: TMenuItem;
+    AtualizaPreoProdutoviaTabela1: TMenuItem;
+    DownAction1: TMenuItem;
+    EmissodeEtiquetaSimples1: TMenuItem;
+    TSOutrasConfiguracoes: TTabSheet;
+    DBRadioGroup1: TDBRadioGroup;
+    DBRadioGroup7: TDBRadioGroup;
+    DBRadioGroup6: TDBRadioGroup;
+    Label69: TLabel;
+    DBComboBox4: TDBComboBox;
+    TSAristides: TTabSheet;
+    Label79: TLabel;
+    Label80: TLabel;
+    DBComboBox5: TDBComboBox;
+    Label82: TLabel;
+    DBComboBox6: TDBComboBox;
+    ProdutosaBaixar1: TMenuItem;
+    DBPNcm: TDBPanel;
+    DBPanel1: TDBPanel;
+    DBPanel2: TDBPanel;
+    DBPDescricao: TDBPanel;
+    DBPNumFabricante: TDBPanel;
+    DBPEmbalagem: TDBPanel;
+    DBPPercIPI: TDBPanel;
+    DBPClasse: TDBPanel;
+    LblChecaNumFabricante: TLabel;
+    DBPFabricante: TDBPanel;
+    DBPPercISS: TDBPanel;
+    DBPComplemento: TDBPanel;
+    DBPProdutoB: TDBPanel;
+    DBPNumVolumes: TDBPanel;
+    DBPDescComplemento2: TDBPanel;
+    DBPMarca: TDBPanel;
+    DBPValVarejo: TDBPanel;
+    DBPValAtacado: TDBPanel;
+    DBPPesoBruto: TDBPanel;
+    DBPPesoLiq: TDBPanel;
+    DBPSiagro: TDBPanel;
+    DBPLoteClaspar: TDBPanel;
+    DBPTribTransf: TDBPanel;
+    DBPClassFiscal: TDBPanel;
+    DBPMetrosCubicos: TDBPanel;
+    DBPLocalizacao: TDBPanel;
+    DBPCxPalete: TDBPanel;
+    DBPTecido: TDBPanel;
+    DBPConverteFardo: TDBPanel;
+    DBPPesoMin: TDBPanel;
+    DBPPesoMax: TDBPanel;
+    DBPValidade: TDBPanel;
+    DBPCultura: TDBPanel;
+    DBPDescMax: TDBPanel;
+    DBPPercComissao: TDBPanel;
+    DBPPercINSS: TDBPanel;
+    DBPProdutoBaixa: TDBPanel;
+    DBPLoteBaixa: TDBPanel;
+    DBPanel5: TDBPanel;
+    DBPanel6: TDBPanel;
+    DBPLote: TDBPanel;
+    BtProdBaixaIncluir: TBitBtn;
+    BtProdBaixaEditar: TBitBtn;
+    BtProdBaixaExcluir: TBitBtn;
+    BtProdBaixaConfirmar: TBitBtn;
+    BtProdBaixaCancelar: TBitBtn;
+    DBPanel9: TDBPanel;
+    DBPanel10: TDBPanel;
+    DBPCodProduto2: TDBPanel;
+    DBPanel13: TDBPanel;
+    DBPClasse2: TDBPanel;
+    DBPanel15: TDBPanel;
+    DBPanel16: TDBPanel;
+    DBPanel17: TDBPanel;
+    DBPanel18: TDBPanel;
+    DBPanel7: TDBPanel;
+    DBPanel12: TDBPanel;
+    DBPanel14: TDBPanel;
+    Label59: TLabel;
+    Label1: TLabel;
+    RelatrioVendasPerdidas1: TMenuItem;
+    GbMargem: TGroupBox;
+    Label2: TLabel;
+    DBEdit1: TDBEdit;
+    Label3: TLabel;
+    DBEdit2: TDBEdit;
+    AlterarNCMporClasse1: TMenuItem;
+    TransfereCdigoProduto1: TMenuItem;
+    RelatriodeNCM1: TMenuItem;
+    EdClasse: TEdit;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Label4: TLabel;
+    DBPanel3: TDBPanel;
+    DBLCCstPis: TDBLookupComboBox;
+    DBLCCstCofins: TDBLookupComboBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    ExportaProduto1: TMenuItem;
+    SaveDialog: TSaveDialog;
+    DBLCTipoProduto: TDBLookupComboBox;
+    DBLCCstIpi: TDBLookupComboBox;
+    DBPanel4: TDBPanel;
+    RelatrioEstoqueCompraVenda1: TMenuItem;
+    DBRadioGroup4: TDBRadioGroup;
+    DBRadioGroup5: TDBRadioGroup;
+    DBPanel19: TDBPanel;
+    EtiqPPLA1: TMenuItem;
+    DBLCCstPisSaida: TDBLookupComboBox;
+    DBLCCstCofinsSaida: TDBLookupComboBox;
+    Label8: TLabel;
+    Label9: TLabel;
+    DBCSubst: TDBCheckBox;
+    DBObservacao: TDBMemo;
+    Label10: TLabel;
+    EmissaoEtiquetaZebra1: TMenuItem;
+    DBQtdEtiquetas: TDBRadioGroup;
+    DBEdit3: TDBEdit;
+    Label11: TLabel;
+    DBRadioGroup2: TDBRadioGroup;
+    GroupBox3: TGroupBox;
+    DBPanel20: TDBPanel;
+    DBPanel22: TDBPanel;
+    DBPAnp: TDBPanel;
+    DBPPercGNN: TDBPanel;
+    DBPanel23: TDBPanel;
+    Label12: TLabel;
+    DBLCCstIpiSaida: TDBLookupComboBox;
+    EmissoEtiqueta1: TMenuItem;
+    GroupBox5: TGroupBox;
+    DBPServicoMuncipal: TDBPanel;
+    DBPanel8: TDBPanel;
+    DBCBAplicaDeducaoBCISS: TDBCheckBox;
+    DBPCOD_BARRAS: TDBPanel;
+    DBPNum_fabricante: TDBPanel;
+    DBPanel24: TDBPanel;
+    GroupBox6: TGroupBox;
+    DBPanel25: TDBPanel;
+    DBPFormulacao: TDBPanel;
+    DBPGrupoQuimico: TDBPanel;
+    DBPClasseTox: TDBPanel;
+    DBPanel26: TDBPanel;
+    DBPCest: TDBPanel;
+    este1: TMenuItem;
+    EtiquetaArgox5x31: TMenuItem;
+    EtiquetaZebraEPL1: TMenuItem;
+    RelatorioCatalogo: TMenuItem;
+    DBPMarcaAristides: TDBPanel;
+    DBPanel27: TDBPanel;
+    DBPanel28: TDBPanel;
+    DBPanel11: TDBPanel;
+    Label13: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    TSOutrasConfiguracoesAristides: TTabSheet;
+    DBRadioGroup9: TDBRadioGroup;
+    DBRadioGroup10: TDBRadioGroup;
+    DBPanel29: TDBPanel;
+    DBPanel30: TDBPanel;
+    DBRadioGroup12: TDBRadioGroup;
+    GBGenero: TGroupBox;
+    cbMasculino: TCheckBox;
+    cbFeminino: TCheckBox;
+    cbUnissex: TCheckBox;
+    cbAdulto: TCheckBox;
+    cbInfantil: TCheckBox;
+    cbBebe: TCheckBox;
+    GBSalto: TGroupBox;
+    cbAlto: TCheckBox;
+    cbBaixo: TCheckBox;
+    cbMedio: TCheckBox;
+    cbRasteira: TCheckBox;
+    cbGrosso: TCheckBox;
+    cbFino: TCheckBox;
+    cbAnabela: TCheckBox;
+    cbFachete: TCheckBox;
+    cbEncapado: TCheckBox;
+    cbCortica: TCheckBox;
+    cbAcrilico: TCheckBox;
+    cbLatex: TCheckBox;
+    cbBorracha: TCheckBox;
+    cbPVC: TCheckBox;
+    cbTR: TCheckBox;
+    GBMaterial: TGroupBox;
+    cbCouro: TCheckBox;
+    cbSintetico: TCheckBox;
+    cbSwed: TCheckBox;
+    cbMicrofibra: TCheckBox;
+    cbVerniz: TCheckBox;
+    cbLona: TCheckBox;
+    cbTecido: TCheckBox;
+    cbGliter: TCheckBox;
+    cbCamurca: TCheckBox;
+    cbNobuk: TCheckBox;
+    cbElastico: TCheckBox;
+    cbPlastico: TCheckBox;
+    DBPPercGNI: TDBPanel;
+    DBPPercGLPPetroleo: TDBPanel;
+    TSMaisConfiguracoesAristides: TTabSheet;
+    GBConfig: TGroupBox;
+    cbBoneca: TCheckBox;
+    cbDorsai: TCheckBox;
+    cbSlipper: TCheckBox;
+    cbEsportiva: TCheckBox;
+    cbIate: TCheckBox;
+    cbSlipon: TCheckBox;
+    cbIndoorSalao: TCheckBox;
+    cbCampo: TCheckBox;
+    cbSuicoSociety: TCheckBox;
+    cbTiraTornozelo: TCheckBox;
+    cbSalome: TCheckBox;
+    cbDedo: TCheckBox;
+    cbGaspea: TCheckBox;
+    cbTiraX: TCheckBox;
+    cb2Tiras: TCheckBox;
+    cbMule: TCheckBox;
+    cbCoturno: TCheckBox;
+    cbMontaria: TCheckBox;
+    cbOpenboot: TCheckBox;
+    cbAnkleboot: TCheckBox;
+    cbOver: TCheckBox;
+    cbCanoMedio: TCheckBox;
+    cbMangaLonga: TCheckBox;
+    cbMangaCurta: TCheckBox;
+    cbTermica: TCheckBox;
+    cbProtecaoSolar: TCheckBox;
+    cbLargo: TCheckBox;
+    cbEstreito: TCheckBox;
+    cbMedioConfig: TCheckBox;
+    cb2Alcas: TCheckBox;
+    cbTransversal: TCheckBox;
+    cbBau: TCheckBox;
+    cbNotebook: TCheckBox;
+    cbFesta: TCheckBox;
+    cbClutch: TCheckBox;
+    cbEscolar: TCheckBox;
+    cbViagem: TCheckBox;
+    cb2Rodas: TCheckBox;
+    cb4Rodas: TCheckBox;
+    cb5Rodas: TCheckBox;
+    cb360: TCheckBox;
+    cbKit: TCheckBox;
+    GroupBox7: TGroupBox;
+    DBCheckBox1: TDBCheckBox;
+    DBPCNPJFabricante: TDBPanel;
+    DBPanel21: TDBPanel;
+    TabSheet3: TTabSheet;
+    GroupBox8: TGroupBox;
+    DBComboBox10: TDBComboBox;
+    GroupBox11: TGroupBox;
+    DBComboBox15: TDBComboBox;
+    GroupBox9: TGroupBox;
+    DBComboBox11: TDBComboBox;
+    GroupBox12: TGroupBox;
+    DBComboBox16: TDBComboBox;
+    GroupBox10: TGroupBox;
+    DBComboBox13: TDBComboBox;
+    cbChunky: TCheckBox;
+    cbSneaker: TCheckBox;
+    cbOxford: TCheckBox;
+    DBPPesoBrutoNFCe: TDBPanel;
+    DBPPesoLiquidoNFCe: TDBPanel;
+    EtiquetaCartaoZebra: TMenuItem;
+    cbBrinde: TCheckBox;
+    cbEspadrille: TCheckBox;
+    cbContraforte: TCheckBox;
+    cbLuz: TCheckBox;
+    ArquivoBalanaToledo1: TMenuItem;
+    DBPanel31: TDBPanel;
+    DBRadioGroup3: TDBRadioGroup;
+    DBRadioGroup8: TDBRadioGroup;
+    DBPanel32: TDBPanel;
+    GroupBox13: TGroupBox;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    DBEAltura: TDBEdit;
+    DBELargura: TDBEdit;
+    DBComprimento: TDBEdit;
+    DBEdit4: TDBEdit;
+    Label18: TLabel;
+    DBPanel33: TDBPanel;
+    DBPanel34: TDBPanel;
+    GroupBox14: TGroupBox;
+    Label19: TLabel;
+    Label22: TLabel;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    DBPanel35: TDBPanel;
+    DBPanel36: TDBPanel;
+    GroupBox15: TGroupBox;
+    DBPanel40: TDBPanel;
+    DBPanel41: TDBPanel;
+    DBPanel42: TDBPanel;
+    Label23: TLabel;
+    DBECodUsuario: TDBEdit;
+    EdNomeUsuario: TEdit;
+    DBPanel37: TDBPanel;
+    Label24: TLabel;
+    DBEdit7: TDBEdit;
+    Label25: TLabel;
+    DBEdit8: TDBEdit;
+    Label26: TLabel;
+    DBEdit9: TDBEdit;
+    DBRGEnviaBalanca: TDBRadioGroup;
+    Label27: TLabel;
+    EDCustoProduto: TEdit;
+    DBRadioGroup11: TDBRadioGroup;
+    Label28: TLabel;
+    DBComboBox7: TDBComboBox;
+    GroupBox16: TGroupBox;
+    GroupBox17: TGroupBox;
+    DBComboBox8: TDBComboBox;
+    GroupBox18: TGroupBox;
+    DBComboBox9: TDBComboBox;
+    GroupBox19: TGroupBox;
+    DBComboBox12: TDBComboBox;
+    DBROpcaoProduto: TDBRadioGroup;
+    DBPanel38: TDBPanel;
+    LabelObs: TLabel;
+    DBMemoObs: TDBMemo;
+    GroupBox20: TGroupBox;
+    Label30: TLabel;
+    DBLCCClasTribIBSCBSCompra: TDBLookupComboBox;
+    Label31: TLabel;
+    DBLCCClasTribIBSCBSVenda: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure SBConsultaClick(Sender: TObject);
+    procedure ProdutoporClasse1Click(Sender: TObject);
+    procedure Produto1Click(Sender: TObject);
+    procedure ListadePreos1Click(Sender: TObject);
+    procedure Etiquetas1Click(Sender: TObject);
+    procedure RegistrodeInventrio1Click(Sender: TObject);
+    procedure SBConfirmarClick(Sender: TObject);
+    procedure SBCancelarClick(Sender: TObject);
+    procedure BaixasnoEstqoue1Click(Sender: TObject);
+    procedure DSPrimarioStateChange(Sender: TObject);
+    procedure EtiquetasPequenas1Click(Sender: TObject);
+    procedure ProdutosPromoo1Click(Sender: TObject);
+    procedure ProdutosSemEstoque1Click(Sender: TObject);
+    procedure EstoquePorClasse1Click(Sender: TObject);
+    procedure EtiquetasCodBarras1Click(Sender: TObject);
+    procedure ChecarEstoqueCMovimentao1Click(Sender: TObject);
+    procedure SBHelpClick(Sender: TObject);
+    procedure EstoquePClasseEmbalagem1Click(Sender: TObject);
+    procedure ProdutosComEstoqueNegativo1Click(Sender: TObject);
+    procedure PosiodeEstoque1Click(Sender: TObject);
+    procedure EntradaSaida1Click(Sender: TObject);
+    procedure PosioparaCompra1Click(Sender: TObject);
+    procedure VendasporClasseSinttico1Click(Sender: TObject);
+    procedure SBExcluirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure MovimentoPorFornecedor1Click(Sender: TObject);
+    procedure ImpressoEtiquetaCodBarra1Click(Sender: TObject);
+    procedure ComposiodeEstoque1Click(Sender: TObject);
+    procedure MovimentoEstoque1Click(Sender: TObject);
+    procedure MeNumFabricanteExit(Sender: TObject);
+    procedure ControledeMovProduto1Click(Sender: TObject);
+    procedure ProdutosporMarca1Click(Sender: TObject);
+    procedure Rel1Click(Sender: TObject);
+    procedure EtiquetaMdiaCodBarra1Click(Sender: TObject);
+    procedure btnIncluirImagemClick(Sender: TObject);
+    procedure btnProcurarClick(Sender: TObject);
+    procedure AtualizarImagemProduto;
+    procedure DSImagemProdutoDataChange(Sender: TObject; Field: TField);
+    procedure btnExcluirImagemClick(Sender: TObject);
+    procedure VendaspGrupodeClasses1Click(Sender: TObject);
+    procedure BtProdutoPrecoClick(Sender: TObject);
+    procedure BtProdutoPrecoAlterarClick(Sender: TObject);
+    procedure DSProdutoPrecoStateChange(Sender: TObject);
+    procedure SBIncluirClick(Sender: TObject);
+    procedure ProdutossemMovimentao1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure AtualizaPreoTodososProdutos1Click(Sender: TObject);
+    procedure MovEstoqueEntradaSaidaClick(Sender: TObject);
+    procedure AtualizaPreodeVendaporCusto1Click(Sender: TObject);
+    procedure BtMarca2Click(Sender: TObject);
+    procedure DSProdutoMarcaDataChange(Sender: TObject; Field: TField);
+    procedure ProdutopMarca1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure ONProdutoMarcaClick(Sender: TObject;
+      Button: TOracleNavigateBtn);
+    procedure AtualizaPreoporMarca1Click(Sender: TObject);
+    procedure ProdutoServiopMotor1Click(Sender: TObject);
+    procedure Pesagem1Click(Sender: TObject);
+    procedure DBENumFabricanteExit(Sender: TObject);
+    procedure ProdutosporLocalizao1Click(Sender: TObject);
+    procedure EstoqueporLote1Click(Sender: TObject);
+    procedure ProdutoscvalordiferentedaMargem1Click(Sender: TObject);
+    procedure EnviarEMailcomPromoes1Click(Sender: TObject);
+    procedure EtiquetaProdutosemEstoque1Click(Sender: TObject);
+    procedure AtualizaPreoProdutoviaTabela1Click(Sender: TObject);
+    procedure DownActionExecute(Sender: TObject);
+    procedure EmissodeEtiquetaSimples1Click(Sender: TObject);
+    procedure ProdutosaBaixar1Click(Sender: TObject);
+    procedure DBPNcmDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel2DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPClasseDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPFabricanteDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPProdutoBDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPMarcaDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPLoteClasparDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPCulturaDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPProdutoBaixaDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPLoteBaixaDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPLoteDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DsEstoqueBaixaStateChange(Sender: TObject);
+    procedure BtProdBaixaIncluirClick(Sender: TObject);
+    procedure BtProdBaixaEditarClick(Sender: TObject);
+    procedure BtProdBaixaExcluirClick(Sender: TObject);
+    procedure BtProdBaixaCancelarClick(Sender: TObject);
+    procedure BtProdBaixaConfirmarClick(Sender: TObject);
+    procedure DBPanel9DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel8DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel13CodigoExit(Sender: TObject);
+    procedure DBPClasse2DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel15DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel7CodigoChange(Sender: TObject);
+    procedure DBPanel12DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPNcmValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: string);
+    procedure RelatrioVendasPerdidas1Click(Sender: TObject);
+    procedure AlterarNCMporClasse1Click(Sender: TObject);
+    procedure TransfereCdigoProduto1Click(Sender: TObject);
+    procedure RelatriodeNCM1Click(Sender: TObject);
+    procedure DBPClasseCodigoChange(Sender: TObject);
+    procedure DBPClasseCodigoExit(Sender: TObject);
+    procedure DBLCCstPisCloseUp(Sender: TObject);
+    procedure DBLCCstCofinsCloseUp(Sender: TObject);
+    procedure ExportaProduto1Click(Sender: TObject);
+    procedure DBLCCstIpiCloseUp(Sender: TObject);
+    procedure RelatrioEstoqueCompraVenda1Click(Sender: TObject);
+    procedure DBPServicoMuncipalValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: String);
+    procedure EtiqPPLA1Click(Sender: TObject);
+    procedure DBLCCstPisSaidaCloseUp(Sender: TObject);
+    procedure DBLCCstCofinsSaidaCloseUp(Sender: TObject);
+    procedure DBLCCstPisDropDown(Sender: TObject);
+    procedure DBLCCstCofinsDropDown(Sender: TObject);
+    procedure DBLCCstCofinsSaidaDropDown(Sender: TObject);
+    procedure DBLCCstPisSaidaDropDown(Sender: TObject);
+    procedure DBPAnpDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPAnpValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: String);
+    procedure DBObservacaoKeyPress(Sender: TObject; var Key: Char);
+    procedure EmissaoEtiquetaZebra1Click(Sender: TObject);
+    procedure SBProdutoEnter(Sender: TObject);
+    procedure DBLCCstIpiSaidaCloseUp(Sender: TObject);
+    procedure DBLCCstIpiSaidaDropDown(Sender: TObject);
+    procedure BtCopiaClick(Sender: TObject);
+    procedure EmissoEtiqueta1Click(Sender: TObject);
+    procedure DBPanel19Exit(Sender: TObject);
+    procedure DBPCestDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPCestBuscaClick(Sender: TObject);
+    procedure este1Click(Sender: TObject);
+    procedure DBPNcmCodigoExit(Sender: TObject);
+    procedure DBPNcmAfterConsulta(Sender: TObject);
+    procedure EtiquetaArgox5x31Click(Sender: TObject);
+    procedure EtiquetaZebraEPL1Click(Sender: TObject);
+    procedure RelatorioCatalogoClick(Sender: TObject);
+    procedure DBPMarcaAristidesDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel27DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure BtRoyaltiesClick(Sender: TObject);
+    procedure DBPanel28DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure cbMasculinoClick(Sender: TObject);
+    procedure cbFemininoClick(Sender: TObject);
+    procedure cbUnissexClick(Sender: TObject);
+    procedure cbAdultoClick(Sender: TObject);
+    procedure cbInfantilClick(Sender: TObject);
+    procedure cbBebeClick(Sender: TObject);
+    procedure MELocalizaExit(Sender: TObject);
+    procedure cbAltoClick(Sender: TObject);
+    procedure cbBaixoClick(Sender: TObject);
+    procedure cbMedioClick(Sender: TObject);
+    procedure cbRasteiraClick(Sender: TObject);
+    procedure cbGrossoClick(Sender: TObject);
+    procedure cbFinoClick(Sender: TObject);
+    procedure cbAnabelaClick(Sender: TObject);
+    procedure cbFacheteClick(Sender: TObject);
+    procedure cbEncapadoClick(Sender: TObject);
+    procedure cbCorticaClick(Sender: TObject);
+    procedure cbAcrilicoClick(Sender: TObject);
+    procedure cbLatexClick(Sender: TObject);
+    procedure cbBorrachaClick(Sender: TObject);
+    procedure cbPVCClick(Sender: TObject);
+    procedure cbTRClick(Sender: TObject);
+    procedure cbCouroClick(Sender: TObject);
+    procedure cbSinteticoClick(Sender: TObject);
+    procedure cbSwedClick(Sender: TObject);
+    procedure cbMicrofibraClick(Sender: TObject);
+    procedure cbVernizClick(Sender: TObject);
+    procedure cbLonaClick(Sender: TObject);
+    procedure cbTecidoClick(Sender: TObject);
+    procedure cbGliterClick(Sender: TObject);
+    procedure cbCamurcaClick(Sender: TObject);
+    procedure cbNobukClick(Sender: TObject);
+    procedure cbElasticoClick(Sender: TObject);
+    procedure cbPlasticoClick(Sender: TObject);
+    procedure DBPPercGLPPetroleoValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: String);
+    procedure cbBonecaClick(Sender: TObject);
+    procedure cbDorsaiClick(Sender: TObject);
+    procedure cbSlipperClick(Sender: TObject);
+    procedure cbEsportivaClick(Sender: TObject);
+    procedure cbIateClick(Sender: TObject);
+    procedure cbSliponClick(Sender: TObject);
+    procedure cbIndoorSalaoClick(Sender: TObject);
+    procedure cbCampoClick(Sender: TObject);
+    procedure cbSuicoSocietyClick(Sender: TObject);
+    procedure cbTiraTornozeloClick(Sender: TObject);
+    procedure cbSalomeClick(Sender: TObject);
+    procedure cbDedoClick(Sender: TObject);
+    procedure cbGaspeaClick(Sender: TObject);
+    procedure cbTiraXClick(Sender: TObject);
+    procedure cb2TirasClick(Sender: TObject);
+    procedure cbMuleClick(Sender: TObject);
+    procedure cbCoturnoClick(Sender: TObject);
+    procedure cbMontariaClick(Sender: TObject);
+    procedure cbOpenbootClick(Sender: TObject);
+    procedure cbAnklebootClick(Sender: TObject);
+    procedure cbOverClick(Sender: TObject);
+    procedure cbCanoMedioClick(Sender: TObject);
+    procedure cbMedioConfigClick(Sender: TObject);
+    procedure cb2AlcasClick(Sender: TObject);
+    procedure cbTransversalClick(Sender: TObject);
+    procedure cbBauClick(Sender: TObject);
+    procedure cbLargoClick(Sender: TObject);
+    procedure cbEstreitoClick(Sender: TObject);
+    procedure cbNotebookClick(Sender: TObject);
+    procedure cbFestaClick(Sender: TObject);
+    procedure cbClutchClick(Sender: TObject);
+    procedure cbKitClick(Sender: TObject);
+    procedure cbEscolarClick(Sender: TObject);
+    procedure cbViagemClick(Sender: TObject);
+    procedure cb360Click(Sender: TObject);
+    procedure cbMangaLongaClick(Sender: TObject);
+    procedure cbMangaCurtaClick(Sender: TObject);
+    procedure cbTermicaClick(Sender: TObject);
+    procedure cbProtecaoSolarClick(Sender: TObject);
+    procedure cb2RodasClick(Sender: TObject);
+    procedure cb4RodasClick(Sender: TObject);
+    procedure cb5RodasClick(Sender: TObject);
+    procedure DBPCNPJFabricanteValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: String);
+    procedure DBPNcmFieldKeyPress(Sender: TObject; var Key: Char);
+    procedure DBPCestFieldKeyPress(Sender: TObject; var Key: Char);
+    procedure DBPanel24FieldKeyPress(Sender: TObject; var Key: Char);
+    procedure DBComboBox7KeyPress(Sender: TObject; var Key: Char);
+    procedure DBComboBox2KeyPress(Sender: TObject; var Key: Char);
+    procedure DBComboBox10KeyPress(Sender: TObject; var Key: Char);
+    procedure EtiquetaCartaoZebraClick(Sender: TObject);
+    procedure cbBrindeClick(Sender: TObject);
+    procedure cbEspadrilleClick(Sender: TObject);
+    procedure cbContraforteClick(Sender: TObject);
+    procedure cbLuzClick(Sender: TObject);
+    procedure cbChunkyClick(Sender: TObject);
+    procedure cbSneakerClick(Sender: TObject);
+    procedure cbOxfordClick(Sender: TObject);
+    procedure ArquivoBalanaToledo1Click(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure DBPanel38DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBLCCClasTribIBSCBSVendaDropDown(Sender: TObject);
+    procedure DBLCCClasTribIBSCBSCompraDropDown(Sender: TObject);
+
+  private
+    wDataChange: Boolean;
+    procedure exportaProdutos;
+    procedure doPrior(wTamColuna: Integer);
+    function getTextoLinha(wEtiquetaLinha,
+      wLarguraEtiqueta: Integer): string;
+    function getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+    procedure buscaCest;
+    { Private declarations }
+    procedure gerenciaCheckBox(checkBox: TObject; tabela: string);
+    procedure BuscaDadosCalcados;
+    procedure LimpaCheckBox;
+  public
+    { Public declarations }
+  end;
+
+var
+  FProdutoCad: TFProdutoCad;
+  wAux : string;
+implementation
+
+uses UProduto_cl, UClasseCons, UClasse_cl, UProdutoCons, UTributacaoCons,
+  UTributacao_cl, URProduto_Classe, UProdutoParam, URProduto, UCadastroCons,
+  UCadastro_cl, UListaPreco, UParamSistema_cl,
+  URProduto_Etiquetas_Peq_Todas, UEstoqueParam, URRegistro_Inventario,
+  UEstoque_cl, UOracle_cl, UTipoLoteCons, UTipoLote_cl,
+  URProdutoBaixaEstoque, UEtiquetas, URProdutoPromocao, UrProdutoSemEstoque,
+  UREstoqueClasse, URProduto_Eti_CodBarra, UrProdutoChecagem,
+  UREstoque_Classe_Emb, UREstoqueNegativo, UREstoque_Posicao,
+  UREstoqueEntrSaida, UREstoqueMinMax, URCompra_Posicao,
+  UREstoque_Classe_Sint, URMovimentoFornecedor, UREtiquetaCodBarra,
+  UREstoqueComposicao, URMovimentoEstoque, UUsuario_cl,
+  UREstoque_Posicao_Sintetico, URMovimentoEstoque1, URControleMovProduto,
+  URelatorioEstoque_cl, UrComposicaoEstoque, UREtiquetaCodBarEncopel,
+  UMarca_cl, UMarcaCons, URProdutoMarca, URCustoCompra, UEtiquetaMediaBarra,
+  UREstoqueGrupoClasse, UProdutoRelatorio_cl, URProdutoSemMovimentacao,
+  UAtualizaPrecoEstoque, UREstoqueProd, UGeneroProdutoCons,
+  UListaServicoCons, URPesagemProducao, UPesagemEmbarque, UTela_cl,
+  URPrecoMarca, UFmProduto, UCulturaCons, UCultura_cl, UAtualizaPrecoMarca,
+  URProdutoServicoMotor, UBiblioteca, URProdutoLocalizacao, UREstoqueLote,
+  URProdutoValDifMargem, UEmailPromocao, UrEstoque_Etiqueta,
+  UAtualizaPrecoTabela, UFmClasse, UREtiquetaConfirmadaEstoque,
+  UTParametro, URProdutoBaixar, UNcmCons, UrVendasPerdidas,
+  UNCMMargemClasse, UProdutoTransf, URNcm, URRegistro_Inventario_paisagem,
+  UREtiqCodBarra, StrUtils, UREstoqueCompraVenda, UEstadoCons,
+  UAtividadeContribCons, UAnpCons, UCestCons, shellApi,
+  URProduto_EntradaSaida, URProduto_EntradaSaidaRetrato, UCatalogo,
+  UEtiquetaCartaoZebra, URProdutoBaixar2, UNBS_cl, UFNBS_Cons, OracleData;
+//  UREtiqCodBarra;
+
+{$R *.DFM}
+  //PPLA
+  function A_Set_Darkness(darkness: integer): integer; stdcall; external 'WINPPLA.DLL';
+  function A_CreatePrn(selection: integer; FileName: pchar): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Print_Out(width, height, copies, amount: integer): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Prn_Text(x, y, ori, font, typee, hor_factor, ver_factor: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Prn_Barcode(x, y, ori: integer; typee: char; narrow, width, height: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Prn_Text_TrueType(x, y, FSize: integer; FType: pchar; Fspin, FWeight, FItalic, FUnline, FStrikeOut: integer; id_name, data: pchar; mem_mode: integer): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Get_Graphic(x, y, mem_mode: integer; format: char; filename: pchar): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Draw_Box(mode, x, y, width, height, top, side: integer): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Draw_Line(mode, x, y, width, height: integer): integer; stdcall; external 'WINPPLA.DLL';
+  procedure A_ClosePrn(); stdcall; external 'WINPPLA.DLL';
+  function A_Load_Graphic(x, y: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+  function A_Clear_Memory(): integer; stdcall; external 'WINPPLA.DLL';
+  function A_GetUSBDeviceInfo(nPort:integer; pDeviceName:PAnsiChar; pDeviceNameLen:PInteger;
+              pDevicePath:PAnsiChar; pDevicePathLen:PInteger):integer;stdcall;external 'WINPPLA.DLL';
+  function  A_EnumUSB(buf:PAnsiChar):integer;stdcall;external 'WINPPLA.DLL';
+  function  A_GetUSBBufferLen():integer;stdcall;external 'WINPPLA.DLL';
+  function  A_Set_Backfeed(back:integer):integer;stdcall;external 'WINPPLA.DLL';
+
+  //PPLB
+  function B_Set_Darkness(darkness: integer): integer; stdcall; external 'WINPPLB.DLL';
+  function B_CreatePrn(selection: integer; FileName: pchar): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Print_Out(labset: integer): integer; stdcall; external 'WINPPLB.DLL';
+
+  function B_Prn_Text(x, y, ori, font, hor_factor, ver_factor: integer; mode: char; data:pchar): integer; stdcall; external 'WINPPLB.DLL';
+                                                        //char type[4]
+//function B_Prn_Barcode(x, y, ori: integer; typee: char; narrow, width, height: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Prn_Barcode(x, y, ori: integer; typee: String; n,      w,     height: integer; human: char; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Prn_Text_TrueType(x, y, FSize: integer; FType: pchar; Fspin, FWeight, FItalic, FUnline, FStrikeOut: integer; id_name, data: pchar; mem_mode: integer): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Get_Graphic(x, y, mem_mode: integer; format: char; filename: pchar): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Draw_Box(mode, x, y, width, height, top, side: integer): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Draw_Line(mode, x, y, width, height: integer): integer; stdcall; external 'WINPPLB.DLL';
+  procedure B_ClosePrn(); stdcall; external 'WINPPLB.DLL';
+  function B_Load_Graphic(x, y: integer; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+  function B_Clear_Memory(): integer; stdcall; external 'WINPPLB.DLL';
+  function B_GetUSBDeviceInfo(nPort:integer; pDeviceName:PAnsiChar; pDeviceNameLen:PInteger;
+              pDevicePath:PAnsiChar; pDevicePathLen:PInteger):integer;stdcall;external 'WINPPLB.DLL';
+  function  B_EnumUSB(buf:PAnsiChar):integer;stdcall;external 'WINPPLB.DLL';
+  function  B_GetUSBBufferLen():integer;stdcall;external 'WINPPLB.DLL';
+  //function  B_Set_Backfeed(back:integer):integer;stdcall;external 'WINPPLB.DLL';
+  function  B_Set_Backfeed(option:char):integer;stdcall;external 'WINPPLB.DLL';
+  //int B_Set_Backfeed(char option);
+
+
+
+function RMaskCGC_CPF(wCgc1: string; Zeros: Integer): string;
+var
+  S: string;
+  x: integer;
+begin
+
+  for x := 1 to length(wCgc1) do
+    if wCgc1[x] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+      S := S + wCgc1[x];
+
+  while Length(S) < Zeros do
+    S := '0' + S;
+
+  Result := S;
+
+end;
+
+procedure TFProdutoCad.FormActivate(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    CDSOrigem.EmptyDataSet;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;';
+    CDSOrigemcod_origem.Value := 0;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '1 - Estrangeira – Importação direta, exceto a indicada no código 6;';
+    CDSOrigemcod_origem.Value := 1;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '2 - Estrangeira – Adquirida no mercado interno, exceto a indicada no código 7;';
+    CDSOrigemcod_origem.Value := 2;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% e inferior ou igual a 70%;';
+    CDSOrigemcod_origem.Value := 3;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;';
+    CDSOrigemcod_origem.Value := 4;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;';
+    CDSOrigemcod_origem.Value := 5;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '6 - Estrangeira – Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;';
+    CDSOrigemcod_origem.Value := 6;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '7 - Estrangeira – Adquirida no mercado interno, sem similar nacional, constante em lista da CAMEX e gás natural;';
+    CDSOrigemcod_origem.Value := 7;
+    CDSOrigem.Post;
+    CDSOrigem.Append;
+    CDSOrigemOrigem.Value := '8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%;';
+    CDSOrigemcod_origem.Value := 8;
+    CDSOrigem.Post;
+
+  end;
+  DMProduto.QProduto.Open;
+  DMProduto.QEstoqueBaixa.Open;
+  DMProduto.QProdutoPreco.Open;
+  DMProduto.QImagemProduto.open;
+  //Configura o tamanho da tela Cadastro de Produtos se a tela for 800x600
+  if Screen.Height < 768 then
+    SBProduto.Height := Round((Screen.Height * (65 / 100)));
+
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+  begin
+    TbPrecos.TabVisible := True;
+    DBPEmbalagem.LCaption := 'Peso Líquido';
+    DBPNumVolumes.LCaption := 'Peso Bruto';
+    DBPValVarejo.Visible := False;
+    DBPValAtacado.Visible := False;
+  end;
+  if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO') or
+     (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') or
+     (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   or
+     (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GONZATTI') then
+    DbRadioGroup1.Caption := 'Produto Transgenico';
+
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'TEMPERMED' then
+    DBPNumFabricante.LCaption := 'Cód. Material';
+  DBPValAtacado.LCaption := 'Preço ' + DMParamSistema.QParamSistemaInd_Preco.value;
+  DBPValVarejo.LCaption := 'Preço ' + DMParamSistema.QParamSistemaInd_Preco2.value;
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'ABATE' then
+  begin
+    DBPCultura.LCaption := 'Embalagem';
+
+    if DMUsuario.pTipoFuncionario = 'DIRETOR' then
+    begin
+      DBPValVarejo.Visible := True;
+      DBPValAtacado.Visible := True;
+    end
+    else
+    begin
+      DBPValVarejo.Visible := False;
+      DBPValAtacado.Visible := False;
+    end;
+  end;
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'GERALPECAS' then
+  begin
+    DBPNumFabricante.Left := 152;
+    DBPNumFabricante.Top := 3;
+    DBPNumFabricante.TabOrder := 1;
+    DBPanel19.Left := 380;
+    DBPanel19.Top := 323;
+    DBPanel19.TabOrder := 15;
+  End;
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'VETRO' then
+  begin
+    DBPPesoMin.LCaption := 'Peso Altura';
+    DBPPesoMax.LCaption := 'Peso Largura'; 
+  End;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NEOALI') then
+  begin
+    DBPFabricante.LCaption := 'Artista';
+    DBPNumFabricante.LCaption:= 'Cód. Obra';
+  end;
+  if (DMParamSistema.CodEmpresa = 'DIVINO') then
+  begin
+    DBPFabricante.LCaption := 'Artista';
+    DBPNumFabricante.LCaption:= 'Cód. Obra';
+    GroupBox14.Visible := True;
+    DBComprimento.Visible := False;
+    Label17.Visible := False;
+  end;
+  if (DMParamSistema.CodEmpresa = 'KREUZ') then //Solicitado por Rubens Kreuz (10/08/2022). Junior.
+  begin
+    DBPPercComissao.Required := True;
+    DBPDescMax.Required := True;
+  end;
+  if not DMProduto.QProduto.Eof then
+    BuscaDadosCalcados;
+end;
+
+procedure TFProdutoCad.SBConsultaClick(Sender: TObject);
+begin
+  inherited;
+  if FProdutoCons = nil then
+    FProdutoCons := TFProdutoCons.Create(Application);
+  if not (TDataSet(DSPrimario.DataSet).State in [DSBrowse]) then
+    FProdutoCons.RetornaConsulta := false;
+  if FProdutoCons.ShowModal = MrOk then
+    with DMProduto do
+    begin
+      QCstpis.Open;
+      QCstPisSaida.Open;
+      QCstCofins.Open;
+      QCstCofinsSaida.Open;
+      QProduto.Close;
+      QProduto.SetVariable('PK', QProdutoConsCod_Produto.Value);
+      QProduto.Open;
+      BuscaDadosCalcados;
+    end;
+    if (DMParamSistema.CodEmpresa = 'FINESTRA') then
+    begin
+      EDCustoProduto.Text := DMOracle.FastSelect('VL_ULTIMO_CUSTO','TB_ESTOQUE',' COD_PRODUTO = ' + DMProduto.QProdutoConsCOD_PRODUTO.Text);
+    end;
+end;
+
+procedure TFProdutoCad.ProdutoporClasse1Click(Sender: TObject);
+var
+ wFornecedor: string;
+begin
+  inherited;
+  // Chamada ao Relatório de Produtos por Classe
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[0].TabVisible := true;
+
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    if FRProduto_Classe = nil then
+      FRProduto_Classe := TFRProduto_Classe.Create(Application);
+    with DMProdutoRelatorio do // Filtragem dos Dados
+    begin
+      QRProdutoClasse.Close;
+      If Trim(FProdutoParam.Fm0SubClasse1.MeClasse.Text) <> '' Then
+      Begin
+        QRProdutoClasse.SetVariable('NUM_CLASSE', StrToInt(Trim(FProdutoParam.Fm0SubClasse1.MeClasse.Text)));
+        QRProdutoClasse.SetVariable('NUM_SUBCLASSE', StrToInt(Trim(FProdutoParam.Fm0SubClasse1.MeSubClasse.Text)));
+      End
+      else
+      Begin
+        QRProdutoClasse.SetVariable('NUM_CLASSE', Null);
+        QRProdutoClasse.SetVariable('NUM_SUBCLASSE',Null);
+      End;
+      If Trim(FProdutoParam.Fm0SubClasse2.MeClasse.Text) <> '' Then
+      Begin
+        QRProdutoClasse.SetVariable('NUM_CLASSE1', StrToInt(Trim(FProdutoParam.Fm0SubClasse2.MeClasse.Text)));
+        QRProdutoClasse.SetVariable('NUM_SUBCLASSE1', StrToInt(Trim(FProdutoParam.Fm0SubClasse2.MeSubClasse.Text)));
+      End
+      else
+      Begin
+        QRProdutoClasse.SetVariable('NUM_CLASSE1', Null);
+        QRProdutoClasse.SetVariable('NUM_SUBCLASSE1',Null);
+      End;
+
+      if Trim(FProdutoParam.Fm0Fornecedor.MeCadastro.Text) <> '' then
+      begin
+        QRProdutoClasse.SetVariable('COD_FORNECEDOR',StrToInt(Trim(FProdutoParam.Fm0Fornecedor.MeCadastro.Text)));
+        wFornecedor := Trim(FProdutoParam.Fm0Fornecedor.MeCadastro.Text);
+      end
+      else
+      begin
+        QRProdutoClasse.SetVariable('COD_FORNECEDOR',null);
+        wFornecedor := 'Todos';
+      end;
+
+      if Trim(FProdutoParam.ME0TipoProduto.Text) <> '' then
+        QRProdutoClasse.SetVariable('TIPO_PRODUTO', FProdutoParam.ME0TipoProduto.Text)
+      else
+        QRProdutoClasse.SetVariable('TIPO_PRODUTO', Null);
+
+      case FProdutoParam.CB0Situacao.ItemIndex of
+        0: QRProdutoClasse.SetVariable('SITUACAO', Null);
+        1: QRProdutoClasse.SetVariable('SITUACAO', 'ATIVO');
+        2: QRProdutoClasse.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QRProdutoClasse.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      QRProdutoClasse.SQL[QRProdutoClasse.SQL.Count - 1] := '';
+      case FProdutoParam.CB0Ordem.ItemIndex of
+        0: DMProdutoRelatorio.QRProdutoClasse.SQL.Add('TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, TB_PRODUTO.COD_PRODUTO');
+        1: DMProdutoRelatorio.QRProdutoClasse.SQL.Add('TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, TB_PRODUTO.DESC_PRODUTO');
+        2: DMProdutoRelatorio.QRProdutoClasse.SQL.Add('TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, TB_PRODUTO.NUM_FABRICANTE');
+        3: DMProdutoRelatorio.QRProdutoClasse.SQL.Add('TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, Substr(NUM_FABRICANTE,5,3)||Substr(NUM_FABRICANTE,10,2)||Substr(NUM_FABRICANTE,1,4)||Substr(NUM_FABRICANTE,8,2)');
+      end;
+      QRProdutoClasse.Open;
+
+      if (DMParamSistema.CodEmpresa = 'GARAGE280') or (DMParamSistema.CodEmpresa = 'FRACTA') then
+      begin
+        FRProduto_Classe.QRLabel3.Caption := 'Cód. Barras';
+        FRProduto_Classe.QRDBText6.DataField := 'DESC_COD_BARRA';
+      end
+      else
+      begin
+        FRProduto_Classe.QRLabel3.Caption := 'Cod. Fabricante';
+        FRProduto_Classe.QRDBText6.DataField := 'NUM_FABRICANTE';
+      end;
+
+      //Por Gian 06/01/2021 Autorizado por Marcos
+      //Ocultar colunas com valores de produtos
+      if FProdutoParam.RG0MostrarValores.ItemIndex = 0 then
+      begin
+        FRProduto_Classe.QRLabel11.Enabled := True;
+        FRProduto_Classe.QRLabel12.Enabled := True;
+        FRProduto_Classe.QRDBText10.Enabled := True;
+        FRProduto_Classe.QRDBText11.Enabled := True;
+      end
+      else
+      begin
+        FRProduto_Classe.QRLabel11.Enabled := False;
+        FRProduto_Classe.QRLabel12.Enabled := False;
+        FRProduto_Classe.QRDBText10.Enabled := False;
+        FRProduto_Classe.QRDBText11.Enabled := False;
+      end;
+{Para exibir somente a descrição e o código do produto. Solicitado por Luiz ARZ. Alex 20/05/2025}
+      if FProdutoParam.RG0MostrarCodDesc.ItemIndex = 1 then
+      begin
+        FRProduto_Classe.QRDBText6.Visible := True;
+        FRProduto_Classe.QRDBText7.Visible := True;
+        FRProduto_Classe.QRDBText8.Visible := True;
+        FRProduto_Classe.QRDBText9.Visible := True;
+        FRProduto_Classe.QRDBText10.Visible := True;
+        FRProduto_Classe.QRDBText11.Visible := True;
+        FRProduto_Classe.QRDBText12.Visible := True;
+        FRProduto_Classe.QRLabel3.Visible := True;
+        FRProduto_Classe.QRLabel8.Visible := True;
+        FRProduto_Classe.QRLabel9.Visible := True;
+        FRProduto_Classe.QRLabel10.Visible := True;
+        FRProduto_Classe.QRLabel11.Visible := True;
+        FRProduto_Classe.QRLabel12.Visible := True;
+        FRProduto_Classe.QRLabel13.Visible := True;
+        FRProduto_Classe.QRDBText6.Enabled  := True;
+        FRProduto_Classe.QRDBText7.Enabled  := True;
+        FRProduto_Classe.QRDBText8.Enabled  := True;
+        FRProduto_Classe.QRDBText9.Enabled  := True;
+        FRProduto_Classe.QRDBText10.Enabled  := True;
+        FRProduto_Classe.QRDBText11.Enabled  := True;
+        FRProduto_Classe.QRDBText12.Enabled  := True;
+        FRProduto_Classe.QRLabel3.Enabled  := True;
+        FRProduto_Classe.QRLabel8.Enabled  := True;
+        FRProduto_Classe.QRLabel9.Enabled  := True;
+        FRProduto_Classe.QRLabel10.Enabled  := True;
+        FRProduto_Classe.QRLabel11.Enabled  := True;
+        FRProduto_Classe.QRLabel12.Enabled  := True;
+        FRProduto_Classe.QRLabel13.Enabled  := True;
+      end
+      else
+      begin
+        FRProduto_Classe.QRDBText6.Visible := False;
+        FRProduto_Classe.QRDBText7.Visible := False;
+        FRProduto_Classe.QRDBText8.Visible := False;
+        FRProduto_Classe.QRDBText9.Visible := False;
+        FRProduto_Classe.QRDBText10.Visible := False;
+        FRProduto_Classe.QRDBText11.Visible := False;
+        FRProduto_Classe.QRDBText12.Visible := False;
+        FRProduto_Classe.QRLabel3.Visible := False;
+        FRProduto_Classe.QRLabel8.Visible := False;
+        FRProduto_Classe.QRLabel9.Visible := False;
+        FRProduto_Classe.QRLabel10.Visible := False;
+        FRProduto_Classe.QRLabel11.Visible := False;
+        FRProduto_Classe.QRLabel12.Visible := False;
+        FRProduto_Classe.QRLabel13.Visible := False;
+        FRProduto_Classe.QRDBText6.Enabled  := False;
+        FRProduto_Classe.QRDBText7.Enabled  := False;
+        FRProduto_Classe.QRDBText8.Enabled  := False;
+        FRProduto_Classe.QRDBText9.Enabled  := False;
+        FRProduto_Classe.QRDBText10.Enabled  := False;
+        FRProduto_Classe.QRDBText11.Enabled  := False;
+        FRProduto_Classe.QRDBText12.Enabled  := False;
+        FRProduto_Classe.QRLabel3.Enabled  := False;
+        FRProduto_Classe.QRLabel8.Enabled  := False;
+        FRProduto_Classe.QRLabel9.Enabled  := False;
+        FRProduto_Classe.QRLabel10.Enabled  := False;
+        FRProduto_Classe.QRLabel11.Enabled  := False;
+        FRProduto_Classe.QRLabel12.Enabled  := False;
+        FRProduto_Classe.QRLabel13.Enabled  := False;
+        FRProduto_Classe.QRDBText5.AutoSize := True;
+        FRProduto_Classe.QRBand2.Enabled := False;
+        FRProduto_Classe.QRBand2.Visible := False;
+      end;
+      if DMParamSistema.CodEmpresa ='JBATACADO' then
+      begin
+        FRProduto_Classe.QRLabel3.Caption := 'Referência';
+        FRProduto_Classe.QRLabel8.Caption := 'Marca';
+        FRProduto_Classe.QRLabel10.Enabled := False;
+        FRProduto_Classe.QRLabel9.Enabled := False;
+        FRProduto_Classe.QRDBText9.Width := 110;
+        FRProduto_Classe.QRDBText9.DataField := 'DESC_MARCA';
+      end;
+      FRProduto_Classe.QRLTitulo.Caption := 'Relatório Produto por Classe, Fornecedor: ' + wFornecedor;
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProduto_Classe.QRPrimario.Preview
+      else
+        FRProduto_Classe.QRPrimario.Print;
+      QRProdutoClasse.Close;
+    end; //End With
+  end; //End If
+end;
+
+procedure TFProdutoCad.Produto1Click(Sender: TObject);
+begin
+  inherited;
+  // Chamada ao Relatório de Produtos
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[1].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME1CodFilial.Text), 'ESTOQUE');
+    if FRProdutos = nil then
+      FRProdutos := TFRProdutos.Create(Application);
+    with DMProdutoRelatorio do // Filtragem dos Dados
+    begin
+      QRProduto.Close;
+      if Trim(FProdutoParam.ME1TipoProduto.Text) <> '' then
+        QRProduto.SetVariable('TIPO_PRODUTO', FProdutoParam.ME1TipoProduto.Text)
+      else
+        QRProduto.SetVariable('TIPO_PRODUTO', Null);
+      if FProdutoParam.RG1QtdeEstoque.ItemIndex = 1 then // Listar Estoque Zero=Não
+        QRProduto.SetVariable('QTDE_ESTOQUE', 0)
+      else
+        QRProduto.SetVariable('QTDE_ESTOQUE', Null);
+      if Trim(FProdutoParam.ME1Cod.Text) <> '' then
+        QRProduto.SetVariable('COD_CADASTRO', FProdutoParam.ME1Cod.Text)
+      else
+        QRProduto.SetVariable('COD_CADASTRO', Null);
+      if Trim(FProdutoParam.ME1CodFilial.Text) <> '' then
+        QRProduto.SetVariable('COD_FILIAL', FProdutoParam.ME1CodFilial.Text)
+      else
+        QRProduto.SetVariable('COD_FILIAL', Null);
+      if Trim(FProdutoParam.Me1Descricao.Text) <> '' then
+      begin
+        if FProdutoParam.CB1TipoDescricao.ItemIndex = 0 then
+          QRProduto.SetVariable('DESC_PRODUTO', '%'+Trim(FProdutoParam.Me1Descricao.Text)+'%')
+        else
+          QRProduto.SetVariable('DESC_PRODUTO', Trim(FProdutoParam.Me1Descricao.Text)+'%')
+      end
+      else
+        QRProduto.SetVariable('DESC_PRODUTO', Null);
+      case FProdutoParam.CB1Situacao.ItemIndex of
+        0: QRProduto.SetVariable('SITUACAO', Null);
+        1: QRProduto.SetVariable('SITUACAO', 'ATIVO');
+        2: QRProduto.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QRProduto.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      QRProduto.SQL[QRProduto.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FProdutoParam.CB1Ordem.ItemIndex of
+        0: DMProdutoRelatorio.QRProduto.SQL.Add('ORDER BY COD_PRODUTO');
+        1: DMProdutoRelatorio.QRProduto.SQL.Add('ORDER BY DESC_PRODUTO');
+        2: DMProdutoRelatorio.QRProduto.SQL.Add('ORDER BY NUM_FABRICANTE');
+      end;
+      QRProduto.Open;
+      FRProdutos.QRLFilial.Caption := 'Filial:' + FProdutoParam.Me1Filial.Text;
+      if (FProdutoParam.RG1Codigo.ItemIndex = 0 ) then //Add Filtro. Junior 21/07/2026
+      begin
+        FRProdutos.QRDBText1.Enabled := True;
+        FRProdutos.QRLabel4.Left := 41;
+        FRProdutos.QRDBText9.Enabled := False;
+      end
+      else
+      begin
+        FRProdutos.QRDBText1.Enabled := False;
+        FRProdutos.QRDBText9.Enabled := True;
+      end;
+      {if (DMParamSistema.CodEmpresa.Value = 'DINIZ') then
+      begin
+        FRProdutos.QRDBText1.Enabled := False;
+        FRProdutos.QRDBText9.Enabled := True;
+      end
+      else
+      begin
+        FRProdutos.QRDBText1.Enabled := True;
+        FRProdutos.QRLabel4.Left := 41;
+        FRProdutos.QRDBText9.Enabled := False;
+      end;}
+      if DMParamSistema.QParamSistemaCod_Empresa.Value = 'SONOBOM' then
+      begin
+        FRProdutos.QRDBText3.Left := 550;
+        FRProdutos.QRDBText4.Left := 581;
+        FRProdutos.QRLabel6.Left := 559;
+        FRProdutos.QRLabel7.Left := 598;
+        FRProdutos.QRDBText2.Width := 450;
+        FRProdutos.QRDBText5.Enabled := False;
+        FRProdutos.QRDBText6.Enabled := False;
+        FRProdutos.QRLabel8.Enabled := False;
+        FRProdutos.QRLPrecoAtacMin.Enabled := False;
+        FRProdutos.QRLucro.Enabled := False;
+        FRProdutos.QRExpr1.Enabled := False;
+      end;
+      if (DMParamSistema.CodEmpresa = 'GARAGE280') or (DMParamSistema.CodEmpresa = 'FRACTA') then
+      begin
+        FRProdutos.QRLPrecoAtacMin.Caption := 'Vl Custo';
+        FRProdutos.QRDBText6.DataField := 'VL_ULTIMO_CUSTO'; //Vl Atacado para Vl Custo.
+        FRProdutos.QRLucro.Enabled := True;
+        FRProdutos.QRExpr1.Enabled := True;
+      end;
+      if (DMParamSistema.CodEmpresa = 'SCALA') then
+      begin
+        FRProdutos.QRLPrecoAtacMin.Caption := 'Vl Custo';
+        FRProdutos.QRDBText6.DataField := 'VL_ULTIMO_CUSTO'; //Vl Atacado para Vl Custo.
+      end;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutos.QRPrimario.Preview
+      else
+        FRProdutos.QRPrimario.Print;
+      QRProduto.Close;
+    end; //End With
+  end; //End If
+end;
+
+procedure TFProdutoCad.ListadePreos1Click(Sender: TObject);
+var
+  Day, Month, Year: Word;
+  wTam: Integer;
+begin
+  inherited;
+  // Chamada ao Relatório de Lista de Preços
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[2].TabVisible := true;
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+  begin
+    DecodeDate(Date, Year, Month, Day);
+    FProdutoParam.ME2DtAlteracao.Text := '01/' + FormatFloat('00', Month) + '/' + IntToStr(Year);
+  end;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    if FRListaPreco = nil then
+      FRListaPreco := TFRListaPreco.Create(Application);
+    with DMProdutoRelatorio do // Filtragem dos Dados
+    begin
+      FRListaPreco.QrlTitulo.Caption := 'Lista Preços Válida até ' + FProdutoParam.ME2DtValidade.Text;
+      QRListaPrecos.Close;
+      if Trim(FProdutoParam.ME2TipoProduto.Text) <> '' then
+        QRListaPrecos.SetVariable('TIPO_PRODUTO', FProdutoParam.ME2TipoProduto.Text)
+      else
+        QRListaPrecos.SetVariable('TIPO_PRODUTO', Null);
+      if Trim(FProdutoParam.ME2Codigo.Text) <> '' then
+        QRListaPrecos.SetVariable('FABRICANTE', FProdutoParam.ME2Codigo.Text)
+      else
+        QRListaPrecos.SetVariable('FABRICANTE', Null);
+      if Trim(FProdutoParam.Fm2Classe.MeClasse.Text) <> '' then
+        QRListaPrecos.SetVariable('CLASSE', FProdutoParam.Fm2Classe.MeClasse.Text)
+      else
+        QRListaPrecos.SetVariable('CLASSE', Null);
+      if Trim(FProdutoParam.Fm2Marca.MeMarca.Text) <> '' then
+        QRListaPrecos.SetVariable('MARCA', FProdutoParam.Fm2Marca.MeMarca.Text)
+      else
+        QRListaPrecos.SetVariable('MARCA', Null);
+      if Trim(FProdutoParam.ME2DtAlteracao.Text) <> '' then
+      begin
+        QRListaPrecos.SetVariable('DATA_ALTERACAO', FProdutoParam.ME2DtAlteracao.Text);
+        FRListaPreco.QRLTitulo.Caption := FRListaPreco.QRLTitulo.Caption + ' Precos Alterados a Partir ' + FProdutoParam.ME2DtAlteracao.Text;
+      end
+      else
+        QRListaPrecos.SetVariable('DATA_ALTERACAO', Null);
+      if Trim(FProdutoParam.ME2DtValidade.Text) <> '' then
+        QRListaPrecos.SetVariable('DT_VENCTO_PRECO', FProdutoParam.ME2DtValidade.Text)
+      else
+        QRListaPrecos.SetVariable('DT_VENCTO_PRECO', Null);
+      case FProdutoParam.CB2Situacao.ItemIndex of
+        0: QRListaPrecos.SetVariable('SITUACAO', Null);
+        1: QRListaPrecos.SetVariable('SITUACAO', 'ATIVO');
+        2: QRListaPrecos.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QRListaPrecos.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      QRListaPrecos.SQL[QRListaPrecos.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FProdutoParam.RG2QtdeEstoque.ItemIndex of
+        0: DMProdutoRelatorio.QRListaPrecos.SetVariable('LISTA_ESTOQUE_ZERO', 'SIM');
+        1: DMProdutoRelatorio.QRListaPrecos.SetVariable('LISTA_ESTOQUE_ZERO', 'NAO');
+      end;
+      case FProdutoParam.CB2Ordem.ItemIndex of
+        0: DMProdutoRelatorio.QRListaPrecos.SQL.Add('ORDER BY COD_PRODUTO');
+        1: DMProdutoRelatorio.QRListaPrecos.SQL.Add('ORDER BY DESC_PRODUTO');
+        2: DMProdutoRelatorio.QRListaPrecos.SQL.Add('ORDER BY DESC_CLASSE');
+        3: DMProdutoRelatorio.QRListaPrecos.SQL.Add('ORDER BY NUM_FABRICANTE');
+      end;
+      QRListaPrecos.Open;
+      if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+      begin
+        FRListaPreco.QRLPrecoAtacMin.Font.Color := ClWhite;
+        FRListaPreco.QRDBTPrecoAtacMin.Font.Color := ClWhite;
+      end;
+      with FRListaPreco do
+      begin
+        case FProdutoParam.RG2Precos.ItemIndex of
+          0:
+            begin
+              QRLPrecoAtacMin.Enabled := True;
+              QRDBTPrecoAtacMin.Enabled := True;
+              QRLPrecoVarMax.Enabled := False;
+              QRDBTPrecoVarMax.Enabled := False;
+            end;
+          1:
+            begin
+              QRLPrecoAtacMin.Enabled := False;
+              QRDBTPrecoAtacMin.Enabled := False;
+              QRLPrecoVarMax.Enabled := True;
+              QRDBTPrecoVarMax.Enabled := True;
+            end;
+          2:
+            begin
+              QRLPrecoAtacMin.Enabled := True;
+              QRDBTPrecoAtacMin.Enabled := True;
+              QRLPrecoVarMax.Enabled := True;
+              QRDBTPrecoVarMax.Enabled := True;
+            end;
+          end;
+        // Adicionado por Djeison - 07-01-2013 - Pedido Ceifagril
+        if FProdutoParam.RG2Codigo.ItemIndex = 1 then
+        begin
+          QRLCodigo.Enabled := False;
+          QRDBTCodigo.Enabled := False;
+          QRLNumFab.Enabled := True;
+          QRDBTNumFab.Enabled := True;
+        end else
+        begin
+          QRLCodigo.Enabled := True;
+          QRDBTCodigo.Enabled := True;
+          QRLNumFab.Enabled := False;
+          QRDBTNumFab.Enabled := False;
+        end;
+
+        wTam := QRDBTProduto.Width;
+        if FProdutoParam.CB2PrecoCusto.Checked then
+        begin
+          QRLCustoMedio.Enabled := True;
+          QRDBTCustoMedio.Enabled := True;
+        end
+        else
+        begin
+          QRLCustoMedio.Enabled := False;
+          QRDBTCustoMedio.Enabled := False;
+          QRDBTProduto.Width := QRDBTProduto.Width + QRDBTCustoMedio.Width;
+        end;
+        if FProdutoParam.CB2Unidade.Checked then
+         begin
+          QRDBTUn.Enabled := True;
+          QRLUn.Enabled := True;
+         end
+        else
+         begin
+          QRDBTUn.Enabled := False;
+          QRLUn.Enabled := False;
+         end;
+        if FProdutoParam.CB2Embalagem.Checked then
+         begin
+          QRDBTEmbalagem.Enabled := True;
+          QRLEmbalagem.Enabled := True;
+         end
+        else
+         begin
+          QRDBTEmbalagem.Enabled := False;
+          QRLEmbalagem.Enabled := False;
+         end;
+        if FProdutoParam.CB2Vencimento.Checked then
+         begin
+          QRDBTVencto.Enabled := True;
+          QRLVencto.Enabled := True;
+         end
+        else
+         begin
+          QRDBTVencto.Enabled := False;
+          QRLVencto.Enabled := False;
+         end;
+        if FProdutoParam.CB2Tributacao.Checked then
+         begin
+          QRDBTTributacao.Enabled := True;
+          QRLTributacao.Enabled := True;
+         end
+        else
+         begin
+          QRDBTTributacao.Enabled := False;
+          QRLTributacao.Enabled := False;
+         end;
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          QRPrimario.Preview
+        else
+          QRPrimario.Print;
+        QRListaPrecos.Close;
+        QRDBTProduto.Width := wTam;
+      end;                            
+    end; //End With
+  end; //End If
+end;
+
+procedure TFProdutoCad.Etiquetas1Click(Sender: TObject);
+begin
+  inherited;
+  // Chamada ao Relatório de Produtos
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[3].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    with DMProdutoRelatorio do
+    begin
+      DMProdutoRelatorio.QRProdutoEtiquetas.Close;
+      if FRProduto_Etiqueta_Peq_Todas = nil then
+        FRProduto_Etiqueta_Peq_Todas := TFRProduto_Etiqueta_Peq_Todas.Create(Application);
+      if Trim(FProdutoParam.ME3CodProduto.Text) <> '' then
+        QRProdutoEtiquetas.SetVariable('COD_PRODUTO', 'COD_PRODUTO IN (' + FProdutoParam.ME3CodProduto.Text + ')')
+      else
+        QRProdutoEtiquetas.SetVariable('COD_PRODUTO', '1 = 1');
+
+      if FProdutoParam.CLB3Etiquetas.Checked[0] then
+       Begin
+         FRProduto_Etiqueta_Peq_Todas.QRDBNumFab.DataField := 'COD_PRODUTO';
+         FRProduto_Etiqueta_Peq_Todas.QRDBNumFab.Visible := True;
+       End
+      else
+       Begin
+         FRProduto_Etiqueta_Peq_Todas.QRDBNumFab.DataField := 'COD_FABRICANTE';
+         FRProduto_Etiqueta_Peq_Todas.QRDBNumFab.Visible := True;
+       End;
+
+      // Parâmetro para sair com preço ou não
+      FRProduto_Etiqueta_Peq_Todas.QRLabel1.Enabled := FProdutoParam.CLB3Etiquetas.Checked[2];
+      FRProduto_Etiqueta_Peq_Todas.QRDBValVarejo.Enabled := FProdutoParam.CLB3Etiquetas.Checked[2];
+{Adicionado para filtrar por data de alteração de preço. Alex 07/05/2025}
+      if FProdutoParam.ME3DtInicial.Text <> '' then
+        QRProdutoEtiquetas.SetVariable('DT_ALT_PRECO_INI',FProdutoParam.ME3DtInicial.Text)
+      else
+        QRProdutoEtiquetas.SetVariable('DT_ALT_PRECO_INI',Null);
+      if FProdutoParam.ME3DtFinal.Text <> '' then
+        QRProdutoEtiquetas.SetVariable('DT_ALT_PRECO_FIM',FProdutoParam.ME3DtFinal.Text)
+      else
+        QRProdutoEtiquetas.SetVariable('DT_ALT_PRECO_FIM',Null);
+
+
+      If Trim(FProdutoParam.Fm3SubClasse.MeClasse.Text) <> '' Then
+         QRProdutoEtiquetas.SetVariable('NUM_CLASSE',Trim(FProdutoParam.Fm3SubClasse.MeClasse.Text))
+      Else
+         QRProdutoEtiquetas.SetVariable('NUM_CLASSE',Null);
+
+      If Trim(FProdutoParam.Fm3SubClasse.MeSubClasse.Text) <> '' Then
+         QRProdutoEtiquetas.SetVariable('NUM_SUBCLASSE',Trim(FProdutoParam.Fm3SubClasse.MeSubClasse.Text))
+      Else
+         QRProdutoEtiquetas.SetVariable('NUM_SUBCLASSE',Null);
+      Case FProdutoParam.Rg3Situacao.ItemIndex of
+        0 : QRProdutoEtiquetas.SetVariable('IND_SITUACAO', 'ATIVO');
+        1 : QRProdutoEtiquetas.SetVariable('IND_SITUACAO', 'DESATIVADO');
+        2 : QRProdutoEtiquetas.SetVariable('IND_SITUACAO', 'FORA DE LINHA');
+        3 : QRProdutoEtiquetas.SetVariable('IND_SITUACAO', Null);
+      End;
+      If FProdutoParam.Rg3Estoque.ItemIndex = 0 Then
+         QRProdutoEtiquetas.SetVariable('SUBSTITUICAO',' COD_PRODUTO IN (SELECT COD_PRODUTO FROM TB_ESTOQUE WHERE QT_QUANTIDADE > 0)')
+      Else
+         QRProdutoEtiquetas.SetVariable('SUBSTITUICAO','1=1');
+      QRProdutoEtiquetas.Open;
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProduto_Etiqueta_Peq_Todas.QRPrimario.Preview
+      else
+        FRProduto_Etiqueta_Peq_Todas.QRPrimario.Print;
+
+      QRProdutoEtiquetas.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.RegistrodeInventrio1Click(Sender: TObject);
+var
+  wClasses: string;
+  i: Integer;
+  wQuant : Real;
+begin
+  inherited;
+  if FEstoqueParam = nil then
+     FEstoqueParam := TFEstoqueParam.Create(Application);
+  FEstoqueParam.PGRelatorio.Pages[1].TabVisible := true;
+  if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'DINIZ')     Then
+     FEstoqueParam.Rg1Codigo.ItemIndex := 1;
+  if (DMParamSistema.CodEmpresa = 'KREUZ') then
+    FEstoqueParam.CB1Ordem.ItemIndex := 1;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME1CodFilial.Text), 'ESTOQUE');
+    if FREstoqueInventario = nil then
+       FREstoqueInventario := TFREstoqueInventario.Create(Application);
+    If FREstoqueInventario_paisagem = Nil Then
+       FREstoqueInventario_paisagem := TFREstoqueInventario_paisagem.Create(Application);
+    If FEstoqueParam.Rg1Codigo.ItemIndex = 1 Then
+     Begin
+      FREstoqueInventario.QrDbText2.Width := 0;
+      FREstoqueInventario.QrDbText2.Left := 0;
+      FREstoqueInventario.QrDbText2.Font.color := ClWindow;
+      //FREstoqueInventario.QrtLote.Width := 0;
+      FREstoqueInventario.QrDbText1.Left := 20;
+      FREstoqueInventario.QrDbText1.DataField := 'NUM_FABRICANTE';
+      FREstoqueInventario.QrDbText1.Alignment := taLeftJustify;
+      FREstoqueInventario.QrDbText1.Width := 105;
+      FREstoqueInventario.QrLabel5.Font.Color := ClWindow;
+      //FREstoqueInventario.QrlLote.Font.color := ClWindow;
+
+      FREstoqueInventario_paisagem.QrDbText2.Width := 0;
+      FREstoqueInventario_paisagem.QrDbText2.Left := 0;
+      FREstoqueInventario_paisagem.QrDbText2.Font.color := ClWindow;
+      FREstoqueInventario_paisagem.QrtLote.Width := 0;
+      FREstoqueInventario_paisagem.QrDbText1.Left := 20;
+      FREstoqueInventario_paisagem.QrDbText1.DataField := 'NUM_FABRICANTE';
+      FREstoqueInventario_paisagem.QrDbText1.Alignment := taLeftJustify;
+      FREstoqueInventario_paisagem.QrDbText1.Width := 105;
+      FREstoqueInventario_paisagem.QrLabel5.Font.Color := ClWindow;
+      FREstoqueInventario_paisagem.QrlLote.Font.color := ClWindow;
+    end;
+    with DMEstoque do
+    begin
+      QREstoque_Inventario.Close;
+      QEstoqueOEmpresa.Close;
+      If Trim(FEstoqueParam.ME1CodFilial.text) <> '' then
+        QREstoque_Inventario.SetVariable('COD_FILIAL', FEstoqueParam.ME1CodFilial.text)
+      else
+        QREstoque_Inventario.SetVariable('COD_FILIAL', Null);
+      if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ARISTIDES')  Then
+       Begin
+         QREstoque_Inventario.SetVariable('SUBSTITUICAO_LOTE', '1 = 1');
+         QREstoque_Inventario.SetVariable('ARISTIDES', '1 = 1'); // esta linha server para loja esportes
+        //comentado pra trazer tudo no relatorio de inventario - vitor longo
+        { If Trim(DMParamSistema.QParamSistemaDesc_Empresa.Value) = 'ARISTIDES CALCADOS' Then
+            QREstoque_Inventario.SetVariable('ARISTIDES','SUBSTR(TRIM(TB_PRODUTO.COD_PRODUTO),1,2) BETWEEN 10 AND 21'); //AUMENTADO OS INTERVALOS DAS FILIAIS ENTRE 10 E 21
+         If Trim(DMParamSistema.QParamSistemaDesc_Empresa.Value) = 'FEIRA DOS CALÇADOS' Then
+            QREstoque_Inventario.SetVariable('ARISTIDES','SUBSTR(TRIM(TB_PRODUTO.COD_PRODUTO),1,2) BETWEEN 10 AND 21');
+         If Trim(DMParamSistema.QParamSistemaDesc_Empresa.Value) = 'NANE CALCADOS' Then
+            QREstoque_Inventario.SetVariable('ARISTIDES','SUBSTR(TRIM(TB_PRODUTO.COD_PRODUTO),1,2) BETWEEN 10 AND 21');   }
+       end
+      Else
+       Begin
+         QREstoque_Inventario.SetVariable('SUBSTITUICAO_LOTE', 'E.COD_LOTE_TIPO = q.COD_LOTE_TIPO');
+         QREstoque_Inventario.SetVariable('ARISTIDES', '1 = 1');
+       End;
+      wClasses := '(';
+      If (FEstoqueParam.M1Classes.Lines[0] = '') And
+         (Trim(FEstoqueParam.ME1NumClasseInicial.text) = '')  then
+         QREstoque_Inventario.SetVariable('CLASSE_INICIAL', '1 = 1')
+      else
+      Begin
+        If FEstoqueParam.M1Classes.Lines[0] <> '' Then
+         Begin
+           For i := 0 to FEstoqueParam.M1Classes.Lines.Count do
+             wClasses := wClasses + FEstoqueParam.M1Classes.Lines[i] + ',';
+           wClasses := Copy(wClasses, 1, Length(wClasses) - 3) + ')';
+         End
+        Else
+           wClasses := Trim(FEstoqueParam.ME1NumClasseInicial.text);
+        QREstoque_Inventario.SetVariable('CLASSE_INICIAL', 'TB_CLASSE.NUM_CLASSE IN ' + wClasses);
+      End;
+      If Trim(FEstoqueParam.Me1SubClasses.text) <> '' then
+         QREstoque_Inventario.SetVariable('SUBCLASSE', Trim(FEstoqueParam.Me1SubClasses.text))
+      else
+         QREstoque_Inventario.SetVariable('SUBCLASSE', Null);
+      case FEstoqueParam.RGEstoque.ItemIndex of
+        0: QREstoque_Inventario.SetVariable('ESTOQUE', 'Tb_Estoque.Qt_Quantidade = 0');
+        1: QREstoque_Inventario.SetVariable('ESTOQUE', 'Tb_Estoque.Qt_Quantidade <> 0');
+        2: QREstoque_Inventario.SetVariable('ESTOQUE', 'Tb_Estoque.Qt_Quantidade < 0');
+        3: QREstoque_Inventario.SetVariable('ESTOQUE', 'Tb_Estoque.Qt_Quantidade > 0');
+        4: QREstoque_Inventario.SetVariable('ESTOQUE', '1 = 1');
+      end;
+      case FEstoqueParam.RGEstoque.ItemIndex of
+        0: QREstoque_Inventario.SetVariable('HAVING', 'SUM(Tb_Estoque.Qt_Quantidade) = 0');
+        1: QREstoque_Inventario.SetVariable('HAVING', 'SUM(Tb_Estoque.Qt_Quantidade) <> 0');
+        2: QREstoque_Inventario.SetVariable('HAVING', 'SUM(Tb_Estoque.Qt_Quantidade) < 0');
+        3: QREstoque_Inventario.SetVariable('HAVING', 'SUM(Tb_Estoque.Qt_Quantidade) > 0');
+        4: QREstoque_Inventario.SetVariable('HAVING', '1 = 1');
+      end;
+      if FEstoqueParam.CBSituacao.Text = 'TODOS' then
+         QREstoque_Inventario.SetVariable('SITUACAO', Null)
+      else
+         QREstoque_Inventario.SetVariable('SITUACAO', FEstoqueParam.CBSituacao.Text);
+
+      if FEstoqueParam.CB1TipoProduto.Text = 'TODOS' then
+         QREstoque_Inventario.SetVariable('TIPO_PRODUTO', Null)
+      else
+         QREstoque_Inventario.SetVariable('TIPO_PRODUTO', FEstoqueParam.CB1TipoProduto.Text);
+      if Trim(FEstoqueParam.Me1CodFornecedor.text) <> '' then
+         QREstoque_Inventario.SetVariable('COD_CADASTRO', FEstoqueParam.Me1CodFornecedor.text)
+      else
+         QREstoque_Inventario.SetVariable('COD_CADASTRO', Null);
+      if Trim(FEstoqueParam.Fm1marca.MeMarca.text) <> '' then
+         QREstoque_Inventario.SetVariable('COD_MARCA', Trim(FEstoqueParam.Fm1marca.MeMarca.text))
+      else
+         QREstoque_Inventario.SetVariable('COD_MARCA', Null);
+      if Trim(FEstoqueParam.Fm12Tributacao.MeTributacao.text) <> '' then
+         QREstoque_Inventario.SetVariable('COD_TRIBUTACAO', Trim(FEstoqueParam.Fm12Tributacao.MeTributacao.text))
+      else
+         QREstoque_Inventario.SetVariable('COD_TRIBUTACAO', Null);
+      if Trim(FEstoqueParam.Me1Percentual.Text) <> '' then
+         QREstoque_Inventario.SetVariable('PERC_INVENTARIO', StrToFloat(Trim(FEstoqueParam.Me1Percentual.text)))
+      else
+         QREstoque_Inventario.SetVariable('PERC_INVENTARIO', 1);
+      if Trim(FEstoqueParam.Fm1Lote.MeLote.Text) <> '' then
+        QREstoque_Inventario.SetVariable('LOTE_TIPO',Trim(FEstoqueParam.Fm1Lote.MeLote.Text))
+      else
+        QREstoque_Inventario.SetVariable('LOTE_TIPO',Null);
+      if Trim(FEstoqueParam.Fm1Produto.MeProduto.Text) <> '' then
+        QREstoque_Inventario.SetVariable('COD_PRODUTO',Trim(FEstoqueParam.Fm1Produto.MeProduto.Text)) //A pedido da Magali da Marticar. Alessandro 25/03/13
+      else
+        QREstoque_Inventario.SetVariable('COD_PRODUTO',Null);
+      if FEstoqueParam.RG1AgrupaLote.ItemIndex = 0 then
+        QREstoque_Inventario.SetVariable('AGRUPA_LOTE',Null)
+      else
+        QREstoque_Inventario.SetVariable('AGRUPA_LOTE','SIM');
+
+
+//          FREstoqueInventario.TQRValor.Caption:=FEstoqueParam.RG1Valor.Items.Strings[FEstoqueParam.RG1Valor.ItemIndex];
+      FREstoqueInventario.QRLFilial.Caption := 'Local:' + FEstoqueParam.ME1Filial.Text;
+      FREstoqueInventario_paisagem.QRLFilial.Caption := 'Local:' + FEstoqueParam.ME1Filial.Text;
+      if FestoqueParam.Rg1Quantidade.ItemIndex = 0 then
+      begin
+        case FEstoqueParam.RG1Valor.ItemIndex of
+          0:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_CUSTO_MEDIO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_MEDIO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_MEDIO)';
+              FREstoqueInventario.TQRValor.Caption := 'Custo Medio';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_CUSTO_MEDIO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_MEDIO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_MEDIO)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Custo Medio';
+            end;
+          1:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VAL_ATACADO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_ATACADO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_ATACADO)';
+              FREstoqueInventario.TQRValor.Caption := 'Vl.Atacado';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VAL_ATACADO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_ATACADO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_ATACADO)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Vl.Atacado';
+            end;
+          2:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VAL_VAREJO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_VAREJO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_VAREJO)';
+              FREstoqueInventario.TQRValor.Caption := 'Vl.Varejo';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VAL_VAREJO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_VAREJO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VAL_VAREJO)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Vl.Varejo';
+            end;
+          3:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_ULTIMO_CUSTO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_ULTIMO_CUSTO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_ULTIMO_CUSTO)';
+              FREstoqueInventario.TQRValor.Caption := 'Ult. Custo';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_ULTIMO_CUSTO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_ULTIMO_CUSTO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_ULTIMO_CUSTO)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Ult. Custo';
+            end;
+          4:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_CUSTO_DOLAR';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_DOLAR';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_DOLAR)';
+              FREstoqueInventario.TQRValor.Caption := 'Custo Dolar';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_CUSTO_DOLAR';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_DOLAR';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE*QREstoque_Inventario.VL_CUSTO_DOLAR)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Custo Dolar';
+            end;
+        end;
+        FREstoqueInventario.QRSumQuant.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE)';
+        FREstoqueInventario_paisagem.QRSumQuant.Expression := 'SUM(QREstoque_Inventario.QT_QUANTIDADE)';
+      end
+      else
+      begin
+        case FEstoqueParam.RG1Valor.ItemIndex of
+          0:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_CUSTO_MEDIO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_MEDIO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_MEDIO)';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_CUSTO_MEDIO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_MEDIO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_MEDIO)';
+            end;
+          1:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VAL_ATACADO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_ATACADO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_ATACADO)';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VAL_ATACADO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_ATACADO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_ATACADO)';
+            end;
+          2:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VAL_VAREJO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_VAREJO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_VAREJO)';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VAL_VAREJO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_VAREJO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VAL_VAREJO)';
+            end;
+          3:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_ULTIMO_CUSTO';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_ULTIMO_CUSTO';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_ULTIMO_CUSTO)';
+              FREstoqueInventario.TQRValor.Caption := 'Último Custo';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_ULTIMO_CUSTO';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_ULTIMO_CUSTO';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_ULTIMO_CUSTO)';
+              FREstoqueInventario_paisagem.TQRValor.Caption := 'Último Custo';
+            end;
+          4:
+            begin
+              FREstoqueInventario.QRDBValor.DataField := 'VL_CUSTO_DOLAR';
+              FREstoqueInventario.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_DOLAR';
+              FREstoqueInventario.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_DOLAR)';
+
+              FREstoqueInventario_paisagem.QRDBValor.DataField := 'VL_CUSTO_DOLAR';
+              FREstoqueInventario_paisagem.QRExprValorTotal.Expression := 'QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_DOLAR';
+              FREstoqueInventario_paisagem.QRSumValorTotal.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO*QREstoque_Inventario.VL_CUSTO_DOLAR)';
+            end;
+        end;
+        FREstoqueInventario.QRSumQuant.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO)';
+        FREstoqueInventario_paisagem.QRSumQuant.Expression := 'SUM(QREstoque_Inventario.QT_INVENTARIO)';
+      end;
+      QREstoque_Inventario.SQL[QREstoque_inventario.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FEstoqueParam.CB1Ordem.ItemIndex of
+        0:
+          if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'DINIZ') Then
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY NUM_FABRICANTE')
+          else
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY COD_PRODUTO');
+        1: DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY DESC_PRODUTO');
+        2: if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'DINIZ') Then
+              DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY Substr(NUM_FABRICANTE,4,3)||Substr(NUM_FABRICANTE,9,2)||Substr(NUM_FABRICANTE,1,3)||Substr(NUM_FABRICANTE,7,2)');
+        3: if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'DINIZ') Then
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_CLASSE.NUM_CLASSE,TB_CLASSE.NUM_SUBCLASSE,NUM_FABRICANTE')
+          else
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY NUM_CLASSE,NUM_SUBCLASSE,COD_PRODUTO');
+        4: DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY NUM_CLASSE,NUM_SUBCLASSE,DESC_PRODUTO');
+        5:
+           DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY DESC_LOCALIZACAO');//Erro ao gerar rel. DINIA. Arrumado....Não precisa da linha abaixo, a localização já está na sql com o comando DECODE. Junior 03/03/2023. Suporte(6682)
+          {if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') or
+             (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DISPART') then
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.DESC_LOCALIZACAO')
+          else
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_PRODUTO.DESC_LOCALIZACAO');}
+        6:
+          If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+             DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY QT_QUANT DESC')
+          Else
+             DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY QT_QUANT DESC');
+        7:
+          Case FEstoqueParam.RG1Valor.ItemIndex of
+             0 : If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_CUSTO_MEDIO * TB_ESTOQUE.QT_QUANTIDADE DESC')
+                 else
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_CUSTO_MEDIO * TB_ESTOQUE.QT_INVENTARIO DESC');
+             1 : If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_PRODUTO.VAL_ATACADO * TB_ESTOQUE.QT_QUANTIDADE DESC')
+                 Else
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_PRODUTO.VAL_ATACADO * TB_ESTOQUE.QT_INVENTARIO DESC');
+             2 : If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_PRODUTO.VAL_VAREJO * TB_ESTOQUE.QT_QUANTIDADE DESC')
+                 Else
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_PRODUTO.VAL_VAREJO * TB_ESTOQUE.QT_INVENTARIO DESC');
+             3 : If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_ULTIMO_CUSTO * TB_ESTOQUE.QT_QUANTIDADE DESC')
+                 Else
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_ULTIMO_CUSTO * TB_ESTOQUE.QT_INVENTARIO DESC');
+             4 : If FEstoqueParam.Rg1Quantidade.ItemIndex = 0 Then
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_CUSTO_MEDIO * TB_ESTOQUE.QT_QUANTIDADE DESC')
+                 Else
+                    DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY TB_ESTOQUE.VL_CUSTO_MEDIO * TB_ESTOQUE.QT_INVENTARIO DESC');
+          End;
+        8:
+            DMEstoque.QREstoque_Inventario.SQL.Add('ORDER BY NUM_FABRICANTE')
+      end;
+      DMEstoque.pDt_Inventario := Trim(FEstoqueParam.Me1DtReferencia.Text);
+      QEstoqueOEmpresa.SetVariable('COD_PRODUTO', Null);
+
+      //posição de estoque ate aquela data
+      QEstoqueOEmpresa.SetVariable('DATAI', '01/01/1900');
+      if (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'MARICOTA')  Then
+        QEstoqueOEmpresa.SetVariable('DATAF', '31/12/2200')
+      else
+        QEstoqueOEmpresa.SetVariable('DATAF',Trim(FEstoqueParam.Me1DtReferencia.Text));
+      QEstoqueOEmpresa.Open;
+      QREstoque_Inventario.Open;
+      DMEstoque.pNrPagina := StrToInt(Trim(FEstoqueParam.Me1Pagina.Text));
+      FREstoqueInventario.wPagina := StrToInt(Trim(FEstoqueParam.Me1Pagina.Text));
+      FREstoqueInventario.QRLabel2.Caption := 'Registro de Inventário - Posição de Estoque Até:' + FEstoqueParam.ME1DtReferencia.Text;
+
+      FREstoqueInventario_paisagem.wPagina := StrToInt(Trim(FEstoqueParam.Me1Pagina.Text));
+      FREstoqueInventario_paisagem.QRLabel2.Caption := 'Registro de Inventário - Posição de Estoque Até:' + FEstoqueParam.ME1DtReferencia.Text;
+      If FEstoqueParam.Rg1FormaImpressao.ItemIndex = 0 Then
+        if FEstoqueParam.RGPreview.ItemIndex = 0 then
+          FREstoqueInventario.QRPrimario.Preview
+        else
+          FREstoqueInventario.QRPrimario.Print
+      Else
+        if FEstoqueParam.RGPreview.ItemIndex = 0 then
+          FREstoqueInventario_paisagem.QRPrimario.Preview
+        else
+          FREstoqueInventario_paisagem.QRPrimario.Print;
+      QREstoque_Inventario.Close;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.SBConfirmarClick(Sender: TObject);
+var
+  wCodigo: Real;
+  wProduto: string;
+  wEstoque: Boolean;
+begin
+  wCodigo := DMProduto.QProdutoCod_produto.Value;
+//  If DBEdit5.Text <> '' Then
+  if (DSPrimario.State = DsInsert) and (DMProduto.QProdutoNUM_FABRICANTE.Value <> '')
+    and (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'INSIDE')
+    and (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'DISPART')
+    and (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'KREUZ' )
+    and (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ARISTIDES') then //Permitir cadastrar produto com o mesmo num_fabricante. Junior 26-09-2012. Solicitado por Rubens.
+  begin
+    wProduto := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_PRODUTO', 'NUM_FABRICANTE=' + Chr(39) + Trim(DBPNumFabricante.DBEdit.Text) + Chr(39));
+//    If DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'INSIDE' Then
+//    If (wProduto <> '') And (StrToFloat(wProduto) <> wCodigo) Then
+    if (wProduto <> '') then
+      raise Exception.Create('Produto Já Cadastrado com Código do Produto = ' + wProduto);
+  end;
+  wEstoque := ((DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ABATE') and (DSPrimario.State = DsInsert));
+
+  inherited;
+  if not (DSPrimario.State in [DsEdit, DsInsert]) then
+  begin
+    if wEstoque then //Inserindo registro no estoque com qtde 0
+    try
+      DMOracle.ExecutaSql('INSERT INTO TB_ESTOQUE(COD_LOTE_TIPO, COD_FILIAL, COD_PRODUTO, QT_QUANTIDADE) ' +
+        'VALUES (1, 2, ' + DMProduto.QProdutoCOD_PRODUTO.Text + ', 0)', False);
+    except
+    end;
+
+    if DMProduto.QEstoqueBaixa.State in [dsinsert, dsedit] then
+    begin
+      DMProduto.QEstoqueBaixa.post;
+    end;
+    try
+      DMOracle.DBCemapa.Commit;
+    except
+      DMOracle.DBCemapa.RollBack;
+      raise exception.create('Erro! Transação não efetuada');
+    end;
+    DMProduto.QProduto.Close;
+    DMProduto.QProduto.SetVariable('PK', wCodigo);
+    DMProduto.QProduto.Open;
+    if DMOracle.DBCemapa.InTransaction then
+      DMOracle.DBCemapa.Commit;
+  end;
+end;
+
+procedure TFProdutoCad.SBCancelarClick(Sender: TObject);
+var
+  wCodigo: real;
+  codProd: Integer;
+  descLog, sql: String;
+  dataLog: TDate;
+begin
+  wCodigo := DMProduto.QProdutoCod_produto.Value;
+  inherited;
+  // para monitorar problemas com a sequence do código de produto
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'IRRIGASOLO' then
+  begin
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT SQPRODUTO.CURRVAL FROM DUAL');
+    DMOracle.QExecSQL.Open;
+    codProd :=  DMOracle.QExecSQL.Fields[0].AsInteger;
+    descLog := 'USUARIO ' + IntToStr(DMUsuario.CodUsuarioCorrente);
+    descLog := descLog + ' clicou para cancelar um novo produto! ';
+    descLog := descLog + FormatDateTime('DD/MM/YYYY hh:mm:ss', Now) + ' codigo usado: ' + IntToStr(codProd);
+    sql := 'INSERT INTO TB_LOG(COD_LOG, DT_LOG, DESC_NOME_CAMPO, DESC_NOME_TABELA, DESC_OPERACAO, COD_CHAVE_PRIMARIA,  COD_USUARIO)';    
+    sql := sql + ' VALUES(SQLOG.NEXTVAL, ' + QuotedStr(FormatDateTime('DD/MM/YYYY', Now)) + ', ' + QuotedStr(descLog)
+               + ',' + QuotedStr('TB_PRODUTO') + ', ' + QuotedStr('CANCELAR') + ', ' + IntToStr(codProd) + ', '
+               + IntToStr(DMUsuario.CodUsuarioCorrente) + ')';
+    DMOracle.ExecutaSql(sql);
+  end;
+
+  if DMProduto.QEstoqueBaixa.State in [dsinsert, dsedit] then
+  begin
+    DMProduto.QEstoqueBaixa.cancel;
+  end;
+  DMOracle.DBCemapa.Rollback;
+  DMProduto.QProduto.Close;
+  DMProduto.QProduto.SetVariable('PK', wCodigo);
+  DMProduto.QProduto.Open;
+  BuscaDadosCalcados;
+end;
+
+procedure TFProdutoCad.BaixasnoEstqoue1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[4].TabVisible := True;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    if FRProdutosBaixa = nil then
+      FRProdutosBaixa := TFRProdutosBaixa.Create(Application);
+    with DMProdutoRelatorio do // Filtragem dos Dados
+    begin
+      QRProdutoEstoqueBaixa.Close;
+      QRProdutoEstoqueBaixa.Open;
+      QREstoqueBaixa.Close;
+      QREstoqueBaixa.Open;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutosBaixa.QRPrimario.Preview
+      else
+        FRProdutosBaixa.QRPrimario.Print;
+      QRProdutoEstoqueBaixa.Close;
+      QREstoqueBaixa.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.DSPrimarioStateChange(Sender: TObject);
+begin
+  inherited;
+  LblChecaNumFabricante.Visible := False;
+  DsEstoqueBaixaStateChange(Sender);
+
+  DBLCCstIpi.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCTipoProduto.enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCstPis.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCstCofins.enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCstPisSaida.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCstCofinsSaida.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCstIpiSaida.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  SBConsulta.Enabled := true;
+  GBGenero.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  GBSalto.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  GBMaterial.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  GBConfig.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCClasTribIBSCBSVenda.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+  DBLCCClasTribIBSCBSCompra.Enabled := DSPrimario.State in [dsEdit, dsInsert];
+end;
+
+procedure TFProdutoCad.EtiquetasPequenas1Click(Sender: TObject);
+begin
+  inherited;
+  // Chamada ao Relatório de Produtos
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[5].TabVisible := true;
+  while FProdutoParam.Showmodal = MrOk do
+  begin // Begin If
+    DMProdutoRelatorio.QRProdutoEtiquetas.Close;
+    if Trim(FProdutoParam.ME5CodProduto.Text) <> '' then
+    begin
+      DMProdutoRelatorio.QRProdutoEtiquetas.SetVariable('COD_PRODUTO', 'TB_PRODUTO.COD_PRODUTO = ' + FProdutoParam.ME5CodProduto.Text);
+      DMProdutoRelatorio.QRProdutoEtiquetas.SetVariable('IND_SITUACAO', Null);
+      DMProdutoRelatorio.QRProdutoEtiquetas.SetVariable('NUM_CLASSE', Null);
+      DMProdutoRelatorio.QRProdutoEtiquetas.SetVariable('NUM_SUBCLASSE', Null);
+      DMProdutoRelatorio.QRProdutoEtiquetas.SetVariable('SUBSTITUICAO', '1=1');
+      DMProdutoRelatorio.QRProdutoEtiquetas.Open;
+      if Etiquetas = nil then
+        Etiquetas := TEtiquetas.Create;
+      Etiquetas.PNum_Linhas := Trunc((FProdutoParam.SENumEtiquetas.Value + StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text)) / 5);
+      if ((FProdutoParam.SENumEtiquetas.Value + StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text)) / 5) > Etiquetas.PNum_Linhas then
+        Etiquetas.PNum_Linhas := Etiquetas.PNum_Linhas + 1;
+      Etiquetas.EmiteEtiquetas(1, FProdutoParam.Rg5Preco.ItemIndex, StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text), FProdutoParam.SENumEtiquetas.Value); // Etiquetas Pequenas
+    end;
+    DMProdutoRelatorio.QRProdutoEtiquetas.Close;
+    FProdutoParam.Me5CodBarras.Clear;
+    FProdutoParam.ME5NumEtiquetasImp.Text := '0';
+    {
+    if StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text) + FProdutoParam.SENumEtiquetas.Value >= 90 then
+      FProdutoParam.ME5NumEtiquetasImp.Text := IntToStr(StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text) + FProdutoParam.SENumEtiquetas.Value - 90)
+    else
+      FProdutoParam.ME5NumEtiquetasImp.Text := IntToStr(StrToInt(FProdutoParam.ME5NumEtiquetasImp.Text) + FProdutoParam.SENumEtiquetas.Value);
+    }
+    FProdutoParam.PGRelatorio.Pages[5].TabVisible := true;
+  end;
+end;
+
+procedure TFProdutoCad.ProdutosPromoo1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[6].TabVisible := true;
+
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    with DMProdutoRelatorio do
+    begin
+      QRProdutosPromocao.Close;
+      if Trim(FProdutoParam.MEDescPromocao.Text) <> '' then
+        QRProdutosPromocao.SetVariable('DESC_PROMOCAO', Trim(FProdutoParam.MEDescPromocao.Text))
+      else
+        QRProdutosPromocao.SetVariable('DESC_PROMOCAO', Null);
+
+      if Trim(FProdutoParam.ME6TipoProduto.Text) <> '' then
+        QRProdutosPromocao.SetVariable('IND_TIPO_PRODUTO', Trim(FProdutoParam.ME6TipoProduto.Text))
+      else
+        QRProdutosPromocao.SetVariable('IND_TIPO_PRODUTO', Null);
+
+      if Trim(FProdutoParam.ME6DataInicial.Text) <> '' then
+        QRProdutosPromocao.SetVariable('DT_INICIAL', FProdutoParam.ME6DataInicial.Text)
+      else
+        QRProdutosPromocao.SetVariable('DT_INICIAL', Null);
+
+      if Trim(FProdutoParam.ME6DataFinal.Text) <> '' then
+        QRProdutosPromocao.SetVariable('DT_FINAL', FProdutoParam.ME6DataFinal.Text)
+      else
+        QRProdutosPromocao.SetVariable('DT_FINAL', Null);
+      QRProdutosPromocao.Open;
+      if FRProdutoPromocao = nil then
+        FRProdutoPromocao := TFRProdutoPromocao.Create(Application);
+      FRProdutoPromocao.QRLTitulo.Caption := 'Relatório de Produtos em Promoção ' + FProdutoParam.MEDescPromocao.Text;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoPromocao.QRPrimario.Preview
+      else
+        FRProdutoPromocao.QRPrimario.Print;
+      QRProdutosPromocao.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.ProdutosSemEstoque1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[7].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    if FRProdutoSEstoque = nil then
+      FRProdutoSEstoque := TFRProdutoSEstoque.Create(Application);
+    with DMProdutoRelatorio do // Filtragem dos Dados
+    begin
+      QRProdutoSEstoque.Close;
+      if Trim(FProdutoParam.ME7TipoProduto.Text) <> '' then
+        QRProdutoSEstoque.SetVariable('TIPO_PRODUTO', FProdutoParam.ME7TipoProduto.Text)
+      else
+        QRProdutoSEstoque.SetVariable('TIPO_PRODUTO', Null);
+      if Trim(FProdutoParam.ME7Cadastro.Text) <> '' then
+        QRProdutoSEstoque.SetVariable('COD_CADASTRO', FProdutoParam.ME7Cadastro.Text)
+      else
+        QRProdutoSEstoque.SetVariable('COD_CADASTRO', Null);
+      case FProdutoParam.CB7Situacao.ItemIndex of
+        0: QRProdutoSEstoque.SetVariable('SITUACAO', Null);
+        1: QRProdutoSEstoque.SetVariable('SITUACAO', 'ATIVO');
+        2: QRProdutoSEstoque.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QRProdutoSEstoque.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      QRProdutoSEstoque.Open;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoSEstoque.QRPrimario.Preview
+      else
+        FRProdutoSEstoque.QRPrimario.Print;
+      QRProdutoSEstoque.Close;
+    end; //End With
+  end; //End If
+
+end;
+
+procedure TFProdutoCad.EstoquePorClasse1Click(Sender: TObject);
+begin
+  inherited;
+  if FEstoqueParam = nil then
+    FEstoqueParam := TFEstoqueParam.Create(Application);
+    FEstoqueParam.PGRelatorio.Pages[6].TabVisible := true;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME6CodFilial.Text), 'ESTOQUE');
+    with DMEstoque do
+    begin
+      QREstoqueClasse.Close;
+      if Trim(FEstoqueParam.ME6CodFilial.text) <> '' then
+        QREstoqueClasse.SetVariable('COD_FILIAL', FEstoqueParam.ME6CodFilial.text)
+      else
+        QREstoqueClasse.SetVariable('COD_FILIAL', Null);
+
+      //classe e subclasse inicial
+      if Trim(FEstoqueParam.Fm6SubClasseInicial.MeClasse.text) <> '' then
+        QREstoqueClasse.SetVariable('CLASSE', FEstoqueParam.Fm6SubClasseInicial.MeClasse.text)
+      else
+        QREstoqueClasse.SetVariable('CLASSE', Null);
+
+      if Trim(FEstoqueParam.Fm6SubClasseInicial.MeSubClasse.text) <> '' then
+        QREstoqueClasse.SetVariable('SUBCLASSE_INICIAL', FEstoqueParam.Fm6SubClasseInicial.MeSubClasse.text)
+      else
+        QREstoqueClasse.SetVariable('SUBCLASSE_INICIAL', Null);
+
+      if Trim(FEstoqueParam.Fm6SubClasseFinal.MeSubClasse.text) <> '' then
+        QREstoqueClasse.SetVariable('SUBCLASSE_FINAL', FEstoqueParam.Fm6SubClasseFinal.MeSubClasse.text)
+      else
+        QREstoqueClasse.SetVariable('SUBCLASSE_FINAL', Null);
+
+
+      if FEstoqueParam.RG6Estoque.ItemIndex = 0 then
+        QREstoqueClasse.SetVariable('ESTOQUE', Null)
+      else
+        QREstoqueClasse.SetVariable('ESTOQUE', 0);
+      case FEstoqueParam.CB6Situacao.ItemIndex of
+        0: QREstoqueClasse.SetVariable('SITUACAO', Null);
+        1: QREstoqueClasse.SetVariable('SITUACAO', 'ATIVO');
+        2: QREstoqueClasse.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QREstoqueClasse.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      if FEstoqueParam.Me6Vencimento.Text = '' then
+        QREstoqueClasse.SetVariable('DT_VENCIMENTO', Null)
+      else
+        QREstoqueClasse.SetVariable('DT_VENCIMENTO', StrToDate(FEstoqueParam.Me6Vencimento.Text));
+
+      QREstoqueClasse.SQL[QREstoqueClasse.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FEstoqueParam.CB6Ordem.ItemIndex of
+        0: QREstoqueClasse.SQL.Add('ORDER BY NUM_CLASSE,NUM_SUBCLASSE,Tb_produto.COD_PRODUTO');
+        1: QREstoqueClasse.SQL.Add('ORDER BY NUM_CLASSE,NUM_SUBCLASSE,Tb_produto.DESC_PRODUTO');
+      end;
+      QREstoqueClasse.Open;
+
+      if FREstoqueClasse = nil then
+        FREstoqueClasse := TFREstoqueClasse.Create(Application);
+
+      FREstoqueClasse.QRLabel11.Caption := 'Num. Fabricante';
+      FREstoqueClasse.QRDBText2.DataField := 'NUM_FABRICANTE';
+      if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'RAELETRO') THEN     //solicitado por Cleimar 29/07/2014 Rafael
+      Begin
+        FREstoqueClasse.QRLabel11.Caption := 'Codigo';
+        FREstoqueClasse.QRDBText2.DataField := 'COD_PRODUTO';
+      end;
+
+      if FEstoqueParam.RGPreview.ItemIndex = 0 then
+        FREstoqueClasse.QRPrimario.Preview
+      else
+        FREstoqueClasse.QRPrimario.Print;
+      QREstoqueClasse.Close;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.EtiquetasCodBarras1Click(Sender: TObject);
+var
+  i: integer;
+begin
+  inherited;
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'ENCOPEL' then
+  begin
+    if FProdutoParam = nil then
+      FProdutoParam := TFProdutoParam.Create(Application);
+    FProdutoParam.ME8Data.Visible := False;
+    FProdutoParam.ME8Volumes.Visible := False;
+    FProdutoParam.Label31.Visible := False;
+    FProdutoParam.Label33.Visible := False;
+
+
+    FProdutoParam.ME8Data2.Visible := False;
+    FProdutoParam.ME8Volumes2.Visible := False;
+    FProdutoParam.Label110.Visible := False;
+    FProdutoParam.Label111.Visible := False;
+    FProdutoParam.PGRelatorio.Pages[8].TabVisible := true;
+
+    if FProdutoParam.ShowModal = mrOk then
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME8CodFilial.Text), 'ESTOQUE');
+
+      with DMProdutoRelatorio do
+      begin
+        QRProdutosCodBarra.Close;
+        QRProdutosCodBarra.Sql.Clear;
+        QRProdutosCodBarra.Sql.Text := 'SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO';
+
+        if Trim(FProdutoParam.ME8NrCopias.Text) <> '' then
+        begin
+          for i := 1 to StrToint(Trim(FProdutoParam.ME8NrCopias.Text)) - 1 do
+          begin
+            QRProdutosCodBarra.Sql.Add('UNION ALL SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO');
+          end;
+        end;
+
+        if Trim(FProdutoParam.ME8NrCopias2.Text) <> '' then
+        begin
+          for i := 1 to StrToint(Trim(FProdutoParam.ME8NrCopias2.Text)) do
+          begin
+            QRProdutosCodBarra.Sql.Add('UNION ALL SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = ' + trim(FProdutoParam.ME8CodProduto2.Text));
+          end;
+        end;
+
+        if Trim(FProdutoParam.ME8CodProduto.Text) <> '' then
+          QRProdutosCodBarra.SetVariable('COD_PRODUTO', FProdutoParam.ME8CodProduto.Text)
+        else
+          QRProdutosCodBarra.SetVariable('COD_PRODUTO', Null);
+
+        QRProdutosCodBarra.Open;
+
+        if FREtiquetaCodBarEncopel = nil then
+          FREtiquetaCodBarEncopel := TFREtiquetaCodBarEncopel.Create(Application);
+
+        FREtiquetaCodBarEncopel.Barcode1.Digits := ''; // CodBarra.data:='';
+        FREtiquetaCodBarEncopel.Barcode1.Digits := Trim(FProdutoParam.ME8CodBarra.Text);
+        FREtiquetaCodBarEncopel.QuickRep1.Preview;
+        QRProdutosCodBarra.Close;
+
+      end;
+    end;
+  end;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[8].TabVisible := true;
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME8CodFilial.Text), 'ESTOQUE');
+
+    with DMProdutoRelatorio do
+    begin
+      QRProdutosCodBarra.Close;
+      QRProdutosCodBarra.Sql.Clear;
+      QRProdutosCodBarra.Sql.Text := 'SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO';
+      if Trim(FProdutoParam.ME8NrCopias.Text) <> '' then
+      begin
+        for i := 1 to StrToint(Trim(FProdutoParam.ME8NrCopias.Text)) - 1 do
+        begin
+          QRProdutosCodBarra.Sql.Append('UNION ALL SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO');
+        end;
+      end;
+      if Trim(FProdutoParam.ME8CodProduto.Text) <> '' then
+        QRProdutosCodBarra.SetVariable('COD_PRODUTO', FProdutoParam.ME8CodProduto.Text)
+      else
+        QRProdutosCodBarra.SetVariable('COD_PRODUTO', Null);
+      QRProdutosCodBarra.Open;
+
+      if FREtiquetasCodBarra = nil then
+        FREtiquetasCodBarra := TFREtiquetasCodBarra.Create(Application);
+
+      FREtiquetasCodBarra.QRLData.Caption := '';
+      FREtiquetasCodBarra.QRLEmpresa.Caption := '';
+      FREtiquetasCodBarra.QRLVolume.Caption := '';
+      FREtiquetasCodBarra.Barcode1.Digits := ''; // CodBarra.data:='';
+      FREtiquetasCodBarra.QRLData.Caption := FProdutoParam.ME8Data.Text;
+      FREtiquetasCodBarra.QRLEmpresa.Caption := FProdutoParam.ME8Filial.Text;
+      FREtiquetasCodBarra.QRLVolume.Caption := FProdutoParam.ME8Volumes.Text;
+      FREtiquetasCodBarra.Barcode1.Digits := Trim(FProdutoParam.ME8CodBarra.Text);
+      FREtiquetasCodBarra.QuickRep1.Preview;
+      QRProdutosCodBarra.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.ChecarEstoqueCMovimentao1Click(Sender: TObject);
+var
+  wQtInventario, wQtEstoque: Real;
+  wDtInventario, wTeste: string;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[9].TabVisible := true;
+  FProdutoParam.Me9DtReferencia.Text := '  /  /    ';
+  wQtInventario := 0;
+  wQtEstoque := 0; // INICIALIZA  VALOR DAS VARIAVEIS - Robson 26/06/2000
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME9CodFilial.Text), 'ESTOQUE');
+    if FRProdutoChecagem = nil then
+      FRProdutoChecagem := TFRProdutoChecagem.Create(Application);
+    with DMEstoque do
+    begin
+      wDtInventario := FProdutoParam.Me9DtReferencia.Text;
+      if wDtInventario <> '' then
+      begin
+        wTeste := DMOracle.BuscaNome('SELECT QT_INVENTARIO FROM TB_ESTOQUE', 'TB_ESTOQUE.COD_PRODUTO=' + Trim(FProdutoParam.ME9CodProduto.Text) + ' AND TB_ESTOQUE.COD_LOTE_TIPO=' + Trim(FProdutoParam.ME9CodLote.Text) + ' AND TB_ESTOQUE.COD_FILIAL=' + Trim(FProdutoParam.ME9CodFilial.Text));
+        if wTeste <> '' then
+          wQtInventario := StrToFloat(wTeste);
+      end
+      else
+        wQtInventario := 0;
+      if DMOracle.BuscaNome('SELECT QT_QUANTIDADE FROM TB_ESTOQUE', 'TB_ESTOQUE.COD_PRODUTO=' + Trim(FProdutoParam.ME9CodProduto.Text) + ' AND TB_ESTOQUE.COD_LOTE_TIPO=' + Trim(FProdutoParam.ME9CodLote.Text) + ' AND TB_ESTOQUE.COD_FILIAL=' + Trim(FProdutoParam.ME9CodFilial.Text)) = ''
+        then
+        MessageDlg('Produto Sem Movimentação', mtInformation, [mbOk], 0)
+      else
+        wQtEstoque := StrToFloat(DMOracle.BuscaNome('SELECT QT_QUANTIDADE FROM TB_ESTOQUE', 'TB_ESTOQUE.COD_PRODUTO=' + Trim(FProdutoParam.ME9CodProduto.Text) + ' AND TB_ESTOQUE.COD_LOTE_TIPO=' + Trim(FProdutoParam.ME9CodLote.Text) + ' AND TB_ESTOQUE.COD_FILIAL=' + Trim(FProdutoParam.ME9CodFilial.Text)));
+      QRChecagemEstoque.Close;
+      if wDtInventario <> ''
+        then
+        QRChecagemEstoque.SetVariable('DATA_I', wDtInventario)
+      else
+        QRChecagemEstoque.SetVariable('DATA_I', StrToDate('01/01/2000'));
+      if Trim(FProdutoParam.ME9CodProduto.Text) <> '' then
+        QRChecagemEstoque.SetVariable('COD_PRODUTO', FProdutoParam.ME9CodProduto.Text)
+      else
+        QRChecagemEstoque.SetVariable('COD_PRODUTO', Null);
+      if Trim(FProdutoParam.ME9CodFilial.Text) <> '' then
+        QRChecagemEstoque.SetVariable('FILIAL', FProdutoParam.ME9CodFilial.Text)
+      else
+        QRChecagemEstoque.SetVariable('FILIAL', Null);
+      if Trim(FProdutoParam.ME9CodLote.Text) <> '' then
+        QRChecagemEstoque.SetVariable('LOTE', FProdutoParam.ME9CodLote.Text)
+      else
+        QRChecagemEstoque.SetVariable('LOTE', Null);
+      QRChecagemEstoque.Open;
+      FrProdutoChecagem.QRLProduto.Caption := Trim(FProdutoParam.ME9CodProduto.Text) + ' - ' + Trim(FProdutoParam.ME9Produto.Text) + ' - Lote:' + Trim(FProdutoParam.ME9Lote.Text);
+      FrProdutoChecagem.QRLDtInventario.Caption := wDtInventario;
+      FrProdutoChecagem.QRLQtInventario.Caption := FormatFloat('###,###,##0.00', wQtInventario);
+      FrProdutoChecagem.QRLQtEstoque.Caption := FormatFloat('###,###,##0.00', wQtEstoque);
+      FrProdutoChecagem.QRLFilial.Caption := 'Filial:' + Trim(FProdutoParam.ME9Filial.Text);
+// faz esta movimentacao das quantidades para permitir realizar os calculos no final do relatorio
+// banda summary before print
+      FrProdutoChecagem.QRLDiferenca.Caption := FloatToStr(wQtEstoque);
+      FrProdutoChecagem.QRLTotal.Caption := FloatToStr(wQtInventario);
+      pEstoque := wQtEstoque;
+      pInventario := wQtInventario;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FrProdutoChecagem.QRPrimario.Preview
+      else
+        FrProdutoChecagem.QRPrimario.Print;
+      QRChecagemEstoque.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.SBHelpClick(Sender: TObject);
+begin
+  inherited;
+  Application.HelpContext(4);
+end;
+
+procedure TFProdutoCad.EstoquePClasseEmbalagem1Click(Sender: TObject);
+begin
+  inherited;
+  if FEstoqueParam = nil then
+    FEstoqueParam := TFEstoqueParam.Create(Application);
+  FEstoqueParam.PGRelatorio.Pages[7].TabVisible := true;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME7CodFilial.Text), 'ESTOQUE');
+    if FREstoque_Classe_Emb = nil then
+      FREstoque_Classe_Emb := TFREstoque_Classe_Emb.Create(Application);
+    with DMEstoque do
+    begin
+      QREstoqueClasse_Emb.Close;
+      if Trim(FEstoqueParam.ME7CodFilial.text) <> '' then
+        QREstoqueClasse_Emb.SetVariable('COD_FILIAL', FEstoqueParam.ME7CodFilial.text)
+      else
+        QREstoqueClasse_Emb.SetVariable('COD_FILIAL', Null);
+      if Trim(FEstoqueParam.ME7NumClasseInicial.text) <> '' then
+        QREstoqueClasse_Emb.SetVariable('CLASSE_INICIAL', FEstoqueParam.ME7NumClasseInicial.text)
+      else
+        QREstoqueClasse_Emb.SetVariable('CLASSE_INICIAL', Null);
+      if Trim(FEstoqueParam.ME7DescClasseFinal.text) <> '' then
+        QREstoqueClasse_Emb.SetVariable('CLASSE_FINAL', FEstoqueParam.ME7NumClasseFinal.text)
+      else
+        QREstoqueClasse_Emb.SetVariable('CLASSE_FINAL', Null);
+      if FEstoqueParam.RG7Estoque.ItemIndex = 0 then
+        QREstoqueClasse_Emb.SetVariable('ESTOQUE', Null)
+      else
+        QREstoqueClasse_Emb.SetVariable('ESTOQUE', 0);
+      case FEstoqueParam.CB7Situacao.ItemIndex of
+        0: QREstoqueClasse_Emb.SetVariable('SITUACAO', Null);
+        1: QREstoqueClasse_Emb.SetVariable('SITUACAO', 'ATIVO');
+        2: QREstoqueClasse_Emb.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QREstoqueClasse_Emb.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      if FEstoqueParam.CB7TipoProduto.Text = 'TODOS' then
+        QREstoqueClasse_Emb.SetVariable('TIPO_PRODUTO', Null)
+      else
+        QREstoqueClasse_Emb.SetVariable('TIPO_PRODUTO', FEstoqueParam.Cb7TipoProduto.Text);
+      if Trim(FEstoqueParam.ME7CodLote.text) <> '' then
+        QREstoqueClasse_Emb.SetVariable('COD_LOTE_TIPO', FEstoqueParam.ME7CodLote.text)
+      else
+        QREstoqueClasse_Emb.SetVariable('COD_LOTE_TIPO', Null);
+      QREstoqueClasse_Emb.SQL[QREstoqueClasse_Emb.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FEstoqueParam.CB7Ordem.ItemIndex of
+        0: QREstoqueClasse_Emb.SQL.Add('ORDER BY DESC_CLASSE,COD_PRODUTO');
+        1: QREstoqueClasse_Emb.SQL.Add('ORDER BY DESC_CLASSE,DESC_PRODUTO');
+      end;
+     QREstoqueClasse_Emb.Open;
+
+      if DMParamSistema.QParamSistemaCod_Empresa.Value = 'CGS' then
+        FREstoque_Classe_Emb.QRGroup1.ForceNewPage := False;
+
+      if FEstoqueParam.Rg7Preco.ItemIndex = 0 then
+       begin
+         FREstoque_Classe_Emb.QRVal_varejo.Enabled:= true;
+         FREstoque_Classe_Emb.QRDBText6.Enabled:= true;
+         FREstoque_Classe_Emb.QRExpr6.Enabled:= true;
+         FREstoque_Classe_Emb.QRExpr7.Enabled:= true;
+       end
+       else
+       begin
+         FREstoque_Classe_Emb.QRVal_varejo.Enabled:= false;
+         FREstoque_Classe_Emb.QRDBText6.Enabled:= false;
+         FREstoque_Classe_Emb.QRExpr6.Enabled:= false;
+         FREstoque_Classe_Emb.QRExpr7.Enabled:= false;
+       end;
+       if FEstoqueParam.RGPreview.ItemIndex = 0 then
+        FREstoque_Classe_Emb.QRPrimario.Preview
+      else
+        FREstoque_Classe_Emb.QRPrimario.Print;
+      QREstoqueClasse_Emb.Close;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.ProdutosComEstoqueNegativo1Click(Sender: TObject);
+begin
+  inherited;
+  if FEstoqueParam = nil then
+    FEstoqueParam := TFEstoqueParam.Create(Application);
+  FEstoqueParam.PGRelatorio.Pages[8].TabVisible := true;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME8CodFilial.Text), 'ESTOQUE');
+    if FREstoqueNegativo = nil then
+      FREstoqueNegativo := TFREstoqueNegativo.Create(Application);
+    with DMEstoque do
+    begin
+      QREstoqueNegativo.Close;
+      if Trim(FEstoqueParam.ME8CodFilial.text) <> '' then
+        QREstoqueNegativo.SetVariable('COD_FILIAL', FEstoqueParam.ME8CodFilial.text)
+      else
+        QREstoqueNegativo.SetVariable('COD_FILIAL', Null);
+      if Trim(FEstoqueParam.ME8Fornecedor.text) <> '' then
+        QREstoqueNegativo.SetVariable('COD_FORNECEDOR', FEstoqueParam.ME8Fornecedor.text)
+      else
+        QREstoqueNegativo.SetVariable('COD_FORNECEDOR', Null);
+
+      QREstoqueNegativo.SQL[QREstoqueNegativo.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FEstoqueParam.CB8Ordem.ItemIndex of
+        0: QREstoqueNegativo.SQL.Add('ORDER BY COD_PRODUTO');
+        1: QREstoqueNegativo.SQL.Add('ORDER BY DESC_PRODUTO');
+      end;
+
+      QREstoqueNegativo.Open;
+      if FEstoqueParam.RGPreview.ItemIndex = 0 then
+        FREstoqueNegativo.QRPrimario.Preview
+      else
+        FREstoqueNegativo.QRPrimario.Print;
+      QREstoqueNegativo.Close;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.PosiodeEstoque1Click(Sender: TObject);
+begin
+  inherited;
+  if FEstoqueParam = nil then
+    FEstoqueParam := TFEstoqueParam.Create(Application);
+  FEstoqueParam.PGRelatorio.Pages[9].TabVisible := true;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME9CodFilial.Text), 'ESTOQUE');
+    with DMEstoque do
+    begin
+      if (FEstoqueParam.Rg9TpRelatorio.ItemIndex = 0) then  //analítico
+      begin
+        QREstoque_Posicao.Close;
+        if Trim(FEstoqueParam.ME9CodFilial.text) <> '' then
+          QREstoque_Posicao.SetVariable('COD_FILIAL', FEstoqueParam.ME9CodFilial.text)
+        else
+          QREstoque_Posicao.SetVariable('COD_FILIAL', Null);
+
+        if Trim(FEstoqueParam.ME9NumClasseInicial.text) <> '' then
+          QREstoque_Posicao.SetVariable('CLASSE_INICIAL', FEstoqueParam.ME9NumClasseInicial.text)
+        else
+          QREstoque_Posicao.SetVariable('CLASSE_INICIAL', Null);
+
+        if Trim(FEstoqueParam.ME9SubClasseI.text) <> '' then
+          QREstoque_Posicao.SetVariable('SUB_CLASSE_INICIAL', FEstoqueParam.ME9SubClasseI.text)
+        else
+          QREstoque_Posicao.SetVariable('SUB_CLASSE_INICIAL', Null);
+
+        if Trim(FEstoqueParam.ME9NumClasseFinal.text) <> '' then
+          QREstoque_Posicao.SetVariable('CLASSE_FINAL', FEstoqueParam.ME9NumClasseFinal.text)
+        else
+          QREstoque_Posicao.SetVariable('CLASSE_FINAL', Null);
+
+        if Trim(FEstoqueParam.ME9SubClasseF.text) <> '' then
+          QREstoque_Posicao.SetVariable('SUB_CLASSE_FINAL', FEstoqueParam.ME9SubClasseF.text)
+        else
+          QREstoque_Posicao.SetVariable('SUB_CLASSE_FINAL', Null);
+
+        if Trim(FEstoqueParam.ME9CodProduto.text) <> '' then
+          QREstoque_Posicao.SetVariable('COD_PRODUTO', FEstoqueParam.ME9CodProduto.text)
+        else
+          QREstoque_Posicao.SetVariable('COD_PRODUTO', Null);
+
+        if Trim(FEstoqueParam.ME9Cadastro.text) <> '' then
+          QREstoque_Posicao.SetVariable('COD_CADASTRO', FEstoqueParam.ME9Cadastro.text)
+        else
+          QREstoque_Posicao.SetVariable('COD_CADASTRO', Null);
+        if Trim(FEstoqueParam.Me9Vendedor.text) <> '' then
+          QREstoque_Posicao.SetVariable('COD_VENDEDOR', FEstoqueParam.Me9Vendedor.text)
+        else
+          QREstoque_Posicao.SetVariable('COD_VENDEDOR', Null);
+        if Trim(FEstoqueParam.FmMarca1.MeMarca.Text) <> '' then
+          QREstoque_Posicao.SetVariable('COD_MARCA', FEstoqueParam.FmMarca1.MeMarca.Text)
+        else
+          QREstoque_Posicao.SetVariable('COD_MARCA', Null);
+        
+
+        QREstoque_Posicao.SetVariable('DATA_INICIAL', FEstoqueParam.ME9DataInicial.Text);
+        QREstoque_Posicao.SetVariable('DATA_FINAL', FEstoqueParam.ME9DataFinal.Text);
+        case FEstoqueParam.Rg9Situacao.ItemIndex of
+          0: QREstoque_Posicao.SetVariable('SITUACAO', 'ATIVO');
+          1: QREstoque_Posicao.SetVariable('SITUACAO', 'DESATIVADO');
+          2: QREstoque_Posicao.SetVariable('SITUACAO', 'FORA DE LINHA');
+          3: QREstoque_Posicao.SetVariable('SITUACAO', Null);
+        end;
+        if FEstoqueParam.RG9Estoque.ItemIndex = 0 then
+         QREstoque_Posicao.SetVariable('ESTOQUE', Null)
+        else
+         QREstoque_Posicao.SetVariable('ESTOQUE', '0');
+        QREstoque_Posicao.SQL[QREstoque_Posicao.SQL.Count - 1] := ''; // elimina a última Linha da SQL (O ORDER BY)
+        if FEstoqueParam.Rg9Ordem.itemIndex = 0 then
+          QREstoque_Posicao.SQL.Add('ORDER BY COD_PRODUTO')
+        else
+          QREstoque_Posicao.SQL.Add('ORDER BY DESC_PRODUTO');
+
+        QREstoque_Posicao.Open;
+        if FREstoque_Posicao = nil then
+          FREstoque_Posicao := TFREstoque_Posicao.Create(Application);
+        FREstoque_Posicao.QRLFilial.Caption := 'Filial:' + Trim(FEstoqueParam.ME9Filial.Text) + ' de ' + FEstoqueParam.ME9DataInicial.Text + ' Até ' + FEstoqueParam.ME9DataFinal.Text;
+        FREstoque_Posicao.QRLTitulo.Caption := 'Posição do Estoque';
+        FREstoque_Posicao.QRLMarca.Caption := 'Marca: ' + FEstoqueParam.FmMarca1.EdMarca.Text;
+        if FEstoqueParam.RGPreview.ItemIndex = 0 then
+          FREstoque_Posicao.QRPrimario.Preview
+        else
+          FREstoque_Posicao.QRPrimario.Print;
+        QREstoque_Posicao.Close;
+      end
+      else
+      begin
+        QREstoque_Posicao_Sintetico.Close;
+        if Trim(FEstoqueParam.ME9CodFilial.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('COD_FILIAL', FEstoqueParam.ME9CodFilial.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('COD_FILIAL', Null);
+
+        if Trim(FEstoqueParam.ME9NumClasseInicial.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('CLASSE_INICIAL', FEstoqueParam.ME9NumClasseInicial.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('CLASSE_INICIAL', Null);
+
+        if Trim(FEstoqueParam.ME9SubClasseI.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('SUB_CLASSE_INICIAL', FEstoqueParam.ME9SubClasseI.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('SUB_CLASSE_INICIAL', Null);
+
+        if Trim(FEstoqueParam.ME9NumClasseFinal.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('CLASSE_FINAL', FEstoqueParam.ME9NumClasseFinal.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('CLASSE_FINAL', Null);
+
+        if Trim(FEstoqueParam.ME9SubClasseF.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('SUB_CLASSE_FINAL', FEstoqueParam.ME9SubClasseF.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('SUB_CLASSE_FINAL', Null);
+
+        if Trim(FEstoqueParam.ME9CodProduto.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('COD_PRODUTO', FEstoqueParam.ME9CodProduto.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('COD_PRODUTO', Null);
+
+        if Trim(FEstoqueParam.ME9Cadastro.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('COD_CADASTRO', FEstoqueParam.ME9Cadastro.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('COD_CADASTRO', Null);
+        if Trim(FEstoqueParam.Me9Vendedor.text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('COD_VENDEDOR', FEstoqueParam.Me9Vendedor.text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('COD_VENDEDOR', Null);
+        if Trim(FEstoqueParam.FmMarca1.MeMarca.Text) <> '' then
+          QREstoque_Posicao_Sintetico.SetVariable('COD_MARCA', FEstoqueParam.FmMarca1.MeMarca.Text)
+        else
+          QREstoque_Posicao_Sintetico.SetVariable('COD_MARCA', Null);
+        QREstoque_Posicao_Sintetico.SetVariable('DATA_INICIAL', FEstoqueParam.ME9DataInicial.Text);
+        QREstoque_Posicao_Sintetico.SetVariable('DATA_FINAL', FEstoqueParam.ME9DataFinal.Text);
+        case FEstoqueParam.Rg9Situacao.ItemIndex of
+          0: QREstoque_Posicao_Sintetico.SetVariable('SITUACAO', 'ATIVO');
+          1: QREstoque_Posicao_Sintetico.SetVariable('SITUACAO', 'DESATIVADO');
+          2: QREstoque_Posicao_Sintetico.SetVariable('SITUACAO', 'FORA DE LINHA');
+          3: QREstoque_Posicao_Sintetico.SetVariable('SITUACAO', Null);
+        end;
+        if FEstoqueParam.RG9Estoque.ItemIndex = 0 then
+         QREstoque_Posicao_Sintetico.SetVariable('ESTOQUE', Null)
+        else
+         QREstoque_Posicao_Sintetico.SetVariable('ESTOQUE', '0');
+        QREstoque_Posicao_Sintetico.SQL[QREstoque_Posicao_Sintetico.SQL.Count - 1] := ''; // elimina a última Linha da SQL (O ORDER BY)
+        if FEstoqueParam.Rg9Ordem.itemIndex = 0 then
+          QREstoque_Posicao_Sintetico.SQL.Add('ORDER BY COD_PRODUTO')
+        else
+          QREstoque_Posicao_Sintetico.SQL.Add('ORDER BY DESC_PRODUTO');
+        QREstoque_Posicao_Sintetico.Open;
+        if FREstoque_Posicao_Sintetico = nil then
+          FREstoque_Posicao_Sintetico := TFREstoque_Posicao_Sintetico.Create(Application);
+        FREstoque_Posicao_Sintetico.QRLFilial.Caption := 'Filial:' + Trim(FEstoqueParam.ME9Filial.Text) + ' de ' + FEstoqueParam.ME9DataInicial.Text + ' Até ' + FEstoqueParam.ME9DataFinal.Text;
+        FREstoque_Posicao_Sintetico.QRLTitulo.Caption := 'Posição do Estoque';
+        FREstoque_Posicao_Sintetico.QRLMarca.Caption := 'Marca: ' + FEstoqueParam.FmMarca1.EdMarca.Text;
+        if FEstoqueParam.RGPreview.ItemIndex = 0 then
+          FREstoque_Posicao_Sintetico.QRPrimario.Preview
+        else
+          FREstoque_Posicao_Sintetico.QRPrimario.Print;
+        QREstoque_Posicao_Sintetico.Close;
+      end;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.EntradaSaida1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[10].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME6CodFilial.Text), 'ESTOQUE');
+    with DMEstoque do
+    begin
+      QREstoqueEntrSaida.Close;
+      if Trim(FProdutoParam.ME6CodFilial.text) <> '' then
+        QREstoqueEntrSaida.SetVariable('FILIAL', FProdutoParam.ME6CodFilial.text)
+      else
+        QREstoqueEntrSaida.SetVariable('FILIAL', Null);
+
+      if Trim(FProdutoParam.ME6Classe_I.text) <> '' then
+        QREstoqueEntrSaida.SetVariable('CLASSE_I', FProdutoParam.ME6Classe_I.text)
+      else
+        QREstoqueEntrSaida.SetVariable('CLASSE_F', Null);
+
+      if Trim(FProdutoParam.ME6Classe_F.text) <> '' then
+        QREstoqueEntrSaida.SetVariable('CLASSE_F', FProdutoParam.ME6Classe_F.text)
+      else
+        QREstoqueEntrSaida.SetVariable('CLASSE_F', Null);
+
+      QREstoqueEntrSaida.SetVariable('DATA_I', FProdutoParam.ME6Data_I.Text);
+      QREstoqueEntrSaida.SetVariable('DATA_F', FProdutoParam.ME6Data_F.Text);
+
+      if FREstoqueEntrSaida = nil then
+        FREstoqueEntrSaida := TFREstoqueEntrSaida.Create(Application);
+
+      FREstoqueEntrSaida.QRLFilial.Caption := 'Filial:' + Trim(FProdutoParam.ME6CodFilial.Text) + '-' + FProdutoParam.ME6DescFilial.Text;
+      FREstoqueEntrSaida.QRLTitulo.Caption := 'Entradas e Saidas no Periodo ' + ' De ' + FProdutoParam.ME6Data_I.Text + ' Ate ' + FProdutoParam.ME6Data_F.Text;
+      FREstoqueEntrSaida.QRLClasse.Caption := 'Classe : ' + Trim(FProdutoParam.ME6Classe_I.text) + ' - ' + Trim(FProdutoParam.ME6DClasseI.text) + '  Final: ' + Trim(FProdutoParam.ME6Classe_F.text) + ' - ' + Trim(FProdutoParam.ME6DClasseF.text);
+      FREstoqueEntrSaida.QRLSaldo.Caption := FProdutoParam.ME_Saldo.Text;
+      QREstoqueEntrSaida.Open;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FREstoqueEntrSaida.QRPrimario.Preview
+      else
+        FREstoqueEntrSaida.QRPrimario.Print;
+      QREstoqueEntrSaida.Close;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.PosioparaCompra1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[11].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME10CodFilial.Text), 'ESTOQUE');
+    with DMProduto do
+    begin
+      QRCompraPosicao.Close;
+      if Trim(FProdutoParam.ME10CodFilial.text) <> '' then // usado no calcfields da query
+        pFilial := StrtoInt(Trim(FProdutoParam.ME10CodFilial.text))
+      else
+        pFilial := 0;
+      if Trim(FProdutoParam.ME10CodFornecedor.text) <> '' then
+        QRCompraPosicao.SetVariable('FORNECEDOR', Trim(FProdutoParam.ME10CodFornecedor.text))
+      else
+        QRCompraPosicao.SetVariable('FORNECEDOR', Null);
+      if Trim(FProdutoParam.ME10CodProduto.text) <> '' then
+        QRCompraPosicao.SetVariable('PRODUTO', Trim(FProdutoParam.ME10CodProduto.text))
+      else
+        QRCompraPosicao.SetVariable('PRODUTO', Null);
+      if Trim(FProdutoParam.ME10NumClasse.Text) <> '' then
+        QRCompraPosicao.SetVariable('NUM_CLASSE', Trim(FProdutoParam.ME10NumClasse.Text))
+      else
+        QRCompraPosicao.SetVariable('NUM_CLASSE', Null);
+      if Trim(FProdutoParam.ME10NumSubClasse.Text) <> '' then
+        QRCompraPosicao.SetVariable('NUM_SUBCLASSE', Trim(FProdutoParam.ME10NumSubClasse.Text))
+      else
+        QRCompraPosicao.SetVariable('NUM_SUBCLASSE', Null);
+      if Trim(FProdutoParam.FmMarca1.MeMarca.Text) <> '' then
+        QRCompraPosicao.SetVariable('COD_MARCA', Trim(FProdutoParam.FmMarca1.MeMarca.Text))
+      else
+        QRCompraPosicao.SetVariable('COD_MARCA', Null);
+      if FProdutoParam.RGOrdem10.ItemIndex = 0 then
+        QRCompraPosicao.SQL.Add('ORDER BY TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, TB_PRODUTO.DESC_PRODUTO')
+      else
+        QRCompraPosicao.SQL.Add('ORDER BY TB_CLASSE.NUM_CLASSE, TB_CLASSE.NUM_SUBCLASSE, TB_PRODUTO.COD_PRODUTO');
+      case FProdutoParam.Cb10Situacao.ItemIndex of
+        0: QRCompraPosicao.SetVariable('SITUACAO', Null);
+        1: QRCompraPosicao.SetVariable('SITUACAO', 'ATIVO');
+        2: QRCompraPosicao.SetVariable('SITUACAO', 'DESATIVADO');
+        3: QRCompraPosicao.SetVariable('SITUACAO', 'FORA DE LINHA');
+      end;
+      QRCompraPosicao.Open;
+      if FRCompra_Posicao = nil then
+        FRCompra_Posicao := TFRCompra_Posicao.Create(Application);
+      if Trim(FProdutoParam.ME10CodFilial.Text) <> '' then
+      begin
+        FRCompra_Posicao.QRLEmpresa.Caption := 'Filial: ' + FProdutoParam.ME10DescFilial.Text;
+        FRCompra_Posicao.QRLTitulo.Caption := 'Relatório de Posição para Compra do Fornecedor ' + FProdutoParam.ME10DescFornecedor.text;
+        FRCompra_Posicao.QRLMarca.Caption := 'Marca: ' + FProdutoParam.FmMarca1.EdMarca.Text;
+      end
+      else
+      begin
+        FRCompra_Posicao.QRLEmpresa.Caption := 'Filial: ' + 'Todas';
+        FRCompra_Posicao.QRLTitulo.Caption := 'Relatório de Posição para Compra do Fornecedor ' + FProdutoParam.ME10DescFornecedor.text;
+        FRCompra_Posicao.QRLMarca.Caption := 'Filtrar pela marca: ' + FProdutoParam.FmMarca1.EdMarca.Text;
+      end;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRCompra_Posicao.QRPrimario.Preview
+      else
+        FRCompra_Posicao.QRPrimario.Print;
+      QRCompraPosicao.Close;
+      QRCompraPosicao.SQL[QRCompraPosicao.SQL.Count - 1] := ''; // elimina a última Linha da SQL (O ORDER BY)
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.VendasporClasseSinttico1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+
+  FProdutoParam.PGRelatorio.Pages[12].TabVisible := true;
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME11CodFilial.Text), 'ESTOQUE');
+    with DMEstoque do
+    begin
+      QREstoqueClasseSint.Close;
+      // Passa valores para os parametros da query
+      QREstoqueClasseSint.SetVariable('DATAI', FProdutoParam.ME11DataI.Text);
+      QREstoqueClasseSint.SetVariable('DATAF', FProdutoParam.ME11DataF.Text);
+
+      if Trim(FProdutoParam.ME11CodFilial.Text) = '' then
+        QREstoqueClasseSint.SetVariable('FILIAL', Null)
+      else
+        QREstoqueClasseSint.SetVariable('FILIAL', FProdutoParam.ME11CodFilial.Text);
+
+      if Trim(FProdutoParam.ME11NumClasseI.Text) = '' then
+        QREstoqueClasseSint.SetVariable('CLASSE_I', 1)
+      else
+        QREstoqueClasseSint.SetVariable('CLASSE_I', FProdutoParam.ME11NumClasseI.Text);
+
+      if Trim(FProdutoParam.ME11NumClasseF.Text) = '' then
+        QREstoqueClasseSint.SetVariable('CLASSE_F', 99999)
+      else
+        QREstoqueClasseSint.SetVariable('CLASSE_F', FProdutoParam.ME11NumClasseF.Text);
+      QREstoqueClasseSint.Open;
+    end;
+
+    if FREstoqueClasseSint = nil then
+      FREstoqueClasseSint := TFREstoqueClasseSint.Create(Application);
+
+    FREstoqueClasseSint.QRLEmpresa.Caption := 'Filial:' + Trim(FProdutoParam.ME11CodFilial.Text) + '-' + FProdutoParam.ME11FilialDesc.Text;
+    FREstoqueClasseSint.QRLTitulo.Caption := 'RESUMO DAS VENDAS POR CLASSE NO PERIODO DE ' + FProdutoParam.ME11DataI.Text + ' Até ' + FProdutoParam.ME11DataF.Text;
+
+    if FProdutoParam.RGPreview.ItemIndex = 0 then
+      FREstoqueClasseSint.QRPrimario.Preview
+    else
+      FREstoqueClasseSint.QRPrimario.Print;
+
+    DMEstoque.QREstoqueClasseSint.Close;
+
+  end;
+
+end;
+
+procedure TFProdutoCad.SBExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if DMOracle.DBCemapa.InTransaction then
+    DMOracle.DBCemapa.Commit;
+  LimpaCheckBox;
+end;
+
+procedure TFProdutoCad.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  DMProduto.QProduto.Close;
+  DMProduto.QEstoqueBaixa.Close;
+  DMProduto.QProdutoPreco.Close;
+  DMProduto.QImagemProduto.Close;;
+  Action := CaFree;
+  FProdutoCad := nil;
+end;
+
+procedure TFProdutoCad.MovimentoPorFornecedor1Click(Sender: TObject);
+begin
+  inherited;
+  if FEstoqueParam = nil then
+    FEstoqueParam := TFEstoqueParam.Create(Application);
+  FEstoqueParam.PGRelatorio.Pages[11].TabVisible := true;
+  if FEstoqueParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FEstoqueParam.ME11Filial.Text), 'ESTOQUE');
+    with DMProdutoRelatorio do
+    begin
+      QRMovimentoFornecedor.Close;
+      if Trim(FEstoqueParam.ME11Filial.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('COD_FILIAL', FEstoqueParam.ME11Filial.text)
+      else
+        QRMovimentoFornecedor.SetVariable('COD_FILIAL', Null);
+      if Trim(FEstoqueParam.ME11Produto.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('COD_PRODUTO', FEstoqueParam.ME11Produto.text)
+      else
+        QRMovimentoFornecedor.SetVariable('COD_PRODUTO', Null);
+      if Trim(FEstoqueParam.ME11Vendedor.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('COD_Vendedor', FEstoqueParam.ME11Vendedor.text)
+      else
+        QRMovimentoFornecedor.SetVariable('COD_Vendedor', Null);
+      if Trim(FEstoqueParam.ME11Fornecedor.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('COD_FORNECEDOR', FEstoqueParam.ME11Fornecedor.text)
+      else
+        QRMovimentoFornecedor.SetVariable('COD_FORNECEDOR', Null);
+      if Trim(FEstoqueParam.ME11DT_EMISSAO_I.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('DT_EMISSAO_I', FEstoqueParam.ME11DT_EMISSAO_I.text);
+      if Trim(FEstoqueParam.ME11DT_EMISSAO_I.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('DT_EMISSAO_F', FEstoqueParam.ME11DT_EMISSAO_F.text);
+      case FEstoqueParam.Rg11VendaFutura.ItemIndex of
+        0: QRMovimentoFornecedor.SetVariable('IND_FUTURA_CLIENTE', Null);
+        1: QRMovimentoFornecedor.SetVariable('IND_FUTURA_CLIENTE', 'V');
+      end;
+      if Trim(FEstoqueParam.ME11Classe.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('CLASSE', FEstoqueParam.ME11Classe.text)
+      else
+        QRMovimentoFornecedor.SetVariable('CLASSE', Null);
+      if Trim(FEstoqueParam.ME11SubClasse.text) <> '' then
+        QRMovimentoFornecedor.SetVariable('SUBCLASSE', FEstoqueParam.ME11SubClasse.text)
+      else
+        QRMovimentoFornecedor.SetVariable('SUBCLASSE', Null);
+{CodSuporte: 11581. Alex 13/10/2025.}
+      QRMovimentoFornecedor.SQL[QRMovimentoFornecedor.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      if (FEstoqueParam.Rg11Ordenar.ItemIndex = 0) then
+        QRMovimentoFornecedor.SQL.Add(' COD_VENDEDOR');
+      if (FEstoqueParam.Rg11Ordenar.ItemIndex = 1) then
+        QRMovimentoFornecedor.SQL.Add(' TB_NOTA_ITEM.COD_PRODUTO');
+      if (FEstoqueParam.Rg11Ordenar.ItemIndex = 2) then
+        QRMovimentoFornecedor.SQL.Add(' DT_ALTERACAO_PRECO');
+      QRMovimentoFornecedor.Open;
+      if FRMovimentoFornecedor = nil then
+        FRMovimentoFornecedor := TFRMovimentoFornecedor.Create(Application);
+      FRMovimentoFornecedor.QRLFilial.Caption := Trim(FEstoqueParam.ED11Filial.Text) + ' de ' + Trim(FEstoqueParam.ME11DT_Emissao_I.Text) + ' Até ' + Trim(FEstoqueParam.ME11DT_Emissao_F.Text);
+      FRMovimentoFornecedor.QRLFornecedor.Caption := FEstoqueParam.ED11Fornecedor.Text;
+      FRMovimentoFornecedor.QRLClasse.Caption := 'Classe: ' + FEstoqueParam.Ed11Classe.Text + ' SubClasse: ' + FEstoqueParam.me11SubClasse.Text + FEstoqueParam.Ed11SubClasse.Text;
+      if FEstoqueParam.RGPreview.ItemIndex = 0 then
+        FRMovimentoFornecedor.QRPrimario.Preview
+      else
+        FRMovimentoFornecedor.QRPrimario.Print;
+      QRMovimentoFornecedor.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.ImpressoEtiquetaCodBarra1Click(Sender: TObject);
+var
+  i, wQuant: integer;
+  wNumEtiquetas: array[1..7] of integer;
+  wCodEtiquetas: array[1..7] of string;
+  wCont: Integer;
+ // wAux : string;
+  j, Coluna: Integer;
+  Produtos: array[1..6] of string;
+  Copias: array[1..6] of string;
+  NomeCampo: string;
+begin
+  inherited;
+  wCont := 0;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[14].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PIXIXE' Then
+    Begin
+      DMProdutoRelatorio.QREtiquetaCodBarra.Close;
+      DMProdutoRelatorio.QREtiquetaCodBarra.open;
+
+      //--deleta etiquetas existentes
+      if DMProdutoRelatorio.QREtiquetaCodBarra.RecordCount > 0 then
+      begin
+        DMProdutoRelatorio.QREtiquetaCodBarra.First;
+        while not DMProdutoRelatorio.QREtiquetaCodBarra.Eof do
+        begin
+          DMProdutoRelatorio.QREtiquetaCodBarra.Delete;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias.Text));
+        while wCont <> 0 do
+        Begin
+          wCont:= wCont -1;
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto2.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias2.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias2.Text));
+        while wCont <> 0 do
+        Begin
+          wCont:= wCont -1;
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto2.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto3.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias3.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias3.Text));
+        while wCont <> 0 do
+        Begin
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto3.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+          wCont:= wCont -1;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto4.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias4.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias4.Text));
+        while wCont <> 0 do
+        Begin
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto4.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+          wCont:= wCont -1;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto5.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias5.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias5.Text));
+        while wCont <> 0 do
+        Begin
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto5.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+          wCont:= wCont -1;
+        end;
+      end;
+      if (Trim(FProdutoParam.ME14Produto6.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias6.Text) <> '') then
+      Begin
+        wCont := StrToInt(Trim(FProdutoParam.ME14NumCopias6.Text));
+        while wCont <> 0 do
+        Begin
+          DMProdutoRelatorio.QREtiquetaCodBarra.close;
+          DMProdutoRelatorio.QREtiquetaCodBarra.open;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+          DMProdutoRelatorio.QREtiquetaCodBarraETIQUETA1.Text :=Trim(FProdutoParam.ME14Produto6.Text) ;
+          DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+          wCont:= wCont -1;
+        end;
+      end;  
+
+      if FREtiqCodBarra = nil then
+        FREtiqCodBarra := TFREtiqCodBarra.Create(Application);
+     FREtiqCodBarra.QRLEmpresa.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+      FREtiqCodBarra.QRPrimario.Preview;
+    end
+    else
+    begin
+      if (Trim(FProdutoParam.ME14Produto.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias.Text) <> '') or
+      (Trim(FProdutoParam.ME14Produto2.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias2.Text) <> '') or
+      (Trim(FProdutoParam.ME14Produto3.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias3.Text) <> '') or
+      (Trim(FProdutoParam.ME14Produto4.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias4.Text) <> '') or
+      (Trim(FProdutoParam.ME14Produto5.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias5.Text) <> '') or
+      (Trim(FProdutoParam.ME14Produto6.Text) <> '') and (Trim(FProdutoParam.ME14NumCopias6.Text) <> '') then
+      Begin
+        wCont := 1;
+        if Trim(FProdutoParam.ME14NumCopias.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto.Text));
+          inc(wCont);
+        end;
+        if Trim(FProdutoParam.ME14NumCopias2.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias2.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto2.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto2.Text));
+          inc(wCont);
+        end;
+        if Trim(FProdutoParam.ME14NumCopias3.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias3.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto3.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto3.Text));
+          inc(wCont);
+        end;
+        if Trim(FProdutoParam.ME14NumCopias4.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias4.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto4.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto4.Text));
+          inc(wCont);
+        end;
+        if Trim(FProdutoParam.ME14NumCopias5.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias5.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto5.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto5.Text));
+          inc(wCont);
+        end;
+        if Trim(FProdutoParam.ME14NumCopias6.Text) <> '' then
+        begin
+          wNumEtiquetas[wCont] := StrToInt(Trim(FProdutoParam.ME14NumCopias6.Text));
+          if FProdutoParam.Rg14CodBarra.ItemIndex = 0 then
+            wCodEtiquetas[wCont] := Trim(FProdutoParam.ME14Produto6.Text)
+          else
+            wCodEtiquetas[wCont] := DMOracle.BuscaNome('SELECT NUM_FABRICANTE FROM TB_PRODUTO', 'COD_PRODUTO=' + Trim(FProdutoParam.ME14Produto6.Text));
+        end;
+
+        with DMProdutoRelatorio do
+        begin
+          QREtiquetaCodBarra.Close;
+          QREtiquetaCodBarra.open;
+
+          //--deleta etiquetas existentes
+          if QREtiquetaCodBarra.RecordCount > 0 then
+          begin
+            QREtiquetaCodBarra.First;
+            while not QREtiquetaCodBarra.Eof do
+            begin
+              QREtiquetaCodBarra.Delete;
+            end;
+          end;
+          //-----------------
+          QREtiquetaCodBarra.Close;
+          QREtiquetaCodBarra.Open;
+          if (DMParamSistema.CodEmpresa <> 'BERLIZ') then
+          begin
+            wCont := 1;
+            //-----empilhamento de etiquetas
+            while (wNumEtiquetas[wCont] >= 1) and (wCodEtiquetas[wCont] <> '') do
+            begin
+              wQuant := wNumEtiquetas[wCont];
+              while wQuant > 0 do
+              begin
+                QREtiquetaCodBarra.Append;
+                QREtiquetaCodBarraETIQUETA1.Text := wCodEtiquetas[wCont];
+                QREtiquetaCodBarraETIQUETA2.Text := wCodEtiquetas[wCont];
+                QREtiquetaCodBarraETIQUETA3.Text := wCodEtiquetas[wCont];
+                QREtiquetaCodBarraETIQUETA4.Text := wCodEtiquetas[wCont];
+                QREtiquetaCodBarraETIQUETA5.Text := wCodEtiquetas[wCont];
+                QREtiquetaCodBarra.Post;
+                wQuant := wQuant - 5;
+              end;
+              inc(wCont);
+            end;
+          end
+          else
+          begin
+            // Carrega produtos e cópias
+            DMProdutoRelatorio.QREtiquetaCodBarra.Close;
+            DMProdutoRelatorio.QREtiquetaCodBarra.open;
+            if DMProdutoRelatorio.QREtiquetaCodBarra.RecordCount <> 0 then
+            begin
+              DMOracle.ExecutaSql('DELETE FROM TB_ETIQUETA_CB');
+            end;
+            Produtos[1] := Trim(FProdutoParam.ME14Produto.Text);
+            Copias[1] := Trim(FProdutoParam.ME14NumCopias.Text);
+
+            Produtos[2] := Trim(FProdutoParam.ME14Produto2.Text);
+            Copias[2] := Trim(FProdutoParam.ME14NumCopias2.Text);
+
+            Produtos[3] := Trim(FProdutoParam.ME14Produto3.Text);
+            Copias[3] := Trim(FProdutoParam.ME14NumCopias3.Text);
+
+            Produtos[4] := Trim(FProdutoParam.ME14Produto4.Text);
+            Copias[4] := Trim(FProdutoParam.ME14NumCopias4.Text);
+
+            Produtos[5] := Trim(FProdutoParam.ME14Produto5.Text);
+            Copias[5] := Trim(FProdutoParam.ME14NumCopias5.Text);
+
+            Produtos[6] := Trim(FProdutoParam.ME14Produto6.Text);
+            Copias[6] := Trim(FProdutoParam.ME14NumCopias6.Text);
+
+            Coluna := 1;
+            DMProdutoRelatorio.QREtiquetaCodBarra.Close;
+            DMProdutoRelatorio.QREtiquetaCodBarra.Open;
+            DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+            i := 1;
+            while i < 7 do
+            begin
+              if (Produtos[i] <> '') and (Copias[i] <> '') then
+              begin
+                wCont := StrToInt(Copias[i]);
+                for j := 1 to wCont do
+                begin
+                  NomeCampo := 'ETIQUETA' + IntToStr(Coluna);
+                  DMProdutoRelatorio.QREtiquetaCodBarra.AutoCalcFields := false;
+                  DMProdutoRelatorio.QREtiquetaCodBarra.FieldByName(NomeCampo).AsString := Produtos[i];
+
+                  Inc(Coluna);
+                  if Coluna > 5 then
+                  begin
+                    DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+                    DMProdutoRelatorio.QREtiquetaCodBarra.Append;
+                    Coluna := 1;
+                  end;
+                end;
+              end;
+              inc(i);
+            end;
+
+            // Posta a última linha se ainda não tiver postado
+            if DMProdutoRelatorio.QREtiquetaCodBarra.State in [dsInsert, dsEdit] then
+              DMProdutoRelatorio.QREtiquetaCodBarra.Post;
+          end;
+          if FREtiquetaBarra = nil then
+            FREtiquetaBarra := TFREtiquetaBarra.Create(Application);
+
+          if FProdutoParam.RG14Preco.ItemIndex = 1 then
+          begin
+            FREtiquetaBarra.QRDBText2.Enabled := false;
+            FREtiquetaBarra.QRDBText4.Enabled := false;
+            FREtiquetaBarra.QRDBText6.Enabled := false;
+            FREtiquetaBarra.QRDBText8.Enabled := false;
+            FREtiquetaBarra.QRDBText10.Enabled := false;
+          end
+          else
+          begin
+            FREtiquetaBarra.QRDBText2.Enabled := true;
+            FREtiquetaBarra.QRDBText4.Enabled := true;
+            FREtiquetaBarra.QRDBText6.Enabled := true;
+            FREtiquetaBarra.QRDBText8.Enabled := true;
+            FREtiquetaBarra.QRDBText10.Enabled := true;
+          end;
+
+          FREtiquetaBarra.QRLEmpresa.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+          FREtiquetaBarra.QRLEmpresa2.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+          FREtiquetaBarra.QRLEmpresa3.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+          FREtiquetaBarra.QRLEmpresa4.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+          FREtiquetaBarra.QRLEmpresa5.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Value;
+          QREtiquetaCodBarra.Open;
+          FREtiquetaBarra.QRPrimario.Preview;
+        end;
+      end
+      else
+      showmessage('Devem ser Informados o Produto e o número de Etiquetas');
+    end;
+  end;
+end;
+
+
+procedure TFProdutoCad.ComposiodeEstoque1Click(Sender: TObject);
+var
+  wEstoque, wCusto: string;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[15].TabVisible := true; 
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.Me15CodFilial.Text), 'ESTOQUE');
+    with DMRelatorio_Estoque do
+    begin
+      if Trim(FProdutoParam.Me15CodFilial.text) = '' then
+        raise exception.create('Filial deve ser informado');
+      if (Trim(FProdutoParam.Me15CodProduto.text) = '') and
+        (FProdutoParam.RG15Opcao.ItemIndex = 0) then
+        raise exception.create('Produto deve ser informado');
+      if (Trim(FProdutoParam.Me15CodLote.text) = '') and
+        (FProdutoParam.RG15Opcao.ItemIndex = 0) then
+        raise exception.create('Lote deve ser informado');
+      if (Trim(FProdutoParam.Me15DtInicial.text) = '') or (Trim(FProdutoParam.Me15DtFinal.text) = '') then
+        raise exception.create('Período deve ser informado');
+      if FProdutoParam.RG15Opcao.ItemIndex = 0 then
+      begin
+        QrEstoqueComposicao.Close;
+        QrEstoqueComposicao.ClearVariables;
+        QrEstoqueComposicao.SetVariable('COD_FILIAL', FProdutoParam.Me15CodFilial.text);
+        QrEstoqueComposicao.SetVariable('COD_PRODUTO', FProdutoParam.Me15CodProduto.text);
+        QrEstoqueComposicao.SetVariable('COD_LOTE', FProdutoParam.Me15CodLote.text);
+        QrEstoqueComposicao.SetVariable('DATA_I', FProdutoParam.Me15DtInicial.Text);
+        QrEstoqueComposicao.SetVariable('DATA_F', FProdutoParam.Me15DtFinal.Text);
+        QrEstoqueComposicao.SetVariable('COD_CLASSE_PRODUTO', '1 = 1');
+        if FrEstoqueComposicao = nil then
+          FrEstoqueComposicao := TFrEstoqueComposicao.Create(Application);
+        FrEstoqueComposicao.QRLFilial.Caption := 'Filial:' + Trim(FProdutoParam.Me15CodFilial.Text) + '-' + Trim(FProdutoParam.ME15DescFilial.Text);
+        FrEstoqueComposicao.QRLProduto.Caption := 'Produto:' + Trim(FProdutoParam.Me15CodProduto.text) + '-' + Trim(FProdutoParam.ME15DescProduto.Text) + ' Lote:' + Trim(FProdutoParam.Me15Lote.Text);
+        FrEstoqueComposicao.QRLTitulo.Caption := 'Entradas e Saídas no Periodo ' + ' De ' + FProdutoParam.Me15DtInicial.Text + ' Ate ' + FProdutoParam.Me15DtFinal.Text;
+        if FProdutoParam.CB15Implantacao.Checked then
+          QrEstoqueComposicao.SetVariable('IMPLANTACAO', 'SIM');
+        QrEstoqueComposicao.Open;
+
+        wEstoque := DMOracle.BuscaNome('SELECT QT_INVENTARIO FROM TB_ESTOQUE',
+          'COD_PRODUTO=' + FloatToStr(QrEstoqueComposicaoCod_produto.value) +
+          ' AND COD_FILIAL=' + FloatToStr(QrEstoqueComposicaoCod_Filial.value) +
+          ' AND COD_LOTE_TIPO=' + FloatToStr(QrEstoqueComposicaoCod_Lote_Tipo.value));
+        if wEstoque = '' then
+          wEstoque := '0';
+
+        wCusto := DMOracle.BuscaNome('SELECT VL_CUSTO_INVENTARIO FROM TB_ESTOQUE',
+          'COD_PRODUTO = ' + FloatToStr(QrEstoqueComposicaoCod_produto.value) +
+          ' AND COD_FILIAL = ' + FloatToStr(QrEstoqueComposicaoCod_Filial.value) +
+          ' AND COD_LOTE_TIPO = ' + FloatToStr(QrEstoqueComposicaoCod_Lote_Tipo.value));
+        if wCusto = '' then
+          wCusto := '0';
+        FrEstoqueComposicao.QRLQuantidade.Caption := wEstoque;
+        FrEstoqueComposicao.QRLCusto_Inicial.Caption := wCusto;
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          FrEstoqueComposicao.QRPrimario.Preview
+        else
+          FrEstoqueComposicao.QRPrimario.Print;
+        QrEstoqueComposicao.Close;
+      end
+      else
+      begin
+        QrComposicaoEstoque.Close;
+        QrComposicaoEstoque.ClearVariables;
+        if FrComposicaoEstoque = nil then
+          FrComposicaoEstoque := TFrComposicaoEstoque.Create(Application);
+        if Trim(FProdutoParam.Me15CodFilial.text) <> '' then
+        begin
+          FrComposicaoEstoque.QRLFilial.Caption := 'Filial:' + FProdutoParam.Me15DescFilial.text;
+          QrComposicaoEstoque.SetVariable('COD_FILIAL', FProdutoParam.Me15CodFilial.text);
+        end;
+        if Trim(FProdutoParam.Me15CodProduto.text) <> '' then
+          QrComposicaoEstoque.SetVariable('COD_PRODUTO', FProdutoParam.Me15CodProduto.text);
+        if Trim(FProdutoParam.Me15CodLote.text) <> '' then
+          QrComposicaoEstoque.SetVariable('COD_LOTE', FProdutoParam.Me15CodLote.text);
+        QrComposicaoEstoque.SetVariable('DATA_I', FProdutoParam.Me15DtInicial.Text);
+        QrComposicaoEstoque.SetVariable('DATA_F', FProdutoParam.Me15DtFinal.Text);
+        FrComposicaoEstoque.QRLTitulo.Caption := 'Composicao de Custo no Periodo ' + ' De ' + FProdutoParam.Me15DtInicial.Text + ' Ate ' + FProdutoParam.Me15DtFinal.Text;
+        QrComposicaoEstoque.Open;
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          FrComposicaoEstoque.QRPrimario.Preview
+        else
+          FrComposicaoEstoque.QRPrimario.Print;
+        QrComposicaoEstoque.Close;
+      end;
+    end; //End With
+  end;
+end;
+
+procedure TFProdutoCad.MovimentoEstoque1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[16].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    if (trim(FProdutoParam.Me16DtInicial.Text) = '') and (trim(FProdutoParam.Me16DtFinal.Text) = '') then
+      raise exception.Create('É necessário informar um Período');
+
+    if (trim(FProdutoParam.Me16CodProduto.text) = '') then
+      raise exception.Create('É necessário informar um produto');
+
+    with DMEstoque do
+    begin
+      QRMovimentoEstoque.Close;
+      QRMovimentoEstoque1.Close;
+
+      QRMovimentoEstoque.SetVariable('DATA_I', FProdutoParam.Me16DtInicial.Text);
+      QRMovimentoEstoque1.SetVariable('DATA_I', FProdutoParam.Me16DtInicial.Text);
+      QRMovimentoEstoque.SetVariable('DATA_F', FProdutoParam.Me16DtFinal.Text);
+      QRMovimentoEstoque1.SetVariable('DATA_F', FProdutoParam.Me16DtFinal.Text);
+
+      if trim(FProdutoParam.Me16CodFilial.text) <> '' then
+      begin
+        QRMovimentoEstoque.SetVariable('COD_FILIAL', FProdutoParam.Me16CodFilial.text);
+        QRMovimentoEstoque1.SetVariable('COD_FILIAL', FProdutoParam.Me16CodFilial.text)
+      end
+      else
+      begin
+        QRMovimentoEstoque.SetVariable('COD_FILIAL', null);
+        QRMovimentoEstoque1.SetVariable('COD_FILIAL', null);
+      end;
+      if trim(FProdutoParam.Me16Lote.text) <> '' then
+      begin
+        QRMovimentoEstoque.SetVariable('COD_LOTE_TIPO', FProdutoParam.Me16Lote.text);
+        QRMovimentoEstoque1.SetVariable('COD_LOTE_TIPO', FProdutoParam.Me16Lote.text)
+      end
+      else
+      begin
+        QRMovimentoEstoque.SetVariable('COD_LOTE_TIPO', null);
+        QRMovimentoEstoque1.SetVariable('COD_LOTE_TIPO', null);
+      end;
+      if trim(FProdutoParam.FmDepartamento16.MeDepartamento.Text) <> '' then
+      begin
+        QRMovimentoEstoque.SetVariable('COD_DEPARTAMENTO', FProdutoParam.FmDepartamento16.MeDepartamento.text);
+        QRMovimentoEstoque1.SetVariable('COD_DEPARTAMENTO', FProdutoParam.FmDepartamento16.MeDepartamento.text)
+      end
+      else
+      begin
+        QRMovimentoEstoque.SetVariable('COD_DEPARTAMENTO', null);
+        QRMovimentoEstoque1.SetVariable('COD_DEPARTAMENTO', null);
+      end;
+      if trim(FProdutoParam.Me16CodFornecedor.text) <> '' then
+      begin
+        QRMovimentoEstoque.SetVariable('COD_CADASTRO', FProdutoParam.Me16CodFornecedor.text);
+        QRMovimentoEstoque1.SetVariable('COD_CADASTRO', FProdutoParam.Me16CodFornecedor.text);
+      end
+      else
+      begin
+        QRMovimentoEstoque.SetVariable('COD_CADASTRO', null);
+        QRMovimentoEstoque1.SetVariable('COD_CADASTRO', null);
+      end;
+      if trim(FProdutoParam.Me16CodProduto.text) <> '' then
+      begin
+        QRMovimentoEstoque.SetVariable('COD_PRODUTO', FProdutoParam.Me16CodProduto.text);
+        QRMovimentoEstoque1.SetVariable('COD_PRODUTO', FProdutoParam.Me16CodProduto.text);
+      end
+      else
+      begin
+        QRMovimentoEstoque.SetVariable('COD_PRODUTO', null);
+        QRMovimentoEstoque1.SetVariable('COD_PRODUTO', null);
+      end;
+
+      if FProdutoParam.Rg16Tipo.ItemIndex = 0 then
+        QRMovimentoEstoque.Open
+      else
+        QRMovimentoEstoque1.Open;
+      if FRMovimentoEstoque = nil then
+        FRMovimentoEstoque := TFRMovimentoEstoque.Create(Application);
+      FRMovimentoEstoque.QRLPeriodo.Caption := FProdutoParam.Me16DtInicial.Text + ' a ' + FProdutoParam.Me16DtFinal.Text;
+      FRMovimentoEstoque.QRLote.Caption := FProdutoParam.ME16DescLote.Text;
+
+      if FRMovimentoEstoque1 = nil then
+        FRMovimentoEstoque1 := TFRMovimentoEstoque1.Create(Application);
+
+      FRMovimentoEstoque1.QRLbProduto.Caption := 'Extrato de Movimentação Produto: ' + FProdutoParam.ME16DescProduto.Text;
+      FRMovimentoEstoque1.QRLbFilial.Caption := 'Filial: ' + FProdutoParam.ME16DescFilial.Text + ' - De ' + FProdutoParam.Me16DtInicial.Text + ' à ' + FProdutoParam.Me16DtFinal.Text;
+
+      if FProdutoParam.Rg16Tipo.ItemIndex = 0 then
+        FRMovimentoEstoque.QRPrimario.Preview
+      else
+        FRMovimentoEstoque1.QRPrimario.Preview;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.MeNumFabricanteExit(Sender: TObject);
+var
+  wCodigo: string;
+begin
+  inherited;
+  wCodigo := '';
+  if Trim(MeNumFabricante.Text) <> '' then
+  begin
+    wCodigo := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_PRODUTO', 'NUM_FABRICANTE = ' + chr(39) + Trim(MeNumFabricante.Text) + chr(39));
+    if wCodigo = '' then
+      wCodigo := DMOracle.FastSelect('COD_PRODUTO', 'TB_PRODUTO', 'NUM_FABRICANTE LIKE ' + QuotedStr(Trim(MeNumFabricante.Text) + '%'));
+  end;
+  if wCodigo <> '' then
+  begin
+    MeLocaliza.Text := wCodigo;
+    MELocalizaExit(Self);
+  end;
+  MeNumFabricante.Clear;
+end;
+
+procedure TFProdutoCad.ControledeMovProduto1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[17].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    if (trim(FProdutoParam.Me17Produto.text) <> '') and
+      (trim(FProdutoParam.Me17DtInicial.Text) <> '') and
+      (trim(FProdutoParam.Me17DtFinal.Text) <> '') then
+    begin
+      with DMRelatorio_Estoque do
+      begin
+        QRControleMovProduto.Close;
+        QREstoque_Inicial.Close;
+        if trim(FProdutoParam.Me17Filial.text) <> '' then
+        begin
+          QRControleMovProduto.SetVariable('COD_FILIAL', FProdutoParam.Me17Filial.text);
+          QREstoque_Inicial.SetVariable('COD_FILIAL', FProdutoParam.Me17Filial.text);
+        end
+        else
+        begin
+          QRControleMovProduto.SetVariable('COD_FILIAL', null);
+          QREstoque_Inicial.SetVariable('COD_FILIAL', null);
+        end;
+        QRControleMovProduto.SetVariable('COD_PRODUTO', FProdutoParam.Me17Produto.text);
+        QRControleMovProduto.SetVariable('DT_INICIAL', FProdutoParam.Me17DtInicial.Text);
+        QRControleMovProduto.SetVariable('DT_FINAL', FProdutoParam.Me17DtFinal.Text);
+        QREstoque_Inicial.SetVariable('COD_PRODUTO', FProdutoParam.Me17Produto.text);
+        QREstoque_Inicial.SetVariable('DT_INICIAL', FProdutoParam.Me17DtInicial.Text);
+        QREstoque_Inicial.Open;
+        QRControleMovProduto.Open;
+        if FRControleMovProduto = nil then
+          FRControleMovProduto := TFRControleMovProduto.Create(Application);
+        FRControleMovProduto.wEstoque_Final := DMRelatorio_Estoque.QrEstoque_InicialQt_Estoque.Value;
+        FRControleMovProduto.QRLPeriodo.Caption := FProdutoParam.Me17DtInicial.Text + ' até ' + FProdutoParam.Me17DtFinal.Text;
+        FRControleMovProduto.QRLProduto.Caption := 'Produto:' + FProdutoParam.Ed17Produto.Text;
+
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          FRControleMovProduto.QRPrimario.Preview
+        else
+          FRControleMovProduto.QRPrimario.Print;
+        QRControleMovProduto.Close;
+      end;
+    end
+    else
+      raise exception.Create('É necessário informar o Código do produto e Período');
+  end;
+end;
+
+procedure TFProdutoCad.ProdutosporMarca1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[18].TabVisible := true;
+  
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoMarca.Close;
+      if Trim(FProdutoParam.ME18Produto.text) <> '' then
+        QRProdutoMarca.SetVariable('PRODUTO', FProdutoParam.ME18Produto.text)
+      else
+        QRProdutoMarca.SetVariable('PRODUTO', Null);
+      if Trim(FProdutoParam.ME18Marca.text) <> '' then
+        QRProdutoMarca.SetVariable('MARCA', FProdutoParam.ME18Marca.text)
+      else
+        QRProdutoMarca.SetVariable('MARCA', Null);
+      If Trim(FProdutoParam.Fm18Filial.MeFilial.Text) <> '' Then
+        QRProdutoMarca.SetVariable('COD_FILIAL',Trim(FProdutoParam.Fm18Filial.MeFilial.Text))
+      Else
+        QRProdutoMarca.SetVariable('COD_FILIAL',Null);
+      QRProdutoMarca.Open;
+      if FRProdutoMarca = nil then
+        FRProdutoMarca := TFRProdutoMarca.Create(Application);
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoMarca.QRPrimario.Preview
+      else
+        FRProdutoMarca.QRPrimario.Print;
+      QRProdutoMarca.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.Rel1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+     FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[19].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMRelatorio_Estoque do
+    begin
+      if Trim(FProdutoParam.ME19Filial.text) = '' then
+        raise exception.create('Informar Filial');
+
+      if (Trim(FProdutoParam.ME19DtInicial.text) = '') or (Trim(FProdutoParam.ME19DtFinal.text) = '') then
+        raise exception.create('Informar Período');
+
+      if Trim(FProdutoParam.ME19Lote.text) = '' then
+        raise exception.create('Informar Lote');
+
+      if trim(FProdutoParam.ME19Classe.text) = '' then
+        raise exception.create('Informar NºClasse');
+
+      QRCustoCompra.Close;
+      if Trim(FProdutoParam.ME19Produto.text) <> '' then
+        QRCustoCompra.SetVariable('COD_PRODUTO', FProdutoParam.ME19Produto.text)
+      else
+        QRCustoCompra.SetVariable('COD_PRODUTO', Null);
+      QRCustoCompra.SetVariable('COD_FILIAL', FProdutoParam.ME19Filial.text);
+      QRCustoCompra.SetVariable('COD_LOTE', FProdutoParam.ME19Lote.text);
+      QRCustoCompra.SetVariable('NUM_CLASSE', FProdutoParam.ME19Classe.text);
+      if Trim(FProdutoParam.ME19DtInicial.text) <> '' then
+        QRCustoCompra.SetVariable('DATA_I', FProdutoParam.ME19DtInicial.text)
+      else
+        QRCustoCompra.SetVariable('DATA_I', Null);
+      if Trim(FProdutoParam.ME19DtFinal.text) <> '' then
+        QRCustoCompra.SetVariable('DATA_F', FProdutoParam.ME19DtFinal.text)
+      else
+        QRCustoCompra.SetVariable('DATA_F', Null);
+      QRCustoCompra.Open;
+
+      if FRCustoCompra = nil then
+         FRCustoCompra := TFRCustoCompra.Create(Application);
+      FRCustoCompra.QRLFilial.Caption := 'Filial: ' + FProdutoParam.ME19Filial.Text + '- ' + FProdutoParam.ED19Filial.text;
+      FRCustoCompra.QRLPeriodo.Caption := 'Período: ' + FProdutoParam.ME19DtInicial.text + ' até ' + FProdutoParam.ME19DtFinal.text;
+      FRCustoCompra.QRLLote.Caption := 'Lote: ' + FProdutoParam.ME19Lote.text;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRCustoCompra.QRPrimario.Preview
+      else
+        FRCustoCompra.QRPrimario.Print;
+      FRCustoCompra.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.EtiquetaMdiaCodBarra1Click(Sender: TObject);
+var
+  i, j, wQtde: integer;
+  wResto: Boolean;
+  wCodProduto,wDescProduto, wCodBarra : string;
+  ret,nLen : integer;
+  pbuf : array[0..127] of AnsiChar;
+  ver : PAnsiChar;
+  strmsg : string;
+  len1,len2 : integer;
+  buf1,buf2 : AnsiString;
+  buff1 : array[0..127] of WideChar;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[20].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'BISSOLOTTI' then
+    begin
+      if(trim(FProdutoParam.ME20Produto.Text) = '') then
+        raise Exception.Create('Informe o produto');
+      if(trim(FProdutoParam.ME20NrCopia.Text) = '') then
+        raise Exception.Create('Informe a quantidade');
+      DMProdutoRelatorio.QREtiquetaCaixa.Close;
+      DMProdutoRelatorio.QREtiquetaCaixa.SetVariable('COD_PRODUTO', trim(FProdutoParam.ME20Produto.Text));
+      DMProdutoRelatorio.QREtiquetaCaixa.Open;
+      wCodProduto := DMProdutoRelatorio.QREtiquetaCaixaCOD_PRODUTO.AsString;
+      wDescProduto := DMProdutoRelatorio.QREtiquetaCaixaDESC_PRODUTO.AsString;
+      wCodBarra := DMProdutoRelatorio.QREtiquetaCaixaDESC_COD_BARRA.AsString;
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+
+      j:= 1;
+      wQtde := (StrToInt(trim(FProdutoParam.ME20NrCopia.Text)) div 3);
+      wResto := (StrToInt(trim(FProdutoParam.ME20NrCopia.Text)) mod 3) <> 0;
+      if wResto then
+        wQtde := wQtde + 1;
+      while (j <= wQtde) do
+      begin
+
+        A_EnumUSB(pbuf);
+        A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+        ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+        A_Set_Darkness(12);
+
+        A_Prn_Text(029, 110, 1, 1, 0, 5, 6, 'n', 2, pchar('DESAFIO'));
+        A_Prn_Text(019, 090, 1, 1, 0, 2, 2, 'n', 2, pchar('Ref.'+wCodProduto));
+        A_Prn_Text(019, 068, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(wDescProduto,1, 28)));
+        A_Prn_Barcode(039, 005, 1,'D',3, 5, 50, 'N', 1, pchar(wCodBarra));
+
+        A_Prn_Text(237, 110, 1, 1, 0, 5, 6, 'n', 2, pchar('DESAFIO'));
+        A_Prn_Text(227, 090, 1, 1, 0, 2, 2, 'n', 2, pchar('Ref.'+wCodProduto));
+        A_Prn_Text(227, 068, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(wDescProduto,1, 28)));
+        A_Prn_Barcode(237, 005, 1,'D',3, 5, 50, 'N', 8, pchar(wCodBarra));
+
+        A_Print_Out(1, 1, 1, 1);
+        A_ClosePrn;
+        Inc(j);
+      end;
+    end
+    else
+    begin
+      with DMProdutoRelatorio do
+      begin
+        QRProdutosCodBarra.Close;
+        QRProdutosCodBarra.Sql.Clear;
+        QRProdutosCodBarra.Sql.Text := 'SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO';
+        if Trim(FProdutoParam.ME20NrCopia.Text) <> '' then
+        begin
+          for i := 1 to StrToint(Trim(FProdutoParam.ME20NrCopia.Text)) - 1 do
+          begin
+            QRProdutosCodBarra.Sql.Append('UNION ALL SELECT * FROM TB_PRODUTO WHERE COD_PRODUTO = :COD_PRODUTO');
+          end;
+        end;
+
+        if Trim(FProdutoParam.ME20Produto.Text) <> '' then
+          QRProdutosCodBarra.SetVariable('COD_PRODUTO', FProdutoParam.ME20Produto.Text);
+
+        QRProdutosCodBarra.Open;
+
+        if FREtiqueta_Media = nil then
+          FREtiqueta_Media := TFREtiqueta_Media.Create(Application);
+
+        FREtiqueta_Media.Barcode1.Digits := ''; // CodBarra.data:='';
+        FREtiqueta_Media.Barcode1.Digits := Trim(FProdutoParam.ME20Produto.Text);
+        FREtiqueta_Media.QuickRep1.Preview;
+        QRProdutosCodBarra.Close;
+      end;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.AtualizarImagemProduto;
+var
+  b: TStream;
+  Jpg: TJpegImage;
+begin
+  Jpg := nil;
+
+  // transferindo a fotografia para o objeto TStream
+  b := DMProduto.QImagemProduto.CreateBlobStream(DMProduto.QImagemProdutoIMG_IMAGEM, bmRead);
+
+  // se o registro não possui fotografia então apagaremos a imagem
+  // atual dentro do TImage, senão vai parecer que a fotografia seguinte
+  // será igual a anterior
+  if b.Size > 0 then
+  begin
+    // aqui ta o problema, como recuperar o jpeg do banco
+    // perceba que a variavel 'Jpg' é do tipo TJpegImage que por sua vez é uma classe TGraphic
+    // e que portanto poderá ser assinalada a propriedade Image1.Picure[.Graphic]
+    try
+      Jpg := TJpegImage.Create;
+      Jpg.LoadFromStream(b);
+      imgProduto.Picture.Assign(Jpg);
+      imgProduto.visible := true;
+    except
+    end;
+  end
+  else
+  begin
+    // Essa seria a maneira natural de eliminar um desenho dentro do
+    // TImage, pois se fizessemos um Image1.Picture.Graphic:=nil como
+    // sugerem alguns exemplos na internet, provocariamos um 'access violation',
+    // pois um nulo não pode ser tratado como bitmap ou jpeg.
+    imgProduto.Picture.Assign(nil);
+    imgProduto.Visible := false;
+  end;
+
+  lblImagemNaoCadastrada.Visible := not imgProduto.Visible; //se a imagem está visível esconde o label, se nao mostra o label
+
+  // Vamos liberar um pouco de memória
+  jpg.Free;
+  b.Destroy;
+end;
+
+procedure TFProdutoCad.btnIncluirImagemClick(Sender: TObject);
+var
+  MyJPEG: TJPEGImage;
+  MyBMP: TBitmap;
+  stream, outStream: TMemoryStream;
+  ext: string;
+
+  StretchBitmap: TBitmap;
+  Ratio: double;
+  ARect: TRect;
+
+  Height, width: integer;
+
+begin
+  inherited;
+
+  if not FileExists(MECaminhoImagem.Text) then
+    raise Exception.Create('Arquivo não encontrado');
+
+  ext := ExtractFileExt(LowerCase(MECaminhoImagem.Text));
+  if (ext <> '.bmp') and (ext <> '.jpg') and (ext <> '.jpeg') then
+    raise Exception.Create('Arquivo Inválido');
+
+  stream := TMemoryStream.Create;
+  OutStream := TMemoryStream.Create;
+  MyJPEG := TJPEGImage.Create;
+  MyBMP := TBitmap.Create;
+
+  // Create bitmap
+  StretchBitmap := TBitmap.Create;
+  try
+    //se a figura informada for um bitmap é feita a conversão para jpeg
+    if ext = '.bmp' then
+    begin
+      MyBMP.LoadFromFile(MECaminhoImagem.Text);
+      MyJPEG.Assign(MyBMP);
+      MyJPEG.Compress;
+    end
+    else //se for jpg/jpeg
+      MyJPEG.LoadFromFile(MECaminhoImagem.Text);
+
+    //-------redimensiona a imagem para ficar com o tamanho apropriado-----------
+    // Adjust parameters
+    Ratio := 0;
+//    Height := 240;
+//    width := 200;
+    //Agora faz-se necessária a imagem em tamanho original (Diego Stiehl - 13/07/2010)
+    Height := MyJPEG.Height;
+    width := MyJPEG.Width;
+
+    if MyJPEG.Height > 0 then
+      Ratio := MyJPEG.Width / MyJPEG.Height;
+
+    if Ratio > 1 then
+      Height := Round(width / Ratio)
+    else
+      Width := Round(Height * Ratio);
+
+    // Set bitmap atributes
+    StretchBitmap.Width := width;
+    StretchBitmap.Height := Height;
+    StretchBitmap.Canvas.Brush.Color := clWindow;
+    StretchBitmap.Canvas.FillRect(Rect(0, 0, Width, Height));
+
+    // StretchDraw original image
+    ARect := Rect(0, 0, width, Height);
+    StretchBitmap.Canvas.StretchDraw(ARect, MyJPEG);
+
+    // Assign back to the Jpeg, and save to the output file
+    MyJPEG.Assign(StretchBitmap);
+    MyJPEG.SaveToStream(OutStream);
+    //---------fim redimensiona a imagem------------
+
+    //------------grava a imagem no banco de dados-----------------
+    DMProduto.QImagemProduto.close;
+    DMProduto.QImagemProduto.open;
+
+    DMProduto.QImagemProduto.Insert;
+
+    DMProduto.QImagemProdutoCOD_PRODUTO.Value := DMProduto.QProdutoCOD_PRODUTO.AsInteger;
+    DMProduto.QImagemProdutoIMG_IMAGEM.LoadFromStream(outStream);
+    DMProduto.QImagemProduto.post;
+    //----------fim grava imagem no banco de dados------------
+
+    AtualizarImagemProduto;
+  finally
+    MyJPEG.Free;
+    MyBMP.Free;
+    StretchBitmap.Free;
+  end;
+end;
+
+procedure TFProdutoCad.btnProcurarClick(Sender: TObject);
+begin
+  inherited;
+  if OPDImagem.Execute then
+    MECaminhoImagem.Text := OPDImagem.FileName;
+end;
+
+procedure TFProdutoCad.DSImagemProdutoDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  if (DMProduto.QImagemProduto.RecordCount <= 0) then
+  begin
+    btnIncluirImagem.Enabled := true;
+    btnProcurar.Enabled := true;
+    btnExcluirImagem.Enabled := false;
+    MECaminhoImagem.Text := 'C:\';
+    MECaminhoImagem.ReadOnly := true;
+    MECaminhoImagem.Color := clWindow;
+    MECaminhoImagem.TabStop := true;
+  end
+  else
+  begin
+    btnIncluirImagem.Enabled := false;
+    btnProcurar.Enabled := false;
+    btnExcluirImagem.Enabled := true;
+    MECaminhoImagem.Text := '[Imagem já incluída]';
+    MECaminhoImagem.ReadOnly := false;
+    MECaminhoImagem.Color := clBtnFace;
+    MECaminhoImagem.TabStop := false;
+  end;
+end;
+
+procedure TFProdutoCad.btnExcluirImagemClick(Sender: TObject);
+begin
+  inherited;
+  if messageDlg('Deseja realmente excluir essa imagem?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    DMProduto.QImagemProduto.delete;
+end;
+
+procedure TFProdutoCad.VendaspGrupodeClasses1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+
+  FProdutoParam.PGRelatorio.Pages[21].TabVisible := true;
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.ME21Filial.Text), 'ESTOQUE');
+    with DMEstoque do
+    begin
+      QREstoqueGrupoClasse.Close;
+      QREstoqueGrupoClasse.SetVariable('DATAI', FProdutoParam.ME21Data_I.Text);
+      QREstoqueGrupoClasse.SetVariable('DATAF', FProdutoParam.ME21Data_F.Text);
+      //---------ano anterior
+      QREstoqueGrupoClasse.SetVariable('DATAI_ANT', FProdutoParam.ME21Data_I_ant.Text);
+      QREstoqueGrupoClasse.SetVariable('DATAF_ANT', FProdutoParam.ME21Data_F_ant.Text);
+
+
+      if Trim(FProdutoParam.ME21Filial.Text) = '' then
+        QREstoqueGrupoClasse.SetVariable('FILIAL', Null)
+      else
+        QREstoqueGrupoClasse.SetVariable('FILIAL', FProdutoParam.ME21Filial.Text);
+      QREstoqueGrupoClasse.Open;
+      if Trim(FProdutoParam.Fm21SubClasse.MEClasse.Text) = '' then
+        QREstoqueGrupoClasse.SetVariable('COD_CLASSE', Null)
+      else
+        QREstoqueGrupoClasse.SetVariable('COD_CLASSE', trim(FProdutoParam.Fm21SubClasse.MEClasse.Text));
+      if (Trim(FProdutoParam.Fm21SubClasse.MESubclasse.Text) = '') or (Trim(FProdutoParam.Fm21SubClasse.MESubclasse.Text) = '0') then
+        QREstoqueGrupoClasse.SetVariable('COD_SUBCLASSE', Null)
+      else
+        QREstoqueGrupoClasse.SetVariable('COD_SUBCLASSE', FProdutoParam.Fm21SubClasse.MESubclasse.Text);
+      if Trim(FProdutoParam.ME21Vendedor.Text) = '' then
+        QREstoqueGrupoClasse.SetVariable('COD_VENDEDOR', Null)
+      else
+        QREstoqueGrupoClasse.SetVariable('COD_VENDEDOR', trim(FProdutoParam.ME21Vendedor.Text));
+
+      QREstoqueGrupoClasse.SQL[QREstoqueGrupoClasse.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FProdutoParam.Rg21Ordem.ItemIndex of
+        0: QREstoqueGrupoClasse.SQL.Add('ORDER BY COD_CLASSE,DESC_CLASSE');
+        1: QREstoqueGrupoClasse.SQL.Add('ORDER BY DESC_CLASSE,COD_CLASSE');
+      end;
+
+      QREstoqueGrupoClasse.Open;
+      QREstoqueGrupoClasse.Close; //FOI FEITO ISSO PQ NÃO FUNCIONAVA APENAS COM UM OPEN, DAVA PROBLEMA NA PASSAGEM DE PARAMETROS
+      QREstoqueGrupoClasse.Open; //FABIANO - 22/09/2005.... NÃO ME PERGUNTE PQ!!!!! EU TBM NÃO SEI.... TEM VARIOS CODIGOS NO FORM DO RELATORIO, PROVAVELMENTE TEM ALGUMA COISA HAVER COM AQUELES CODIGOS, MAS NAO ENTENDI O QUE ACONTECE LÁ PRA NÃO FUNCIONAR DIREITO.
+    end;
+
+    if FREstoqueGrupoClasse = nil then
+      FREstoqueGrupoClasse := TFREstoqueGrupoClasse.Create(Application);
+
+    FREstoqueGrupoClasse.QRLEmpresa.Caption := 'Filial:' + Trim(FProdutoParam.ME21Filial.Text) + '-' + FProdutoParam.ED21Filial.Text;
+    FREstoqueGrupoClasse.QRLTitulo.Caption := 'RESUMO DAS VENDAS POR GRUPO DE CLASSES';
+    FREstoqueGrupoClasse.qrlVendedor.Caption := 'Vendedor: ' + FProdutoParam.ed21Vendedor.Text;
+    FREstoqueGrupoClasse.QRLPeriodoAtual.Caption := 'Periodo de '+ FProdutoParam.ME21Data_I.Text + ' Ate ' + FProdutoParam.ME21Data_F.Text;
+    FREstoqueGrupoClasse.QRLPeriodoAnterior.Caption := 'Periodo de '+ FProdutoParam.ME21Data_I_Ant.Text + ' Ate ' + FProdutoParam.ME21Data_F_Ant.Text;
+    if FProdutoParam.RGPreview.ItemIndex = 0 then
+      FREstoqueGrupoClasse.QRPrimario.Preview
+    else
+      FREstoqueGrupoClasse.QRPrimario.Print;
+
+    DMEstoque.QREstoqueGrupoClasse.Close;
+
+  end;
+end;
+
+procedure TFProdutoCad.BtProdutoPrecoClick(Sender: TObject);
+begin
+  inherited;
+  if FProdutoCons = nil then
+    FProdutoCons := TFProdutoCons.Create(Application);
+  if FProdutoCons.ShowModal = mrOk then
+    DMProduto.QProdutoPrecoCod_Produto.Value := StrToInt(DMProduto.QProdutoConsCod_Produto.Text);
+end;
+
+procedure TFProdutoCad.BtProdutoPrecoAlterarClick(Sender: TObject);
+begin
+  inherited;
+  if FProdutoCons = nil then
+    FProdutoCons := TFProdutoCons.Create(Application);
+  if FProdutoCons.ShowModal = mrOk then
+    DMProduto.QProdutoPrecoCOD_PRODUTO_PRECO.Value := StrToInt(DMProduto.QProdutoConsCod_Produto.Text);
+end;
+
+procedure TFProdutoCad.DSProdutoPrecoStateChange(Sender: TObject);
+begin
+  inherited;
+  if DSProdutoPreco.State in [DsEdit, DsInsert] then
+  begin
+    BtProdutoPreco.Enabled := True;
+    BtProdutoPrecoAlterar.Enabled := True;
+  end
+  else
+  begin
+    BtProdutoPreco.Enabled := False;
+    BtProdutoPrecoAlterar.Enabled := False;
+  end;
+end;
+
+procedure TFProdutoCad.SBIncluirClick(Sender: TObject);
+var
+  codProd: integer;
+  descLog, sql: String;
+  dataLog: TDate;
+begin
+  inherited;
+  if (DMParamSistema.CodEmpresa = 'ARISTIDES') OR
+     (DMParamSistema.CodEmpresa = 'LEURIA')   or
+     (DMParamSistema.CodEmpresa = 'ALPHA') or
+     (pos('NFCE',DMParamSistema.qParamSistemaCod_Empresa.Value) > 0) then
+  begin
+    PageControl1.ActivePage := PageControl1.Pages[1];
+    if DBPCodProduto2.Showing then
+      DBPCodProduto2.SetFocus
+  end
+  else
+  begin
+    PageControl1.ActivePage := PageControl1.Pages[0];
+    if DMParamSistema.QParamSistemaCod_Empresa.Value = 'GERALPECAS' then
+    begin
+      if DBPNumFabricante.Showing then
+        DBPNumFabricante.SetFocus;
+    end
+    else if DBPDescricao.Showing then
+      DBPDescricao.SetFocus;
+  end;
+
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'IRRIGASOLO' then
+  begin
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT SQPRODUTO.CURRVAL FROM DUAL');
+    DMOracle.QExecSQL.Open;
+    codProd :=  DMOracle.QExecSQL.Fields[0].AsInteger;
+    descLog := 'USUARIO ' + IntToStr(DMUsuario.CodUsuarioCorrente);
+    descLog := descLog + ' clicou para inserir um novo produto! ';
+    descLog := descLog + FormatDateTime('DD/MM/YYYY hh:mm:ss', Now) + ' codigo usado: ' + IntToStr(codProd);
+    sql := 'INSERT INTO TB_LOG(COD_LOG, DT_LOG, DESC_NOME_CAMPO, DESC_NOME_TABELA, DESC_OPERACAO, COD_CHAVE_PRIMARIA, COD_USUARIO)';
+    sql := sql + ' VALUES(SQLOG.NEXTVAL, ' + QuotedStr(FormatDateTime('DD/MM/YYYY', Now)) + ', '
+               + QuotedStr(descLog) + ',' + QuotedStr('TB_PRODUTO') + ', ' + QuotedStr('INSERIR') + ', ' + IntToStr(codProd) + ', '
+               + IntToStr(DMUsuario.CodUsuarioCorrente) + ')';
+    DMOracle.ExecutaSql(sql);
+  end;
+
+  DMProduto.QProdutoNUM_EMBALAGEM.value := 1;
+  LimpaCheckBox;
+end;
+
+procedure TFProdutoCad.ProdutossemMovimentao1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[23].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoSemMovimentacao.Close;
+
+      if Trim(FProdutoParam.ME23Dias.Text) = '' then
+        raise Exception.Create('É necessário informar o número de dias!')
+      else
+        QRProdutoSemMovimentacao.SetVariable('DT_INICIAL', Date - StrToFloat(FProdutoParam.ME23Dias.Text));
+      QRProdutoSemMovimentacao.SetVariable('DT_FINAL', Date);
+      if Trim(FProdutoParam.Fm23Classe.MeClasse.Text) <> '' then
+        QRProdutoSemMovimentacao.SetVariable('COD_CLASSE', StrToInt(Trim(FProdutoParam.Fm23Classe.MeClasse.Text)))
+      else
+        QRProdutoSemMovimentacao.SetVariable('COD_CLASSE', Null);
+      if Trim(FProdutoParam.Fm23Filial.MeFilial.Text) <> '' then
+        QRProdutoSemMovimentacao.SetVariable('COD_FILIAL', StrToInt(Trim(FProdutoParam.Fm23Filial.MeFilial.Text)))
+      else
+        QRProdutoSemMovimentacao.SetVariable('COD_FILIAL', Null);
+      case FProdutoParam.Rg23Estoque.ItemIndex of
+        0: QRProdutoSemMovimentacao.SetVariable('IND_ESTOQUE', 'TB_ESTOQUE.QT_QUANTIDADE > 0');
+        1: QRProdutoSemMovimentacao.SetVariable('IND_ESTOQUE', 'TB_ESTOQUE.QT_QUANTIDADE <= 0');
+        2: QRProdutoSemMovimentacao.SetVariable('IND_ESTOQUE', '1 = 1');
+      end;
+      QRProdutoSemMovimentacao.SQL[QRProdutoSemMovimentacao.SQL.Count - 1] := '';
+      case FProdutoParam.Rg23Ordem.ItemIndex of
+        0:
+         If FProdutoParam.Rg23Exibir.ItemIndex = 0 Then
+            QRProdutoSemMovimentacao.SQL.Add('ORDER BY TB_PRODUTO.COD_PRODUTO')
+         Else
+            QRProdutoSemMovimentacao.SQL.Add('ORDER BY TB_PRODUTO.NUM_FABRICANTE');
+        1: QRProdutoSemMovimentacao.SQL.Add('ORDER BY TB_PRODUTO.DESC_PRODUTO');
+      end;
+
+      QRProdutoSemMovimentacao.Open;
+
+      if FRProdutoSemMovimentacao = nil then
+        FRProdutoSemMovimentacao := TFRProdutoSemMovimentacao.Create(Application);
+      If FProdutoParam.Rg23Exibir.ItemIndex = 0 Then
+       Begin
+         FRProdutoSemMovimentacao.QrDbText1.DataField := 'COD_PRODUTO';
+         FRProdutoSemMovimentacao.QrDbText1.Alignment := taRightJustify;
+         FRProdutoSemMovimentacao.QRLProduto.Alignment := taRightJustify;
+       End
+      Else
+       Begin
+         FRProdutoSemMovimentacao.QrDbText1.DataField := 'NUM_FABRICANTE';
+         FRProdutoSemMovimentacao.QrDbText1.Alignment := taLeftJustify;
+         FRProdutoSemMovimentacao.QRLProduto.Alignment := taLeftJustify;
+       End;
+      FRProdutoSemMovimentacao.QRLTitulo.Caption := 'Produtos Sem Movimentação à ' + FProdutoParam.ME23Dias.Text + ' dias';
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoSemMovimentacao.QRPrimario.Preview
+      else
+        FRProdutoSemMovimentacao.QRPrimario.Print;
+      QRProdutoSemMovimentacao.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.FormCreate(Sender: TObject);
+begin
+  inherited;
+{João da Borges solicitou deixar o campo habilitado pois ele faz o controle manual dos códigos de produtos. Alex 14/03/2023.}  
+  if (DMParamSistema.CodEmpresa = 'BORGES')   or (DMParamSistema.CodEmpresa = 'BORGES2')  or (DMParamSistema.CodEmpresa = 'OSARE') or
+     (DMParamSistema.CodEmpresa = 'PIXIXE')   or (DMParamSistema.CodEmpresa = 'REDIESEL') or (DMParamSistema.CodEmpresa = 'LALA')  or
+     (DMParamSistema.CodEmpresa = 'POLLYANA') or (DMParamSistema.CodEmpresa = 'KREUZ')    or (DMParamSistema.CodEmpresa= 'RADIO')  or
+     (DMParamSistema.CodEmpresa = 'NFCE-BAHIA') or (DMParamSistema.CodEmpresa = 'BRFERRO') or (DMParamSistema.CodEmpresa = 'TELHASUL') then
+  begin
+    DBPanel1.ReadOnly := false;
+    DBPCodProduto2.ReadOnly := false;
+  end;
+  if (DMParamSistema.CodEmpresa <> 'FINESTRA') then
+  begin
+    Label27.Visible := false;
+    EDCustoProduto.Visible := false;
+  end;
+  PageControl1.TabIndex := 0;
+  TSCustoMarca.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FGLASS') or
+    (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INJEPAR');
+  DBGProdutoMarca.Columns.Items[2].Visible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FGLASS') or
+    (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INJEPAR');
+  TSAristides.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES') OR (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'LEURIA') OR
+                            (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ALPHA') or (pos('NFCE',DMParamSistema.qParamSistemaCod_Empresa.Value) > 0);
+  TSOutrasConfiguracoesAristides.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES');
+  TSMaisConfiguracoesAristides.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES');
+  TSProdutos.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ARISTIDES') AND (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'LEURIA') AND
+                           (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ALPHA') AND (pos('NFCE',DMParamSistema.qParamSistemaCod_Empresa.Value) = 0);
+  TSOutrasConfiguracoes.TabVisible := (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ARISTIDES') AND (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'LEURIA') AND
+                                      (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ALPHA') AND (pos('NFCE',DMParamSistema.qParamSistemaCod_Empresa.Value) = 0);
+
+  DMUsuario.QUsuario.Open;
+
+  if (DMUsuario.QUsuarioCOD_USUARIO.Value = 1) or (DMUsuario.QUsuarioNOME.Value = 'CEMAPA') then
+  begin
+    EtiquetaCartaoZebra.Enabled := true;
+    EtiquetaCartaoZebra.Visible := true;
+  end;
+
+  //Para paf-ecf não deve aparecer 2 val_atacado
+    DBPValAtacado.Visible :=
+      not (DMParamSistema.QParamSistemaIND_PAF_ECF.Value = 'S');
+
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TRENTO') then
+    Bib.inverteControles(DBPValVarejo, DBPValAtacado);
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES') then
+  begin
+    TSAristides.Caption := 'Produtos';
+    TSOutrasConfiguracoesAristides.Caption := 'Outras Configurações';
+    TSMaisConfiguracoesAristides.Caption := 'Mais Configurações';
+    TSOutrasConfiguracoesAristides.PageIndex := 2;
+    TSMaisConfiguracoesAristides.PageIndex := 3;
+    DBComboBox6.Items.Clear;
+    DBComboBox6.Items.Add('UN');
+    DBComboBox6.Items.Add('PR');
+    DMProduto.QProdutoVAL_VAREJO.DisplayFormat := '#,###0.00';
+
+    //Deixa invisível os componentes que não serão usados
+    DBPCOD_BARRAS.Visible := false;
+    DBPProdutoB.Visible := false;
+    DBPLoteClaspar.Visible := false;
+    DBPFabricante.Visible := false;
+    DBPMarca.Visible := false;
+    DBPNumFabricante.Visible := false;
+    DBPTribTransf.Visible := false;
+    DBPDescMax.Visible := false;
+    DBPPercIPI.Visible := false;
+    DBPClasseTox.Visible := false;
+    DBPNumVolumes.Visible := false;
+    DBPClassFiscal.Visible := false;
+    DBPPercComissao.Visible := false;
+    DBPPercISS.Visible := false;
+    DBPPercINSS.Visible := false;
+    Label29.Visible := false;
+    DBComboBox3.Visible := false;
+    DBRadioGroup1.Visible := false;
+    DBRadioGroup4.Visible := false;
+    DBRadioGroup5.Visible := false;
+    DBPComplemento.Visible := false;
+    DBPDescComplemento2.Visible := false;
+    DBPFormulacao.Visible := false;
+    DBPGrupoQuimico.Visible := false;
+    DBPMetrosCubicos.Visible := false;
+    DBRadioGroup6.Visible := false;
+    DBRadioGroup7.Visible := false;
+    DBPCxPalete.Visible := false;
+    DBPValAtacado.Visible := false;
+    DBPLocalizacao.Visible := false;
+    TSBaixaEstoque.TabVisible := false;
+    GroupBox14.Visible := False;
+  end;
+  if (pos('NFCE',DMParamSistema.qParamSistemaCod_Empresa.Value) > 0) or
+     (DMParamSistema.CodEmpresa = 'LEURIA')  then
+  begin
+    TSAristides.Caption := 'Produtos';
+{Comentado para aparecer todos os formatos de produtos no nomdulo NFCe. Alex 27/05/2026
+    DBComboBox6.Items.Clear;
+    DBComboBox6.Items.Add('UN');
+    DBComboBox6.Items.Add('PR');}
+    DMProduto.QProdutoVAL_VAREJO.DisplayFormat := '#,###0.00';
+
+    //Deixa invisível os componentes que não serão usados
+    DBPProdutoB.Visible := false;
+    DBPLoteClaspar.Visible := false;
+    DBPFabricante.Visible := false;
+    DBPMarca.Visible := false;
+    DBPNumFabricante.Visible := false;
+    DBPTribTransf.Visible := false;
+    DBPDescMax.Visible := false;
+    DBPPercIPI.Visible := false;
+    DBPClasseTox.Visible := false;
+    DBPNumVolumes.Visible := false;
+    DBPClassFiscal.Visible := false;
+    DBPPercComissao.Visible := false;
+    DBPPercISS.Visible := false;
+    DBPPercINSS.Visible := false;
+    Label29.Visible := false;
+    DBComboBox3.Visible := false;
+    DBRadioGroup1.Visible := false;
+    DBRadioGroup4.Visible := false;
+    DBRadioGroup5.Visible := false;
+    DBPComplemento.Visible := false;
+    DBPDescComplemento2.Visible := false;
+    DBPFormulacao.Visible := false;
+    DBPGrupoQuimico.Visible := false;
+    DBPMetrosCubicos.Visible := false;
+    DBRadioGroup6.Visible := false;
+    DBRadioGroup7.Visible := false;
+    DBPCxPalete.Visible := false;
+    DBPValAtacado.Visible := false;
+    DBPLocalizacao.Visible := false;
+    TSBaixaEstoque.TabVisible := false;
+    TabSheet1.TabVisible := false;
+    DBPPesoBrutoNFCe.Visible := True;
+    DBPPesoLiquidoNFCe.Visible := true;
+    GroupBox14.Visible := False;
+  end;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DISPART') then
+  begin
+    DBComboBox2.Items.Clear;
+    DBComboBox2.Items.Add('PC');
+    DBComboBox2.Items.Add('LT');
+    DBComboBox2.Items.Add('KIT');
+    DBComboBox2.Items.Add('M');
+    DBComboBox2.Items.Add('JG');
+  end;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DINIZ' then
+  begin
+    DBComboBox1.Items.Clear;
+    DBComboBox1.Items.Add('PEÇA');
+  end;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'MALAGGI' then
+  begin
+    DBComboBox1.Items.Clear;
+    DBComboBox1.Items.Add('COMERCIAL');
+    DBComboBox1.Items.Add('SERVIÇO');
+  end;
+  
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ABATE' then
+  begin
+    DBPDescComplemento2.LCaption := 'Temperatura (Impressão Etiqueta)';
+    DBComboBox1.Items.Add('SUÍNO');
+    DBComboBox1.Items.Add('RAÇÃO');
+  end;
+
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'CONKRETA' then
+  begin
+    DBComboBox1.Items.Add('LOCAÇÃO');
+    DBComboBox2.Items.Add('HR');
+  end;
+//Solicitado por Thais para aparecer mais duas unidades de Medida. Alex 16/11/2023.
+  if (DMParamSistema.CodEmpresa = 'NFCE-EMPOR') then
+  begin
+    DBComboBox6.Items.Clear;
+    DBComboBox6.Items.Add('UN');
+    DBComboBox6.Items.Add('PR');
+    DBComboBox6.Items.Add('CEN');
+    DBComboBox6.Items.Add('KG');
+  end;
+  if DMParamSistema.CodEmpresa = 'SCALA' then
+  begin
+    LabelObs.Visible  := True;
+    DBMemoObs.Visible := True;
+    LabelObs.Top := 440;
+    DBMemoObs.Top := 456;
+  end;
+  if (DMParamSistema.CodEmpresa = 'SIGVANS') then
+  begin
+    DBROpcaoProduto.Visible := True;
+  end;
+  DMProduto.QCestCons.Open;
+  DMProduto.QClassTribIBSCBS.Open;
+end;
+
+procedure TFProdutoCad.AtualizaPreoTodososProdutos1Click(Sender: TObject);
+var
+  wPorcentagem: double;
+  wSql: string;
+  wValor: Real;
+  wCont: Integer;
+begin
+  inherited;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'VETRO' then
+  begin
+    if FAtualizaPrecoEstoque = nil then
+      FAtualizaPrecoEstoque := TFAtualizaPrecoEstoque.Create(Application);
+    FAtualizaPrecoEstoque.FmMarca1.Visible := False;
+    FAtualizaPrecoEstoque.MeCodClasse.Visible := True;
+    FAtualizaPrecoEstoque.EdDescClasse.Visible := True;
+    FAtualizaPrecoEstoque.SBCodClasse.Visible := True;
+    FAtualizaPrecoEstoque.FmProduto.Visible := False;
+    FAtualizaPrecoEstoque.FmFilial.Visible := False;
+    FAtualizaPrecoEstoque.CBVarejo.Visible := True;
+    FAtualizaPrecoEstoque.CBVarejo.Checked := True;
+    FAtualizaPrecoEstoque.CBAtacado.Visible := False;
+    FAtualizaPrecoEstoque.FmLote1.Visible := False;
+    FAtualizaPrecoEstoque.Caption := 'Atualiza Preço de Venda';
+
+    if FAtualizaPrecoEstoque.ShowModal = MrOk then
+    begin
+      if MessageDlg('Deseja atualizar o preço de todos os produtos?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        with FAtualizaPrecoEstoque do
+        begin
+          if (not CBVarejo.Checked) and (not CBAtacado.Checked) then
+          begin
+            MessageDlg('Escolha ao menos um dos preços para atualizar.', mtError, [mbOK], 0);
+            Exit;
+          end;
+          with DMProduto do
+          begin
+            QAtualizaPreco.Close;
+            QAtualizaPreco.SQL.Clear;
+            QAtualizaPreco.SQL.Add('SELECT TB_PRODUTO.COD_PRODUTO, TB_PRODUTO.VAL_VAREJO AS VL_CUSTO_MEDIO ');
+            QAtualizaPreco.SQL.Add(' FROM TB_PRODUTO,TB_CLASSE WHERE');
+            QAtualizaPreco.SQL.Add(' TB_PRODUTO.COD_CLASSE = TB_CLASSE.COD_CLASSE AND :COD_FILIAL IS NULL AND');
+            QAtualizaPreco.SQL.Add(':COD_PRODUTO IS NULL AND :COD_LOTE_TIPO IS NULL AND TB_CLASSE.COD_CLASSE =:COD_CLASSE');
+
+            if Trim(MeCodClasse.Text) <> '' then
+              QAtualizaPreco.SetVariable('COD_CLASSE', Trim(MeCodClasse.Text))
+            else
+              raise Exception.Create('Informe a Classe!');
+
+            QAtualizaPreco.open;
+            QAtualizaPreco.First;
+
+            wCont := 0;
+            while not QAtualizaPreco.Eof do
+            begin
+              wValor := QAtualizaPrecoVL_CUSTO_MEDIO.Value;
+              if wValor > 0 then
+              begin
+                wValor := wValor + (wValor * StrToFloat(FAtualizaPrecoEstoque.MePorcentagem.Text) / 100);
+                wSql := 'UPDATE TB_PRODUTO SET ';
+                if (CBVarejo.Checked) then
+                begin
+                  wSql := wSql + ' VAL_VAREJO = ' + bib.TrocaVirgulaPorPonto(FloatToStr(wValor));
+                  //QAtualizaPrecoVAL_VAREJO.Value := wValor;
+                  Inc(wCont);
+                end;
+                if (CBAtacado.Checked) then
+                begin
+                  if (CBVarejo.Checked) then
+                    wSql := wSql + ', ';
+                  wSql := wSql + ' VAL_ATACADO = ' + bib.TrocaVirgulaPorPonto(FloatToStr(wValor));
+                  //QAtualizaPrecoVAL_ATACADO.Value := wValor;
+                  Inc(wCont);
+                end;
+                wSql := wSql + ' WHERE COD_PRODUTO = ' + QAtualizaPrecoCOD_PRODUTO.Text;
+                DMOracle.ExecutaSql(wSql);
+              end;
+              QAtualizaPreco.Next;
+            end;
+            try
+              DMOracle.DBCemapa.Commit;
+              if (wCont = 0) then
+                MessageDlg('Nenhum valor foi atualizado.', mtInformation, [mbOK], 0)
+              else if (wCont = 1) then
+                MessageDlg('1 valor foi atualizado.', mtInformation, [mbOK], 0)
+              else
+                MessageDlg(IntToStr(wCont) + ' valores foram atualizados.', mtInformation, [mbOK], 0);
+            except
+              DMOracle.DBCemapa.RollBack;
+              raise exception.create('Erro! Transação não efetuada');
+            end;
+            QAtualizaPreco.Close;
+          end;
+        end;
+      end;
+    end;
+  end
+  else
+  begin
+    if FAtualizaPrecoEstoque = nil then
+      FAtualizaPrecoEstoque := TFAtualizaPrecoEstoque.Create(Application);
+    FAtualizaPrecoEstoque.FmMarca1.Visible := True;
+    FAtualizaPrecoEstoque.MeCodClasse.Visible := True;
+    FAtualizaPrecoEstoque.EdDescClasse.Visible := True;
+    FAtualizaPrecoEstoque.SBCodClasse.Visible := True;
+    FAtualizaPrecoEstoque.FmProduto.Visible := False;
+    FAtualizaPrecoEstoque.FmFilial.Visible := False;
+    FAtualizaPrecoEstoque.CBVarejo.Visible := False;
+    FAtualizaPrecoEstoque.CBAtacado.Visible := False;
+    FAtualizaPrecoEstoque.Label3.Visible := True;
+    FAtualizaPrecoEstoque.Label4.Visible := True;
+    FAtualizaPrecoEstoque.FmLote1.Visible := False;
+    FAtualizaPrecoEstoque.Caption := 'Atualiza Preço de Venda';
+    if FAtualizaPrecoEstoque.ShowModal = MrOk then
+    begin
+//        Alterado por Djeison - 25/01/2013 - Adicionado Parâmetro Marca para reajustar Preços
+//      if MessageDlg('Deseja atualizar o preço de todos os produtos?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+//      begin
+        with DMProduto do
+        begin
+          if (trim(FAtualizaPrecoEstoque.MePorcentagem.Text) <> '0') and (trim(FAtualizaPrecoEstoque.MePorcentagem.Text) <> '') then
+          begin
+            try
+              QProduto.Close;
+              wPorcentagem := StrToFloat(Trim(FAtualizaPrecoEstoque.MePorcentagem.Text));
+  //            wPorcentagem := 0;
+              //ACRESCENTADO O FILTRO DA CLASSE PARA ATUALIZAÇÃO DO VALOR DE VENDA DOS PRODUTO. SOLICI. CLEIMAR - RA ELETRO. JUNIOR-02/03/2015
+
+              //TODOS OS PRODUTO
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)       = '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)            = '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) = '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem, NULL, NULL, NULL]);
+
+              //SOMENTE MARCA
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)      <> '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)            = '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) = '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      StrToInt(Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)), NULL, NULL]);
+
+              //SOMENTE CLASSE
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)       = '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) = '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)           <> '')then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                     NULL, StrToInt(Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)), NULL]);
+
+               //SOMENTE FABRICANTE
+              if ((Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) <> '') and
+                  (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)             = '') and
+                  (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)        = '')) then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      NULL, NULL, StrToInt(Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text))]);
+
+              //SOMENTE MARCA E CLASSE
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)      <> '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)           <> '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) = '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      StrToInt(Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)),StrToInt(Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)), NULL]);
+
+              //SOMENTE CLASSE E FABRICANTE
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)      =  '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)           <> '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text)<> '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      NULL ,StrToInt(Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)), StrToInt(Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text))]);
+
+              //SOMENTE MARCA E FABRICANTE
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)       <> '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)             = '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text) <> '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      StrToInt(Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)),NULL, StrToInt(Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text))]);
+
+              //SOMENTE MARCA, CLASSE E FABRICANTE
+              if (Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)      <> '') and
+                 (Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)           <> '') and
+                 (Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text)<> '') then
+                    OPAtualizaEstoque.CallProcedure('PROC_ATUALIZA_ESTOQUE', [wPorcentagem,
+                      StrToInt(Trim(FAtualizaPrecoEstoque.FmMarca1.MeMarca.Text)),StrToInt(Trim(FAtualizaPrecoEstoque.MeCodClasse.Text)),
+                       StrToInt(Trim(FAtualizaPrecoEstoque.FmCadastro1.MeCadastro.Text))]);
+
+              QProduto.Open;
+            except
+              raise exception.Create('Operação não concluida');
+            end;
+            ShowMessage('Estoque Atualizado');
+          end
+          else
+            ShowMessage('Operação Inválida. Informe um percentual.');
+        end;
+//      end;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.MovEstoqueEntradaSaidaClick(Sender: TObject);
+  var
+  wAnoInicial, wMesInicial, wDiaInicial : String;
+  wDataJob : TDateTime;
+begin
+  inherited;
+  dmoracle.qdataserv.Open;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[25].TabVisible := True;
+  if FProdutoParam.ShowModal = mrOk then
+    with DMProdutoRelatorio do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FProdutoParam.FmFilial25.MeFilial.Text), 'VENDA');
+      QRMovEntradaSaida.Close;
+
+      if ((Trim(FProdutoParam.Me25DtSaidaI.Text) = '') or (Trim(FProdutoParam.Me25DtSaidaf.Text) = '') or
+        (Trim(FProdutoParam.MEDataI25.Text) = '') or (Trim(FProdutoParam.MEDataF25.Text) = '')) then
+        Raise Exception.Create('Obrigatório informar todas as datas!!');
+
+      QRMovEntradaSaida.SetVariable('DATA_I',FProdutoParam.MEDataI25.Text);
+      QRMovEntradaSaida.SetVariable('DATA_F',FProdutoParam.MEDataF25.Text + ' 23:59:59');
+      QRMovEntradaSaida.SetVariable('DT_VENDA_I',FProdutoParam.Me25DtSaidaI.Text);
+      QRMovEntradaSaida.SetVariable('DT_VENDA_F',FProdutoParam.Me25DtSaidaf.Text);
+
+      if Trim(FProdutoParam.FmFilial25.MeFilial.Text) = '' then
+        raise Exception.Create('Informe uma filial.')
+      else
+        QRMovEntradaSaida.SetVariable('FILIAL', Trim(FProdutoParam.FmFilial25.MeFilial.Text));
+      if trim(FProdutoParam.FmCadastro25.MeCadastro.Text) = '' then
+        QRMovEntradaSaida.SetVariable('COD_CADASTRO', NULL)
+      else
+        QRMovEntradaSaida.SetVariable('COD_CADASTRO', trim(FProdutoParam.FmCadastro25.MeCadastro.Text));
+      if Trim(FProdutoParam.FmProdutoInicial25.MeProduto.Text) = '' then
+        QRMovEntradaSaida.SetVariable('PRODUTO', '1 = 1')
+      else
+       Begin
+         If Trim(FProdutoParam.FmProdutoFinal25.MeProduto.Text) = '' Then
+            Raise Exception.Create('Quando informado produto inicial é obrigado informar produto final');
+         QRMovEntradaSaida.SetVariable('PRODUTO','TB_NOTA_ITEM.COD_PRODUTO BETWEEN ' + Trim(FProdutoParam.FmProdutoInicial25.MeProduto.Text) +
+           ' And ' + Trim(FProdutoParam.FmProdutoFinal25.MeProduto.Text));
+       End;
+      if Trim(FProdutoParam.FmLote25.MeLote.Text) = '' then
+        QRMovEntradaSaida.SetVariable('LOTE', Null)
+      else
+        QRMovEntradaSaida.SetVariable('LOTE', Trim(FProdutoParam.FmLote25.MeLote.Text));
+
+      if Trim(FProdutoParam.FmOperacao25.MeOperacao.Text) = '' then
+        QRMovEntradaSaida.SetVariable('OPERACAO', Null)
+      else
+        QRMovEntradaSaida.SetVariable('OPERACAO', Trim(FProdutoParam.FmOperacao25.MeOperacao.Text));
+
+      if Trim(FProdutoParam.Fmperacao25.MeOperacao.Text) = '' then
+        QRMovEntradaSaida.SetVariable('OPERACAO1', Null)
+      else
+        QRMovEntradaSaida.SetVariable('OPERACAO1', Trim(FProdutoParam.Fmperacao25.MeOperacao.Text));
+
+      if Trim(FProdutoParam.MEClasse25.Text) = '' then
+        QRMovEntradaSaida.SetVariable('CLASSE', Null)
+      else
+        QRMovEntradaSaida.SetVariable('CLASSE', FProdutoParam.MEClasse25.Text);
+
+      if (Trim(FProdutoParam.MESubclasse25.Text) = '') or (Trim(FProdutoParam.MESubclasse25.Text) = '0') then
+        QRMovEntradaSaida.SetVariable('SUBCLASSE', Null)
+      else
+        QRMovEntradaSaida.SetVariable('SUBCLASSE', FProdutoParam.MESubclasse25.Text);
+
+      if Trim(FProdutoParam.FmNota25.MeNota.Text) = '' then
+        QRMovEntradaSaida.SetVariable('COD_PRODUTOS_NOTA', '1 = 1')
+      Else
+        QRMovEntradaSaida.SetVariable('COD_PRODUTOS_NOTA', 'TB_NOTA_ITEM.COD_PRODUTO IN (SELECT COD_PRODUTO FROM TB_NOTA_ITEM WHERE COD_NOTA_CAB = ' + Trim(FProdutoParam.FmNota25.MeNota.Text)+')');
+
+      Case FProdutoParam.RgProdComSaida25.itemindex Of
+         0 : QRMovEntradaSaida.SetVariable('IND_ENTRADA_SAIDA', 'E');
+         1 : QRMovEntradaSaida.SetVariable('IND_ENTRADA_SAIDA', 'S');
+         2 : QRMovEntradaSaida.SetVariable('IND_ENTRADA_SAIDA', Null);
+      End;
+      //------
+      QRMovEntradaSaida.SQL[QRMovEntradaSaida.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      if FProdutoParam.RgOrdem25.ItemIndex = 0 then
+         QRMovEntradaSaida.Sql.Add('ORDER BY COD_PRODUTO,DESC_PRODUTO')
+      else
+         QRMovEntradaSaida.Sql.Add('ORDER BY DESC_PRODUTO,COD_PRODUTO');
+      QRMovEntradaSaida.Open;
+
+      If FRProduto_EntradaSaidaRetrato = nil then
+        FRProduto_EntradaSaidaRetrato := TFRProduto_EntradaSaidaRetrato.Create(Application);
+      FRProduto_EntradaSaidaRetrato.QRLTitulo.Caption := 'MOVIMENTAÇÃO DE ESTOQUE DESDE O DIA ' + FProdutoParam.MEDataI25.Text;
+      FRProduto_EntradaSaidaRetrato.QRLFilial.Caption := 'FILIAL: ' + Trim(FProdutoParam.FmFilial25.MeFilial.Text) + ' - ' + Trim(FProdutoParam.FmFilial25.EdFilial.Text);
+      FRProduto_EntradaSaidaRetrato.QRLClasse.Caption := 'CLASSE: ' + Trim(FProdutoParam.MEClasse25.Text) + ' SUBCLASSE: ' + Trim(FProdutoParam.MESubClasse25.Text) +
+        ' ' + Trim(FProdutoParam.EdClasse25.Text);
+      FRProduto_EntradaSaidaRetrato.QRLCadastro.Caption := 'CADASTRO: ' + Trim(FProdutoParam.FmCadastro25.EdCadastro.Text);
+
+      wDataJob := DMOracle.QDataServDTSERVIDOR.Value - 1;
+
+      FRProduto_EntradaSaidaRetrato.QRLabel8.Caption := DateToStr(wDataJob);
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+         FRProduto_EntradaSaidaRetrato.QRPrimario.Preview
+      else
+         FRProduto_EntradaSaidaRetrato.QRPrimario.Print;
+      QRMovEntradaSaida.Close;
+      dmoracle.QDataServ.Close;
+    end;
+end;
+
+procedure TFProdutoCad.AtualizaPreodeVendaporCusto1Click(Sender: TObject);
+var
+  wSql, wAudit: string;
+  wValor: Real;
+  wCont: Integer;
+begin
+  inherited;
+  if FAtualizaPrecoEstoque = nil then
+    FAtualizaPrecoEstoque := TFAtualizaPrecoEstoque.Create(Application);
+  FAtualizaPrecoEstoque.MeCodClasse.Visible := True;
+  FAtualizaPrecoEstoque.EdDescClasse.Visible := True;
+  FAtualizaPrecoEstoque.SBCodClasse.Visible := True;
+  FAtualizaPrecoEstoque.FmProduto.Visible := True;
+  FAtualizaPrecoEstoque.FmFilial.Visible := True;
+  FAtualizaPrecoEstoque.CBVarejo.Visible := True;
+  FAtualizaPrecoEstoque.CBAtacado.Visible := True;
+  FAtualizaPrecoEstoque.FmLote1.Visible := true;
+  FAtualizaPrecoEstoque.Caption := 'Atualiza Preço de Venda por Custo';
+  if FAtualizaPrecoEstoque.ShowModal = MrOk then
+  begin
+    with FAtualizaPrecoEstoque do
+    begin
+      if (not CBVarejo.Checked) and (not CBAtacado.Checked) then
+      begin
+        MessageDlg('Escolha ao menos um dos preços para atualizar.', mtError, [mbOK], 0);
+        Exit;
+      end;
+      with DMProduto do
+      begin
+        QAtualizaPreco.Close;
+        if Trim(FmFilial.MeFilial.Text) <> '' then
+          QAtualizaPreco.SetVariable('COD_FILIAL', Trim(FmFilial.MeFilial.Text))
+        else
+        begin
+          MessageDlg('Filial é obrigatória', mtError, [mbOk], 0);
+          abort;
+        end;
+
+       // if Trim(FmClasse.MeClasse.Text) <> '' then
+       //   QAtualizaPreco.SetVariable('NUM_CLASSE', Trim(FmClasse.MeClasse.Text))
+       // else
+       //   QAtualizaPreco.SetVariable('NUM_CLASSE', null);
+        if Trim(FmProduto.MeProduto.Text) <> '' then
+          QAtualizaPreco.SetVariable('COD_PRODUTO', Trim(FmProduto.MeProduto.Text))
+        else
+          QAtualizaPreco.SetVariable('COD_PRODUTO', null);
+        if Trim(MeCodClasse.Text) <> '' then
+          QAtualizaPreco.SetVariable('COD_CLASSE', Trim(MeCodClasse.Text))
+        else
+          QAtualizaPreco.SetVariable('COD_CLASSE', null);
+        if Trim(FmLote1.MeLote.Text) = '' then
+        begin
+          MessageDlg('Lote deve ser informado', mtError, [mbOk], 0);
+          abort;
+        end
+        else
+          QAtualizaPreco.SetVariable('COD_LOTE_TIPO', Trim(FmLote1.MeLote.Text));
+        QAtualizaPreco.open;
+        QAtualizaPreco.First;
+
+        wCont := 0;
+        while not QAtualizaPreco.Eof do
+        begin
+          wValor := QAtualizaPrecoVL_CUSTO_MEDIO.Value;
+//          wAux := DMOracle.BuscaNome('SELECT VL_CUSTO_MEDIO FROM TB_ESTOQUE',
+//                                     'COD_PRODUTO = ' + QAtualizaPrecoCOD_PRODUTO.Text +
+//                                     ' AND VL_CUSTO_MEDIO > 0');
+//          if (wAux <> '') then
+//            wValor := StrToFloat(wAux);
+
+          ///INCLUÍDO PARA VERIFICAR AS ALTERAÇÕES DE PREÇO NA INSIDE POR RECLAMAÇÃO DO ISAAC DE QUE OS
+          ///PRODUTOS VOLTAM O VALOR - CLEBER 24/01/2020
+          wAudit := '';
+          if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+          begin
+            if (CBVarejo.Checked) and
+               (CBAtacado.Checked) then
+            begin
+              wAudit := 'INSERT INTO TB_AUDIT(COD_USUARIO, IND_OPERACAO, NOME_TABELA, ' +
+                      'DESC_CAMPO01, DESC_VALOR01, DESC_CAMPO02, DESC_VALOR02, DESC_CAMPO03, DESC_VALOR03,' +
+                      ' DESC_CAMPO04, DESC_VALOR04, DT_AUDIT)' +
+                      ' VALUES(' + QuotedStr(DMUsuario.QUsuarioCOD_USUARIO.Text) +
+                      ', ' + QuotedStr('Alteração') + ', ' + QuotedStr('TB_PRODUTO') + ', ' ;
+            end
+            else
+            begin
+              wAudit := 'INSERT INTO TB_AUDIT(COD_USUARIO, IND_OPERACAO, NOME_TABELA, ' +
+                      'DESC_CAMPO01, DESC_VALOR01, DESC_CAMPO02, DESC_VALOR02, DESC_CAMPO03, DESC_VALOR03, DT_AUDIT) ' +
+                      ' VALUES(' + QuotedStr(DMUsuario.QUsuarioCOD_USUARIO.Text) +
+                      ', ' + QuotedStr('Alteração') + ', ' + QuotedStr('TB_PRODUTO') + ', ';
+            end;
+          end;
+
+
+
+
+          if wValor > 0 then
+          begin
+            wValor := wValor + (wValor * StrToFloat(FAtualizaPrecoEstoque.MePorcentagem.Text) / 100);
+            wSql := 'UPDATE TB_PRODUTO SET ';
+            if (CBVarejo.Checked) then
+            begin
+              wSql := wSql + ' VAL_VAREJO = ' + bib.TrocaVirgulaPorPonto(FloatToStr(wValor));
+              //QAtualizaPrecoVAL_VAREJO.Value := wValor;
+              ///CLEBER - 24/01/2020
+              if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+                wAudit := wAudit + QuotedStr('VAL_VAREJO') + ', ' + QuotedStr(bib.TrocaVirgulaPorPonto(FloatToStr(wValor))) + ', ';
+              Inc(wCont);
+            end;
+            if (CBAtacado.Checked) then
+            begin
+              if (CBVarejo.Checked) then
+                wSql := wSql + ', ';
+              wSql := wSql + ' VAL_ATACADO = ' + bib.TrocaVirgulaPorPonto(FloatToStr(wValor));
+              //QAtualizaPrecoVAL_ATACADO.Value := wValor;
+              ///CLEBER - 24/01/2020
+              if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+                wAudit := wAudit + QuotedStr('VAL_VAREJO') + ', ' + QuotedStr(bib.TrocaVirgulaPorPonto(FloatToStr(wValor))) + ', ';
+              Inc(wCont);
+            end;
+            wSql := wSql + ' WHERE COD_PRODUTO = ' + QAtualizaPrecoCOD_PRODUTO.Text;
+            ///CLEBER - 24/01/2020
+            if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+            begin
+              wAudit := wAudit + QuotedStr('TELA') + ', ' + QuotedStr('FPRODUTOCAD.ATUALIZAVENDACUSTO') + ', ';
+              wAudit := wAudit + QuotedStr('COD_PRODUTO') + ', ' + QuotedStr(QAtualizaPrecoCOD_PRODUTO.Text) + ', ' +
+                       'TO_DATE(' + QuotedStr(DateTimeToStr(DMOracle.DataHoraServ)) + ', ' + QuotedStr('DD/MM/YYYY HH24:MI:SS') +
+                        '))';
+            end;
+            DMOracle.ExecutaSql(wSql);
+            ///CLEBER - 24/01/2020
+            if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+              DMOracle.ExecutaSql(wAudit);
+          end;
+          QAtualizaPreco.Next;
+        end;
+        try
+          DMOracle.DBCemapa.Commit;
+          if (wCont = 0) then
+            MessageDlg('Nenhum valor foi atualizado.', mtInformation, [mbOK], 0)
+          else if (wCont = 1) then
+            MessageDlg('1 valor foi atualizado.', mtInformation, [mbOK], 0)
+          else
+            MessageDlg(IntToStr(wCont) + ' valores foram atualizados.', mtInformation, [mbOK], 0);
+        except
+          DMOracle.DBCemapa.RollBack;
+          raise exception.create('Erro! Transação não efetuada');
+        end;
+        QAtualizaPreco.Close;
+      end;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.BtMarca2Click(Sender: TObject);
+begin
+  inherited;
+  if FMarca_Cons = nil then
+    FMarca_Cons := TFMarca_Cons.Create(Application);
+  if FMarca_Cons.ShowModal = mrOk then
+    DMProduto.QProdutoMarcaCOD_MARCA.Value := DMMarca.QMarcaConsCOD_MARCA.Value;
+end;
+
+procedure TFProdutoCad.DSProdutoMarcaDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  BtMarca2.Enabled := (DSProdutoMarca.State in [DsEdit, DsInsert]);
+end;
+
+procedure TFProdutoCad.ProdutopMarca1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[26].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+    with DMProdutoRelatorio do
+    begin
+      QRPrecoMarca.Close;
+      if Trim(FProdutoParam.Fm26Produto.MeProduto.Text) <> '' then
+        QRPrecoMarca.SetVariable('COD_PRODUTO', StrToInt(Trim(FProdutoParam.Fm26Produto.MeProduto.Text)))
+      else
+        QRPrecoMarca.SetVariable('COD_PRODUTO', null);
+      if Trim(FProdutoParam.Fm26Marca.MeMarca.Text) <> '' then
+        QRPrecoMarca.SetVariable('COD_MARCA', StrToInt(Trim(FProdutoParam.Fm26Marca.MeMarca.Text)))
+      else
+        QRPrecoMarca.SetVariable('COD_MARCA', null);
+      QRPrecoMarca.open;
+
+      if FRPrecoMarca = nil then
+        FRPrecoMarca := TFRPrecoMarca.Create(Application);
+      if Trim(FProdutoParam.Fm26Marca.MeMarca.Text) <> '' then
+        FRPrecoMarca.QRLMarca.Caption := Trim(FProdutoParam.Fm26Marca.MeMarca.Text) +
+          ' - ' + FProdutoParam.Fm26Marca.EdMarca.Text
+      else
+        FRPrecoMarca.QRLMarca.Caption := FProdutoParam.Fm26Marca.EdMarca.Text;
+      if Trim(FProdutoParam.Fm26Produto.MeProduto.Text) <> '' then
+        FRPrecoMarca.QRLProduto.Caption := Trim(FProdutoParam.Fm26Produto.MeProduto.Text) +
+          ' - ' + FProdutoParam.Fm26Produto.EdProduto.Text
+      else
+        FRPrecoMarca.QRLProduto.Caption := FProdutoParam.Fm26Produto.EdProduto.Text;
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'FGLASS' then
+      begin
+        FRPrecoMarca.QRLCusto.Caption := '';
+        FRPrecoMarca.DBTValCusto.DataField := '';
+        FRPrecoMarca.DBTDescProduto.Width := 520;
+      end;
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRPrecoMarca.QRPrimario.Preview
+      else
+        FRPrecoMarca.QRPrimario.Print;
+      QRPrecoMarca.Close;
+    end;
+end;
+
+procedure TFProdutoCad.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if (Key = '+') and (DMProduto.QProdutoCOD_PRODUTO.Value > 0) then
+  begin
+    if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FGLASS') then
+      PageControl1.ActivePage := TSCustoMarca;
+    if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INJEPAR') or
+      (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FGLASS') then
+    begin
+      if DSPrimario.State = DsBrowse then
+        DMProduto.QProduto.Edit;
+      if DSProdutoMarca.State in [DsEdit, DsInsert] then
+        DMProduto.QProdutoMarca.Post;
+      if DsProdutoRelacionado.State in [DsEdit, DsInsert] then
+        DMProduto.QProdutoRelacionado.Post;
+      DMProduto.QProdutoMarca.Append;
+      DMProduto.QProdutoRelacionado.Append;
+      DBECodMarca.SetFocus;
+      Key := #0;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.ONProdutoMarcaClick(Sender: TObject;
+  Button: TOracleNavigateBtn);
+begin
+  inherited;
+  if (Button = nbInsert) then //Em fase de testes. Se encomodar, comente e avise o Diego Ferruginha.
+  begin
+    if TOracleNavigator(Sender).DataSource.DataSet.State in [DsEdit, DsInsert] then
+      TOracleNavigator(Sender).DataSource.DataSet.Cancel;
+    TOracleNavigator(Sender).DataSource.DataSet.Append;
+  end;
+end;
+
+procedure TFProdutoCad.AtualizaPreoporMarca1Click(Sender: TObject);
+{var
+  wSql: string;
+  wFlag: boolean;
+}
+begin
+  inherited;
+  AtualizaPreoTodososProdutos1Click(Self); //colocado pelo César devido a fazer a mesma rotina as duas rotinas
+
+{  if FAtualizaPrecoMarca = nil then
+    FAtualizaPrecoMarca := TFAtualizaPrecoMarca.Create(Application);
+  if (FAtualizaPrecoMarca.ShowModal = MrOk) and (Trim(FAtualizaPrecoMarca.MePorcentagem.Text) <> '') then
+  begin
+    wFlag := False;
+//    wSql := 'UPDATE TB_PRODUTO SET VAL_VAREJO = VAL_VAREJO + (' +
+//            Trim(FAtualizaPrecoMarca.MePorcentagem.Text) + '*VAL_VAREJO/100)';
+    wSql := 'UPDATE TB_PRODUTO_MARCA SET VAL_PRODUTO_MARCA = VAL_PRODUTO_MARCA + (' +
+      Trim(FAtualizaPrecoMarca.MePorcentagem.Text) + '*VAL_PRODUTO_MARCA/100)';
+    if Trim(FAtualizaPrecoMarca.FmClasse.MeClasse.Text) > '0' then
+    begin
+      wSql := wSql + ' WHERE COD_PRODUTO IN (SELECT COD_PRODUTO FROM TB_PRODUTO' +
+        ' WHERE COD_CLASSE = ' + FAtualizaPrecoMarca.FmClasse.MeClasse.Text + ')';
+      wFlag := True;
+    end;
+    if Trim(FAtualizaPrecoMarca.FmProduto.MeProduto.Text) > '0' then
+    begin
+      if wFlag then
+        wSql := wSql + ' AND '
+      else
+        wSql := wSql + ' WHERE ';
+      wSql := wSql + 'COD_PRODUTO = ' + FAtualizaPrecoMarca.FmProduto.MeProduto.Text;
+      wFlag := True;
+    end;
+    if Trim(FAtualizaPrecoMarca.FmMarca.MeMarca.Text) > '0' then
+    begin
+      if wFlag then
+        wSql := wSql + ' AND '
+      else
+        wSql := wSql + ' WHERE ';
+      wSql := wSql + 'COD_MARCA = ' + FAtualizaPrecoMarca.FmMarca.MeMarca.Text;
+    end;
+    DMOracle.ExecutaSql(wSql);
+    SBRefreshClick(SBRefresh);
+  end;
+  }
+end;
+
+procedure TFProdutoCad.ProdutoServiopMotor1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[26].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoServicoMotor.Close;
+      if Trim(FProdutoParam.Fm26Produto.MeProduto.Text) <> '' then
+        QRProdutoServicoMotor.SetVariable('COD_PRODUTO', StrToInt(Trim(FProdutoParam.Fm26Produto.MeProduto.Text)))
+      else
+        QRProdutoServicoMotor.SetVariable('COD_PRODUTO', null);
+      if Trim(FProdutoParam.Fm26Marca.MeMarca.Text) <> '' then
+        QRProdutoServicoMotor.SetVariable('COD_MARCA', StrToInt(Trim(FProdutoParam.Fm26Marca.MeMarca.Text)))
+      else
+        QRProdutoServicoMotor.SetVariable('COD_MARCA', null);
+      QRProdutoServicoMotor.Open;
+
+      if FRProdutoServicoMotor = nil then
+        FRProdutoServicoMotor := TFRProdutoServicoMotor.Create(Application);
+      if Trim(FProdutoParam.Fm26Marca.MeMarca.Text) <> '' then
+        FRProdutoServicoMotor.QRLMarca.Caption := Trim(FProdutoParam.Fm26Marca.MeMarca.Text) +
+          ' - ' + FProdutoParam.Fm26Marca.EdMarca.Text
+      else
+        FRProdutoServicoMotor.QRLMarca.Caption := FProdutoParam.Fm26Marca.EdMarca.Text;
+      if Trim(FProdutoParam.Fm26Produto.MeProduto.Text) <> '' then
+        FRProdutoServicoMotor.QRLProduto.Caption := Trim(FProdutoParam.Fm26Produto.MeProduto.Text) +
+          ' - ' + FProdutoParam.Fm26Produto.EdProduto.Text
+      else
+        FRProdutoServicoMotor.QRLProduto.Caption := FProdutoParam.Fm26Produto.EdProduto.Text;
+
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoServicoMotor.QRPrimario.Preview
+      else
+        FRProdutoServicoMotor.QRPrimario.Print;
+      QRProdutoServicoMotor.Close;
+    end;
+end;
+
+procedure TFProdutoCad.Pesagem1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[27].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin
+    if Trim(FProdutoParam.FmProduto23.MEProduto.Text) = '' then
+      raise Exception.Create('Informe o Produto!');
+    if MessageDlg('ATENÇÃO: Você está prestes a zerar o Estoque de ' + FProdutoParam.FMProduto23.EdProduto.Text + '!'
+      + Chr(10) + 'Você Tem Certeza disso, esta Operação irá CANCELAR todas as Etiquetas que ainda Estão em Estoque.',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      with DMProduto do
+      begin
+        QZeraEstoquePesagem.Close;
+        QZeraEstoquePesagem.SetVariable('PRODUTO', Trim(FProdutoParam.FmProduto23.MeProduto.Text));
+        QZeraEstoquePesagem.Open;
+        QZeraEstoquePesagem.First;
+        while not DMProduto.QZeraEstoquePesagem.Eof do
+        begin
+          try
+            DMOracle.DBCemapa.StartTransaction;
+            DMOracle.QExecSQL.Close;
+            DMOracle.QExecSQL.SQL.Clear;
+            DMOracle.QExecSQL.SQL.Add('UPDATE TB_PESAGEM_PRODUCAO SET IND_SITUACAO = ' + QuotedStr('CANCELADA'));
+            DMOracle.QExecSQL.SQL.Add(', IND_BAIXAR_ESTOQUE = ' + QuotedStr('SIM'));
+            DMOracle.QExecSQL.SQL.Add(' WHERE COD_PESAGEM = ' + QZeraEstoquePesagemCOD_PESAGEM.Text);
+            DMOracle.QExecSQL.ExecSQL;
+            //Atualização de estoque sendo feita por TRIGGER
+//            DMEstoque.AtualizaEstoque(-2, 2, QZeraEstoquePesagemCOD_PRODUTO.Value, 1, QZeraEstoquePesagemNUM_PESO_LIQUIDO.Value * -1, 0, 0, 0);
+            DMOracle.DBCemapa.Commit;
+            DMProduto.QZeraEstoquePesagem.Next;
+          except
+            DMOracle.DBCemapa.Rollback;
+            raise Exception.Create('A etiqueta não foi cancelada.Feche e Tente de Novo');
+          end;
+
+        end;
+        ShowMessage('OK! Estoque Zerado!');
+      end;
+    end;
+  end;
+
+end;
+
+procedure TFProdutoCad.DBENumFabricanteExit(Sender: TObject);
+var
+  wAux: string;
+begin
+  inherited;
+  if DSPrimario.State in [DsEdit, DsInsert] then
+    with DMProduto.QProdutoNUM_FABRICANTE do
+      if Value <> '' then
+      begin
+        wAux := DMOracle.BuscaNome('SELECT COD_PRODUTO || ' + QuotedStr(' - ') + ' || DESC_PRODUTO' +
+          ' FROM TB_PRODUTO', 'COD_PRODUTO <> ' + DMProduto.QProdutoCOD_PRODUTO.Text +
+          ' AND NUM_FABRICANTE = ' + QuotedStr(Trim(Value)));
+        if wAux <> '' then
+        begin
+          LblChecaNumFabricante.Caption := 'Número de fabricante já consta no sistema. Produto: ' + wAux;
+          LblChecaNumFabricante.Visible := True;
+        end
+        else
+          LblChecaNumFabricante.Visible := False;
+      end;
+end;
+
+procedure TFProdutoCad.ProdutosporLocalizao1Click(Sender: TObject);
+var
+  wOrdem: string;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[28].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoLocalizacao.Close;
+      if Trim(FProdutoParam.ME28Localizacao.Text) <> '' then
+        QRProdutoLocalizacao.SetVariable('DESC_LOCALIZACAO', Trim(FProdutoParam.ME28Localizacao.Text))
+      else
+        QRProdutoLocalizacao.SetVariable('DESC_LOCALIZACAO', null);
+      if Trim(FProdutoParam.ME28Secao.Text) <> '' then
+        QRProdutoLocalizacao.SetVariable('DESC_SECAO', Trim(FProdutoParam.ME28Secao.Text))
+      else
+        QRProdutoLocalizacao.SetVariable('DESC_SECAO', null);
+      if Trim(FProdutoParam.ME28Boqueta.Text) <> '' then
+        QRProdutoLocalizacao.SetVariable('DESC_BOQUETA', Trim(FProdutoParam.ME28Boqueta.Text))
+      else
+        QRProdutoLocalizacao.SetVariable('DESC_BOQUETA', null);
+      wOrdem := '';
+      case FProdutoParam.CB28Ordem.ItemIndex of
+        0: wOrdem := 'COD_PRODUTO';
+        1: wOrdem := 'NUM_FABRICANTE';
+        2: wOrdem := 'DESC_PRODUTO';
+        3: wOrdem := 'DESC_LOCALIZACAO';
+        4: wOrdem := 'DESC_SECAO';
+        5: wOrdem := 'DESC_BOQUETA';
+      end;
+      if wOrdem <> '' then
+        QRProdutoLocalizacao.SQL.Add(' ORDER BY ' + wOrdem);
+      QRProdutoLocalizacao.Open;
+
+      if FRProdutoLocalizacao = nil then
+        FRProdutoLocalizacao := TFRProdutoLocalizacao.Create(Application);
+      FRProdutoLocalizacao.QRLLocalizacao.Caption := Trim(FProdutoParam.ME28Localizacao.Text);
+      FRProdutoLocalizacao.QRLSecao.Caption := Trim(FProdutoParam.ME28Secao.Text);
+      FRProdutoLocalizacao.QRLBoqueta.Caption := Trim(FProdutoParam.ME28Boqueta.Text);
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoLocalizacao.QRPrimario.Preview
+      else
+        FRProdutoLocalizacao.QRPrimario.Print;
+
+      QRProdutoLocalizacao.Close;
+      if wOrdem <> '' then
+        QRProdutoLocalizacao.SQL.Delete(QRProdutoLocalizacao.SQL.Count - 1);
+    end;
+end;
+
+procedure TFProdutoCad.EstoqueporLote1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[29].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+    with DMProdutoRelatorio do
+    begin
+      QEstoqueLote.Close;
+      if Trim(FProdutoParam.Fm29Produto.MeProduto.Text) <> '' then
+        QEstoqueLote.SetVariable('COD_PRODUTO', Trim(FProdutoParam.Fm29Produto.MeProduto.Text))
+      else
+        QEstoqueLote.SetVariable('COD_PRODUTO', null);
+      if Trim(FProdutoParam.Fm29Lote.MeLote.Text) <> '' then
+        QEstoqueLote.SetVariable('COD_LOTE_TIPO', Trim(FProdutoParam.Fm29Lote.MeLote.Text))
+      else
+        QEstoqueLote.SetVariable('COD_LOTE_TIPO', null);
+      QEstoqueLote.Open;
+
+      if FREstoqueLote = nil then
+        FREstoqueLote := TFREstoqueLote.Create(Application);
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FREstoqueLote.QRPrimario.Preview
+      else
+        FREstoqueLote.QRPrimario.Print;
+
+      QEstoqueLote.Close;
+    end;
+end;
+
+procedure TFProdutoCad.ProdutoscvalordiferentedaMargem1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[31].TabVisible := true;
+  if FProdutoParam.ShowModal = MrOk then
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoValorDifMargem.Close;
+      if FProdutoParam.RG31Custo.ItemIndex = 0 then
+        QRProdutoValorDifMargem.SetVariable('TIPO_CUSTO', 'MEDIO')
+      else
+        QRProdutoValorDifMargem.SetVariable('TIPO_CUSTO', '');
+      QRProdutoValorDifMargem.Open;
+
+      if FRProdutoValDifMargem = nil then
+        FRProdutoValDifMargem := TFRProdutoValDifMargem.Create(Application);
+      FRProdutoValDifMargem.QRLCusto.Caption := FProdutoParam.RG31Custo.Items[FProdutoParam.RG31Custo.ItemIndex];
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FRProdutoValDifMargem.QRPrimario.Preview
+      else
+        FRProdutoValDifMargem.QRPrimario.Print;
+
+      QRProdutoValorDifMargem.Close;
+    end;
+end;
+
+procedure TFProdutoCad.EnviarEMailcomPromoes1Click(Sender: TObject);
+begin
+  inherited;
+  if FEmailPromocao = nil then
+    FEmailPromocao := TFEmailPromocao.Create(Application);
+  FEmailPromocao.ShowModal;
+end;
+
+procedure TFProdutoCad.EtiquetaProdutosemEstoque1Click(Sender: TObject);
+  procedure doPrior(wTamColuna: Integer);
+  var
+    i: Integer;
+  begin
+    for i := 1 to wTamColuna - 1 do
+      DMRelatorio_Estoque.cdsEtiquetasEstoque2.Prior;
+  end;
+var wI: Integer;
+  wNumColunas, qtd, i, j, wQtdeUsada, wEtiquetaLinha, wLarguraEtiqueta, wEtiquetaAtual, wTotalEtiquetas, wMod: Integer;
+  wLinhaAtual, wEtiquetaColuna, wNumLinhasEtiqueta : Integer;
+  F: TextFile;
+  {coluna, linha, posicao, RecNoAnterior, wCont, esquerda, : Integer;
+
+  //  wBarra: string;
+  wQtde: Real;
+     , : Integer;
+   wEsquerda, wDiv, : Integer; }
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[32].TabVisible := true;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+
+    if(DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'UNIFORME') then // IMPRESSORA TÉRMICA ZEBRA
+      begin
+        wNumColunas := 3;
+
+        if (trim(FProdutoParam.Me32Etiquetas.Text) <> '') and ((trim(FProdutoParam.FmProduto32.MeProduto.Text) = '')
+          or (trim(FProdutoParam.FmLote32.MeLote.Text) = '')) then
+            raise exception.Create('A quantidade está informada. Informe também o produto e lote!');
+
+        with DMRelatorio_Estoque do
+        begin
+          QrEtiquetasEstoque2.Close;
+          if trim(FProdutoParam.FmProduto32.MeProduto.Text) <> '' then
+            QrEtiquetasEstoque2.SetVariable('cod_produto', trim(FProdutoParam.FmProduto32.MeProduto.Text))
+          else
+            QrEtiquetasEstoque2.SetVariable('cod_produto', null);
+
+          if Trim(FProdutoParam.FmLote32.MeLote.Text) <> '' then
+            QrEtiquetasEstoque2.SetVariable('cod_lote_tipo', Trim(FProdutoParam.FmLote32.MeLote.Text))
+          else
+            QrEtiquetasEstoque2.SetVariable('cod_lote_tipo', null);
+          QrEtiquetasEstoque2.open;
+
+          QrEtiquetasEstoque2.First;
+
+          cdsEtiquetasEstoque2.Close;
+          cdsEtiquetasEstoque2.Open;
+          cdsEtiquetasEstoque2.First;
+
+          while not (CdsEtiquetasEstoque2.Eof) do
+          begin
+            CdsEtiquetasEstoque2.Delete;
+          end;
+          wTotalEtiquetas := 0;
+          wQtdeUsada := 0;
+          if Trim(FProdutoParam.Me32Etiquetas.Text) <> '' then
+          begin
+            for i := 1 to StrToInt(Trim(FProdutoParam.Me32Etiquetas.Text)) do
+            begin
+              Inc(wQtdeUsada);
+
+              cdsEtiquetasEstoque2.Append;
+              cdsEtiquetasEstoque2NUM_FABRICANTE.Value := QrEtiquetasEstoque2NUM_FABRICANTE.Value;
+              cdsEtiquetasEstoque2DESC_PRODUTO.Value := QrEtiquetasEstoque2DESC_PRODUTO.Value;
+              cdsEtiquetasEstoque2DESC_LOCALIZACAO.Value := QrEtiquetasEstoque2DESC_LOCALIZACAO.Value;
+              if FProdutoParam.RG32Tipo.ItemIndex = 1 then
+                cdsEtiquetasEstoque2VAL_VAREJO.Value := QrEtiquetasEstoque2VAL_VAREJO.Value;
+              cdsEtiquetasEstoque2COD_LOTE_TIPO.Value := QrEtiquetasEstoque2COD_LOTE_TIPO.Value;
+              cdsEtiquetasEstoque2COD_PRODUTO.Value := QrEtiquetasEstoque2COD_PRODUTO.Value;
+              cdsEtiquetasEstoque2.Post;
+
+              Inc(wTotalEtiquetas);
+            end;
+          end
+          else
+          begin
+            while not QrEtiquetasEstoque2.Eof do
+            begin
+              qtd := QrEtiquetasEstoque2QT_QUANTIDADE.AsInteger;
+
+              for i := 1 to qtd do
+              begin
+                Inc(wQtdeUsada);
+
+                cdsEtiquetasEstoque2.Append;
+                cdsEtiquetasEstoque2NUM_FABRICANTE.Value := QrEtiquetasEstoque2NUM_FABRICANTE.Value;
+                cdsEtiquetasEstoque2DESC_PRODUTO.Value := QrEtiquetasEstoque2DESC_PRODUTO.Value;
+                cdsEtiquetasEstoque2DESC_LOCALIZACAO.Value := QrEtiquetasEstoque2DESC_LOCALIZACAO.Value;
+                if FProdutoParam.RG32Tipo.ItemIndex = 1 then
+                  cdsEtiquetasEstoque2VAL_VAREJO.Value := QrEtiquetasEstoque2VAL_VAREJO.Value;
+                cdsEtiquetasEstoque2COD_LOTE_TIPO.Value := QrEtiquetasEstoque2COD_LOTE_TIPO.Value;
+                cdsEtiquetasEstoque2COD_PRODUTO.Value := QrEtiquetasEstoque2COD_PRODUTO.Value;
+                cdsEtiquetasEstoque2.Post;
+
+                Inc(wTotalEtiquetas);
+              end;
+
+              QrEtiquetasEstoque2.Next;
+            end;
+          end;
+          cdsEtiquetasEstoque2.First;
+
+          wEtiquetaLinha := 0;
+          wEtiquetaColuna := 0;
+          wEtiquetaAtual := 0;
+          wLinhaAtual := 0;
+          wLarguraEtiqueta := 280;
+          wNumColunas := 3;
+          wNumLinhasEtiqueta := 3;
+
+          if cdsEtiquetasEstoque2.IsEmpty then
+            Exit;
+
+          AssignFile(F, 'LPT1');
+          Rewrite(F);
+
+          while (1 = 1) do
+          begin
+            if ((wEtiquetaLinha = 0) and (wEtiquetaColuna = 0)) then
+            begin
+              writeLN(F, 'N');
+              writeLN(F, 'Q4,0,0');
+            end;
+
+            writeLN(F, getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta * wEtiquetaColuna));
+
+            if (wEtiquetaAtual = wTotalEtiquetas - 1) then
+            begin
+            //            wDiv = wTotalEtiquetas DIV wNumColunas;
+              wMod := wTotalEtiquetas mod wNumColunas;
+
+              wEtiquetaColuna := 0;
+              if (wMod > 0) then
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wMod - 1);
+                  doPrior(wMod);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end
+              else
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end;
+            end
+            else
+            begin
+              if (wEtiquetaColuna < wNumColunas - 1) then
+              begin
+                Inc(wEtiquetaAtual);
+                Inc(wEtiquetaColuna);
+                cdsEtiquetasEstoque2.Next;
+              end
+              else
+              begin
+                wEtiquetaColuna := 0;
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  wEtiquetaColuna := 0;
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  wEtiquetaLinha := 0;
+                  inc(wEtiquetaAtual);
+                  CdsEtiquetasEstoque2.Next;
+                  writeLN(F, 'P1');
+                end;
+              end;
+            end;
+          end;
+        end;
+      end
+
+
+
+
+
+
+    else
+    begin
+      DMRelatorio_Estoque.QrEtiquetas_Estoque.Close;
+      if FrEstoque_Etiqueta = nil then
+        FrEstoque_Etiqueta := TFrEstoque_Etiqueta.Create(Application);
+      if Trim(FProdutoParam.FmProduto32.MEProduto.Text) <> '' then
+        DMRelatorio_Estoque.QrEtiquetas_Estoque.SetVariable('COD_PRODUTO', Trim(FProdutoParam.FmProduto32.MEProduto.Text))
+      else
+        DMRelatorio_Estoque.QrEtiquetas_Estoque.SetVariable('COD_PRODUTO', Null);
+      if Trim(FProdutoParam.FmLote32.MELote.Text) <> '' then
+        DMRelatorio_Estoque.QrEtiquetas_Estoque.SetVariable('COD_LOTE_TIPO', Trim(FProdutoParam.FmLote32.MELote.Text))
+      else
+        DMRelatorio_Estoque.QrEtiquetas_Estoque.SetVariable('COD_LOTE_TIPO', Null);
+      DMRelatorio_Estoque.QrEtiquetas_Estoque.Open;
+      DMRelatorio_Estoque.CDS_Etiquetas.Open;
+      while not (DMRelatorio_Estoque.QrEtiquetas_Estoque.Eof) do
+      begin
+        for wI := 1 to StrToInt(Trim(FProdutoParam.Me32Etiquetas.Text)) do
+        begin
+          DMRelatorio_Estoque.CDS_Etiquetas.Insert;
+          DMRelatorio_Estoque.CDS_EtiquetasCod_Produto.Value := Trunc(DMRelatorio_Estoque.QrEtiquetas_EstoqueCod_Produto.Value);
+          DMRelatorio_Estoque.CDS_EtiquetasDesc_Produto.Value := DMRelatorio_Estoque.QrEtiquetas_EstoqueDesc_Produto.Value;
+          DMRelatorio_Estoque.CDS_EtiquetasCod_Lote_Tipo.Value := DMRelatorio_Estoque.QrEtiquetas_EstoqueCod_Lote_Tipo.Value;
+          DMRelatorio_Estoque.CDS_EtiquetasDesc_Lote.Value := DMRelatorio_Estoque.QrEtiquetas_EstoqueDesc_Lote.Value;
+          DMRelatorio_Estoque.CDS_Etiquetas.Post;
+        end;
+        DMRelatorio_Estoque.QrEtiquetas_Estoque.Next;
+      end;
+      DMRelatorio_Estoque.CDS_Etiquetas.First;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FrEstoque_Etiqueta.QRPrimario.Preview
+      else
+        FrEstoque_Etiqueta.QRPrimario.Print;
+      DMRelatorio_Estoque.CDS_Etiquetas.EmptyDataSet;
+      DMRelatorio_Estoque.CDS_Etiquetas.Close;
+      DMRelatorio_Estoque.QrEtiquetas_Estoque.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.AtualizaPreoProdutoviaTabela1Click(Sender: TObject);
+begin
+  inherited;
+  if FAtualizaPrecoTabela = nil then
+    FAtualizaPrecoTabela := TFAtualizaPrecoTabela.Create(Application);
+//  DMProduto.QAtualizaPrecoProduto.Close;
+//  DMProduto.QAtualizaPrecoProduto.Open;
+  FAtualizaPrecoTabela.ShowModal;
+end;
+
+procedure TFProdutoCad.DownActionExecute(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  with FProdutoParam do
+  begin
+    AtivaPagina(32);
+    FmUsuario32.Visible := True;
+    FmData32.Visible := True;
+    Me32Etiquetas.Visible := False;
+    Label140.Visible := False;
+    LEtiqueta.Visible := True;
+    MEEtiqueta32.Visible := True;
+  end;
+  if FProdutoParam.ShowModal = mrOk then
+    with DMRelatorio_Estoque do
+    begin
+      QrEtiquetaConfirmadaEstoque.Close;
+      QrEtiquetaConfirmadaEstoque.ClearVariables;
+      if Trim(FProdutoParam.FmProduto32.MEProduto.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('PRODUTO', Trim(FProdutoParam.FmProduto32.MEProduto.Text));
+      if Trim(FProdutoParam.FmLote32.MeLote.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('LOTE', Trim(FProdutoParam.FmLote32.MeLote.Text));
+      if Trim(FProdutoParam.FmUsuario32.MeUsuario.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('USUARIO', Trim(FProdutoParam.FmUsuario32.MeUsuario.Text));
+      if Trim(FProdutoParam.FmData32.MeDtInicial.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('DT_INICIO', Trim(FProdutoParam.FmData32.MeDtInicial.Text));
+      if Trim(FProdutoParam.FmData32.MeDtFinal.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('DT_FIM', Trim(FProdutoParam.FmData32.MeDtFinal.Text));
+      if Trim(FProdutoParam.MEEtiqueta32.Text) <> '' then
+        QrEtiquetaConfirmadaEstoque.SetVariable('ETIQUETA', Trim(FProdutoParam.MEEtiqueta32.Text));
+      case FProdutoParam.RG32Situacao.ItemIndex of
+        0: QrEtiquetaConfirmadaEstoque.SetVariable('SITUACAO', 'CONFIRMADO');
+        1: QrEtiquetaConfirmadaEstoque.SetVariable('SITUACAO', 'CANCELADACANCELADO');
+        2: QrEtiquetaConfirmadaEstoque.SetVariable('SITUACAO', 'EMBARCADO');
+      end;
+      QrEtiquetaConfirmadaEstoque.Open;
+
+      if FrEtiquetaConfirmadaEstoque = nil then
+        FrEtiquetaConfirmadaEstoque := TFrEtiquetaConfirmadaEstoque.Create(Application);
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FrEtiquetaConfirmadaEstoque.QRPrimario.Preview
+      else
+        FrEtiquetaConfirmadaEstoque.QRPrimario.Print;
+      QrEtiquetaConfirmadaEstoque.Close;
+    end;
+  with FProdutoParam do
+  begin
+    FmUsuario32.Visible := False;
+    FmData32.Visible := False;
+    Me32Etiquetas.Visible := True;
+    Label140.Visible := True;
+    LEtiqueta.Visible := False;
+    MEEtiqueta32.Visible := False;
+  end;
+end;
+
+procedure TFProdutoCad.EmissodeEtiquetaSimples1Click(Sender: TObject);
+var
+  coluna, linha, posicao, RecNoAnterior, i, qtd, wCont, esquerda, wNumColunas: Integer;
+  F: TextFile;
+  //  wBarra: string;
+  wQtde: Real;
+
+  wQtdeUsada: Integer;
+
+  wEtiquetaLinha, wEtiquetaColuna, wEtiquetaAtual, wLinhaAtual, wTotalEtiquetas, wNumLinhasEtiqueta: Integer;
+  wLarguraEtiqueta, wEsquerda, wDiv, wMod: Integer;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[33].TabVisible := True;
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProduto do
+    begin
+      QEtiquetaSimples.Close;
+      QEtiquetaSimples.SetVariable('COD_PRODUTO', FProdutoParam.Fm33Produto.MeProduto.Text);
+      QEtiquetaSimples.Open;
+      QEtiquetaSimples.First;
+
+      CdEtiquetaSimples.Close;
+      CdEtiquetaSimples.Open;
+
+      wTotalEtiquetas := 0;
+      wQtdeUsada := 0;
+      while not QEtiquetaSimples.Eof do
+      begin
+        qtd := StrToInt(Trim(FProdutoParam.Me33Quantidade.Text));
+
+        for i := 1 to qtd do
+        begin
+          Inc(wQtdeUsada);
+
+          CdEtiquetaSimples.Append;
+          CdEtiquetaSimplesCOD_PRODUTO.Value := QEtiquetaSimplesCOD_PRODUTO.Value;
+          CdEtiquetaSimplesDESC_PRODUTO.Value := QEtiquetaSimplesDESC_PRODUTO.Value;
+          CdEtiquetaSimplesVAL_VAREJO.Value := QEtiquetaSimplesVAL_VAREJO.Value;
+          CdEtiquetaSimples.Post;
+
+          Inc(wTotalEtiquetas);
+        end;
+
+        QEtiquetaSimples.Next;
+      end;
+
+      CdEtiquetaSimples.First;
+
+      wEtiquetaLinha := 0;
+      wEtiquetaColuna := 0;
+      wEtiquetaAtual := 0;
+      wLinhaAtual := 0;
+      wLarguraEtiqueta := 340;
+      wNumColunas := 2;
+      wNumLinhasEtiqueta := 4;
+
+        //        while not CdEtiqNota.Eof do
+      if CdEtiquetaSimples.IsEmpty then
+        Exit;
+
+      AssignFile(F, 'LPT1');
+      Rewrite(F);
+
+      while (1 = 1) do
+      begin
+        if ((wEtiquetaLinha = 0) and (wEtiquetaColuna = 0)) then
+        begin
+          writeLN(F, 'N');
+          writeLN(F, 'Q4,0,0');
+        end;
+
+        writeLN(F, getTextoLinha(wEtiquetaLinha, wLarguraEtiqueta * wEtiquetaColuna));
+
+        if (wEtiquetaAtual = wTotalEtiquetas - 1) then
+        begin
+            //            wDiv = wTotalEtiquetas DIV wNumColunas;
+          wMod := wTotalEtiquetas mod wNumColunas;
+
+          wEtiquetaColuna := 0;
+          if (wMod > 0) then
+          begin
+            if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+            begin
+              inc(wEtiquetaLinha);
+              dec(wEtiquetaAtual, wMod - 1);
+              doPrior(wMod);
+            end
+            else
+            begin
+              writeLN(F, 'P1');
+              CloseFile(F);
+              Exit;
+            end;
+          end
+          else
+          begin
+            if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+            begin
+              inc(wEtiquetaLinha);
+              dec(wEtiquetaAtual, wNumColunas - 1);
+              doPrior(wNumColunas);
+            end
+            else
+            begin
+              writeLN(F, 'P1');
+              CloseFile(F);
+              Exit;
+            end;
+          end;
+        end
+        else
+        begin
+          if (wEtiquetaColuna < wNumColunas - 1) then
+          begin
+            Inc(wEtiquetaAtual);
+            Inc(wEtiquetaColuna);
+            CdEtiquetaSimples.Next;
+          end
+          else
+          begin
+            wEtiquetaColuna := 0;
+            if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+            begin
+              inc(wEtiquetaLinha);
+              dec(wEtiquetaAtual, wNumColunas - 1);
+              wEtiquetaColuna := 0;
+              doPrior(wNumColunas);
+            end
+            else
+            begin
+              wEtiquetaLinha := 0;
+              inc(wEtiquetaAtual);
+              CdEtiquetaSimples.Next;
+              writeLN(F, 'P1');
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.doPrior(wTamColuna: Integer);
+var
+  i: Integer;
+begin
+  for i := 1 to wTamColuna - 1 do
+    DMProduto.QEtiquetaSimples.Prior;
+end;
+
+function TFProdutoCad.getTextoLinha(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+var
+  wBarra: string;
+begin
+  if wEtiquetaLinha = 0 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 30) + ',5,0,1,1,2,N,"' + DMProduto.QEtiquetaSimplesDESC_PRODUTO.Text + '"';
+  if wEtiquetaLinha = 1 then
+  begin
+    wBarra := Bib.StrZero(DMProduto.QEtiquetaSimplesCOD_PRODUTO.Text, 12);
+    Result := 'B' + inttostr(wLarguraEtiqueta + 40) + ',35,0,1,2,3,60,B,"' + wBarra + '"'
+  end;
+  if wEtiquetaLinha = 2 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 30) + ',135,0,1,1,3,N,"' + 'Preco R$ ' + FormatFloat('#,##0.00', DMProduto.QEtiquetaSimplesVAL_VAREJO.Value) + '"';
+end;
+
+procedure TFProdutoCad.ProdutosaBaixar1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[35].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProduto do
+    begin
+
+      if FProdutoParam.RgTipoRelatorio.ItemIndex = 0 then
+      begin
+        QRProdutosBaixar.Close();
+        QRProdutosBaixar.SQL[QRProdutosBaixar.SQL.Count - 1] := '';
+        if Trim(FProdutoParam.FmProduto35.MeProduto.Text) <> '' then
+          QRProdutosBaixar.SetVariable(':COD_PRODUTO', Trim(FProdutoParam.FmProduto35.MeProduto.Text))
+        else
+          QRProdutosBaixar.SetVariable(':COD_PRODUTO', null);
+        if Trim(FProdutoParam.FmClasse35.MeClasse.Text) <> '' then
+          QRProdutosBaixar.SetVariable(':COD_CLASSE', Trim(FProdutoParam.FmClasse35.MeClasse.Text))
+        else
+          QRProdutosBaixar.SetVariable(':COD_CLASSE', null);
+
+        if FProdutoParam.Rg35Ordem.ItemIndex = 0 then
+          QRProdutosBaixar.SQL.Add('Tb_Produto.Desc_Produto,Tb_Estoque_Baixar.Cod_Produto_Baixa')
+        else
+          QRProdutosBaixar.SQL.Add('Tb_Produto.Desc_Produto,Tb_Produto1.Desc_Produto');
+        QRProdutosBaixar.Open();
+        if FRProdutoBaixar = nil then
+          FRProdutoBaixar := TFRProdutoBaixar.Create(Application);
+        FRProdutoBaixar.QRLTitulo.Caption := 'Relatório de Produtos a Baixar';
+        if Trim(FProdutoParam.FmClasse35.MeClasse.Text) <> '' then
+          FRProdutoBaixar.QRLabel9.Caption := FProdutoParam.FmClasse35.EdClasse.Text
+        else
+          FRProdutoBaixar.QRLabel9.Caption := 'CLASSE: TODAS';
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          FRProdutoBaixar.QRPrimario.Preview
+        else
+          FRProdutoBaixar.QRPrimario.Print;
+        QRProdutosBaixar.Close();
+      end
+      else
+      begin
+        QRProdutosBaixar2.Close();
+        QRProdutosBaixar2.SQL[QRProdutosBaixar2.SQL.Count - 1] := '';
+        if Trim(FProdutoParam.FmProduto35.MeProduto.Text) <> '' then
+          QRProdutosBaixar2.SetVariable(':COD_PRODUTO', Trim(FProdutoParam.FmProduto35.MeProduto.Text))
+        else
+          QRProdutosBaixar2.SetVariable(':COD_PRODUTO', null);
+        if Trim(FProdutoParam.FmClasse35.MeClasse.Text) <> '' then
+          QRProdutosBaixar2.SetVariable(':COD_CLASSE', Trim(FProdutoParam.FmClasse35.MeClasse.Text))
+        else
+          QRProdutosBaixar2.SetVariable(':COD_CLASSE', null);
+
+        if FProdutoParam.Rg35Ordem.ItemIndex = 0 then
+          QRProdutosBaixar2.SQL.Add('TB_ESTOQUE_BAIXAR.COD_PRODUTO,Tb_Produto1.Desc_Produto')
+        else
+          QRProdutosBaixar2.SQL.Add('Tb_Produto.Desc_Produto,Tb_Estoque_Baixar.Cod_Produto');
+        QRProdutosBaixar2.Open();
+        if FRProdutoBaixar2 = nil then
+          FRProdutoBaixar2 := TFRProdutoBaixar2.Create(Application);
+        FRProdutoBaixar2.QRLTitulo.Caption := 'Relatório de Produtos Kits a Baixar';
+        //if Trim(FProdutoParam.FmClasse35.MeClasse.Text) <> '' then
+          //FRProdutoBaixar2.QRLabel9.Caption := FProdutoParam.FmClasse35.EdClasse.Text
+        //else
+          //FRProdutoBaixar2.QRLabel9.Caption := 'CLASSE: TODAS';
+        if FProdutoParam.RGPreview.ItemIndex = 0 then
+          FRProdutoBaixar2.QRPrimario.Preview
+        else
+          FRProdutoBaixar2.QRPrimario.Print;
+        QRProdutosBaixar2.Close();
+
+      end;
+
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.DBPNcmDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FNcmCons;
+  Classe := TFNcmCons;
+end;
+
+procedure TFProdutoCad.DBPanel2DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTributacaoCons;
+  Classe := TFTributacaoCons;
+end;
+
+procedure TFProdutoCad.DBPClasseDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FClasseCons;
+  Classe := TFClasseCons;
+end;
+
+procedure TFProdutoCad.DBPFabricanteDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FCadastroCons;
+  Classe := TFCadastroCons;
+end;
+
+procedure TFProdutoCad.DBPProdutoBDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FProdutoCons;
+  Classe := TFProdutoCons;
+end;
+
+procedure TFProdutoCad.DBPMarcaDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FMarca_Cons;
+  Classe := TFMarca_Cons;
+end;
+
+procedure TFProdutoCad.DBPLoteClasparDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTipoLoteCons;
+  Classe := TFTipoLoteCons;
+end;
+
+procedure TFProdutoCad.DBPCulturaDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FCulturaCons;
+  Classe := TFCulturaCons;
+end;
+
+procedure TFProdutoCad.DBPProdutoBaixaDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FProdutoCons;
+  Classe := TFProdutoCons;
+end;
+
+procedure TFProdutoCad.DBPLoteBaixaDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTipoLoteCons;
+  Classe := TFTipoLoteCons;
+end;
+
+procedure TFProdutoCad.DBPLoteDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTipoLoteCons;
+  Classe := TFTipoLoteCons;
+end;
+
+procedure TFProdutoCad.DsEstoqueBaixaStateChange(Sender: TObject);
+var
+  b, b2, b3: Boolean;
+begin
+  inherited;
+  b := DSPrimario.State in [DsEdit, DsInsert];
+  b2 := DsEstoqueBaixa.State in [DsEdit, DsInsert];
+  b3 := (DsEstoqueBaixa.DataSet.IsEmpty) or (DsEstoqueBaixa.DataSet.RecordCount = 0);
+  BtProdBaixaIncluir.Enabled := b and not b2;
+  BtProdBaixaExcluir.Enabled := b and not (b2 or b3);
+  BtProdBaixaEditar.Enabled := b and not (b2 or b3);
+  BtProdBaixaConfirmar.Enabled := b2;
+  BtProdBaixaCancelar.Enabled := b2;
+end;
+
+procedure TFProdutoCad.BtProdBaixaIncluirClick(Sender: TObject);
+begin
+  inherited;
+  DsEstoqueBaixa.DataSet.Append;
+end;
+
+procedure TFProdutoCad.BtProdBaixaEditarClick(Sender: TObject);
+begin
+  inherited;
+  DsEstoqueBaixa.DataSet.Edit;
+end;
+
+procedure TFProdutoCad.BtProdBaixaExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if (MessageDlg('Excluir produto a baixar?', mtConfirmation, [mbYes, mbNo, mbCancel], 0) = mrYes) then
+  begin
+    DsEstoqueBaixa.DataSet.Delete;
+    DsEstoqueBaixaStateChange(Sender);
+  end;
+end;
+
+procedure TFProdutoCad.BtProdBaixaCancelarClick(Sender: TObject);
+begin
+  inherited;
+  DsEstoqueBaixa.DataSet.Cancel;
+end;
+
+procedure TFProdutoCad.BtProdBaixaConfirmarClick(Sender: TObject);
+begin
+  inherited;
+  if ValidaCampos(Self, DsEstoqueBaixa) then
+    DsEstoqueBaixa.DataSet.Post;
+end;
+
+procedure TFProdutoCad.DBPanel9DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FGeneroProdutoCons;
+  Classe := TFGeneroProdutoCons;
+end;
+
+procedure TFProdutoCad.DBPanel8DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FListaServicoCons;
+  Classe := TFListaServicoCons;
+end;
+
+procedure TFProdutoCad.DBPanel13CodigoExit(Sender: TObject);
+begin
+  inherited;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FORTE' then
+    if DBComboBox2.Showing then
+      DBComboBox2.SetFocus;
+end;
+
+procedure TFProdutoCad.DBPClasse2DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FClasseCons;
+  Classe := TFClasseCons;
+end;
+
+procedure TFProdutoCad.DBPanel15DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTributacaoCons;
+  Classe := TFTributacaoCons;
+end;
+
+procedure TFProdutoCad.DBPanel7CodigoChange(Sender: TObject);
+begin
+  inherited;
+  AtualizarImagemProduto;
+end;
+
+procedure TFProdutoCad.DBPanel12DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FProdutoCons;
+  Classe := TFProdutoCons;
+end;
+
+procedure TFProdutoCad.DBPNcmValidate(Sender: TObject; Value: Variant;
+  var isValid: Boolean; var Msg: string);
+var str: string;
+  aux: Integer;
+begin
+  inherited;
+  if Value = null then
+    str := ''
+  else
+    str := Value;
+  if ((Length(str) = 2) or (Length(str) = 8) or (Length(str) = 7)) then
+    isValid := True
+  else
+  begin
+    isValid := False;
+    Msg := 'Inválido';
+  end;
+  try
+    aux := StrToInt('0'+Value);
+  except
+    isValid := False;
+    Msg := 'Inválido';
+  end;
+  with DMProduto do
+  begin
+    if QProdutoIND_TIPO_PRODUTO.Value = 'SERVIÇO' then
+      if str = '00' then
+        isValid := True
+      else
+      begin
+        isValid := False;
+        Msg := 'Serviço deve ter NCM 00';
+      end;
+
+    // Produtos do tipo 'CONSUMO' são utilizados em notas de entrada que não
+    // irão para SEFAZ. Não precisa ser obrigatória a informação de NCM
+    // Marlon - 05/2016
+    if QProdutoIND_TIPO_PRODUTO.Value = 'CONSUMO' then
+    begin
+      isValid := true;
+      Msg := '';
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.RelatrioVendasPerdidas1Click(Sender: TObject);
+begin
+  inherited;
+
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[36].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProduto do
+    begin
+      QRVendaPerdida.Close();
+      if Trim(FProdutoParam.Fm36Produto.MeProduto.Text) <> '' then
+        QRVendaPerdida.SetVariable(':COD_PRODUTO', Trim(FProdutoParam.Fm36Produto.MeProduto.Text))
+      else
+        QRVendaPerdida.SetVariable(':COD_PRODUTO', null);
+      if Trim(FProdutoParam.Fm36Motivo.MeMotivo.Text) <> '' then
+        QRVendaPerdida.SetVariable(':COD_MOTIVO', Trim(FProdutoParam.Fm36Motivo.MeMotivo.Text))
+      else
+        QRVendaPerdida.SetVariable(':COD_MOTIVO', null);
+      if Trim(FProdutoParam.Fm36Vendedor.MeVendedor.Text) <> '' then
+        QRVendaPerdida.SetVariable(':COD_VENDEDOR', Trim(FProdutoParam.Fm36Vendedor.MeVendedor.Text))
+      else
+        QRVendaPerdida.SetVariable(':COD_VENDEDOR', null);
+      QRVendaPerdida.SetVariable(':DT_INICIAL', FProdutoParam.Fm36Datas.MeDtInicial.Text);
+      QRVendaPerdida.SetVariable(':DT_FINAL', FProdutoParam.Fm36Datas.MeDtFinal.Text);
+      QRVendaPerdida.Open();
+      if FrVendasPerdidas = nil then
+        FrVendasPerdidas := TFrVendasPerdidas.Create(Application);
+      FrVendasPerdidas.QRLTitulo.Caption := 'Relatório de Vendas Perdidas De '+
+          FProdutoParam.Fm36Datas.MeDtInicial.Text + ' Até ' + FProdutoParam.Fm36Datas.MeDtFinal.Text;
+      If FProdutoParam.Rg36CodigoProduto.ItemIndex = 0 Then
+         FrVendasPerdidas.QRDBPRoduto.DataField := 'Cod_Produto'
+      Else
+         FrVendasPerdidas.QRDBPRoduto.DataField := 'Num_Fabricante';
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FrVendasPerdidas.QRPrimario.Preview
+      else
+        FrVendasPerdidas.QRPrimario.Print;
+      QRVendaPerdida.Close();
+    end;
+  end;
+
+end;
+
+procedure TFProdutoCad.AlterarNCMporClasse1Click(Sender: TObject);
+begin
+  inherited;
+  If FNCMMargemClasse = Nil Then
+     FNCMMargemClasse := TFNCMMargemClasse.Create(Application);
+  FNCMMargemClasse.ShowModal;
+end;
+
+procedure TFProdutoCad.TransfereCdigoProduto1Click(Sender: TObject);
+begin
+  inherited;
+  If FProdutoTransf = Nil Then
+     FProdutoTransf := TFProdutoTransf.Create(Application);
+  FProdutoTransf.ShowModal;   
+end;
+
+procedure TFProdutoCad.RelatriodeNCM1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[37].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProdutoRelatorio do
+    begin
+      QRProdutoNCM.Close;
+      if Trim(FProdutoParam.FmProduto37.MeProduto.Text) <> '' then
+        QRProdutoNCM.SetVariable('PRODUTO', Trim(FProdutoParam.FmProduto37.MeProduto.Text))
+      else
+        QRProdutoNCM.SetVariable('PRODUTO', null);
+      if Trim(FProdutoParam.FmNcm37.MeNcm.Text) <> '' then
+        QRProdutoNCM.SetVariable('NCM', Trim(FProdutoParam.FmNcm37.MeNcm.Text))
+      else
+        QRProdutoNCM.SetVariable('NCM', null);
+      case FProdutoParam.CB37Situacao.ItemIndex of
+        0: DMProdutoRelatorio.QRProdutoNCM.SetVariable('SITUACAO', 'ATIVO');
+        1: DMProdutoRelatorio.QRProdutoNCM.SetVariable('SITUACAO', 'DESATIVADO');
+        2: DMProdutoRelatorio.QRProdutoNCM.SetVariable('SITUACAO', Null);
+      end;
+      QRProdutoNCM.SQL[QRProdutoNCM.SQL.Count - 1] := '';
+      case FProdutoParam.CB37Ordem.ItemIndex of
+        0: DMProdutoRelatorio.QRProdutoNCM.SQL.Add('P.DESC_PRODUTO');
+        1: DMProdutoRelatorio.QRProdutoNCM.SQL.Add('P.NUM_GENERO_NCM, P.DESC_PRODUTO');
+        2: DMProdutoRelatorio.QRProdutoNCM.SQL.Add('P.COD_PRODUTO, P.DESC_PRODUTO');
+      end;
+
+      case FProdutoParam.RGComCest.ItemIndex of
+        0: DMProdutoRelatorio.QRProdutoNCM.SetVariable('COM_CEST', NULL);
+        1: DMProdutoRelatorio.QRProdutoNCM.SetVariable('COM_CEST','AND COD_CEST IS NOT NULL');
+        2: DMProdutoRelatorio.QRProdutoNCM.SetVariable('COM_CEST','AND COD_CEST IS NULL');
+      end;
+      if Trim(FProdutoParam.CB37TipoProduto.Text) <> '' then
+        QRProdutoNCM.SetVariable('TIPO_PRODUTO', FProdutoParam.CB37TipoProduto.Text)
+      else
+        QRProdutoNCM.SetVariable('TIPO_PRODUTO', Null);
+      QRProdutoNCM.Open;
+    end;
+    if FRNcm = nil then
+      FRNcm := TFRNcm.Create(Application);
+
+    FRNCM.QRLabel8.Caption := 'TIPO DE PRODUTO: ' + FProdutoParam.CB37TipoProduto.Text + '';
+
+    if (FProdutoParam.RGPreview.ItemIndex = 0) then
+      FRNcm.QRPrimario.Preview
+    else
+      FRNcm.QRPrimario.Print;
+  end;
+end;
+
+procedure TFProdutoCad.DBPClasseCodigoChange(Sender: TObject);
+var wNumClasse :String;
+begin
+  inherited;
+  with DMProduto do
+  begin
+    if QProdutoCOD_CLASSE.Text <> '' then
+    begin
+      wNumClasse := DMOracle.BuscaNome('SELECT NUM_CLASSE FROM TB_CLASSE',
+        'COD_CLASSE = ' + QProdutoCOD_CLASSE.Text);
+      if wNumClasse <> '' then
+      begin
+        EdClasse.Text := 'Classe: '+ DMOracle.BuscaNome('SELECT DESC_CLASSE FROM TB_CLASSE','NUM_CLASSE = ' +
+            wNumClasse + ' AND NUM_SUBCLASSE = 0');
+        EdClasse.Text := EdClasse.Text +
+          ' - Subclasse: ' +
+          DMOracle.BuscaNome('SELECT DESC_CLASSE FROM TB_CLASSE','COD_CLASSE = ' + QProdutoCOD_CLASSE.Text);
+        EdClasse.Hint := EdClasse.Text;
+      end
+      else
+        EdClasse.Text := 'Classe inexistente';
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.DBPClasseCodigoExit(Sender: TObject);
+begin
+  inherited;
+  DBPClasseCodigoChange(Sender);
+end;
+
+procedure TFProdutoCad.DBLCCstPisCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstPis.Hint := QCstpisDESC_COMPLETA.Value;
+    if QCstpisCOD_CST_PIS.Value = '' then
+      QProdutoCOD_CST_PIS.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstCofinsCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstCofins.Hint := QCstCofinsDESC_COMPLETA.Value;
+    if QCstCofinsCOD_CST_COFINS.Value = '' then
+      QProdutoCOD_CST_COFINS.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.ExportaProduto1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[39].TabVisible := true;
+  FProdutoParam.RGPreview.Visible := False;
+  if FProdutoParam.Showmodal = mrOk then
+    exportaProdutos;
+
+  FProdutoParam.RGPreview.Visible := True;
+  
+end;
+
+procedure TFProdutoCad.exportaProdutos;
+var
+  S : string;
+  F : TextFile;
+  wSequencia : integer;
+begin
+  wSequencia := 1;
+  try
+    with DMProduto do
+    begin
+      QProdutoExp.Close;
+      QUnidadeExp.Close;
+      if Trim(FProdutoParam.FmDatas39.MeDtInicial.Text) <> '' then
+        QProdutoExp.SetVariable('DT_COMPRA_I',FProdutoParam.FmDatas39.MeDtInicial.Text)
+      else
+        QProdutoExp.SetVariable('DT_COMPRA_I',Null);
+
+      if Trim(FProdutoParam.FmDatas39.MeDtFinal.Text) <> '' then
+        QProdutoExp.SetVariable('DT_COMPRA_F',FProdutoParam.FmDatas39.MeDtFinal.Text )
+      else
+        QProdutoExp.SetVariable('DT_COMPRA_F',Null);
+
+      QUnidadeExp.Open;
+      QProdutoExp.Open;
+      QUnidadeExp.First;
+      QProdutoExp.First;
+      
+      while not QUnidadeExp.Eof do
+      begin
+        S := S + Bib.FormataTexto(UpperCase(QUnidadeExpDESC_UNIDADE.Text),6);
+        case AnsiIndexStr(UpperCase(QUnidadeExpDESC_UNIDADE.Text),['CX','KG','LT','M','M2','PAR','PC','PCT','SC',
+                                                                   'T','UN','M3','MIL']) of
+         0 : S := S + bib.FormataTexto('CAIXA',30);
+         1 : S := S + bib.FormataTexto('KILOGRAMA',30);
+         2 : S := S + bib.FormataTexto('LITRO',30);
+         3 : S := S + bib.FormataTexto('METRO',30);
+         4 : S := S + bib.FormataTexto('METRO QUADRADO',30);
+         5 : S := S + bib.FormataTexto('PAR',30);
+         6 : S := S + bib.FormataTexto('PECA',30);
+         7 : S := S + bib.FormataTexto('PACOTE',30);
+         8 : S := S + bib.FormataTexto('SACO',30);
+         9 : S := S + bib.FormataTexto('TONELADA',30);
+         10: S := S + bib.FormataTexto('UNIDADE',30);
+         11: S := S + bib.FormataTexto('METROS CUBICOS',30);
+         12: S := S + bib.FormataTexto('MILHEIRO',30);
+
+         else
+           S := S + bib.FormataTexto('UNIDADE',30);
+        end;
+        S := S + bib.FormataTexto(' ',457,' ')+ //BRANCOS
+        '1' +                                   //TIPO DE REGISTRO
+        RMaskCGC_CPF(IntToStr(wSequencia),6);
+        wSequencia := wSequencia + 1;
+        S:= S+Chr(13)+Chr(10);
+        QUnidadeExp.Next;
+      end;
+      wSequencia := 1;
+      while not QProdutoExp.Eof do
+      begin
+        //LAYOUT DO ITEM
+        S := S + RMaskCGC_CPF(QProdutoExpCOD_PRODUTO.Text,10)      +
+        bib.FormataTexto(QProdutoExpDESC_PRODUTO.Text,40)          +
+        RMaskCGC_CPF(QProdutoExpNUM_GENERO_NCM.Text,8);
+        if QProdutoExpDESC_UNIDADE.IsNull then
+          S := S + Bib.FormataTexto('UN',6);
+        S := S + bib.FormataTexto(QProdutoExpDESC_UNIDADE.Value,4) +
+        Bib.StrZeroDecimal(QProdutoExpNUM_PESO_LIQUIDO.Value,9,3)  +
+        bib.FormataTexto(QProdutoExpNUM_FABRICANTE.Value,15)  ;
+        //Para o layout informado, o codigo dos tipos de produtos estão
+        //        diferentes com o do sistema.
+        case StrToInt(QProdutoExpCOD_TIPO_PRODUTO.Text)  of
+           00 : S := S + '01'; //Mercadoria para revenda
+           01 : S := S + '02'; //Matéria-prima
+           02 : S := S + '06'; //Material de Embalagem
+           03 : S := S + '04'; //Produto em elaboração
+           04 : S := S + '05'; //Produto acabado
+           06 : S := S + '03'; //Produto intermediário
+         else   S := S + '99'; // Outros
+        end;
+        //CAMPOS RESERVADOS
+        S := S + bib.FormataTexto(' ',12, ' ')+
+        bib.StrZero2(0,12,0)                  + //TRIBUTACAO - ENTRADA-ICMS/IPI  -  SAIDA-ICMS/IPI
+        bib.FormataTexto(' ',6,' ')           + //CAMPO DE UNIDADE 2
+        bib.StrZeroDecimal(0,5,2)             + //Aliquota ICMS
+        bib.StrZeroDecimal(0,5,2)             + //Aliquota IPI
+        bib.FormataTexto(' ',365,' ')         + //CAMPOS RESERVADOS
+        '2'                                   + //TIPO DE REGISTRO
+        RMaskCGC_CPF(IntToStr(wSequencia),6);   //SEQUENCIA
+        wSequencia := wSequencia + 1;
+        S:= S+Chr(13)+Chr(10);
+
+        //LAYOUT PARA FATOR DE CONVERSÃO
+        {S:= S + RMaskCGC_CPF(QProdutoExpCOD_PRODUTO.Text,10)   +
+        bib.FormataTexto(QProdutoExpNUM_FABRICANTE.Value,15);
+        if QProdutoExpDESC_UNIDADE.isNull then
+          S := S + bib.FormataTexto('UN',6);
+
+        S := S + bib.FormataTexto(QProdutoExpDESC_UNIDADE.Value,6)      +
+        bib.StrZeroDecimal(QprodutoExpQT_QUANTIDADE.Value,16,6)+ //QUANTIDADE
+        bib.FormataTexto(' ',446,' ') +   //BRANCOS
+        '3' +                             //TIPO DE REGISTRO
+        RMaskCGC_CPF(IntToStr(wSequencia),6);
+        S := S+Chr(13)+chr(10);
+        wSequencia := wSequencia +1;}
+
+        QProdutoExp.Next;
+      end;
+
+    end;
+
+    if FProdutoCad.SaveDialog.Execute then
+    begin
+      AssignFile(F, FProdutoCad.SaveDialog.FileName);
+      Rewrite(F);
+      Writeln(F,S);
+      CloseFile(F);
+      Application.MessageBox('Arquivo Gerado com Sucesso.', 'Atenção', MB_ICONINFORMATION or MB_OK);
+    end;
+  except on e:Exception do
+   begin
+     FProdutoParam.RGPreview.Visible := True;
+     Application.MessageBox('Não foi possível exportar os produtos.', 'Atenção', MB_ICONINFORMATION or MB_OK);
+   end;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstIpiCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstIpi.Hint := QCstIpiDESC_COMPLETA.Value;
+    if QCstIpiCOD_CST_IPI.Value = '' then
+      QProdutoCOD_CST_IPI.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.RelatrioEstoqueCompraVenda1Click(Sender: TObject);
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[40].TabVisible := True;
+  if FProdutoParam.Showmodal = mrOk then
+  begin // Begin If
+    if FREstoqueCompraVenda = nil then
+      FREstoqueCompraVenda := TFREstoqueCompraVenda.Create(Application);
+    with DMRelatorio_Estoque do // Filtragem dos Dados
+    begin
+      QREstoqueCompraVenda.Close;
+      if (Trim(FProdutoParam.Fm40Datas.MeDtInicial.Text) <> '') and
+                 (Trim(FProdutoParam.Fm40Datas.MeDtFinal.Text) <> '') then
+      begin
+        QREstoqueCompraVenda.SetVariable('DATA_INICIAL',FProdutoParam.Fm40Datas.MeDtInicial.Text);
+        QREstoqueCompraVenda.SetVariable('DATA_FINAL',FProdutoParam.Fm40Datas.MeDtFinal.Text);
+      end
+      else
+        raise Exception.Create('É necessário informar a Data de Referência.');
+
+      QREstoqueCompraVenda.Open;
+      if FProdutoParam.RGPreview.ItemIndex = 0 then
+        FREstoqueCompraVenda.QRPrimario.Preview
+      else
+        FREstoqueCompraVenda.QRPrimario.Print;
+      QREstoqueCompraVenda.Close;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.DBPServicoMuncipalValidate(Sender: TObject;
+  Value: Variant; var isValid: Boolean; var Msg: String);
+var
+  str: String;
+begin
+ // inherited;
+//  if Value <> Variants.Null then
+//    str := Value
+//  else
+//    str := '';
+  //if Trim(str) <> '' then
+//  begin
+//    if Length(str) = 7 then
+//      isValid := True
+//    else
+//    begin
+//      isValid := False;
+//      Msg := 'O código de serviço municipal deve ter 7 dígitos.';
+//    end;
+//  end;
+  isValid := true;
+end;
+
+procedure TFProdutoCad.EtiqPPLA1Click(Sender: TObject);
+var
+wMarca : string;
+wQtde, wCont : integer;
+  ret,nLen : integer;
+  pbuf : array[0..127] of AnsiChar;
+  ver : PAnsiChar;
+  strmsg : string;
+  len1,len2 : integer;
+  buf1,buf2 : AnsiString;
+  buff1 : array[0..127] of WideChar;
+
+begin
+  inherited;
+  wCont := 1;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[33].TabVisible := True;
+  if FProdutoParam.ShowModal = mrOk then
+    with DMProduto do
+    Begin
+      QProduto.Close;
+      QProduto.SetVariable('PK',FProdutoParam.Fm33Produto.MeProduto.Text);
+      Qproduto.Open; 
+
+      if QProdutoCOD_MARCA.Text <> '' then
+        wMarca := DMOracle.BuscaNome('SELECT DESC_MARCA FROM TB_MARCA','COD_MARCA='+QProdutoCOD_MARCA.Text)
+      else
+        wMarca := '*';
+      wQtde := StrToInt(Trim(FProdutoParam.Me33Quantidade.Text));
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+      A_EnumUSB(pbuf);
+      A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+
+      while wCont <= wQtde do
+      begin
+        A_Prn_Text(240, 028, 3, 3, 0, 2, 1, 'n', 2, pchar(QProdutoNUM_FABRICANTE.Text));
+        A_Prn_Text(240, 048, 3, 3, 0, 1, 1, 'n', 2, pchar(QProdutoDESC_LOCALIZACAO.Text));
+        A_Prn_Text(240, 068, 3, 2, 0, 1, 1, 'n', 2, pchar(wMarca));
+        A_Prn_Text(240, 088, 3, 2, 0, 1, 1, 'n', 2, pchar(QProdutoDESC_PRODUTO.Text));
+        A_Prn_Barcode(220, 140, 3, 'E', 0, 7, 40, 'N', 1, pchar(QProdutoDESC_COD_BARRA.Text));
+
+        A_Set_Backfeed(320);
+        A_Print_Out(1, 1, 1, 1);
+        wCont := wCont + 1;
+      end;
+    end;
+    A_ClosePrn;
+end;
+
+
+procedure TFProdutoCad.DBLCCstPisSaidaCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstPisSaida.Hint := QCstpisDESC_COMPLETA.Value;
+    if QCstpisCOD_CST_PIS.Value = '' then
+      QProdutoCOD_CST_PIS.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstCofinsSaidaCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstCofinsSaida.Hint := QCstCofinsDESC_COMPLETA.Value;
+    if QCstCofinsCOD_CST_COFINS.Value = '' then
+      QProdutoCOD_CST_COFINS.Clear;
+  end;
+
+end;
+
+procedure TFProdutoCad.DBLCCstPisDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QCstpis.Close;
+    QCstpis.Open;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstCofinsDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QCstCofins.Close;
+    QCstCofins.Open;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstCofinsSaidaDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QCstCofinsSaida.Close;
+    QCstCofinsSaida.Open;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstPisSaidaDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QCstPisSaida.Close;
+    QCstPisSaida.Open;
+  end;
+end;
+
+function TFProdutoCad.getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+var
+  wBarra: string;
+begin
+  if wEtiquetaLinha = 0 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',10,0,1,1,2,N,"' + Copy(DMRelatorio_Estoque.CdsEtiquetasEstoque2DESC_PRODUTO.Text, 1, 25) + '"';
+  if wEtiquetaLinha = 1 then
+    if DMRelatorio_Estoque.CdsEtiquetasEstoque2VAL_VAREJO.Value > 0 then
+      Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',40,0,1,1,2,N," Tam: ' +
+        DMOracle.FastSelect('DESC_LOTE', 'TB_LOTE_TIPO', 'COD_LOTE_TIPO = ' +
+        DMRelatorio_Estoque.CdsEtiquetasEstoque2COD_LOTE_TIPO.Text) + ' Preço: ' +
+        FormatFloat('0.00', DMRelatorio_Estoque.CdsEtiquetasEstoque2VAL_VAREJO.Value) + '"'
+    else
+      Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',40,0,1,1,2,N," Tam: ' +
+        DMOracle.FastSelect('DESC_LOTE', 'TB_LOTE_TIPO', 'COD_LOTE_TIPO = ' +
+        DMRelatorio_Estoque.CdsEtiquetasEstoque2COD_LOTE_TIPO.Text) + '"';
+  if wEtiquetaLinha = 2 then
+  begin
+    wBarra := Bib.StrZero(DMRelatorio_Estoque.CdsEtiquetasEstoque2COD_PRODUTO.Text, 8);
+    Result := 'B' + inttostr(wLarguraEtiqueta + 40) + ',80,0,1,2,1,50,B,"' + wBarra + '"'
+  end;                                                  
+end;
+
+procedure TFProdutoCad.DBPAnpDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FAnpCons;
+  Classe := TFAnpCons;
+end;
+
+procedure TFProdutoCad.DBPAnpValidate(Sender: TObject; Value: Variant;
+  var isValid: Boolean; var Msg: String);
+var str: string;
+begin
+  inherited;
+  if Value <> Variants.Null then
+    str := Value
+  else
+    str := '';
+  if Trim(str) <> '' then
+  begin
+    if (Length(str) = 9) then
+      isValid := True
+    else
+    begin
+      isValid := False;
+      Msg := 'Inválido';
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.DBObservacaoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  inherited;
+  Key := AnsiUpperCase( Key )[1];
+end;
+
+procedure TFProdutoCad.EmissaoEtiquetaZebra1Click(Sender: TObject);
+var
+  wNumEtiquetas : Integer;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(nil);
+  FProdutoParam.PGRelatorio.Pages[41].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProdutoRelatorio do
+    begin
+      if not CDSEtiquetaZebra.Active then
+        CDSEtiquetaZebra.CreateDataSet;                                                         
+      CDSEtiquetaZebra.Open;
+      CDSEtiquetaZebra.EmptyDataSet;
+      QREtiquetaZebra.Close;
+      if (Trim(FProdutoParam.Fm41Produto.MeProduto.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_PRODUTO', FProdutoParam.Fm41Produto.MeProduto.Text)
+      else
+        QREtiquetaZebra.SetVariable('COD_PRODUTO', Null);
+
+      if (Trim(FProdutoParam.Fm41SubClasse.MeClasse.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_CLASSE', DMClasse.QClasseConsCOD_CLASSE.Value)
+      else
+        QREtiquetaZebra.SetVariable('COD_CLASSE', Null);
+      if (Trim(FProdutoParam.ME14Filial.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_FILIAL',
+          Trim(FProdutoParam.ME14Filial.Text))
+      else
+        QREtiquetaZebra.SetVariable('COD_FILIAL', Null);
+
+      if (Trim(FProdutoParam.ME14Lote.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_LOTE', Trim(FProdutoParam.ME14Lote.Text))
+      else
+      begin
+        if DMOracle.BuscaNome('SELECT COUNT(*) FROM TB_ESTOQUE', 'COD_PRODUTO = ' + FProdutoParam.Fm41Produto.MeProduto.Text) = '0' then //Necessário para clientes sem controle de estoque
+           QREtiquetaZebra.SetVariable('COD_LOTE', Null)
+        else
+          QREtiquetaZebra.SetVariable('COD_LOTE', 1); //Junior 28/05/2025. Necessário para imprimir qtd certo de etiq. sem informar o lote. Estava imp. qte * qtd_lotes.
+      end;
+      Case FProdutoParam.RG37Situacao.ItemIndex of
+        0 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'ATIVO');
+        1 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'DESATIVADO');
+        2 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'FORA DE LINHA');
+        3 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', Null);
+      end;
+
+      QREtiquetaZebra.Open;
+      if QREtiquetaZebra.RecordCount = 0 then
+      begin
+        MessageDlg('Não existe produto cadastrado com esta classe e subclasse ou situação.',
+          mtError, [mbOk],0);
+        Abort;
+      end;
+
+      while not QREtiquetaZebra.Eof do
+      begin
+        /// Verificar quantidade de etiquetas a serem impressas para cada produto.
+        if ( FProdutoParam.RG41QtdeEtiquetas.ItemIndex = 1 ) and
+            (Trim(FProdutoParam.Me41QtdeEtiquetas.Text) <> '') then
+        begin
+         for wNumEtiquetas := StrToInt(Trim(FProdutoParam.Me41QtdeEtiquetas.Text))
+            downto 1 do
+          begin
+            CDSEtiquetaZebra.Append;
+            CDSEtiquetaZebraCOD_PRODUTO.Value :=
+              QREtiquetaZebraCOD_PRODUTO.Value;
+            CDSEtiquetaZebraDESC_PRODUTO.Value :=
+              QREtiquetaZebraDESC_PRODUTO.Value;
+            CDSEtiquetaZebraVAL_VAREJO.Value :=
+              qretiquetazebraVAL_VAREJO.Value;
+            CDSEtiquetaZebraNUM_FABRICANTE.Value :=
+              QREtiquetaZebraNUM_FABRICANTE.Value;
+            CDSEtiquetaZebraIND_PRECO_VENDA_ETIQUETA.Value :=
+              QREtiquetaZebraIND_PRECO_VENDA_ETIQUETA.Value;
+            CDSEtiquetaZebraCOD_LOTE_TIPO.Value :=
+              QREtiquetaZebraCOD_LOTE_TIPO.Value; //Pegado o LoteTipo do estoque para imprimir no código de barra(utilizado pela OSARE) Junior 28/11/20017
+            CDSEtiquetaZebradesc_cod_barra.Value :=
+                  QREtiquetaZebraDESC_COD_BARRA.Value;
+            CDSEtiquetaZebraNOME_FABRICANTE.Value :=
+                  QREtiquetaZebraNOME.Value;
+            CDSEtiquetaZebraDESC_LOCALIZACAO.Value :=
+                  QREtiquetaZebraDESC_LOCALIZACAO.Value;
+            CDSEtiquetaZebranum_converte_fardo.Value :=
+                  QREtiquetaZebraNUM_CONVERTE_FARDO.Value;
+            CDSEtiquetaZebradesc_observacao.Value :=
+                  QREtiquetaZebraDESC_OBSERVACAO.Value;
+            if (Trim(FProdutoParam.Fm41Datas.MeDtInicial.Text) <> '') and (Trim(FProdutoParam.Fm41Datas.MeDtFinal.Text) <> '') then
+            begin
+              CDSEtiquetaZebradt_fabricacao.Value := StrToDate(Trim(FProdutoParam.Fm41Datas.MeDtInicial.Text));
+              CDSEtiquetaZebradt_vencimento.Value := StrToDate(Trim(FProdutoParam.Fm41Datas.MeDtFinal.Text));
+            end;
+            CDSEtiquetaZebra.Post;
+          end;
+          //break; Tirei pois não estava percorrendo toda a Query, ai nao imprimia todos as etiquetas necessárias daquela classe. Kreuz. Vanessa 06/07/2017
+        end
+        else
+          if FProdutoParam.RG41QtdeEtiquetas.ItemIndex = 0 then
+          begin
+            if (Trim(FProdutoParam.ME14Filial.Text) <> '') and
+              (Trim(FProdutoParam.ME14Lote.Text) <> '') then
+            begin
+              for wNumEtiquetas := QREtiquetaZebraQT_QUANTIDADE.Value
+                downto 1 do
+              begin
+                CDSEtiquetaZebra.Append;
+                CDSEtiquetaZebraCOD_PRODUTO.Value :=
+                  QREtiquetaZebraCOD_PRODUTO.Value;
+                CDSEtiquetaZebraDESC_PRODUTO.Value :=
+                  QREtiquetaZebraDESC_PRODUTO.Value;
+                CDSEtiquetaZebraVAL_VAREJO.Value :=
+                  qretiquetazebraVAL_VAREJO.Value;
+                CDSEtiquetaZebraNUM_FABRICANTE.Value :=
+                  QREtiquetaZebraNUM_FABRICANTE.Value;
+                CDSEtiquetaZebraIND_PRECO_VENDA_ETIQUETA.Value :=
+                  QREtiquetaZebraIND_PRECO_VENDA_ETIQUETA.Value;
+                CDSEtiquetaZebraCOD_LOTE_TIPO.Value :=
+                  QREtiquetaZebraCOD_LOTE_TIPO.Value; //Pegado o LoteTipo do estoque para imprimir no código de barra(utilizado pela OSARE) Junior 28/11/20017
+                CDSEtiquetaZebradesc_cod_barra.Value :=
+                  QREtiquetaZebraDESC_COD_BARRA.Value;
+                CDSEtiquetaZebraNOME_FABRICANTE.Value :=
+                  QREtiquetaZebraNOME.Value;
+                CDSEtiquetaZebradesc_observacao.Value :=
+                  QREtiquetaZebraDESC_OBSERVACAO.Value;
+                CDSEtiquetaZebra.Post;
+              end;
+            end
+            else
+            begin
+              MessageDlg('Filial e/ou Lote não informado',mtError,[mbOk],0);
+              Abort;
+            end;
+          end;
+        QREtiquetaZebra.Next;
+        end;
+      if FProdutoParam.rg41Etiqueta.ItemIndex = 0 Then //etiqueta 3.3x3cm 3 colunas
+        ImprimeEtiquetaZebra(CDSEtiquetaZebra)
+      else if FProdutoParam.rg41Etiqueta.ItemIndex = 1 Then //8x3cm 1 coluna
+      begin    //Filtro de Valor para impressão de Etiqueta NeoAli. Tama. 8x3. Sol. Marcos. Junior 23/01/2019
+        if (DMParamSistema.CodEmpresa = 'NEOALI') or (DMParamSistema.CodEmpresa = 'NFCE-DOCES')then
+        begin
+          if FProdutoParam.RG41Valor.ItemIndex = 0 then
+            pValorEtiqueta := True
+          else
+            pValorEtiqueta := False;
+//Adicionado para não imprimir o nome de artista. Solicitado pelo Rogerio. cod_suporte: 5063. Alex 06/06/2022
+          {if (FProdutoParam.RG41Artista.ItemIndex = 0) and (FProdutoParam.RG41Artista.Visible)  then
+            pImprimeArtista := True
+          else
+            pImprimeArtista := False;}
+          pImprimeArtista := FProdutoParam.Rg41Artista.Items[FProdutoParam.Rg41Artista.ItemIndex];
+          if (DMParamSistema.CodEmpresa = 'NEOALI') then
+             ImprimeEtiquetaZebra8x3NeoAli(CDSEtiquetaZebra)
+          else
+             ImprimeEtiquetaZebra8x3(CDSEtiquetaZebra);
+        end
+        else if (DMParamSistema.CodEmpresa = 'FINESTRA') then
+           ImprimeEtiquetaZebra8x3Finestra(CDSEtiquetaZebra)
+        else
+          ImprimeEtiquetaZebra8x3(CDSEtiquetaZebra);
+      end
+      else if FProdutoParam.rg41Etiqueta.ItemIndex = 2 then   //Tipo de etiqueta 5x5 2 colunas Jr.Doces
+        ImprimeEtiquetaZebra5x5(CDSEtiquetaZebra)
+      else if FProdutoParam.RG41Etiqueta.ItemIndex = 3 then  //Tipo de etiqueta 5x3 1 coluna G.GIRARDI
+        ImprimeEtiquetaZebra5x3(CDSEtiquetaZebra)
+      else //Tipo de Etiqueta Tag (roupa) 7x5
+      begin
+         if FProdutoParam.RG41Valor.ItemIndex = 0 then
+           pValorEtiqueta := True
+         else
+           pValorEtiqueta := False;
+        ImprimeEtiquetaZebraJBATACADO(CDSEtiquetaZebra);
+      end;
+    end;
+    if (DMParamSistema.CodEmpresa = 'KREUZ') or (DMParamSistema.CodEmpresa = 'NFCE-DOCES') or
+       (DMParamSistema.CodEmpresa = 'MAVENIDA') then //nao sair da tela de impressao de etiquetas. Solicitacao Rubens 28/06/2017
+      EmissaoEtiquetaZebra1Click(Sender);
+  end;
+end;
+
+procedure TFProdutoCad.SBProdutoEnter(Sender: TObject);
+begin
+  inherited;
+  //-- Adicionar 2 itens na unidade do produto a pedido da Marlise. Vanessa 25-02-2014
+  if (DMParamSistema.CodEmpresa = 'RAELETRO') then
+  begin
+    DBComboBox2.Items.Add('KM');
+    DBComboBox2.Items.Add('HR');
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstIpiSaidaCloseUp(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    DBLCCstIpiSaida.Hint := QCstIpiSaidaDESC_COMPLETA.Value;
+    if QCstIpiSaidaCOD_CST_IPI.Value = '' then
+      QCstIpiSaidaCOD_CST_IPI.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCstIpiSaidaDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QCstIpiSaida.Close;
+    QCstIpiSaida.Open;
+  end;
+end;
+
+procedure TFProdutoCad.BtCopiaClick(Sender: TObject);
+begin
+  inherited;
+  //Rubens(Kreuz), solicitou para deixar o Num_fabricante em branco quando duplica o registro. Junior-08/05/2015.
+  DBPNumFabricante.DBEdit.Text := '';
+end;
+
+procedure TFProdutoCad.EmissoEtiqueta1Click(Sender: TObject);
+var wQtde_etiqueta : integer;
+
+    ret,nLen : integer;
+    pbuf : array[0..127] of AnsiChar;
+    ver : PAnsiChar;
+    strmsg : string;
+    len1,len2 : integer;
+    buf1,buf2 : AnsiString;
+    buff1 : array[0..127] of WideChar;
+   
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(nil);
+  FProdutoParam.AtivaPagina(42);
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    wQtde_etiqueta := 0;
+    with DMProdutoRelatorio do
+    begin
+      QREtiqueta.Close;
+
+      if Trim(FProdutoParam.FmProduto42.MeProduto.Text) <> '' then
+        QREtiqueta.SetVariable(':COD_PRODUTO', Trim(FProdutoParam.FmProduto42.MeProduto.Text))
+      else
+        raise Exception.Create('Obrigatório informar o produto');
+      if StrToInt(FProdutoParam.MeEtiqueta42.Text) > 0  then
+        wQtde_etiqueta := StrToInt(FProdutoParam.MeEtiqueta42.text)
+      else
+        raise Exception.Create('Obrigatório informar a quantidade');
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+      A_EnumUSB(pbuf);
+      A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := A_CreatePrn(12, PAnsiChar(buf2));
+      A_Set_Darkness(12); //escurece a impressão
+      QREtiqueta.Open;
+      while wQtde_etiqueta > 0 do
+      begin
+        A_Prn_Text(015, 220, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. Produto: ' + FloatToStr(QREtiquetaCOD_PRODUTO.Value)));
+        A_Prn_Text(015, 160, 1, 1, 0, 3, 8, 'n', 2, pchar(QREtiquetaNUM_FABRICANTE.Text));
+        A_Prn_Text(015, 120, 1, 1, 0, 1, 3, 'n', 2, pchar(QREtiquetaDESC_PRODUTO.Text));
+        A_Prn_Text(015, 100, 1, 1, 0, 1, 3, 'n', 2, pchar(QREtiquetaDESC_COMPLEMENTO_2.Text));
+       // A_Prn_Text(008, 060, 1, 1, 0, 1, 3, 'n', 2, pchar(QREtiquetaDESC_COMPLEMENTO_2.Text)); neste campo está igual o NUM_FABRICANTE
+        A_Prn_Text(015, 080, 1, 1, 0, 1, 3, 'n', 2, pchar(FormatDateTime('dd/MM/yyyy', DMOracle.DataServ)));
+        A_Prn_Barcode(50, 006, 1, 'D', 0, 1, 40, 'N', 0, pchar(FormatFloat('0000000000000',QREtiquetaCOD_PRODUTO.Value)));
+
+        A_Set_Backfeed(320);     //avança para tirar a etiqueta
+        A_Print_Out(1, 1, 1, 1); //Imprime
+        wQtde_etiqueta := wQtde_etiqueta -1;
+      end;
+      A_ClosePrn; //fecha
+    end;
+  end;
+
+end;
+
+procedure TFProdutoCad.DBPanel19Exit(Sender: TObject);
+Var wProduto : String;
+begin
+  inherited;
+  If Trim(DmProduto.QProdutoDESC_COD_BARRA.Text) <> '' Then
+   Begin
+     wProduto := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_PRODUTO', 'DESC_COD_BARRA=' + Chr(39) + Trim(DmProduto.QProdutoDESC_COD_BARRA.Text) + Chr(39));
+     If wProduto <> '' Then
+        raise exception.Create('Código já cadastrado '+wProduto);
+   End;
+end;
+
+procedure TFProdutoCad.DBPCestDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FCestCons;
+  Classe := TFCestCons;
+end;
+
+procedure TFProdutoCad.DBPCestBuscaClick(Sender: TObject);
+begin
+  inherited;
+  if FCestCons = nil then
+     FCestCons := TFCestCons.Create(Application);
+  with DMProduto do
+  begin
+    if trim(QProdutoNUM_GENERO_NCM.Value) <> '' then
+    begin
+      FCestCons.METexto.Text := QProdutoNUM_GENERO_NCM.Value;
+      FCestCons.MECest.Clear;
+      FCestCons.MEDesc.Clear;
+      FCestCons.BtProcurarClick(Self);
+    end;
+    if QCestCons.RecordCount = 0 then
+    begin
+      FCestCons.METexto.Text := copy(QProdutoNUM_GENERO_NCM.Value, 0, 4);
+      FCestCons.MECest.Clear;
+      FCestCons.MEDesc.Clear;
+      FCestCons.BtProcurarClick(Self);
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.este1Click(Sender: TObject);
+var wQtde_etiqueta : integer;
+    ret,nLen : integer;
+    pbuf : array[0..127] of AnsiChar;
+    ver : PAnsiChar;
+    strmsg : string;
+    len1,len2 : integer;
+    buf1,buf2 : AnsiString;
+    buff1 : array[0..127] of WideChar;
+    wColuna: Integer;
+    wControla_Ultima_Linha : Boolean;
+begin
+  inherited;
+  if FProdutoParam = nil then
+     FProdutoParam := TFProdutoParam.Create(nil);
+  FProdutoParam.AtivaPagina(42);
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    wQtde_etiqueta := 0;
+    with DMProdutoRelatorio do
+    begin
+      QREtiqueta.Close;
+
+      if Trim(FProdutoParam.FmProduto42.MeProduto.Text) <> '' then
+         QREtiqueta.SetVariable(':COD_PRODUTO', Trim(FProdutoParam.FmProduto42.MeProduto.Text))
+      else
+        raise Exception.Create('Obrigatório informar o produto');
+      if StrToInt(FProdutoParam.MeEtiqueta42.Text) > 0  then
+         wQtde_etiqueta := StrToInt(FProdutoParam.MeEtiqueta42.text)
+      else
+         raise Exception.Create('Obrigatório informar a quantidade');
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+      B_EnumUSB(pbuf);
+      B_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := B_CreatePrn(1, PAnsiChar(buf2));
+      B_Set_Darkness(8); //escurece a impressão
+
+      QREtiqueta.Open;
+      QREtiqueta.First;
+      wColuna := 1;
+      while wQtde_etiqueta > 0 do
+      begin
+        if wColuna = 1 then
+        begin
+          if Trim(FProdutoParam.MeLote42.Text) <> '' then
+            B_Prn_Barcode(0, 20, 0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value) + formatFloat('00',StrToFloat(Trim(FProdutoParam.MeLote42.Text)) )))
+          else
+            B_Prn_Barcode(0, 20, 0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value)));
+          B_Prn_Text(0,   110, 0,  2,  1, 1, 'n', pchar(copy(QREtiquetaDESC_PRODUTO.Value,1,20)));
+          B_Prn_Text(0,   140, 0,  4,  1, 1, 'n',pchar('R$'+ FormatFloat('0.00',QREtiquetaVAL_VAREJO.Value)));
+          B_Prn_Text(140, 140, 0,  2,  1, 1, 'n',pchar(QREtiquetaCOD_PRODUTO.Text) );
+          wControla_Ultima_Linha := True;
+          //wQtde_etiqueta := wQtde_etiqueta -1;
+        end;
+        if wColuna = 2 then
+        begin
+          if Trim(FProdutoParam.MeLote42.Text) <> '' then //270
+            B_Prn_Barcode(290, 20,  0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value) + formatFloat('00',StrToFloat(Trim(FProdutoParam.MeLote42.Text)) )))
+          else
+            B_Prn_Barcode(290, 20,  0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value)));
+          B_Prn_Text(290, 110, 0,  2,  1, 1, 'n', pchar(copy(QREtiquetaDESC_PRODUTO.Value,1,20)));
+          B_Prn_Text(290, 140, 0,  4,  1, 1, 'n',pchar('R$'+ FormatFloat('0.00',QREtiquetaVAL_VAREJO.Value)));
+          B_Prn_Text(430, 140, 0,  2,  1, 1, 'n',pchar(QREtiquetaCOD_PRODUTO.Text) ); //410
+        end;
+        if wColuna = 3 then
+        begin
+          if Trim(FProdutoParam.MeLote42.Text) <> '' then
+            B_Prn_Barcode(580, 20,  0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value) + formatFloat('00',StrToFloat(Trim(FProdutoParam.MeLote42.Text)) )))
+          else //560
+            B_Prn_Barcode(580, 20,  0, '3', 2, 3, 55, 'B', pchar(formatfloat('000000',QREtiquetaCOD_PRODUTO.Value)));
+          B_Prn_Text(580, 110, 0,  2,  1, 1, 'n', pchar(copy(QREtiquetaDESC_PRODUTO.Value,1,20)));
+          B_Prn_Text(580, 140, 0,  4,  1, 1, 'n',pchar('R$ '+ FormatFloat('0.00',QREtiquetaVAL_VAREJO.Value)));
+          B_Prn_Text(740, 140, 0,  2,  1, 1, 'n',pchar(QREtiquetaCOD_PRODUTO.Text) ); //720
+
+          //B_Set_Backfeed('F');
+          B_Print_out(1);
+        end;
+        Inc(wColuna);
+        if (wColuna > 3) then
+        begin
+          wColuna := 1;
+          wControla_Ultima_Linha := False;
+        end;
+        wQtde_etiqueta := wQtde_etiqueta -1;
+      end;
+      if wControla_Ultima_Linha then
+      begin
+        //B_Set_Backfeed('F');
+        B_Print_out(1);
+      end
+    end;
+  end;
+    B_ClosePrn; //fecha
+end;
+
+
+
+procedure TFProdutoCad.DBPNcmCodigoExit(Sender: TObject);
+begin
+  inherited;
+  buscaCest;
+end;
+
+procedure TFProdutoCad.buscaCest;
+begin
+  with DMProduto do
+  begin
+    QCestCons.Close;
+    QCestCons.SetVariable('COD_NCM', QProdutoNUM_GENERO_NCM.Value);
+    QCestCons.Open;
+    if QCestCons.RecordCount > 0 then
+      QProdutoCOD_CEST.Value := QCestConsCOD_CEST.Value
+    else
+      QProdutoCOD_CEST.Clear;
+  end;
+end;
+
+procedure TFProdutoCad.DBPNcmAfterConsulta(Sender: TObject);
+begin
+  inherited;
+  buscaCest;
+end;
+
+procedure TFProdutoCad.EtiquetaArgox5x31Click(Sender: TObject);
+var
+wMarca : string;
+wQtde, wCont : integer;
+  ret,nLen : integer;
+  pbuf : array[0..127] of AnsiChar;
+  ver : PAnsiChar;
+  strmsg : string;
+  len1,len2 : integer;
+  buf1,buf2 : AnsiString;
+  buff1 : array[0..127] of WideChar;
+
+begin
+  inherited;
+  //Etiqueta Argox 5x3 a pedido do Aurélio Trento - 16/03/2017
+  wCont := 1;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[33].TabVisible := True;
+  if FProdutoParam.ShowModal = mrOk then
+    with DMProduto do
+    begin
+      QProduto.Close;
+      QProduto.SetVariable('PK',FProdutoParam.Fm33Produto.MeProduto.Text);
+      Qproduto.Open; 
+
+      if QProdutoCOD_MARCA.Text <> '' then
+        wMarca := DMOracle.BuscaNome('SELECT DESC_MARCA FROM TB_MARCA','COD_MARCA='+QProdutoCOD_MARCA.Text)
+      else
+        wMarca := '*';
+
+      wQtde := StrToInt(Trim(FProdutoParam.Me33Quantidade.Text));
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+      A_EnumUSB(pbuf);
+      A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+
+      if wQtde = 1 then
+      begin
+        A_Prn_Text(      025, 085, 1, 2, 0, 2, 2, 'n', 2, pchar(QProdutoNUM_FABRICANTE.Text));
+        A_Prn_Text(      025, 065, 1, 1, 0, 1, 2, 'n', 2, pchar(wMarca + ' - ' + QProdutoDESC_LOCALIZACAO.Text));
+        A_Prn_Text(      025, 050, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QProdutoDESC_PRODUTO.Text,1,39)));
+        A_Prn_Barcode(023, 006, 1, 'E', 0, 0, 30, 'N', 0, pchar(QProdutoDESC_COD_BARRA.Text));
+
+        A_Set_Backfeed(320);
+        A_Print_Out(1, 1, 1, 1);
+        wCont := wCont + 1;
+      end
+      else
+      while wCont <= wQtde do //2 colunas
+      begin
+        A_Prn_Text(      025, 085, 1, 2, 0, 2, 2, 'n', 2, pchar(QProdutoNUM_FABRICANTE.Text));
+        A_Prn_Text(      025, 065, 1, 1, 0, 1, 2, 'n', 2, pchar(wMarca + ' - ' + QProdutoDESC_LOCALIZACAO.Text));
+        A_Prn_Text(      025, 050, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QProdutoDESC_PRODUTO.Text,1,39)));
+        A_Prn_Barcode(023, 006, 1, 'E', 0, 0, 30, 'N', 0, pchar(QProdutoDESC_COD_BARRA.Text));
+
+        A_Prn_Text(      235, 085, 1, 2, 0, 2, 2, 'n', 2, pchar(QProdutoNUM_FABRICANTE.Text));
+        A_Prn_Text(      235, 065, 1, 1, 0, 1, 2, 'n', 2, pchar(wMarca + ' - ' + QProdutoDESC_LOCALIZACAO.Text));
+        A_Prn_Text(      235, 050, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QProdutoDESC_PRODUTO.Text,1,39)));
+        A_Prn_Barcode(233, 006, 1, 'E', 0, 0, 30, 'N', 0, pchar(QProdutoDESC_COD_BARRA.Text));
+
+        A_Set_Backfeed(320);
+        A_Print_Out(1, 1, 1, 1);
+        wCont := wCont + 2; //2 colunas
+      end;
+    end;
+    A_ClosePrn;
+end;
+
+procedure TFProdutoCad.EtiquetaZebraEPL1Click(Sender: TObject);
+var
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  valorInt, valorDec: string;
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(nil);
+  FProdutoParam.PGRelatorio.Pages[41].TabVisible := true;
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    with DMProdutoRelatorio do
+    begin
+      QREtiquetaZebra.Close;
+      if (Trim(FProdutoParam.Fm41Produto.MeProduto.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_PRODUTO', FProdutoParam.Fm41Produto.MeProduto.Text)
+      else
+        QREtiquetaZebra.SetVariable('COD_PRODUTO', Null);
+      if (Trim(FProdutoParam.Fm41SubClasse.MeClasse.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_CLASSE', DMClasse.QClasseConsCOD_CLASSE.Value)
+      else
+        QREtiquetaZebra.SetVariable('COD_CLASSE', Null);
+      if (Trim(FProdutoParam.ME14Filial.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_FILIAL',
+          Trim(FProdutoParam.ME14Filial.Text))
+      else
+        QREtiquetaZebra.SetVariable('COD_FILIAL', Null);
+      if (Trim(FProdutoParam.ME14Lote.Text) <> '') then
+        QREtiquetaZebra.SetVariable('COD_LOTE',Trim(FProdutoParam.ME14Lote.Text))
+      else
+        QREtiquetaZebra.SetVariable('COD_LOTE', Null);
+      Case FProdutoParam.RG37Situacao.ItemIndex of
+        0 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'ATIVO');
+        1 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'DESATIVADO');
+        2 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', 'FORA DE LINHA');
+        3 : DMProdutoRelatorio.QREtiquetaZebra.SetVariable('IND_SITUACAO', Null);
+      end;
+      QREtiquetaZebra.Open;
+      if QREtiquetaZebra.RecordCount = 0 then
+      begin
+        MessageDlg('Não existe produto cadastrado com esta Classe/Subclasse ou Situação.',
+          mtError, [mbOk],0);
+        Abort;
+      end;
+      while not QREtiquetaZebra.Eof do
+      begin
+        if (FProdutoParam.RG41Etiqueta.ItemIndex) = 0 then //Tamanho Etiqueta
+        begin
+          if (FProdutoParam.RG41QtdeEtiquetas.ItemIndex = 1) and (Trim(FProdutoParam.Me41QtdeEtiquetas.Text) <> '') then /// Verifica a quantidade de etiquetas a serem impressas para cada produto.
+          begin
+            if MessageDlg('Deseja imprimir '+ trim(FProdutoParam.Me41QtdeEtiquetas.Text) +
+              ' etiqueta(s)?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+            begin
+              wContEtiquetas := 0;
+              while wContEtiquetas < strtoint(trim(FProdutoParam.Me41QtdeEtiquetas.Text)) do
+              begin
+
+              if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ZORZINCO' then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q216,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  wString.Add('A195,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');  //3 COLUNA
+                  wString.Add('A252,106,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('B252,70,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.Text,1,14)+'"');
+                  wString.Add('A481,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A537,106,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('B537,71,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.Text,1,14)+'"');
+                  wString.Add('A767,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A822,106,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('B822,68,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.text,1,14)+'"'); //1 COLUNA
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'SOLDAR') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('Q200,24');//184
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                                   //152
+                  wString.Add('A759,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A534,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                  wString.Add('A534,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A700,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B809,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B809,66,2,1,2,6,34,B,"'+FormatFloat('00000000', QREtiquetaZebraCOD_PRODUTO.Value)+'"');//depois
+
+                  wString.Add('A474,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A245,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                  wString.Add('A245,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A424,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B522,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B522,67,2,1,2,6,34,B,"'+FormatFloat('00000000',QREtiquetaZebraCOD_PRODUTO.Value)+'"');
+
+                                    //154
+                  wString.Add('A184,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A820,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                  wString.Add('A820,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A134,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B235,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B235,69,2,1,2,6,34,B,"'+FormatFloat('00000000',QREtiquetaZebraCOD_PRODUTO.Value)+'"');
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'OTICA') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  wString.Add('A790,84,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,18)+'"');
+                  wString.Add('A550,66,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B780,66,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'BORGES') or (DMParamSistema.CodEmpresa = 'BORGES2') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('Q200,24');//184
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                                   //152
+                  wString.Add('A759,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                  wString.Add('A504,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //534
+                  wString.Add('A504,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A730,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B809,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B799,66,2,1,2,6,34,B,"'+FormatFloat('00000000', QREtiquetaZebraCOD_PRODUTO.Value)+'"');//depois B809
+
+                  wString.Add('A474,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                  wString.Add('A220,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A220,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A424,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B522,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B502,67,2,1,2,6,34,B,"'+FormatFloat('00000000',QREtiquetaZebraCOD_PRODUTO.Value)+'"');//B522
+
+                                    //154
+                  wString.Add('A184,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                  wString.Add('A795,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A795,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A134,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //wString.Add('B235,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B220,69,2,1,2,6,34,B,"'+FormatFloat('00000000',QREtiquetaZebraCOD_PRODUTO.Value)+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'JASOL') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //COLUNA 1
+                  wString.Add('A184,165,2,4,1,1,N,"KALCE"');
+                  wString.Add('A250,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('A250,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A250,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                  //2 coluna
+                  wString.Add('A474,165,2,4,1,1,N,"KALCE"');
+                  wString.Add('A540,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A540,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A540,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B535,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                  //3 coluna
+                  wString.Add('A759,165,2,4,1,1,N,"KALCE"');
+                  wString.Add('A824,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A824,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A824,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'BAZAR') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+
+                  //1 coluna
+                  wString.Add('A184,165,2,4,1,1,N,"BAZAR"');
+                  wString.Add('A255,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  //wString.Add('A255,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A255,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                  //2 coluna
+                  wString.Add('A474,165,2,4,1,1,N,"BAZAR"');
+                  wString.Add('A540,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  //wString.Add('A544,100,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A540,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B540,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                  //3 coluna
+                  wString.Add('A759,165,2,4,1,1,N,"BAZAR"');
+                  wString.Add('A824,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  //wString.Add('A824,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A824,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NIR') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+//Ajustado a etiqueta para o novo formato. Alex 02/01/2024
+                  //1 coluna
+                  wString.Add('A184,165,2,4,1,1,N,"CEMAPA"');
+                  wString.Add('A230,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//255
+                  //wString.Add('A255,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A230,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B230,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                  //2 coluna
+                  wString.Add('A474,165,2,4,1,1,N,"CEMAPA"');
+                  wString.Add('A510,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//540
+                  //wString.Add('A544,100,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A510,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B510,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                  //3 coluna
+                  wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+                  wString.Add('A800,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //824
+                  //wString.Add('A824,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A800,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B800,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+                  
+                  wString.Add('P1');
+                end
+
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'GGIRARDI') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+
+                  //1 coluna
+                  wString.Add('A184,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                  wString.Add('A255,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                  //2 coluna
+                  wString.Add('A474,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                  wString.Add('A540,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('B540,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                  //3 coluna
+                  wString.Add('A759,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                  wString.Add('A824,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                      wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'NUTRIVET') or (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+
+                  //1 coluna
+                  wString.Add('A184,165,2,4,1,1,N,"NUTRIPET"');
+                  wString.Add('A255,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('A255,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  //wString.Add('A255,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                  //2 coluna
+                  wString.Add('A474,165,2,4,1,1,N,"NUTRIPET"');
+                  wString.Add('A540,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A544,100,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  //wString.Add('A540,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B540,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                  //3 coluna
+                  wString.Add('A759,165,2,4,1,1,N,"NUTRIPET"');
+                  wString.Add('A824,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A824,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  //wString.Add('A824,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'AGROCAMPO') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A184,170,2,4,1,1,N,"AGROCAMPO"');
+                  wString.Add('A232,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130
+                  wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                  //2 coluna
+                  wString.Add('A474,170,2,4,1,1,N,"AGROCAMPO"');
+                  wString.Add('A520,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                  //3 coluna
+                  wString.Add('A759,170,2,4,1,1,N,"AGROCAMPO"');
+                  wString.Add('A810,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONNA') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  //wString.Add('A190,170,2,4,1,1,N,"DONNA"'); //184
+                  wString.Add('A222,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130 //232
+                  wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809 //225
+                  //2 coluna
+                  //wString.Add('A480,170,2,4,1,1,N,"DONNA"');//474
+                  wString.Add('A510,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245 //520
+                  wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"'); //510
+                  //3 coluna
+                  //wString.Add('A749,170,2,4,1,1,N,"DONNA"');//759
+                  wString.Add('A790,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820 //810
+                  wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235 //800
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NFCE-SHADA') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A190,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A252,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                  wString.Add('A252,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                  //2 coluna
+                  wString.Add('A480,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A540,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                  wString.Add('A540,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                  //3 coluna
+                  wString.Add('A749,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A820,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                  wString.Add('A820,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'DINIZ') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q240,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  //wString.Add('D8');//estava D14 02/09/2021 - Diminuido a temperatura(rasgando o ribon)
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A370,140,2,4,1,1,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text +'"');
+                  wString.Add('A370,115,2,3,1,1,N,"'+QREtiquetaZebraDESC_LOCALIZACAO.Text +'"'); //LOCALIZACAO
+                  wString.Add('A370,090,2,3,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,26)+'"'); //(1,26)
+                  wString.Add('A370,065,2,3,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,27,26)+'"'); //(1,26)
+                  if Trim(QREtiquetaZebraDESC_COD_BARRA.Text) = '' then
+                    wString.Add('B240,045,2,1,2,6,20,N,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"')//B340
+                  else
+                    wString.Add('B240,045,2,1,2,6,20,N,"'+QREtiquetaZebraDESC_COD_BARRA.Text+'"');//B340
+                  //2 coluna           //3 - tamanho da fonte
+                  wString.Add('A790,140,2,4,1,1,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text +'"');
+                  wString.Add('A790,115,2,3,1,1,N,"'+QREtiquetaZebraDESC_LOCALIZACAO.Text +'"'); //LOCALIZACAO
+                  wString.Add('A790,090,2,3,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,26)+'"');
+                  wString.Add('A790,065,2,3,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,27,26)+'"');
+                  if Trim(QREtiquetaZebraDESC_COD_BARRA.Text) = '' then
+                    wString.Add('B660,045,2,1,2,6,20,N,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"')//B760,060
+                  else
+                    wString.Add('B660,045,2,1,2,6,20,N,"'+QREtiquetaZebraDESC_COD_BARRA.Text+'"');//B760,060
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'SCALA') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q240,024');
+                  wString.Add('q831');//wString.Add('q400');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A420,140,2,4,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,22)+'"'); //(380
+                  wString.Add('A420,110,2,4,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,23,22)+'"'); //380
+                  //wString.Add('A380,075,2,3,1,1,N,"'+'Cód.'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B340
+                  //wString.Add('A380,040,2,4,1,1,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text +'"');
+                  wString.Add('A420,060,2,4,2,2,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text+'"');//380
+
+                  //2 coluna           //3 - tamanho da fonte
+                  wString.Add('A840,140,2,4,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,22)+'"');//800
+                  wString.Add('A840,110,2,4,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,23,22)+'"');//800
+                  //wString.Add('A800,075,2,3,1,1,N,"'+'Cód.'+QREtiquetaZebraCOD_PRODUTO.Text +'"');
+                  //wString.Add('A800,040,2,4,1,1,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text +'"');
+                  wString.Add('A840,060,2,4,2,2,N,"'+QREtiquetaZebraNUM_FABRICANTE.Text+'"');//800
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'SEMEFERTIL') then
+                begin
+{Semefertil solicitou aumentar a fonte no valor antes da virgula. Alex 23/05/2025}
+                  valorInt := IntToStr(Trunc(QREtiquetaZebraVAL_VAREJO.Value)); // parte inteira do valor
+                  valorDec := Copy(FormatFloat('0.00', QREtiquetaZebraVAL_VAREJO.Value), Length(valorInt) + 2, 2); // parte decimal do valor
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q240,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A220,160,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,14)+'"');//130 //232
+                  wString.Add('A220,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,15,14)+'"');
+                  wString.Add('A220,90,2,3,2,2,N,"R$ '+valorInt+'"'); // valor inteiro
+                  wString.Add('A184,75,2,2,1,1,N,".'+valorDec+'"');  //  valor decimal
+
+                  //2 coluna
+                  wString.Add('A510,160,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,14)+'"');//245 //520
+                  wString.Add('A510,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,15,14)+'"');
+                  wString.Add('A510,90,2,4,2,2,N,"R$ '+valorInt+'"'); // valor inteiro
+                  wString.Add('A474,75,2,2,1,1,N,".'+valorDec+'"');   // valor decimal
+
+                  //3 coluna
+                  wString.Add('A790,160,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,14)+'"'); //790
+                  wString.Add('A790,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,15,14)+'"');
+                  wString.Add('A790,90,2,4,2,2,N,"R$ '+valorInt+'"'); // valor inteiro
+                  wString.Add('A759,75,2,2,1,1,N,".'+valorDec+'"');   // valor decimal
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'DUST') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A200,170,2,4,1,1,N,"DUST COUNTRY"');
+                  wString.Add('A215,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//130
+                  wString.Add('A215,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B200,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                  //wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+                  //2 coluna
+                  wString.Add('A474,170,2,4,1,1,N,"DUST COUNTRY"');
+                  wString.Add('A502,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A502,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B475,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                  //wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+                  //3 coluna
+                  wString.Add('A759,170,2,4,1,1,N,"DUST COUNTRY"');
+                  wString.Add('A790,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A790,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B765,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                  //wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.CodEmpresa = 'AGROCAO') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A200,170,2,4,1,1,N,"AGROCAO"');
+                  wString.Add('A215,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//130
+                  wString.Add('A215,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B200,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) + '"');
+                  //2 coluna
+                  wString.Add('A474,170,2,4,1,1,N,"AGROCAO"');
+                  wString.Add('A502,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A502,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B475,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) + '"');
+                  //3 coluna
+                  wString.Add('A759,170,2,4,1,1,N,"AGROCAO"');
+                  wString.Add('A790,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A790,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B765,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) + '"');
+
+                  wString.Add('P1');
+                end
+                else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PILILICOS') then
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A184,170,2,4,1,1,N,"PILILICOS"');
+                  wString.Add('A232,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130
+                  wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                  //2 coluna
+                  wString.Add('A474,170,2,4,1,1,N,"PILILICOS"');
+                  wString.Add('A520,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                  wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                  //3 coluna
+                  wString.Add('A759,170,2,4,1,1,N,"PILILICOS"');
+                  wString.Add('A810,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                  wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                  wString.Add('P1');
+                end
+                else
+                begin
+                  wString.Add('I8,A,001');
+                  wString.Add('');
+                  wString.Add('');
+                  wString.Add('Q176,024');
+                  wString.Add('q831');
+                  wString.Add('rN');
+                  wString.Add('S3');
+                  wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                  wString.Add('ZT');
+                  wString.Add('JF');
+                  wString.Add('O');
+                  wString.Add('R0,0');
+                  wString.Add('f100');
+                  wString.Add('N');
+                  //1 coluna
+                  wString.Add('A184,154,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A245,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+ //               if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                  wString.Add('A245,96,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                    wString.Add('B245,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"') //235
+                  else
+                    wString.Add('B245,69,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');//245
+                  if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                    wString.Add('A112,69,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                  //2 coluna
+                  wString.Add('A474,153,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A534,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+//               if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                  wString.Add('A534,96,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                    wString.Add('B534,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"')
+                  else
+                    wString.Add('B534,67,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+                  if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                    wString.Add('A400,67,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');//384
+                  //3 coluna
+                  wString.Add('A759,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                  wString.Add('A820,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+//                if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                    wString.Add('A820,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                    wString.Add('B820,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"')
+                  else
+                    wString.Add('B820,66,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+                   if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                    wString.Add('A688,66,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                   wString.Add('P1');
+                end;
+                try
+                  wString.SaveToFile(arquivo);
+                  ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+                finally
+                  Sleep(1000); //estava 500
+                  wString.Clear;
+                if FileExists(arquivo) then
+                  DeleteFile(arquivo);
+                end;
+                if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'OTICA' then
+                  Inc(wContEtiquetas)
+                else if (DMParamSistema.CodEmpresa = 'DINIZ') or (DMParamSistema.CodEmpresa = 'SCALA') then //or (DMParamSistema.CodEmpresa = 'SEMEFERTIL') then
+                  wContEtiquetas := wContEtiquetas + 2
+                else
+                  wContEtiquetas := wContEtiquetas + 3;
+              end;
+            end; //DESEJA
+          end
+          else  //tipo de etiqueta
+            if FProdutoParam.RG41QtdeEtiquetas.ItemIndex = 0 then
+            begin
+              if (Trim(FProdutoParam.ME14Filial.Text) <> '') and (Trim(FProdutoParam.ME14Lote.Text) <> '') then
+              begin
+                if MessageDlg('Irá imprimir '+ inttostr(QREtiquetaZebraQT_QUANTIDADE.Value) +' etiqueta(s).'+#10#13+'Deseja continuar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+                begin
+                  wContEtiquetas := 0;
+                  while wContEtiquetas < QREtiquetaZebraQT_QUANTIDADE.Value do
+                  begin
+                    if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ZORZINCO' then
+                    begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+
+                      wString.Add('A759,152,2,4,1,1,N,"'+COPY(DMParamSistema.QParamSistemaDESC_EMPRESA.Text,1,8)+'"');
+                      wString.Add('A820,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                      wString.Add('B807,71,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.text,1,15)+'"');
+
+                      wString.Add('A471,152,2,4,1,1,N,"'+copy(DMParamSistema.QParamSistemaDESC_EMPRESA.Text,1,8)+'"');
+                      wString.Add('A534,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                      wString.Add('B526,71,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.Text,1,15)+'"');
+
+                      wString.Add('A189,152,2,4,1,1,N,"'+copy(DMParamSistema.QParamSistemaDESC_EMPRESA.Text,1,8)+'"');
+                      wString.Add('A245,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                      wString.Add('B246,71,2,1,2,6,34,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.Text,1,15)+'"');
+                      wString.Add('P1');
+
+                    end
+                    else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'GGIRARDI') then
+                    begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+
+                      //1 coluna
+                      wString.Add('A184,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                      wString.Add('A255,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                      wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                      //2 coluna
+                      wString.Add('A474,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                      wString.Add('A540,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                      wString.Add('B540,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                      //3 coluna
+                      wString.Add('A759,165,2,4,1,1,N,"DIST. GGIRARDI"');
+                      wString.Add('A824,250,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                      wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                      wString.Add('P1');
+                    end
+                    else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'SOLDAR') then
+                    begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+                      wString.Add('A759,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A534,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                      wString.Add('A534,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,41)+'"');
+                      wString.Add('B809,66,2,1,2,6,30,B,"'+QREtiquetaZebraDESC_COD_BARRA.Text+'"');
+
+                      wString.Add('A474,153,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A245,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                      wString.Add('A245,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,41)+'"');
+                      wString.Add('B522,67,2,1,2,6,30,B,"'+QREtiquetaZebraDESC_COD_BARRA.Text+'"');
+
+                      wString.Add('A184,154,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A820,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+                      wString.Add('A820,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,41)+'"');
+                      wString.Add('B235,69,2,1,2,6,30,B,"'+QREtiquetaZebraDESC_COD_BARRA.Text+'"');
+
+                      wString.Add('P1');
+                    end
+                    else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'OTICA') then
+                    begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+                      wString.Add('A790,84,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,18)+'"');
+                      wString.Add('A550,66,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                      wString.Add('B780,66,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+
+                      wString.Add('P1');
+                    end
+                    else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NIR') then
+                    begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+
+                      //1 coluna
+                      wString.Add('A184,165,2,4,1,1,N,"CEMAPA"');
+                      wString.Add('A255,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');
+                      //wString.Add('A255,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                      wString.Add('A255,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                      wString.Add('B245,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+
+                      //2 coluna
+                      wString.Add('A474,165,2,4,1,1,N,"CEMAPA"');
+                      wString.Add('A540,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                      //wString.Add('A544,100,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                      wString.Add('A540,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                      wString.Add('B540,70,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+
+                      //3 coluna
+                      wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+                      wString.Add('A824,130,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                      //wString.Add('A824,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,5)+'"');
+                      wString.Add('A824,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                      wString.Add('B824,69,2,1,2,6,34,B,"'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                      wString.Add('P1');
+                    end
+                  else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'AGROCAMPO') then
+                  begin
+                    wString.Add('I8,A,001');
+                    wString.Add('');
+                    wString.Add('');
+                    wString.Add('Q176,024');
+                    wString.Add('q831');
+                    wString.Add('rN');
+                    wString.Add('S3');
+                    wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                    wString.Add('ZT');
+                    wString.Add('JF');
+                    wString.Add('O');
+                    wString.Add('R0,0');
+                    wString.Add('f100');
+                    wString.Add('N');
+                    //1 coluna
+                    wString.Add('A184,170,2,4,1,1,N,"AGROCAMPO"');
+                    wString.Add('A232,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130
+                    wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                    //2 coluna
+                    wString.Add('A474,170,2,4,1,1,N,"AGROCAMPO"');
+                    wString.Add('A520,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                    wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                    //3 coluna
+                    wString.Add('A759,170,2,4,1,1,N,"AGROCAMPO"');
+                    wString.Add('A810,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                    wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                    wString.Add('P1');
+                  end
+                  else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONNA') then
+                  begin
+                    wString.Add('I8,A,001');
+                    wString.Add('');
+                    wString.Add('');
+                    wString.Add('Q176,024');
+                    wString.Add('q831');
+                    wString.Add('rN');
+                    wString.Add('S3');
+                    wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                    wString.Add('ZT');
+                    wString.Add('JF');
+                    wString.Add('O');
+                    wString.Add('R0,0');
+                    wString.Add('f100');
+                    wString.Add('N');
+                    //1 coluna
+//                    wString.Add('A184,170,2,4,1,1,N,"DONNA"');
+                    wString.Add('A232,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130
+                    wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                    //2 coluna
+//                    wString.Add('A474,170,2,4,1,1,N,"DONNA"');
+                    wString.Add('A520,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                    wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                    //3 coluna
+//                    wString.Add('A759,170,2,4,1,1,N,"DONNA"');
+                    wString.Add('A810,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                    wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                    wString.Add('P1');
+                  end
+                  else
+                  if (DMParamSistema.CodEmpresa = 'DUST') then
+                  begin
+                    wString.Add('I8,A,001');
+                    wString.Add('');
+                    wString.Add('');
+                    wString.Add('Q176,024');
+                    wString.Add('q831');
+                    wString.Add('rN');
+                    wString.Add('S3');
+                    wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                    wString.Add('ZT');
+                    wString.Add('JF');
+                    wString.Add('O');
+                    wString.Add('R0,0');
+                    wString.Add('f100');
+                    wString.Add('N');
+                    //1 coluna
+                    wString.Add('A200,170,2,4,1,1,N,"DUST COUNTRY"');
+                    wString.Add('A215,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//130
+                    wString.Add('A215,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B200,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                       FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                    //wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+                    //2 coluna
+                    wString.Add('A474,170,2,4,1,1,N,"DUST COUNTRY"');
+                    wString.Add('A502,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                    wString.Add('A502,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B475,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                      FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                    //wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+                    //3 coluna
+                    wString.Add('A759,170,2,4,1,1,N,"DUST COUNTRY"');
+                    wString.Add('A790,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                    wString.Add('A790,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B765,75,2,1,2,6,34,B,"'+ pchar(FormatFloat('000000',QREtiquetaZebraCOD_PRODUTO.Value)) +
+                                      FormatFloat('00',QREtiquetaZebraCOD_LOTE_TIPO.Value) + '"');
+                    //wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text + QREtiquetaZebraCOD_LOTE_TIPO.Text + '"');
+
+                    wString.Add('P1');
+                  end
+                  else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PILILICOS') then
+                  begin
+                    wString.Add('I8,A,001');
+                    wString.Add('');
+                    wString.Add('');
+                    wString.Add('Q176,024');
+                    wString.Add('q831');
+                    wString.Add('rN');
+                    wString.Add('S3');
+                    wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                    wString.Add('ZT');
+                    wString.Add('JF');
+                    wString.Add('O');
+                    wString.Add('R0,0');
+                    wString.Add('f100');
+                    wString.Add('N');
+                    //1 coluna
+                    wString.Add('A184,170,2,4,1,1,N,"PILILICOS"');
+                    wString.Add('A232,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,21)+'"');//130
+                    wString.Add('A232,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//depois B809
+                    //2 coluna
+                    wString.Add('A474,170,2,4,1,1,N,"PILILICOS"');
+                    wString.Add('A520,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');//245
+                    wString.Add('A520,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');
+                    //3 coluna
+                    wString.Add('A759,170,2,4,1,1,N,"PILILICOS"');
+                    wString.Add('A810,140,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"'); //820
+                    wString.Add('A810,120,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                    wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                    wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QREtiquetaZebraCOD_PRODUTO.Text+'"');//B235
+
+                    wString.Add('P1');
+                  end
+                  else
+                  begin
+                      wString.Add('I8,A,001');
+                      wString.Add('');
+                      wString.Add('');
+                      wString.Add('Q176,024');
+                      wString.Add('q831');
+                      wString.Add('rN');
+                      wString.Add('S3');
+                      wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+                      wString.Add('ZT');
+                      wString.Add('JF');
+                      wString.Add('O');
+                      wString.Add('R0,0');
+                      wString.Add('f100');
+                      wString.Add('N');
+                      //1 coluna  //Ajustei para as colunas ficarem certas. Esta misturado e dificil de manutenção. Junior - 15/08/2019
+                      wString.Add('A184,154,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A245,114,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+ //                   if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                      wString.Add('A245,96,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                      if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                        wString.Add('B245,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"') //235
+                      else
+                        wString.Add('B245,69,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');//245
+                      if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                        wString.Add('A112,69,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                      //2 coluna
+                      wString.Add('A474,153,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A534,112,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+//                    if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                      wString.Add('A534,96,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                      if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                        wString.Add('B534,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"')
+                      else
+                        wString.Add('B534,67,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+                      if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                        wString.Add('A400,67,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');//384
+                      //3 coluna
+                      wString.Add('A759,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+                      wString.Add('A820,111,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,20)+'"');
+//                    if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then // retirado Junior 15/08/2019
+                        wString.Add('A820,95,2,2,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,21,20)+'"');
+                      if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DONABENTA') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'FERRAGMED') then
+                        wString.Add('B820,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"')
+                      else
+                        wString.Add('B820,66,2,1,2,6,34,B,"'+'00'+Trim(QREtiquetaZebraCOD_PRODUTO.Text)+'"');
+                       if FProdutoParam.RG41Valor.ItemIndex = 0 then
+                        wString.Add('A688,66,2,2,1,1,N,"R$'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');
+                       wString.Add('P1');
+                   end;  //end cod_empresa
+               end;
+               try
+                 wString.SaveToFile(arquivo); //gera arquivo texto com o conteúdo que será enviado para a impressora
+                 //Para usar USB tem que compartilhar a impressora e enviar o arquivo para o compartilhamento
+                 ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+               finally
+                 Sleep(1000);//estava 500
+                 wString.Clear;
+                 if FileExists(arquivo) then
+                   DeleteFile(arquivo);
+               end;
+               if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'OTICA' then
+                 Inc(wContEtiquetas)
+               else if (DMParamSistema.CodEmpresa = 'DINIZ') or (DMParamSistema.CodEmpresa = 'SCALA') then
+                 wContEtiquetas := wContEtiquetas +2
+               else
+                 wContEtiquetas := wContEtiquetas + 3;
+            end; //DESEJA
+          end
+          else
+          begin
+            MessageDlg('Filial e/ou Lote não informado.',mtError,[mbOk],0);
+            Abort;
+          end; //end else filial
+        end; //end if ItemIndex
+      //  QREtiquetaZebra.Next;
+      end else
+      begin           //Etiqueta de Gôndola - Junior 15/08/2019 suporte(12962)
+        wString.Add('I8,A,001');
+//        wString.Add('');
+//        wString.Add('');
+        //Deixei q040 porque foi a única forma de imprimir certo.
+//        wString.Add('Q018,0');//q024//estava q040  wString.Add('Q216,024');   (configura a altura da etiqueta 480/8=60mm e altura do espaço entre etiquetas 24/8=3mm)
+        wString.Add('q720'); //831
+        wString.Add('rN');
+        wString.Add('S3'); //VELOCIDADE DA IMPRESSAO
+        //wString.Add('D7'); //DENSIDADE
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+        wString.Add('ZT');
+        wString.Add('JF');//HABILITA BACKFEED
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        wString.Add('A680,180,2,4,1,1,N,"'+copy(QREtiquetaZebraDESC_PRODUTO.Text,1,37)+'"');//y-240
+        wString.Add('B680,140,2,1,2,6,80,B,"'+copy(QREtiquetaZebraDESC_COD_BARRA.Text,1,14)+'"'); //y-200
+        wString.Add('A380,140,2,5,1,1,N,"'+FormatFloat('0.00',QREtiquetaZebraVAL_VAREJO.Value)+'"');//y-200
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally  //1000
+          Sleep(1000); //estava 500
+          wString.Clear;
+        if FileExists(arquivo) then
+          DeleteFile(arquivo);
+        end;
+        {if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'OTICA' then
+          Inc(wContEtiquetas)
+        else
+          wContEtiquetas := wContEtiquetas + 3;}
+
+      end; //Tipo de Etiqueta
+      QREtiquetaZebra.Next;
+    end; //end while
+  end; //end tela parametros
+  DMProdutoRelatorio.QREtiquetaZebra.Close;
+  DMUsuario.QUsuario.Close;
+end;
+end;
+
+procedure TFProdutoCad.RelatorioCatalogoClick(Sender: TObject);
+begin
+  inherited;
+  if FCatalogo = nil then
+    FCatalogo := TFCatalogo.Create(Application);
+    FCatalogo.ShowModal;
+end;
+
+procedure TFProdutoCad.DBPMarcaAristidesDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FMarca_Cons;
+  Classe := TFMarca_Cons;
+end;
+
+procedure TFProdutoCad.DBPanel27DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FTipoLoteCons;
+  Classe := TFTipoLoteCons;
+end;
+
+procedure TFProdutoCad.BtRoyaltiesClick(Sender: TObject);
+begin
+  inherited;
+  If FCadastroCons = Nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  If FCadastroCons.ShowModal = mrOk then
+    DMProduto.QProdutoCOD_ROYALTIES.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+end;
+
+procedure TFProdutoCad.DBPanel28DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FCadastroCons;
+  Classe := TFCadastroCons;
+end;
+
+procedure TFProdutoCad.gerenciaCheckBox(checkBox: TObject;
+  tabela: string);
+var cb: TCheckBox;
+  state: TCheckBoxState;
+  evento: TNotifyEvent;
+  codigo: string;
+begin
+
+  // Verifica se o produto está em modo de edição
+  cb := TCheckBox(checkBox);
+  state := cb.State;
+//  if DSPrimario.State in [dsBrowse] then
+//  begin
+//    evento := cb.OnClick;
+//    cb.OnClick := nil;
+//    if cb.State = cbChecked then
+//      cb.State := cbUnchecked
+//    else
+//      cb.State := cbChecked;
+//    cb.OnClick := evento;
+//    Raise Exception.Create('Produto não está em modo de edição');
+//  end;
+
+  // Busca o código da opção checada na tabela passada por parâmetro
+  codigo := DMOracle.FastSelect(
+    ('COD' + copy(tabela, 3, length(tabela)))
+    , tabela
+    , ('DESC' + copy(tabela, 3, length(tabela)) + ' = '
+      + QuotedStr(UpperCase(bib.RemoveAcentos(Copy(cb.Name, 3, Length(cb.Name))))))
+  );
+
+  if codigo = '' then
+  begin
+    cb.Checked := false;
+    Raise Exception.Create('Opção inexistente na tabela '
+      + tabela);
+  end;
+
+  // Monta SQLs para inserção ou exclusão dos registros nas tabelas associativas
+  with DMProduto do
+  begin
+    if cb.State = cbChecked then
+    begin
+      SqlDadosCalcados.Add('INSERT INTO TB_PRODUTO' + copy(tabela, 3, length(tabela))
+        + ' VALUES ('
+        + QProdutoCOD_PRODUTO.Text
+        + ', '
+        + codigo
+        + ')');
+    end
+    else
+    begin
+      SqlDadosCalcados.Add('DELETE FROM TB_PRODUTO' + copy(tabela, 3, length(tabela))
+        + ' WHERE COD_PRODUTO = '
+        + QProdutoCOD_PRODUTO.Text
+        + ' AND COD' + copy(tabela, 3, length(tabela)) + ' = '
+        + codigo
+      );
+    end;
+  end;  
+end;
+
+procedure TFProdutoCad.cbMasculinoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbFemininoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbUnissexClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbAdultoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbInfantilClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbBebeClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_GENERO_CALCADO');
+end;
+
+procedure TFProdutoCad.BuscaDadosCalcados;
+var descDado: string;
+i, j: integer;
+event: TNotifyEvent;
+begin
+  LimpaCheckBox;
+  with DMProduto do
+  begin
+    if QProduto.Eof then
+      exit;
+
+    QDadosCalcadosCons.Close;
+    QDadosCalcadosCons.SetVariable('COD_PRODUTO', QProdutoCOD_PRODUTO.Value);
+    QDadosCalcadosCons.Open;
+    while not QDadosCalcadosCons.Eof do
+    begin
+      // Busca a descrição do dado que está na tabela associativa que associa o produto
+      // ao dado do calçado
+      descDado
+        := DMOracle.FastSelect('DESC' + copy(QDadosCalcadosConsTABELA.Value, 11, length(QDadosCalcadosConsTABELA.Value))
+        , 'TB' + Copy(QDadosCalcadosConsTABELA.Value, 11, length(QDadosCalcadosConsTABELA.Value))
+        , 'COD' + Copy(QDadosCalcadosConsTABELA.Value, 11, length(QDadosCalcadosConsTABELA.Value))
+          + ' = ' + QDadosCalcadosConsCOD_DADO.Text
+        );
+
+      // Busca o GroupBox relacionado ao dado, utilizando nome da tabela que vem da query
+      // De posse do GroupBox e decrição do dado, marca o checkbox corretamente
+      // Chama a procedure GerenciaCheckbox para gerar as SQLs
+      for i := 0 to self.ComponentCount - 1 do
+      begin
+        if self.Components[i].ClassName = 'TGroupBox' then
+        begin
+          if Pos(UpperCase(Copy(self.Components[i].Name, 3, length(self.Components[i].Name)))
+            , QDadosCalcadosConsTABELA.Value) > 0 then
+          begin
+            // CheckBox
+            for j := 0 to TGroupBox(self.Components[i]).ControlCount -1 do
+            begin
+              if UpperCase(Copy(TGroupBox(self.Components[i]).Controls[j].Name, 3, length(TGroupBox(self.Components[i]).Controls[j].Name)))
+                = descDado then
+              begin
+                event := TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick;
+                TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick := nil;
+                TCheckBox(TGroupBox(self.Components[i]).Controls[j]).Checked := true;
+                TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick := event;
+              end;
+            end;
+          end;
+        end;
+        
+      end;             
+      QDadosCalcadosCons.Next;
+    end;
+  end;
+
+end;
+
+procedure TFProdutoCad.MELocalizaExit(Sender: TObject);
+begin
+  inherited;
+  BuscaDadosCalcados;
+end;
+
+procedure TFProdutoCad.LimpaCheckBox;
+var nomes: string;
+i,j: integer;
+event: TNotifyEvent;
+begin
+  nomes := 'GBGENERO,GBSALTO,GBMATERIAL,GBCONFIG,';
+  // Limpa os ckeckboxes
+  for i := 0 to self.ComponentCount - 1 do
+  begin
+    if self.Components[i].ClassName = 'TGroupBox' then
+    begin
+      if Pos(UpperCase(TGroupBox(self.Components[i]).Name)
+        , nomes) > 0 then
+      begin
+        // CheckBox
+        for j := 0 to TGroupBox(self.Components[i]).ControlCount -1 do
+        begin
+          event := TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick;
+          TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick := nil;
+          TCheckBox(TGroupBox(self.Components[i]).Controls[j]).Checked := false;
+          TCheckBox(TGroupBox(self.Components[i]).Controls[j]).OnClick := event;
+        end;
+      end;
+    end;
+  end; 
+end;
+
+procedure TFProdutoCad.cbAltoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbBaixoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMedioClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbRasteiraClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbGrossoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbFinoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbAnabelaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbFacheteClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbEncapadoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCorticaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbAcrilicoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbLatexClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbBorrachaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbPVCClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTRClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_SALTO_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCouroClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSinteticoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSwedClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMicrofibraClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbVernizClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbLonaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTecidoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbGliterClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCamurcaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbNobukClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbElasticoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.cbPlasticoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_MATERIAL_CALCADO');
+end;
+
+procedure TFProdutoCad.DBPPercGLPPetroleoValidate(Sender: TObject;
+  Value: Variant; var isValid: Boolean; var Msg: String);
+var str: string;
+begin
+  inherited;
+  if Value <> Variants.Null then
+    str := Value
+  else
+    str := '';
+  with DMProduto do
+  begin
+    if (Trim(str) <> '') and (QProdutoCOD_PRODUTO_ANP.Value = 210203001) then
+    begin
+      if Round(Value + QProdutoPERC_GNI.Value + QProdutoPERC_MIXGN.Value) = 100 then
+        isValid := True
+      else
+      begin
+        isValid := False;
+        Msg := 'A soma dos percentuais de GLP derivado do petróleo, Gás Natural Nacional e Gás Natural Importado deve ser igual a 100%.';
+      end;
+    end;
+  end;
+end;
+
+procedure TFProdutoCad.cbBonecaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbDorsaiClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSlipperClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbEsportivaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbIateClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSliponClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbIndoorSalaoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCampoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSuicoSocietyClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTiraTornozeloClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSalomeClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbDedoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbGaspeaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTiraXClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb2TirasClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMuleClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCoturnoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMontariaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbOpenbootClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbAnklebootClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbOverClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbCanoMedioClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMedioConfigClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb2AlcasClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTransversalClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbBauClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbLargoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbEstreitoClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbNotebookClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbFestaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbClutchClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbKitClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbEscolarClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbViagemClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb360Click(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMangaLongaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbMangaCurtaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbTermicaClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbProtecaoSolarClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb2RodasClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb4RodasClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cb5RodasClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.DBPCNPJFabricanteValidate(Sender: TObject;
+  Value: Variant; var isValid: Boolean; var Msg: String);
+var str: string;
+begin
+  inherited;
+  if Value <> Variants.Null then
+    str := Value
+  else
+    str := '';
+  if (Trim(str) = '') and (DMProduto.QProdutoIND_ESCALA_RELEVANTE.Value = 'N') then
+  begin
+    isValid := False;
+    Msg := 'Para escala não relevante é obrigatório informar o CNPJ do Fabricante.';
+  end
+  else
+    isValid := True;
+end;
+
+procedure TFProdutoCad.DBPNcmFieldKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not (Key in ['0'..'9', Chr(8)]) then
+    Key := #0
+end;
+
+procedure TFProdutoCad.DBPCestFieldKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  inherited;
+  if not (Key in ['0'..'9', Chr(8)]) then
+    Key := #0
+end;
+
+procedure TFProdutoCad.DBPanel24FieldKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  inherited;
+  if not (Key in ['0'..'9', Chr(8)]) then
+    Key := #0
+end;
+
+procedure TFProdutoCad.DBComboBox7KeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  Key := UpCase(Key);
+end;
+
+procedure TFProdutoCad.DBComboBox2KeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  Key := UpCase(Key);
+end;
+
+procedure TFProdutoCad.DBComboBox10KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  inherited;
+  Key := UpCase(Key);
+end;
+
+procedure TFProdutoCad.EtiquetaCartaoZebraClick(Sender: TObject);
+begin
+  inherited;
+    if FEtiquetaCartaoZebra = nil then
+      FEtiquetaCartaoZebra := TFEtiquetaCartaoZebra.Create(Application);
+
+    FEtiquetaCartaoZebra.ShowModal;
+end;
+
+procedure TFProdutoCad.cbBrindeClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbEspadrilleClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbContraforteClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbLuzClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbChunkyClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbSneakerClick(Sender: TObject);
+begin
+  inherited;
+    gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.cbOxfordClick(Sender: TObject);
+begin
+  inherited;
+  gerenciaCheckBox(Sender, 'TB_CONFIG_CALCADO');
+end;
+
+procedure TFProdutoCad.ArquivoBalanaToledo1Click(Sender: TObject);
+var
+  Arquivo : TextFile;
+  wTabelaPadrao : TVariantMap;
+  DirSalvar : String;
+begin
+  inherited;
+  if FProdutoParam = nil then
+    FProdutoParam := TFProdutoParam.Create(Application);
+  FProdutoParam.PGRelatorio.Pages[45].TabVisible := true;
+
+  if FProdutoParam.ShowModal = mrOk then
+  begin
+    {try
+      with DMProduto do
+      begin
+        QRArqBalancaToledo.Close;
+
+        if Trim(FProdutoParam.Fm45Classe.MeClasse.Text) <> '' then
+          QRArqBalancaToledo.SetVariable('COD_CLASSE', StrToInt(Trim(FProdutoParam.Fm45Classe.MeClasse.Text)))
+        else
+          raise Exception.Create('É necessário informar a classe!');
+
+        QRArqBalancaToledo.Open;
+
+        if QRArqBalancaToledo.RecordCount > 0 then
+        begin
+          if(SelectDirectory('Selecione o diretório', '', DirSalvar)) then
+          begin
+            wTabelaPadrao := TVariantMap.Create;
+            AssignFile(Arquivo, DirSalvar + '\' + 'Itensmgv.txt');
+            Rewrite(Arquivo);
+
+            try
+              while not QRArqBalancaToledo.Eof do
+              begin
+                wTabelaPadrao.Clear;
+                wTabelaPadrao.addValue('DD', Bib.FormataTextoEsq('01',2,'0'));
+                wTabelaPadrao.addValue('T', Bib.FormataTextoEsq('0',1,'0'));
+                wTabelaPadrao.addValue('CCCCCC', Bib.FormataTextoEsq(QRArqBalancaToledoCOD_PRODUTO.Text,6,'0'));
+                wTabelaPadrao.addValue('PPPPPP', Bib.FormataTextoEsq(QRArqBalancaToledoVAL_VAREJO.Text,6,'0'));
+                wTabelaPadrao.addValue('VVV', Bib.FormataTextoEsq(QRArqBalancaToledoNUM_DIAS_VALIDADE.Text,3,'0'));
+                wTabelaPadrao.addValue('D1', Bib.FormataTexto(QRArqBalancaToledoDESC_PRODUTO.Text,25));
+                wTabelaPadrao.addValue('D2', Bib.FormataTexto('',25,' '));
+                wTabelaPadrao.addValue('RRRRRR', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('FFFF', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('IIIIII', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('DV', Bib.FormataTextoEsq('1',1,'0'));
+                wTabelaPadrao.addValue('DE', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('CF', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('L', Bib.FormataTextoEsq('',12,'0'));
+                wTabelaPadrao.addValue('G', Bib.FormataTextoEsq('',11,'0'));
+                wTabelaPadrao.addValue('Z', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('CS', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CT', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('FR', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CE1', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CE2', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CON', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('EAN', Bib.FormataTextoEsq(QRArqBalancaToledoDESC_COD_BARRA.Text,12,'0'));
+                wTabelaPadrao.addValue('GL', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('|DA', '|' + Bib.FormataTextoEsq('',2,'0'));
+                wTabelaPadrao.addValue('|D3', '|' + Bib.FormataTexto('',35,' '));
+                wTabelaPadrao.addValue('D4', Bib.FormataTexto('',35,' '));
+                wTabelaPadrao.addValue('CE3', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('CE4', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('MIDIA', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('PPPPPP', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('SF', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('|FFFFFFFF', '|' + Bib.FormataTextoEsq('',0,'0'));
+                wTabelaPadrao.addValue('|ST', '|' + Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('|BNA', '|' + Bib.FormataTextoEsq('',0,'0'));
+                wTabelaPadrao.addValue('|G1', '|' + Bib.FormataTextoEsq('',12,'0'));
+                wTabelaPadrao.addValue('PG', Bib.FormataTextoEsq('',4,'0'));
+
+                Writeln(Arquivo, wTabelaPadrao.join());
+                QRArqBalancaToledo.Next;
+              end;
+
+              CloseFile(Arquivo);
+            except
+              on E: Exception do
+              begin
+                CloseFile(Arquivo);
+                Raise;
+              end;
+            end;
+
+            MessageDlg(IntToStr(QRArqBalancaToledo.RecordCount) + ' produtos íncluidos.', mtConfirmation, [mbOK], 0);
+          end;
+        end
+        else
+          MessageDlg('Nenhum registro filtrado.', mtWarning, [mbOK], 0);
+      end;
+
+    except
+      on E: Exception do
+      begin
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+      end;
+    end;
+  end;}
+//Balança Toledo MGV5
+  if (FProdutoParam.RG45TipoBalanca.ItemIndex = 0) then
+  begin
+    try
+      with DMProduto do
+      begin
+        QRArqBalancaToledo.Close;
+        QRArqBalancaToledo.Open;
+        if QRArqBalancaToledo.RecordCount > 0 then
+        begin
+          if(SelectDirectory('Selecione o diretório', '', DirSalvar)) then
+          begin
+            wTabelaPadrao := TVariantMap.Create;
+            //AssignFile(Arquivo, DirSalvar + '\' + 'Itensmgv.txt');
+            AssignFile(Arquivo, DirSalvar + '\' + 'TXITENS.txt');
+            Rewrite(Arquivo);
+            try
+              while not QRArqBalancaToledo.Eof do
+              begin
+                wTabelaPadrao.Clear;
+                wTabelaPadrao.addValue('DD', Bib.FormataTextoEsq('01',2,'0'));
+                wTabelaPadrao.addValue('T', Bib.FormataTextoEsq('3',1,'3'));
+                wTabelaPadrao.addValue('CCCCCCCC', Bib.FormataTextoEsq(QRArqBalancaToledoDESC_COD_BARRA.Text,8,'0'));
+                wTabelaPadrao.addValue('PPPPPP', Bib.FormataTextoEsq(QRArqBalancaToledoVAL_VAREJO.Text,6,'0'));
+                wTabelaPadrao.addValue('VVV', Bib.FormataTextoEsq(QRArqBalancaToledoNUM_DIAS_VALIDADE.Text,3,'0'));
+                wTabelaPadrao.addValue('D1', Bib.FormataTexto(QRArqBalancaToledoDESC_PRODUTO.Text,25));
+                wTabelaPadrao.addValue('D2', Bib.FormataTexto('',25,' '));
+                wTabelaPadrao.addValue('RRRRRR', Bib.FormataTexto('',6,' '));
+                wTabelaPadrao.addValue('FFF', Bib.FormataTexto('',3,' '));
+                wTabelaPadrao.addValue('IIII', Bib.FormataTexto('',4,' '));
+                wTabelaPadrao.addValue('DV', Bib.FormataTexto('',1,'1'));
+                wTabelaPadrao.addValue('DE', Bib.FormataTexto('',1,' '));
+                wTabelaPadrao.addValue('CF', Bib.FormataTexto('',4,' '));
+                wTabelaPadrao.addValue('L', Bib.FormataTexto('',12,' '));
+                wTabelaPadrao.addValue('G', Bib.FormataTexto('',11,' '));
+                wTabelaPadrao.addValue('Z', Bib.FormataTexto('',1,' '));
+                wTabelaPadrao.addValue('R', Bib.FormataTexto('',2,' '));
+                Writeln(Arquivo, wTabelaPadrao.join());
+                QRArqBalancaToledo.Next;
+              end;
+              CloseFile(Arquivo);
+            except
+              on E: Exception do
+              begin
+                CloseFile(Arquivo);
+                Raise;
+              end;
+            end;
+
+            MessageDlg(IntToStr(QRArqBalancaToledo.RecordCount) + ' produtos íncluidos.', mtConfirmation, [mbOK], 0);
+          end;
+        end
+        else
+          MessageDlg('Nenhum registro localizado. Verifique a opção "Envia para Balança" dos produtos. ', mtWarning, [mbOK], 0);
+      end;
+      except
+        on E: Exception do
+        begin
+          MessageDlg(E.Message, mtError, [mbOK], 0);
+        end;
+      end;
+   end;
+  end;
+//Balança Toledo MGV6
+  if (FProdutoParam.RG45TipoBalanca.ItemIndex = 1) then
+  begin
+    try
+      with DMProduto do
+      begin
+        QRArqBalancaToledo.Close;
+        QRArqBalancaToledo.Open;
+        if QRArqBalancaToledo.RecordCount > 0 then
+        begin
+          if(SelectDirectory('Selecione o diretório', '', DirSalvar)) then
+          begin
+            wTabelaPadrao := TVariantMap.Create;
+            AssignFile(Arquivo, DirSalvar + '\' + 'Itensmgv.txt');
+            Rewrite(Arquivo);
+
+            try
+              while not QRArqBalancaToledo.Eof do
+              begin
+                wTabelaPadrao.Clear;
+                wTabelaPadrao.addValue('DD', Bib.FormataTextoEsq('01',2,'0'));
+                if (QRArqBalancaToledoDESC_UNIDADE.Text = '0') then
+                  wTabelaPadrao.addValue('T', Bib.FormataTextoEsq('0',1,'0'))
+                else
+                  wTabelaPadrao.addValue('T', Bib.FormataTextoEsq('1',1,'1'));
+                if (DMParamSistema.CodEmpresa = 'LACARNES') then
+                  wTabelaPadrao.addValue('CCCCCC', Bib.FormataTextoEsq(QRArqBalancaToledoDESC_COD_BARRA.Text,6,'0'))
+                else
+                  wTabelaPadrao.addValue('CCCCCC', Bib.FormataTextoEsq(QRArqBalancaToledoCOD_PRODUTO.Text,6,'0'));
+                wTabelaPadrao.addValue('PPPPPP', Bib.FormataTextoEsq(QRArqBalancaToledoVAL_VAREJO.Text,6,'0'));
+                wTabelaPadrao.addValue('VVV', Bib.FormataTextoEsq(QRArqBalancaToledoNUM_DIAS_VALIDADE.Text,3,'0'));
+                wTabelaPadrao.addValue('D1', Bib.FormataTexto(QRArqBalancaToledoDESC_PRODUTO.Text,25));
+                wTabelaPadrao.addValue('D2', Bib.FormataTexto('',25,' '));
+                wTabelaPadrao.addValue('RRRRRR', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('FFFF', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('IIIIII', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('DV', Bib.FormataTextoEsq('1',1,'0'));
+                if (DMParamSistema.CodEmpresa = 'FINESTRA') then
+                  wTabelaPadrao.addValue('DE', Bib.FormataTextoEsq('',1,'1'))
+                else
+                  wTabelaPadrao.addValue('DE', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('CF', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('L', Bib.FormataTextoEsq('',12,'0'));
+                wTabelaPadrao.addValue('G', Bib.FormataTextoEsq('',11,'0'));
+                wTabelaPadrao.addValue('Z', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('CS', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CT', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('FR', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CE1', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CE2', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('CON', Bib.FormataTextoEsq('',4,'0'));
+                wTabelaPadrao.addValue('EAN', Bib.FormataTextoEsq(QRArqBalancaToledoDESC_COD_BARRA.Text,12,'0'));
+                wTabelaPadrao.addValue('GL', Bib.FormataTextoEsq('',6,'0'));
+                //if DMParamSistema.CodEmpresa = 'NFCE-ITALI' then
+                wTabelaPadrao.addValue('|DA', '|' + Bib.FormataTextoEsq('01',2,'0'));
+                {else
+                  wTabelaPadrao.addValue('|DA', '|' + Bib.FormataTextoEsq('',2,'0'));}
+                wTabelaPadrao.addValue('|D3', '|' + Bib.FormataTexto('',35,' '));
+                wTabelaPadrao.addValue('D4', Bib.FormataTexto('',35,' '));
+                wTabelaPadrao.addValue('CE3', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('CE4', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('MIDIA', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('PPPPPP', Bib.FormataTextoEsq('',6,'0'));
+                wTabelaPadrao.addValue('SF', Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('|FFFFFFFF', '|' + Bib.FormataTextoEsq('',0,'0'));
+                wTabelaPadrao.addValue('|ST', '|' + Bib.FormataTextoEsq('',1,'0'));
+                wTabelaPadrao.addValue('|BNA', '|' + Bib.FormataTextoEsq('',0,'0'));
+                wTabelaPadrao.addValue('|G1', '|' + Bib.FormataTextoEsq('',12,'0'));
+                wTabelaPadrao.addValue('PG', Bib.FormataTextoEsq('',4,'0'));
+
+                Writeln(Arquivo, wTabelaPadrao.join());
+                QRArqBalancaToledo.Next;
+              end;
+              CloseFile(Arquivo);
+            except
+              on E: Exception do
+              begin
+                CloseFile(Arquivo);
+                Raise;
+              end;
+            end;
+
+            MessageDlg(IntToStr(QRArqBalancaToledo.RecordCount) + ' produtos íncluidos.', mtConfirmation, [mbOK], 0);
+          end;
+        end
+        else
+          MessageDlg('Nenhum registro localizado. Verifique a opção "Envia para Balança" dos produtos. ', mtWarning, [mbOK], 0);
+      end;
+      except
+        on E: Exception do
+        begin
+          MessageDlg(E.Message, mtError, [mbOK], 0);
+        end;
+      end;
+    end;
+
+end;
+
+procedure TFProdutoCad.TabSheet1Show(Sender: TObject);
+begin
+  inherited;
+  EdNomeUsuario.Text := DMOracle.FastSelect('NOME','TB_USUARIO','COD_USUARIO = ' + DBECodUsuario.Text);
+end;
+
+procedure TFProdutoCad.DBPanel38DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FNBS_Cons;
+  Classe := TFNBS_Cons;
+end;
+
+procedure TFProdutoCad.DBLCCClasTribIBSCBSVendaDropDown(Sender: TObject);
+begin
+  inherited;
+  with DMProduto do
+  begin
+    QClassTribIBSCBS.Close;
+    QClassTribIBSCBS.Open;
+  end;
+end;
+
+procedure TFProdutoCad.DBLCCClasTribIBSCBSCompraDropDown(Sender: TObject);
+begin
+  inherited;
+  inherited;
+  with DMProduto do
+  begin
+    QClassTribIBSCBS.Close;
+    QClassTribIBSCBS.Open;
+  end;
+end;
+
+end.

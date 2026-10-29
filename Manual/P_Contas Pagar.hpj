@@ -1,0 +1,31 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Contas Pagar.hlp
+
+[FILES]
+ContasPagar.rtf
+
+[MAP]
+Baixa_Titulos=16
+Bancos_Agencias=4
+Botao_Click=9
+Cadastro_Contas_Pagar=7
+Contabiliza_Contas_a_Pagar=17
+Contas_Pagar=1
+Emissão_de_Cheques=3
+Finalidade=6
+Forma_Operacao_Sistema=10
+Historicos=8
+Relacao_CP_Vencimento=11
+Relacao_Movimento_Contas_Pagar=12
+Relacao_Titulos_Abertos=15
+Relacao_Titulos_Baixados=14
+relacao_titulos_dep=18
+Relacao_Titulos_Fornecedor=13
+Relatório_de_Histórico=2
+
+[BAGGAGE]
+ContasPagar.rtf

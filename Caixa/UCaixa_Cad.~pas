@@ -1,0 +1,3442 @@
+unit UCaixa_Cad;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCADSIMPLES, ImgList, Menus, Db, ComCtrls, StdCtrls, Mask, Buttons,
+  ExtCtrls, DBCtrls, variants, QRPrntr, Qrctrls, QuickRpt, ActnList,
+  DBPanel, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
+  IdHTTP, Grids, DBGrids, OleCtrls, PdfLib_TLB, Printers;
+
+type
+  TFCaixaCad = class(TFTCadSimples)
+    RelaodeMovimentosSaldos1: TMenuItem;
+    RelaodeMovimentodeCaixa1: TMenuItem;
+    RelaodeMovimentodeCaixaSinttico1: TMenuItem;
+    ResumodeLanamentos1: TMenuItem;
+    LBMovimentos: TListBox;
+    Panel2: TPanel;
+    EmissodeRecibo1: TMenuItem;
+    FluxodeCaixa1: TMenuItem;
+    M1: TMenuItem;
+    MovimentosSaldosGeral1: TMenuItem;
+    ResumoLanamentosAgrupadoCaixaBanco1: TMenuItem;
+    SaldoDirio1: TMenuItem;
+    ResumoLanamentosAgrupCaixa1: TMenuItem;
+    RelatrioSaldosporDepartamento1: TMenuItem;
+    ResumoIndicadores1: TMenuItem;
+    FluxodeCaixaRealizado1: TMenuItem;
+    MovimentodeCaixaporClienteeHistrico1: TMenuItem;
+    QRCompositeReport1: TQRCompositeReport;
+    DREporCaixa1: TMenuItem;
+    OrigemeDestinodeValores1: TMenuItem;
+    SaldoMensal1: TMenuItem;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    DBGrid1: TDBGrid;
+    DsCaixaDocumento: TDataSource;
+    BitBtn1: TBitBtn;
+    OpenDialog: TOpenDialog;
+    DBPanel1: TDBPanel;
+    DBPanel9: TDBPanel;
+    DBPanel10: TDBPanel;
+    DBPFilial: TDBPanel;
+    DBPDepartamento: TDBPanel;
+    DBPHistorico: TDBPanel;
+    DBPanel7: TDBPanel;
+    DBPanel5: TDBPanel;
+    DBPanel6: TDBPanel;
+    DBPanel4: TDBPanel;
+    Label8: TLabel;
+    BtHistoricoContabil: TSpeedButton;
+    Edit1: TEdit;
+    DBPanel11: TDBPanel;
+    DBPDescComplemento: TDBPanel;
+    Label38: TLabel;
+    SBAdiantamento: TSpeedButton;
+    MEAdiantamento: TMaskEdit;
+    DBEdit1: TDBEdit;
+    DbImovel: TDBPanel;
+    DbRAluguel: TDBRadioGroup;
+    BitBtn4: TBitBtn;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    MeArquivo: TMaskEdit;
+    SpeedButton1: TSpeedButton;
+    BitBtn3: TBitBtn;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    Label3: TLabel;
+    DBEdit3: TDBEdit;
+    N2: TMenuItem;
+    RelatrioResumoporPlanoContas1: TMenuItem;
+    Opes1: TMenuItem;
+    LanamentoCaixaBanco1: TMenuItem;
+    d1: TMenuItem;
+    BtLcto40Col: TBitBtn;
+    BtAbreGaveta: TButton;
+    Demonstrativo1: TMenuItem;
+    procedure FormActivate(Sender: TObject);
+    procedure DSPrimarioStateChange(Sender: TObject);
+    procedure SBConsultaClick(Sender: TObject);
+    procedure RelaodeMovimentosSaldos1Click(Sender: TObject);
+    procedure RelaodosLanamentosSinttica1Click(Sender: TObject);
+    procedure RelaodeMovimentodeCaixa1Click(Sender: TObject);
+    procedure RelaodeMovimentodeCaixaSinttico1Click(Sender: TObject);
+    procedure ResumodeLanamentos1Click(Sender: TObject);
+    procedure SBConfirmarClick(Sender: TObject);
+    procedure SBExcluirClick(Sender: TObject);
+    procedure SBCancelarClick(Sender: TObject);
+    procedure EmissodeRecibo1Click(Sender: TObject);
+    procedure FluxodeCaixa1Click(Sender: TObject);
+    procedure SBIncluirClick(Sender: TObject);
+    procedure SBHelpClick(Sender: TObject);
+    procedure BtHistoricoContabilClick(Sender: TObject);
+    procedure M1Click(Sender: TObject);
+    procedure SBAlterarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure MovimentosSaldosGeral1Click(Sender: TObject);
+    procedure ResumoLanamentosAgrupadoCaixaBanco1Click(Sender: TObject);
+    procedure SaldoDirio1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure ResumoLanamentosAgrupCaixa1Click(Sender: TObject);
+    procedure RelatrioSaldosporDepartamento1Click(Sender: TObject);
+    procedure ResumoIndicadores1Click(Sender: TObject);
+    procedure FluxodeCaixaRealizado1Click(Sender: TObject);
+    procedure MovimentodeCaixaporClienteeHistrico1Click(Sender: TObject);
+    procedure QRCompositeReport1AddReports(Sender: TObject);
+    procedure DREporCaixa1Click(Sender: TObject);
+    procedure DBPFilialDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPDepartamentoDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPHistoricoDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPHistoricoValidate(Sender: TObject; Value: Variant;
+      var isValid: Boolean; var Msg: string);
+    procedure DBPanel7CodigoExit(Sender: TObject);
+    procedure DBPanel7DefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure DBPanel7AfterConsulta(Sender: TObject);
+    procedure OrigemeDestinodeValores1Click(Sender: TObject);
+    procedure SaldoMensal1Click(Sender: TObject);
+    procedure DbImovelDefineByForm(Sender: TObject;
+      var FormConsulta: TPtrForm; var Classe: TFormClass);
+    procedure SBAdiantamentoClick(Sender: TObject);
+    procedure DBEdit1Exit(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure RelatrioResumoporPlanoContas1Click(Sender: TObject);
+    procedure DBPHistoricoCodigoExit(Sender: TObject);
+    procedure LanamentoCaixaBanco1Click(Sender: TObject);
+    procedure d1Click(Sender: TObject);
+    procedure SBLancamento40colunaClick(Sender: TObject);
+    procedure BtLcto40ColClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BtAbreGavetaClick(Sender: TObject);
+    procedure Demonstrativo1Click(Sender: TObject);
+
+  private
+    procedure EmiteReciboEntrada40Col;
+  public
+    { Public declarations }
+  end;
+
+var
+  FCaixaCad: TFCaixaCad;
+implementation
+
+uses UCaixa_cl, UFilial_cl, UFilialCons, UDepartamentoCons,
+  UDepartamento_cl, UHistoricoCons, UHistorico_cl, UCadastroCons,
+  UCadastro_cl, UCaixaCons, UCaixaParam, URCaixa_MovSaldos, URCaixa_RelLanc,
+  URCaixa_MovCaixa, URCaixa_ResLanc, URCaixa_MovCaixaSint, UPlanilha_cl,
+  UOracle_cl, URReciboCaixa, UBiblioteca, URCaixa_Fluxo_Caixa,
+  UCaixaLanc_Cont, UParamSistema_cl, USerie_cl, USequencia_cl,
+  UHistContabilCons, UHistContabil_cl, URCaixa_MovHistorico,
+  UTela_cl, UUsuario_cl, URCaixa_MovCaixa1,
+  URResumoLancamentoAgrupadoCaixaBanco, UCustoVeiculo_CX,
+  UCustoVeiculoMov_cl, UCaixaRel_cl, URSaldoDiario,
+  URResumoLancAgrupadoCaixaBanco2, UrCaixaSaldoDep, URResumoIndicadores,
+  URFluxoCaixaRealizado, URFluxoCaixaRealizadoSint,
+  URCaixa_MovSaldosAvemed, URCaixa_MovCaixaCliente, UFmFilial,
+  UFmHistorico, UFmDepartamento, UFmCadastro, URDreCaixa,
+  UROrigemDestinoValores, URCaixaMensal, UImovel_Cons, UAdiantamentoCons,
+  UAdiantamento_cl, UPDFViewer, UrResumoPlanoContas, URDemonstrativo,
+  UrCaixaBancosAnalitico, URCaixa_movSaldos40Colunas, URDREANALITICO, UFTransferenciaCaixaBanco,
+  URDREFinanceiro,URCaixa_ResLanc40Col, URLancamento40colunas, DateUtils;
+
+{$R *.DFM}
+
+procedure TFCaixaCad.FormActivate(Sender: TObject);
+begin
+  inherited;
+  DMCaixa.pCalcFields_Caixa := True;
+  DMCaixa.QCaixa_Mov.Open;
+  DMCaixa.QCaixa_Documento.Open;
+  DSPrimario.AutoEdit := False;
+end;
+
+procedure TFCaixaCad.DSPrimarioStateChange(Sender: TObject);
+begin
+  inherited;
+  BtHistoricoContabil.Enabled := (DSPrimario.State in [DSInsert, DSEdit]);
+  SBAdiantamento.Enabled := (DSPrimario.State in [DSInsert, DSEdit]);
+  SbCancelar.Visible := not (DSPrimario.State in [DSEdit]);
+  Cancelar1.Visible := SbCancelar.Visible;
+end;
+
+procedure TFCaixaCad.SBConsultaClick(Sender: TObject);
+begin
+  inherited;
+  if FCaixaCons = nil then
+    FCaixaCons := TFCaixaCons.Create(Application);
+  if FCaixaCons.ShowModal = mrOk then
+  begin
+    DMCaixa.QCaixa_Mov.Close;
+    DMCaixa.QCaixa_Mov.SetVariable('PK', DMCaixa.QCaixa_Mov_ConsCod_Caixa_Mov.Value);
+    DMCaixa.QCaixa_Mov.Open;
+  end;
+end;
+
+procedure TFCaixaCad.RelaodeMovimentosSaldos1Click(Sender: TObject);
+var
+  wdt_inicial, wdt_final: string;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[0].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME0CodFilial.Text), 'CAIXA');
+    with DMCaixaRel do
+    begin
+      DMCaixa.QSaldo.Close;
+      if Trim(FCaixaParam.ME0DtInicial.Text) = '' then
+        raise Exception.Create('Campo Data Inicial Deve Ser Informado');
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME0DtInicial.Text) - 1); //envia a SQL o Dia anterior ao informado
+
+      if Trim(FCaixaParam.ME0CodFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME0CodFilial.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME0CodDepto.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME0CodDepto.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME0CodHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME0CodHistorico.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+
+      if Trim(FCaixaParam.ME0CodHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME0CodHistorico.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      //DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      DMCaixa.QSaldo.Open;
+      QRCaixa_MovSaldos.Close;
+
+      if Trim(FCaixaParam.ME0CodFilial.Text) <> '' then
+        QRCaixa_MovSaldos.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME0CodFilial.Text)))
+      else
+        QRCaixa_MovSaldos.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME0CodDepto.Text) <> '' then
+        QRCaixa_MovSaldos.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME0CodDepto.Text) + ')')
+      else
+        QRCaixa_MovSaldos.SetVariable('DEPARTAMENTOS', '1=1');
+
+      QRCaixa_MovSaldos.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME0DtInicial.Text));
+      wdt_inicial := DateToStr(StrToDate(FCaixaParam.ME0DtInicial.Text));
+
+      QRCaixa_MovSaldos.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME0DtFinal.Text));
+      wdt_final := DateToStr(StrToDate(FCaixaParam.ME0DtFinal.Text));
+
+      if Trim(FCaixaParam.ME0CodHistorico.Text) <> '' then
+        QRCaixa_MovSaldos.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME0CodHistorico.Text)))
+      else
+        QRCaixa_MovSaldos.SetVariable('COD_HISTORICO', Null);
+
+      QRCaixa_MovSaldos.Open;
+
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'CASACARNES' then
+      begin
+        if FRCaixa_MovSaldos40Colunas = nil then
+          FRCaixa_MovSaldos40Colunas := TFRCaixa_MovSaldos40Colunas.Create(Application);
+        FRCaixa_MovSaldos40Colunas.QRLSaldoAnterior.Caption := FormatFloat('#,##0.00', (DMCaixa.QSaldoCredito.Value - DMCaixa.QSaldoDebito.Value));
+        FRCaixa_MovSaldos40Colunas.QRLPeriodo.Caption := 'Periodo de: ' + wdt_inicial + ' até: ' + wdt_Final;
+        FRCaixa_MovSaldos40Colunas.QRPrimario.Height := 217;
+        FRCaixa_MovSaldos40Colunas.QRPrimario.Height := FRCaixa_MovSaldos40Colunas.QRPrimario.Height + QRCaixa_MovSaldos.RecordCount * 19;
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_MovSaldos40Colunas.QRPrimario.Preview
+        else
+          FRCaixa_MovSaldos40Colunas.QRPrimario.Print;
+      end
+      else
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'AVEMED' then
+      begin
+        if FRCaixa_MovSaldosAvemed = nil then
+          FRCaixa_MovSaldosAvemed := TFRCaixa_MovSaldosAvemed.Create(Application);
+        FRCaixa_MovSaldosAvemed.QRLSaldoAnterior.Caption := FormatFloat('#,##0.00', (DMCaixa.QSaldoCredito.Value - DMCaixa.QSaldoDebito.Value));
+        FRCaixa_MovSaldosAvemed.QRLPeriodo.Caption := 'Periodo de: ' + wdt_inicial + ' até: ' + wdt_Final;
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_MovSaldosAvemed.QRPrimario.Preview
+        else
+          FRCaixa_MovSaldosAvemed.QRPrimario.Print;
+      end
+      else
+      begin
+        if FRCaixa_MovSaldos = nil then
+          FRCaixa_MovSaldos := TFRCaixa_MovSaldos.Create(Application);
+        FRCaixa_MovSaldos.QRLSaldoAnterior.Caption := FormatFloat('#,##0.00', (DMCaixa.QSaldoCredito.Value - DMCaixa.QSaldoDebito.Value));
+        FRCaixa_MovSaldos.QRLPeriodo.Caption := 'Periodo de: ' + wdt_inicial + ' até: ' + wdt_Final;
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_MovSaldos.QRPrimario.Preview
+        else
+          FRCaixa_MovSaldos.QRPrimario.Print;
+      end;
+
+      QRCaixa_MovSaldos.Close;
+      DMCaixa.QSaldo.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.RelaodosLanamentosSinttica1Click(Sender: TObject);
+var
+  wdt_inicial, wdt_final: string;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[1].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    with DMCaixaRel do
+    begin
+      DMCaixa.QSaldo.Close;
+      if Trim(FCaixaParam.ME1DtInicial.Text) = '' then
+        raise Exception.Create('Campo Data Inicial Deve Ser Informado');
+      DMCaixa.QSaldo.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME1DtInicial.Text));
+
+      if Trim(FCaixaParam.ME1DtFinal.Text) = '' then
+        raise Exception.Create('Campo Data Final Deve Ser Informado');
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME1DtFinal.Text));
+
+      if Trim(FCaixaParam.ME1CodFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME1CodFilial.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME1CodDepto.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME1CodDepto.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_DEPARTAMENTO', Null);
+      DMCaixa.QSaldo.Open;
+
+      QRCaixa_Lanc.Close;
+
+      if Trim(FCaixaParam.ME1CodFilial.Text) <> '' then
+        QRCaixa_Lanc.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME1CodFilial.Text)))
+      else
+        QRCaixa_Lanc.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME1CodDepto.Text) <> '' then
+        QRCaixa_Lanc.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME1CodDepto.Text)))
+      else
+        QRCaixa_Lanc.SetVariable('COD_DEPARTAMENTO', Null);
+
+      QRCaixa_Lanc.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME1DtInicial.Text));
+      wdt_inicial := DateToStr(StrToDate(FCaixaParam.ME1DtInicial.Text));
+
+      QRCaixa_Lanc.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME1DtFinal.Text));
+      wdt_final := DateToStr(StrToDate(FCaixaParam.ME1DtFinal.Text));
+
+      QRCaixa_Lanc.Open;
+      if FRCaixa_RelLanc = nil then
+        FRCaixa_RelLanc := TFRCaixa_RelLanc.Create(Application);
+      FRCaixa_RelLanc.QRLPeriodo.Caption := 'Periodo de: ' + wdt_inicial + ' até: ' + wdt_Final;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRCaixa_RelLanc.QRPrimario.Preview
+      else
+        FRCaixa_RelLanc.QRPrimario.Print;
+      QRCaixa_Lanc.Open;
+      DMCaixa.QSaldo.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.RelaodeMovimentodeCaixa1Click(Sender: TObject);
+var
+  i: Integer;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[2].TabVisible := True;
+  if not DMUsuario.Privilegiado then
+    FCaixaParam.ME2CodDepto.Text := IntToStr(DMUsuario.CodDepartamentoUsuario);
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME2CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      // Detalhamento de Caixa
+      QRCaixa_Det.ClearVariables;
+      QRCaixa_Det.Close;
+      QRCaixa_Det.ClearVariables;
+      if Trim(FCaixaParam.ME2DtInicial.Text) = '' then
+        raise Exception.Create('Campo Data Inicial Deve Ser Informado');
+      if Trim(FCaixaParam.ME2DtFinal.Text) = '' then
+        raise Exception.Create('Campo Data Final Deve Ser Informado');
+
+      QRCaixa_Det.SetVariable('DT_INICIAL', FCaixaParam.ME2DtInicial.Text);
+      QRCaixa_Det.SetVariable('DT_FINAL', FCaixaParam.ME2DtFinal.Text);
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        QRCaixa_Det.SetVariable('COD_FILIAL', Trim(FCaixaParam.ME2CodFilial.Text))
+      Else
+        QRCaixa_Det.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2CodDepto.Text) <> '' then
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', 'COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', '1=1');
+      QRCaixa_Det.Open;
+
+      DMCaixa.QSaldo.Close;
+      DMCaixa.QSaldo.ClearVariables;
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME2DtInicial.Text) - 1);
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME2CodFilial.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2Departamento.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME2CodHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME2CodHistorico.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+      if Trim(FCaixaParam.ME2HistoricoFinal.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME2HistoricoFinal.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      DMCaixa.QSaldo.Open;
+
+      QRCaixa_MovCaixa.Close;
+      QRCaixa_MovCaixa.ClearVariables;
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME2CodFilial.Text)))
+      Else
+        QRCaixa_MovCaixa.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2Departamento.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        QRCaixa_MovCaixa.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME2CodHistorico.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME2CodHistorico.Text)))
+      Else
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO', Null);
+      if Trim(FCaixaParam.ME2HistoricoFinal.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME2HistoricoFinal.Text)))
+      Else
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO_F', Null);
+      {Permitir consultas de historicos fora da sequencia - Junior 31-07-2013}
+      if Trim(FCaixaParam.Me02Historico.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('HISTORICO', 'TB_CAIXA_MOV.COD_HISTORICO IN ('+Bib.Colocaaspanastring(Trim(FCaixaParam.Me02Historico.Text))+')')
+      else
+        QRCaixa_MovCaixa.SetVariable('HISTORICO','1=1');
+
+      if Trim(FCaixaParam.FmCadastro2.MeCadastro.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_CADASTRO', StrToInt(Trim(FCaixaParam.FmCadastro2.MeCadastro.Text)))
+      Else
+        QRCaixa_MovCaixa.SetVariable('COD_CADASTRO', Null);
+      QRCaixa_MovCaixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME2DtInicial.Text));
+      QRCaixa_MovCaixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME2DtFinal.Text));
+
+      QRCaixa_MovCaixa.SQL[QRCaixa_MovCaixa.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FCaixaParam.RG2Ordem.ItemIndex of
+        0: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY Tb_caixa_mov.COD_DEPARTAMENTO,TB_CAIXA_MOV.DT_MOVIMENTO,TB_CAIXA_MOV.NUM_DOCUMENTO');
+        1: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY Tb_caixa_mov.COD_DEPARTAMENTO,TB_CAIXA_MOV.COD_HISTORICO,TB_CAIXA_MOV.NUM_DOCUMENTO');
+        2: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY Tb_caixa_mov.COD_DEPARTAMENTO,TB_CAIXA_MOV.COD_CADASTRO,TB_CAIXA_MOV.NUM_DOCUMENTO');
+        3: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY Tb_caixa_mov.COD_DEPARTAMENTO,TB_CAIXA_MOV.COD_CAIXA_MOV');
+        4: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY Tb_caixa_mov.COD_DEPARTAMENTO,TB_CAIXA_MOV.COD_HISTORICO,TB_CAIXA_MOV.DT_MOVIMENTO');
+      end;
+      QRCaixa_MovCaixa.Open;
+
+      if FRCaixa_MovCaixa = nil then
+        FRCaixa_MovCaixa := TFRCaixa_MovCaixa.Create(Application);
+      FRCaixa_MovCaixa.QRLPeriodo.Caption := 'Filial:' + FCaixaParam.ME2Filial.Text + '   Periodo de: ' +
+            FCaixaParam.ME2DtInicial.Text + ' até: ' + FCaixaParam.ME2DtFinal.Text;
+      if DmParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PUBLICAR' then
+      begin
+        FRCaixa_MovCaixa.QRDBObservacao.Enabled := true;
+        FRCaixa_MovCaixa.QRBand7.Enabled := false;
+      end;
+      if DmParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INJEPAR' then
+      begin
+        FRCaixa_MovCaixa.Font.Size := 10;
+        for i := 0 to FRCaixa_MovCaixa.ComponentCount - 1 do //percorrer os componentes para aumentar fonte
+        begin
+          if FRCaixa_MovCaixa.Components[i].ClassName = 'TQRLabel' then
+            TQRLabel(FRCaixa_MovCaixa.Components[i]).ParentFont := True;
+          if FRCaixa_MovCaixa.Components[i].ClassName = 'TQRDBText' then
+            TQRDBText(FRCaixa_MovCaixa.Components[i]).ParentFont := True;
+        end;
+      //  FRCaixa_MovCaixa.QRDBTHistorico.Width := 110;
+        FRCaixa_MovCaixa.QRDBTDtMovimento.Width := 84;
+        FRCaixa_MovCaixa.QRDBTDtMovimento.Left := 211;
+      end;
+      if DMParamSistema.CodEmpresa = 'HOSPITAL' then
+      begin //Alteração solicitado por Diego. Junior 10/08/2018
+        FRCaixa_MovCaixa.QRDBText1.Enabled := False; //Dep.
+        FRCaixa_MovCaixa.QRDBText2.Enabled := False; //Dep.
+        FRCaixa_MovCaixa.QRLabel4.Enabled  := False; //Usuario
+        FRCaixa_MovCaixa.QRDBText3.Enabled := False; //Usuario
+        FRCaixa_MovCaixa.QRLabel22.Enabled := False; //Filial
+        FRCaixa_MovCaixa.QRDBText12.Enabled:= False; //Filial
+        FRCaixa_MovCaixa.QRLabel6.Enabled  := False; //Num. Doc
+        FRCaixa_MovCaixa.QRDBText5.Enabled := False; //Num. Doc
+      end;
+      if DMParamSistema.CodEmpresa = 'CHAPEUP' then
+      begin //Alteração mARCOS. 04/02/2021 INCLUIDO TOTAL DE CONTA RECEBER
+        QRTotalCR.Close;
+        QRTotalCR.SetVariable('DT_EMISSAO_I',StrToDate(FCaixaParam.ME2DtInicial.Text));
+        QRTotalCR.SetVariable('DT_EMISSAO_F',StrToDate(FCaixaParam.ME2DtFinal.Text));
+        QRTotalCR.Open;
+        FRCaixa_MovCaixa.QRBand5.Height := 145;
+        FRCaixa_MovCaixa.QRLTotalCR.Enabled := True;
+        FRCaixa_MovCaixa.QRLtotalcr.Caption := 'Total C.Receber dia.: '+FormatFloat('0.00#,##', QRTotalCRVAL_TOTAL.Value);
+
+      end;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRCaixa_MovCaixa.QRPrimario.Preview
+      else
+        FRCaixa_MovCaixa.QRPrimario.Print;
+      QRCaixa_Det.Close;
+      DMCaixa.QSaldo.Close;
+      QRCaixa_MovCaixa.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.RelaodeMovimentodeCaixaSinttico1Click(
+  Sender: TObject);
+var
+  wdt_inicial, wdt_final: string;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[3].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME3CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      QRCaixa_MovCaixaSint.Close;
+
+      if Trim(FCaixaParam.ME3CodFilial.Text) <> '' then
+        QRCaixa_MovCaixaSint.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME3CodFilial.Text)))
+      else
+        QRCaixa_MovCaixaSint.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME3CodDepto.Text) <> '' then
+        QRCaixa_MovCaixaSint.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME3CodDepto.Text) + ')')
+      else
+        QRCaixa_MovCaixaSint.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME3CodHistorico.Text) <> '' then
+        QRCaixa_MovCaixaSint.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME3CodHistorico.Text)))
+      else
+        QRCaixa_MovCaixaSint.SetVariable('COD_HISTORICO', Null);
+
+      if Trim(FCaixaParam.ME3HistoricoF.Text) <> '' then
+        QRCaixa_MovCaixaSint.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME3HistoricoF.Text)))
+      else
+        QRCaixa_MovCaixaSint.SetVariable('COD_HISTORICO_F', Null);
+
+      if Trim(FCaixaParam.ME3DtInicial.text) <> '' then
+      begin
+        QRCaixa_MovCaixaSint.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME3DtInicial.Text));
+        wdt_inicial := DateToStr(StrToDate(FCaixaParam.ME3DtInicial.Text));
+      end
+      else
+      begin
+        QRCaixa_MovCaixaSint.SetVariable('DT_INICIAL', Null);
+        wdt_inicial := '00/00/0000';
+      end;
+
+      if Trim(FCaixaParam.ME3DtFinal.text) <> '' then
+      begin
+        QRCaixa_MovCaixaSint.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME3DtFinal.text));
+        wdt_Final := DateToStr(StrToDate(FCaixaParam.ME3DtFinal.Text));
+      end
+      else
+      begin
+        QRCaixa_MovCaixaSint.SetVariable('DT_FINAL', Null);
+        wdt_Final := '00/00/0000';
+      end;
+
+      QRCaixa_MovCaixaSint.Open;
+      if FRCaixa_MovCaixaSint = nil then
+        FRCaixa_MovCaixaSint := TFRCaixa_MovCaixaSint.Create(Application);
+      FRCaixa_MovCaixaSint.QRLPeriodo.Caption := 'Dt. Inicial: ' + wdt_inicial + '  Dt. Final: ' + wdt_final;
+      FRCaixa_MovCaixaSint.QRLFilial.Caption := 'Filial:' + FCaixaParam.Me3Filial.Text;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRCaixa_MovCaixaSint.QRPrimario.Preview
+      else
+        FRCaixa_MovCaixaSint.QRPrimario.Print;
+      QRCaixa_MovCaixaSint.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.ResumodeLanamentos1Click(Sender: TObject);
+var
+  wdt_inicial, wdt_final: string;
+  wIndexImpressoraPadrao: integer;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[4].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME4CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      QRCaixa_ResLanc.Close;
+
+      if Trim(FCaixaParam.ME4CodFilial.Text) <> '' then
+        QRCaixa_ResLanc.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME4CodFilial.Text)))
+      else
+        QRCaixa_ResLanc.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME4CodDepto.Text) <> '' then
+        QRCaixa_ResLanc.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME4CodDepto.Text)))
+      else
+        QRCaixa_ResLanc.SetVariable('COD_DEPARTAMENTO', Null);
+
+      if Trim(FCaixaParam.ME4CodHistorico.Text) <> '' then
+        QRCaixa_ResLanc.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME4CodHistorico.Text)))
+      else
+        QRCaixa_ResLanc.SetVariable('COD_HISTORICO', Null);
+
+      if Trim(FCaixaParam.ME4HistoricoFinal.Text) <> '' then
+        QRCaixa_ResLanc.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME4HistoricoFinal.Text)))
+      else
+        QRCaixa_ResLanc.SetVariable('COD_HISTORICO_F', Null);
+
+      if Trim(FCaixaParam.ME4DtInicial.Text) <> '' then
+      begin
+        QRCaixa_ResLanc.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME4DtInicial.Text));
+        wdt_inicial := DateToStr(StrToDate(FCaixaParam.ME4DtInicial.Text));
+      end
+      else
+      begin
+        QRCaixa_ResLanc.SetVariable('DT_INICIAL', Null);
+        wdt_inicial := '00/00/0000';
+      end;
+
+      if Trim(FCaixaParam.ME4DtFinal.Text) <> '' then
+      begin
+        QRCaixa_ResLanc.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME4DtFinal.Text));
+        wdt_final := DateToStr(StrToDate(FCaixaParam.ME4DtFinal.Text));
+      end
+      else
+      begin
+        QRCaixa_ResLanc.SetVariable('DT_FINAL', Null);
+        wdt_final := '99/99/9999';
+      end;
+
+      QRCaixa_ResLanc.Open;
+      //INICIO - SALDO ANTERIOR - Solicitado Sidnei(Feira) - Junior 26/06/2020
+      DMCaixa.QSaldo.Close;
+      DMCaixa.QSaldo.ClearVariables;
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME4DtInicial.Text) - 1);
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME4CodFilial.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2Departamento.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME4CodDepto.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME2CodHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME4CodHistorico.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+      if Trim(FCaixaParam.ME2HistoricoFinal.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.ME4HistoricoFinal.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      DMCaixa.QSaldo.Open;
+      //FIM - SALDO ANTERIOR
+
+      if DMParamSistema.CodEmpresa = 'MAVENIDA' then
+      begin
+        if FRCaixa_ResLanc40Col = nil then
+          FRCaixa_ResLanc40Col := TFRCaixa_ResLanc40Col.Create(Application);
+        FRCaixa_ResLanc40Col.QRLPeriodo.Caption := 'Data: ' + wdt_inicial + ' até: ' + wdt_Final;
+
+        wIndexImpressoraPadrao := Printer.PrinterIndex;
+        if DMUsuario.ImpressoraPadraoNFCe <> '' then
+        begin
+          if pos('\\', DMUsuario.ImpressoraPadraoNFCe) > 0 then
+            Printer.PrinterIndex :=
+            Printer.Printers.IndexOf(Bib.PegaImpressoraPorNomeRede(DMUsuario.ImpressoraPadraoNFCe))
+        else
+          Printer.PrinterIndex := Printer.Printers.IndexOf(DMUsuario.ImpressoraPadraoNFCe);
+        end;
+        FRCaixa_ResLanc40Col.QRPrimario.PrinterSettings.PrinterIndex := Printer.PrinterIndex;
+        FRCaixa_ResLanc40Col.QRPrimario.Print;
+        
+        FRCaixa_ResLanc40Col.Free;
+        FRCaixa_ResLanc40Col := Nil;
+        {if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_ResLanc40Col.QRPrimario.Preview
+        else
+          FRCaixa_ResLanc40Col.QRPrimario.Print;}
+      end
+      else
+      begin
+        if FRCaixa_ResLanc = nil then
+          FRCaixa_ResLanc := TFRCaixa_ResLanc.Create(Application);
+        FRCaixa_ResLanc.QRLPeriodo.Caption := 'Periodo de: ' + wdt_inicial + ' até: ' + wdt_Final;
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_ResLanc.QRPrimario.Preview
+        else
+          FRCaixa_ResLanc.QRPrimario.Print;
+        QRCaixa_ResLanc.Close;
+      end;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.SBConfirmarClick(Sender: TObject);
+var
+  wLinhaMov, wNumDoc, wContaCred, wContaDeb, wTipoRecibo: string;
+  wCodDoc, wCodHistorico, wVlrLancto, wCodCompl: Real;
+  wDtLancto: TDateTime;
+  wFilial: Integer;
+begin
+  DmUsuario.Checar_Filial_Usuario(DMCaixa.QCaixa_MovCod_Filial.Text, 'CAIXA');
+  if DMParamSistema.QParamSistemaDt_Fechamento_Financeiro.Value >= DMCaixa.QCaixa_MovDt_Movimento.Value then
+    raise Exception.Create('Não é Permitido Realizar Este Lançamento - Fechamento Contabil');
+  if DMOracle.BuscaNome('SELECT IND_SITUACAO FROM TB_HISTORICO', 'COD_HISTORICO = ' + FloatToStr(DMCaixa.QCaixa_MovCod_Historico.Value)) = 'NAO' then
+    raise Exception.Create('Histórico Não Liberado Para Uso');
+  if (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'ZADIMEL') and
+     (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'MOINHO') then
+    if Trim(DMCaixa.QCaixa_MovCOD_CADASTRO.Text) <> '' then
+      if Trim(DMOracle.BuscaNome('SELECT DT_CANCELAMENTO FROM TB_CADASTRO', ' COD_CADASTRO = ' + DMCaixa.QCaixa_MovCOD_CADASTRO.Text)) <> '' then
+        raise exception.Create('ATENÇÃO - Cadastro Cancelado, Verifique!');
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+    if Trim(DMCaixa.QCaixa_MovCOD_CADASTRO.Text) = '' then
+      raise exception.Create('ATENÇÃO - Preencher Cadastro, Verifique!');
+  //  Lancto Contábil
+  try
+    DMCaixa.QCaixa_MovCOD_NOTA_CAB.Text := '';
+    DMCaixa.QCaixa_MovCOD_CONTA_RECEBER_CAB.Text := '';
+    DMCaixa.QCaixa_MovCOD_CONTA_PAGAR_CAB.Text := '';
+    if DMHistorico.QHistoricoIND_ADIANTAMENTO.Text = 'NAO' then
+      DMCaixa.QCaixa_MovCOD_ADIANTAMENTO.Text := '';
+    dmcaixa.QCaixa_MovCOD_BCO_MOVIMENTO.Text := '';
+    dmcaixa.QCaixa_MovCOD_CONHECIMENTO.Text := '';
+    inherited;
+    if DSPrimario.State in [DsEdit, DsInsert] then //Não deu certo pra salvar.
+      Exit;
+    DBPDescComplemento.DBEdit.SetFocus;
+    with DMCaixa do
+    begin
+      if (DMParamSistema.QParamSistemaInd_Contabiliza.Value = 'S') then
+      begin
+        wCodDoc := QCaixa_MovCod_Caixa_Mov.Value;
+        wNumDoc := FloatToStr(QCaixa_MovNum_Documento.Value) + '-' + Trim(QCaixa_MovDesc_Complemento.Value);
+        wFilial := QCaixa_MovCod_Filial.Value;
+        wContaCred := QCaixa_MovCod_Contabil_Cred.Value;
+        wContaDeb := QCaixa_MovCod_Contabil_Deb.Value;
+        wCodCompl := QCaixa_MovCod_Cadastro.Value;
+        if Trim(Edit1.Text) <> '' then // Código Histórico informado na tela
+          wCodHistorico := StrToFloat(Trim(Edit1.Text))
+        else
+          wCodHistorico := QCaixa_MovCod_Historico_Contabil.Value;
+        if wCodHistorico <> 0 then
+        begin
+          wVlrLancto := QCaixa_MovVal_Movimento.Value;
+          wDtLancto := QCaixa_MovDt_Movimento.Value;
+          if FCaixa_Lanc_Cont = nil then
+            FCaixa_Lanc_Cont := TFCaixa_Lanc_Cont.Create(Application);
+          FCaixa_Lanc_Cont.MEContaCredito.text := wContaCred;
+          if DMParamSistema.QParamSistemaInd_Tipo_Plano_Conta.Value = 'UNICO' then
+            FCaixa_Lanc_Cont.pFilial := 1
+          else
+            FCaixa_Lanc_Cont.pFilial := wFilial;
+          FCaixa_Lanc_Cont.MEContaDebito.Text := wContaDeb;
+          FCaixa_Lanc_Cont.MEContaDebitoExit(Self);
+          FCaixa_Lanc_Cont.MEContaCreditoExit(Self);
+          FCaixa_Lanc_Cont.MeFilialDebito.Text := FloatToStr(wFilial);
+          FCaixa_Lanc_Cont.MeFilialCredito.Text := FloatToStr(wFilial);
+          FCaixa_Lanc_Cont.ShowModal;
+          wContaCred := Bib.LimpaString(FCaixa_Lanc_Cont.MEContaCredito.text, '.');
+          wContaDeb := Bib.LimpaString(FCaixa_Lanc_Cont.MEContaDebito.text, '.');
+          DMPlanilha.GravaLanc('CX', wCodDoc, wNumDoc, {StrToFloat} strtoint(FCaixa_Lanc_Cont.MeFilialCredito.Text), wContaCred, 'CREDITO', wCodCompl, wCodHistorico, wVlrlancto, wDTLancto, wContaDeb);
+          DMPlanilha.GravaLanc('CX', wCodDoc, wNumDoc, {StrToFloat} strtoint(FCaixa_Lanc_Cont.MeFilialDebito.Text), wContaDeb, 'DEBITO', wCodCompl, wCodHistorico, wVlrlancto, wDTLancto, wContaCred);
+        end;
+      end;
+      DMOracle.DBCemapa.Commit;
+      wLinhaMov := '';
+      wLinhaMov := (FloatToStr(DMCaixa.QCaixa_MovCod_Caixa_Mov.value) + '  ' +
+        DMCaixa.QCaixa_Movnome_filial.value + '   ' +
+        DMCaixa.QCaixa_Movnome_departamento.value + '   ' +
+        DMCaixa.QCaixa_Movnome_historico.value + '   ' +
+        DMCaixa.QCaixa_Movnome_cadastro.value + '   ' +
+        FormatFloat('#,##0.00', DMCaixa.QCaixa_MovVAL_MOVIMENTO.value));
+      LBMovimentos.Items.Add(wLinhaMov);
+    end;
+  except
+    DMOracle.DBCemapa.RollBack;
+//    DMCaixa.QCaixa_Mov.Cancel;
+    raise Exception.Create('Erro ao tentar Contabilizar.' + #13 + 'Verifique se existe um Histórico Contabil Cadastrado para este Histórico.');
+  end;
+  //Cadastra movimento de Custo de Veículo - PMC 01/04/2004
+  if DMOracle.BuscaNome('SELECT IND_VEICULO FROM TB_HISTORICO', 'COD_HISTORICO = ' + DMCaixa.QCaixa_MovCOD_HISTORICO.Text) = 'S' then
+  begin
+    if FCustoVeiculo_CX = nil then
+      FCustoVeiculo_CX := TFCustoVeiculo_CX.Create(Application);
+    FCustoVeiculo_CX.ShowModal;
+  end;
+  //fim Cadastro movimento Custo Veículo
+
+
+  // Emissão de Recibo ao registrar movimento no Caixa - Djeison A. Selzlein - 21/08/2013
+  wTipoRecibo := DMOracle.BuscaNome('SELECT IND_TIPO_RECIBO FROM TB_HISTORICO',
+    'COD_HISTORICO = ' + DMCaixa.QCaixa_MovCOD_HISTORICO.Text);
+
+  if ( wTipoRecibo = 'M') then
+    if MessageDlg('Deseja emitir recibo de movimentação de Caixa?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      EmiteReciboEntrada40Col;
+end;
+
+procedure TFCaixaCad.SBExcluirClick(Sender: TObject);
+var wNumDoc: Integer;
+begin
+  if DMParamSistema.QParamSistemaDt_Fechamento_Financeiro.Value >= DMCaixa.QCaixa_MovDt_Movimento.Value then
+    raise Exception.Create('Não é Permitido Voltar Confirmação - Fechamento Contabil');
+
+  if MessageDlg('Apagar este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    If (DMCaixa.QCaixa_MovCod_Nota_Cab.isNull)          and
+       (DMCaixa.QCaixa_MovCod_Conta_Receber_Cab.IsNull) and
+       (DMCaixa.QCaixa_MovCod_Conta_Pagar_Cab.IsNull)   and
+       (DMCaixa.QCaixa_MovCOD_BCO_MOVIMENTO.IsNull)     and
+       (DMCaixa.QCaixa_MovCOD_ORDEM_SERVICO_CAB.IsNull)   then
+    begin
+      if not (DMCaixa.QCaixa_MovCod_Caixa_Mov.IsNull) then
+      begin
+        if DMOracle.DBCemapa.InTransaction = false then
+          DMOracle.DBCemapa.StartTransaction;
+        try
+          wNumDoc := DMCaixa.QCaixa_MovCod_Caixa_Mov.Value;
+          DMPlanilha.Descontabiliza(wNumDoc, 'CX');
+          //exclui cadastro de movimento de custo de veículo - PMC 31/03/2004
+
+          if DMOracle.BuscaNome('SELECT IND_VEICULO FROM TB_HISTORICO', 'COD_HISTORICO = ' + DMCaixa.QCaixa_MovCOD_HISTORICO.Text) = 'S' then
+             DMCustoVeiculoMov.ExcluiCustoVei('CAIXA MOV', DMCaixa.QCaixa_MovCOD_CAIXA_MOV.Value);
+          //fim exclusão de movimento de custo de veídulo
+          DSPrimario.DataSet.Delete;
+          DMOracle.DBCemapa.Commit;
+        except
+          DMOracle.DBCemapa.RollBack;
+        end;
+      end;
+    end
+    else
+      ShowMessage('Não é Possível Excluir um Registro de Movimento' + #13 +
+        'gerado pela Nota, Banco, Ordem de Serviço, Contas a Pagar ou Contas a Receber');
+  end;
+  Edit1.Text := '';
+end;
+
+procedure TFCaixaCad.SBCancelarClick(Sender: TObject);
+begin
+  inherited;
+  DMOracle.DBCemapa.RollBack;
+end;
+
+procedure TFCaixaCad.EmissodeRecibo1Click(Sender: TObject);
+var wOperacao: string;
+  wNumero: Integer;
+begin
+  inherited;
+  if DMcaixa.QCaixa_MovCOD_CAIXA_MOV.Value <> 0 then
+  begin
+    if FRReciboCaixa = nil then
+      FRReciboCaixa := TFRReciboCaixa.Create(Application);
+    DMFilial.QFilial.Close;
+    DMFilial.QFilial.SetVariable('PK', DMCaixa.QCaixa_MovCod_Filial.Value);
+    DMFilial.QFilial.Open;
+    wOperacao := DMOracle.BuscaNome('SELECT IND_OPERACAO FROM TB_HISTORICO', 'COD_HISTORICO = ' + FloatToStr(DMCaixa.QCaixa_MovCod_Historico.Value));
+    if wOperacao = '+' then
+    begin
+      FRReciboCaixa.QRLResponsavel.Caption := DMFilial.QFilialDesc_Filial.value;
+      FRReciboCaixa.QRLRecibo.Caption := DMCaixa.QCaixa_MovNome_Cadastro.Value;
+//      FRReciboCaixa.QRDBText17.Caption := DMCaixa.QCaixa_MovNUM_CGC_CPF.Value;
+    end
+    else
+    begin
+      FRReciboCaixa.QRLResponsavel.Caption := DMCaixa.QCaixa_MovNome_Cadastro.Value;
+      FRReciboCaixa.QRLRecibo.Caption := DMFilial.QFilialDesc_Filial.value;
+    end;
+    wNumero := DMSequencia.Sequencia(DMCaixa.Qcaixa_MovCod_Filial.Value, 'RECIBO');
+    FRReciboCaixa.QRLNumero.Caption := FloatToStr(wNumero);
+    if DMCaixa.QCaixa_MovNum_Documento.Text = '' then
+    begin
+      DMCaixa.QCaixa_Mov.Edit;
+      DMCaixa.QCaixa_MovNum_Documento.Value := wNumero;
+      DMCaixa.QCaixa_Mov.Post;
+      if DMOracle.DBCemapa.InTransaction then
+        DMOracle.DBCemapa.Commit;
+    end;
+    FRReciboCaixa.QRLNumDocumento.Caption := DMCaixa.QCaixa_MovNUM_DOCUMENTO.Text;
+    FRReciboCaixa.QRLValor.Caption := FormatFloat('#,##0.00', DMCaixa.QCaixa_MovVal_Movimento.Value);
+    FRReciboCaixa.QRLComplemento.Caption := DMCaixa.QCaixa_MovNome_Historico.Text + ' - ' + Trim(DMCaixa.QCaixa_MovDesc_Complemento.Value) + Trim(DMCaixa.QCaixa_MovDesc_Complemento1.Value);
+    FRReciboCaixa.QRLValorExtenso.Caption := Bib.extenso(DMCaixa.QCaixa_MovVal_Movimento.Value, 'REAL');
+    FRReciboCaixa.QRLData.Caption := FormatDateTime(', dd "de" mmmm "de" yyyy', DMCaixa.QCaixa_MovDT_MOVIMENTO.Value);
+
+    FRReciboCaixa.QRLResponsavel1.Caption := FRReciboCaixa.QRLResponsavel.Caption;
+    FRReciboCaixa.QRLRecibo1.Caption := FRReciboCaixa.QRLRecibo.Caption;
+    FRReciboCaixa.QRLNumero1.Caption := FRReciboCaixa.QRLNumero.Caption;
+    FRReciboCaixa.QRLNumDocumento1.Caption := FRReciboCaixa.QRLNumDocumento.Caption;
+    FRReciboCaixa.QRLValor1.Caption := FRReciboCaixa.QRLValor.Caption;
+    FRReciboCaixa.QRLComplemento1.Caption := FRReciboCaixa.QRLComplemento.Caption;
+    FRReciboCaixa.QRLValorExtenso1.Caption := FRReciboCaixa.QRLValorExtenso.Caption;
+    FRReciboCaixa.QRLData1.Caption := FRReciboCaixa.QRLData.Caption;
+
+    FRReciboCaixa.QuickRep1.Preview;
+    DMFilial.QFilial.Close;
+  end
+  else
+  begin
+    ShowMessage('É necessário escolher um lançamento no caixa,' + #13 +
+      'antes de solicitar a impressão do recibo.');
+  end;
+
+end;
+
+procedure TFCaixaCad.FluxodeCaixa1Click(Sender: TObject);
+var wValor_Caixa, wValor_Bancos, wValor_Aplicacoes: string;
+  I: Integer;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.RgPreview.Visible := False;
+  FCaixaParam.PGRelatorio.Pages[5].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.Me5CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      QrSaldo_Fluxo_Caixa.Close;
+      QrSaldo_Fluxo_Caixa.SetVariable('DATA_SALDO', StrToDate(FCaixaParam.ME5DtSaldo.Text));
+      if Trim(FCaixaParam.ME5CodFilial.Text) <> '' then
+        QrSaldo_Fluxo_Caixa.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME5CodFilial.Text)))
+      else
+        QrSaldo_Fluxo_Caixa.SetVariable('COD_FILIAL', Null);
+      if Trim(FCaixaParam.Me5CodDepto.Text) <> '' then
+        QrSaldo_Fluxo_Caixa.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.Me5CodDepto.Text)))
+      else
+        QrSaldo_Fluxo_Caixa.SetVariable('COD_DEPARTAMENTO', Null);
+      QrSaldo_Fluxo_Caixa.Open;
+      FCaixaParam.ME6SaldoCaixa.Text := FormatFloat('##,###,##0.00', QrSaldo_Fluxo_CaixaSaldo_Caixa.Value);
+      FCaixaParam.ME6SaldoBancos.Text := FormatFloat('##,###,##0.00', QrSaldo_Fluxo_CaixaSaldo_Bancos.Value);
+      FCaixaParam.ME6SaldoAplicacoes.Text := FormatFloat('##,###,##0.00', 0);
+      FCaixaParam.PGRelatorio.Pages[6].TabVisible := True;
+      FCaixaParam.RgPreview.Visible := True;
+      if FCaixaParam.ShowModal = MrOk then
+      begin
+        QrFluxo_Caixa_Cr_Cp.Close;
+        QrFluxo_Caixa_Cr_Cp.SetVariable('DT_INICIO', StrToDate(FCaixaParam.ME5DtSaldo.Text));
+        QrFluxo_Caixa_Cr_Cp.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME6DtFinal.Text));
+        if Trim(FCaixaParam.ME5CodFilial.Text) <> '' then
+          QrFluxo_Caixa_Cr_Cp.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME5CodFilial.Text)))
+        else
+          QrFluxo_Caixa_Cr_Cp.SetVariable('COD_FILIAL', Null);
+        if Trim(FCaixaParam.Me5CodDepto.Text) <> '' then
+          QrFluxo_Caixa_Cr_Cp.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.Me5CodDepto.Text)))
+        else
+          QrFluxo_Caixa_Cr_Cp.SetVariable('COD_DEPARTAMENTO', Null);
+        QrFluxo_Caixa_Cr_Cp.Open;
+        if FRCaixa_Fluxo_Caixa = nil then
+          FRCaixa_Fluxo_Caixa := TFRCaixa_Fluxo_Caixa.Create(Application);
+        FRCaixa_Fluxo_Caixa.QRLTitulo.Caption := 'Fluxo de Caixa Até: ' + FCaixaParam.ME6DtFinal.Text;
+        wValor_Caixa := '';
+        for i := 1 to Length(FCaixaParam.Me6SaldoCaixa.Text) do
+          if FCaixaParam.Me6SaldoCaixa.Text[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '-'] then
+            wValor_Caixa := wValor_Caixa + FCaixaParam.Me6SaldoCaixa.Text[I];
+        FRCaixa_Fluxo_Caixa.Sld_Caixa.Caption := FormatFloat('##,###,##0.00', StrToFloat(wValor_Caixa));
+        wValor_Bancos := '';
+        for i := 1 to Length(FCaixaParam.Me6SaldoBancos.Text) do
+          if FCaixaParam.Me6SaldoBancos.Text[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '-'] then
+            wValor_Bancos := wValor_Bancos + FCaixaParam.Me6SaldoBancos.Text[I];
+        wValor_Aplicacoes := '';
+        for i := 1 to Length(FCaixaParam.Me6SaldoAplicacoes.Text) do
+          if FCaixaParam.Me6SaldoAplicacoes.Text[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '-'] then
+            wValor_Aplicacoes := wValor_Aplicacoes + FCaixaParam.Me6SaldoAplicacoes.Text[I];
+        FRCaixa_Fluxo_Caixa.Sld_Aplicacoes.Caption := FormatFloat('##,###,##0.00', StrToFloat(wValor_Aplicacoes));
+        FRCaixa_Fluxo_Caixa.Sld_Bancos.Caption := FormatFloat('##,###,##0.00', StrToFloat(wValor_Bancos));
+        FRCaixa_Fluxo_Caixa.Sld_Saldo.Caption := FormatFloat('##,###,##0.00', StrToFloat(wValor_Bancos) + StrToFloat(wValor_Caixa) + StrToFloat(wValor_Aplicacoes));
+        FRCaixa_Fluxo_Caixa.SVal_Saldo.Caption := FormatFloat('##,###,##0.00', StrToFloat(wValor_Bancos) + StrToFloat(wValor_Caixa) + StrToFloat(wValor_Aplicacoes));
+
+        FRCaixa_Fluxo_Caixa.QRBand4.Enabled := FCaixaParam.RG6Tipo.ItemIndex <> 0;    //sintetico/analitico
+        FRCaixa_Fluxo_Caixa.QRGroup1.Enabled := FCaixaParam.RG6Tipo.ItemIndex <> 0;   //sintetico/analitico
+        FRCaixa_Fluxo_Caixa.QRDBTData.Enabled := FCaixaParam.RG6Tipo.ItemIndex = 0;   //sintetico/analitico
+
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRCaixa_Fluxo_Caixa.QRPrimario.Preview
+        else
+          FRCaixa_Fluxo_Caixa.QRPrimario.Print;
+      end;
+      QrFluxo_Caixa_Cr_Cp.Close;
+      QrSaldo_Fluxo_Caixa.Close;
+    end;
+  end;
+  FCaixaParam.RgPreview.Visible := True;
+end;
+
+procedure TFCaixaCad.SBIncluirClick(Sender: TObject);
+begin
+  inherited;
+  Edit1.Text := '';
+  DBPFilial.DBEdit.SetFocus;
+end;
+
+procedure TFCaixaCad.SBHelpClick(Sender: TObject);
+begin
+  inherited;
+  Application.HelpContext(2);
+end;
+
+procedure TFCaixaCad.BtHistoricoContabilClick(Sender: TObject);
+begin
+  inherited;
+  if FHistContabilCons = nil then
+    FHistContabilCons := TFHistContabilCons.Create(Application);
+  if FHistContabilCons.ShowModal = mrOk then
+    Edit1.Text := DMHistContabil.QHistContabilConsCOD_HISTORICO_CONTABIL.Text;
+end;
+
+procedure TFCaixaCad.M1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[7].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME7CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      QRCaixaMovHistorico.Close;
+      if Trim(FCaixaParam.ME7CodFilial.Text) <> '' then
+        QRCaixaMovHistorico.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME7CodFilial.Text)))
+      else
+        QRCaixaMovHistorico.SetVariable('FILIAL', Null);
+
+      if Trim(FCaixaParam.ME7CodHistorico.Text) <> '' then
+        QRCaixaMovHistorico.SetVariable('HISTORICO', StrToInt(Trim(FCaixaParam.ME7CodHistorico.Text)))
+      else
+        QRCaixaMovHistorico.SetVariable('HISTORICO', Null);
+
+      if Trim(FCaixaParam.ME7Dt_I.Text) <> '' then
+        QRCaixaMovHistorico.SetVariable('DATA_I', StrToDate(FCaixaParam.ME7Dt_I.Text))
+      else
+        QRCaixaMovHistorico.SetVariable('DATA_I', Null);
+
+      if Trim(FCaixaParam.ME7Dt_F.Text) <> '' then
+        QRCaixaMovHistorico.SetVariable('DATA_F', StrToDate(FCaixaParam.ME7Dt_F.Text))
+      else
+        QRCaixaMovHistorico.SetVariable('DATA_F', Null);
+
+      QRCaixaMovHistorico.Open;
+      if FRCaixa_MovHistorico = nil then
+        FRCaixa_MovHistorico := TFRCaixa_MovHistorico.Create(Application);
+
+      FRCaixa_MovHistorico.QRLEmpresa.Caption := 'Filial:' + FCaixaParam.Me7DescFilial.Text;
+      if (FCaixaParam.ME7Dt_I.Text <> '') or
+        (FCaixaParam.ME7Dt_F.Text <> '') then
+        FRCaixa_MovHistorico.QRLTitulo.Caption := 'Movimentação de Caixa por Histórico de ' + FCaixaParam.ME7Dt_I.Text
+          + ' até ' + FCaixaParam.ME7Dt_F.Text
+      else
+        FRCaixa_MovHistorico.QRLTitulo.Caption := 'Movimentação de Caixa por Histórico';
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRCaixa_MovHistorico.QRPrimario.Preview
+      else
+        FRCaixa_MovHistorico.QRPrimario.Print;
+      QRCaixaMovHistorico.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.SBAlterarClick(Sender: TObject);
+var
+  wNumDoc: Integer;
+begin
+  if DMParamSistema.QParamSistemaDt_Fechamento_Financeiro.Value >= DMCaixa.QCaixa_MovDt_Movimento.Value then
+    raise Exception.Create('Não é Permitido Voltar Confirmação - Fechamento Contabil');
+//Solicitado pela Loja Kalce, devido as condicionais que são feitas retorno e não esta permitindo alterar o departamento. Junior solicitou. Alex 09/08/2023
+  if (DMParamSistema.CodEmpresa <> 'JASOL') then
+    if not (DMCaixa.QCaixa_MovCod_Nota_Cab.isNull) then
+      raise Exception.Create('Não é Permitido Alterar Lançamento Feito Por uma Nota');
+  if not (DMCaixa.QCaixa_MovCod_Conta_Receber_Cab.IsNull) then
+    raise Exception.Create('Não é Permitido Alterar Lançamento Feito Pelo Contas a Receber');
+  if not (DMCaixa.QCaixa_MovCod_Conta_Pagar_Cab.IsNull) then
+    raise Exception.Create('Não é Permitido Alterar Lançamento Feito Pelo Contas a Pagar');
+  if not (DMCaixa.QCaixa_MovCod_Caixa_Mov.IsNull) then
+  begin
+    if DMOracle.DBCemapa.InTransaction = false then
+      DMOracle.DBCemapa.StartTransaction;
+    try
+      wNumDoc := DMCaixa.QCaixa_MovCod_Caixa_Mov.Value;
+      DMPlanilha.Descontabiliza(wNumDoc, 'CX');
+      //exclui cadastro de movimento de custo de veículo - PMC 01/04/2004
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.value = 'AB' then
+        if DMOracle.BuscaNome('SELECT IND_VEICULO FROM TB_HISTORICO', 'COD_HISTORICO = ' + DMCaixa.QCaixa_MovCOD_HISTORICO.Text) = 'S' then
+          DMCustoVeiculoMov.ExcluiCustoVei('CAIXA MOV', DMCaixa.QCaixa_MovCOD_CAIXA_MOV.Value);
+      //fim exclusão de movimento de custo de veídulo
+      DSPrimario.DataSet.Edit;
+      DMOracle.DBCemapa.Commit;
+    except
+      DMOracle.DBCemapa.RollBack;
+    end;
+  end;
+  Edit1.Text := '';
+end;
+
+procedure TFCaixaCad.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  DMCaixa.QCaixa_Mov.Close;
+  DMCaixa.QCaixa_Documento.Close;
+  Action := CaFree;
+  FCaixaCad := nil;
+end;
+
+procedure TFCaixaCad.MovimentosSaldosGeral1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[2].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME2CodFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+          // Detalhamento de Caixa
+      QRCaixa_Det.Close;
+      if Trim(FCaixaParam.ME2DtInicial.Text) = '' then
+        raise Exception.Create('Campo Data Inicial Deve Ser Informado');
+      QRCaixa_Det.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME2DtInicial.Text));
+
+      if Trim(FCaixaParam.ME2DtFinal.Text) = '' then
+        raise Exception.Create('Campo Data Final Deve Ser Informado');
+      QRCaixa_Det.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME2DtFinal.Text));
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        QRCaixa_Det.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME2CodFilial.Text)))
+      else
+        QRCaixa_Det.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2CodDepto.Text) <> '' then
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_DET.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', '1=1');
+
+      QRCaixa_Det.Open;
+
+      DMCaixa.QSaldo.Close;
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME2DtInicial.Text) - 1);
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME2CodFilial.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2CodDepto.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME2CodHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME2CodHistorico.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+
+      if Trim(FCaixaParam.Me2HistoricoFinal.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.Me2HistoricoFinal.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      DMCaixa.QSaldo.Open;
+      QRCaixa_MovCaixa.Close;
+
+      if Trim(FCaixaParam.ME2CodFilial.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME2CodFilial.Text)))
+      else
+        QRCaixa_MovCaixa.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME2CodDepto.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME2CodDepto.Text) + ')')
+      else
+        QRCaixa_MovCaixa.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.ME2CodHistorico.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.ME2CodHistorico.Text)))
+      else
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO', Null);
+
+      if Trim(FCaixaParam.Me2HistoricoFinal.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.Me2HistoricoFinal.Text)))
+      else
+        QRCaixa_MovCaixa.SetVariable('COD_HISTORICO_F', Null);
+
+      if Trim(FCaixaParam.FmCadastro2.MeCadastro.Text) <> '' then
+        QRCaixa_MovCaixa.SetVariable('COD_CADASTRO', StrToInt(Trim(FCaixaParam.FmCadastro2.MeCadastro.Text)))
+      Else
+        QRCaixa_MovCaixa.SetVariable('COD_CADASTRO', Null);
+
+      QRCaixa_MovCaixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME2DtInicial.Text));
+      QRCaixa_MovCaixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME2DtFinal.Text));
+
+      QRCaixa_MovCaixa.SQL[QRCaixa_MovCaixa.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+      case FCaixaParam.RG2Ordem.ItemIndex of
+        0: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY TB_CAIXA_MOV.DT_MOVIMENTO, TB_CAIXA_MOV.NUM_DOCUMENTO');
+        1: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY TB_CAIXA_MOV.COD_HISTORICO, TB_CAIXA_MOV.NUM_DOCUMENTO');
+        2: DMCaixaRel.QRCaixa_MovCaixa.SQL.Add('ORDER BY TB_CAIXA_MOV.COD_CADASTRO, TB_CAIXA_MOV.NUM_DOCUMENTO');
+      end;
+
+      QRCaixa_MovCaixa.Open;
+      if FRCaixa_MovCaixa1 = nil then
+        FRCaixa_MovCaixa1 := TFRCaixa_MovCaixa1.Create(Application);
+      FRCaixa_MovCaixa1.QRLPeriodo.Caption := 'Filial:' + FCaixaParam.ME2Filial.Text + '   Periodo de: ' +
+           FCaixaParam.ME2DtInicial.Text + ' até: ' + FCaixaParam.ME2DtFinal.Text;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRCaixa_MovCaixa1.QRPrimario.Preview
+      else
+        FRCaixa_MovCaixa1.QRPrimario.Print;
+      QRCaixa_Det.Close;
+      DMCaixa.QSaldo.Close;
+      QRCaixa_MovCaixa.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.ResumoLanamentosAgrupadoCaixaBanco1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+     FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[8].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+      //DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME8Filial.Text),'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      if Trim(FCaixaParam.Me8DtInicial.text) = '' then
+        raise exception.create('É necessário informar a data inicial');
+      if Trim(FCaixaParam.Me8DtFinal.text) = '' then
+        raise exception.create('É necessário informar a data final');
+      If FCaixaParam.Rg8TipoRelatorio.ItemIndex = 1 Then
+       Begin
+         QRResLancBancoCaixa.Close;
+         if Trim(FCaixaParam.ME8Filial.Text) <> '' then
+           QRResLancBancoCaixa.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME8Filial.Text)))
+         else
+           QRResLancBancoCaixa.SetVariable('FILIAL', Null);
+         if Trim(FCaixaParam.Fm8Historico.MeHistorico.Text) <> '' then
+           QRResLancBancoCaixa.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.Fm8Historico.MeHistorico.Text)))
+         else
+           QRResLancBancoCaixa.SetVariable('COD_HISTORICO', Null);
+
+         if Trim(FCaixaParam.Ed8Departamento.Text) = 'VÁRIOS' then
+         begin
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTO',null);
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME8Departamento.Text) + ')');
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_BCO', 'TB_BCO_MOVIMENTO.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME8Departamento.Text) + ')');
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_DESCONTO', 'CR.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME8Departamento.Text) + ')');
+         end
+         else
+         begin
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS', '1=1');
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_BCO', '1=1');
+           QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_DESCONTO', '1=1');
+           if Trim(FCaixaParam.ME8Departamento.Text) <> '' then
+             QRResLancBancoCaixa.SetVariable('DEPARTAMENTO', Trim(FCaixaParam.ME8Departamento.Text))
+           else
+           begin
+             if Trim(FCaixaParam.Me8Departamentos.Text) <> '' then
+              begin
+               QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO NOT IN (' + Trim(FCaixaParam.Me8Departamentos.Text) + ')');
+               QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_BCO', 'TB_BCO_MOVIMENTO.COD_DEPARTAMENTO NOT IN (' + Trim(FCaixaParam.Me8Departamentos.Text) + ')');
+               QRResLancBancoCaixa.SetVariable('DEPARTAMENTOS_DESCONTO', 'CR.COD_DEPARTAMENTO NOT IN (' + Trim(FCaixaParam.Me8Departamentos.Text) + ')');
+              End;
+           end;
+         end;
+         if Trim(FCaixaParam.Me8Historicos.Text) <> '' then
+          begin
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_CAIXA', 'TB_CAIXA_MOV.COD_HISTORICO NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_BANCO', 'TB_BCO_MOVIMENTO.COD_HISTORICO NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_BANCO_DESCONTO'
+            , 'F.COD_HISTORICO_CHEQUE NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_CAIXA_DESCONTO'
+            , 'F.COD_HISTORICO_BAIXA NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+          End
+         Else
+          begin
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_CAIXA', '1=1');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_BANCO', '1=1');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_BANCO_DESCONTO', '1=1');
+           QRResLancBancoCaixa.SetVariable('HISTORICOS_CAIXA_DESCONTO', '1=1');
+          End;
+         QRResLancBancoCaixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME8DtInicial.Text));
+         QRResLancBancoCaixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME8DtFinal.Text));
+         QRResLancBancoCaixa.Open;
+         if FRResumoLancAgrupadoCaixaBanco = nil then
+           FRResumoLancAgrupadoCaixaBanco := TFRResumoLancAgrupadoCaixaBanco.Create(Application);
+         FRResumoLancAgrupadoCaixaBanco.QRLFilial.Caption := 'FILIAL :' + FCaixaParam.Ed8Filial.Text;
+         FRResumoLancAgrupadoCaixaBanco.QRLDepartamento.Caption := 'DEPARTAMENTO:' + FCaixaParam.Ed8Departamento.Text;
+
+         if (FCaixaParam.ME8DtInicial.Text <> '') or
+           (FCaixaParam.ME8DtFinal.Text <> '') then
+           FRResumoLancAgrupadoCaixaBanco.QRLTitulo.Caption := 'Movimentação de Caixa e Banco por Histórico de ' + FCaixaParam.ME8DtInicial.Text
+             + ' até ' + FCaixaParam.ME8DtFinal.Text
+         else
+           FRResumoLancAgrupadoCaixaBanco.QRLTitulo.Caption := 'Movimentação de Caixa por Histórico';
+
+         if FCaixaParam.RGPreview.ItemIndex = 0 then
+           FRResumoLancAgrupadoCaixaBanco.QRPrimario.Preview
+         else
+           FRResumoLancAgrupadoCaixaBanco.QRPrimario.Print;
+         QRResLancBancoCaixa.Close;
+       End
+      Else
+       Begin
+         QrResBancoCaixaAnalitico.Close;
+         if Trim(FCaixaParam.ME8Filial.Text) <> '' then
+           QrResBancoCaixaAnalitico.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME8Filial.Text)))
+         else
+           QrResBancoCaixaAnalitico.SetVariable('FILIAL', Null);
+         if Trim(FCaixaParam.Fm8Historico.MeHistorico.Text) <> '' then
+           QrResBancoCaixaAnalitico.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.Fm8Historico.MeHistorico.Text)))
+         else
+           QrResBancoCaixaAnalitico.SetVariable('COD_HISTORICO', Null);
+
+         if Trim(FCaixaParam.Ed8Departamento.Text) = 'VÁRIOS' then
+         begin
+           QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTO',null);
+           QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME8Departamento.Text) + ')');
+           QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS_BCO', 'TB_BCO_MOVIMENTO.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME8Departamento.Text) + ')');
+         end
+         else
+         begin
+           QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS', '1=1');
+           QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS_BCO', '1=1');
+           if Trim(FCaixaParam.ME8Departamento.Text) <> '' then
+             QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTO', Trim(FCaixaParam.ME8Departamento.Text))
+           else
+           begin
+             if Trim(FCaixaParam.Me8Departamentos.Text) <> '' then
+              begin
+               QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO NOT IN (' + Trim(FCaixaParam.Me8Departamentos.Text) + ')');
+               QrResBancoCaixaAnalitico.SetVariable('DEPARTAMENTOS_BCO', 'TB_BCO_MOVIMENTO.COD_DEPARTAMENTO NOT IN (' + Trim(FCaixaParam.Me8Departamentos.Text) + ')');
+              End;
+           end;
+         end;
+         if Trim(FCaixaParam.Me8Historicos.Text) <> '' then
+          begin
+           QrResBancoCaixaAnalitico.SetVariable('HISTORICOS_CAIXA', 'TB_CAIXA_MOV.COD_HISTORICO NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+           QrResBancoCaixaAnalitico.SetVariable('HISTORICOS_BANCO', 'TB_BCO_MOVIMENTO.COD_HISTORICO NOT IN (' + Trim(FCaixaParam.Me8Historicos.Text) + ')');
+          End
+         Else
+          begin
+           QrResBancoCaixaAnalitico.SetVariable('HISTORICOS_CAIXA', '1=1');
+           QrResBancoCaixaAnalitico.SetVariable('HISTORICOS_BANCO', '1=1');
+          End;
+         QrResBancoCaixaAnalitico.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME8DtInicial.Text));
+         QrResBancoCaixaAnalitico.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME8DtFinal.Text));
+
+         QrResBancoCaixaAnalitico.Open;
+         
+         if FrCaixaBancosAnalitico = nil then
+           FrCaixaBancosAnalitico := TFrCaixaBancosAnalitico.Create(Application);
+         FrCaixaBancosAnalitico.QRLFilial.Caption := 'FILIAL :' + FCaixaParam.Ed8Filial.Text;
+         FrCaixaBancosAnalitico.QRLDepartamento.Caption := 'DEPARTAMENTO:' + FCaixaParam.Ed8Departamento.Text;
+
+         if (FCaixaParam.ME8DtInicial.Text <> '') or
+           (FCaixaParam.ME8DtFinal.Text <> '') then
+           FrCaixaBancosAnalitico.QRLTitulo.Caption := 'Movimentação de Caixa e Banco por Histórico de ' + FCaixaParam.ME8DtInicial.Text
+             + ' até ' + FCaixaParam.ME8DtFinal.Text
+         else
+           FrCaixaBancosAnalitico.QRLTitulo.Caption := 'Movimentação de Caixa por Histórico';
+
+         if DMParamSistema.CodEmpresa = 'HOSPITAL' then
+         begin //Alteração solicitado por Diego. Junior 10/08/2018.
+           FrCaixaBancosAnalitico.QRDBText3.Enabled := false; //código do cliente
+           FrCaixaBancosAnalitico.QRLabel6.Enabled  := false; //número doc.
+           FrCaixaBancosAnalitico.QRDBText8.Enabled := false; //número doc.
+         end;
+         if FCaixaParam.RGPreview.ItemIndex = 0 then
+           FrCaixaBancosAnalitico.QRPrimario.Preview
+         else
+           FrCaixaBancosAnalitico.QRPrimario.Print;
+         QrResBancoCaixaAnalitico.Close;
+       End
+    end;
+  end;
+
+end;
+
+procedure TFCaixaCad.SaldoDirio1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[12].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME12Filial.Text), 'CAIXA');
+    with DMCaixaRel do
+    begin
+      DMCaixa.QSaldo.Close;
+      if Trim(FCaixaParam.ME12DtInicial.Text) = '' then
+        raise Exception.Create('Campo Data Inicial Deve Ser Informado');
+      DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME12DtInicial.Text) - 1); //envia a SQL o Dia anterior ao informado
+
+      if Trim(FCaixaParam.ME12Filial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME12Filial.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.ME12Departamento.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.ME12Departamento.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+
+      DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      DMCaixa.QSaldo.Open;
+
+      QRSaldoDiario.Close;
+
+      if Trim(FCaixaParam.ME12Filial.Text) <> '' then
+        QRSaldoDiario.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME12Filial.Text)))
+      else
+        QRSaldoDiario.SetVariable('FILIAL', Null);
+      if Trim(FCaixaParam.ME12Departamento.Text) <> '' then
+        QRSaldoDiario.SetVariable('DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME12Departamento.Text)))
+      else
+        QRSaldoDiario.SetVariable('DEPARTAMENTO', Null);
+      QRSaldoDiario.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME12DtInicial.Text));
+      if Trim(FCaixaParam.ME12DtFinal.Text) = '' then
+        raise Exception.create('A Data final deve ser informada!');
+      QRSaldoDiario.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME12DtFinal.Text));
+
+      QRSaldoDiario.Open;
+      if FRSaldoDiario = nil then
+        FRSaldoDiario := TFRSaldoDiario.Create(Application);
+      FRSaldoDiario.QRLSaldoAnterior.Caption := FormatFloat('#,##0.00', (DMCaixa.QSaldoCredito.Value - DMCaixa.QSaldoDebito.Value));
+      FRSaldoDiario.QRLPeriodo.Caption := 'Até: ' + (FCaixaParam.ME12DtFinal.Text);
+      FRSaldoDiario.QRLFilial.Caption := 'Filial :' + (FCaixaParam.ME12Filial.Text) + ' ' + FcaixaParam.Ed12Filial.Text;
+      FRSaldoDiario.QRLDepartamento.Caption := 'Departamento :' + FcaixaParam.ME12Departamento.Text + ' ' + FCaixaParam.Ed12Departamento.Text;
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRSaldoDiario.QRPrimario.Preview
+      else
+        FRSaldoDiario.QRPrimario.Print;
+      QRSaldoDiario.Close;
+      DMCaixa.QSaldo.Close;
+    end;
+  end;
+
+end;
+
+procedure TFCaixaCad.FormCreate(Sender: TObject);
+begin
+  inherited;
+  if dsprimario.DataSet = nil then
+    dsprimario.DataSet := DMCaixa.QCaixa_Mov; //para nao perder o data set
+
+  If DMParamSistema.QParamSistemaCod_Empresa.Value <> 'RAZENTE' Then
+   Begin
+     DbImovel.Visible := False;
+     DbRAluguel.Visible := False;
+   End;
+
+end;
+
+procedure TFCaixaCad.ResumoLanamentosAgrupCaixa1Click(Sender: TObject);
+begin
+  inherited;
+{  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[8].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+      //DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME8Filial.Text),'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      QRResLancBancoCaixa.Close;
+      if Trim(FCaixaParam.Me8DtInicial.text) = '' then
+        raise exception.create('É necessário informar a data inicial');
+      if Trim(FCaixaParam.Me8DtFinal.text) = '' then
+        raise exception.create('É necessário informar a data final');
+      if Trim(FCaixaParam.ME8Filial.Text) <> '' then
+        QRResLancBancoCaixa.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME8Filial.Text)))
+      else
+        QRResLancBancoCaixa.SetVariable('FILIAL', Null);
+
+      if Trim(FCaixaParam.ME8Departamento.Text) <> '' then
+        QRResLancBancoCaixa.SetVariable('DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME8Departamento.Text)))
+      else
+        QRResLancBancoCaixa.SetVariable('DEPARTAMENTO', Null);
+
+      QRResLancBancoCaixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME8DtInicial.Text));
+      QRResLancBancoCaixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME8DtFinal.Text));
+      QRResLancBancoCaixa.Open;
+      if FRResumoLancAgrupadoCaixaBanco = nil then
+        FRResumoLancAgrupadoCaixaBanco := TFRResumoLancAgrupadoCaixaBanco.Create(Application);
+      FRResumoLancAgrupadoCaixaBanco.QRLFilial.Caption := 'FILIAL :' + FCaixaParam.Ed8Filial.Text;
+      FRResumoLancAgrupadoCaixaBanco.QRLDepartamento.Caption := 'DEPARTAMENTO:' + FCaixaParam.Ed8Departamento.Text;
+
+      if (FCaixaParam.ME8DtInicial.Text <> '') or
+         (FCaixaParam.ME8DtFinal.Text <> '') then
+        FRResumoLancAgrupadoCaixaBanco.QRLTitulo.Caption := 'Movimentação de Caixa e Banco por Histórico de ' + FCaixaParam.ME8DtInicial.Text
+          + ' até ' + FCaixaParam.ME8DtFinal.Text
+      else
+        FRResumoLancAgrupadoCaixaBanco.QRLTitulo.Caption := 'Movimentação de Caixa por Histórico';
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRResumoLancAgrupadoCaixaBanco.QRPrimario.Preview
+      else
+        FRResumoLancAgrupadoCaixaBanco.QRPrimario.Print;
+      QRResLancBancoCaixa.Close;
+    end;
+  end;
+  }
+end;
+
+procedure TFCaixaCad.RelatrioSaldosporDepartamento1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[14].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME14Filial.Text), 'CAIXA');
+    with DMCaixaRel do
+    begin
+      QRSaldoDepartamento.Close;
+      if Trim(FCaixaParam.ME14Filial.Text) <> '' then
+        QRSaldoDepartamento.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.ME14Filial.Text)))
+      else
+        QRSaldoDepartamento.SetVariable('FILIAL', Null);
+      if Trim(FCaixaParam.ME14Departamento.Text) <> '' then
+        QRSaldoDepartamento.SetVariable('DEPARTAMENTO', StrToInt(Trim(FCaixaParam.ME14Departamento.Text)))
+      else
+        QRSaldoDepartamento.SetVariable('DEPARTAMENTO', Null);
+          //QRSaldoDepartamento.SetVariable('DT_INICIAL',StrToDate(FCaixaParam.ME12DtInicial.Text));
+      if Trim(FCaixaParam.ME14DtFinal.Text) = '' then
+        raise Exception.create('A Data final deve ser informada!');
+      QRSaldoDepartamento.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME14DtFinal.Text));
+
+      QRSaldoDepartamento.Open;
+      if FrCaixaSaldoDep = nil then
+        FrCaixaSaldoDep := TFrCaixaSaldoDep.Create(Application);
+      FrCaixaSaldoDep.QRLPeriodo.Caption := {'Periodo de: '+(FCaixaParam.ME12DtInicial.Text)+} ' até: ' + (FCaixaParam.ME14DtFinal.Text);
+      FrCaixaSaldoDep.QRLFilial.Caption := 'Filial :' + (FCaixaParam.ME14Filial.Text) + ' ' + FcaixaParam.Ed14Filial.Text;
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FrCaixaSaldoDep.QRPrimario.Preview
+      else
+        FrCaixaSaldoDep.QRPrimario.Print;
+      QRSaldoDepartamento.Close;
+    end;
+  end;
+end;
+
+function primeiroDiaMes(dt: TDate): TDate;
+var d, m, a: word;
+begin
+  DecodeDate(dt, a, m, d);
+  result := strtodate('01/' + inttostr(m) + '/' + inttostr(a));
+end;
+
+function ultimoDiaMes(dt: TDate): TDate;
+var d, m, a: word;
+begin
+  DecodeDate(dt, a, m, d);
+  if m = 12 then m := 1 else m := m + 1;
+  result := strtodate('01/' + inttostr(m) + '/' + inttostr(a)) - 1;
+end;
+
+function mesExtenso(dt: TDate): string;
+var
+  d, m, a: word;
+begin
+  DecodeDate(dt, a, m, d);
+  if m = 1 then result := 'Jan/' + inttostr(a);
+  if m = 2 then result := 'Fev/' + inttostr(a);
+  if m = 3 then result := 'Mar/' + inttostr(a);
+  if m = 4 then result := 'Abr/' + inttostr(a);
+  if m = 5 then result := 'Mai/' + inttostr(a);
+  if m = 6 then result := 'Jun/' + inttostr(a);
+  if m = 7 then result := 'Jul/' + inttostr(a);
+  if m = 8 then result := 'Ago/' + inttostr(a);
+  if m = 9 then result := 'Set/' + inttostr(a);
+  if m = 10 then result := 'Out/' + inttostr(a);
+  if m = 11 then result := 'Nov/' + inttostr(a);
+  if m = 12 then result := 'Dez/' + inttostr(a);
+end;
+
+procedure TFCaixaCad.ResumoIndicadores1Click(Sender: TObject);
+var
+  wCodFilial, wPrimeiroDiaMes, wUltimoDiaMes: string;
+  wVendaBruta, wVendaVista, wCustoVenda: real;
+  wMes: TDate;
+  i: integer;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[15].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    if FRResumoIndicadores = nil then
+      FRResumoIndicadores := TFRResumoIndicadores.create(application);
+
+    if trim(FCaixaParam.ME15Filial.Text) = '' then
+      wCodFilial := 'NULL'
+    else
+      wCodFilial := trim(FCaixaParam.ME15Filial.Text);
+
+    wPrimeiroDiaMes := DateToStr(primeiroDiaMes(strtodate(FCaixaParam.ME15DtReferencia.Text)));
+    wUltimoDiaMes := DateToStr(ultimoDiaMes(strtodate(FCaixaParam.ME15DtReferencia.Text)));
+
+    {*** calcula o total em estoque ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VL_CUSTO_MEDIO * QT_QUANTIDADE)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_ESTOQUE');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_ESTOQUE.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlValorEstoque.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total de itens em estoque ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(QT_QUANTIDADE)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_ESTOQUE');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_ESTOQUE.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlTotalItensEstoque.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula as vendas brutas acumulada ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasBrutasAC.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wVendaBruta := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula o custo medio das mercadorias vendidas acumulada ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_CUSTO * TB_NOTA_ITEM.QT_QUANTIDADE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlCMVAVistaAC.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wCustoVenda := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula a margem bruta acumulada ***}
+    if wVendaBruta <> 0 then
+      FRResumoIndicadores.qrlMargemBrutaAC.Caption := FormatFloat('#,##0.00', (1 - wCustoVenda / wVendaBruta) * 100)
+    else
+      FRResumoIndicadores.qrlMargemBrutaAC.Caption := '0,00';
+    {*** fim ***}
+
+    {*** calcula as vendas A VISTA acumulada ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_CONDICAO_PAGTO = ''1''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasAVistaAC.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wVendaVista := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula as vendas A PRAZO acumulada ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_CONDICAO_PAGTO <> ''1''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasAPrazoAC.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+
+    {*** porcentagem da venda a vista e venda a prazo acumulada ***}
+    if wVendaBruta <> 0 then
+      FRResumoIndicadores.qrlPercAVistaAC.Caption := FormatFloat('#,##0.00', wVendaVista * 100 / wVendaBruta)
+    else
+      FRResumoIndicadores.qrlPercAVistaAC.Caption := '0,00';
+    if wVendaBruta <> 0 then
+      FRResumoIndicadores.qrlPercAPrazoAC.Caption := FormatFloat('#,##0.00', 100 - wVendaVista * 100 / wVendaBruta)
+    else
+      FRResumoIndicadores.qrlPercAPrazoAC.Caption := '0,00';
+    {*** fim ***}
+
+
+    {*** calcula as vendas brutas ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO = ''' + FCaixaParam.ME15DtReferencia.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasBrutas.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wVendaBruta := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula o custo medio das mercadorias vendidas ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_CUSTO * TB_NOTA_ITEM.QT_QUANTIDADE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO = ''' + FCaixaParam.ME15DtReferencia.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlCMVAVista.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wCustoVenda := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula a margem bruta acumulada ***}
+    if wVendaBruta <> 0 then
+      FRResumoIndicadores.qrlMargemBruta.Caption := FormatFloat('#,##0.00', (1 - wCustoVenda / wVendaBruta) * 100)
+    else
+      FRResumoIndicadores.qrlMargemBruta.Caption := '0,00';
+    {*** fim ***}
+
+    {*** calcula as vendas a vista ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_CONDICAO_PAGTO = ''1''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO = ''' + FCaixaParam.ME15DtReferencia.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasAVista.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    wVendaVista := DMOracle.QExecSQL.Fields[0].AsFloat;
+    {*** fim ***}
+
+    {*** calcula as vendas a prazo ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(Tb_nota_item.VAL_TOTAL-DECODE(TB_NOTA_CAB.VAL_DESCONTO,0,0,Tb_nota_item.VAL_DESCONTO)+Tb_nota_item.VAL_DESPESAS+Tb_nota_item.VAL_FRETE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_CONDICAO_PAGTO <> ''1''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO = ''' + FCaixaParam.ME15DtReferencia.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlVendasAPrazo.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** porcentagem da venda a vista e venda a prazo acumulada ***}
+    if wVendaBruta > 0 then
+      FRResumoIndicadores.qrlPercAVista.Caption := FormatFloat('#,##0.00', wVendaVista * 100 / wVendaBruta)
+    else
+      FRResumoIndicadores.qrlPercAVista.Caption := '0,00';
+
+    if wVendaBruta > 0 then
+      FRResumoIndicadores.qrlPercAPrazo.Caption := FormatFloat('#,##0.00', 100 - wVendaVista * 100 / wVendaBruta)
+    else
+      FRResumoIndicadores.qrlPercAPrazo.Caption := '0,00';
+    {*** fim ***}
+
+    {*** calcula o numero de itens vendidos acumulados ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(TB_NOTA_ITEM.QT_QUANTIDADE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlNumItensAC.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o numero de itens vendidos ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(TB_NOTA_ITEM.QT_QUANTIDADE) AS SVAL_TOTAL');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB,');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_ITEM');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_ENTRADA_SAIDA = ''S''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.IND_SITUACAO = ''2''');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_NOTA_CAB.DT_EMISSAO = ''' + FCaixaParam.ME15DtReferencia.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_NOTA_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlNumItens.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total do contas a receber ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber vencidas ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO < ''' + FCaixaParam.ME15DtHoje.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceberVenc.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes atual ***}
+    wMes := StrToDate(FCaixaParam.ME15DtHoje.Text);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + FCaixaParam.ME15DtHoje.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber1.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber1.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 2 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber2.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber2.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 3 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber3.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber3.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 4 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber4.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber4.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 5 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber5.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber5.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 6 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber6.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber6.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 7 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber7.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber7.Caption := 'Tot. Rec. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a receber no mes 8 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_RECEBER_CAB.DT_VENCIMENTO >= ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_RECEBER_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasReceber8.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesReceber8.Caption := 'Tot. Rec. ' + mesExtenso(wMes) + '+';
+    {*** fim ***}
+
+    {*** calcula o total do contas a pagar ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar vencidas ***}
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO < ''' + FCaixaParam.ME15DtHoje.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagarVenc.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes atual ***}
+    wMes := StrToDate(FCaixaParam.ME15DtHoje.Text);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + FCaixaParam.ME15DtHoje.Text + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar1.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar1.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 2 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar2.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar2.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 3 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar3.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar3.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 4 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar4.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar4.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 5 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar5.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar5.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 6 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar6.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar6.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 7 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >=  ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO <= ''' + wUltimoDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar7.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar7.Caption := 'Tot. Pag. ' + mesExtenso(wMes);
+    {*** fim ***}
+
+    {*** calcula o total das contas a pagar no mes 8 ***}
+    wMes := IncMonth(wMes, 1);
+    wPrimeiroDiaMes := datetostr(primeiroDiaMes(wMes));
+    wUltimoDiaMes := datetostr(ultimoDiaMes(wMes));
+
+    DMOracle.QExecSQL.Close;
+    DMOracle.QExecSQL.SQL.Clear;
+    DMOracle.QExecSQL.SQL.Add('SELECT');
+    DMOracle.QExecSQL.SQL.Add('  SUM(VAL_TITULO)');
+    DMOracle.QExecSQL.SQL.Add('FROM');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB');
+    DMOracle.QExecSQL.SQL.Add('WHERE');
+    DMOracle.QExecSQL.SQL.Add('  TB_CONTA_PAGAR_CAB.DT_VENCIMENTO >= ''' + wPrimeiroDiaMes + ''' ');
+    DMOracle.QExecSQL.SQL.Add('  AND');
+    DMOracle.QExecSQL.SQL.Add('  (' + wCodFilial + ' IS NULL OR');
+    DMOracle.QExecSQL.SQL.Add('    TB_CONTA_PAGAR_CAB.COD_FILIAL = ' + wCodFilial + ')');
+    DMOracle.QExecSQL.open;
+    FRResumoIndicadores.qrlContasPagar8.Caption := FormatFloat('#,##0.00', DMOracle.QExecSQL.Fields[0].AsFloat);
+    FRResumoIndicadores.qrlMesPagar8.Caption := 'Tot. Rec. ' + mesExtenso(wMes) + '+';
+    {*** fim ***}
+
+
+    {*** calcula o saldo do caixa ***}
+    DMCaixa.QSaldo.Close;
+    DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME15DtHoje.Text));
+
+    if Trim(FCaixaParam.ME15Filial.Text) <> '' then
+      DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME15Filial.Text)))
+    else
+      DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+    DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+    DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+    DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+    DMCaixa.QSaldo.Open;
+
+    DMCaixaRel.QRCaixa_MovCaixa.Close;
+    if Trim(FCaixaParam.ME15Filial.Text) <> '' then
+      DMCaixaRel.QRCaixa_MovCaixa.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME15Filial.Text)))
+    else
+      DMCaixaRel.QRCaixa_MovCaixa.SetVariable('COD_FILIAL', Null);
+
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('DEPARTAMENTOS', '1=1');
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('COD_HISTORICO',Null);
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('COD_HISTORICO_F',Null);
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('COD_CADASTRO',Null);
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.ME15DtReferencia.Text));
+    DMCaixaRel.QRCaixa_MovCaixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.ME15DtReferencia.Text));
+
+    DMCaixaRel.QRCaixa_MovCaixa.Open;
+
+    wReceita := 0;
+    wDespesa := 0;
+    DMCaixaRel.QRCaixa_MovCaixa.first;
+    for i := 1 to DMCaixaRel.QRCaixa_MovCaixa.recordcount do
+    begin
+      if DMCaixaRel.QRCaixa_MovCaixaInd_Operacao.Value = '+' then
+        wReceita := wReceita + DMCaixaRel.QRCaixa_MovCaixaVal_Movimento.Value
+      else
+        wDespesa := wDespesa + DMCaixaRel.QRCaixa_MovCaixaVal_Movimento.Value;
+      DMCaixaRel.QRCaixa_MovCaixa.Next;
+    end;
+    FRResumoIndicadores.qrlSaldoCaixa.Caption := FormatFloat('#,##0.00', DMCaixa.QSaldoCredito.Value - DMCaixa.QSaldoDebito.Value + wReceita - wDespesa);
+    DMCaixaRel.QRCaixa_MovCaixa.close;
+    {*** fim ***}
+
+    {*** despesas comissoes, etc, estao em um subdetail no relatorio ***}
+    DMCaixaRel.QRIndicadoresDesp.Close;
+    if Trim(FCaixaParam.ME15Filial.Text) <> '' then
+      DMCaixaRel.QRIndicadoresDesp.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.ME15Filial.Text)))
+    else
+      DMCaixaRel.QRIndicadoresDesp.SetVariable('COD_FILIAL', Null);
+
+    DMCaixaRel.QRIndicadoresDesp.SetVariable('DT_MOVIMENTO_INI', StrToDate({wPrimeiroDiaMes}'01/01/1000'));
+    DMCaixaRel.QRIndicadoresDesp.SetVariable('DT_MOVIMENTO_FIM', StrToDate({wUltimoDiaMes}'01/01/3000'));
+
+    DMCaixaRel.QRIndicadoresDesp.Open;
+    {*** fim ***}
+
+
+
+    if FCaixaParam.RGPreview.ItemIndex = 0 then
+      FRResumoIndicadores.QRPrimario.Preview
+    else
+      FRResumoIndicadores.QRPrimario.Print;
+  end;
+end;
+
+procedure TFCaixaCad.FluxodeCaixaRealizado1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[16].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    with DMCaixaRel do
+    begin
+      QRFluxoCaixaRealizado.Close;
+      QRFluxoCaixaRealizadoSint.Close;
+      if FCaixaParam.RG17Opcao.ItemIndex = 0 then
+      begin
+        if trim(FCaixaParam.FmFilial17.MeFilial.Text) <> '' then
+          QRFluxoCaixaRealizado.SetVariable('FILIAL', trim(FCaixaParam.FmFilial17.MeFilial.Text))
+        else
+          QRFluxoCaixaRealizado.SetVariable('FILIAL', null);
+        if trim(FCaixaParam.FmDepartamento17.MeDepartamento.Text) <> '' then
+          QRFluxoCaixaRealizado.SetVariable('DEPARTAMENTO', trim(FCaixaParam.FmDepartamento17.MeDepartamento.Text))
+        else
+          QRFluxoCaixaRealizado.SetVariable('DEPARTAMENTO', null);
+        if trim(FCaixaParam.FmHistorico17.MeHistorico.Text) <> '' then
+          QRFluxoCaixaRealizado.SetVariable('HISTORICO', trim(FCaixaParam.FmHistorico17.MeHistorico.Text))
+        else
+          QRFluxoCaixaRealizado.SetVariable('HISTORICO', null);
+        if trim(FCaixaParam.FmCadastro17.MeCadastro.Text) <> '' then
+          QRFluxoCaixaRealizado.SetVariable('CADASTRO', trim(FCaixaParam.FmCadastro17.MeCadastro.Text))
+        else
+          QRFluxoCaixaRealizado.SetVariable('CADASTRO', null);
+        if trim(FCaixaParam.Me17Data_I.Text) <> '' then
+        begin
+          if trim(FCaixaParam.Me17Data_F.Text) <> '' then
+            QRFluxoCaixaRealizado.SetVariable('DATA_F', trim(FCaixaParam.Me17Data_F.Text))
+          else
+            FCaixaParam.Me17Data_F.Text := DateToStr(Date);
+          QRFluxoCaixaRealizado.SetVariable('DATA_I', trim(FCaixaParam.Me17Data_I.Text));
+        end
+        else
+          raise Exception.Create('Data inicial deve ser informada');
+                 
+        QRFluxoCaixaRealizado.Open;
+
+        if FRFluxoCaixaRealizado = nil then
+          FRFluxoCaixaRealizado := TFRFluxoCaixaRealizado.Create(Application);
+        if trim(FCaixaParam.FmFilial17.MeFilial.Text) <> '' then
+          FRFluxoCaixaRealizado.QRLFilial.Caption := 'Filial: ' + trim(FCaixaParam.FmFilial17.MeFilial.Text)
+        else
+          FRFluxoCaixaRealizado.QRLFilial.Caption := 'Filial: TODAS';
+        FRFluxoCaixaRealizado.QRLPeriodo.Caption := 'Período de: ' + FCaixaParam.Me17Data_I.Text + ' até ' +
+          FCaixaParam.Me17Data_F.Text;
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRFluxoCaixaRealizado.QRPrimario.Preview
+        else
+          FRFluxoCaixaRealizado.QRPrimario.Print;
+      end
+      else
+      begin
+        if trim(FCaixaParam.FmFilial17.MeFilial.Text) <> '' then
+          QRFluxoCaixaRealizadoSint.SetVariable('FILIAL', trim(FCaixaParam.FmFilial17.MeFilial.Text))
+        else
+          QRFluxoCaixaRealizadoSint.SetVariable('FILIAL', null);
+        if trim(FCaixaParam.FmDepartamento17.MeDepartamento.Text) <> '' then
+          QRFluxoCaixaRealizadoSint.SetVariable('DEPARTAMENTO', trim(FCaixaParam.FmDepartamento17.MeDepartamento.Text))
+        else
+          QRFluxoCaixaRealizadoSint.SetVariable('DEPARTAMENTO', null);
+        if trim(FCaixaParam.FmHistorico17.MeHistorico.Text) <> '' then
+          QRFluxoCaixaRealizadoSint.SetVariable('HISTORICO', trim(FCaixaParam.FmHistorico17.MeHistorico.Text))
+        else
+          QRFluxoCaixaRealizadoSint.SetVariable('HISTORICO', null);
+        if trim(FCaixaParam.FmCadastro17.MeCadastro.Text) <> '' then
+          QRFluxoCaixaRealizadoSint.SetVariable('CADASTRO', trim(FCaixaParam.FmCadastro17.MeCadastro.Text))
+        else
+          QRFluxoCaixaRealizadoSint.SetVariable('CADASTRO', null);
+        if trim(FCaixaParam.Me17Data_I.Text) <> '' then
+        begin
+          if trim(FCaixaParam.Me17Data_F.Text) <> '' then
+            QRFluxoCaixaRealizadoSint.SetVariable('DATA_F', trim(FCaixaParam.Me17Data_F.Text))
+          else
+            FCaixaParam.Me17Data_F.Text := DateToStr(Date);
+          QRFluxoCaixaRealizadoSint.SetVariable('DATA_I', trim(FCaixaParam.Me17Data_I.Text));
+        end
+        else
+          raise Exception.Create('Data inicial deve ser informada');
+
+        QRFluxoCaixaRealizadoSint.Open;
+
+        if FRFluxoCaixaRealizadoSint = nil then
+          FRFluxoCaixaRealizadoSint := TFRFluxoCaixaRealizadoSint.Create(Application);
+        if trim(FCaixaParam.FmFilial17.MeFilial.Text) <> '' then
+          FRFluxoCaixaRealizadoSint.QRLFilial.Caption := 'Filial: ' + trim(FCaixaParam.FmFilial17.EdFilial.Text)
+        else
+          FRFluxoCaixaRealizadoSint.QRLFilial.Caption := '';
+        if (trim(FCaixaParam.Me17Data_I.Text) <> '') and (trim(FCaixaParam.Me17Data_F.Text) <> '') then
+          FRFluxoCaixaRealizadoSint.QRLPeriodo.Caption := 'Período: ' + trim(FCaixaParam.Me17Data_I.Text) +
+            ' até ' + trim(FCaixaParam.Me17Data_F.Text);
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRFluxoCaixaRealizadoSint.QRPrimario.Preview
+        else
+          FRFluxoCaixaRealizadoSint.QRPrimario.Print;
+      end;
+    end;
+
+  end;
+end;
+
+procedure TFCaixaCad.MovimentodeCaixaporClienteeHistrico1Click(
+  Sender: TObject);
+var
+  wdt_inicial, wdt_final: string;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[17].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.Fm18Filial.MeFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      if (Trim(FCaixaParam.Fm18Datas.MeDtInicial.Text) = '') or
+        (Trim(FCaixaParam.Fm18Datas.MeDtFinal.Text) = '') then
+      begin
+        MessageDlg('Por favor, informe as datas corretamente.', mtInformation, [mbOK], 0);
+        Exit;
+      end;
+
+      QRCaixa_Det.Close;
+      if Trim(FCaixaParam.Fm18Datas.MeDtInicial.Text) <> '' then
+        QRCaixa_Det.SetVariable('DT_INICIAL', StrToDate(Trim(FCaixaParam.Fm18Datas.MeDtInicial.Text)))
+      else
+        QRCaixa_Det.SetVariable('DT_INICIAL', Null);
+
+      if Trim(FCaixaParam.Fm18Datas.MeDtFinal.Text) <> '' then
+        QRCaixa_Det.SetVariable('DT_FINAL', StrToDate(Trim(FCaixaParam.Fm18Datas.MeDtFinal.Text)))
+      else
+        QRCaixa_Det.SetVariable('DT_FINAL', Null);
+
+      if Trim(FCaixaParam.Fm18Filial.MeFilial.Text) <> '' then
+        QRCaixa_Det.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm18Filial.MeFilial.Text)))
+      else
+        QRCaixa_Det.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text) <> '' then
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_DET.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text) + ')')
+      else
+        QRCaixa_Det.SetVariable('DEPARTAMENTOS', '1=1');
+      QRCaixa_Det.Open;
+
+      DMCaixa.QSaldo.Close;
+      if Trim(FCaixaParam.Fm18Datas.MeDtInicial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.Fm18Datas.MeDtInicial.Text) - 1)
+      else
+        DMCaixa.QSaldo.SetVariable('DT_FINAL', StrToDate('01/01/1900'));
+
+      if Trim(FCaixaParam.Fm18Filial.MeFilial.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm18Filial.MeFilial.Text)))
+      else
+        DMCaixa.QSaldo.SetVariable('COD_FILIAL', Null);
+
+      if Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', 'TB_CAIXA_MOV.COD_DEPARTAMENTO IN (' + Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text) + ')')
+      else
+        DMCaixa.QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+
+      if Trim(FCaixaParam.Fm18Historico.MeHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.Fm18Historico.MeHistorico.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO', Null);
+      if Trim(FCaixaParam.Fm18HistoricoFinal.MeHistorico.Text) <> '' then
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.Fm18HistoricoFinal.MeHistorico.Text)))
+      Else
+        DMCaixa.QSaldo.SetVariable('COD_HISTORICO_F', Null);
+
+      DMCaixa.QSaldo.Open;
+
+      QRCaixa_MovCaixaCliente.Close;
+      if Trim(FCaixaParam.Fm18Filial.MeFilial.Text) <> '' then
+        QRCaixa_MovCaixaCliente.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm18Filial.MeFilial.Text)))
+      else
+        QRCaixa_MovCaixaCliente.SetVariable('COD_FILIAL', Null);
+      if Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text) <> '' then
+        QRCaixa_MovCaixaCliente.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.Fm18Departamento.MeDepartamento.Text)))
+      else
+        QRCaixa_MovCaixaCliente.SetVariable('COD_DEPARTAMENTO', Null);
+      if Trim(FCaixaParam.Fm18Historico.MeHistorico.Text) <> '' then
+        QRCaixa_MovCaixaCliente.SetVariable('COD_HISTORICO', StrToInt(Trim(FCaixaParam.Fm18Historico.MeHistorico.Text)))
+      else
+        QRCaixa_MovCaixaCliente.SetVariable('COD_HISTORICO', Null);
+      if Trim(FCaixaParam.Fm18HistoricoFinal.MeHistorico.Text) <> '' then
+        QRCaixa_MovCaixaCliente.SetVariable('COD_HISTORICO_F', StrToInt(Trim(FCaixaParam.Fm18HistoricoFinal.MeHistorico.Text)))
+      else
+        QRCaixa_MovCaixaCliente.SetVariable('COD_HISTORICO_F', Null);
+      if Trim(FCaixaParam.Fm18Cadastro.MeCadastro.Text) <> '' then
+        QRCaixa_MovCaixaCliente.SetVariable('COD_CADASTRO', StrToInt(Trim(FCaixaParam.Fm18Cadastro.MeCadastro.Text)))
+      else
+        QRCaixa_MovCaixaCliente.SetVariable('COD_CADASTRO', Null);
+
+      wdt_inicial := DateToStr(StrToDate(FCaixaParam.Fm18Datas.MeDtInicial.Text));
+      QRCaixa_MovCaixaCliente.SetVariable('DT_INICIAL', wdt_inicial);
+      wdt_final := DateToStr(StrToDate(FCaixaParam.Fm18Datas.MeDtFinal.Text));
+      QRCaixa_MovCaixaCliente.SetVariable('DT_FINAL', wdt_final);
+      QRCaixa_MovCaixaCliente.Open;
+
+      if FRCaixa_MovCaixaCliente = nil then
+        FRCaixa_MovCaixaCliente := TFRCaixa_MovCaixaCliente.Create(Application);
+      if FRCaixa_MovCaixaSint = nil then
+        FRCaixa_MovCaixaSint := TFRCaixa_MovCaixaSint.Create(Application);
+
+      FRCaixa_MovCaixaCliente.QRLPeriodo.Caption := 'Periodo de ' + wdt_inicial + ' até ' + wdt_Final;
+      FRCaixa_MovCaixaCliente.QRLFilial.Caption := FCaixaParam.Fm18Filial.MeFilial.Text +
+        ' - ' + FCaixaParam.Fm18Filial.EdFilial.Text;
+      FRCaixa_MovCaixaCliente.QRLHistorico.Caption := FCaixaParam.Fm18Historico.MeHistorico.Text +
+        ' - ' + FCaixaParam.Fm18Historico.EdHistorico.Text;
+      FRCaixa_MovCaixaCliente.QRLHistoricoFinal.Caption := FCaixaParam.Fm18HistoricoFinal.MeHistorico.Text +
+        ' - ' + FCaixaParam.Fm18HistoricoFinal.EdHistorico.Text;
+      FRCaixa_MovCaixaCliente.QRLDepartamento.Caption := FCaixaParam.Fm18Departamento.MeDepartamento.Text +
+        ' - ' + FCaixaParam.Fm18Departamento.EdDepartamento.Text;
+      FRCaixa_MovCaixaCliente.QRLCadastro.Caption := FCaixaParam.Fm18Cadastro.MeCadastro.Text +
+        ' - ' + FCaixaParam.Fm18Cadastro.EdCadastro.Text;
+      if DMParamSistema.CodEmpresa = 'HOSPITAL' then
+      begin //Alteração solicitada por Diego. Junior 10/08/2018
+        FRCaixa_MovCaixaCliente.QRLabel8.Caption := 'Funcionario';
+        FRCaixa_MovCaixaCliente.QRDBText3.Enabled := False; //Cod cadastro
+      end;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        QRCompositeReport1.Preview
+      else
+        QRCompositeReport1.Print;
+      QRCaixa_MovCaixaCliente.Close;
+      DMCaixa.QSaldo.Close;
+      QRCaixa_Det.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.QRCompositeReport1AddReports(Sender: TObject);
+begin
+  inherited;
+  QRCompositeReport1.Reports.Add(FRCaixa_MovCaixaCliente.QRPrimario);
+  QRCompositeReport1.Reports.Add(FRCaixa_MovCaixaSint.QRPrimario);
+end;
+
+procedure TFCaixaCad.DREporCaixa1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[18].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+      //DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.ME8Filial.Text),'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+
+      QRDre_Caixa.Close;
+	    QRDre_Caixa_Analitico.Close;
+	  
+      if Trim(FCaixaParam.Fm19Datas.MeDtInicial.Text) = '' then
+        raise exception.create('É necessário informar a data inicial');
+      if Trim(FCaixaParam.Fm19Datas.MeDtFinal.Text) = '' then
+        raise exception.create('É necessário informar a data final');
+		
+	
+      if FCaixaParam.RgTipoRelatorio18.ItemIndex = 0 then
+      begin
+
+          if Trim(FCaixaParam.Fm19Filial.MeFilial.Text) <> '' then
+            QRDre_Caixa.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm19Filial.MeFilial.Text)))
+          else
+            QRDre_Caixa.SetVariable('COD_FILIAL', Null);
+
+          QRDre_Caixa.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.Fm19Datas.MeDtInicial.Text));
+          QRDre_Caixa.SetVariable('DT_FINAL', StrToDate(FCaixaParam.Fm19Datas.MeDtFinal.Text));
+          QRDre_Caixa.Open;
+          if FrDreCaixa = nil then
+            FrDreCaixa := TFrDreCaixa.Create(Application);
+          FrDreCaixa.QRLFilial.Caption := 'FILIAL :' + FCaixaParam.Fm19Filial.EdFilial.Text;
+        
+          FrDreCaixa.QRLTitulo.Caption := 'Demonstrativo de Resultado de ' + FCaixaParam.Fm19Datas.MeDtInicial.Text + ' Até ' + FCaixaParam.Fm19Datas.MeDtFinal.Text;
+        
+          if FCaixaParam.RGPreview.ItemIndex = 0 then
+            FrDreCaixa.QRPrimario.Preview
+          else
+            FrDreCaixa.QRPrimario.Print; 		  
+          QRDre_Caixa.Close;
+		
+      end
+      else
+      begin
+		
+        if Trim(FCaixaParam.Fm19Filial.MeFilial.Text) <> '' then
+          QRDre_Caixa_Analitico.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm19Filial.MeFilial.Text)))
+        else
+          QRDre_Caixa_Analitico.SetVariable('COD_FILIAL', Null);
+
+          QRDre_Caixa_Analitico.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.Fm19Datas.MeDtInicial.Text));
+          QRDre_Caixa_Analitico.SetVariable('DT_FINAL', StrToDate(FCaixaParam.Fm19Datas.MeDtFinal.Text));
+          QRDre_Caixa_Analitico.Open;
+        if FRELDREANALITICO = nil then
+          FRELDREANALITICO := TFRELDREANALITICO.Create(Application);
+          FRELDREANALITICO.QRLFilial.Caption := 'FILIAL :' + FCaixaParam.Fm19Filial.EdFilial.Text;
+
+          FRELDREANALITICO.QRLTitulo.Caption := 'Demonstrativo de Resultado de ' + FCaixaParam.Fm19Datas.MeDtInicial.Text + ' Até ' + FCaixaParam.Fm19Datas.MeDtFinal.Text;
+
+        if FCaixaParam.RGPreview.ItemIndex = 0 then
+          FRELDREANALITICO.QRPrimario.Preview
+        else
+          FRELDREANALITICO.QRPrimario.Print;
+
+        QRDre_Caixa_Analitico.Close;
+
+      end;
+
+    end;
+  end;
+
+end;
+
+procedure TFCaixaCad.DBPFilialDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FFilialCons;
+  Classe := TFFilialCons;
+end;
+
+procedure TFCaixaCad.DBPDepartamentoDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FDepartamentoCons;
+  Classe := TFDepartamentoCons;
+end;
+
+procedure TFCaixaCad.DBPHistoricoDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FHistoricoCons;
+  Classe := TFHistoricoCons;
+end;
+
+procedure TFCaixaCad.DBPHistoricoValidate(Sender: TObject; Value: Variant;
+  var isValid: Boolean; var Msg: string);
+var
+  wDep: string;
+begin
+  inherited;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'MOINHO') and
+    (not DMCaixa.QCaixa_MovCOD_HISTORICO.IsNull) then
+  begin
+    wDep := DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_HISTORICO',
+      'COD_HISTORICO = ' + DMCaixa.QCaixa_MovCOD_HISTORICO.Text);
+    isValid := (wDep = '') or (wDep = DMCaixa.QCaixa_MovCOD_DEPARTAMENTO.Text);
+    if not isValid then
+      Msg := 'Historico Não Permitido Para Este Departamento';
+  end;
+end;
+
+procedure TFCaixaCad.DBPanel7CodigoExit(Sender: TObject);
+begin
+  inherited;
+  If (DMParamSistema.CodEmpresa <> 'RAZENTE')    and (DMParamSistema.CodEmpresa <> 'NIR') and
+     (DMParamSistema.CodEmpresa <> 'FURGOESMED') and (DMParamSistema.CodEmpresa <> 'HOSPITAL')  Then
+     if DSPrimario.State in [DsInsert, DsEdit] then
+      if DMCaixa.QCaixa_MovCOD_CADASTRO.Text <> '' then
+         DMCaixa.QCaixa_MovDESC_COMPLEMENTO.Value := DMOracle.BuscaNome('SELECT NOME FROM TB_CADASTRO',
+          'COD_CADASTRO = ' + DMCaixa.QCaixa_MovCOD_CADASTRO.Text);
+end;
+
+procedure TFCaixaCad.DBPanel7DefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FCadastroCons;
+  Classe := TFCadastroCons;
+end;
+
+procedure TFCaixaCad.DBPanel7AfterConsulta(Sender: TObject);
+begin
+  inherited;
+  DBPanel7CodigoExit(Self);
+end;
+
+procedure TFCaixaCad.OrigemeDestinodeValores1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[19].TabVisible := True;
+  if Trim(FCaixaParam.FmDatas19.MeDtInicial.Text) = '' then
+    FCaixaParam.FmDatas19.MeDtInicial.Text :=
+      DateToStr(DMOracle.DataServ);
+  if Trim(FCaixaParam.FmDatas19.MeDtFinal.Text) = '' then
+    FCaixaParam.FmDatas19.MeDtFinal.Text :=
+      DateToStr(DMOracle.DataServ);
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    with DMCaixaRel do
+    begin
+      with FCaixaParam do
+      begin
+        QROrigDestValores.Close;
+        QROrigDestValores.SetVariable('COD_FILIAL',
+          bib.ift(Trim(FmFilial19.MeFilial.Text) = '', NULL,
+          Trim(FmFilial19.MeFilial.Text)));
+        QROrigDestValores.SetVariable('COD_DEPARTAMENTO',
+          bib.ift(Trim(FmDepartamento19.MEDepartamento.Text)  = '',
+          NULL,Trim(FmDepartamento19.MEDepartamento.Text)));
+        QROrigDestValores.SetVariable('DATA_SALDO', FmDatas19.MeDtInicial.Text);
+        QROrigDestValores.Open;
+        if FROrigemDestinoValores = Nil then
+          FROrigemDestinoValores := TFROrigemDestinoValores.Create(Application);
+        FROrigemDestinoValores.QRLFilial.Caption :=
+          DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL','COD_FILIAL = ' +
+          IntToStr(DMUsuario.CodFilialUsuario));
+        FROrigemDestinoValores.QRLDataRef.Caption := FmDatas19.MeDtInicial.Text;
+
+        QROrigDestValoresHoje.Close;
+        QROrigDestValoresHoje.SetVariable('COD_FILIAL',
+          bib.ift(Trim(FmFilial19.MeFilial.Text) = '', NULL,
+          Trim(FmFilial19.MeFilial.Text)));
+        QROrigDestValoresHoje.SetVariable('COD_DEPARTAMENTO',
+          bib.ift(Trim(FmDepartamento19.MEDepartamento.Text)  = '',
+          NULL,Trim(FmDepartamento19.MEDepartamento.Text)));
+        QROrigDestValoresHoje.SetVariable('DT_INICIAL', FmDatas19.MeDtInicial.Text);
+        QROrigDestValoresHoje.SetVariable('DT_FINAL', FmDatas19.MeDtFinal.Text);
+        QROrigDestValoresHoje.Open;
+
+        QROrigDestValoresFinal.Close;
+        QROrigDestValoresFinal.SetVariable('COD_FILIAL',
+          bib.ift(Trim(FmFilial19.MeFilial.Text) = '', NULL,
+          Trim(FmFilial19.MeFilial.Text)));
+        QROrigDestValoresFinal.SetVariable('COD_DEPARTAMENTO',
+          bib.ift(Trim(FmDepartamento19.MEDepartamento.Text)  = '',
+          NULL,Trim(FmDepartamento19.MEDepartamento.Text)));
+        QROrigDestValoresFinal.SetVariable('DATA_SALDO', FmDatas19.MeDtFinal.Text);
+        QROrigDestValoresFinal.Open;
+
+        QRRazaoPagamentos.Close;
+        QRRazaoPagamentos.SetVariable('COD_FILIAL',
+          bib.ift(Trim(FmFilial19.MeFilial.Text) = '', NULL,
+          Trim(FmFilial19.MeFilial.Text)));
+        QRRazaoPagamentos.SetVariable('COD_DEPARTAMENTO',
+          bib.ift(Trim(FmDepartamento19.MEDepartamento.Text)  = '',
+          NULL,Trim(FmDepartamento19.MEDepartamento.Text)));
+        QRRazaoPagamentos.SetVariable('DT_INICIAL', FmDatas19.MeDtInicial.Text);
+        QRRazaoPagamentos.SetVariable('DT_FINAL', FmDatas19.MeDtFinal.Text);
+        QRRazaoPagamentos.Open;
+
+
+        if FROrigemDestinoValores = Nil then
+          FROrigemDestinoValores := TFROrigemDestinoValores.Create(Application);
+        FROrigemDestinoValores.QRLFilial.Caption :=
+          DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL','COD_FILIAL = ' +
+          IntToStr(DMUsuario.CodFilialUsuario));
+        FROrigemDestinoValores.QRLDataRef.Caption := 'De ' + FmDatas19.MeDtInicial.Text +
+          'até ' + FmDatas19.MeDtFinal.Text;
+
+
+        FROrigemDestinoValores.QRCompositeReport1.Preview;
+      end;
+    end;
+  end;  
+end;
+
+procedure TFCaixaCad.SaldoMensal1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[20].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    with DMCaixa do
+    begin
+      QSaldo.Close;
+      if FCaixaParam.Fm20Datas.MeDtInicial.text = '' then
+        raise Exception.Create('A data inicial deve ser informada.');
+      if FCaixaParam.Fm20Datas.MeDtFinal.text = '' then
+        raise Exception.Create('A data final deve ser informada.');
+        if trim(FCaixaParam.Fm20Filial.MeFilial.Text) = '' then
+        raise Exception.Create('A filial deve ser informada.');
+      QSaldo.SetVariable('DT_FINAL', StrToDate(FCaixaParam.Fm20Datas.MeDtInicial.text) - 1); //envia a SQL o Dia anterior ao informado
+      QSaldo.SetVariable('COD_FILIAL', StrToInt(trim(FCaixaParam.Fm20Filial.MeFilial.text)));
+      QSaldo.SetVariable('DEPARTAMENTOS', '1=1');
+      QSaldo.SetVariable('COD_HISTORICO', Null);
+      QSaldo.SetVariable('COD_HISTORICO_F', Null);
+      QSaldo.Open;
+    end;
+    with DMCaixaRel do
+    begin
+      QRCaixaMensal.Close;
+      QRCaixaMensal.SetVariable('DT_INICIAL', StrToDate(FCaixaParam.Fm20Datas.MeDtInicial.text));
+      QRCaixaMensal.SetVariable('DT_FINAL', StrToDate(FCaixaParam.Fm20Datas.MeDtFinal.text));
+      QRCaixaMensal.SetVariable('COD_FILIAL', StrToInt(trim(FCaixaParam.Fm20Filial.MeFilial.text)));
+      QRCaixaMensal.Open;
+      if FRCaixaMensal = nil then
+        FRCaixaMensal := TFRCaixaMensal.Create(Application);
+      FRCaixaMensal.QRLPeriodo.Caption := FCaixaParam.Fm20Datas.MeDtInicial.text + ' até ' + FCaixaParam.Fm20Datas.MeDtFinal.text;
+      FRCaixaMensal.QRPrimario.Preview;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.DbImovelDefineByForm(Sender: TObject;
+  var FormConsulta: TPtrForm; var Classe: TFormClass);
+begin
+  inherited;
+  FormConsulta := @FImovel_Cons;
+  Classe := TFImovel_Cons;
+
+end;
+
+procedure TFCaixaCad.EmiteReciboEntrada40Col;
+var wVal : string;
+    wContador : integer;
+begin
+  // Impressão de Recibo - Matricial - Modificado por Djeison A. Selzlein - 17/08/2013
+  if Imp = Nil Then
+     Imp := TImp.Create;
+
+  wVal := DMOracle.BuscaNome('SELECT DESC_LPT_RECIBO FROM TB_FILIAL','COD_FILIAL = '
+    + DMCaixa.QCaixa_MovCOD_FILIAL.Text);
+  if wVal = 'LPT1' then
+    imp.AbreImpressora;
+  if wVal = 'LPT2' then
+    imp.AbreImpressora_Lpt2;
+  if wVal = 'LPT3' then
+    imp.AbreImpressora_Lpt3;
+  if wval = 'COM2' then
+    imp.AbreImpressora_Com2;
+
+  Imp.ConfiguraImpressora('CONDENSADO_OFF','SEXTOS',3);
+
+  DMFilial.QFilial.close;
+  DMFilial.QFilial.SetVariable('PK', DMCaixa.QCaixa_MovCOD_FILIAL.Text);
+  DMFilial.QFilial.open;
+
+  DMDepartamento.QDepartamento.close;
+  DMDepartamento.QDepartamento.SetVariable('PK', DMCaixa.QCaixa_MovCOD_DEPARTAMENTO.Text);
+  DMDepartamento.QDepartamento.open;
+
+  DMHistorico.QHistorico.close;
+  DMHistorico.QHistorico.SetVariable('PK', DMCaixa.QCaixa_MovCOD_HISTORICO.Text);
+  DMHistorico.QHistorico.open;
+
+  if (DMCaixa.QCaixa_MovCOD_CADASTRO.Text <> '') then
+  begin
+    DMCadastro.QCadastro.Close;
+    DMCadastro.QCadastro.SetVariable('PK', DMCaixa.QCaixa_MovCOD_CADASTRO.Text);
+    DMCadastro.QCadastro.Open;
+  end;
+  wContador := 7;
+  Imp.WriteXY(0,wContador,Copy(DMFilial.QFilialDESC_FILIAL.Value,1,40));
+  Inc(wContador);
+  Imp.WriteXY(0,wContador,Copy(DMFilial.QFilialDESC_ENDERECO.Value,1,40));
+  Inc(wContador);
+  Imp.WriteXY(0,wContador,Copy(DMFilial.QFilialDESC_TELEFONE.Value,1,40));
+  Inc(wContador);
+  With DMCaixa do
+  begin
+    Imp.WriteXY(0,wContador,'RECIBO DE MOVIMENTO DE CAIXA');
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'----------------------------------------');
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,DateToStr(DMOracle.DataServ) + '            N. Doc.:  ' + QCaixa_MovNUM_DOCUMENTO.Text);
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'----------------------------------------');
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'CLI.:' + copy(DMCadastro.QCadastroNOME.Value, 1, 35));
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'END.:' + copy(DMCadastro.QCadastroDESC_ENDERECO.Value,1,35));
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,copy(DMCadastro.QCadastroDESC_CIDADE.Value,1,40));
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'----------------------------------------');
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'Historico...: ' + DMHistorico.QHistoricoDESC_HISTORICO.Value);
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'Departamento: ' + DMDepartamento.QDepartamentoDESC_DEPARTAMENTO.Value);
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'----------------------------------------');
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'  Num. Doc...: ' + Bib.NumToTexto(QCaixa_MovNUM_DOCUMENTO.Value,0,10));
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'  Dt. Emissao: ' + DateToStr(QCaixa_MovDT_MOVIMENTO.Value));
+    Inc(wContador);
+    Imp.WriteXY(0,wContador,'  Val. Mov...: ' + Bib.NumToTexto(QCaixa_MovVAL_MOVIMENTO.Value,2,10));
+    Inc(wContador);
+
+    Imp.WriteXY(0,wContador,'----------------------------------------');
+    wContador := wContador + 6;
+    Imp.WriteXY(0,wContador,' ');
+  end;
+
+  Imp.ConfiguraImpressora('CONDENSADO_OFF','SEXTOS',66);
+  Imp.FechaImpressora;  // Finaliza os serviços de Impressao
+end;
+
+procedure TFCaixaCad.SBAdiantamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FAdiantamentoCons = nil then
+    FAdiantamentoCons := TFAdiantamentoCons.create(application);
+
+  FAdiantamentoCons.MECadastro.Text := DMCaixa.QCaixa_MovCOD_CADASTRO.Text;
+  FAdiantamentoCons.MECadastroExit(Sender);
+  FAdiantamentoCons.MeDtInicial.Text := DateToStr(Date - 30);
+  FAdiantamentoCons.MeDtFinal.Text := DateToStr(Date);
+  FAdiantamentoCons.BtProcurar.Click;
+
+  if FAdiantamentoCons.showmodal = mrok then
+  begin
+    DMCaixa.QCaixa_MovCod_Adiantamento.Value := Trunc(DMAdiantamento.QAdiantamentoConsCOD_ADIANTAMENTO.Value);
+    DBEdit1Exit(Sender);
+  end;
+
+end;
+
+procedure TFCaixaCad.DBEdit1Exit(Sender: TObject);
+begin
+  inherited;
+  //somente um dos busca_nome vai retornar alguma coisa, o outro sempre trará ''
+  if Trim(DbEdit1.Text) <> '' then
+    MEAdiantamento.Text := DMOracle.BuscaNome('SELECT NUM_DOCUMENTO FROM TB_CAIXA_MOV T1, TB_ADIANTAMENTO T2',
+                                              'T1.COD_CAIXA_MOV = T2.COD_CAIXA_MOV AND '+
+                                              'T2.COD_ADIANTAMENTO = ' + trim(DBEdit1.Text))+
+                           DMOracle.BuscaNome('SELECT NUM_CHEQUE FROM TB_BCO_MOVIMENTO T1, TB_ADIANTAMENTO T2',
+                                              'T1.COD_BCO_MOVIMENTO = T2.COD_BCO_MOVIMENTO AND '+
+                                              'T2.COD_ADIANTAMENTO = ' + trim(DBEdit1.Text));
+end;
+
+procedure TFCaixaCad.BitBtn1Click(Sender: TObject);
+var
+  Stream : TStream;
+  FileStream : TFileStream;
+  PastaTemp : String;
+  NomeArquivo : String;
+begin
+  inherited;
+  PastaTemp := GetEnvironmentVariable('TEMP');
+  if (PastaTemp = '') then begin
+    MessageDlg('É preciso definir a variável TEMP, para armazenamento de arquivos temporários.' ,
+      mtError, [mbOK], 0);
+    Abort;
+  end;
+  FileStream.Free;
+  Stream.Free;
+  NomeArquivo := PastaTemp + '\' + DsCaixaDocumento.DataSet.FieldByName('NOME_ARQUIVO').AsString;
+  Stream := DsCaixaDocumento.DataSet.CreateBlobStream(DsCaixaDocumento.DataSet.FieldByName('ARQUIVO'), bmRead);
+  try
+    Stream.Seek(0, soFromBeginning);
+    FileStream := TFileStream.Create(NomeArquivo, fmCreate);
+    try
+      FileStream.CopyFrom(Stream, Stream.Size);
+    finally
+      FileStream.Free;
+    end;
+    If FPDFViewer = Nil Then
+       FPDFViewer := TFPDFViewer.Create(Self);
+    FPDFViewer.Caption := 'Visualizando arquivo ' + NomeArquivo;
+    FPDFViewer.Pdf1.src := NomeArquivo;
+    FPDFViewer.ShowModal;
+//    FPDFViewer := Nil;
+  finally
+    Stream.Free;
+  end;
+end;
+
+procedure TFCaixaCad.BitBtn3Click(Sender: TObject);
+var
+  Stream : TStream;
+  FileStream : TFileStream;
+  wNomeArquivo : String;
+  wPosicaoBarra : Integer;
+begin
+  inherited;
+  DmCaixa.QCaixa_Documento.Insert;
+  Stream := DmCaixa.QCaixa_Documento.CreateBlobStream(DmCaixa.QCaixa_DocumentoARQUIVO, bmWrite);
+  try
+    Stream.Seek(0, soFromBeginning);
+    FileStream := TFileStream.Create(MeArquivo.Text, fmOpenRead or fmShareDenyWrite);
+    try
+      Stream.CopyFrom(FileStream, FileStream.Size);
+    finally
+      FileStream.Free;
+    end;
+    wNomeArquivo := MeArquivo.Text;
+    wPosicaoBarra := Pos('\', wNomeArquivo);
+    while (wPosicaoBarra > 0) do begin
+      wNomeArquivo := Copy(wNomeArquivo, (wPosicaoBarra+1), Length(wNomeArquivo));
+      wPosicaoBarra := Pos('\', wNomeArquivo);
+    end;
+    DmCaixa.QCaixa_DocumentoNOME_ARQUIVO.AsString := wNomeArquivo;
+    DmCaixa.QCaixa_DocumentoDESCRICAO.AsString := MeArquivo.Text;
+    DmCaixa.QCaixa_DocumentoDT_INCLUSAO.AsDateTime := Now;
+    DmCaixa.QCaixa_DocumentoCOD_CAIXA_MOV.Value := DmCaixa.QCaixa_MovCOD_CAIXA_MOV.Value;
+
+    DmCaixa.QCaixa_Documento.Post;
+    MessageDlg('Arquivo inserido com sucesso' ,
+      MtError, [mbOK], 0);
+  finally
+    Stream.Free;
+  end;
+end;
+
+
+
+procedure TFCaixaCad.BitBtn4Click(Sender: TObject);
+begin
+  inherited;
+  DmCaixa.QCaixa_Documento.Delete;
+end;
+
+procedure TFCaixaCad.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  If OpenDialog.Execute Then
+     MeArquivo.Text := OpenDialog.FileName;
+
+end;
+
+procedure TFCaixaCad.RelatrioResumoporPlanoContas1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+     FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[21].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.Fm21Filial.MeFilial.Text), 'CAIXA'); //Segurança de Filial
+    with DMCaixaRel do
+    begin
+      if (Trim(FCaixaParam.Fm21Datas.MeDtInicial.Text) = '') or
+         (Trim(FCaixaParam.Fm21Datas.MeDtFinal.Text) = '') then
+      begin
+        MessageDlg('Por favor, informe as datas corretamente.', mtInformation, [mbOK], 0);
+        Exit;
+      end;
+
+      QRResumoPlano.Close;
+      if Trim(FCaixaParam.Fm21Datas.MeDtInicial.Text) <> '' then
+        QRResumoPlano.SetVariable('DT_INICIAL', StrToDate(Trim(FCaixaParam.Fm21Datas.MeDtInicial.Text)))
+      else
+        QRResumoPlano.SetVariable('DT_INICIAL', Null);
+
+      if Trim(FCaixaParam.Fm21Datas.MeDtFinal.Text) <> '' then
+        QRResumoPlano.SetVariable('DT_FINAL', StrToDate(Trim(FCaixaParam.Fm21Datas.MeDtFinal.Text)))
+      else
+        QRResumoPlano.SetVariable('DT_FINAL', Null);
+
+      if Trim(FCaixaParam.Fm21Filial.MeFilial.Text) <> '' then
+        QRResumoPlano.SetVariable('COD_FILIAL', StrToInt(Trim(FCaixaParam.Fm21Filial.MeFilial.Text)))
+      else
+        QRResumoPlano.SetVariable('COD_FILIAL', Null);
+      if Trim(FCaixaParam.Fm21Departamento.MeDepartamento.Text) <> '' then
+        QRResumoPlano.SetVariable('COD_DEPARTAMENTO', StrToInt(Trim(FCaixaParam.Fm21Departamento.MeDepartamento.Text)))
+      else
+        QRResumoPlano.SetVariable('COD_DEPARTAMENTO', Null);
+
+      QRResumoPlano.Open;
+
+      if FrResumoPlanoContas = nil then
+        FrResumoPlanoContas := TFrResumoPlanoContas.Create(Application);
+      FrResumoPlanoContas.QRLFilial.Caption := FCaixaParam.Fm21Filial.EdFilial.Text +
+        ' - de ' + FCaixaParam.Fm21Datas.MeDtInicial.Text + ' Até ' + FCaixaParam.Fm21Datas.MeDtFinal.Text;
+
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DEION' then
+        FrResumoPlanoContas.QRLTitulo.Caption := 'Relatório DRE por Caixa';
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FrResumoPlanoContas.QrPrimario.Preview
+      else
+        FrResumoPlanoContas.QrPrimario.Print;
+      QRResumoPlano.Close;
+    end;
+  end;
+
+end;
+
+procedure TFCaixaCad.DBPHistoricoCodigoExit(Sender: TObject);
+var
+  wDep: String;
+begin
+  inherited;
+  if Trim(DBPHistorico.DBEdit.Text) <> '' then
+  begin
+    wDep := DMOracle.BuscaNome(
+      'SELECT COD_DEPARTAMENTO FROM TB_HISTORICO','COD_HISTORICO = '+
+      DBPHistorico.DBEdit.Text);
+    if wDep <> '' then
+      DMCaixa.QCaixa_MovCOD_DEPARTAMENTO.Text := wDep;
+  end;
+end;
+
+procedure TFCaixaCad.LanamentoCaixaBanco1Click(Sender: TObject);
+begin
+  inherited;
+  if FTransferenciaCaixaBanco = nil then
+    FTransferenciaCaixaBanco := TFTransferenciaCaixaBanco.Create(Application);
+ //  DMTela.VerificaTela(pModulo,FTransferenciaCaixaBanco.Caption,FTransferenciaCaixaBanco.Name);
+  FTransferenciaCaixaBanco.ShowModal;
+end;
+
+procedure TFCaixaCad.d1Click(Sender: TObject);
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[22].TabVisible := True;
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FCaixaParam.FmFilial22.MEFilial.Text), 'CAIXA');
+    with DMCaixaRel do
+    begin
+      QRDRE_Financeiro.Close;
+      if Trim(FCaixaParam.ME14Filial.Text) <> '' then
+        QRDRE_Financeiro.SetVariable('FILIAL', StrToInt(Trim(FCaixaParam.FmFilial22.MEFilial.Text)))
+      else
+        QRDRE_Financeiro.SetVariable('FILIAL', Null);
+      if Trim(FCaixaParam.Me22DtInicial.Text) = '' then
+        raise Exception.create('A Data inicial deve ser informada!');
+      QRDRE_Financeiro.SetVariable('DATA_I', StrToDate(FCaixaParam.Me22DtInicial.Text));
+      if Trim(FCaixaParam.Me22DtFinal.Text) = '' then
+        raise Exception.create('A Data final deve ser informada!');
+      QRDRE_Financeiro.SetVariable('DATA_F', StrToDate(FCaixaParam.Me22DtFinal.Text));
+
+      QRDRE_Financeiro.Open;
+      if FRDREFinanceiro = nil then
+        FRDREFinanceiro := TFRDREFinanceiro.Create(Application);
+      FRDREFinanceiro.QRLTitulo.Caption := 'Demonstrativo de Resultado de: '+(FCaixaParam.Me22DtInicial.Text)+ ' até: ' + (FCaixaParam.Me22DtFinal.Text);
+//      FRDREFinanceiro.QRLFilial.Caption := 'Filial :' + (FCaixaParam.ME14Filial.Text) + ' ' + FcaixaParam.Ed14Filial.Text;
+
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRDREFinanceiro.QRPrimario.Preview
+      else
+        FRDREFinanceiro.QRPrimario.Print;
+      QRDRE_Financeiro.Close;
+    end;
+  end;
+end;
+
+procedure TFCaixaCad.SBLancamento40colunaClick(Sender: TObject);
+var wOperacao: string;
+wIndexImpressoraPadrao: integer;
+begin
+  inherited;
+    if DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value = 0 Then
+       MessageDlg('Selecione o lançamento para realizar a impressão', mtError, [mbOK], 0)
+    else
+      Begin
+      if FRLancamento40colunas = Nil then
+        FRLancamento40colunas := FRLancamento40colunas.Create(Application);
+        wIndexImpressoraPadrao := Printer.PrinterIndex;
+        if DMUsuario.ImpressoraPadraoNFCe <> '' then
+        begin
+          if pos('\\', DMUsuario.ImpressoraPadraoNFCe) > 0 then
+            Printer.PrinterIndex :=
+            Printer.Printers.IndexOf(Bib.PegaImpressoraPorNomeRede(DMUsuario.ImpressoraPadraoNFCe))
+        else
+          Printer.PrinterIndex := Printer.Printers.IndexOf(DMUsuario.ImpressoraPadraoNFCe);
+        end;
+        FRLancamento40colunas.QRPrimario.PrinterSettings.PrinterIndex := Printer.PrinterIndex;
+        FRLancamento40colunas.QRPrimario.Print;
+        
+        FRCaixa_ResLanc40Col.Free;
+        FRCaixa_ResLanc40Col := Nil;
+      end;
+end;
+
+procedure TFCaixaCad.BtLcto40ColClick(Sender: TObject);
+var wIndexImpressoraPadrao: integer;
+begin
+  inherited;
+    if DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value = 0 Then
+       MessageDlg('Selecione o lançamento para realizar a impressão', mtError, [mbOK], 0)
+    else
+      Begin
+      if FRLancamento40colunas = Nil then
+        FRLancamento40colunas := TFRLancamento40colunas.Create(Application);
+        wIndexImpressoraPadrao := Printer.PrinterIndex;
+        if DMUsuario.ImpressoraPadraoNFCe <> '' then
+        begin
+          if pos('\\', DMUsuario.ImpressoraPadraoNFCe) > 0 then
+            Printer.PrinterIndex :=
+            Printer.Printers.IndexOf(Bib.PegaImpressoraPorNomeRede(DMUsuario.ImpressoraPadraoNFCe))
+        else
+          Printer.PrinterIndex := Printer.Printers.IndexOf(DMUsuario.ImpressoraPadraoNFCe);
+        end;
+        FRLancamento40colunas.QRPrimario.PrinterSettings.PrinterIndex := Printer.PrinterIndex;
+        FRLancamento40colunas.QRPrimario.Print;
+        
+        FRCaixa_ResLanc40Col.Free;
+        FRCaixa_ResLanc40Col := Nil;
+      end;
+end;
+
+procedure TFCaixaCad.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  If Key = 120 Then // 120 = F9 - Junior. Abrir gaveta
+    BtAbreGavetaClick(Sender);
+end;
+
+procedure TFCaixaCad.BtAbreGavetaClick(Sender: TObject);
+var F : TextFile;
+    wImpressora : String;
+begin
+  inherited;
+  wImpressora := DMOracle.FastSelect('DESC_IMPRESSORA_DANFE_NFCE','TB_USUARIO','COD_USUARIO = ' + IntToStr(DMUsuario.CodUsuarioCorrente) );
+  AssignFile(F,'\\'+copy(wImpressora,3,40));
+  Rewrite(F);
+  Writeln(F,#027+#112+#000+#010+#100''); //abrir gaveta Epson
+  CloseFile(F);
+end;
+
+procedure TFCaixaCad.Demonstrativo1Click(Sender: TObject);
+var
+  wPeriodo: string;
+begin
+  inherited;
+  if FCaixaParam = nil then
+    FCaixaParam := TFCaixaParam.Create(Application);
+  FCaixaParam.PGRelatorio.Pages[23].TabVisible := True;
+  FCaixaParam.Me23DtInicial.Text := DateToStr(DMOracle.DataServ-360);
+  FCaixaParam.Me23DtFinal.Text := DateToStr(DMOracle.DataServ);
+  if FCaixaParam.ShowModal = MrOk then
+  begin
+    with DMCaixaRel do
+    begin
+      QRDemonstrativo.Close;
+      if trim(FCaixaParam.Me23DtInicial.Text) <> '' then
+      begin
+        QRDemonstrativo.SetVariable('DT_EMISSAO_INI',trim(FCaixaParam.Me23DtInicial.Text));
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_INI',trim(FCaixaParam.Me23DtInicial.Text));
+      end
+      else
+      begin
+        QRDemonstrativo.SetVariable('DT_EMISSAO_INI',null);
+        QRDemonstrativo.SetVariable('DT_EMISSAO_FIM',null);
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_INI',null);
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_FIM',null);
+      end;
+      if trim(FCaixaParam.Me23DtFinal.Text) <> '' then
+      begin
+        QRDemonstrativo.SetVariable('DT_EMISSAO_FIM',trim(FCaixaParam.Me23DtFinal.Text));
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_FIM',trim(FCaixaParam.Me23DtFinal.Text));
+      end
+      else
+      begin
+        QRDemonstrativo.SetVariable('DT_EMISSAO_INI',null);
+        QRDemonstrativo.SetVariable('DT_EMISSAO_FIM',null);
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_INI',null);
+        QRDemonstrativo.SetVariable('DT_MOVIMENTO_FIM',null);
+      end;
+      QRDemonstrativo.Open;
+
+      if FRDemonstrativo = nil then
+        FRDemonstrativo := TFRDemonstrativo.Create(Application);
+      FRDemonstrativo.QRLEmpresa.Caption := 'Filial: ' + QRDemonstrativoDESC_FILIAL.Text;
+      if (trim(FCaixaParam.Me23DtInicial.Text) <> ' / / ') and (trim(FCaixaParam.Me23DtFinal.Text) <> ' / / ') then
+        wPeriodo := ' de ' + trim(FCaixaParam.Me23DtInicial.Text) + ' até ' + trim(FCaixaParam.Me23DtFinal.Text)
+      else
+        wPeriodo := ' da inaguração até hoje';
+      FRDemonstrativo.QRLTitulo.Caption := 'Relatório Demonstrativo da Empresa no período ' + wPeriodo;
+      if FCaixaParam.RGPreview.ItemIndex = 0 then
+        FRDemonstrativo.QRPrimario.Preview
+      else
+        FRDemonstrativo.QRPrimario.Print;
+    end;
+  end;
+end;
+
+end.
+

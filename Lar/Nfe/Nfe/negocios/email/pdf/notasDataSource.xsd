@@ -1,0 +1,1140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="notasDataSource" targetNamespace="http://tempuri.org/notasDataSource.xsd" xmlns:mstns="http://tempuri.org/notasDataSource.xsd" xmlns="http://tempuri.org/notasDataSource.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" IsAppSettingsProperty="True" Modifier="Assembly" Name="ConnectionString (Settings)" PropertyReference="ApplicationSettings.Nfe.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.OracleClient">
+          </Connection>
+          <Connection ConnectionStringObject="Data Source=ora;Persist Security Info=True;User ID=sistema;Unicode=True" IsAppSettingsProperty="False" Modifier="Assembly" Name="ora.SISTEMA" Provider="System.Data.OracleClient">
+          </Connection>
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TB_FILIALTableAdapter" GeneratorDataComponentClassName="TB_FILIALTableAdapter" Name="TB_FILIAL" UserDataComponentName="TB_FILIALTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="SISTEMA.TB_FILIAL" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="True" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="True" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="False">
+                    <CommandText>DELETE FROM "SISTEMA"."TB_FILIAL" WHERE (("COD_FILIAL" = :Original_COD_FILIAL) AND ((:IsNull_DESC_FILIAL = 1 AND "DESC_FILIAL" IS NULL) OR ("DESC_FILIAL" = :Original_DESC_FILIAL)) AND ((:IsNull_DESC_CIDADE = 1 AND "DESC_CIDADE" IS NULL) OR ("DESC_CIDADE" = :Original_DESC_CIDADE)) AND ((:IsNull_DESC_CEP = 1 AND "DESC_CEP" IS NULL) OR ("DESC_CEP" = :Original_DESC_CEP)) AND ((:IsNull_DESC_ENDERECO = 1 AND "DESC_ENDERECO" IS NULL) OR ("DESC_ENDERECO" = :Original_DESC_ENDERECO)) AND ((:IsNull_NUM_CGC = 1 AND "NUM_CGC" IS NULL) OR ("NUM_CGC" = :Original_NUM_CGC)) AND ((:IsNull_DESC_INSCRICAO = 1 AND "DESC_INSCRICAO" IS NULL) OR ("DESC_INSCRICAO" = :Original_DESC_INSCRICAO)) AND ((:IsNull_DESC_TELEFONE = 1 AND "DESC_TELEFONE" IS NULL) OR ("DESC_TELEFONE" = :Original_DESC_TELEFONE)) AND ((:IsNull_NUM_NOTA_FISCAL = 1 AND "NUM_NOTA_FISCAL" IS NULL) OR ("NUM_NOTA_FISCAL" = :Original_NUM_NOTA_FISCAL)) AND ((:IsNull_NUM_TITULO = 1 AND "NUM_TITULO" IS NULL) OR ("NUM_TITULO" = :Original_NUM_TITULO)) AND ((:IsNull_IND_ESTOQUE = 1 AND "IND_ESTOQUE" IS NULL) OR ("IND_ESTOQUE" = :Original_IND_ESTOQUE)) AND ((:IsNull_NUM_ORCAMENTO = 1 AND "NUM_ORCAMENTO" IS NULL) OR ("NUM_ORCAMENTO" = :Original_NUM_ORCAMENTO)) AND ((:IsNull_NUM_PEDIDO = 1 AND "NUM_PEDIDO" IS NULL) OR ("NUM_PEDIDO" = :Original_NUM_PEDIDO)) AND ((:IsNull_NUM_RECEITA = 1 AND "NUM_RECEITA" IS NULL) OR ("NUM_RECEITA" = :Original_NUM_RECEITA)) AND ((:IsNull_NUM_CONTRATO = 1 AND "NUM_CONTRATO" IS NULL) OR ("NUM_CONTRATO" = :Original_NUM_CONTRATO)) AND ((:IsNull_NUM_CPR = 1 AND "NUM_CPR" IS NULL) OR ("NUM_CPR" = :Original_NUM_CPR)) AND ((:IsNull_NUM_GUIA = 1 AND "NUM_GUIA" IS NULL) OR ("NUM_GUIA" = :Original_NUM_GUIA)) AND ((:IsNull_NUM_BOLETIM = 1 AND "NUM_BOLETIM" IS NULL) OR ("NUM_BOLETIM" = :Original_NUM_BOLETIM)) AND ((:IsNull_NUM_CAIXA_POSTAL = 1 AND "NUM_CAIXA_POSTAL" IS NULL) OR ("NUM_CAIXA_POSTAL" = :Original_NUM_CAIXA_POSTAL)) AND ((:IsNull_NUM_RECIBO = 1 AND "NUM_RECIBO" IS NULL) OR ("NUM_RECIBO" = :Original_NUM_RECIBO)) AND ((:IsNull_COD_ESTADO = 1 AND "COD_ESTADO" IS NULL) OR ("COD_ESTADO" = :Original_COD_ESTADO)) AND ((:p3 = 1 AND "DT_FECHAMENTO_CONTABIL" IS NULL) OR ("DT_FECHAMENTO_CONTABIL" = :p2)) AND ((:IsNull_NUM_ROMANEIO = 1 AND "NUM_ROMANEIO" IS NULL) OR ("NUM_ROMANEIO" = :Original_NUM_ROMANEIO)) AND ((:IsNull_NUM_PAG_RAZAO = 1 AND "NUM_PAG_RAZAO" IS NULL) OR ("NUM_PAG_RAZAO" = :Original_NUM_PAG_RAZAO)) AND ((:IsNull_DESC_LPT_NOTA = 1 AND "DESC_LPT_NOTA" IS NULL) OR ("DESC_LPT_NOTA" = :Original_DESC_LPT_NOTA)) AND ((:IsNull_DESC_LPT_PEDIDO = 1 AND "DESC_LPT_PEDIDO" IS NULL) OR ("DESC_LPT_PEDIDO" = :Original_DESC_LPT_PEDIDO)) AND ((:IsNull_COD_SERIE = 1 AND "COD_SERIE" IS NULL) OR ("COD_SERIE" = :Original_COD_SERIE)) AND ((:IsNull_NUM_ENDERECO = 1 AND "NUM_ENDERECO" IS NULL) OR ("NUM_ENDERECO" = :Original_NUM_ENDERECO)) AND ((:p6 = 1 AND "DESC_COMPLEMENTO_ENDERECO" IS NULL) OR ("DESC_COMPLEMENTO_ENDERECO" = :p5)) AND ((:IsNull_DESC_BAIRRO = 1 AND "DESC_BAIRRO" IS NULL) OR ("DESC_BAIRRO" = :Original_DESC_BAIRRO)) AND ((:IsNull_DESC_NOME_CONTATO = 1 AND "DESC_NOME_CONTATO" IS NULL) OR ("DESC_NOME_CONTATO" = :Original_DESC_NOME_CONTATO)) AND ((:p9 = 1 AND "IND_PADRAO_ARQ_MAGNETICO" IS NULL) OR ("IND_PADRAO_ARQ_MAGNETICO" = :p8)) AND ((:p12 = 1 AND "IND_PADRAO_FIN_ARQ_MAGNETICO" IS NULL) OR ("IND_PADRAO_FIN_ARQ_MAGNETICO" = :p11)) AND ((:IsNull_DESC_FAX = 1 AND "DESC_FAX" IS NULL) OR ("DESC_FAX" = :Original_DESC_FAX)) AND ((:IsNull_DESC_E_MAIL = 1 AND "DESC_E_MAIL" IS NULL) OR ("DESC_E_MAIL" = :Original_DESC_E_MAIL)) AND ((:IsNull_IND_PORTA_BALANCA = 1 AND "IND_PORTA_BALANCA" IS NULL) OR ("IND_PORTA_BALANCA" = :Original_IND_PORTA_BALANCA)) AND ((:IsNull_DESC_LPT_OS = 1 AND "DESC_LPT_OS" IS NULL) OR ("DESC_LPT_OS" = :Original_DESC_LPT_OS)) AND ((:IsNull_DESC_TIPO_BALANCA = 1 AND "DESC_TIPO_BALANCA" IS NULL) OR ("DESC_TIPO_BALANCA" = :Original_DESC_TIPO_BALANCA)) AND ((:IsNull_COD_CREDENCIAL_SEAB = 1 AND "COD_CREDENCIAL_SEAB" IS NULL) OR ("COD_CREDENCIAL_SEAB" = :Original_COD_CREDENCIAL_SEAB)) AND ((:IsNull_PERC_ISS = 1 AND "PERC_ISS" IS NULL) OR ("PERC_ISS" = :Original_PERC_ISS)) AND ((:p15 = 1 AND "NUM_MINISTERIO_AGRICULTURA" IS NULL) OR ("NUM_MINISTERIO_AGRICULTURA" = :p14)) AND ((:p18 = 1 AND "IND_BLOQUEIO_VENDA_VCTO" IS NULL) OR ("IND_BLOQUEIO_VENDA_VCTO" = :p17)) AND ((:p21 = 1 AND "DESC_IMPRESSORA_FISCAL" IS NULL) OR ("DESC_IMPRESSORA_FISCAL" = :p20)) AND ((:p24 = 1 AND "IND_LIBERA_PESO_ROMANEIO" IS NULL) OR ("IND_LIBERA_PESO_ROMANEIO" = :p23)) AND ((:IsNull_IND_ESTOQUE_NEGATIVO = 1 AND "IND_ESTOQUE_NEGATIVO" IS NULL) OR ("IND_ESTOQUE_NEGATIVO" = :Original_IND_ESTOQUE_NEGATIVO)) AND ((:IsNull_DESC_PORTA_CHRONOS = 1 AND "DESC_PORTA_CHRONOS" IS NULL) OR ("DESC_PORTA_CHRONOS" = :Original_DESC_PORTA_CHRONOS)) AND ((:IsNull_IND_SUBSTITUICAO = 1 AND "IND_SUBSTITUICAO" IS NULL) OR ("IND_SUBSTITUICAO" = :Original_IND_SUBSTITUICAO)) AND ((:IsNull_COD_CADASTRO = 1 AND "COD_CADASTRO" IS NULL) OR ("COD_CADASTRO" = :Original_COD_CADASTRO)) AND ((:IsNull_DESC_CPF_RESPONSAVEL = 1 AND "DESC_CPF_RESPONSAVEL" IS NULL) OR ("DESC_CPF_RESPONSAVEL" = :Original_DESC_CPF_RESPONSAVEL)) AND ((:IsNull_DESC_NIT = 1 AND "DESC_NIT" IS NULL) OR ("DESC_NIT" = :Original_DESC_NIT)) AND ((:p27 = 1 AND "DESC_INSCRICAO_MUNICIPAL" IS NULL) OR ("DESC_INSCRICAO_MUNICIPAL" = :p26)) AND ((:IsNull_DESC_SUFRAMA = 1 AND "DESC_SUFRAMA" IS NULL) OR ("DESC_SUFRAMA" = :Original_DESC_SUFRAMA)) AND ((:IsNull_COD_CIDADE = 1 AND "COD_CIDADE" IS NULL) OR ("COD_CIDADE" = :Original_COD_CIDADE)))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="False" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_FILIAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_FILIAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_FILIAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_FILIAL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CIDADE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CIDADE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CEP" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CEP" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_ENDERECO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_ENDERECO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CGC" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_NUM_CGC" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_INSCRICAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_INSCRICAO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_TELEFONE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_TELEFONE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_NOTA_FISCAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_NOTA_FISCAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_TITULO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_TITULO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_ESTOQUE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_ESTOQUE" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ORCAMENTO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ORCAMENTO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_PEDIDO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_PEDIDO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_RECEITA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_RECEITA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CONTRATO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CONTRATO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CPR" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CPR" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_GUIA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_GUIA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_BOLETIM" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_BOLETIM" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CAIXA_POSTAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CAIXA_POSTAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_RECIBO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_RECIBO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_ESTADO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_COD_ESTADO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p3" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="p2" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ROMANEIO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ROMANEIO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_PAG_RAZAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_PAG_RAZAO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_NOTA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_NOTA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_PEDIDO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_PEDIDO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_SERIE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_COD_SERIE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ENDERECO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ENDERECO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p6" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p5" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_BAIRRO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_BAIRRO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_NOME_CONTATO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_NOME_CONTATO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p9" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p8" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p12" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p11" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_FAX" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_FAX" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_E_MAIL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_E_MAIL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_PORTA_BALANCA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_IND_PORTA_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_OS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_OS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_TIPO_BALANCA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_TIPO_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_PERC_ISS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_PERC_ISS" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p15" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="p14" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p18" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p17" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p21" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p20" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p24" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p23" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_PORTA_CHRONOS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_PORTA_CHRONOS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_SUBSTITUICAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_SUBSTITUICAO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CADASTRO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CADASTRO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_NIT" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_NIT" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p27" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p26" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_SUFRAMA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_SUFRAMA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CIDADE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CIDADE" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="False">
+                    <CommandText>INSERT INTO "SISTEMA"."TB_FILIAL" ("COD_FILIAL", "DESC_FILIAL", "DESC_CIDADE", "DESC_CEP", "DESC_ENDERECO", "NUM_CGC", "DESC_INSCRICAO", "DESC_TELEFONE", "NUM_NOTA_FISCAL", "NUM_TITULO", "IND_ESTOQUE", "NUM_ORCAMENTO", "NUM_PEDIDO", "NUM_RECEITA", "NUM_CONTRATO", "NUM_CPR", "NUM_GUIA", "NUM_BOLETIM", "NUM_CAIXA_POSTAL", "NUM_RECIBO", "COD_ESTADO", "DT_FECHAMENTO_CONTABIL", "NUM_ROMANEIO", "NUM_PAG_RAZAO", "DESC_LPT_NOTA", "DESC_LPT_PEDIDO", "COD_SERIE", "NUM_ENDERECO", "DESC_COMPLEMENTO_ENDERECO", "DESC_BAIRRO", "DESC_NOME_CONTATO", "IND_PADRAO_ARQ_MAGNETICO", "IND_PADRAO_FIN_ARQ_MAGNETICO", "DESC_FAX", "DESC_E_MAIL", "IND_PORTA_BALANCA", "DESC_LPT_OS", "DESC_TIPO_BALANCA", "COD_CREDENCIAL_SEAB", "PERC_ISS", "NUM_MINISTERIO_AGRICULTURA", "IND_BLOQUEIO_VENDA_VCTO", "DESC_IMPRESSORA_FISCAL", "IND_LIBERA_PESO_ROMANEIO", "IND_ESTOQUE_NEGATIVO", "DESC_PORTA_CHRONOS", "IND_SUBSTITUICAO", "COD_CADASTRO", "DESC_CPF_RESPONSAVEL", "DESC_NIT", "DESC_INSCRICAO_MUNICIPAL", "DESC_SUFRAMA", "COD_CIDADE") VALUES (:COD_FILIAL, :DESC_FILIAL, :DESC_CIDADE, :DESC_CEP, :DESC_ENDERECO, :NUM_CGC, :DESC_INSCRICAO, :DESC_TELEFONE, :NUM_NOTA_FISCAL, :NUM_TITULO, :IND_ESTOQUE, :NUM_ORCAMENTO, :NUM_PEDIDO, :NUM_RECEITA, :NUM_CONTRATO, :NUM_CPR, :NUM_GUIA, :NUM_BOLETIM, :NUM_CAIXA_POSTAL, :NUM_RECIBO, :COD_ESTADO, :p1, :NUM_ROMANEIO, :NUM_PAG_RAZAO, :DESC_LPT_NOTA, :DESC_LPT_PEDIDO, :COD_SERIE, :NUM_ENDERECO, :p4, :DESC_BAIRRO, :DESC_NOME_CONTATO, :p7, :p10, :DESC_FAX, :DESC_E_MAIL, :IND_PORTA_BALANCA, :DESC_LPT_OS, :DESC_TIPO_BALANCA, :COD_CREDENCIAL_SEAB, :PERC_ISS, :p13, :p16, :p19, :p22, :IND_ESTOQUE_NEGATIVO, :DESC_PORTA_CHRONOS, :IND_SUBSTITUICAO, :COD_CADASTRO, :DESC_CPF_RESPONSAVEL, :DESC_NIT, :p25, :DESC_SUFRAMA, :COD_CIDADE)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="False" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_FILIAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_FILIAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_FILIAL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CIDADE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CEP" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_ENDERECO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="NUM_CGC" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_INSCRICAO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_TELEFONE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_NOTA_FISCAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_TITULO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_ESTOQUE" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ORCAMENTO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_PEDIDO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_RECEITA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CONTRATO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CPR" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_GUIA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_BOLETIM" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CAIXA_POSTAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_RECIBO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="COD_ESTADO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="p1" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ROMANEIO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_PAG_RAZAO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_NOTA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_PEDIDO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="COD_SERIE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ENDERECO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p4" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_BAIRRO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_NOME_CONTATO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p7" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p10" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_FAX" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_E_MAIL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="IND_PORTA_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_OS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_TIPO_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="PERC_ISS" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="p13" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p16" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p19" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p22" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_PORTA_CHRONOS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_SUBSTITUICAO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CADASTRO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_NIT" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p25" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_SUFRAMA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CIDADE" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="False">
+                    <CommandText>SELECT COD_FILIAL, DESC_FILIAL, DESC_CIDADE, DESC_CEP, DESC_ENDERECO, NUM_CGC, DESC_INSCRICAO, DESC_TELEFONE, NUM_NOTA_FISCAL, NUM_TITULO, IND_ESTOQUE, NUM_ORCAMENTO, NUM_PEDIDO, NUM_RECEITA, NUM_CONTRATO, NUM_CPR, NUM_GUIA, NUM_BOLETIM, NUM_CAIXA_POSTAL, NUM_RECIBO, COD_ESTADO, DT_FECHAMENTO_CONTABIL, NUM_ROMANEIO, NUM_PAG_RAZAO, DESC_LPT_NOTA, DESC_LPT_PEDIDO, COD_SERIE, NUM_ENDERECO, DESC_COMPLEMENTO_ENDERECO, DESC_BAIRRO, DESC_NOME_CONTATO, IND_PADRAO_ARQ_MAGNETICO, IND_PADRAO_FIN_ARQ_MAGNETICO, DESC_FAX, DESC_E_MAIL, IND_PORTA_BALANCA, DESC_LPT_OS, DESC_TIPO_BALANCA, COD_CREDENCIAL_SEAB, PERC_ISS, NUM_MINISTERIO_AGRICULTURA, IND_BLOQUEIO_VENDA_VCTO, DESC_IMPRESSORA_FISCAL, IND_LIBERA_PESO_ROMANEIO, IND_ESTOQUE_NEGATIVO, DESC_PORTA_CHRONOS, IND_SUBSTITUICAO, COD_CADASTRO, DESC_CPF_RESPONSAVEL, DESC_NIT, DESC_INSCRICAO_MUNICIPAL, DESC_SUFRAMA, COD_CIDADE FROM SISTEMA.TB_FILIAL</CommandText>
+                    <Parameters>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="False">
+                    <CommandText>UPDATE "SISTEMA"."TB_FILIAL" SET "COD_FILIAL" = :COD_FILIAL, "DESC_FILIAL" = :DESC_FILIAL, "DESC_CIDADE" = :DESC_CIDADE, "DESC_CEP" = :DESC_CEP, "DESC_ENDERECO" = :DESC_ENDERECO, "NUM_CGC" = :NUM_CGC, "DESC_INSCRICAO" = :DESC_INSCRICAO, "DESC_TELEFONE" = :DESC_TELEFONE, "NUM_NOTA_FISCAL" = :NUM_NOTA_FISCAL, "NUM_TITULO" = :NUM_TITULO, "IND_ESTOQUE" = :IND_ESTOQUE, "NUM_ORCAMENTO" = :NUM_ORCAMENTO, "NUM_PEDIDO" = :NUM_PEDIDO, "NUM_RECEITA" = :NUM_RECEITA, "NUM_CONTRATO" = :NUM_CONTRATO, "NUM_CPR" = :NUM_CPR, "NUM_GUIA" = :NUM_GUIA, "NUM_BOLETIM" = :NUM_BOLETIM, "NUM_CAIXA_POSTAL" = :NUM_CAIXA_POSTAL, "NUM_RECIBO" = :NUM_RECIBO, "COD_ESTADO" = :COD_ESTADO, "DT_FECHAMENTO_CONTABIL" = :p1, "NUM_ROMANEIO" = :NUM_ROMANEIO, "NUM_PAG_RAZAO" = :NUM_PAG_RAZAO, "DESC_LPT_NOTA" = :DESC_LPT_NOTA, "DESC_LPT_PEDIDO" = :DESC_LPT_PEDIDO, "COD_SERIE" = :COD_SERIE, "NUM_ENDERECO" = :NUM_ENDERECO, "DESC_COMPLEMENTO_ENDERECO" = :p4, "DESC_BAIRRO" = :DESC_BAIRRO, "DESC_NOME_CONTATO" = :DESC_NOME_CONTATO, "IND_PADRAO_ARQ_MAGNETICO" = :p7, "IND_PADRAO_FIN_ARQ_MAGNETICO" = :p10, "DESC_FAX" = :DESC_FAX, "DESC_E_MAIL" = :DESC_E_MAIL, "IND_PORTA_BALANCA" = :IND_PORTA_BALANCA, "DESC_LPT_OS" = :DESC_LPT_OS, "DESC_TIPO_BALANCA" = :DESC_TIPO_BALANCA, "COD_CREDENCIAL_SEAB" = :COD_CREDENCIAL_SEAB, "PERC_ISS" = :PERC_ISS, "NUM_MINISTERIO_AGRICULTURA" = :p13, "IND_BLOQUEIO_VENDA_VCTO" = :p16, "DESC_IMPRESSORA_FISCAL" = :p19, "IND_LIBERA_PESO_ROMANEIO" = :p22, "IND_ESTOQUE_NEGATIVO" = :IND_ESTOQUE_NEGATIVO, "DESC_PORTA_CHRONOS" = :DESC_PORTA_CHRONOS, "IND_SUBSTITUICAO" = :IND_SUBSTITUICAO, "COD_CADASTRO" = :COD_CADASTRO, "DESC_CPF_RESPONSAVEL" = :DESC_CPF_RESPONSAVEL, "DESC_NIT" = :DESC_NIT, "DESC_INSCRICAO_MUNICIPAL" = :p25, "DESC_SUFRAMA" = :DESC_SUFRAMA, "COD_CIDADE" = :COD_CIDADE WHERE (("COD_FILIAL" = :Original_COD_FILIAL) AND ((:IsNull_DESC_FILIAL = 1 AND "DESC_FILIAL" IS NULL) OR ("DESC_FILIAL" = :Original_DESC_FILIAL)) AND ((:IsNull_DESC_CIDADE = 1 AND "DESC_CIDADE" IS NULL) OR ("DESC_CIDADE" = :Original_DESC_CIDADE)) AND ((:IsNull_DESC_CEP = 1 AND "DESC_CEP" IS NULL) OR ("DESC_CEP" = :Original_DESC_CEP)) AND ((:IsNull_DESC_ENDERECO = 1 AND "DESC_ENDERECO" IS NULL) OR ("DESC_ENDERECO" = :Original_DESC_ENDERECO)) AND ((:IsNull_NUM_CGC = 1 AND "NUM_CGC" IS NULL) OR ("NUM_CGC" = :Original_NUM_CGC)) AND ((:IsNull_DESC_INSCRICAO = 1 AND "DESC_INSCRICAO" IS NULL) OR ("DESC_INSCRICAO" = :Original_DESC_INSCRICAO)) AND ((:IsNull_DESC_TELEFONE = 1 AND "DESC_TELEFONE" IS NULL) OR ("DESC_TELEFONE" = :Original_DESC_TELEFONE)) AND ((:IsNull_NUM_NOTA_FISCAL = 1 AND "NUM_NOTA_FISCAL" IS NULL) OR ("NUM_NOTA_FISCAL" = :Original_NUM_NOTA_FISCAL)) AND ((:IsNull_NUM_TITULO = 1 AND "NUM_TITULO" IS NULL) OR ("NUM_TITULO" = :Original_NUM_TITULO)) AND ((:IsNull_IND_ESTOQUE = 1 AND "IND_ESTOQUE" IS NULL) OR ("IND_ESTOQUE" = :Original_IND_ESTOQUE)) AND ((:IsNull_NUM_ORCAMENTO = 1 AND "NUM_ORCAMENTO" IS NULL) OR ("NUM_ORCAMENTO" = :Original_NUM_ORCAMENTO)) AND ((:IsNull_NUM_PEDIDO = 1 AND "NUM_PEDIDO" IS NULL) OR ("NUM_PEDIDO" = :Original_NUM_PEDIDO)) AND ((:IsNull_NUM_RECEITA = 1 AND "NUM_RECEITA" IS NULL) OR ("NUM_RECEITA" = :Original_NUM_RECEITA)) AND ((:IsNull_NUM_CONTRATO = 1 AND "NUM_CONTRATO" IS NULL) OR ("NUM_CONTRATO" = :Original_NUM_CONTRATO)) AND ((:IsNull_NUM_CPR = 1 AND "NUM_CPR" IS NULL) OR ("NUM_CPR" = :Original_NUM_CPR)) AND ((:IsNull_NUM_GUIA = 1 AND "NUM_GUIA" IS NULL) OR ("NUM_GUIA" = :Original_NUM_GUIA)) AND ((:IsNull_NUM_BOLETIM = 1 AND "NUM_BOLETIM" IS NULL) OR ("NUM_BOLETIM" = :Original_NUM_BOLETIM)) AND ((:IsNull_NUM_CAIXA_POSTAL = 1 AND "NUM_CAIXA_POSTAL" IS NULL) OR ("NUM_CAIXA_POSTAL" = :Original_NUM_CAIXA_POSTAL)) AND ((:IsNull_NUM_RECIBO = 1 AND "NUM_RECIBO" IS NULL) OR ("NUM_RECIBO" = :Original_NUM_RECIBO)) AND ((:IsNull_COD_ESTADO = 1 AND "COD_ESTADO" IS NULL) OR ("COD_ESTADO" = :Original_COD_ESTADO)) AND ((:p3 = 1 AND "DT_FECHAMENTO_CONTABIL" IS NULL) OR ("DT_FECHAMENTO_CONTABIL" = :p2)) AND ((:IsNull_NUM_ROMANEIO = 1 AND "NUM_ROMANEIO" IS NULL) OR ("NUM_ROMANEIO" = :Original_NUM_ROMANEIO)) AND ((:IsNull_NUM_PAG_RAZAO = 1 AND "NUM_PAG_RAZAO" IS NULL) OR ("NUM_PAG_RAZAO" = :Original_NUM_PAG_RAZAO)) AND ((:IsNull_DESC_LPT_NOTA = 1 AND "DESC_LPT_NOTA" IS NULL) OR ("DESC_LPT_NOTA" = :Original_DESC_LPT_NOTA)) AND ((:IsNull_DESC_LPT_PEDIDO = 1 AND "DESC_LPT_PEDIDO" IS NULL) OR ("DESC_LPT_PEDIDO" = :Original_DESC_LPT_PEDIDO)) AND ((:IsNull_COD_SERIE = 1 AND "COD_SERIE" IS NULL) OR ("COD_SERIE" = :Original_COD_SERIE)) AND ((:IsNull_NUM_ENDERECO = 1 AND "NUM_ENDERECO" IS NULL) OR ("NUM_ENDERECO" = :Original_NUM_ENDERECO)) AND ((:p6 = 1 AND "DESC_COMPLEMENTO_ENDERECO" IS NULL) OR ("DESC_COMPLEMENTO_ENDERECO" = :p5)) AND ((:IsNull_DESC_BAIRRO = 1 AND "DESC_BAIRRO" IS NULL) OR ("DESC_BAIRRO" = :Original_DESC_BAIRRO)) AND ((:IsNull_DESC_NOME_CONTATO = 1 AND "DESC_NOME_CONTATO" IS NULL) OR ("DESC_NOME_CONTATO" = :Original_DESC_NOME_CONTATO)) AND ((:p9 = 1 AND "IND_PADRAO_ARQ_MAGNETICO" IS NULL) OR ("IND_PADRAO_ARQ_MAGNETICO" = :p8)) AND ((:p12 = 1 AND "IND_PADRAO_FIN_ARQ_MAGNETICO" IS NULL) OR ("IND_PADRAO_FIN_ARQ_MAGNETICO" = :p11)) AND ((:IsNull_DESC_FAX = 1 AND "DESC_FAX" IS NULL) OR ("DESC_FAX" = :Original_DESC_FAX)) AND ((:IsNull_DESC_E_MAIL = 1 AND "DESC_E_MAIL" IS NULL) OR ("DESC_E_MAIL" = :Original_DESC_E_MAIL)) AND ((:IsNull_IND_PORTA_BALANCA = 1 AND "IND_PORTA_BALANCA" IS NULL) OR ("IND_PORTA_BALANCA" = :Original_IND_PORTA_BALANCA)) AND ((:IsNull_DESC_LPT_OS = 1 AND "DESC_LPT_OS" IS NULL) OR ("DESC_LPT_OS" = :Original_DESC_LPT_OS)) AND ((:IsNull_DESC_TIPO_BALANCA = 1 AND "DESC_TIPO_BALANCA" IS NULL) OR ("DESC_TIPO_BALANCA" = :Original_DESC_TIPO_BALANCA)) AND ((:IsNull_COD_CREDENCIAL_SEAB = 1 AND "COD_CREDENCIAL_SEAB" IS NULL) OR ("COD_CREDENCIAL_SEAB" = :Original_COD_CREDENCIAL_SEAB)) AND ((:IsNull_PERC_ISS = 1 AND "PERC_ISS" IS NULL) OR ("PERC_ISS" = :Original_PERC_ISS)) AND ((:p15 = 1 AND "NUM_MINISTERIO_AGRICULTURA" IS NULL) OR ("NUM_MINISTERIO_AGRICULTURA" = :p14)) AND ((:p18 = 1 AND "IND_BLOQUEIO_VENDA_VCTO" IS NULL) OR ("IND_BLOQUEIO_VENDA_VCTO" = :p17)) AND ((:p21 = 1 AND "DESC_IMPRESSORA_FISCAL" IS NULL) OR ("DESC_IMPRESSORA_FISCAL" = :p20)) AND ((:p24 = 1 AND "IND_LIBERA_PESO_ROMANEIO" IS NULL) OR ("IND_LIBERA_PESO_ROMANEIO" = :p23)) AND ((:IsNull_IND_ESTOQUE_NEGATIVO = 1 AND "IND_ESTOQUE_NEGATIVO" IS NULL) OR ("IND_ESTOQUE_NEGATIVO" = :Original_IND_ESTOQUE_NEGATIVO)) AND ((:IsNull_DESC_PORTA_CHRONOS = 1 AND "DESC_PORTA_CHRONOS" IS NULL) OR ("DESC_PORTA_CHRONOS" = :Original_DESC_PORTA_CHRONOS)) AND ((:IsNull_IND_SUBSTITUICAO = 1 AND "IND_SUBSTITUICAO" IS NULL) OR ("IND_SUBSTITUICAO" = :Original_IND_SUBSTITUICAO)) AND ((:IsNull_COD_CADASTRO = 1 AND "COD_CADASTRO" IS NULL) OR ("COD_CADASTRO" = :Original_COD_CADASTRO)) AND ((:IsNull_DESC_CPF_RESPONSAVEL = 1 AND "DESC_CPF_RESPONSAVEL" IS NULL) OR ("DESC_CPF_RESPONSAVEL" = :Original_DESC_CPF_RESPONSAVEL)) AND ((:IsNull_DESC_NIT = 1 AND "DESC_NIT" IS NULL) OR ("DESC_NIT" = :Original_DESC_NIT)) AND ((:p27 = 1 AND "DESC_INSCRICAO_MUNICIPAL" IS NULL) OR ("DESC_INSCRICAO_MUNICIPAL" = :p26)) AND ((:IsNull_DESC_SUFRAMA = 1 AND "DESC_SUFRAMA" IS NULL) OR ("DESC_SUFRAMA" = :Original_DESC_SUFRAMA)) AND ((:IsNull_COD_CIDADE = 1 AND "COD_CIDADE" IS NULL) OR ("COD_CIDADE" = :Original_COD_CIDADE)))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="False" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_FILIAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_FILIAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_FILIAL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CIDADE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CEP" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_ENDERECO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="NUM_CGC" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_INSCRICAO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_TELEFONE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_NOTA_FISCAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_TITULO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_ESTOQUE" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ORCAMENTO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_PEDIDO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_RECEITA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CONTRATO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CPR" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_GUIA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_BOLETIM" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_CAIXA_POSTAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_RECIBO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="COD_ESTADO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="p1" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ROMANEIO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_PAG_RAZAO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_NOTA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_PEDIDO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="COD_SERIE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="NUM_ENDERECO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p4" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_BAIRRO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_NOME_CONTATO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p7" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p10" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_FAX" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_E_MAIL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="IND_PORTA_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_LPT_OS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_TIPO_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="PERC_ISS" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="p13" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p16" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p19" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p22" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_PORTA_CHRONOS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="IND_SUBSTITUICAO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CADASTRO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_NIT" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p25" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="DESC_SUFRAMA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="COD_CIDADE" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                      <Parameter AllowDbNull="False" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_FILIAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_FILIAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_FILIAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_FILIAL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FILIAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CIDADE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CIDADE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CIDADE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CEP" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CEP" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CEP" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_ENDERECO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_ENDERECO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CGC" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_NUM_CGC" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="NUM_CGC" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_INSCRICAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_INSCRICAO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_TELEFONE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_TELEFONE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TELEFONE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_NOTA_FISCAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_NOTA_FISCAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_NOTA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_TITULO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_TITULO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_TITULO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_ESTOQUE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_ESTOQUE" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ORCAMENTO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ORCAMENTO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ORCAMENTO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_PEDIDO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_PEDIDO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_RECEITA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_RECEITA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECEITA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CONTRATO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CONTRATO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CONTRATO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CPR" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CPR" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CPR" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_GUIA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_GUIA" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_GUIA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_BOLETIM" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_BOLETIM" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_BOLETIM" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_CAIXA_POSTAL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_CAIXA_POSTAL" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_CAIXA_POSTAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_RECIBO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_RECIBO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_RECIBO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_ESTADO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_COD_ESTADO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="COD_ESTADO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p3" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="p2" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DT_FECHAMENTO_CONTABIL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ROMANEIO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ROMANEIO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_PAG_RAZAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_PAG_RAZAO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_PAG_RAZAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_NOTA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_NOTA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_NOTA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_PEDIDO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_PEDIDO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_PEDIDO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_SERIE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_COD_SERIE" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="COD_SERIE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_NUM_ENDERECO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_NUM_ENDERECO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p6" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p5" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_COMPLEMENTO_ENDERECO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_BAIRRO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_BAIRRO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_BAIRRO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_NOME_CONTATO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_NOME_CONTATO" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NOME_CONTATO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p9" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p8" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p12" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p11" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_FAX" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_FAX" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_FAX" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_E_MAIL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_E_MAIL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_E_MAIL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_PORTA_BALANCA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_IND_PORTA_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_PORTA_BALANCA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_LPT_OS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_LPT_OS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_LPT_OS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_TIPO_BALANCA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_TIPO_BALANCA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_TIPO_BALANCA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CREDENCIAL_SEAB" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CREDENCIAL_SEAB" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_PERC_ISS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_PERC_ISS" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="PERC_ISS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p15" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="p14" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="NUM_MINISTERIO_AGRICULTURA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p18" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p17" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="IND_BLOQUEIO_VENDA_VCTO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p21" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p20" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_IMPRESSORA_FISCAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p24" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="p23" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_LIBERA_PESO_ROMANEIO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_ESTOQUE_NEGATIVO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_ESTOQUE_NEGATIVO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_PORTA_CHRONOS" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_PORTA_CHRONOS" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_PORTA_CHRONOS" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_IND_SUBSTITUICAO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiStringFixedLength" Direction="Input" ParameterName="Original_IND_SUBSTITUICAO" Precision="0" ProviderType="Char" Scale="0" Size="0" SourceColumn="IND_SUBSTITUICAO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CADASTRO" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CADASTRO" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CADASTRO" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_CPF_RESPONSAVEL" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_CPF_RESPONSAVEL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_NIT" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_NIT" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_NIT" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="p27" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="p26" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_INSCRICAO_MUNICIPAL" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_DESC_SUFRAMA" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="Original_DESC_SUFRAMA" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="DESC_SUFRAMA" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="IsNull_COD_CIDADE" Precision="0" ProviderType="Int32" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="True" SourceVersion="Original">
+                      </Parameter>
+                      <Parameter AllowDbNull="True" AutogeneratedName="" DataSourceName="" DbType="VarNumeric" Direction="Input" ParameterName="Original_COD_CIDADE" Precision="0" ProviderType="Number" Scale="0" Size="0" SourceColumn="COD_CIDADE" SourceColumnNullMapping="False" SourceVersion="Original">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="COD_FILIAL" DataSetColumn="COD_FILIAL" />
+              <Mapping SourceColumn="DESC_FILIAL" DataSetColumn="DESC_FILIAL" />
+              <Mapping SourceColumn="DESC_CIDADE" DataSetColumn="DESC_CIDADE" />
+              <Mapping SourceColumn="DESC_CEP" DataSetColumn="DESC_CEP" />
+              <Mapping SourceColumn="DESC_ENDERECO" DataSetColumn="DESC_ENDERECO" />
+              <Mapping SourceColumn="NUM_CGC" DataSetColumn="NUM_CGC" />
+              <Mapping SourceColumn="DESC_INSCRICAO" DataSetColumn="DESC_INSCRICAO" />
+              <Mapping SourceColumn="DESC_TELEFONE" DataSetColumn="DESC_TELEFONE" />
+              <Mapping SourceColumn="NUM_NOTA_FISCAL" DataSetColumn="NUM_NOTA_FISCAL" />
+              <Mapping SourceColumn="NUM_TITULO" DataSetColumn="NUM_TITULO" />
+              <Mapping SourceColumn="IND_ESTOQUE" DataSetColumn="IND_ESTOQUE" />
+              <Mapping SourceColumn="NUM_ORCAMENTO" DataSetColumn="NUM_ORCAMENTO" />
+              <Mapping SourceColumn="NUM_PEDIDO" DataSetColumn="NUM_PEDIDO" />
+              <Mapping SourceColumn="NUM_RECEITA" DataSetColumn="NUM_RECEITA" />
+              <Mapping SourceColumn="NUM_CONTRATO" DataSetColumn="NUM_CONTRATO" />
+              <Mapping SourceColumn="NUM_CPR" DataSetColumn="NUM_CPR" />
+              <Mapping SourceColumn="NUM_GUIA" DataSetColumn="NUM_GUIA" />
+              <Mapping SourceColumn="NUM_BOLETIM" DataSetColumn="NUM_BOLETIM" />
+              <Mapping SourceColumn="NUM_CAIXA_POSTAL" DataSetColumn="NUM_CAIXA_POSTAL" />
+              <Mapping SourceColumn="NUM_RECIBO" DataSetColumn="NUM_RECIBO" />
+              <Mapping SourceColumn="COD_ESTADO" DataSetColumn="COD_ESTADO" />
+              <Mapping SourceColumn="DT_FECHAMENTO_CONTABIL" DataSetColumn="DT_FECHAMENTO_CONTABIL" />
+              <Mapping SourceColumn="NUM_ROMANEIO" DataSetColumn="NUM_ROMANEIO" />
+              <Mapping SourceColumn="NUM_PAG_RAZAO" DataSetColumn="NUM_PAG_RAZAO" />
+              <Mapping SourceColumn="DESC_LPT_NOTA" DataSetColumn="DESC_LPT_NOTA" />
+              <Mapping SourceColumn="DESC_LPT_PEDIDO" DataSetColumn="DESC_LPT_PEDIDO" />
+              <Mapping SourceColumn="COD_SERIE" DataSetColumn="COD_SERIE" />
+              <Mapping SourceColumn="NUM_ENDERECO" DataSetColumn="NUM_ENDERECO" />
+              <Mapping SourceColumn="DESC_COMPLEMENTO_ENDERECO" DataSetColumn="DESC_COMPLEMENTO_ENDERECO" />
+              <Mapping SourceColumn="DESC_BAIRRO" DataSetColumn="DESC_BAIRRO" />
+              <Mapping SourceColumn="DESC_NOME_CONTATO" DataSetColumn="DESC_NOME_CONTATO" />
+              <Mapping SourceColumn="IND_PADRAO_ARQ_MAGNETICO" DataSetColumn="IND_PADRAO_ARQ_MAGNETICO" />
+              <Mapping SourceColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" DataSetColumn="IND_PADRAO_FIN_ARQ_MAGNETICO" />
+              <Mapping SourceColumn="DESC_FAX" DataSetColumn="DESC_FAX" />
+              <Mapping SourceColumn="DESC_E_MAIL" DataSetColumn="DESC_E_MAIL" />
+              <Mapping SourceColumn="IND_PORTA_BALANCA" DataSetColumn="IND_PORTA_BALANCA" />
+              <Mapping SourceColumn="DESC_LPT_OS" DataSetColumn="DESC_LPT_OS" />
+              <Mapping SourceColumn="DESC_TIPO_BALANCA" DataSetColumn="DESC_TIPO_BALANCA" />
+              <Mapping SourceColumn="COD_CREDENCIAL_SEAB" DataSetColumn="COD_CREDENCIAL_SEAB" />
+              <Mapping SourceColumn="PERC_ISS" DataSetColumn="PERC_ISS" />
+              <Mapping SourceColumn="NUM_MINISTERIO_AGRICULTURA" DataSetColumn="NUM_MINISTERIO_AGRICULTURA" />
+              <Mapping SourceColumn="IND_BLOQUEIO_VENDA_VCTO" DataSetColumn="IND_BLOQUEIO_VENDA_VCTO" />
+              <Mapping SourceColumn="DESC_IMPRESSORA_FISCAL" DataSetColumn="DESC_IMPRESSORA_FISCAL" />
+              <Mapping SourceColumn="IND_LIBERA_PESO_ROMANEIO" DataSetColumn="IND_LIBERA_PESO_ROMANEIO" />
+              <Mapping SourceColumn="IND_ESTOQUE_NEGATIVO" DataSetColumn="IND_ESTOQUE_NEGATIVO" />
+              <Mapping SourceColumn="DESC_PORTA_CHRONOS" DataSetColumn="DESC_PORTA_CHRONOS" />
+              <Mapping SourceColumn="IND_SUBSTITUICAO" DataSetColumn="IND_SUBSTITUICAO" />
+              <Mapping SourceColumn="COD_CADASTRO" DataSetColumn="COD_CADASTRO" />
+              <Mapping SourceColumn="DESC_CPF_RESPONSAVEL" DataSetColumn="DESC_CPF_RESPONSAVEL" />
+              <Mapping SourceColumn="DESC_NIT" DataSetColumn="DESC_NIT" />
+              <Mapping SourceColumn="DESC_INSCRICAO_MUNICIPAL" DataSetColumn="DESC_INSCRICAO_MUNICIPAL" />
+              <Mapping SourceColumn="DESC_SUFRAMA" DataSetColumn="DESC_SUFRAMA" />
+              <Mapping SourceColumn="COD_CIDADE" DataSetColumn="COD_CIDADE" />
+            </Mappings>
+            <Sources>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="notasDataSource" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="notasDataSource" msprop:Generator_DataSetName="notasDataSource">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TB_FILIAL" msprop:Generator_UserTableName="TB_FILIAL" msprop:Generator_RowDeletedName="TB_FILIALRowDeleted" msprop:Generator_RowChangedName="TB_FILIALRowChanged" msprop:Generator_RowClassName="TB_FILIALRow" msprop:Generator_RowChangingName="TB_FILIALRowChanging" msprop:Generator_RowEvArgName="TB_FILIALRowChangeEvent" msprop:Generator_RowEvHandlerName="TB_FILIALRowChangeEventHandler" msprop:Generator_TableClassName="TB_FILIALDataTable" msprop:Generator_TableVarName="tableTB_FILIAL" msprop:Generator_RowDeletingName="TB_FILIALRowDeleting" msprop:Generator_TablePropName="TB_FILIAL">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="COD_FILIAL" msprop:Generator_UserColumnName="COD_FILIAL" msprop:Generator_ColumnPropNameInRow="COD_FILIAL" msprop:Generator_ColumnVarNameInTable="columnCOD_FILIAL" msprop:Generator_ColumnPropNameInTable="COD_FILIALColumn" type="xs:decimal" />
+              <xs:element name="DESC_FILIAL" msprop:Generator_UserColumnName="DESC_FILIAL" msprop:Generator_ColumnPropNameInRow="DESC_FILIAL" msprop:Generator_ColumnVarNameInTable="columnDESC_FILIAL" msprop:Generator_ColumnPropNameInTable="DESC_FILIALColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_CIDADE" msprop:Generator_UserColumnName="DESC_CIDADE" msprop:Generator_ColumnPropNameInRow="DESC_CIDADE" msprop:Generator_ColumnVarNameInTable="columnDESC_CIDADE" msprop:Generator_ColumnPropNameInTable="DESC_CIDADEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_CEP" msprop:Generator_UserColumnName="DESC_CEP" msprop:Generator_ColumnPropNameInRow="DESC_CEP" msprop:Generator_ColumnVarNameInTable="columnDESC_CEP" msprop:Generator_ColumnPropNameInTable="DESC_CEPColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_ENDERECO" msprop:Generator_UserColumnName="DESC_ENDERECO" msprop:Generator_ColumnPropNameInRow="DESC_ENDERECO" msprop:Generator_ColumnVarNameInTable="columnDESC_ENDERECO" msprop:Generator_ColumnPropNameInTable="DESC_ENDERECOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NUM_CGC" msprop:Generator_UserColumnName="NUM_CGC" msprop:Generator_ColumnPropNameInRow="NUM_CGC" msprop:Generator_ColumnVarNameInTable="columnNUM_CGC" msprop:Generator_ColumnPropNameInTable="NUM_CGCColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="18" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_INSCRICAO" msprop:Generator_UserColumnName="DESC_INSCRICAO" msprop:Generator_ColumnPropNameInRow="DESC_INSCRICAO" msprop:Generator_ColumnVarNameInTable="columnDESC_INSCRICAO" msprop:Generator_ColumnPropNameInTable="DESC_INSCRICAOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_TELEFONE" msprop:Generator_UserColumnName="DESC_TELEFONE" msprop:Generator_ColumnPropNameInRow="DESC_TELEFONE" msprop:Generator_ColumnVarNameInTable="columnDESC_TELEFONE" msprop:Generator_ColumnPropNameInTable="DESC_TELEFONEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NUM_NOTA_FISCAL" msprop:Generator_UserColumnName="NUM_NOTA_FISCAL" msprop:Generator_ColumnPropNameInRow="NUM_NOTA_FISCAL" msprop:Generator_ColumnVarNameInTable="columnNUM_NOTA_FISCAL" msprop:Generator_ColumnPropNameInTable="NUM_NOTA_FISCALColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_TITULO" msprop:Generator_UserColumnName="NUM_TITULO" msprop:Generator_ColumnPropNameInRow="NUM_TITULO" msprop:Generator_ColumnVarNameInTable="columnNUM_TITULO" msprop:Generator_ColumnPropNameInTable="NUM_TITULOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IND_ESTOQUE" msprop:Generator_UserColumnName="IND_ESTOQUE" msprop:Generator_ColumnPropNameInRow="IND_ESTOQUE" msprop:Generator_ColumnVarNameInTable="columnIND_ESTOQUE" msprop:Generator_ColumnPropNameInTable="IND_ESTOQUEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NUM_ORCAMENTO" msprop:Generator_UserColumnName="NUM_ORCAMENTO" msprop:Generator_ColumnPropNameInRow="NUM_ORCAMENTO" msprop:Generator_ColumnVarNameInTable="columnNUM_ORCAMENTO" msprop:Generator_ColumnPropNameInTable="NUM_ORCAMENTOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_PEDIDO" msprop:Generator_UserColumnName="NUM_PEDIDO" msprop:Generator_ColumnPropNameInRow="NUM_PEDIDO" msprop:Generator_ColumnVarNameInTable="columnNUM_PEDIDO" msprop:Generator_ColumnPropNameInTable="NUM_PEDIDOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_RECEITA" msprop:Generator_UserColumnName="NUM_RECEITA" msprop:Generator_ColumnPropNameInRow="NUM_RECEITA" msprop:Generator_ColumnVarNameInTable="columnNUM_RECEITA" msprop:Generator_ColumnPropNameInTable="NUM_RECEITAColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_CONTRATO" msprop:Generator_UserColumnName="NUM_CONTRATO" msprop:Generator_ColumnPropNameInRow="NUM_CONTRATO" msprop:Generator_ColumnVarNameInTable="columnNUM_CONTRATO" msprop:Generator_ColumnPropNameInTable="NUM_CONTRATOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_CPR" msprop:Generator_UserColumnName="NUM_CPR" msprop:Generator_ColumnPropNameInRow="NUM_CPR" msprop:Generator_ColumnVarNameInTable="columnNUM_CPR" msprop:Generator_ColumnPropNameInTable="NUM_CPRColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_GUIA" msprop:Generator_UserColumnName="NUM_GUIA" msprop:Generator_ColumnPropNameInRow="NUM_GUIA" msprop:Generator_ColumnVarNameInTable="columnNUM_GUIA" msprop:Generator_ColumnPropNameInTable="NUM_GUIAColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_BOLETIM" msprop:Generator_UserColumnName="NUM_BOLETIM" msprop:Generator_ColumnPropNameInRow="NUM_BOLETIM" msprop:Generator_ColumnVarNameInTable="columnNUM_BOLETIM" msprop:Generator_ColumnPropNameInTable="NUM_BOLETIMColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_CAIXA_POSTAL" msprop:Generator_UserColumnName="NUM_CAIXA_POSTAL" msprop:Generator_ColumnPropNameInRow="NUM_CAIXA_POSTAL" msprop:Generator_ColumnVarNameInTable="columnNUM_CAIXA_POSTAL" msprop:Generator_ColumnPropNameInTable="NUM_CAIXA_POSTALColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_RECIBO" msprop:Generator_UserColumnName="NUM_RECIBO" msprop:Generator_ColumnPropNameInRow="NUM_RECIBO" msprop:Generator_ColumnVarNameInTable="columnNUM_RECIBO" msprop:Generator_ColumnPropNameInTable="NUM_RECIBOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="COD_ESTADO" msprop:Generator_UserColumnName="COD_ESTADO" msprop:Generator_ColumnPropNameInRow="COD_ESTADO" msprop:Generator_ColumnVarNameInTable="columnCOD_ESTADO" msprop:Generator_ColumnPropNameInTable="COD_ESTADOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DT_FECHAMENTO_CONTABIL" msprop:Generator_UserColumnName="DT_FECHAMENTO_CONTABIL" msprop:Generator_ColumnPropNameInRow="DT_FECHAMENTO_CONTABIL" msprop:Generator_ColumnVarNameInTable="columnDT_FECHAMENTO_CONTABIL" msprop:Generator_ColumnPropNameInTable="DT_FECHAMENTO_CONTABILColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NUM_ROMANEIO" msprop:Generator_UserColumnName="NUM_ROMANEIO" msprop:Generator_ColumnPropNameInRow="NUM_ROMANEIO" msprop:Generator_ColumnVarNameInTable="columnNUM_ROMANEIO" msprop:Generator_ColumnPropNameInTable="NUM_ROMANEIOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_PAG_RAZAO" msprop:Generator_UserColumnName="NUM_PAG_RAZAO" msprop:Generator_ColumnPropNameInRow="NUM_PAG_RAZAO" msprop:Generator_ColumnVarNameInTable="columnNUM_PAG_RAZAO" msprop:Generator_ColumnPropNameInTable="NUM_PAG_RAZAOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DESC_LPT_NOTA" msprop:Generator_UserColumnName="DESC_LPT_NOTA" msprop:Generator_ColumnPropNameInRow="DESC_LPT_NOTA" msprop:Generator_ColumnVarNameInTable="columnDESC_LPT_NOTA" msprop:Generator_ColumnPropNameInTable="DESC_LPT_NOTAColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_LPT_PEDIDO" msprop:Generator_UserColumnName="DESC_LPT_PEDIDO" msprop:Generator_ColumnPropNameInRow="DESC_LPT_PEDIDO" msprop:Generator_ColumnVarNameInTable="columnDESC_LPT_PEDIDO" msprop:Generator_ColumnPropNameInTable="DESC_LPT_PEDIDOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="COD_SERIE" msprop:Generator_UserColumnName="COD_SERIE" msprop:Generator_ColumnPropNameInRow="COD_SERIE" msprop:Generator_ColumnVarNameInTable="columnCOD_SERIE" msprop:Generator_ColumnPropNameInTable="COD_SERIEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NUM_ENDERECO" msprop:Generator_UserColumnName="NUM_ENDERECO" msprop:Generator_ColumnPropNameInRow="NUM_ENDERECO" msprop:Generator_ColumnVarNameInTable="columnNUM_ENDERECO" msprop:Generator_ColumnPropNameInTable="NUM_ENDERECOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DESC_COMPLEMENTO_ENDERECO" msprop:Generator_UserColumnName="DESC_COMPLEMENTO_ENDERECO" msprop:Generator_ColumnPropNameInRow="DESC_COMPLEMENTO_ENDERECO" msprop:Generator_ColumnVarNameInTable="columnDESC_COMPLEMENTO_ENDERECO" msprop:Generator_ColumnPropNameInTable="DESC_COMPLEMENTO_ENDERECOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="22" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_BAIRRO" msprop:Generator_UserColumnName="DESC_BAIRRO" msprop:Generator_ColumnPropNameInRow="DESC_BAIRRO" msprop:Generator_ColumnVarNameInTable="columnDESC_BAIRRO" msprop:Generator_ColumnPropNameInTable="DESC_BAIRROColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_NOME_CONTATO" msprop:Generator_UserColumnName="DESC_NOME_CONTATO" msprop:Generator_ColumnPropNameInRow="DESC_NOME_CONTATO" msprop:Generator_ColumnVarNameInTable="columnDESC_NOME_CONTATO" msprop:Generator_ColumnPropNameInTable="DESC_NOME_CONTATOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="28" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_PADRAO_ARQ_MAGNETICO" msprop:Generator_UserColumnName="IND_PADRAO_ARQ_MAGNETICO" msprop:Generator_ColumnPropNameInRow="IND_PADRAO_ARQ_MAGNETICO" msprop:Generator_ColumnVarNameInTable="columnIND_PADRAO_ARQ_MAGNETICO" msprop:Generator_ColumnPropNameInTable="IND_PADRAO_ARQ_MAGNETICOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_PADRAO_FIN_ARQ_MAGNETICO" msprop:Generator_UserColumnName="IND_PADRAO_FIN_ARQ_MAGNETICO" msprop:Generator_ColumnPropNameInRow="IND_PADRAO_FIN_ARQ_MAGNETICO" msprop:Generator_ColumnVarNameInTable="columnIND_PADRAO_FIN_ARQ_MAGNETICO" msprop:Generator_ColumnPropNameInTable="IND_PADRAO_FIN_ARQ_MAGNETICOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_FAX" msprop:Generator_UserColumnName="DESC_FAX" msprop:Generator_ColumnPropNameInRow="DESC_FAX" msprop:Generator_ColumnVarNameInTable="columnDESC_FAX" msprop:Generator_ColumnPropNameInTable="DESC_FAXColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_E_MAIL" msprop:Generator_UserColumnName="DESC_E_MAIL" msprop:Generator_ColumnPropNameInRow="DESC_E_MAIL" msprop:Generator_ColumnVarNameInTable="columnDESC_E_MAIL" msprop:Generator_ColumnPropNameInTable="DESC_E_MAILColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_PORTA_BALANCA" msprop:Generator_UserColumnName="IND_PORTA_BALANCA" msprop:Generator_ColumnPropNameInRow="IND_PORTA_BALANCA" msprop:Generator_ColumnVarNameInTable="columnIND_PORTA_BALANCA" msprop:Generator_ColumnPropNameInTable="IND_PORTA_BALANCAColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_LPT_OS" msprop:Generator_UserColumnName="DESC_LPT_OS" msprop:Generator_ColumnPropNameInRow="DESC_LPT_OS" msprop:Generator_ColumnVarNameInTable="columnDESC_LPT_OS" msprop:Generator_ColumnPropNameInTable="DESC_LPT_OSColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_TIPO_BALANCA" msprop:Generator_UserColumnName="DESC_TIPO_BALANCA" msprop:Generator_ColumnPropNameInRow="DESC_TIPO_BALANCA" msprop:Generator_ColumnVarNameInTable="columnDESC_TIPO_BALANCA" msprop:Generator_ColumnPropNameInTable="DESC_TIPO_BALANCAColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="7" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="COD_CREDENCIAL_SEAB" msprop:Generator_UserColumnName="COD_CREDENCIAL_SEAB" msprop:Generator_ColumnPropNameInRow="COD_CREDENCIAL_SEAB" msprop:Generator_ColumnVarNameInTable="columnCOD_CREDENCIAL_SEAB" msprop:Generator_ColumnPropNameInTable="COD_CREDENCIAL_SEABColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PERC_ISS" msprop:Generator_UserColumnName="PERC_ISS" msprop:Generator_ColumnPropNameInRow="PERC_ISS" msprop:Generator_ColumnVarNameInTable="columnPERC_ISS" msprop:Generator_ColumnPropNameInTable="PERC_ISSColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NUM_MINISTERIO_AGRICULTURA" msprop:Generator_UserColumnName="NUM_MINISTERIO_AGRICULTURA" msprop:Generator_ColumnPropNameInRow="NUM_MINISTERIO_AGRICULTURA" msprop:Generator_ColumnVarNameInTable="columnNUM_MINISTERIO_AGRICULTURA" msprop:Generator_ColumnPropNameInTable="NUM_MINISTERIO_AGRICULTURAColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IND_BLOQUEIO_VENDA_VCTO" msprop:Generator_UserColumnName="IND_BLOQUEIO_VENDA_VCTO" msprop:Generator_ColumnPropNameInRow="IND_BLOQUEIO_VENDA_VCTO" msprop:Generator_ColumnVarNameInTable="columnIND_BLOQUEIO_VENDA_VCTO" msprop:Generator_ColumnPropNameInTable="IND_BLOQUEIO_VENDA_VCTOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_IMPRESSORA_FISCAL" msprop:Generator_UserColumnName="DESC_IMPRESSORA_FISCAL" msprop:Generator_ColumnPropNameInRow="DESC_IMPRESSORA_FISCAL" msprop:Generator_ColumnVarNameInTable="columnDESC_IMPRESSORA_FISCAL" msprop:Generator_ColumnPropNameInTable="DESC_IMPRESSORA_FISCALColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_LIBERA_PESO_ROMANEIO" msprop:Generator_UserColumnName="IND_LIBERA_PESO_ROMANEIO" msprop:Generator_ColumnPropNameInRow="IND_LIBERA_PESO_ROMANEIO" msprop:Generator_ColumnVarNameInTable="columnIND_LIBERA_PESO_ROMANEIO" msprop:Generator_ColumnPropNameInTable="IND_LIBERA_PESO_ROMANEIOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_ESTOQUE_NEGATIVO" msprop:Generator_UserColumnName="IND_ESTOQUE_NEGATIVO" msprop:Generator_ColumnPropNameInRow="IND_ESTOQUE_NEGATIVO" msprop:Generator_ColumnVarNameInTable="columnIND_ESTOQUE_NEGATIVO" msprop:Generator_ColumnPropNameInTable="IND_ESTOQUE_NEGATIVOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_PORTA_CHRONOS" msprop:Generator_UserColumnName="DESC_PORTA_CHRONOS" msprop:Generator_ColumnPropNameInRow="DESC_PORTA_CHRONOS" msprop:Generator_ColumnVarNameInTable="columnDESC_PORTA_CHRONOS" msprop:Generator_ColumnPropNameInTable="DESC_PORTA_CHRONOSColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IND_SUBSTITUICAO" msprop:Generator_UserColumnName="IND_SUBSTITUICAO" msprop:Generator_ColumnPropNameInRow="IND_SUBSTITUICAO" msprop:Generator_ColumnVarNameInTable="columnIND_SUBSTITUICAO" msprop:Generator_ColumnPropNameInTable="IND_SUBSTITUICAOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="COD_CADASTRO" msprop:Generator_UserColumnName="COD_CADASTRO" msprop:Generator_ColumnPropNameInRow="COD_CADASTRO" msprop:Generator_ColumnVarNameInTable="columnCOD_CADASTRO" msprop:Generator_ColumnPropNameInTable="COD_CADASTROColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DESC_CPF_RESPONSAVEL" msprop:Generator_UserColumnName="DESC_CPF_RESPONSAVEL" msprop:Generator_ColumnPropNameInRow="DESC_CPF_RESPONSAVEL" msprop:Generator_ColumnVarNameInTable="columnDESC_CPF_RESPONSAVEL" msprop:Generator_ColumnPropNameInTable="DESC_CPF_RESPONSAVELColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_NIT" msprop:Generator_UserColumnName="DESC_NIT" msprop:Generator_ColumnPropNameInRow="DESC_NIT" msprop:Generator_ColumnVarNameInTable="columnDESC_NIT" msprop:Generator_ColumnPropNameInTable="DESC_NITColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_INSCRICAO_MUNICIPAL" msprop:Generator_UserColumnName="DESC_INSCRICAO_MUNICIPAL" msprop:Generator_ColumnPropNameInRow="DESC_INSCRICAO_MUNICIPAL" msprop:Generator_ColumnVarNameInTable="columnDESC_INSCRICAO_MUNICIPAL" msprop:Generator_ColumnPropNameInTable="DESC_INSCRICAO_MUNICIPALColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DESC_SUFRAMA" msprop:Generator_UserColumnName="DESC_SUFRAMA" msprop:Generator_ColumnPropNameInRow="DESC_SUFRAMA" msprop:Generator_ColumnVarNameInTable="columnDESC_SUFRAMA" msprop:Generator_ColumnPropNameInTable="DESC_SUFRAMAColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="COD_CIDADE" msprop:Generator_UserColumnName="COD_CIDADE" msprop:Generator_ColumnPropNameInRow="COD_CIDADE" msprop:Generator_ColumnVarNameInTable="columnCOD_CIDADE" msprop:Generator_ColumnPropNameInTable="COD_CIDADEColumn" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_CADASTRO" msprop:Generator_UserTableName="TB_CADASTRO" msprop:Generator_RowDeletedName="TB_CADASTRORowDeleted" msprop:Generator_RowChangedName="TB_CADASTRORowChanged" msprop:Generator_RowClassName="TB_CADASTRORow" msprop:Generator_RowChangingName="TB_CADASTRORowChanging" msprop:Generator_RowEvArgName="TB_CADASTRORowChangeEvent" msprop:Generator_RowEvHandlerName="TB_CADASTRORowChangeEventHandler" msprop:Generator_TableClassName="TB_CADASTRODataTable" msprop:Generator_TableVarName="tableTB_CADASTRO" msprop:Generator_RowDeletingName="TB_CADASTRORowDeleting" msprop:Generator_TablePropName="TB_CADASTRO">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NOME" msprop:Generator_UserColumnName="NOME" msprop:Generator_ColumnPropNameInRow="NOME" msprop:Generator_ColumnVarNameInTable="columnNOME" msprop:Generator_ColumnPropNameInTable="NOMEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CNPJ" msprop:Generator_UserColumnName="CNPJ" msprop:Generator_ColumnPropNameInRow="CNPJ" msprop:Generator_ColumnVarNameInTable="columnCNPJ" msprop:Generator_ColumnPropNameInTable="CNPJColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="LOGRADOURO" msprop:Generator_UserColumnName="LOGRADOURO" msprop:Generator_ColumnPropNameInRow="LOGRADOURO" msprop:Generator_ColumnVarNameInTable="columnLOGRADOURO" msprop:Generator_ColumnPropNameInTable="LOGRADOUROColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMERO" msprop:Generator_UserColumnName="NUMERO" msprop:Generator_ColumnPropNameInRow="NUMERO" msprop:Generator_ColumnVarNameInTable="columnNUMERO" msprop:Generator_ColumnPropNameInTable="NUMEROColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="BAIRRO" msprop:Generator_UserColumnName="BAIRRO" msprop:Generator_ColumnPropNameInRow="BAIRRO" msprop:Generator_ColumnVarNameInTable="columnBAIRRO" msprop:Generator_ColumnPropNameInTable="BAIRROColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CEP" msprop:Generator_UserColumnName="CEP" msprop:Generator_ColumnPropNameInRow="CEP" msprop:Generator_ColumnVarNameInTable="columnCEP" msprop:Generator_ColumnPropNameInTable="CEPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CIDADE" msprop:Generator_UserColumnName="CIDADE" msprop:Generator_ColumnPropNameInRow="CIDADE" msprop:Generator_ColumnVarNameInTable="columnCIDADE" msprop:Generator_ColumnPropNameInTable="CIDADEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="TELEFONE" msprop:Generator_UserColumnName="TELEFONE" msprop:Generator_ColumnPropNameInRow="TELEFONE" msprop:Generator_ColumnVarNameInTable="columnTELEFONE" msprop:Generator_ColumnPropNameInTable="TELEFONEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="UF" msprop:Generator_UserColumnName="UF" msprop:Generator_ColumnPropNameInRow="UF" msprop:Generator_ColumnVarNameInTable="columnUF" msprop:Generator_ColumnPropNameInTable="UFColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="INSCRICAO_ESTADUAL" msprop:Generator_UserColumnName="INSCRICAO_ESTADUAL" msprop:Generator_ColumnPropNameInRow="INSCRICAO_ESTADUAL" msprop:Generator_ColumnVarNameInTable="columnINSCRICAO_ESTADUAL" msprop:Generator_ColumnPropNameInTable="INSCRICAO_ESTADUALColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_NFE" msprop:Generator_UserTableName="TB_NFE" msprop:Generator_RowDeletedName="TB_NFERowDeleted" msprop:Generator_RowChangedName="TB_NFERowChanged" msprop:Generator_RowClassName="TB_NFERow" msprop:Generator_RowChangingName="TB_NFERowChanging" msprop:Generator_RowEvArgName="TB_NFERowChangeEvent" msprop:Generator_RowEvHandlerName="TB_NFERowChangeEventHandler" msprop:Generator_TableClassName="TB_NFEDataTable" msprop:Generator_TableVarName="tableTB_NFE" msprop:Generator_RowDeletingName="TB_NFERowDeleting" msprop:Generator_TablePropName="TB_NFE">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DT_SAIDA" msprop:Generator_UserColumnName="DT_SAIDA" msprop:Generator_ColumnVarNameInTable="columnDT_SAIDA" msprop:Generator_ColumnPropNameInRow="DT_SAIDA" msprop:Generator_ColumnPropNameInTable="DT_SAIDAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DT_EMISSAO" msprop:Generator_UserColumnName="DT_EMISSAO" msprop:Generator_ColumnVarNameInTable="columnDT_EMISSAO" msprop:Generator_ColumnPropNameInRow="DT_EMISSAO" msprop:Generator_ColumnPropNameInTable="DT_EMISSAOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DT_RECEBIMENTO" msprop:Generator_UserColumnName="DT_RECEBIMENTO" msprop:Generator_ColumnVarNameInTable="columnDT_RECEBIMENTO" msprop:Generator_ColumnPropNameInRow="DT_RECEBIMENTO" msprop:Generator_ColumnPropNameInTable="DT_RECEBIMENTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CHAVE_ACESSO" msprop:Generator_UserColumnName="CHAVE_ACESSO" msprop:Generator_ColumnVarNameInTable="columnCHAVE_ACESSO" msprop:Generator_ColumnPropNameInRow="CHAVE_ACESSO" msprop:Generator_ColumnPropNameInTable="CHAVE_ACESSOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NUM_NFE" msprop:Generator_UserColumnName="NUM_NFE" msprop:Generator_ColumnVarNameInTable="columnNUM_NFE" msprop:Generator_ColumnPropNameInRow="NUM_NFE" msprop:Generator_ColumnPropNameInTable="NUM_NFEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="SERIE" msprop:Generator_UserColumnName="SERIE" msprop:Generator_ColumnVarNameInTable="columnSERIE" msprop:Generator_ColumnPropNameInRow="SERIE" msprop:Generator_ColumnPropNameInTable="SERIEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="IND_ENTRADA_SAIDA" msprop:Generator_UserColumnName="IND_ENTRADA_SAIDA" msprop:Generator_ColumnVarNameInTable="columnIND_ENTRADA_SAIDA" msprop:Generator_ColumnPropNameInRow="IND_ENTRADA_SAIDA" msprop:Generator_ColumnPropNameInTable="IND_ENTRADA_SAIDAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NATUREZA_OP" msprop:Generator_UserColumnName="NATUREZA_OP" msprop:Generator_ColumnVarNameInTable="columnNATUREZA_OP" msprop:Generator_ColumnPropNameInRow="NATUREZA_OP" msprop:Generator_ColumnPropNameInTable="NATUREZA_OPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="INSC_EST_SUBST_TRIBUTARIO" msprop:Generator_UserColumnName="INSC_EST_SUBST_TRIBUTARIO" msprop:Generator_ColumnVarNameInTable="columnINSC_EST_SUBST_TRIBUTARIO" msprop:Generator_ColumnPropNameInRow="INSC_EST_SUBST_TRIBUTARIO" msprop:Generator_ColumnPropNameInTable="INSC_EST_SUBST_TRIBUTARIOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DADOS_ADICIONAIS" msprop:Generator_UserColumnName="DADOS_ADICIONAIS" msprop:Generator_ColumnVarNameInTable="columnDADOS_ADICIONAIS" msprop:Generator_ColumnPropNameInRow="DADOS_ADICIONAIS" msprop:Generator_ColumnPropNameInTable="DADOS_ADICIONAISColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CONTINGENCIA" msprop:Generator_UserColumnName="CONTINGENCIA" msprop:Generator_ColumnPropNameInRow="CONTINGENCIA" msprop:Generator_ColumnVarNameInTable="columnCONTINGENCIA" msprop:Generator_ColumnPropNameInTable="CONTINGENCIAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="HORA_NF" msprop:Generator_UserColumnName="HORA_NF" msprop:Generator_ColumnVarNameInTable="columnHORA_NF" msprop:Generator_ColumnPropNameInRow="HORA_NF" msprop:Generator_ColumnPropNameInTable="HORA_NFColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DADOS_ADIC_FISCO" msprop:Generator_UserColumnName="DADOS_ADIC_FISCO" msprop:Generator_ColumnVarNameInTable="columnDADOS_ADIC_FISCO" msprop:Generator_ColumnPropNameInRow="DADOS_ADIC_FISCO" msprop:Generator_ColumnPropNameInTable="DADOS_ADIC_FISCOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MSG_HOMOLOGACAO" msprop:Generator_UserColumnName="MSG_HOMOLOGACAO" msprop:Generator_ColumnVarNameInTable="columnMSG_HOMOLOGACAO" msprop:Generator_ColumnPropNameInRow="MSG_HOMOLOGACAO" msprop:Generator_ColumnPropNameInTable="MSG_HOMOLOGACAOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COD_CONTINGENCIA" msprop:Generator_UserColumnName="COD_CONTINGENCIA" msprop:Generator_ColumnVarNameInTable="columnCOD_CONTINGENCIA" msprop:Generator_ColumnPropNameInRow="COD_CONTINGENCIA" msprop:Generator_ColumnPropNameInTable="COD_CONTINGENCIAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="OBS_LAR" msprop:Generator_UserColumnName="OBS_LAR" msprop:Generator_ColumnPropNameInRow="OBS_LAR" msprop:Generator_ColumnVarNameInTable="columnOBS_LAR" msprop:Generator_ColumnPropNameInTable="OBS_LARColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DADOS_DANFE" msprop:Generator_UserColumnName="DADOS_DANFE" msprop:Generator_ColumnVarNameInTable="columnDADOS_DANFE" msprop:Generator_ColumnPropNameInRow="DADOS_DANFE" msprop:Generator_ColumnPropNameInTable="DADOS_DANFEColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_CALCULO_IMPOSTO" msprop:Generator_UserTableName="TB_CALCULO_IMPOSTO" msprop:Generator_RowDeletedName="TB_CALCULO_IMPOSTORowDeleted" msprop:Generator_RowChangedName="TB_CALCULO_IMPOSTORowChanged" msprop:Generator_RowClassName="TB_CALCULO_IMPOSTORow" msprop:Generator_RowChangingName="TB_CALCULO_IMPOSTORowChanging" msprop:Generator_RowEvArgName="TB_CALCULO_IMPOSTORowChangeEvent" msprop:Generator_RowEvHandlerName="TB_CALCULO_IMPOSTORowChangeEventHandler" msprop:Generator_TableClassName="TB_CALCULO_IMPOSTODataTable" msprop:Generator_TableVarName="tableTB_CALCULO_IMPOSTO" msprop:Generator_RowDeletingName="TB_CALCULO_IMPOSTORowDeleting" msprop:Generator_TablePropName="TB_CALCULO_IMPOSTO">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BASE_CALCULO_ICMS" msprop:Generator_UserColumnName="BASE_CALCULO_ICMS" msprop:Generator_ColumnVarNameInTable="columnBASE_CALCULO_ICMS" msprop:Generator_ColumnPropNameInRow="BASE_CALCULO_ICMS" msprop:Generator_ColumnPropNameInTable="BASE_CALCULO_ICMSColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_ICMS" msprop:Generator_UserColumnName="VALOR_ICMS" msprop:Generator_ColumnVarNameInTable="columnVALOR_ICMS" msprop:Generator_ColumnPropNameInRow="VALOR_ICMS" msprop:Generator_ColumnPropNameInTable="VALOR_ICMSColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BASE_CALCULO_ICMS_SUBST" msprop:Generator_UserColumnName="BASE_CALCULO_ICMS_SUBST" msprop:Generator_ColumnVarNameInTable="columnBASE_CALCULO_ICMS_SUBST" msprop:Generator_ColumnPropNameInRow="BASE_CALCULO_ICMS_SUBST" msprop:Generator_ColumnPropNameInTable="BASE_CALCULO_ICMS_SUBSTColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_TOTAL_PRODUTOS" msprop:Generator_UserColumnName="VALOR_TOTAL_PRODUTOS" msprop:Generator_ColumnVarNameInTable="columnVALOR_TOTAL_PRODUTOS" msprop:Generator_ColumnPropNameInRow="VALOR_TOTAL_PRODUTOS" msprop:Generator_ColumnPropNameInTable="VALOR_TOTAL_PRODUTOSColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_FRETE" msprop:Generator_UserColumnName="VALOR_FRETE" msprop:Generator_ColumnVarNameInTable="columnVALOR_FRETE" msprop:Generator_ColumnPropNameInRow="VALOR_FRETE" msprop:Generator_ColumnPropNameInTable="VALOR_FRETEColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_SEGURO" msprop:Generator_UserColumnName="VALOR_SEGURO" msprop:Generator_ColumnVarNameInTable="columnVALOR_SEGURO" msprop:Generator_ColumnPropNameInRow="VALOR_SEGURO" msprop:Generator_ColumnPropNameInTable="VALOR_SEGUROColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_DESCONTO" msprop:Generator_UserColumnName="VALOR_DESCONTO" msprop:Generator_ColumnVarNameInTable="columnVALOR_DESCONTO" msprop:Generator_ColumnPropNameInRow="VALOR_DESCONTO" msprop:Generator_ColumnPropNameInTable="VALOR_DESCONTOColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OUTRAS_DESPESAS_ACESS" msprop:Generator_UserColumnName="OUTRAS_DESPESAS_ACESS" msprop:Generator_ColumnVarNameInTable="columnOUTRAS_DESPESAS_ACESS" msprop:Generator_ColumnPropNameInRow="OUTRAS_DESPESAS_ACESS" msprop:Generator_ColumnPropNameInTable="OUTRAS_DESPESAS_ACESSColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_IPI" msprop:Generator_UserColumnName="VALOR_IPI" msprop:Generator_ColumnVarNameInTable="columnVALOR_IPI" msprop:Generator_ColumnPropNameInRow="VALOR_IPI" msprop:Generator_ColumnPropNameInTable="VALOR_IPIColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_TOTAL_NOTA" msprop:Generator_UserColumnName="VALOR_TOTAL_NOTA" msprop:Generator_ColumnVarNameInTable="columnVALOR_TOTAL_NOTA" msprop:Generator_ColumnPropNameInRow="VALOR_TOTAL_NOTA" msprop:Generator_ColumnPropNameInTable="VALOR_TOTAL_NOTAColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VALOR_ICMS_SUBST" msprop:Generator_UserColumnName="VALOR_ICMS_SUBST" msprop:Generator_ColumnPropNameInRow="VALOR_ICMS_SUBST" msprop:Generator_ColumnVarNameInTable="columnVALOR_ICMS_SUBST" msprop:Generator_ColumnPropNameInTable="VALOR_ICMS_SUBSTColumn" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_TRANSPORTADOR" msprop:Generator_UserTableName="TB_TRANSPORTADOR" msprop:Generator_RowDeletedName="TB_TRANSPORTADORRowDeleted" msprop:Generator_RowChangedName="TB_TRANSPORTADORRowChanged" msprop:Generator_RowClassName="TB_TRANSPORTADORRow" msprop:Generator_RowChangingName="TB_TRANSPORTADORRowChanging" msprop:Generator_RowEvArgName="TB_TRANSPORTADORRowChangeEvent" msprop:Generator_RowEvHandlerName="TB_TRANSPORTADORRowChangeEventHandler" msprop:Generator_TableClassName="TB_TRANSPORTADORDataTable" msprop:Generator_TableVarName="tableTB_TRANSPORTADOR" msprop:Generator_RowDeletingName="TB_TRANSPORTADORRowDeleting" msprop:Generator_TablePropName="TB_TRANSPORTADOR">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RAZAO_SOCIAL_TRANSP" msprop:Generator_UserColumnName="RAZAO_SOCIAL_TRANSP" msprop:Generator_ColumnVarNameInTable="columnRAZAO_SOCIAL_TRANSP" msprop:Generator_ColumnPropNameInRow="RAZAO_SOCIAL_TRANSP" msprop:Generator_ColumnPropNameInTable="RAZAO_SOCIAL_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FRETE_POR_CONTA" msprop:Generator_UserColumnName="FRETE_POR_CONTA" msprop:Generator_ColumnVarNameInTable="columnFRETE_POR_CONTA" msprop:Generator_ColumnPropNameInRow="FRETE_POR_CONTA" msprop:Generator_ColumnPropNameInTable="FRETE_POR_CONTAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COD_ANTT" msprop:Generator_UserColumnName="COD_ANTT" msprop:Generator_ColumnVarNameInTable="columnCOD_ANTT" msprop:Generator_ColumnPropNameInRow="COD_ANTT" msprop:Generator_ColumnPropNameInTable="COD_ANTTColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PLACA_VEICULO" msprop:Generator_UserColumnName="PLACA_VEICULO" msprop:Generator_ColumnVarNameInTable="columnPLACA_VEICULO" msprop:Generator_ColumnPropNameInRow="PLACA_VEICULO" msprop:Generator_ColumnPropNameInTable="PLACA_VEICULOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="UF_VEICULO" msprop:Generator_UserColumnName="UF_VEICULO" msprop:Generator_ColumnVarNameInTable="columnUF_VEICULO" msprop:Generator_ColumnPropNameInRow="UF_VEICULO" msprop:Generator_ColumnPropNameInTable="UF_VEICULOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CNPJ_TRANSP" msprop:Generator_UserColumnName="CNPJ_TRANSP" msprop:Generator_ColumnVarNameInTable="columnCNPJ_TRANSP" msprop:Generator_ColumnPropNameInRow="CNPJ_TRANSP" msprop:Generator_ColumnPropNameInTable="CNPJ_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CIDADE_TRANSP" msprop:Generator_UserColumnName="CIDADE_TRANSP" msprop:Generator_ColumnVarNameInTable="columnCIDADE_TRANSP" msprop:Generator_ColumnPropNameInRow="CIDADE_TRANSP" msprop:Generator_ColumnPropNameInTable="CIDADE_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="INSC_ESTADUAL_TRANSP" msprop:Generator_UserColumnName="INSC_ESTADUAL_TRANSP" msprop:Generator_ColumnVarNameInTable="columnINSC_ESTADUAL_TRANSP" msprop:Generator_ColumnPropNameInRow="INSC_ESTADUAL_TRANSP" msprop:Generator_ColumnPropNameInTable="INSC_ESTADUAL_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="QUANTIDADE_TRANSP" msprop:Generator_UserColumnName="QUANTIDADE_TRANSP" msprop:Generator_ColumnVarNameInTable="columnQUANTIDADE_TRANSP" msprop:Generator_ColumnPropNameInRow="QUANTIDADE_TRANSP" msprop:Generator_ColumnPropNameInTable="QUANTIDADE_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ESPECIE_TRANSP" msprop:Generator_UserColumnName="ESPECIE_TRANSP" msprop:Generator_ColumnVarNameInTable="columnESPECIE_TRANSP" msprop:Generator_ColumnPropNameInRow="ESPECIE_TRANSP" msprop:Generator_ColumnPropNameInTable="ESPECIE_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="MARCA_TRANSP" msprop:Generator_UserColumnName="MARCA_TRANSP" msprop:Generator_ColumnVarNameInTable="columnMARCA_TRANSP" msprop:Generator_ColumnPropNameInRow="MARCA_TRANSP" msprop:Generator_ColumnPropNameInTable="MARCA_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMERACAO_TRANSP" msprop:Generator_UserColumnName="NUMERACAO_TRANSP" msprop:Generator_ColumnVarNameInTable="columnNUMERACAO_TRANSP" msprop:Generator_ColumnPropNameInRow="NUMERACAO_TRANSP" msprop:Generator_ColumnPropNameInTable="NUMERACAO_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PESO_BRUTO_TRANSP" msprop:Generator_UserColumnName="PESO_BRUTO_TRANSP" msprop:Generator_ColumnVarNameInTable="columnPESO_BRUTO_TRANSP" msprop:Generator_ColumnPropNameInRow="PESO_BRUTO_TRANSP" msprop:Generator_ColumnPropNameInTable="PESO_BRUTO_TRANSPColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PESO_LIQ_TRANSP" msprop:Generator_UserColumnName="PESO_LIQ_TRANSP" msprop:Generator_ColumnVarNameInTable="columnPESO_LIQ_TRANSP" msprop:Generator_ColumnPropNameInRow="PESO_LIQ_TRANSP" msprop:Generator_ColumnPropNameInTable="PESO_LIQ_TRANSPColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ENDERECO_TRANSP" msprop:Generator_UserColumnName="ENDERECO_TRANSP" msprop:Generator_ColumnPropNameInRow="ENDERECO_TRANSP" msprop:Generator_ColumnVarNameInTable="columnENDERECO_TRANSP" msprop:Generator_ColumnPropNameInTable="ENDERECO_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="UF_TRANSP" msprop:Generator_UserColumnName="UF_TRANSP" msprop:Generator_ColumnVarNameInTable="columnUF_TRANSP" msprop:Generator_ColumnPropNameInRow="UF_TRANSP" msprop:Generator_ColumnPropNameInTable="UF_TRANSPColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VOLUME_TRANSP" msprop:Generator_UserColumnName="VOLUME_TRANSP" msprop:Generator_ColumnPropNameInRow="VOLUME_TRANSP" msprop:Generator_ColumnVarNameInTable="columnVOLUME_TRANSP" msprop:Generator_ColumnPropNameInTable="VOLUME_TRANSPColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_PRODUTO" msprop:Generator_UserTableName="TB_PRODUTO" msprop:Generator_RowDeletedName="TB_PRODUTORowDeleted" msprop:Generator_RowChangedName="TB_PRODUTORowChanged" msprop:Generator_RowClassName="TB_PRODUTORow" msprop:Generator_RowChangingName="TB_PRODUTORowChanging" msprop:Generator_RowEvArgName="TB_PRODUTORowChangeEvent" msprop:Generator_RowEvHandlerName="TB_PRODUTORowChangeEventHandler" msprop:Generator_TableClassName="TB_PRODUTODataTable" msprop:Generator_TableVarName="tableTB_PRODUTO" msprop:Generator_RowDeletingName="TB_PRODUTORowDeleting" msprop:Generator_TablePropName="TB_PRODUTO">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="COD_PRODUTO" msprop:Generator_UserColumnName="COD_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnCOD_PRODUTO" msprop:Generator_ColumnPropNameInRow="COD_PRODUTO" msprop:Generator_ColumnPropNameInTable="COD_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DESC_PRODUTO" msprop:Generator_UserColumnName="DESC_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnDESC_PRODUTO" msprop:Generator_ColumnPropNameInRow="DESC_PRODUTO" msprop:Generator_ColumnPropNameInTable="DESC_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NCM_SH" msprop:Generator_UserColumnName="NCM_SH" msprop:Generator_ColumnVarNameInTable="columnNCM_SH" msprop:Generator_ColumnPropNameInRow="NCM_SH" msprop:Generator_ColumnPropNameInTable="NCM_SHColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CST_PRODUTO" msprop:Generator_UserColumnName="CST_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnCST_PRODUTO" msprop:Generator_ColumnPropNameInRow="CST_PRODUTO" msprop:Generator_ColumnPropNameInTable="CST_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CFOP_PRODUTO" msprop:Generator_UserColumnName="CFOP_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnCFOP_PRODUTO" msprop:Generator_ColumnPropNameInRow="CFOP_PRODUTO" msprop:Generator_ColumnPropNameInTable="CFOP_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="UNIDADE_PRODUTO" msprop:Generator_UserColumnName="UNIDADE_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnUNIDADE_PRODUTO" msprop:Generator_ColumnPropNameInRow="UNIDADE_PRODUTO" msprop:Generator_ColumnPropNameInTable="UNIDADE_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="QT_PRODUTO" msprop:Generator_UserColumnName="QT_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnQT_PRODUTO" msprop:Generator_ColumnPropNameInRow="QT_PRODUTO" msprop:Generator_ColumnPropNameInTable="QT_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_UNIT_PRODUTO" msprop:Generator_UserColumnName="VALOR_UNIT_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnVALOR_UNIT_PRODUTO" msprop:Generator_ColumnPropNameInRow="VALOR_UNIT_PRODUTO" msprop:Generator_ColumnPropNameInTable="VALOR_UNIT_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_TOTAL_PRODUTO" msprop:Generator_UserColumnName="VALOR_TOTAL_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnVALOR_TOTAL_PRODUTO" msprop:Generator_ColumnPropNameInRow="VALOR_TOTAL_PRODUTO" msprop:Generator_ColumnPropNameInTable="VALOR_TOTAL_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="BC_ICMS_PRODUTO" msprop:Generator_UserColumnName="BC_ICMS_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnBC_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInRow="BC_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInTable="BC_ICMS_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_ICMS_PRODUTO" msprop:Generator_UserColumnName="VALOR_ICMS_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnVALOR_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInRow="VALOR_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInTable="VALOR_ICMS_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ALIQ_ICMS_PRODUTO" msprop:Generator_UserColumnName="ALIQ_ICMS_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnALIQ_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInRow="ALIQ_ICMS_PRODUTO" msprop:Generator_ColumnPropNameInTable="ALIQ_ICMS_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ALIQ_IPI_PRODUTO" msprop:Generator_UserColumnName="ALIQ_IPI_PRODUTO" msprop:Generator_ColumnVarNameInTable="columnALIQ_IPI_PRODUTO" msprop:Generator_ColumnPropNameInRow="ALIQ_IPI_PRODUTO" msprop:Generator_ColumnPropNameInTable="ALIQ_IPI_PRODUTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DADOSLOTE" msprop:Generator_UserColumnName="DADOSLOTE" msprop:Generator_ColumnVarNameInTable="columnDADOSLOTE" msprop:Generator_ColumnPropNameInRow="DADOSLOTE" msprop:Generator_ColumnPropNameInTable="DADOSLOTEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="INFADPROD" msprop:Generator_UserColumnName="INFADPROD" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="INFADPROD" msprop:Generator_ColumnPropNameInTable="INFADPRODColumn" msprop:Generator_ColumnVarNameInTable="columnINFADPROD" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_ISSQN" msprop:Generator_UserTableName="TB_ISSQN" msprop:Generator_RowDeletedName="TB_ISSQNRowDeleted" msprop:Generator_RowChangedName="TB_ISSQNRowChanged" msprop:Generator_RowClassName="TB_ISSQNRow" msprop:Generator_RowChangingName="TB_ISSQNRowChanging" msprop:Generator_RowEvArgName="TB_ISSQNRowChangeEvent" msprop:Generator_RowEvHandlerName="TB_ISSQNRowChangeEventHandler" msprop:Generator_TableClassName="TB_ISSQNDataTable" msprop:Generator_TableVarName="tableTB_ISSQN" msprop:Generator_RowDeletingName="TB_ISSQNRowDeleting" msprop:Generator_TablePropName="TB_ISSQN">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="INSC_MUNICIPAL" msprop:Generator_UserColumnName="INSC_MUNICIPAL" msprop:Generator_ColumnVarNameInTable="columnINSC_MUNICIPAL" msprop:Generator_ColumnPropNameInRow="INSC_MUNICIPAL" msprop:Generator_ColumnPropNameInTable="INSC_MUNICIPALColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_TOTAL_SERVICO" msprop:Generator_UserColumnName="VALOR_TOTAL_SERVICO" msprop:Generator_ColumnVarNameInTable="columnVALOR_TOTAL_SERVICO" msprop:Generator_ColumnPropNameInRow="VALOR_TOTAL_SERVICO" msprop:Generator_ColumnPropNameInTable="VALOR_TOTAL_SERVICOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="BC_ISSQN" msprop:Generator_UserColumnName="BC_ISSQN" msprop:Generator_ColumnVarNameInTable="columnBC_ISSQN" msprop:Generator_ColumnPropNameInRow="BC_ISSQN" msprop:Generator_ColumnPropNameInTable="BC_ISSQNColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VALOR_ISSQN" msprop:Generator_UserColumnName="VALOR_ISSQN" msprop:Generator_ColumnVarNameInTable="columnVALOR_ISSQN" msprop:Generator_ColumnPropNameInRow="VALOR_ISSQN" msprop:Generator_ColumnPropNameInTable="VALOR_ISSQNColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_FATURA" msprop:Generator_UserTableName="TB_FATURA" msprop:Generator_RowDeletedName="TB_FATURARowDeleted" msprop:Generator_RowChangedName="TB_FATURARowChanged" msprop:Generator_RowClassName="TB_FATURARow" msprop:Generator_RowChangingName="TB_FATURARowChanging" msprop:Generator_RowEvArgName="TB_FATURARowChangeEvent" msprop:Generator_RowEvHandlerName="TB_FATURARowChangeEventHandler" msprop:Generator_TableClassName="TB_FATURADataTable" msprop:Generator_TableVarName="tableTB_FATURA" msprop:Generator_RowDeletingName="TB_FATURARowDeleting" msprop:Generator_TablePropName="TB_FATURA">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MATRICULA" msprop:Generator_UserColumnName="MATRICULA" msprop:Generator_ColumnPropNameInRow="MATRICULA" msprop:Generator_ColumnVarNameInTable="columnMATRICULA" msprop:Generator_ColumnPropNameInTable="MATRICULAColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CMI" msprop:Generator_UserColumnName="CMI" msprop:Generator_ColumnPropNameInRow="CMI" msprop:Generator_ColumnVarNameInTable="columnCMI" msprop:Generator_ColumnPropNameInTable="CMIColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CONDICAO_PAG" msprop:Generator_UserColumnName="CONDICAO_PAG" msprop:Generator_ColumnPropNameInRow="CONDICAO_PAG" msprop:Generator_ColumnVarNameInTable="columnCONDICAO_PAG" msprop:Generator_ColumnPropNameInTable="CONDICAO_PAGColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VECTO" msprop:Generator_UserColumnName="VECTO" msprop:Generator_ColumnPropNameInRow="VECTO" msprop:Generator_ColumnVarNameInTable="columnVECTO" msprop:Generator_ColumnPropNameInTable="VECTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="VENDEDOR" msprop:Generator_UserColumnName="VENDEDOR" msprop:Generator_ColumnPropNameInRow="VENDEDOR" msprop:Generator_ColumnVarNameInTable="columnVENDEDOR" msprop:Generator_ColumnPropNameInTable="VENDEDORColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="FINALIDADE" msprop:Generator_UserColumnName="FINALIDADE" msprop:Generator_ColumnVarNameInTable="columnFINALIDADE" msprop:Generator_ColumnPropNameInRow="FINALIDADE" msprop:Generator_ColumnPropNameInTable="FINALIDADEColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_LOGOTIPO" msprop:Generator_UserTableName="TB_LOGOTIPO" msprop:Generator_RowDeletedName="TB_LOGOTIPORowDeleted" msprop:Generator_RowChangedName="TB_LOGOTIPORowChanged" msprop:Generator_RowClassName="TB_LOGOTIPORow" msprop:Generator_RowChangingName="TB_LOGOTIPORowChanging" msprop:Generator_RowEvArgName="TB_LOGOTIPORowChangeEvent" msprop:Generator_RowEvHandlerName="TB_LOGOTIPORowChangeEventHandler" msprop:Generator_TableClassName="TB_LOGOTIPODataTable" msprop:Generator_TableVarName="tableTB_LOGOTIPO" msprop:Generator_RowDeletingName="TB_LOGOTIPORowDeleting" msprop:Generator_TablePropName="TB_LOGOTIPO">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LOGOTIPO" msprop:Generator_UserColumnName="LOGOTIPO" msprop:Generator_ColumnVarNameInTable="columnLOGOTIPO" msprop:Generator_ColumnPropNameInRow="LOGOTIPO" msprop:Generator_ColumnPropNameInTable="LOGOTIPOColumn" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TB_COD_BARRA" msprop:Generator_UserTableName="TB_COD_BARRA" msprop:Generator_RowDeletedName="TB_COD_BARRARowDeleted" msprop:Generator_RowChangedName="TB_COD_BARRARowChanged" msprop:Generator_RowClassName="TB_COD_BARRARow" msprop:Generator_RowChangingName="TB_COD_BARRARowChanging" msprop:Generator_RowEvArgName="TB_COD_BARRARowChangeEvent" msprop:Generator_RowEvHandlerName="TB_COD_BARRARowChangeEventHandler" msprop:Generator_TableClassName="TB_COD_BARRADataTable" msprop:Generator_TableVarName="tableTB_COD_BARRA" msprop:Generator_RowDeletingName="TB_COD_BARRARowDeleting" msprop:Generator_TablePropName="TB_COD_BARRA">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="COD_BARRA" msprop:Generator_UserColumnName="COD_BARRA" msprop:Generator_ColumnVarNameInTable="columnCOD_BARRA" msprop:Generator_ColumnPropNameInRow="COD_BARRA" msprop:Generator_ColumnPropNameInTable="COD_BARRAColumn" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="COD_BARRA_CONTINGENCIA" msprop:Generator_UserColumnName="COD_BARRA_CONTINGENCIA" msprop:Generator_ColumnPropNameInRow="COD_BARRA_CONTINGENCIA" msprop:Generator_ColumnVarNameInTable="columnCOD_BARRA_CONTINGENCIA" msprop:Generator_ColumnPropNameInTable="COD_BARRA_CONTINGENCIAColumn" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TB_FILIAL" />
+      <xs:field xpath="mstns:COD_FILIAL" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

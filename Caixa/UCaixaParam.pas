@@ -1,0 +1,1380 @@
+unit UCaixaParam;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTPARAMETRO, StdCtrls, Buttons, Mask, ComCtrls, ExtCtrls, UFmCadastro,
+  UFmHistorico, UFmDepartamento, UFmFilial, UFmDatas;
+
+type
+  TFCaixaParam = class(TFTParametro)
+    TabSheet1: TTabSheet;
+    ME0CodFilial: TMaskEdit;
+    ME0Filial: TMaskEdit;
+    SpeedButton1: TSpeedButton;
+    ME0CodDepto: TMaskEdit;
+    SpeedButton2: TSpeedButton;
+    ME0Departamento: TMaskEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    GroupBox1: TGroupBox;
+    ME0DtInicial: TMaskEdit;
+    ME0DtFinal: TMaskEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    TabSheet2: TTabSheet;
+    ME1CodFilial: TMaskEdit;
+    ME1Filial: TMaskEdit;
+    SpeedButton3: TSpeedButton;
+    ME1CodDepto: TMaskEdit;
+    SpeedButton4: TSpeedButton;
+    ME1Departamento: TMaskEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    CB1TodosFilial: TCheckBox;
+    CB1TodosDepartamento: TCheckBox;
+    GroupBox2: TGroupBox;
+    ME1DtInicial: TMaskEdit;
+    TabSheet3: TTabSheet;
+    ME2CodFilial: TMaskEdit;
+    ME2Filial: TMaskEdit;
+    SpeedButton5: TSpeedButton;
+    ME2CodDepto: TMaskEdit;
+    SpeedButton6: TSpeedButton;
+    ME2Departamento: TMaskEdit;
+    Label9: TLabel;
+    Label10: TLabel;
+    GroupBox3: TGroupBox;
+    Label11: TLabel;
+    Label12: TLabel;
+    ME2DtInicial: TMaskEdit;
+    ME2DtFinal: TMaskEdit;
+    RG2Ordem: TRadioGroup;
+    TabSheet4: TTabSheet;
+    ME3CodFilial: TMaskEdit;
+    ME3Filial: TMaskEdit;
+    SpeedButton7: TSpeedButton;
+    ME3CodDepto: TMaskEdit;
+    SpeedButton8: TSpeedButton;
+    ME3Departamento: TMaskEdit;
+    Label13: TLabel;
+    Label14: TLabel;
+    ME3DtInicial: TMaskEdit;
+    Label15: TLabel;
+    TabSheet5: TTabSheet;
+    ME4CodFilial: TMaskEdit;
+    ME4Filial: TMaskEdit;
+    SpeedButton9: TSpeedButton;
+    ME4CodDepto: TMaskEdit;
+    SpeedButton10: TSpeedButton;
+    ME4Departamento: TMaskEdit;
+    Label16: TLabel;
+    Label17: TLabel;
+    GroupBox4: TGroupBox;
+    Label18: TLabel;
+    Label19: TLabel;
+    ME4DtInicial: TMaskEdit;
+    ME4DtFinal: TMaskEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    ME1DtFinal: TMaskEdit;
+    ME0CodHistorico: TMaskEdit;
+    SpeedButton11: TSpeedButton;
+    ME0Historico: TMaskEdit;
+    Label20: TLabel;
+    ME1CodHistorico: TMaskEdit;
+    ME1Historico: TMaskEdit;
+    SpeedButton12: TSpeedButton;
+    CB1TodosHistorico: TCheckBox;
+    Label21: TLabel;
+    ME2CodHistorico: TMaskEdit;
+    Sb2Historico: TSpeedButton;
+    ME2Historico: TMaskEdit;
+    Label22: TLabel;
+    ME3CodHistorico: TMaskEdit;
+    ME3Historico: TMaskEdit;
+    SpeedButton14: TSpeedButton;
+    Label23: TLabel;
+    ME4CodHistorico: TMaskEdit;
+    SpeedButton15: TSpeedButton;
+    ME4Historico: TMaskEdit;
+    Label24: TLabel;
+    ME3DtFinal: TMaskEdit;
+    Label25: TLabel;
+    TabSheet6: TTabSheet;
+    SpeedButton16: TSpeedButton;
+    Label26: TLabel;
+    Me5CodFilial: TMaskEdit;
+    Me5Filial: TMaskEdit;
+    Cb5TodosFilial: TCheckBox;
+    Me5DtSaldo: TMaskEdit;
+    Label27: TLabel;
+    TabSheet7: TTabSheet;
+    GroupBox5: TGroupBox;
+    Me6SaldoCaixa: TMaskEdit;
+    Me6SaldoBancos: TMaskEdit;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Me6DtFinal: TMaskEdit;
+    TabSheet8: TTabSheet;
+    Label31: TLabel;
+    ME7CodFilial: TMaskEdit;
+    Bt7CodFilial: TSpeedButton;
+    ME7DescFilial: TMaskEdit;
+    ME7DescHistorico: TMaskEdit;
+    ME7CodHistorico: TMaskEdit;
+    Bt7CodHistorico: TSpeedButton;
+    Label32: TLabel;
+    GroupBox6: TGroupBox;
+    Label34: TLabel;
+    Label35: TLabel;
+    ME7Dt_I: TMaskEdit;
+    ME7Dt_F: TMaskEdit;
+    Label33: TLabel;
+    Me5CodDepto: TMaskEdit;
+    SpeedButton17: TSpeedButton;
+    Me5Departamento: TMaskEdit;
+    CB5TodosDepartamento: TCheckBox;
+    TabSheet9: TTabSheet;
+    Label36: TLabel;
+    ME8Filial: TMaskEdit;
+    SB8Filial: TSpeedButton;
+    Label37: TLabel;
+    ME8Departamento: TMaskEdit;
+    SB8Departamento: TSpeedButton;
+    GroupBox7: TGroupBox;
+    Label38: TLabel;
+    Label39: TLabel;
+    ME8DtInicial: TMaskEdit;
+    ME8DtFinal: TMaskEdit;
+    Ed8Filial: TEdit;
+    Ed8Departamento: TEdit;
+    TabSheet10: TTabSheet;
+    Label40: TLabel;
+    Sb9Filial: TSpeedButton;
+    Label41: TLabel;
+    Sb9Departamento: TSpeedButton;
+    Me9Filial: TMaskEdit;
+    Me9Departamento: TMaskEdit;
+    GroupBox8: TGroupBox;
+    Label42: TLabel;
+    Label43: TLabel;
+    Me9DtInicio: TMaskEdit;
+    Me9DtFim: TMaskEdit;
+    Ed9Filial: TEdit;
+    Ed9Departamento: TEdit;
+    TabSheet11: TTabSheet;
+    GroupBox9: TGroupBox;
+    ME10Filial: TMaskEdit;
+    ME10Departamento: TMaskEdit;
+    SB10Filial: TSpeedButton;
+    SB10Departamento: TSpeedButton;
+    ME10DtInicial: TMaskEdit;
+    ME10DtFinal: TMaskEdit;
+    Ed10Filial: TEdit;
+    Ed10Departamento: TEdit;
+    Label44: TLabel;
+    Label45: TLabel;
+    Label46: TLabel;
+    Label47: TLabel;
+    TabSheet12: TTabSheet;
+    GroupBox10: TGroupBox;
+    Ed11Filial: TEdit;
+    Ed11Departamento: TEdit;
+    ME11Filial: TMaskEdit;
+    ME11Departamento: TMaskEdit;
+    SB11Filial: TSpeedButton;
+    SB11Departamento: TSpeedButton;
+    ME11DtInicial: TMaskEdit;
+    ME11DtFinal: TMaskEdit;
+    Label48: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    TabSheet13: TTabSheet;
+    ME12Filial: TMaskEdit;
+    ME12Departamento: TMaskEdit;
+    ME12DtFinal: TMaskEdit;
+    SB12Filial: TSpeedButton;
+    SB12Departamento: TSpeedButton;
+    Ed12Filial: TEdit;
+    Ed12Departamento: TEdit;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Sb9Mensagem: TSpeedButton;
+    Me9Mensagem: TMaskEdit;
+    Ed9Mensagem: TEdit;
+    TabSheet14: TTabSheet;
+    Label57: TLabel;
+    Me13Filial: TMaskEdit;
+    Sb13Filial: TSpeedButton;
+    Ed13Filial: TEdit;
+    Label58: TLabel;
+    Label59: TLabel;
+    Me13DtFinal: TMaskEdit;
+    Me13DtInicial: TMaskEdit;
+    Rg13Situacao: TRadioGroup;
+    Label54: TLabel;
+    ME12DtInicial: TMaskEdit;
+    TabSheet15: TTabSheet;
+    SB14Filial: TSpeedButton;
+    SB14Departamento: TSpeedButton;
+    Label60: TLabel;
+    Label61: TLabel;
+    Label62: TLabel;
+    ME14Filial: TMaskEdit;
+    ME14Departamento: TMaskEdit;
+    ME14DtFinal: TMaskEdit;
+    Ed14Filial: TEdit;
+    Ed14Departamento: TEdit;
+    TabSheet16: TTabSheet;
+    SB15Filial: TSpeedButton;
+    Label63: TLabel;
+    ME15Filial: TMaskEdit;
+    Ed15Filial: TEdit;
+    ME15DtReferencia: TMaskEdit;
+    Label64: TLabel;
+    ME15DtHoje: TMaskEdit;
+    Label65: TLabel;
+    Label66: TLabel;
+    Sb9Mensagem1: TSpeedButton;
+    Me9Mensagem1: TMaskEdit;
+    Ed9Mensagem1: TEdit;
+    RG2Saldo: TRadioGroup;
+    Label67: TLabel;
+    Me3HistoricoF: TMaskEdit;
+    Sb3HistoricoF: TSpeedButton;
+    Me3DescHistoricoF: TMaskEdit;
+    Me4HistoricoFinal: TMaskEdit;
+    Sb4HistoricoFinal: TSpeedButton;
+    Me4DescHistoricoFinal: TMaskEdit;
+    Label68: TLabel;
+    Label69: TLabel;
+    Me2HistoricoFinal: TMaskEdit;
+    Sb2HistoricoFinal: TSpeedButton;
+    Me2DescHistoricoFinal: TMaskEdit;
+    FmCadastro2: TFmCadastro;
+    TabSheet17: TTabSheet;
+    FmFilial17: TFmFilial;
+    FmDepartamento17: TFmDepartamento;
+    FmHistorico17: TFmHistorico;
+    FmCadastro17: TFmCadastro;
+    GroupBox11: TGroupBox;
+    Me17Data_I: TMaskEdit;
+    Me17Data_F: TMaskEdit;
+    Label70: TLabel;
+    RG17Opcao: TRadioGroup;
+    TabSheet18: TTabSheet;
+    Fm18Filial: TFmFilial;
+    Fm18Departamento: TFmDepartamento;
+    Fm18Historico: TFmHistorico;
+    Fm18HistoricoFinal: TFmHistorico;
+    Fm18Cadastro: TFmCadastro;
+    Fm18Datas: TFmDatas;
+    TabSheet19: TTabSheet;
+    Fm19Filial: TFmFilial;
+    Fm19Datas: TFmDatas;
+    TabSheet20: TTabSheet;
+    FmDepartamento19: TFmDepartamento;
+    FmFilial19: TFmFilial;
+    FmDatas19: TFmDatas;
+    TabSheet21: TTabSheet;
+    Fm20Filial: TFmFilial;
+    Fm20Datas: TFmDatas;
+    RG6Tipo: TRadioGroup;
+    Label71: TLabel;
+    Me6SaldoAplicacoes: TMaskEdit;
+    Me02Historico: TMaskEdit;
+    Label252: TLabel;
+    Bt2Historico: TBitBtn;
+    Label72: TLabel;
+    Me8Historicos: TMaskEdit;
+    Bt8Historico: TBitBtn;
+    TabSheet22: TTabSheet;
+    Fm21Filial: TFmFilial;
+    Fm21Departamento: TFmDepartamento;
+    Fm21Datas: TFmDatas;
+    Rg8TipoRelatorio: TRadioGroup;
+    Label73: TLabel;
+    Me8Departamentos: TMaskEdit;
+    Bt8Departamento: TBitBtn;
+    Fm8Historico: TFmHistorico;
+    RgTipoRelatorio18: TRadioGroup;
+    TabSheet23: TTabSheet;
+    FmFilial22: TFmFilial;
+    GroupBox12: TGroupBox;
+    Label74: TLabel;
+    Me22DtInicial: TMaskEdit;
+    Me22DtFinal: TMaskEdit;
+    Label75: TLabel;
+    RG18Compras: TRadioGroup;
+    TabSheet24: TTabSheet;
+    GroupBox13: TGroupBox;
+    Me23DtInicial: TMaskEdit;
+    Me23DtFinal: TMaskEdit;
+    Label76: TLabel;
+    Label77: TLabel;
+    RG21TipoRelatorio: TRadioGroup;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
+    procedure ME1CodFilialChange(Sender: TObject);
+    procedure ME1CodDeptoChange(Sender: TObject);
+    procedure CB1TodosFilialClick(Sender: TObject);
+    procedure CB1TodosDepartamentoClick(Sender: TObject);
+    procedure SpeedButton5Click(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure SpeedButton7Click(Sender: TObject);
+    procedure SpeedButton8Click(Sender: TObject);
+    procedure SpeedButton9Click(Sender: TObject);
+    procedure SpeedButton10Click(Sender: TObject);
+    procedure SpeedButton11Click(Sender: TObject);
+    procedure ME0CodHistoricoChange(Sender: TObject);
+    procedure SpeedButton12Click(Sender: TObject);
+    procedure ME1CodHistoricoChange(Sender: TObject);
+    procedure CB1TodosHistoricoClick(Sender: TObject);
+    procedure SpeedButton14Click(Sender: TObject);
+    procedure SpeedButton15Click(Sender: TObject);
+    procedure Me5CodFilialChange(Sender: TObject);
+    procedure Cb5TodosFilialClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Bt7CodFilialClick(Sender: TObject);
+    procedure Bt7CodHistoricoClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure TabSheet2Show(Sender: TObject);
+    procedure TabSheet4Show(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure TabSheet5Show(Sender: TObject);
+    procedure TabSheet6Show(Sender: TObject);
+    procedure TabSheet8Show(Sender: TObject);
+    procedure Me5CodDeptoExit(Sender: TObject);
+    procedure SpeedButton17Click(Sender: TObject);
+    procedure CB5TodosDepartamentoClick(Sender: TObject);
+
+    procedure ME8FilialExit(Sender: TObject);
+    procedure SB8FilialClick(Sender: TObject);
+    procedure ME8DepartamentoExit(Sender: TObject);
+    procedure SB8DepartamentoClick(Sender: TObject);
+    procedure Sb9FilialClick(Sender: TObject);
+    procedure Me9FilialExit(Sender: TObject);
+    procedure Me9DepartamentoExit(Sender: TObject);
+    procedure Sb9DepartamentoClick(Sender: TObject);
+    procedure SB10FilialClick(Sender: TObject);
+    procedure SB10DepartamentoClick(Sender: TObject);
+    procedure ME10FilialExit(Sender: TObject);
+    procedure ME10DepartamentoExit(Sender: TObject);
+    procedure ME11FilialExit(Sender: TObject);
+    procedure ME11DepartamentoExit(Sender: TObject);
+    procedure SB11FilialClick(Sender: TObject);
+    procedure SB11DepartamentoClick(Sender: TObject);
+    procedure SB12FilialClick(Sender: TObject);
+    procedure SB12DepartamentoClick(Sender: TObject);
+    procedure ME12FilialExit(Sender: TObject);
+    procedure ME12DepartamentoExit(Sender: TObject);
+    procedure Sb9MensagemClick(Sender: TObject);
+    procedure Me9MensagemExit(Sender: TObject);
+    procedure Me13FilialExit(Sender: TObject);
+    procedure Sb13FilialClick(Sender: TObject);
+    procedure ME14FilialExit(Sender: TObject);
+    procedure SB14FilialClick(Sender: TObject);
+    procedure ME14DepartamentoExit(Sender: TObject);
+    procedure SB14DepartamentoClick(Sender: TObject);
+    procedure ME15FilialExit(Sender: TObject);
+    procedure Me9Mensagem1Exit(Sender: TObject);
+    procedure Sb9Mensagem1Click(Sender: TObject);
+    procedure Me3HistoricoFExit(Sender: TObject);
+    procedure Sb3HistoricoFClick(Sender: TObject);
+    procedure Sb4HistoricoFinalClick(Sender: TObject);
+    procedure ME2CodHistoricoExit(Sender: TObject);
+    procedure Sb2HistoricoClick(Sender: TObject);
+    procedure Me2HistoricoFinalExit(Sender: TObject);
+    procedure Sb2HistoricoFinalClick(Sender: TObject);
+    procedure ME2CodFilialExit(Sender: TObject);
+    procedure ME2CodDeptoExit(Sender: TObject);
+    procedure ME0CodFilialExit(Sender: TObject);
+    procedure ME0CodDeptoExit(Sender: TObject);
+    procedure ME3CodFilialExit(Sender: TObject);
+    procedure ME3CodDeptoExit(Sender: TObject);
+    procedure ME3CodHistoricoExit(Sender: TObject);
+    procedure ME4CodFilialExit(Sender: TObject);
+    procedure ME4CodDeptoExit(Sender: TObject);
+    procedure ME4CodHistoricoExit(Sender: TObject);
+    procedure Me4HistoricoFinalExit(Sender: TObject);
+    procedure ME7CodFilialExit(Sender: TObject);
+    procedure ME7CodHistoricoExit(Sender: TObject);
+    procedure ME8DepartamentoChange(Sender: TObject);
+    procedure Bt2HistoricoClick(Sender: TObject);
+    procedure Bt8HistoricoClick(Sender: TObject);
+
+
+   // procedure PGRelatorioChange(Sender: TObject);
+  private
+    { Private declarations }
+    wConsultando: Boolean;
+  public
+    { Public declarations }
+  end;
+
+var
+  FCaixaParam: TFCaixaParam;
+
+implementation
+
+uses UFilialCons, UFilial_cl, UDepartamentoCons, UDepartamento_cl,
+  UOracle_cl, UUsuario_cl, UParamSistema_cl, UHistoricoCons, UHistorico_cl,
+  UCadastro_cl, UCaixa_cl, UMensagemCons, UMensagem_cl, UTConsulta,
+  DBGrids, UBiblioteca;
+
+{$R *.DFM}
+
+procedure TFCaixaParam.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME0CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton2Click(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME0CodDepto.Text := FloatToStr(DMDepartamento.QDepartamentoConsCod_Departamento.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton3Click(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME1CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton4Click(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME1CodDepto.Text := FloatToStr(DMDepartamento.QDepartamentoConsCod_Departamento.Value);
+end;
+
+procedure TFCaixaParam.ME1CodFilialChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME1CodFilial.text) <> '' then
+  begin
+    ME1Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME1CodFilial.Text);
+    CB1TodosFilial.Checked := False;
+  end
+  else
+  begin
+    ME1Filial.Clear;
+    CB1TodosFilial.Checked := True;
+  end
+end;
+
+procedure TFCaixaParam.ME1CodDeptoChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME1CodDepto.text) <> '' then
+  begin
+    ME1Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + ME1CodDepto.Text);
+    CB1TodosDepartamento.Checked := False;
+  end
+  else
+  begin
+    ME1Departamento.Clear;
+    CB1TodosDepartamento.Checked := True;
+  end
+end;
+
+procedure TFCaixaParam.CB1TodosFilialClick(Sender: TObject);
+begin
+  inherited;
+  if CB1TodosFilial.Checked = True then
+    ME1CodFilial.Clear;
+end;
+
+procedure TFCaixaParam.CB1TodosDepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if CB1TodosDepartamento.Checked = True then
+    ME1CodDepto.Clear;
+end;
+
+procedure TFCaixaParam.SpeedButton5Click(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME2CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton6Click(Sender: TObject);
+var i: Integer;
+  str: string;
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  FDepartamentoCons.MultiSelect := True;
+  wConsultando := True;
+  if FDepartamentoCons.Showmodal = mrOk then
+  begin
+    if FDepartamentoCons.DBGrid1.SelectedRows.Count > 1 then
+    begin
+      str := '';
+      for i := 0 to FDepartamentoCons.DBGrid1.SelectedRows.Count - 1 do
+      begin
+        DMDepartamento.QDepartamentoCons.GotoBookmark(pointer(FDepartamentoCons.DBGrid1.SelectedRows.Items[i]));
+        str := str + DMDepartamento.QDepartamentoCons.FieldByName('COD_DEPARTAMENTO').Text;
+        if (i < (FDepartamentoCons.DBGrid1.SelectedRows.Count - 1)) then
+          str := str + ',';
+      end;
+      ME2CodDepto.Text := str;
+      ME2Departamento.Text := 'VÁRIOS';
+    end
+    else
+    begin
+      ME2CodDepto.Text := FloatToStr(DMDepartamento.QDepartamentoConsCod_Departamento.Value);
+      ME2Departamento.Text := DMDepartamento.QDepartamentoConsDESC_DEPARTAMENTO.Text;
+    end;
+  end;
+  wConsultando := False;
+  FDepartamentoCons.MultiSelect := False;
+end;
+
+procedure TFCaixaParam.SpeedButton7Click(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME3CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton8Click(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME3CodDepto.Text := FloatToStr(DMDepartamento.QDepartamentoConsCod_Departamento.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton9Click(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME4CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton10Click(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME4CodDepto.Text := FloatToStr(DMDepartamento.QDepartamentoConsCod_Departamento.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton11Click(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME0CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.ME0CodHistoricoChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME0CodHistorico.text) <> '' then
+    ME0Historico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME0CodHistorico.Text))
+  else
+    ME0Historico.Clear;
+end;
+
+procedure TFCaixaParam.SpeedButton12Click(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME1CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.ME1CodHistoricoChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME1CodHistorico.text) <> '' then
+  begin
+    ME1Historico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + ME1CodHistorico.Text);
+    CB1TodosHistorico.Checked := False;
+  end
+  else
+  begin
+    ME1Historico.Clear;
+    CB1TodosHistorico.Checked := True;
+  end;
+end;
+
+procedure TFCaixaParam.CB1TodosHistoricoClick(Sender: TObject);
+begin
+  inherited;
+  if CB1TodosHistorico.Checked = True then
+    ME1CodHistorico.Clear;
+end;
+
+procedure TFCaixaParam.SpeedButton14Click(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME3CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.SpeedButton15Click(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME4CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.Me5CodFilialChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME5CodFilial.text) <> '' then
+  begin
+    ME5Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME5CodFilial.Text);
+    CB5TodosFilial.Checked := False;
+  end
+  else
+  begin
+    ME5Filial.Clear;
+    CB5TodosFilial.Checked := True;
+  end
+
+end;
+
+procedure TFCaixaParam.Cb5TodosFilialClick(Sender: TObject);
+begin
+  inherited;
+  if CB5TodosFilial.Checked = True then
+    ME5CodFilial.Clear;
+
+end;
+
+procedure TFCaixaParam.FormCreate(Sender: TObject);
+begin
+  inherited;
+{  ME0CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+  ME1CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+  ME2CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+  ME3CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+  ME4CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+  ME5CodFilial.Text:=FloatToStr(DMParamSistema.QParamSistemaCOD_FILIAL.Value);
+ }ME5DtSaldo.Text := DateToStr(DMOracle.DataServ);
+  ME0DtInicial.Text := DateToStr(DMOracle.DataServ);
+  ME0DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME1DtInicial.Text := DateToStr(DMOracle.DataServ);
+  ME1DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME2DtInicial.Text := DateToStr(DMOracle.DataServ);
+  ME2DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME4DtInicial.Text := DateToStr(DMOracle.DataServ);
+  ME4DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME3DtInicial.Text := DateToStr(DMOracle.DataServ);
+  ME3DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME6DtFinal.Text := DateToStr(DMOracle.DataServ);
+  ME7Dt_I.Text := DateToStr(DMOracle.DataServ);
+  ME7Dt_F.Text := DateToStr(DMOracle.DataServ);
+
+  ME15DtHoje.Text := DateToStr(DMOracle.DataServ);
+  ME15DtReferencia.Text := DateToStr(DMOracle.DataServ);
+
+
+end;
+
+procedure TFCaixaParam.Bt7CodFilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME7CodFilial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+end;
+
+procedure TFCaixaParam.Bt7CodHistoricoClick(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME7CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.FormActivate(Sender: TObject);
+begin
+  inherited;
+{  ME0CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+  ME1CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+  ME2CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+  ME3CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+  ME4CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+  ME7CodFilial.Text:=FloatToStr(DMUsuario.CodFilialUsuario);
+ }ME0DtInicial.Text := DateToStr(Date());
+  ME0DtFinal.Text := DateToStr(Date());
+  ME1DtInicial.Text := DateToStr(Date());
+  ME1DtFinal.Text := DateToStr(Date());
+  ME2DtInicial.Text := DateToStr(Date());
+  ME2DtFinal.Text := DateToStr(Date());
+  ME3DtInicial.Text := DateToStr(Date());
+  ME3DtFinal.Text := DateToStr(Date());
+  ME4DtInicial.Text := DateToStr(Date());
+  ME4DtFinal.Text := DateToStr(Date());
+  ME5DtSaldo.Text := DateToStr(Date());
+  ME6DtFinal.Text := DateToStr(Date());
+  ME7Dt_I.Text := DateToStr(Date());
+  ME7Dt_F.Text := DateToStr(Date());
+end;
+
+procedure TFCaixaParam.TabSheet1Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 3;
+end;
+
+procedure TFCaixaParam.TabSheet2Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 5;
+end;
+
+procedure TFCaixaParam.TabSheet4Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 5;
+end;
+
+procedure TFCaixaParam.TabSheet3Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 4;
+end;
+
+procedure TFCaixaParam.TabSheet5Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 6;
+end;
+
+procedure TFCaixaParam.TabSheet6Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 7;
+end;
+
+procedure TFCaixaParam.TabSheet8Show(Sender: TObject);
+begin
+  inherited;
+  FCaixaParam.helpcontext := 15;
+end;
+
+procedure TFCaixaParam.Me5CodDeptoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME5CodDepto.text) <> '' then
+  begin
+    Me5Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + ME5CodDepto.Text);
+    CB5TodosDepartamento.Checked := False;
+  end
+  else
+  begin
+    Me5Departamento.Clear;
+    CB5TodosDepartamento.Checked := True;
+  end
+end;
+
+procedure TFCaixaParam.SpeedButton17Click(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+  begin
+    ME5CodDepto.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+    Me5CodDeptoExit(Self);
+  end;
+
+end;
+
+procedure TFCaixaParam.CB5TodosDepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if CB5TodosDepartamento.Checked = True then
+    ME5CodDepto.Clear;
+
+end;
+
+procedure TFCaixaParam.ME8FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME8Filial.text) <> '' then
+    Ed8Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME8Filial.Text)
+  else
+    Ed8Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.SB8FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    ME8Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+
+end;
+
+procedure TFCaixaParam.ME8DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  {if Trim(ME8Departamento.text) <> '' then
+    Ed8Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me8Departamento.Text)
+  else
+    Ed8Departamento.Text := 'Todos'}
+  if Trim(ME8Departamento.Text) = '' then
+    Ed8Departamento.Text := 'TODOS'
+end;
+
+procedure TFCaixaParam.SB8DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME8Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+
+end;
+
+procedure TFCaixaParam.Sb9FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    Me9Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+end;
+
+procedure TFCaixaParam.Me9FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME9Filial.text) <> '' then
+    Ed9Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME9Filial.Text)
+  else
+    Ed9Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.Me9DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME9Departamento.text) <> '' then
+    Ed9Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me9Departamento.Text)
+  else
+    Ed9Departamento.Text := 'Todos'
+end;
+
+procedure TFCaixaParam.Sb9DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME9Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+end;
+
+procedure TFCaixaParam.SB10FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    Me10Filial.Text := FloatToStr(DMFilial.QFilialConsCod_Filial.Value);
+  Me10FilialExit(self);
+end;
+
+procedure TFCaixaParam.SB10DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME10Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+  ME10DepartamentoExit(self);
+end;
+
+procedure TFCaixaParam.ME10FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME10Filial.text) <> '' then
+    Ed10Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME10Filial.Text)
+  else
+    Ed10Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.ME10DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME10Departamento.text) <> '' then
+    Ed10Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me10Departamento.Text)
+  else
+    Ed10Departamento.Text := 'Todos'
+end;
+
+procedure TFCaixaParam.ME11FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME11Filial.text) <> '' then
+    Ed11Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME11Filial.Text)
+  else
+    Ed11Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.ME11DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME11Departamento.text) <> '' then
+    Ed11Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me11Departamento.Text)
+  else
+    Ed11Departamento.Text := 'Todos'
+end;
+
+procedure TFCaixaParam.SB11FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    Me11Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+  Me11FilialExit(self);
+end;
+
+procedure TFCaixaParam.SB11DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME11Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+  ME11DepartamentoExit(self);
+end;
+
+procedure TFCaixaParam.SB12FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    Me12Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+  Me12FilialExit(self);
+end;
+
+procedure TFCaixaParam.SB12DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+    ME12Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+  ME12DepartamentoExit(self);
+end;
+
+procedure TFCaixaParam.ME12FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME12Filial.text) <> '' then
+    Ed12Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME12Filial.Text)
+  else
+    Ed12Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.ME12DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME12Departamento.text) <> '' then
+    Ed12Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me12Departamento.Text)
+  else
+    Ed12Departamento.Text := 'Todos'
+end;
+
+procedure TFCaixaParam.Sb9MensagemClick(Sender: TObject);
+begin
+  inherited;
+  if FMensagemCons = nil then
+    FMensagemCons := TFMensagemCons.Create(Application);
+  if FMensagemCons.Showmodal = mrOk then
+    Me9Mensagem.Text := DMmensagem.QMensagemConsCod_Mensagem.Text;
+
+end;
+
+procedure TFCaixaParam.Me9MensagemExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(Me9Mensagem.text) <> '' then
+    Ed9Mensagem.Text := DMOracle.BuscaNome('SELECT DESC_MENSAGEM FROM TB_MENSAGEM', 'COD_MENSAGEM =' + Me9Mensagem.Text)
+  else
+    Ed9Mensagem.Text := 'Todos'
+end;
+
+procedure TFCaixaParam.Me13FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(Me13Filial.text) <> '' then
+    Ed13Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Me13Filial.Text)
+  else
+    Ed13Filial.Text := 'Todas'
+
+end;
+
+procedure TFCaixaParam.Sb13FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+    Me13Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+  Me13FilialExit(self);
+end;
+
+procedure TFCaixaParam.ME14FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME14Filial.text) <> '' then
+    Ed14Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME14Filial.Text)
+  else
+    Ed14Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.SB14FilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.Showmodal = mrOk then
+  begin
+    Me14Filial.Text := DMFilial.QFilialConsCod_Filial.Text;
+    Me14FilialExit(Sender);
+  end;
+end;
+
+procedure TFCaixaParam.ME14DepartamentoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME14Departamento.text) <> '' then
+    Ed14Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Me14Departamento.Text)
+  else
+    Ed14Departamento.Text := 'Todos';
+end;
+
+procedure TFCaixaParam.SB14DepartamentoClick(Sender: TObject);
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.Showmodal = mrOk then
+  begin
+    ME14Departamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+    ME14DepartamentoExit(self);
+  end;
+end;
+
+procedure TFCaixaParam.ME15FilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME15Filial.text) <> '' then
+    Ed15Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + ME15Filial.Text)
+  else
+    Ed15Filial.Text := 'Todas'
+end;
+
+procedure TFCaixaParam.Me9Mensagem1Exit(Sender: TObject);
+begin
+  inherited;
+  if Trim(Me9Mensagem1.text) <> '' then
+    Ed9Mensagem1.Text := DMOracle.BuscaNome('SELECT DESC_MENSAGEM FROM TB_MENSAGEM', 'COD_MENSAGEM =' + Me9Mensagem1.Text)
+  else
+    Ed9Mensagem1.Text := 'Todos'
+
+end;
+
+procedure TFCaixaParam.Sb9Mensagem1Click(Sender: TObject);
+begin
+  inherited;
+  if FMensagemCons = nil then
+    FMensagemCons := TFMensagemCons.Create(Application);
+  if FMensagemCons.Showmodal = mrOk then
+    Me9Mensagem1.Text := DMmensagem.QMensagemConsCod_Mensagem.Text;
+
+end;
+
+procedure TFCaixaParam.Me3HistoricoFExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME3HistoricoF.text) <> '' then
+    ME3DescHistoricoF.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME3HistoricoF.Text))
+  else
+    ME3DescHistoricoF.Clear;
+end;
+
+procedure TFCaixaParam.Sb3HistoricoFClick(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME3HistoricoF.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+  ME3HistoricoFExit(Sender);
+end;
+
+procedure TFCaixaParam.Sb4HistoricoFinalClick(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME4HistoricoFinal.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+end;
+
+procedure TFCaixaParam.ME2CodHistoricoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME2CodHistorico.text) <> '' then
+    ME2Historico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + ME2CodHistorico.Text)
+  else
+    ME2Historico.Clear;
+end;
+
+procedure TFCaixaParam.Sb2HistoricoClick(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME2CodHistorico.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+  Me2CodHistoricoExit(Self);
+end;
+
+procedure TFCaixaParam.Me2HistoricoFinalExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME2HistoricoFinal.text) <> '' then
+    ME2DescHistoricoFinal.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + ME2HistoricoFinal.Text)
+  else
+    ME2DescHistoricoFinal.Clear;
+end;
+
+procedure TFCaixaParam.Sb2HistoricoFinalClick(Sender: TObject);
+begin
+  inherited;
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.Showmodal = mrOk then
+    ME2HistoricoFinal.Text := FloatToStr(DMHistorico.QHistoricoConsCod_Historico.Value);
+  Me2HistoricoFinalExit(Self);
+end;
+
+procedure TFCaixaParam.ME2CodFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME2CodFilial.text) <> '' then
+    ME2Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Trim(ME2CodFilial.Text))
+  else
+    ME2Filial.Clear;
+
+end;
+
+procedure TFCaixaParam.ME2CodDeptoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME2CodDepto.text) <> '' then
+  begin
+    if Bib.LimpaNumero(Trim(ME2CodDepto.Text)) = Trim(ME2CodDepto.Text) then
+      ME2Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + ME2CodDepto.Text)
+    else
+      ME2Departamento.Text := 'VÁRIOS';
+  end
+  else
+    ME2Departamento.Clear;
+
+end;
+
+procedure TFCaixaParam.ME0CodFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME0CodFilial.text) <> '' then
+    ME0Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Trim(ME0CodFilial.Text))
+  else
+    ME0Filial.Clear;
+
+end;
+
+procedure TFCaixaParam.ME0CodDeptoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME0CodDepto.text) <> '' then
+    ME0Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Trim(ME0CodDepto.Text))
+  else
+    ME0Departamento.Clear;
+
+end;
+
+procedure TFCaixaParam.ME3CodFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME3CodFilial.text) <> '' then
+    ME3Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Trim(ME3CodFilial.Text))
+  else
+    ME3Filial.Clear;
+
+end;
+
+procedure TFCaixaParam.ME3CodDeptoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME3CodDepto.text) <> '' then
+    ME3Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Trim(ME3CodDepto.Text))
+  else
+    ME3Departamento.Clear;
+
+end;
+
+procedure TFCaixaParam.ME3CodHistoricoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME3CodHistorico.text) <> '' then
+    ME3Historico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME3CodHistorico.Text))
+  else
+    ME3Historico.Clear;
+
+end;
+
+procedure TFCaixaParam.ME4CodFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME4CodFilial.text) <> '' then
+    ME4Filial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Trim(ME4CodFilial.Text))
+  else
+    ME4Filial.Clear;
+
+end;
+
+procedure TFCaixaParam.ME4CodDeptoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME4CodDepto.text) <> '' then
+    ME4Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + Trim(ME4CodDepto.Text))
+  else
+    ME4Departamento.Clear;
+
+end;
+
+procedure TFCaixaParam.ME4CodHistoricoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME4CodHistorico.text) <> '' then
+    ME4Historico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME4CodHistorico.Text))
+  else
+    ME4Historico.Clear;
+
+end;
+
+procedure TFCaixaParam.Me4HistoricoFinalExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME4HistoricoFinal.text) <> '' then
+    ME4DescHistoricoFinal.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME4HistoricoFinal.Text))
+  else
+    ME4DescHistoricoFinal.Clear;
+
+end;
+
+procedure TFCaixaParam.ME7CodFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME7CodFilial.text) <> '' then
+    ME7DescFilial.Text := DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL', 'COD_FILIAL =' + Trim(ME7CodFilial.Text))
+  else
+    ME7DescFilial.Text := 'Todas';
+
+end;
+
+procedure TFCaixaParam.ME7CodHistoricoExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME7CodHistorico.text) <> '' then
+    ME7DescHistorico.Text := DMOracle.BuscaNome('SELECT DESC_HISTORICO FROM TB_HISTORICO', 'COD_HISTORICO =' + Trim(ME7CodHistorico.Text))
+  else
+    ME7Deschistorico.Text := 'Todos';
+
+end;
+
+procedure TFCaixaParam.ME8DepartamentoChange(Sender: TObject);
+begin
+  inherited;
+  if Trim(ME8Departamento.text) <> '' then
+    if Bib.LimpaNumero(Trim(ME8Departamento.Text)) = Trim(ME8Departamento.Text) then
+      Ed8Departamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO =' + ME8Departamento.Text)
+    else
+      Ed8Departamento.Text := 'VÁRIOS'
+  Else
+    Ed8Departamento.Clear;
+end;
+
+procedure TFCaixaParam.Bt2HistoricoClick(Sender: TObject);
+begin
+  inherited;
+   if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.ShowModal = mrOK then
+  begin
+    if Trim(Me02Historico.Text) <> '' then
+      Me02Historico.Text := Me02Historico.Text + ',' + DMHistorico.QHistoricoConsCOD_HISTORICO.Text
+    else
+      Me02Historico.Text := DMHistorico.QHistoricoConsCOD_HISTORICO.Text;
+  end;
+end;
+
+procedure TFCaixaParam.Bt8HistoricoClick(Sender: TObject);
+begin
+  inherited;
+   if FHistoricoCons = nil then
+     FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.ShowModal = mrOK then
+  begin
+    if Trim(Me8Historicos.Text) <> '' then
+      Me8Historicos.Text := Me8Historicos.Text + ',' + DMHistorico.QHistoricoConsCOD_HISTORICO.Text
+    else
+      Me8Historicos.Text := DMHistorico.QHistoricoConsCOD_HISTORICO.Text;
+  end;
+
+end;
+
+end.
+

@@ -1,0 +1,48 @@
+unit UMenuCalcDigito;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, UTMenuPrincipal, Menus, ImgList, ComCtrls, Buttons, ExtCtrls;
+
+type
+  TFMenuCalculaDigito = class(TFTMenuPrincipal)
+    Manuteno1: TMenuItem;
+    CalculaDigitoVerificador1: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure CalculaDigitoVerificador1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FMenuCalculaDigito: TFMenuCalculaDigito;
+
+implementation
+
+uses
+ UOracle_cl, UUsuario_cl, UTela_cl, UFuncao_cl, UParamSistema_cl, Math, UMensagemSMS, UCalculaDigito, ULogin,
+  UCalculaDigitoVerificador;
+
+{$R *.dfm}
+
+procedure TFMenuCalculaDigito.FormCreate(Sender: TObject);
+begin
+  inherited;
+  pModulo := 'CALCULA DIGITO';
+end;
+
+procedure TFMenuCalculaDigito.CalculaDigitoVerificador1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FCalculaDigito = Nil then
+    FCalculaDigito := TFCalculaDigito.Create(Application);
+  DMTela.VerificaTela(pModulo,FCalculaDigito.Caption,FCalculaDigito.Name);
+  FCalculaDigito.ShowModal;
+end;
+
+end.

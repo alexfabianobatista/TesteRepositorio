@@ -1,0 +1,13 @@
+Ver 2.0,QBE - Integra Visual Database Builder,0, 10, 1600, 1106,,,,,
+ , , - Distinct & Quote,,,,,
+    1, - Number of Tables,-1, -1, 808, 600, 800, 247,,,,
+TB_LANCTO_CONTABIL,TB_LANCTO_CONTABIL,20, 10, 227, 239,,,,,
+    1, - Number of Columns,,,,,,
+*,TB_LANCTO_CONTABIL,                   1,     ,1,,,
+     , - Number of Criteria,,,,,,
+     , - Number of Joins,,,,,,
+
+"SELECT Statement"
+,,,,,,,
+SELECT	TB_LANCTO_CONTABIL.*
+FROM	"TB_LANCTO_CONTABIL" TB_LANCTO_CONTABIL,,,,,,,

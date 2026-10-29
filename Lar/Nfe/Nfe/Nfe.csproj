@@ -1,0 +1,1245 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nfe</RootNamespace>
+    <AssemblyName>Nfe</AssemblyName>
+    <ApplicationIcon>PjNFe.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>C:\GeraExe\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Enterprise.Framework, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Enterprise.InfoStore, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Npgsql, Version=2.0.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_32\System.Data.OracleClient\2.0.0.0__b77a5c561934e089\System.Data.OracleClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="dao\DaoConfiguracao.cs" />
+    <Compile Include="dao\DaoContingencia.cs" />
+    <Compile Include="dao\DaoDanfe.cs" />
+    <Compile Include="dao\DaoInutilizacao.cs" />
+    <Compile Include="dao\DaoNfe.cs" />
+    <Compile Include="dao\DaoStatus.cs" />
+    <Compile Include="dao\MontaNota.cs" />
+    <Compile Include="dao\StringConexao.cs" />
+    <Compile Include="entidades\Configuracao.cs" />
+    <Compile Include="entidades\Contingencia.cs" />
+    <Compile Include="entidades\Inutilizacao.cs" />
+    <Compile Include="entidades\Nfe.cs" />
+    <Compile Include="entidades\Status.cs" />
+    <Compile Include="Fabrica.cs" />
+    <Compile Include="forms\FConfiguracao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FConfiguracao.Designer.cs">
+      <DependentUpon>FConfiguracao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FContingencia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FContingencia.Designer.cs">
+      <DependentUpon>FContingencia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FReConsulta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FReConsulta.Designer.cs">
+      <DependentUpon>FReConsulta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FServidor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FServidor.Designer.cs">
+      <DependentUpon>FServidor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="negocios\ArquivoNfe.cs" />
+    <Compile Include="negocios\AssinaturaDigital.cs" />
+    <Compile Include="negocios\cancelamento\GerenciaCancelamento.cs" />
+    <Compile Include="negocios\cancelamento\MontaXml.cs" />
+    <Compile Include="negocios\cancelamento\ThreadCancelamento.cs" />
+    <Compile Include="negocios\email\BufferMail.cs" />
+    <Compile Include="negocios\email\EnviaEmail.cs" />
+    <Compile Include="negocios\email\MontaXml.cs" />
+    <Compile Include="negocios\email\pdf\BufferPDF.cs" />
+    <Compile Include="negocios\email\pdf\CodigoBarra.cs" />
+    <Compile Include="negocios\email\pdf\ControlaRelatorio.cs" />
+    <Compile Include="negocios\email\pdf\crDanfeDefault.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crDanfeDefault.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="negocios\email\pdf\DanfeXpath.cs" />
+    <Compile Include="negocios\email\pdf\notasDataSource.cs">
+      <DependentUpon>notasDataSource.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="negocios\email\pdf\notasDataSource.designer.cs">
+      <DependentUpon>notasDataSource.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="negocios\email\ThreadCarregaArquivo.cs" />
+    <Compile Include="negocios\GerenciaConfiguracao.cs" />
+    <Compile Include="negocios\exclusao\BufferPathExclusao.cs" />
+    <Compile Include="negocios\exclusao\ExcluiXmlNaoCarregado.cs" />
+    <Compile Include="negocios\GerenciaReConsulta.cs" />
+    <Compile Include="negocios\inutilizacao\GerenciaInutilizacao.cs" />
+    <Compile Include="negocios\IsFileOpen.cs" />
+    <Compile Include="negocios\Log.cs" />
+    <Compile Include="negocios\monitoramento\CarregaPathArquivo.cs" />
+    <Compile Include="negocios\protocolo\GerenciaProtocolo.cs" />
+    <Compile Include="negocios\ThreadCopiaDanfe.cs" />
+    <Compile Include="negocios\GerenciaExcessoes.cs" />
+    <Compile Include="negocios\exclusao\ThreadExclusao.cs" />
+    <Compile Include="negocios\inutilizacao\MontaXml.cs" />
+    <Compile Include="negocios\inutilizacao\ThreadInutilizacao.cs" />
+    <Compile Include="negocios\Loader.cs" />
+    <Compile Include="negocios\monitoramento\Monitor.cs" />
+    <Compile Include="negocios\monitoramento\WatchXMLFolderr.cs" />
+    <Compile Include="negocios\ParserXML.cs" />
+    <Compile Include="negocios\protocolo\MontaXml.cs" />
+    <Compile Include="negocios\protocolo\ThreadConsultaProtocolo.cs" />
+    <Compile Include="negocios\recepcao\ThreadProcessoEnvio.cs" />
+    <Compile Include="negocios\recepcao\MontaLote.cs" />
+    <Compile Include="negocios\retorno\MontaXml.cs" />
+    <Compile Include="negocios\retorno\ThreadRetorno.cs" />
+    <Compile Include="negocios\status\GerenciaPersistenciaStatus.cs" />
+    <Compile Include="negocios\status\GerenciaStatusServico.cs" />
+    <Compile Include="negocios\status\ThreadGetStatusServico.cs" />
+    <Compile Include="negocios\status\MontaXml.cs" />
+    <Compile Include="negocios\XmlBuffer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="forms\FConfiguracao.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FConfiguracao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FContingencia.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FContingencia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FReConsulta.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FReConsulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FServidor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FServidor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="negocios\email\pdf\crDanfeDefault.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crDanfeDefault.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="negocios\email\pdf\notasDataSource.xsc">
+      <DependentUpon>notasDataSource.xsd</DependentUpon>
+    </None>
+    <None Include="negocios\email\pdf\notasDataSource.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>notasDataSource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="negocios\email\pdf\notasDataSource.xss">
+      <DependentUpon>notasDataSource.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homCancelamentoMS\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\homCancelamentoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homCancelamentoPR\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\homCancelamentoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homCancelamentoScan\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\homCancelamentoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homCancelamentoSP\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\homCancelamentoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homConsProtocoloMS\nfeConsultaNF.wsdl" />
+    <None Include="Web References\homConsProtocoloMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homConsProtocoloPR\nfeConsultaNF.wsdl" />
+    <None Include="Web References\homConsProtocoloPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homConsProtocoloScan\nfeConsultaNF.wsdl" />
+    <None Include="Web References\homConsProtocoloScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homConsProtocoloSP\nfeConsultaNF.wsdl" />
+    <None Include="Web References\homConsProtocoloSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homInutilizacaoMS\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\homInutilizacaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homInutilizacaoPR\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\homInutilizacaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homInutilizacaoScan\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\homInutilizacaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homInutilizacaoSP\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\homInutilizacaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRecepcaoMS\nfeRecepcao.wsdl" />
+    <None Include="Web References\homRecepcaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRecepcaoPR\nfeRecepcao.wsdl" />
+    <None Include="Web References\homRecepcaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRecepcaoScan\nfeRecepcao.wsdl" />
+    <None Include="Web References\homRecepcaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRecepcaoSP\nfeRecepcao.wsdl" />
+    <None Include="Web References\homRecepcaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRetRecepcaoMS\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\homRetRecepcaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRetRecepcaoPR\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\homRetRecepcaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRetRecepcaoScan\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\homRetRecepcaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homRetRecepcaoSP\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\homRetRecepcaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homStatusServicoMS\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\homStatusServicoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homStatusServicoPR\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\homStatusServicoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homStatusServicoScan\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\homStatusServicoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\homStatusServicoSP\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\homStatusServicoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodCancelamentoMS\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\prodCancelamentoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodCancelamentoPR\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\prodCancelamentoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodCancelamentoScan\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\prodCancelamentoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodCancelamentoSP\nfeCancelamentoNF.wsdl" />
+    <None Include="Web References\prodCancelamentoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodConsProtocoloMS\nfeConsultaNF.wsdl" />
+    <None Include="Web References\prodConsProtocoloMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodConsProtocoloPR\nfeConsultaNF.wsdl" />
+    <None Include="Web References\prodConsProtocoloPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodConsProtocoloScan\nfeConsultaNF.wsdl" />
+    <None Include="Web References\prodConsProtocoloScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodConsProtocoloSP\nfeConsultaNF.wsdl" />
+    <None Include="Web References\prodConsProtocoloSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodInutilizacaoMS\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\prodInutilizacaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodInutilizacaoPR\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\prodInutilizacaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodInutilizacaoScan\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\prodInutilizacaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodInutilizacaoSP\nfeInutilizacaoNF.wsdl" />
+    <None Include="Web References\prodInutilizacaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRecepcaoMS\nfeRecepcao.wsdl" />
+    <None Include="Web References\prodRecepcaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRecepcaoPR\nfeRecepcao.wsdl" />
+    <None Include="Web References\prodRecepcaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRecepcaoScan\nfeRecepcao.wsdl" />
+    <None Include="Web References\prodRecepcaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRecepcaoSP\nfeRecepcao.wsdl" />
+    <None Include="Web References\prodRecepcaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRetRecepcaoMS\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\prodRetRecepcaoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRetRecepcaoPR\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\prodRetRecepcaoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRetRecepcaoScan\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\prodRetRecepcaoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodRetRecepcaoSP\nfeRetRecepcao.wsdl" />
+    <None Include="Web References\prodRetRecepcaoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodStatusServicoMS\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\prodStatusServicoMS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodStatusServicoScan\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\prodStatusServicoScan\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodStatusServicoSP\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\prodStatusServicoSP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prodStatusServicoPR\nfeStatusServicoNF.wsdl" />
+    <None Include="Web References\prodStatusServicoPR\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Web References\homCancelamentoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homCancelamentoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homCancelamentoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homCancelamentoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homConsProtocoloMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homConsProtocoloPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homConsProtocoloScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homConsProtocoloSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homInutilizacaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homInutilizacaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homInutilizacaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homInutilizacaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRecepcaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRecepcaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRecepcaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRecepcaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRetRecepcaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRetRecepcaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRetRecepcaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homRetRecepcaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homStatusServicoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homStatusServicoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homStatusServicoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\homStatusServicoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodCancelamentoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodCancelamentoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodCancelamentoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodCancelamentoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodConsProtocoloMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodConsProtocoloPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodConsProtocoloScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodConsProtocoloSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodInutilizacaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodInutilizacaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodInutilizacaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodInutilizacaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRecepcaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRecepcaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRecepcaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRecepcaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRetRecepcaoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRetRecepcaoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRetRecepcaoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodRetRecepcaoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodStatusServicoMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodStatusServicoScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodStatusServicoSP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\prodStatusServicoPR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Scripting">
+      <Guid>{420B2830-E718-11CF-893D-00A0C9054228}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homCancelamentoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homCancelamentoMS_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homConsProtocoloMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homConsProtocoloMS_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homInutilizacaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homInutilizacaoMS_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRecepcaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRecepcaoMS_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRetRecepcaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRetRecepcaoMS_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homStatusServicoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homStatusServicoMS_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodCancelamentoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodCancelamentoMS_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodConsProtocoloMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodConsProtocoloMS_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodInutilizacaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodInutilizacaoMS_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRecepcaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRecepcaoMS_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRetRecepcaoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRetRecepcaoMS_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodStatusServicoMS\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl ms .net\producao\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodStatusServicoMS_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homCancelamentoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homCancelamentoPR_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homConsProtocoloPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homConsProtocoloPR_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homInutilizacaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homInutilizacaoPR_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRecepcaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRecepcaoPR_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRetRecepcaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRetRecepcaoPR_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homStatusServicoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homStatusServicoPR_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodCancelamentoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodCancelamentoPR_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodConsProtocoloPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodConsProtocoloPR_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodInutilizacaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodInutilizacaoPR_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRecepcaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRecepcaoPR_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRetRecepcaoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRetRecepcaoPR_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodStatusServicoPR\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Parana .net\dotnet\producao\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodStatusServidoPR_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homCancelamentoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homCancelamentoSP_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homConsProtocoloSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homConsProtocoloSP_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homInutilizacaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homInutilizacaoSP_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRecepcaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRecepcaoSP_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRetRecepcaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRetRecepcaoSP_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homStatusServicoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homStatusServicoSP_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodCancelamentoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodCancelamentoSP_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodConsProtocoloSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodConsProtocoloSP_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodInutilizacaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodInutilizacaoSP_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRecepcaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRecepcaoSP_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRetRecepcaoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRetRecepcaoSP_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodStatusServicoSP\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl sao paulo .net\producao\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodStatusServicoSP_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homCancelamentoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homCancelamentoScan_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homConsProtocoloScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homConsProtocoloScan_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homInutilizacaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homInutilizacaoScan_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRecepcaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRecepcaoScan_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homRetRecepcaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homRetRecepcaoScan_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\homStatusServicoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_homStatusServicoScan_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeCancelamentoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodCancelamentoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeCancelamentoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodCancelamentoScan_NfeCancelamentoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeConsultaNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodConsProtocoloScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeConsultaNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodConsProtocoloScan_NfeConsultaService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeInutilizacaoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodInutilizacaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeInutilizacaoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodInutilizacaoScan_NfeInutilizacaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRecepcaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRecepcaoScan_NfeRecepcao</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeRetRecepcao.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodRetRecepcaoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeRetRecepcao.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodRetRecepcaoScan_NfeRetRecepcaoService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeStatusServicoNF.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prodStatusServicoScan\</RelPath>
+      <UpdateFromURL>C:\Documents and Settings\Administrador\Meus documentos\material nf-e\wsdl Scan\producao\nfeStatusServicoNF.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nfe_prodStatusServicoScan_NfeStatusServico</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PjNFe.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

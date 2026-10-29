@@ -1,0 +1,1362 @@
+unit BoletoAPI;
+
+interface
+
+uses
+  // Comuns
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StrUtils
+  // Cemapa
+  , UFilial_cl
+  , UContasReceber_cl
+  , UOracle_cl
+  , BoletoApi.Interfaces
+  // Banco
+  , DB
+  //Oracle
+  , OraTeste
+  //ACBR
+  , ACBrBase, ACBrBoleto, ACBrUtil, ACBrMail, ACBrUtil.FilesIO, blcksock,
+  ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
+  ACBrBoletoFCFortesFr;
+
+type
+  TEnvioBoletoApi = class
+
+  private
+    FACBrMail: TACBrMail;
+    Beneficiario: TACBrCedente;
+    Banco: TACBrBanco;
+    FACBrBoleto: TACBrBoleto;
+    Boleto: TACBrBoleto;
+    WebService: TACBrWebService;
+    BeneficiarioWS: TACBrCedenteWS;
+    CobAnterior: TACBrTipoCobranca;
+    Titulo : TACBrTitulo;
+    // Boleto do FortesReport. Instalação a parte.
+    FACBrBoletoFCRL: TACBrBoletoFCFortes;
+
+    nNumNota: Integer;
+    nCodNota: Integer;
+    nBanco: Integer;
+    sIndAmbiente: String;
+    sEmailDanfe: String;
+    bEnviaEmailBoleto: Boolean;
+    FEnviaEmail: TACBrMail;
+
+
+  public
+    Filial: Integer;
+    Documento: Integer;
+    TipoDocumento: String;
+    Emissao: TDate;
+    IndTemErro: Boolean;
+    IndTemRejeicao: Boolean;
+    constructor Create(CodFilial, NumNota, CodNota, NumBanco: Integer;
+                                            IndAmbiente: String; bEnviaEmail: Boolean);
+    function ConverteCodigoJuros(sCodigoJuro: String): TACBrCodigoJuros;
+    function ConverteAceiteTitulo(sAceiteTitulo: String): TACBrAceiteTitulo;
+    function ConverteTipoDiasIntrucao(sTipoDiasIntrucao: String): TACBrTipoDiasIntrucao;
+    function ConverteTipoImpressao(sTipoImpressao: String): TACBrTipoImpressao;
+    function ConverteTipoDocumento(sTipoDocumento: String): TACBrTipoDocumento;
+    function ConverteTipoCarteira(sTipoCarteira: String): TACBrTipoCarteira;
+    function ConverteCarteiraEnvio(sCarteiraEnvio: String): TACBrCarteiraEnvio;
+    function ConverteCodigoDesconto(sCodigoDesconto: String): TACBrCodigoDesconto;
+    function ConverteCodigoMulta(sCodigoMulta: String): TACBrCodigoMulta;
+    function ConverteCodigoNegativacao(sCodigoNegativacao: String): TACBrCodigoNegativacao;
+    function ConverteOperacao(sOperacao: String): TOperacao;
+    function ConverteTipoPagamento(sTipoPagamento: String): TTipo_Pagamento;
+    function ConverteIndicadorSituacaoBoleto(sIndicadorSituacaoBoleto: String): TACBrIndicadorSituacaoBoleto;
+    function ConverteIndicadorBoletoVencido(sIndicadorBoletoVencido: String): TACBrIndicadorBoletoVencido;
+    function ConverteResponEmissao(sResponEmissao: String): TACBrResponEmissao;
+    function ConverteIdentDistribuicao(sIdentDistribuicao: String): TACBrIdentDistribuicao;
+    function ConverteCaracTitulo(sCaracTitulo: String): TACBrCaracTitulo;
+    function ConvertePessoa(sPessoa: String): TACBrPessoa;
+    function ConverteBolLayOut(sBolLayOut: String): TACBrBolLayOut;
+    function ConverteCodigoMora(sCodMora: String): String;
+    function ConverteTipoAmbietne(sAmbiente: String): TTipoAmbienteWS;
+    function ConverteInstrucaoRemessaSicredi(nCodInstrucao: Integer): String;
+
+    { ENVIAR BOLETOS API }
+    procedure EnviarBoletosApi;
+    procedure SetaConfigSicredi(IndAmbiente: String);
+    procedure EnviarBoletosApiSicredi;
+    procedure AssociarRelatorioCPN;
+    procedure GerarPDF;
+
+    { IMPRIMIR BOLETOS API }
+    procedure ImprimirBoletosApi;
+    procedure ImprimirBoletosApiSicredi;
+    procedure EnviaEmailBoletosApiSicredi;
+    procedure SetaImpressaoSicredi;
+
+    { Melhoria para tentar dar independência para a geração }
+    procedure AdicionarBoletoNaListaSicredi;
+
+  end;
+
+
+implementation
+
+uses OracleData, UBiblioteca, UCadastro_cl, UNotaSaida_cl, DateUtils, Math;
+
+
+
+{ TEnvioBoletoApi }
+
+// Tipo de documento deve ser passado exatamente a mesma informação que
+// cria no tipo para a gravação no contas a receber.
+constructor TEnvioBoletoApi.Create(CodFilial, NumNota, CodNota, NumBanco: Integer;
+                                            IndAmbiente: String; bEnviaEmail: Boolean);
+begin
+  Filial := CodFilial;
+  Documento := NumNota;
+  nNumNota := NumNota;
+  nCodNota := CodNota;
+  nBanco := NumBanco;
+  sIndAmbiente := IndAmbiente;
+  bEnviaEmailBoleto := bEnviaEmail;
+  FACBrBoleto := TACBrBoleto.Create(nil);
+  FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+end;
+
+procedure TEnvioBoletoApi.EnviarBoletosApi;
+begin
+
+  if (nBanco = 748) then
+    EnviarBoletosApiSicredi;
+
+end;
+
+procedure TEnvioBoletoApi.EnviarBoletosApiSicredi;
+var
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sMensagem: String;
+  sMensagemEmail: TStrings;
+begin
+
+  // ARRANQUEI TUDO PORQUE DÁ MUITO TRABALHO REESCREVER O CÓDIGO. NA PRÓXIMA VERSÃO EU CORRIJO TUDO
+  with DMNotaSaida do
+  begin
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaConfigSicredi(sIndAmbiente);
+
+		with DMFilial do
+		begin
+			QFilial.Close;
+			QFilial.SetVariable('PK', Filial);
+			QFilial.Open;
+       
+			Beneficiario.TipoInscricao := pJuridica;
+			Beneficiario.CNPJCPF := OnlyNumber(QFilialNUM_CGC.AsString);
+			Beneficiario.Nome := QFilialDESC_FILIAL.AsString;
+			// Beneficiario.FantasiaCedente := QFilialDESC_FILIAL.AsString;
+			Beneficiario.Logradouro := QFilialDESC_ENDERECO.AsString;
+			Beneficiario.NumeroRes := '';
+			Beneficiario.Complemento := QFilialDESC_COMPLEMENTO_ENDERECO.AsString;
+			Beneficiario.Bairro := QFilialDESC_BAIRRO.AsString;
+			Beneficiario.Cidade := QFilialDESC_CIDADE.AsString;
+			Beneficiario.UF := QFilialCOD_ESTADO.AsString;
+			Beneficiario.CEP := OnlyNumber(QFilialDESC_CEP.AsString);
+			Beneficiario.Telefone := QFilialDESC_TELEFONE.AsString;
+		end;
+
+		// NÃO PREENCHE PARA SICREDI
+		{
+		BeneficiarioWS.ClientSecret := '';
+		BeneficiarioWS.KeyUser      := '';
+		BeneficiarioWS.Scope        := '';
+		}
+		BeneficiarioWS.IndicadorPix := True;
+		WebService.SSLHttpLib       := TSSLHttpLib(3);
+
+		Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+		Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+		Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+		Beneficiario.ContaDigito := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+		// Fixo até que o sistema seja preparado pra isso.
+		Beneficiario.TipoDocumento := ConverteTipoDocumento('TRADICIONAL');
+		// Tipo do ACBr para distrituição pelo cliente.
+		// criar function para retornar de acordo com o que está gravado na base
+		Beneficiario.IdentDistribuicao := ConverteIdentDistribuicao(QBoletoAPICOD_IDENTIF_DISTRIBUICAO.AsString);
+		// Tipo do ACBr para emissão pelo cliente.
+		// criar function para retornar de acordo com o que está gravado na base
+		Beneficiario.ResponEmissao := ConverteResponEmissao(QBoletoAPICOD_IDENTIF_EMISSAO_BLOQUETO.AsString);
+
+		// Nada consta na base, informado como simples.
+		Beneficiario.CaracTitulo := ConverteCaracTitulo('');
+		Beneficiario.TipoCarteira := ConverteTipoCarteira('');
+
+
+		Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+		Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+		Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+		Beneficiario.ContaDigito := QBoletoAPICOD_AGENCIA.AsString;
+		Beneficiario.DigitoVerificadorAgenciaConta := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+		// VAZIO PARA SICREDI
+		Beneficiario.Convenio := '';
+		Beneficiario.Operacao := '';
+		Beneficiario.CodigoTransmissao := '';
+
+
+		Beneficiario.Modalidade := '1';
+		Beneficiario.CodigoCedente := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+
+		Boleto.MAIL := FACBrMail;
+
+		for I := 0 to QBoletoAPI.RecordCount - 1 do
+		begin
+		  AdicionarBoletoNaListaSicredi;
+		  QBoletoAPI.Next;
+		end;
+		QBoletoAPI.Close;
+    end;
+
+    // tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe,
+    // tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket
+    Boleto.Configuracoes.WebService.Operacao := tpInclui;  //unico funcional sicredi
+    Boleto.Enviar;
+    IndTemRejeicao := False;
+    IndTemErro := False;
+
+    // Abaixo verifica se houve retorno e se existem boletos que foram corretamente enviados
+    if Boleto.TotalListaRetornoWeb > 0 then
+    begin
+		SLRemessa := TStringList.Create;
+		SLRemessa.Delimiter := ',';
+		//  SLRemessa.QuoteChar := '';
+		try
+			  for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
+			  begin
+
+				if (Boleto.ListadeBoletos.Count = Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) then
+				  MessageDlg('Problemas ao enviar os boletos! Tente novamente mais tarde.',
+							  mtWarning,
+							  [mbOK],
+							  0)
+				else
+				begin
+
+				  for j:= 0 to Pred(Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) do
+				  begin
+					SLRemessa.Add('[Rejeicao'   +IntToStr(j)+']' + sLineBreak +
+								 'Campo='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
+								 'Codigo='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Codigo + sLineBreak +
+								 'Versao='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Versao + sLineBreak +
+								 'Mensagem='   + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
+								 'Ocorrencia=' + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia + sLineBreak +
+								 'Valor='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
+								 IndTemRejeicao := True;
+				  end;
+				  SLRemessa.Add('HEADER'          + sLineBreak +
+							 'Versao='           + Boleto.ListaRetornoWeb[i].Header.Versao + sLineBreak +
+							 'Autenticacao='     + Boleto.ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
+							 'Usuario_Servico='  + Boleto.ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
+							 'Usuario='          + Boleto.ListaRetornoWeb[i].Header.Usuario + sLineBreak +
+							 'Operacao='         + TipoOperacaoToStr(Boleto.ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
+							 'Indice='           + IntToStr(Boleto.ListaRetornoWeb[i].Header.Indice) + sLineBreak +
+							 'Sistema_Origem='   + Boleto.ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
+							 'Agencia='          + Boleto.ListaRetornoWeb[i].Header.Agencia + sLineBreak +
+							 'ID_Origem='        + Boleto.ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
+							 'Data_Hora='        +FormatDateTime('dd/mm/yyyy hh:nn:ss',Boleto.ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
+							 'ID_Processo='      + Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+							 'DADOS'             + sLineBreak +
+							 'Excessao='         +Boleto.ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
+							 'CONTROLE_NEGOCIAL' + sLineBreak +
+							 'Origem_Retorno='   + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
+							 'NSU='              + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
+							 'Cod_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
+							 'Msg_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
+							 'COMPROVANTE'       + sLineBreak +
+							 'Data='             +  FormatDateTime('dd/mm/yyyy', Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
+							 'Hora='             +  Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
+							 'ID_BOLETO'         + sLineBreak +
+							 'Codigo_Barras='    + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
+							 'Linha_Digitavel='  + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
+							 'Nosso_Numero='     + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
+							 'URL='              + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
+							 'CONSULTA_BOLETO'   + sLineBreak +
+							 'Numero_Documento=' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
+							 'Data_Vencimento='  + FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
+							 'Valor='            + CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
+							  );
+					if NaoEstaVazio(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
+					begin
+						SLRemessa.Add('TITULO_RETORNO'            + sLineBreak  +
+						'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+						'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+						'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+						'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+						'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+						'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+						'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+						'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+						'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+						'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+						'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+						'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+						'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+						'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+						'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+						'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+						'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+						'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
+						DMOracle.QExecSQL.Close;
+						DMOracle.QExecSQL.SQL.Clear;
+						wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET DESC_CODIGO_BARRAS = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras);
+						wComando := wComando + ', DESC_TXID = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.TxId);
+						wComando := wComando + ', DESC_LINHA_DIGITAVEL = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig);
+						wComando := wComando + ', DESC_COPIA_COLA = ' + QuotedStr(StringReplace(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV, #$A,'',[rfReplaceAll]));
+						wComando := wComando + ', IND_ENVIADO_BANCO = ' + QuotedStr('SIM');
+						wComando := wComando + ' WHERE COD_NOTA_CAB = ' + IntToStr(nCodNota);
+						wComando := wComando + ' AND COD_NOSSO_NUMERO = ' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero;
+						DMOracle.QExecSQL.SQL.Add(wComando);
+						DMOracle.QExecSQL.ExecSQL;
+
+						if DMOracle.DBCemapa.InTransaction then
+						  DMOracle.DBCemapa.Commit;
+					end; // if NaoEstaVazio
+				end; // if (Boleto.ListadeBoletos.Count
+			end;
+			
+		finally
+			SLRemessa.Free;
+		  // Ajustar aqui para lançar possíveis mensagens de erro ou mostrar os boletos gerados.
+		  // Necessário testes
+		  //ShowMessage(SLRemessa);
+    
+		end;
+    end;
+
+    for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
+    begin
+
+		if (Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV <> EmptyStr) and (bEnviaEmailBoleto) then
+		begin
+
+			sMensagem := 'Esta mensagem refere-se ao título ' +
+				IntToStr(nCodNota) + ' emitido em ' +  FormatDateTime('dd/MM/yyyy', Titulo.DataDocumento) + '.' + chr(13);
+			sMensagem := sMensagem + 'Boleto emitido para:' + chr(13);
+
+			if Length(Titulo.Sacado.CNPJCPF) > 14 then
+			begin
+			  sMensagem := sMensagem + 'Razão Social: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+			  sMensagem := sMensagem + 'CNPJ: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+			end
+			else
+			begin
+			  sMensagem := sMensagem + 'Nome: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+			  sMensagem := sMensagem + 'CPF: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+			end;
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Imprimir e pagar o boleto em anexo em qualquer banco até a data de vencimento.';
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Este e-mail foi enviado automaticamente pelo módulo de contas a receber da ' +
+						  Beneficiario.Nome + '.';
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Desenvolvido por: Sistema Cemapa Informática (45)3264-3773 Medianeira-PR.';
+
+			sMensagemEmail := TStringList.Create;
+
+			sMensagemEmail.Add(sMensagem);
+
+			with DMCadastro do
+			begin
+			  QCadastroEmail.Close;
+			  QCadastroEmail.Open;
+
+			  if QCadastroEmail.RecordCount > 0 then
+			  begin
+				FACBrMail.From := QCadastroEmailDESC_EMAIL.Text;
+				FACBrMail.FromName := Beneficiario.Nome;
+				FACBrMail.Host := QCadastroEmailDESC_SMTP.Text; // troque pelo seu servidor smtp
+				FACBrMail.Username := QCadastroEmailDESC_EMAIL.Text;
+				FACBrMail.Password := QCadastroEmailDESC_SENHA.Text;
+				FACBrMail.Port := QCadastroEmailNUM_PORTA_SMTP.Text; // troque pela porta do seu servidor smtp
+				FACBrMail.SetTLS := False;
+				FACBrMail.SetSSL := False;//(QCadastroEmailIND_SSL.Text = 'S'); // verifica configuração SSL
+				FACBrMail.SSLType := LT_SSLv3;
+
+			  end;
+			  QCadastroEmail.Close;
+			end;
+			
+			if (Trim(sEmailDanfe) <> '') then
+			begin
+			  AssociarRelatorioCPN;
+			  Boleto.EnviarEmail(sEmailDanfe, 'Boletos '+ Titulo.Sacado.NomeSacado, sMensagemEmail, True);
+			end;
+		end;
+    end;
+    
+  end;
+  FACBrMail.Clear;
+  FACBrMail.CleanupInstance;
+  
+
+
+end;
+
+procedure TEnvioBoletoApi.AdicionarBoletoNaListaSicredi;
+var
+  sNossoNum5: string;
+begin
+
+  with DMNotaSaida do
+  begin
+    Titulo := Boleto.CriarTituloNaLista;
+    Titulo.DataDocumento           := QBoletoAPIDT_EMISSAO.Value;
+    Titulo.Vencimento              := QBoletoAPIDT_VENCIMENTO.Value;
+    Titulo.NumeroDocumento         := QBoletoAPINUM_TITULO.AsString;
+    Titulo.SeuNumero               := IntToStr(nCodNota);
+    Titulo.EspecieMod              := 'R$';
+    Titulo.Aceite                  := ConverteAceiteTitulo(QBoletoAPICOD_IDENTIF_ACEITO.asString);
+    Titulo.DataProcessamento       := Now;
+    Titulo.Carteira                := QBoletoAPICARTEIRA.AsString;
+
+    // Código da geração está vindo de algum lugar não identificado. Optado por pegar do nosso numero e usar
+    Titulo.CodigoGeracao           := Copy(Trim(QBoletoAPICOD_NOSSO_NUMERO.AsString), 3, 1);
+    // necessário retirar os dígitos do ano e dígitos de validação pois retornam na própria API
+    sNossoNum5                     := Copy(QBoletoAPICOD_NOSSO_NUMERO.AsString, 4, 5);
+    Titulo.NossoNumero             := sNossoNum5;
+
+    Titulo.ValorDocumento          := QBoletoAPIVAL_TITULO.Value;
+    Titulo.Sacado.NomeSacado       := QBoletoAPINOME.AsString;
+    Titulo.Sacado.CNPJCPF          := QBoletoAPINUM_CGC_CPF.AsString;
+    Titulo.Sacado.Logradouro       := QBoletoAPIDESC_ENDERECO_COBRANCA.AsString;
+    Titulo.Sacado.Numero           := '';
+    Titulo.Sacado.Bairro           := QBoletoAPIDESC_BAIRRO_COBRANCA.AsString;
+    Titulo.Sacado.Cidade           := QBoletoAPIDESC_CIDADE_COBRANCA.AsString;
+    Titulo.Sacado.UF               := QBoletoAPIDESC_ESTADO_COBRANCA.AsString;
+    Titulo.Sacado.CEP              := OnlyNumber(QBoletoAPIDESC_CEP_COBRANCA.AsString);
+    Titulo.Sacado.Email            := '';
+
+    if QBoletoAPIPERC_JURO_BLOQUETO.Value <> 0 then     //QBoletoAPICOD_MORA_JUROS.Value; //Verificar questão dos juros
+    begin
+      Titulo.CodigoMoraJuros :=  cjValorDia;
+      Titulo.ValorMoraJuros := RoundTo(((QBoletoAPIPERC_JURO_BLOQUETO.Value/DMoracle.DiasNoMes(QBoletoAPIDT_VENCIMENTO.Value))*(QBoletoAPIVal_Titulo.Value/100)), -2); //perc_juro_dia do remessa
+    end;
+    
+    Titulo.DataMoraJuros           := QBoletoAPIDT_VENCIMENTO.Value;
+    Titulo.CodigoMora              := ConverteCodigoMora(QBoletoAPIIND_TIPO_JURO.AsString);
+    Titulo.ValorAbatimento         := 0;
+    Titulo.DataAbatimento          := 0;
+
+    If QBoletoAPINR_DIAS_PROTESTO.Value > 0 then   // entre 03 e 99 dias de protesto
+    begin
+      Titulo.DiasDeProtesto          := QBoletoAPINR_DIAS_PROTESTO.Value;
+      Titulo.DataProtesto            := QBoletoAPIDT_VENCIMENTO.Value + QBoletoAPINR_DIAS_PROTESTO.Value;
+    end
+    else
+    begin
+      Titulo.DiasDeProtesto          := 0;
+      Titulo.DataProtesto            := 0;
+    end;
+
+
+    Titulo.PercentualMulta         := (QBoletoAPIVAL_MULTA.Value / QBoletoAPIVAL_TITULO.Value) * 100 ;   // conferir com o junior
+    Titulo.Mensagem.Text           := '';
+    Titulo.Instrucao1              := QBoletoAPIDESC_LOCAL_PGTO_BLOQ.AsString;
+    Titulo.Instrucao2              := QBoletoAPIDESC_INSTRUCAO_BLOQUETO.AsString;
+    Titulo.QtdePagamentoParcial    := 1;
+    Titulo.TipoPagamento           := tpNao_Aceita_Valor_Divergente;
+    Titulo.PercentualMinPagamento  := 0;
+    Titulo.PercentualMaxPagamento  := 0;
+    Titulo.ValorMinPagamento       := 0;
+    Titulo.ValorMaxPagamento       := 0;
+    Titulo.TipoDesconto            := tdNaoConcederDesconto;
+    Titulo.DataDesconto            := 0;
+    Titulo.ValorDesconto           := 0;
+    Titulo.OcorrenciaOriginal.Tipo := toRemessaRegistrar;
+    Titulo.QrCode.emv              := QBoletoAPIDESC_COPIA_COLA.Text;
+    Titulo.QrCode.url              := QBoletoAPIDESC_COPIA_COLA.Text;
+  end;
+
+end;
+
+procedure TEnvioBoletoApi.SetaConfigSicredi(IndAmbiente: String);
+var
+  sClientID, sClientSecret: String;
+begin
+
+  Boleto := FACBrBoleto;
+  Beneficiario := Boleto.Cedente;
+  BeneficiarioWS := Beneficiario.CedenteWS;
+  Boleto.Configuracoes.WebService.VersaoDF := 'V2';
+  Boleto.Configuracoes.WebService.Ambiente := ConverteTipoAmbietne(IndAmbiente);
+// Produção = taProducao, Homologacao = taHomologacao
+  Boleto.Configuracoes.Arquivos.LogNivel := logParanoico;
+  Boleto.Configuracoes.Arquivos.PathGravarRegistro := ExtractFilePath(ParamStr(0)) + 'Log';
+  Boleto.Configuracoes.WebService.Operacao := tpInclui;
+  WebService := Boleto.Configuracoes.WebService;
+  CobAnterior := Boleto.Banco.TipoCobranca;
+  WebService.SSLHttpLib := TSSLHttpLib(0);
+
+  Banco := Boleto.Banco;
+  Banco.TipoCobranca := cobSicred;
+  Banco.LayoutVersaoArquivo := 0;
+  Banco.LayoutVersaoLote    := 0;
+  Banco.CIP                 := '';
+  Banco.DensidadeGravacao   := '';
+  Banco.LocalPagamento      := 'Pagável preferencialmente nas cooperativas de crédito do Sicredi';
+
+  with DMNotaSaida do
+  begin
+    // Se for no ambiente de homologação, esses são os dados do manual
+    if (IndAmbiente = 'H') or (IndAmbiente = 'S') then
+    begin
+      sClientID := '123456789';
+      sClientSecret := 'teste123';
+      // KEY USER É GERADO NO PORTAL DO DESENVOLVEDOR SICREDI.
+      BeneficiarioWS.KeyUser := QBoletoAPIDESC_KEY_USER_HOM.Value;
+    end
+    else
+    begin   // SE FOR PRODUÇÃO, CLIENTID É A CONTA + AGENCIA, SECRET É GERADO NA CONTA DO
+            //CLIENTE E GRAVADO NA CONTA CORRENTE
+
+      sClientID := QBoletoAPINUM_CONTA_CORRENTE.AsString
+                   +    bib.StrZero(QBoletoAPICOD_AGENCIA.AsString,4);
+                   //+ '0'+QBoletoAPICOD_AGENCIA.AsString;
+      sClientSecret := QBoletoAPIDESC_CHAVE_API_BOLETO.AsString;
+            // KEY USER É GERADO NO PORTAL DO DESENVOLVEDOR SICREDI. CASO NÃO HAJA PROBLEMAS, TENTAREMOS ESSE MESMO
+      BeneficiarioWS.KeyUser := QBoletoAPIDESC_KEY_USER_PROD.Value;//'93c213fc-18f9-4fea-8b9b-ef837babf7b6';
+    end;
+  end;
+
+  BeneficiarioWS.ClientID := sClientID;
+  BeneficiarioWS.ClientSecret := sClientSecret;
+  BeneficiarioWS.Scope := 'cobranca';
+  BeneficiarioWS.IndicadorPix := True;
+
+end;
+
+procedure TEnvioBoletoApi.ImprimirBoletosApi;
+begin
+
+  if (nBanco = 748) then
+    ImprimirBoletosApiSicredi;
+
+end;
+
+procedure TEnvioBoletoApi.ImprimirBoletosApiSicredi;
+var
+  Titulo : TACBrTitulo;
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sLinhaDigitavel, sCodigoBarras, sMensagem: String;
+  sMensagemEmail: TStrings;
+begin
+  // FEITO DESSA FORMA PARA FACILITAR A MUDANÇA DE COMPONENTE NO CASO DE MIGRAÇÕES
+  with DMNotaSaida do
+  begin
+
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaImpressaoSicredi;
+
+      with DMFilial do
+      begin
+        QFilial.Close;
+        QFilial.SetVariable('PK', Filial);
+        QFilial.Open;
+
+        Beneficiario.TipoInscricao := pJuridica;
+        Beneficiario.CNPJCPF := OnlyNumber(QFilialNUM_CGC.AsString);
+        Beneficiario.Nome := QFilialDESC_FILIAL.AsString;
+        // Beneficiario.FantasiaCedente := QFilialDESC_FILIAL.AsString;
+        Beneficiario.Logradouro := QFilialDESC_ENDERECO.AsString;
+        Beneficiario.NumeroRes := '';
+        Beneficiario.Complemento := QFilialDESC_COMPLEMENTO_ENDERECO.AsString;
+        Beneficiario.Bairro := QFilialDESC_BAIRRO.AsString;
+        Beneficiario.Cidade := QFilialDESC_CIDADE.AsString;
+        Beneficiario.UF := QFilialCOD_ESTADO.AsString;
+        Beneficiario.CEP := OnlyNumber(QFilialDESC_CEP.AsString);
+        Beneficiario.Telefone := QFilialDESC_TELEFONE.AsString;
+      end;
+
+      // NÃO PREENCHE PARA SICREDI
+      {
+      BeneficiarioWS.ClientSecret := '';
+      BeneficiarioWS.KeyUser      := '';
+      BeneficiarioWS.Scope        := '';
+      }
+      BeneficiarioWS.IndicadorPix := True;
+      WebService.SSLHttpLib       := TSSLHttpLib(3);
+
+      Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+      Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+      Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+      Beneficiario.ContaDigito := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+      // Fixo até que o sistema seja preparado pra isso.
+      Beneficiario.TipoDocumento := ConverteTipoDocumento('TRADICIONAL');
+      // Tipo do ACBr para distrituição pelo cliente.
+      // criar function para retornar de acordo com o que está gravado na base
+      Beneficiario.IdentDistribuicao := ConverteIdentDistribuicao(QBoletoAPICOD_IDENTIF_DISTRIBUICAO.AsString);
+      // Tipo do ACBr para emissão pelo cliente.
+      // criar function para retornar de acordo com o que está gravado na base
+      Beneficiario.ResponEmissao := ConverteResponEmissao(QBoletoAPICOD_IDENTIF_EMISSAO_BLOQUETO.AsString);
+
+      // Nada consta na base, informado como simples.
+      Beneficiario.CaracTitulo := ConverteCaracTitulo('');
+      Beneficiario.TipoCarteira := ConverteTipoCarteira('');
+    end;
+
+    Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+    Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+    Beneficiario.ContaDigito := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.DigitoVerificadorAgenciaConta := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+    // VAZIO PARA SICREDI
+    Beneficiario.Convenio := '';
+    Beneficiario.Operacao := '';
+    Beneficiario.CodigoTransmissao := '';
+
+    Beneficiario.Modalidade := '1';
+    Beneficiario.CodigoCedente := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+
+    for I := 0 to QBoletoAPI.RecordCount - 1 do
+    begin
+
+      AdicionarBoletoNaListaSicredi;
+
+      QBoletoAPI.Next;
+    end;
+  end;
+  GerarPDF;
+
+end;
+
+procedure TEnvioBoletoApi.EnviaEmailBoletosApiSicredi;
+var
+  Titulo : TACBrTitulo;
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sLinhaDigitavel, sCodigoBarras, sMensagem: String;
+  sMensagemEmail: TStrings;
+begin
+  // FEITO DESSA FORMA PARA FACILITAR A MUDANÇA DE COMPONENTE NO CASO DE MIGRAÇÕES
+  with DMNotaSaida do
+  begin
+
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaImpressaoSicredi;
+
+      with DMFilial do
+      begin
+        QFilial.Close;
+        QFilial.SetVariable('PK', Filial);
+        QFilial.Open;
+
+        Beneficiario.TipoInscricao := pJuridica;
+        Beneficiario.CNPJCPF := OnlyNumber(QFilialNUM_CGC.AsString);
+        Beneficiario.Nome := QFilialDESC_FILIAL.AsString;
+        // Beneficiario.FantasiaCedente := QFilialDESC_FILIAL.AsString;
+        Beneficiario.Logradouro := QFilialDESC_ENDERECO.AsString;
+        Beneficiario.NumeroRes := '';
+        Beneficiario.Complemento := QFilialDESC_COMPLEMENTO_ENDERECO.AsString;
+        Beneficiario.Bairro := QFilialDESC_BAIRRO.AsString;
+        Beneficiario.Cidade := QFilialDESC_CIDADE.AsString;
+        Beneficiario.UF := QFilialCOD_ESTADO.AsString;
+        Beneficiario.CEP := OnlyNumber(QFilialDESC_CEP.AsString);
+        Beneficiario.Telefone := QFilialDESC_TELEFONE.AsString;
+      end;
+
+      // NÃO PREENCHE PARA SICREDI
+      {
+      BeneficiarioWS.ClientSecret := '';
+      BeneficiarioWS.KeyUser      := '';
+      BeneficiarioWS.Scope        := '';
+      }
+      BeneficiarioWS.IndicadorPix := True;
+      WebService.SSLHttpLib       := TSSLHttpLib(3);
+
+      Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+      Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+      Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+      Beneficiario.ContaDigito := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+      // Fixo até que o sistema seja preparado pra isso.
+      Beneficiario.TipoDocumento := ConverteTipoDocumento('TRADICIONAL');
+      // Tipo do ACBr para distrituição pelo cliente.
+      // criar function para retornar de acordo com o que está gravado na base
+      Beneficiario.IdentDistribuicao := ConverteIdentDistribuicao(QBoletoAPICOD_IDENTIF_DISTRIBUICAO.AsString);
+      // Tipo do ACBr para emissão pelo cliente.
+      // criar function para retornar de acordo com o que está gravado na base
+      Beneficiario.ResponEmissao := ConverteResponEmissao(QBoletoAPICOD_IDENTIF_EMISSAO_BLOQUETO.AsString);
+
+      // Nada consta na base, informado como simples.
+      Beneficiario.CaracTitulo := ConverteCaracTitulo('');
+      Beneficiario.TipoCarteira := ConverteTipoCarteira('');
+    end;
+
+    Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+    Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+    Beneficiario.ContaDigito := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.DigitoVerificadorAgenciaConta := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+    // VAZIO PARA SICREDI
+    Beneficiario.Convenio := '';
+    Beneficiario.Operacao := '';
+    Beneficiario.CodigoTransmissao := '';
+
+    Beneficiario.Modalidade := '1';
+    Beneficiario.CodigoCedente := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+
+    Boleto.MAIL := FACBrMail;
+
+    for I := 0 to QBoletoAPI.RecordCount - 1 do
+    begin
+
+      AdicionarBoletoNaListaSicredi;
+      QBoletoAPI.Next;
+    
+    end;
+
+    if (Titulo.QrCode.emv <> EmptyStr) and (bEnviaEmailBoleto) then
+    begin
+
+      sMensagem := 'Esta mensagem refere-se ao título ' +
+          IntToStr(nCodNota) + ' emitido em ' +  FormatDateTime('dd/MM/yyyy', Titulo.DataDocumento) + '.' + chr(13);
+      sMensagem := sMensagem + 'Boleto emitido para:' + chr(13);
+
+      if Length(Titulo.Sacado.CNPJCPF) > 14 then
+      begin
+        sMensagem := sMensagem + 'Razão Social: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+        sMensagem := sMensagem + 'CNPJ: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+      end
+      else
+      begin
+        sMensagem := sMensagem + 'Nome: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+        sMensagem := sMensagem + 'CPF: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+      end;
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Imprimir e pagar o boleto em anexo em qualquer banco até a data de vencimento.';
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Este e-mail foi enviado automaticamente pelo módulo de contas a receber da ' +
+        Beneficiario.Nome + '.';
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Desenvolvido por: Sistema Cemapa Informática (45)3264-3773 Medianeira-PR.';
+
+      sMensagemEmail := TStringList.Create;
+
+      sMensagemEmail.Add(sMensagem);
+    
+      with DMCadastro do
+      begin
+        QCadastroEmail.Close;
+        QCadastroEmail.Open;
+
+        if QCadastroEmail.RecordCount > 0 then
+        begin
+          FACBrMail.From := QCadastroEmailDESC_EMAIL.Text;
+          FACBrMail.FromName := Beneficiario.Nome;
+          FACBrMail.Host := QCadastroEmailDESC_SMTP.Text; // troque pelo seu servidor smtp
+          FACBrMail.Username := QCadastroEmailDESC_EMAIL.Text;
+          FACBrMail.Password := QCadastroEmailDESC_SENHA.Text;
+          FACBrMail.Port := QCadastroEmailNUM_PORTA_SMTP.Text; // troque pela porta do seu servidor smtp
+          FACBrMail.SetTLS := FALSE;
+          FACBrMail.SetSSL := False;//(QCadastroEmailIND_SSL.Text = 'S'); // verifica configuração SSL
+          FACBrMail.SSLType := LT_SSLv3;
+
+        end;
+        QCadastroEmail.Close;
+      end;
+      if Trim(sEmailDanfe) = '' then
+      begin
+        ShowMessage('O e-mail do cliente não existe no cadastro. Por favor, corrija!');
+      end
+      else
+      begin
+        AssociarRelatorioCPN;
+        Boleto.EnviarEmail(sEmailDanfe, 'Boletos '+ Titulo.Sacado.NomeSacado, sMensagemEmail, True);
+      end;
+
+    end;
+
+  end;
+  FACBrMail.Clear;
+  FACBrMail.CleanupInstance;
+  sMensagemEmail.Clear;
+  sMensagemEmail.CleanupInstance;
+end;
+
+procedure TEnvioBoletoApi.SetaImpressaoSicredi;
+var
+  sClientID, sClientSecret: String;
+begin
+
+  Boleto := FACBrBoleto;
+  Beneficiario := Boleto.Cedente;
+  BeneficiarioWS := Beneficiario.CedenteWS;
+  Boleto.Configuracoes.WebService.VersaoDF := 'V2';
+  Boleto.Configuracoes.WebService.Ambiente := ConverteTipoAmbietne(sIndAmbiente);
+// Produção = taProducao, Homologacao = taHomologacao
+  Boleto.Configuracoes.Arquivos.LogNivel := logParanoico;
+  Boleto.Configuracoes.Arquivos.PathGravarRegistro := ExtractFilePath(ParamStr(0)) + 'Log';
+  Boleto.Configuracoes.WebService.Operacao := tpInclui;
+  WebService := Boleto.Configuracoes.WebService;
+  CobAnterior := Boleto.Banco.TipoCobranca;
+  WebService.SSLHttpLib := TSSLHttpLib(0);
+
+  Banco := Boleto.Banco;
+  Banco.TipoCobranca := cobSicred;
+  Banco.LayoutVersaoArquivo := 0;
+  Banco.LayoutVersaoLote    := 0;
+  Banco.CIP                 := '';
+  Banco.DensidadeGravacao   := '';
+  Banco.LocalPagamento      := 'Pagável preferencialmente nas cooperativas de crédito do Sicredi';
+
+  BeneficiarioWS.ClientID := sClientID;
+  BeneficiarioWS.ClientSecret := sClientSecret;
+  BeneficiarioWS.Scope := 'cobranca';
+  BeneficiarioWS.IndicadorPix := True;
+
+end;
+
+procedure TEnvioBoletoApi.AssociarRelatorioCPN;
+begin
+  FACBrBoletoFCRL := TACBrBoletoFCFortes.Create(FACBrBoleto);
+  FACBrBoletoFCRL.MargemSuperior :=10;
+  FACBrBoletoFCRL.MargemInferior :=10;
+  FACBrBoletoFCRL.MargemEsquerda :=5;{Alterado a margem pois estava cortando as margens laterais. Valores antigo 10 para as duas margens. Alex 11/03/2026}
+  FACBrBoletoFCRL.MargemDireita  :=3;
+  FACBrBoletoFCRL.AlterarEscalaPadrao := True;
+  // FACBrBoletoFCRL.NovaEscala := 1;
+  FACBrBoleto.ACBrBoletoFC := FACBrBoletoFCRL;
+  FACBrBoleto.ACBrBoletoFC.LayOut := lPadraoPIX;
+  FACBrBoleto.ACBrBoletoFC.DirLogo := ExtractFilePath(ParamStr(0)) + 'boletos\banco_logos\';  
+end;
+
+procedure TEnvioBoletoApi.GerarPDF;
+begin
+  // Define o FortesReport como motor do relatório
+  if not IndTemRejeicao then
+  begin
+    AssociarRelatorioCPN;
+    FACBrBoleto.Imprimir;
+  end;
+end;
+
+function TEnvioBoletoApi.ConverteInstrucaoRemessaSicredi(
+  nCodInstrucao: Integer): String;
+begin
+
+  case nCodInstrucao of
+    028: Result := 'Após Vencimento pagar somente nas Agências BANSICREDI ou SICREDI';
+    148: Result := 'Após o Vencimento pgto somente no SICREDI e não receber após 30 dias do vencto';
+    174: Result := 'Após o Vencimento cobrar multa de R$ 5,00';
+    061: Result := 'Após o quinto dia cobrar R$ 5,00';
+    182: Result := 'Após 5 dias úteis - PROTESTAR';
+    197: Result := 'Após 15 dias do Vencimento, cobrar 1% A.M de juros';
+    098: Result := 'Após o Vencimento cobrar juros de 0,30% ao dia';
+    192: Result := 'Após o Vencimento cobrar juros de até 6% ao mes';
+    020: Result := 'Encaminhar ao SPC após 20 dias corridos de vencido';
+    022: Result := 'Cobrar Encargos (mora/juros) somente após 05 (cinco) dias do vencimento';
+    195: Result := 'Protestar após 03 dias do Vencimento';
+    073: Result := 'Protestar após 05 dias do Vencimento';
+    170: Result := 'Protestar após 10 dias do Vencimento';
+    193: Result := 'Protestar após 30 dias do Vencimento';
+    079: Result := 'Conceder desconto de 0,067% ao dia por antecipação de pagamento';
+    116: Result := 'Conceder desconto de R$ 1,00 se pago nas Agências Sicredi até o Vencimento';
+    204: Result := 'Desconto somente até o Vencimento';
+    194: Result := 'Dispensar juros de mora, para pagamento até 3(três) dias após Vencimento';
+    024: Result := 'Valor de R$ 10,00 Ref. custo de faturamento, incluído no valor do documento';
+    026: Result := 'Nesta parcela esta Incluído o custo da cobrança de R$ 3,00';
+    038: Result := 'Cobrar despesas Bancárias R$ 2,00';
+    142: Result := 'Incluído valor R$ 0,30 ref. Emissao de Cobrança';
+    143: Result := 'Juros Inadimpl. 0,27% ao dia';
+    133: Result := 'Multa por atraso será cobrada na próxima fatura';
+    044: Result := 'Substituição de Bloqueto Bancário';
+    045: Result := 'Desconsiderar Bloqueto anterior cujo Nr. do Documento e Valor são iguais';
+    054: Result := 'Este Bloqueto destina-se Pagamento Parcela(s) de Empréstimo Contraído no Sicredi';
+    055: Result := 'Caso já tenha havido a quitação junto ao Sicredi, desconsiderar este Bloqueto';
+    else Result := '';
+  end;
+end;
+
+
+ {    Conversores - todos aqui. SE PRECISO, ADICIONAR NOVOS ABAIXO, DEIXAR O BOLETO ACIMA  }
+
+function TEnvioBoletoApi.ConverteAceiteTitulo(
+  sAceiteTitulo: String): TACBrAceiteTitulo;
+begin
+  {
+  Result := StrToEnumerado(ok,
+                            sAceiteTitulo,
+                            ['SIM', 'S', 'NÃO', 'NAO', 'N'],
+                            [atSim, atSim, atNao, atNao, atNao]);
+  }
+
+  if (sAceiteTitulo = 'SIM') OR (sAceiteTitulo = 'S')  then
+    Result := atSim
+  else
+    Result := atNao;
+
+end;
+
+function TEnvioBoletoApi.ConverteBolLayOut(
+  sBolLayOut: String): TACBrBolLayOut;
+begin
+  {
+  Result := StrToEnumerado(ok,
+                            sBolLayOut,
+                            ['BOLETO', 'CARNE', 'FATURA', 'ENTREGA', 'ENTREGA2', 'RECIBOTOPO',
+                                'FATURADETALHADA', 'TERMICA80', 'PIX', 'SERVICOS', 'CARNEA5'],
+                            [lPadrao, lCarne, lFatura, lPadraoEntrega, lPadraoEntrega2, lReciboTopo,
+                                lFaturaDetal, lTermica80mm, lPadraoPIX, lPrestaServicos, lCarneA5]);
+
+   }
+  Result := lPadraoPIX;
+
+end;
+
+function TEnvioBoletoApi.ConverteCaracTitulo(
+  sCaracTitulo: String): TACBrCaracTitulo;
+begin
+  {
+  Result := StrToEnumerado(ok,
+                            sCaracTitulo,
+                            ['DIRETAESPECIAL', 'VINCULADA', 'CAUCIONADA', 'DESCONTADA', 'BBVENDOR',
+                                'DIRETA', 'SIMPLESCOMREGISTRO', 'CAUCIONADACOMREGISTRO', 'SIMPLES'],
+                            [tcDiretaEspecial, tcVinculada, tcCaucionada, tcDescontada, tcVendor,
+                                tcDireta, tcSimplesRapComReg, tcCaucionadaRapComReg, tcSimples]);
+  }
+
+  if (sCaracTitulo = 'DIRETAESPECIAL') then
+    Result := tcDiretaEspecial;
+  if (sCaracTitulo = 'VINCULADA') then
+    Result := tcVinculada;
+  if (sCaracTitulo = 'CAUCIONADA') then
+    Result := tcCaucionada;
+  if (sCaracTitulo = 'DESCONTADA') then
+    Result := tcDescontada;
+  if (sCaracTitulo = 'BBVENDOR') then
+    Result := tcVendor;
+  if (sCaracTitulo = 'DIRETA') then
+    Result := tcDireta;
+  if (sCaracTitulo = 'SIMPLESCOMREGISTRO') then
+    Result := tcSimplesRapComReg;
+  if (sCaracTitulo = 'CAUCIONADACOMREGISTRO') then
+    Result := tcCaucionadaRapComReg
+  else
+    Result := tcSimples;
+
+end;
+
+function TEnvioBoletoApi.ConverteCarteiraEnvio(
+  sCarteiraEnvio: String): TACBrCarteiraEnvio;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sCarteiraEnvio,
+                            ['BANCO', 'BANCOEMAIL', 'CEDENTE'],
+                            [tceBanco, tceBancoEmail, tceCedente]);
+  }
+
+  if (sCarteiraEnvio = 'BANCO') then
+    Result := tceBanco;
+  if (sCarteiraEnvio = 'BANCOEMAIL') then
+    Result := tceBancoEmail
+  else
+    Result := tceCedente;
+
+end;
+
+function TEnvioBoletoApi.ConverteCodigoDesconto(
+  sCodigoDesconto: String): TACBrCodigoDesconto;
+begin
+
+{
+  Result := StrToEnumerado(ok,
+                            sCodigoDesconto,
+                            ['VALOR', 'PERCENTUAL', 'SEMDESCONTO'],
+                            [cdValorFixo, cdPercentual, cdSemDesconto]);
+  }
+
+  if (sCodigoDesconto = 'VALOR') then
+    Result := cdValorFixo;
+  if (sCodigoDesconto = 'PERCENTUAL') then
+    Result := cdPercentual
+  else
+    Result := cdSemDesconto;
+
+end;
+
+function TEnvioBoletoApi.ConverteCodigoJuros(
+  sCodigoJuro: String): TACBrCodigoJuros;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sCodigoJuro,
+                            ['VALORDIA', 'TAXAMENSAL', 'ISENTO', 'VALORMENSAL', 'TAXADIARIA', 'TAXAMENSAL'],
+                            [cjValorDia, cjTaxaMensal, cjIsento, cjValorMensal, cjTaxaDiaria, cjTaxaMensal]);
+  }
+
+  if (sCodigoJuro = 'VALORDIA') then
+    Result := cjValorDia;
+  if (sCodigoJuro = 'TAXAMENSAL') then
+    Result := cjTaxaMensal;
+  if (sCodigoJuro = 'ISENTO') then
+    Result := cjIsento;
+  if (sCodigoJuro = 'VALORMES') then
+    Result := cjValorMensal;
+  if (sCodigoJuro = 'TAXADIARIO') then
+    Result := cjTaxaDiaria
+  else
+    Result := cjValorMensal;
+
+end;
+
+function TEnvioBoletoApi.ConverteCodigoMulta(
+  sCodigoMulta: String): TACBrCodigoMulta;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sCodigoMulta,
+                            ['VALOR', 'PERCENTUAL', 'ISENTO'],
+                            [cmValorFixo, cmPercentual, cmIsento]);
+  }
+
+  if (sCodigoMulta = 'VALOR') then
+    Result := cmValorFixo;
+  if (sCodigoMulta = 'PERCENTUAL') then
+    Result := cmPercentual
+  else
+    Result := cmIsento;
+
+end;
+
+function TEnvioBoletoApi.ConverteCodigoNegativacao(
+  sCodigoNegativacao: String): TACBrCodigoNegativacao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sCodigoNegativacao,
+                            ['CORRIDO', 'UTEIS', 'NAOPROTESTAR', 'NEGATIVAR',
+                                  'NAONEGATIVAR', 'CANCELAMENTO', 'NENHUM'],
+                            [cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar,
+                                  cnNaoNegativar, cnCancelamento, cnNenhum]);
+  }
+
+  if (sCodigoNegativacao = 'CORRIDO') then
+    Result := cnProtestarCorrido;
+  if (sCodigoNegativacao = 'UTEIS') then
+    Result := cnProtestarUteis;
+  if (sCodigoNegativacao = 'NAOPROTESTAR') then
+    Result := cnNaoProtestar;
+  if (sCodigoNegativacao = 'NEGATIVAR') then
+    Result := cnNegativar;
+  if (sCodigoNegativacao = 'NAONEGATIVAR') then
+    Result := cnNaoNegativar;
+  if (sCodigoNegativacao = 'CANCELAMENTO') then
+    Result := cnCancelamento
+  else
+    Result := cnNenhum;
+
+end;
+
+function TEnvioBoletoApi.ConverteIndicadorBoletoVencido(
+  sIndicadorBoletoVencido: String): TACBrIndicadorBoletoVencido;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sIndicadorBoletoVencido,
+                            ['SIM', 'S', 'NÃO', 'N', 'NENHUM'],
+                            [ibvSim, ibvSim, ibvNao, ibvNao, ibvNenhum]);
+  }
+
+  if (sIndicadorBoletoVencido = 'SIM') OR (sIndicadorBoletoVencido = 'S') then
+    Result := ibvSim;
+  if (sIndicadorBoletoVencido = 'NÃO') OR (sIndicadorBoletoVencido = 'N')  then
+    Result := ibvNao
+  else
+    Result := ibvNenhum;
+
+end;
+
+function TEnvioBoletoApi.ConverteIndicadorSituacaoBoleto(
+  sIndicadorSituacaoBoleto: String): TACBrIndicadorSituacaoBoleto;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sIndicadorSituacaoBoleto,
+                            ['ABERTO', 'BAIXADO', 'NENHUM'],
+                            [isbAberto, isbBaixado, isbNenhum]);
+  }
+
+  if (sIndicadorSituacaoBoleto = 'ABERTO') then
+    Result := isbAberto;
+  if (sIndicadorSituacaoBoleto = 'BAIXADO') then
+    Result := isbBaixado
+  else
+    Result := isbNenhum;
+
+end;
+
+function TEnvioBoletoApi.ConverteOperacao(sOperacao: String): TOperacao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sOperacao,
+                            ['INCLUI', 'ALTERA', 'BAIXA', 'CONSULTA', 'CONSULTADETALHE',
+                               'PIXCRIAR', 'PIXCANCELAR', 'PIXCONSULTAR', 'CANCELAR', 'TICKET'],
+                            [  tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe,
+                                tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket]);
+  }
+
+
+
+
+  if (sOperacao = 'ALTERA') then
+    Result := tpAltera;
+  if (sOperacao = 'BAIXA') then
+    Result := tpBaixa;
+  if (sOperacao = 'CONSULTA') then
+    Result := tpConsulta;
+  if (sOperacao = 'CONSULTADETALHE') then
+    Result := tpConsultaDetalhe;
+  if (sOperacao = 'PIXCRIAR') then
+    Result := tpPIXCriar;
+  if (sOperacao = 'PIXCANCELAR') then
+    Result := tpPIXCancelar;
+  if (sOperacao = 'PIXCONSULTAR') then
+    Result := tpPIXConsultar;
+  if (sOperacao = 'CANCELAR') then
+    Result := tpCancelar;
+  if (sOperacao = 'TICKET') then
+    Result := tpTicket
+  else 
+    Result := tpInclui;
+
+
+end;
+
+function TEnvioBoletoApi.ConvertePessoa(sPessoa: String): TACBrPessoa;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sPessoa,
+                            ['FÍSICA', 'F', 'JURÍDICA', 'J', 'OUTROS', 'NENHUM'],
+                            [pFisica, pFisica, pJuridica, pJuridica, pOutras, pNenhum]);
+  }
+
+  if (sPessoa = 'FÍSICA') OR (sPessoa = 'F') then
+    Result := pFisica;
+  if (sPessoa = 'JURÍDICA') OR (sPessoa = 'J') then
+    Result := pJuridica;
+  if (sPessoa = 'OUTROS') then
+    Result := pOutras
+  else
+    Result := pNenhum;
+
+end;
+
+function TEnvioBoletoApi.ConverteResponEmissao(
+  sResponEmissao: String): TACBrResponEmissao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sResponEmissao,
+                            ['CLIENTE', 'BANCO', 'BANCOREEMITE', 'BANCONAOREEMITE', 'BANCOPREEMITE'],
+                            [tbCliEmite, tbBancoEmite, tbBancoReemite, tbBancoNaoReemite, tbBancoPreEmite]);
+  }
+
+  if (sResponEmissao = '1') then
+    Result := tbBancoEmite;
+  if (sResponEmissao = '2') then
+    Result := tbCliEmite;
+  if (sResponEmissao = '3') then
+    Result := tbBancoPreEmite;
+  if (sResponEmissao = '4') then
+    Result := tbBancoReemite;
+  if (sResponEmissao = '5') then
+    Result := tbBancoNaoReemite;
+
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoCarteira(
+  sTipoCarteira: String): TACBrTipoCarteira;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sTipoCarteira,
+                            ['SIMPLES', 'REGISTRADA', 'ELETRONICA'],
+                            [tctSimples, tctRegistrada, tctEletronica]);
+  }
+
+
+
+  if (sTipoCarteira = 'SIMPLES') then
+    Result := tctSimples;
+  if (sTipoCarteira = 'REGISTRADA') then
+    Result := tctRegistrada
+  else
+    Result := tctEletronica;
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoDiasIntrucao(
+  sTipoDiasIntrucao: String): TACBrTipoDiasIntrucao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sTipoDiasIntrucao,
+                            ['CORRIDOS', 'UTEIS'],
+                            [diCorridos, diUteis]);
+  }
+
+
+  if (sTipoDiasIntrucao = 'UTEIS') then
+    Result := diUteis
+  else
+    Result := diCorridos;
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoDocumento(
+  sTipoDocumento: String): TACBrTipoDocumento;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sCodigoJuro,
+                            ['TRADICIONAL', 'ESCRITURAL'],
+                            [1, 2]);
+  }
+
+  if (sTipoDocumento = 'TRADICIONAL') then
+    Result := TACBrTipoDocumento(1)
+  else
+    Result := TACBrTipoDocumento(2);
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoImpressao(
+  sTipoImpressao: String): TACBrTipoImpressao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sTipoImpressao,
+                            ['CARNE', 'NORMAL'],
+                            [tipCarne, tipNormal]);
+  }
+
+
+  if (sTipoImpressao = 'CARNE') then
+    Result := tipCarne
+  else
+    Result := tipNormal;
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoPagamento(
+  sTipoPagamento: String): TTipo_Pagamento;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sTipoPagamento,
+                            ['ACEITA_QUALQUER_VALOR', 'ACEITA_VALORES_ENTRE_MINIMO_MAXIMO',
+                              'NAO_ACEITA_VALOR_DIVERGENTE', 'SOMENTE_VALOR_MINIMO'],
+                            [tpAceita_Qualquer_Valor, tpAceita_Valores_entre_Minimo_Maximo,
+                              tpNao_Aceita_Valor_Divergente, tpSomente_Valor_Minimo]);
+  }
+
+  if (sTipoPagamento = 'QUALQUER') then
+    Result := tpAceita_Qualquer_Valor;
+  if (sTipoPagamento = 'ENTREMINMAX') then
+    Result := tpAceita_Valores_entre_Minimo_Maximo;
+  if (sTipoPagamento = 'MINIMO') then
+    Result := tpSomente_Valor_Minimo
+  else
+    Result := tpNao_Aceita_Valor_Divergente;
+
+end;
+
+function TEnvioBoletoApi.ConverteIdentDistribuicao(
+  sIdentDistribuicao: String): TACBrIdentDistribuicao;
+begin
+
+  {
+  Result := StrToEnumerado(ok,
+                            sIdentDistribuicao,
+                            ['BANCO', 'CLIENTE'],
+                            [tbBancoDistribui, tbClienteDistribui]);
+  }
+
+  if (sIdentDistribuicao = '1') then
+    Result := tbBancoDistribui
+  else
+    Result := tbClienteDistribui;
+
+
+end;
+
+function TEnvioBoletoApi.ConverteCodigoMora(sCodMora: String): String;
+begin
+  // Retorna A para valor e B para percentual
+  Result := 'A';
+
+  if sCodMora = 'PERCENTUAL' THEN
+    Result := 'B';
+
+end;
+
+function TEnvioBoletoApi.ConverteTipoAmbietne(sAmbiente: String): TTipoAmbienteWS;
+begin
+  // Retorna o tipo de ambiente do boleto
+  Result := tawsHomologacao;
+
+  if sAmbiente = 'H' THEN
+    Result := tawsHomologacao;
+
+  if sAmbiente = 'P' THEN
+    Result := tawsProducao;
+
+  if sAmbiente = 'S' THEN
+    Result := tawsSandBox;
+
+end; 
+
+end.
+

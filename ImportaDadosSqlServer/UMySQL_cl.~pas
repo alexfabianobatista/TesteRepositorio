@@ -1,0 +1,39 @@
+unit UMySQL_cl;
+
+interface
+
+uses
+  SysUtils, Classes, ZConnection, ZAbstractConnection, DB, ADODB;
+
+type
+  TDMMySQL = class(TDataModule)
+    ZConnection1: TZConnection;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DMMySQL: TDMMySQL;
+
+implementation
+
+{$R *.dfm}
+
+procedure TDMMySQL.DataModuleCreate(Sender: TObject);
+begin
+  try
+    DMSqlServer.Connected := false;
+    DMSqlServer.ConnectionString := 'Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Persist Security Info=False;User ID="";Initial Catalog=SIGIND;Data Source=ALEX;Initial File Name="";Server SPN="";Authentication="";Access Token=""';
+    DMSqlServer.Connected := true;
+  finally;
+{  except
+    ShowException ('Erro ao conectar com banco de dados!', mtError, [mbOK], 0);
+    Application.Terminate; }
+  end;
+
+end;
+
+end.

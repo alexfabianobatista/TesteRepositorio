@@ -1,0 +1,107 @@
+object DmPlanoContaReferencial: TDmPlanoContaReferencial
+  OldCreateOrder = False
+  Left = 453
+  Top = 190
+  Height = 243
+  Width = 410
+  object QPlanoContaReferencial: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_PLANO_CONTA_REFERENCIAL.*'
+      'FROM'
+      '  TB_PLANO_CONTA_REFERENCIAL'
+      'WHERE'
+      '  COD_PLANO_CONTA_REFERENCIAL = :PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_PLANO_CONTA_REFERENCIAL'
+    SequenceField.Sequence = 'SQ_PLANO_CONTA_REFERENCIAL'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000001B000000434F445F504C414E4F5F434F4E54415F52454645
+      52454E4349414C0100000000001C000000444553435F504C414E4F5F434F4E54
+      415F5245464552454E4349414C0100000000001B0000004E554D5F504C414E4F
+      5F434F4E54415F5245464552454E4349414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 16
+    object QPlanoContaReferencialCOD_PLANO_CONTA_REFERENCIAL: TIntegerField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+      Required = True
+    end
+    object QPlanoContaReferencialDESC_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'DESC_PLANO_CONTA_REFERENCIAL'
+      Required = True
+      Size = 100
+    end
+    object QPlanoContaReferencialNUM_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'NUM_PLANO_CONTA_REFERENCIAL'
+    end
+  end
+  object QPlanoContaReferencialCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM '
+      '  TB_PLANO_CONTA_REFERENCIAL'
+      'WHERE'
+      '  NUM_PLANO_CONTA_REFERENCIAL >= :NUM_PLANO_CONTA_REFERENCIAL'
+      'ORDER BY'
+      '  NUM_PLANO_CONTA_REFERENCIAL')
+    Variables.Data = {
+      03000000010000001C0000003A4E554D5F504C414E4F5F434F4E54415F524546
+      4552454E4349414C050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000001B000000434F445F504C414E4F5F434F4E54415F52454645
+      52454E4349414C0100000000001C000000444553435F504C414E4F5F434F4E54
+      415F5245464552454E4349414C0100000000001B0000004E554D5F504C414E4F
+      5F434F4E54415F5245464552454E4349414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 64
+    object QPlanoContaReferencialConsCOD_PLANO_CONTA_REFERENCIAL: TIntegerField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+      Required = True
+    end
+    object QPlanoContaReferencialConsDESC_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'DESC_PLANO_CONTA_REFERENCIAL'
+      Required = True
+      Size = 100
+    end
+    object QPlanoContaReferencialConsNUM_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'NUM_PLANO_CONTA_REFERENCIAL'
+    end
+  end
+  object QRPlanoContaReferencial: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_PLANO_CONTA_REFERENCIAL.*'
+      'FROM'
+      '  TB_PLANO_CONTA_REFERENCIAL'
+      'ORDER BY'
+      '  TB_PLANO_CONTA_REFERENCIAL.NUM_PLANO_CONTA_REFERENCIAL'
+      '')
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000001B000000434F445F504C414E4F5F434F4E54415F52454645
+      52454E4349414C0100000000001B0000004E554D5F504C414E4F5F434F4E5441
+      5F5245464552454E4349414C0100000000001C000000444553435F504C414E4F
+      5F434F4E54415F5245464552454E4349414C010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 192
+    Top = 16
+    object QRPlanoContaReferencialCOD_PLANO_CONTA_REFERENCIAL: TIntegerField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+      Required = True
+    end
+    object QRPlanoContaReferencialNUM_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'NUM_PLANO_CONTA_REFERENCIAL'
+      Required = True
+    end
+    object QRPlanoContaReferencialDESC_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'DESC_PLANO_CONTA_REFERENCIAL'
+      Size = 200
+    end
+  end
+end

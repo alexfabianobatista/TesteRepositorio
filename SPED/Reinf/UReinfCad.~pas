@@ -1,0 +1,26 @@
+unit UReinfCad;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, UReinf_cl, UTCADSIMPLES, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, ActnList, ImgList, DB, Menus,
+  ComCtrls, StdCtrls, Mask, ExtCtrls, Buttons;
+
+type
+  TFReinfCad = class(TFTCadSimples)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FReinfCad: TFReinfCad;
+
+implementation
+
+{$R *.dfm}
+
+end.

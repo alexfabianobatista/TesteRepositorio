@@ -1,0 +1,655 @@
+object FDevolucaoCarregaItens: TFDevolucaoCarregaItens
+  Left = 432
+  Top = 140
+  Width = 974
+  Height = 563
+  BorderIcons = [biSystemMenu, biMaximize]
+  Caption = 'Produtos da Nota'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnActivate = FormActivate
+  DesignSize = (
+    958
+    524)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 945
+    Height = 474
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Caption = 'Produtos'
+    TabOrder = 0
+    object DBGrid1: TDBGrid
+      Left = 10
+      Top = 15
+      Width = 927
+      Height = 450
+      DataSource = DsItensDevolucao
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+      ReadOnly = True
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'MS Sans Serif'
+      TitleFont.Style = []
+      OnCellClick = DBGrid1CellClick
+      OnDrawColumnCell = DBGrid1DrawColumnCell
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'IND_MARCADO'
+          Title.Caption = ' '
+          Width = 26
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'COD_PRODUTO'
+          Title.Alignment = taRightJustify
+          Title.Caption = 'C'#243'digo'
+          Width = 62
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'DESC_PRODUTO'
+          Title.Caption = 'Produto'
+          Width = 279
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'NUM_FABRICANTE'
+          Title.Caption = 'Fabricante'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'QT_QUANTIDADE'
+          Title.Caption = 'Quantidade'
+          Visible = True
+        end>
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 871
+    Top = 491
+    Width = 81
+    Height = 25
+    Anchors = [akRight, akBottom]
+    TabOrder = 1
+    Kind = bkOK
+  end
+  object BtnTodos: TBitBtn
+    Left = 8
+    Top = 491
+    Width = 113
+    Height = 25
+    Anchors = [akLeft, akBottom]
+    Caption = 'Marcar Todos'
+    TabOrder = 2
+    OnClick = BtnTodosClick
+  end
+  object MECodigoBarras: TMaskEdit
+    Left = 128
+    Top = 492
+    Width = 129
+    Height = 21
+    Anchors = [akLeft, akBottom]
+    TabOrder = 3
+    Visible = False
+    OnExit = MECodigoBarrasExit
+  end
+  object DsItensDevolucao: TDataSource
+    DataSet = CdItensDevolucao
+    Left = 232
+    Top = 56
+  end
+  object ImageList1: TImageList
+    Left = 196
+    Top = 57
+    Bitmap = {
+      494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000C8D0D400C8D0
+      D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0
+      D400C8D0D4000000000000000000000000000000000080808000C8D0D400C8D0
+      D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0D400C8D0
+      D400C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000080808000404040000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000404040004040
+      4000404040004040400040404000404040004040400040404000404040004040
+      4000C8D0D4000000000000000000000000000000000080808000404040004040
+      4000404040004040400040404000404040004040400040404000404040004040
+      4000C8D0D4000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000080808000808080008080
+      8000808080008080800080808000808080008080800080808000808080008080
+      8000808080000000000000000000000000000000000080808000808080008080
+      8000808080008080800080808000808080008080800080808000808080008080
+      8000808080000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFFF00000000
+      FFFFFFFF0000000080078007000000009FF79FF7000000009DF79FF700000000
+      98F79FF70000000090779FF70000000092379FF70000000097179FF700000000
+      9F979FF7000000009FD79FF7000000009FF79FF7000000008007800700000000
+      8007800700000000FFFFFFFF0000000000000000000000000000000000000000
+      000000000000}
+  end
+  object DspItensDevolucao: TDataSetProvider
+    DataSet = DMNotaSaida.QItensDevolucao
+    Left = 264
+    Top = 56
+  end
+  object CdItensDevolucao: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'COD_NOTA_ITEM'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'COD_NOTA_CAB'
+        DataType = ftInteger
+      end
+      item
+        Name = 'COD_TRIBUTACAO'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'QT_QUANTIDADE'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_TOTAL'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_IPI'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_COMISSAO'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'COD_PRODUTO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'COD_LOTE_TIPO'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end
+      item
+        Name = 'VAL_DESCONTO'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_DESPESAS'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_FRETE'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_DESCONTO'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_IPI'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_UNITARIO'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_ICM_BASE'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_ICM'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'IND_CLASS_IPI'
+        Attributes = [faRequired]
+        DataType = ftString
+        Size = 1
+      end
+      item
+        Name = 'VAL_CUSTO'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_ISS'
+        Attributes = [faRequired]
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_INSS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_BENEFICIADO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'IND_BX_CONTR_VEND'
+        DataType = ftString
+        Size = 1
+      end
+      item
+        Name = 'NUM_NOTA_PRODUTOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'COD_CULTURA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DESC_PRODUTO'
+        DataType = ftString
+        Size = 58
+      end
+      item
+        Name = 'IND_TIPO_CONSUMO'
+        DataType = ftString
+        Size = 7
+      end
+      item
+        Name = 'QT_CHEGADA'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_PIS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_CONFINS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'PERC_DESC'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_BASE_SUBST'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_ICMS_SUBST'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_UNITARIO_TABELA'
+        DataType = ftFloat
+      end
+      item
+        Name = 'VAL_DPI_TRANSGENICOS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'QT_CREDITO_TRANSGENICOS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'COD_ROMANEIO_AGRICOLA'
+        DataType = ftInteger
+      end
+      item
+        Name = 'IND_TIPO_PRODUTO'
+        Attributes = [faRequired]
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'DESC_COMPLEMENTO'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'IND_MARCADO'
+        DataType = ftString
+        Size = 1
+      end
+      item
+        Name = 'VAL_DESCONTO_RATEIO'
+        DataType = ftFloat
+      end
+      item
+        Name = 'NUM_FABRICANTE'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'IND_MODIFICADO'
+        DataType = ftString
+        Size = 1
+      end>
+    IndexDefs = <>
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'COD_NOTA_CAB'
+        ParamType = ptInput
+      end>
+    ProviderName = 'DspItensDevolucao'
+    StoreDefs = True
+    AfterOpen = CdItensDevolucaoAfterOpen
+    Left = 296
+    Top = 56
+    object CdItensDevolucaoCOD_NOTA_ITEM: TIntegerField
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+    object CdItensDevolucaoCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object CdItensDevolucaoCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object CdItensDevolucaoQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoPERC_IPI: TFloatField
+      FieldName = 'PERC_IPI'
+      Required = True
+      DisplayFormat = '#0.00%'
+    end
+    object CdItensDevolucaoPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+      Required = True
+    end
+    object CdItensDevolucaoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object CdItensDevolucaoCOD_LOTE_TIPO: TIntegerField
+      FieldName = 'COD_LOTE_TIPO'
+      Required = True
+    end
+    object CdItensDevolucaoVAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_DESPESAS: TFloatField
+      FieldName = 'VAL_DESPESAS'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_FRETE: TFloatField
+      FieldName = 'VAL_FRETE'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoPERC_DESCONTO: TFloatField
+      FieldName = 'PERC_DESCONTO'
+      Required = True
+      DisplayFormat = '#0.00%'
+    end
+    object CdItensDevolucaoVAL_IPI: TFloatField
+      FieldName = 'VAL_IPI'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_ICM_BASE: TFloatField
+      FieldName = 'VAL_ICM_BASE'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_ICM: TFloatField
+      FieldName = 'VAL_ICM'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoIND_CLASS_IPI: TStringField
+      FieldName = 'IND_CLASS_IPI'
+      Required = True
+      Size = 1
+    end
+    object CdItensDevolucaoVAL_CUSTO: TFloatField
+      FieldName = 'VAL_CUSTO'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoVAL_ISS: TFloatField
+      FieldName = 'VAL_ISS'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object CdItensDevolucaoPERC_INSS: TFloatField
+      FieldName = 'PERC_INSS'
+      DisplayFormat = '#0.00%'
+    end
+    object CdItensDevolucaoPERC_BENEFICIADO: TFloatField
+      FieldName = 'PERC_BENEFICIADO'
+      DisplayFormat = '#0.00%'
+    end
+    object CdItensDevolucaoIND_BX_CONTR_VEND: TStringField
+      FieldName = 'IND_BX_CONTR_VEND'
+      Size = 1
+    end
+    object CdItensDevolucaoNUM_NOTA_PRODUTOR: TIntegerField
+      FieldName = 'NUM_NOTA_PRODUTOR'
+    end
+    object CdItensDevolucaoCOD_CULTURA: TIntegerField
+      FieldName = 'COD_CULTURA'
+    end
+    object CdItensDevolucaoDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 58
+    end
+    object CdItensDevolucaoIND_TIPO_CONSUMO: TStringField
+      FieldName = 'IND_TIPO_CONSUMO'
+      Size = 7
+    end
+    object CdItensDevolucaoQT_CHEGADA: TFloatField
+      FieldName = 'QT_CHEGADA'
+    end
+    object CdItensDevolucaoVAL_PIS: TFloatField
+      FieldName = 'VAL_PIS'
+    end
+    object CdItensDevolucaoVAL_CONFINS: TFloatField
+      FieldName = 'VAL_CONFINS'
+    end
+    object CdItensDevolucaoPERC_DESC: TFloatField
+      FieldName = 'PERC_DESC'
+    end
+    object CdItensDevolucaoVAL_BASE_SUBST: TFloatField
+      FieldName = 'VAL_BASE_SUBST'
+    end
+    object CdItensDevolucaoVAL_ICMS_SUBST: TFloatField
+      FieldName = 'VAL_ICMS_SUBST'
+    end
+    object CdItensDevolucaoVAL_UNITARIO_TABELA: TFloatField
+      FieldName = 'VAL_UNITARIO_TABELA'
+    end
+    object CdItensDevolucaoVAL_DPI_TRANSGENICOS: TFloatField
+      FieldName = 'VAL_DPI_TRANSGENICOS'
+    end
+    object CdItensDevolucaoQT_CREDITO_TRANSGENICOS: TFloatField
+      FieldName = 'QT_CREDITO_TRANSGENICOS'
+    end
+    object CdItensDevolucaoCOD_ROMANEIO_AGRICOLA: TIntegerField
+      FieldName = 'COD_ROMANEIO_AGRICOLA'
+    end
+    object CdItensDevolucaoIND_TIPO_PRODUTO: TStringField
+      FieldName = 'IND_TIPO_PRODUTO'
+      Required = True
+      Size = 10
+    end
+    object CdItensDevolucaoDESC_COMPLEMENTO: TStringField
+      FieldName = 'DESC_COMPLEMENTO'
+      Size = 50
+    end
+    object CdItensDevolucaoIND_MARCADO: TStringField
+      FieldName = 'IND_MARCADO'
+      OnChange = CdItensDevolucaoIND_MARCADOChange
+      Size = 1
+    end
+    object CdItensDevolucaoVAL_DESCONTO_RATEIO: TFloatField
+      FieldName = 'VAL_DESCONTO_RATEIO'
+    end
+    object CdItensDevolucaoNUM_FABRICANTE: TStringField
+      FieldName = 'NUM_FABRICANTE'
+      Size = 15
+    end
+    object CdItensDevolucaoIND_MODIFICADO: TStringField
+      FieldName = 'IND_MODIFICADO'
+      Size = 1
+    end
+  end
+end

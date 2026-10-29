@@ -1,0 +1,220 @@
+unit UMenuNFCe;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTMENUPRINCIPAL, Menus, Buttons, ExtCtrls, ImgList, ComCtrls;
+
+type
+  TFMenuNFCe = class(TFTMenuPrincipal)
+    Manuteno1: TMenuItem;
+    Cadastro1: TMenuItem;
+    Produtos1: TMenuItem;
+    VendaaoConsumidor1: TMenuItem;
+    Preo1: TMenuItem;
+    ClientesSCPC1: TMenuItem;
+    Usurios1: TMenuItem;
+    Configuraes1: TMenuItem;
+    Series1: TMenuItem;
+    Operao1: TMenuItem;
+    ributao1: TMenuItem;
+    Gerararquivomagntico1: TMenuItem;
+    ConfigurarEmail1: TMenuItem;
+    FrentedeCaixa1: TMenuItem;
+    Vendedor1: TMenuItem;
+    Parmetros1: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure Cadastro1Click(Sender: TObject);
+    procedure Produtos1Click(Sender: TObject);
+    procedure VendaaoConsumidor1Click(Sender: TObject);
+    procedure Preo1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure ClientesSCPC1Click(Sender: TObject);
+    procedure Usurios1Click(Sender: TObject);
+    procedure Configuraes1Click(Sender: TObject);
+    procedure Series1Click(Sender: TObject);
+    procedure Operao1Click(Sender: TObject);
+    procedure ributao1Click(Sender: TObject);
+    procedure Gerararquivomagntico1Click(Sender: TObject);
+    procedure ConfigurarEmail1Click(Sender: TObject);
+    procedure FrentedeCaixa1Click(Sender: TObject);
+    procedure Vendedor1Click(Sender: TObject);
+    procedure Parmetros1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FMenuNFCe: TFMenuNFCe;
+
+implementation
+
+uses UTela_cl, UCadastroCad, UProdutoCad, UParamSistema_cl,
+  UNotaConsumidor, UPrecos, UClienteSCPC, UFilialCad, UUsuario_cl,
+  UFilial_cl, UUsuarioCad, USerie_cl, USerieCad, UOperacaoCad, UOperacaoCons,
+  UTributacao_cl, UTributacaoCad, UTributacaoCons, UMenuLivroFiscal,UEmailConfig,
+  UNotaFrenteCaixa, UVendedorCad, UParamSistema;
+
+{$R *.DFM}                       
+
+procedure TFMenuNFCe.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Self.pModulo:='NFC-e';
+end;
+
+procedure TFMenuNFCe.Cadastro1Click(Sender: TObject);
+begin
+  inherited;
+  If FCadastroCad = Nil then
+    FCadastroCad := TFCadastroCad.Create(Application);
+  DMTela.VerificaTela(pModulo,FCadastroCad.Caption,FCadastroCad.Name);
+  FCadastroCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Produtos1Click(Sender: TObject);
+begin
+  inherited;
+  If FProdutoCad = Nil then
+    FProdutoCad := TFProdutoCad.Create(Application);
+  DMTela.VerificaTela(pModulo,FProdutoCad.Caption,FProdutoCad.Name);
+  FProdutoCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.VendaaoConsumidor1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaConsumidor = Nil then
+    FNotaConsumidor := TFNotaConsumidor.Create(Application);
+  DMTela.VerificaTela(pModulo,FNotaConsumidor.Caption,FNotaConsumidor.Name);
+  FNotaConsumidor.ShowModal;
+end;
+
+procedure TFMenuNFCe.Preo1Click(Sender: TObject);
+begin
+  inherited;
+  if FPrecoCad= nil then
+     FPrecoCad:=TFPrecoCad.Create(Application);
+  //DMTela.VerificaTela(pModulo,FPrecoCad.Caption);
+  FPrecoCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.FormActivate(Sender: TObject);
+Var vHorizontal, vVertical : Integer;
+begin
+  inherited;
+  For vHorizontal := 0 To Self.MMCadSimples.Items.Count-1 do
+    For vVertical := 0 to MMCadSimples.Items[vHorizontal].Count-1 do
+      MMCadSimples.Items[vHorizontal].Items[vVertical].Visible := True;
+end;
+
+procedure TFMenuNFCe.ClientesSCPC1Click(Sender: TObject);
+begin
+  inherited;
+  if FClienteSCPC = Nil then
+    FClienteSCPC := TFClienteSCPC.Create(Application);
+  FClienteSCPC.ShowModal;
+end;
+
+procedure TFMenuNFCe.Usurios1Click(Sender: TObject);
+begin
+  inherited;
+  If FUsuarioCad = Nil then
+    FUsuarioCad := TFUsuarioCad.Create(Application);
+  DMTela.VerificaTela(pModulo,FUsuarioCad.Caption,FUsuarioCad.Name);
+  FUsuarioCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Configuraes1Click(Sender: TObject);
+var wCodFilial: Integer;
+begin
+  inherited;
+  if FFilialCad = nil then
+    FFilialCad := TFFilialCad.Create(Application);
+  DMTela.VerificaTela(pModulo, FFilialCad.Caption, FFilialCad.Name);
+  if DMUsuario.CodFilialUsuario > 0 then
+    wCodFilial := DMUsuario.CodFilialUsuario
+  else
+    wCodFilial := 1;
+  DMFilial.QFilial.Close;
+  DMFilial.QFilial.SetVariable('PK',wCodFilial);
+  DMFilial.QFilial.Open;
+  FFilialCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Series1Click(Sender: TObject);
+begin
+  inherited;
+  if FSerieCad = nil then
+    FSerieCad := TFSerieCad.Create(Application);
+  DMTela.VerificaTela(pModulo, FSerieCad.Caption, FSerieCad.Name);
+  FSerieCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Operao1Click(Sender: TObject);
+begin
+  inherited;
+  if FOperacaoCad = nil then
+    FOperacaoCad := TFOperacaoCad.Create(Application);
+  DMTela.VerificaTela(pModulo, FOperacaoCad.Caption, FOperacaoCad.Name);
+  FOperacaoCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.ributao1Click(Sender: TObject);
+begin
+  inherited;
+  if FTributacaoCad = nil then
+    FTributacaoCad := TFTributacaoCad.Create(Application);
+  DMTela.VerificaTela(pModulo, FTributacaoCad.Caption, FTributacaoCad.Name);
+  FTributacaoCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Gerararquivomagntico1Click(Sender: TObject);
+begin
+  inherited;
+  FMenuLivroFiscal.descClick(Self);
+end;
+
+procedure TFMenuNFCe.ConfigurarEmail1Click(Sender: TObject);
+begin
+  inherited;
+  if FEmailConfig = nil then
+    FEmailConfig := TFEmailConfig.Create(Application);
+  FEmailConfig.ShowModal();
+end;
+
+procedure TFMenuNFCe.FrentedeCaixa1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaFrenteCaixa = Nil then
+    FNotaFrenteCaixa := TFNotaFrenteCaixa.Create(Application);
+  DMTela.VerificaTela(pModulo,FNotaFrenteCaixa.Caption,FNotaFrenteCaixa.Name);
+  FNotaFrenteCaixa.ShowModal;
+end;
+
+procedure TFMenuNFCe.Vendedor1Click(Sender: TObject);
+begin
+  inherited;
+  If FVendedorCad = Nil then
+    FVendedorCad := TFVendedorCad.Create(Application);
+  DMTela.VerificaTela(pModulo,FVendedorCad.Caption,FVendedorCad.Name);
+  FVendedorCad.ShowModal;
+end;
+
+procedure TFMenuNFCe.Parmetros1Click(Sender: TObject);
+begin
+  inherited;
+  if DMUsuario.CodUsuarioCorrente = 1 then
+  begin
+    if FParamSistema = nil then
+      FParamSistema := TFParamSistema.Create(Application);
+    FParamSistema.ShowModal();
+  end
+  else
+    ShowMessage('Tela liberada apenas para configurações do sistema, dúvidas entrar em contato com o suporte do Sistema!');
+end;
+
+end.

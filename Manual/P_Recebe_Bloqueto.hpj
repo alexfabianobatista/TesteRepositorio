@@ -1,0 +1,17 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_RECEBE_BLOQUETO.HLP
+
+[FILES]
+P_Recebe_Bloqueto.rtf
+
+[MAP]
+cadastro_conta=002
+gera_arquivo=004
+modifica_serie=005
+recebe_bloqueto=003
+teclas_atalho=006
+tela_principal=001

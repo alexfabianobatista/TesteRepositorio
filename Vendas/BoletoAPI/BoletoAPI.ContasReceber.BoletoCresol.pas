@@ -1,0 +1,1663 @@
+unit BoletoAPI.ContasReceber.BoletoCresol;
+
+interface
+
+uses
+  // Comuns
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StrUtils, Variants
+  // Cemapa
+  , UFilial_cl
+  , UContasReceber_cl
+  , UOracle_cl
+  , UBancoAgencia_cl
+  , UFinalidade_cl
+  , UParamSistema_cl
+  , UPlanilha_cl
+  , BoletoApi.Interfaces
+  // Banco
+  , DB
+  //Oracle
+  , OraTeste
+  //ACBR
+  , ACBrBase, ACBrBoleto, ACBrUtil, ACBrMail, ACBrUtil.FilesIO, blcksock,
+  ACBrDFeSSL, pcnConversao, ACBrBoletoConversao, ACBrBoletoRetorno,
+  ACBrBoletoFCFortesFr;
+
+type
+  TEnvioBoletoApiCresolCR = class(TInterfacedObject, IBoletoApi)
+
+  private
+    FACBrMail: TACBrMail;
+    Beneficiario: TACBrCedente;
+    Banco: TACBrBanco;
+    FACBrBoleto: TACBrBoleto;
+    Boleto: TACBrBoleto;
+    WebService: TACBrWebService;
+    BeneficiarioWS: TACBrCedenteWS;
+    CobAnterior: TACBrTipoCobranca;
+    Titulo : TACBrTitulo;
+    FiltrosAPI : TACBrBoletoWSFiltroConsulta;
+    // Boleto do FortesReport. Instalação a parte.
+    FACBrBoletoFCRL: TACBrBoletoFCFortes;
+
+    nNumNota: Integer;
+    nCodNota: Integer;
+    nBanco: Integer;
+    sIndAmbiente: String;
+    sEmailDanfe: String;
+    bEnviaEmailBoleto: Boolean;
+    bGeraPdfPasta: Boolean;
+    FEnviaEmail: TACBrMail;
+    iCodContaCorrente: integer;
+
+
+  public
+    Filial: Integer;
+    Documento: Integer;
+    TipoDocumento: String;
+    Emissao: TDate;
+    IndTemErro: Boolean;
+    IndTemRejeicao: Boolean;
+    IndProdutorRural: Boolean;
+    constructor Create(CodFilial, NumBanco: Integer; IndAmbiente: String; bEnviaEmail, bIndPdf: Boolean);
+
+    { NECESSÁRIO CRIAR PARA CADA BANCO QUE TIVER INSTRUÇÕES CADASTRADAS }
+    function ConverteInstrucaoRemessa(nCodInstrucao: Integer): String;
+
+    { ENVIAR BOLETOS API }
+    procedure EnviarBoletosApi;
+    procedure SetaConfigBanco(IndAmbiente: String);
+    procedure AssociarRelatorioCPN;
+    procedure GerarPDF;
+
+    { IMPRIMIR BOLETOS API }
+    procedure ImprimirBoletosApi;
+    procedure EnviaEmailBoletosApi;
+    procedure SetaImpressao;
+
+    { Melhoria para tentar dar independência para a geração }
+    procedure AdicionarBoletoNaLista;
+    procedure SepararPorUltimaBarra(const ATexto: string; out Parte1, Parte2: string);
+    procedure PreecherBeneficiario;
+    function GetIndTemRejeicao: Boolean;
+
+    procedure ConsultarBoletos;
+    function CalculaDVNN(wstrNumeros:String):String;
+    procedure CancelarBoleto;
+
+    procedure SetCodContaCorrente(codConta: integer);
+    function ExtrairValorJSON(const Texto, Campo: string): string;
+
+    procedure BaixaTituloRetorno(wValor_Juro, wValor_Desconto,
+                                              wValor_Baixa, wPagto_Juro: Real;
+                                              NNumero, mDataLiquidacao, mDataCredito: string);
+
+
+  end;
+
+implementation
+
+uses OracleData, UBiblioteca, UCadastro_cl, UNotaSaida_cl, DateUtils, Math,
+     BoletoAPI.Conversores;
+
+
+
+{ TEnvioBoletoApi }
+
+// Tipo de documento deve ser passado exatamente a mesma informação que
+// cria no tipo para a gravação no contas a receber.
+constructor TEnvioBoletoApiCresolCR.Create(CodFilial, NumBanco: Integer; IndAmbiente: String; bEnviaEmail, bIndPdf: Boolean);
+begin
+
+  Filial := CodFilial;
+  nBanco := NumBanco;
+  sIndAmbiente := IndAmbiente;
+  bEnviaEmailBoleto := bEnviaEmail;
+  bGeraPdfPasta := bIndPdf;
+  FACBrBoleto := TACBrBoleto.Create(nil);
+  FACBrMail := TACBrMail.Create(FACBrBoleto);
+  IndTemRejeicao := False;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.EnviarBoletosApi;
+var
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sMensagem: String;
+  sMensagemEmail: TStrings;
+  ListaContaReceber: Array of Integer;
+begin
+
+  // ARRANQUEI TUDO PORQUE DÁ MUITO TRABALHO REESCREVER O CÓDIGO. NA PRÓXIMA VERSÃO EU CORRIJO TUDO
+  with DMContasReceber do
+  begin
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaConfigBanco(sIndAmbiente);
+
+      PreecherBeneficiario;
+
+      Boleto.MAIL := FACBrMail;
+
+      for I := 0 to QBoletoAPI.RecordCount - 1 do
+      begin
+        AdicionarBoletoNaLista;
+        SetLength(ListaContaReceber, I + 1);
+        ListaContaReceber[I] := QBoletoAPICOD_CONTA_RECEBER_CAB.Value;
+        QBoletoAPI.Next;
+      end;
+    end;
+
+    QBoletoAPI.Close;
+
+    // tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe,
+    // tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket
+    Boleto.Configuracoes.WebService.Operacao := tpInclui;  //unico funcional sicredi
+    Boleto.Enviar;
+    IndTemRejeicao := False;
+    IndTemErro := False;
+
+    // Abaixo verifica se houve retorno e se existem boletos que foram corretamente enviados
+    if Boleto.TotalListaRetornoWeb > 0 then
+    begin
+		SLRemessa := TStringList.Create;
+		SLRemessa.Delimiter := ',';
+		//  SLRemessa.QuoteChar := '';
+		try
+			  for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
+			  begin
+
+				if (Boleto.ListadeBoletos.Count = Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) then
+        begin
+          sMensagem := Boleto.ListaRetornoWeb[i].ListaRejeicao[0].Mensagem;
+
+				  MessageDlg('Problemas ao enviar os boletos! ' + sMensagem,
+							  mtWarning,
+							  [mbOK],
+							  0);
+          sMensagem := '';
+          IndTemRejeicao := True;
+        end
+				else
+				begin
+
+				  for j:= 0 to Pred(Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) do
+				  begin
+					SLRemessa.Add('[Rejeicao'   +IntToStr(j)+']' + sLineBreak +
+								 'Campo='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
+								 'Codigo='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Codigo + sLineBreak +
+								 'Versao='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Versao + sLineBreak +
+								 'Mensagem='   + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
+								 'Ocorrencia=' + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia + sLineBreak +
+								 'Valor='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
+								 IndTemRejeicao := True;
+				  end;
+				  SLRemessa.Add('HEADER'          + sLineBreak +
+							 'Versao='           + Boleto.ListaRetornoWeb[i].Header.Versao + sLineBreak +
+							 'Autenticacao='     + Boleto.ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
+							 'Usuario_Servico='  + Boleto.ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
+							 'Usuario='          + Boleto.ListaRetornoWeb[i].Header.Usuario + sLineBreak +
+							 'Operacao='         + TipoOperacaoToStr(Boleto.ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
+							 'Indice='           + IntToStr(Boleto.ListaRetornoWeb[i].Header.Indice) + sLineBreak +
+							 'Sistema_Origem='   + Boleto.ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
+							 'Agencia='          + Boleto.ListaRetornoWeb[i].Header.Agencia + sLineBreak +
+							 'ID_Origem='        + Boleto.ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
+							 'Data_Hora='        +FormatDateTime('dd/mm/yyyy hh:nn:ss',Boleto.ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
+							 'ID_Processo='      + Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+							 'DADOS'             + sLineBreak +
+							 'Excessao='         +Boleto.ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
+							 'CONTROLE_NEGOCIAL' + sLineBreak +
+							 'Origem_Retorno='   + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
+							 'NSU='              + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
+							 'Cod_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
+							 'Msg_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
+							 'COMPROVANTE'       + sLineBreak +
+							 'Data='             +  FormatDateTime('dd/mm/yyyy', Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
+							 'Hora='             +  Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
+							 'ID_BOLETO'         + sLineBreak +
+							 'Codigo_Barras='    + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
+							 'Linha_Digitavel='  + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
+							 'Nosso_Numero='     + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
+							 'URL='              + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
+							 'CONSULTA_BOLETO'   + sLineBreak +
+							 'Numero_Documento=' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
+							 'Data_Vencimento='  + FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
+							 'Valor='            + CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
+							  );
+					if NaoEstaVazio(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras) then
+					begin
+						SLRemessa.Add('TITULO_RETORNO'            + sLineBreak  +
+						'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+						'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+						'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+						'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+						'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+						'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+						'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+						'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+						'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+						'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+						'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+						'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+						'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+						'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+						'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+						'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+						'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+						'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
+						DMOracle.QExecSQL.Close;
+						DMOracle.QExecSQL.SQL.Clear;
+						wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET DESC_CODIGO_BARRAS = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras);
+						wComando := wComando + ', DESC_TXID = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.TxId);
+						wComando := wComando + ', DESC_LINHA_DIGITAVEL = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig);
+						wComando := wComando + ', DESC_COPIA_COLA = ' + QuotedStr(StringReplace(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV, #$A,'',[rfReplaceAll]));
+						wComando := wComando + ', ID_BOLETO = ' + QuotedStr(Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.IDBoleto);
+						wComando := wComando + ', IND_ENVIADO_BANCO = ' + QuotedStr('SIM');
+					 	wComando := wComando + ' WHERE COD_CONTA_RECEBER_CAB = ' + IntToStr(ListaContaReceber[I]);
+						wComando := wComando + ' AND SUBSTR(COD_NOSSO_NUMERO, 6, 6) = ' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero;
+						DMOracle.QExecSQL.SQL.Add(wComando);
+						DMOracle.QExecSQL.ExecSQL;
+
+						if DMOracle.DBCemapa.InTransaction then
+						  DMOracle.DBCemapa.Commit;
+					end; // if NaoEstaVazio
+				end; // if (Boleto.ListadeBoletos.Count
+			end;
+			
+		finally
+			SLRemessa.Free;
+		  // Ajustar aqui para lançar possíveis mensagens de erro ou mostrar os boletos gerados.
+		  // Necessário testes
+		  //ShowMessage(SLRemessa);
+    
+		end;
+    end;
+
+    for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
+    begin
+
+		if (Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EMV <> EmptyStr) and (bEnviaEmailBoleto) then
+		begin
+
+			sMensagem := 'Esta mensagem refere-se ao título ' +
+				IntToStr(nCodNota) + ' emitido em ' +  FormatDateTime('dd/MM/yyyy', Titulo.DataDocumento) + '.' + chr(13);
+			sMensagem := sMensagem + 'Boleto emitido para:' + chr(13);
+
+			if Length(Titulo.Sacado.CNPJCPF) > 14 then
+			begin
+			  sMensagem := sMensagem + 'Razão Social: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+			  sMensagem := sMensagem + 'CNPJ: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+			end
+			else
+			begin
+			  sMensagem := sMensagem + 'Nome: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+			  sMensagem := sMensagem + 'CPF: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+			end;
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Imprimir e pagar o boleto em anexo em qualquer banco até a data de vencimento.';
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Este e-mail foi enviado automaticamente pelo módulo de contas a receber da ' +
+						  Beneficiario.Nome + '.';
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + chr(13);
+			sMensagem := sMensagem + 'Desenvolvido por: Sistema Cemapa Informática (45)3264-3773 Medianeira-PR.';
+
+			sMensagemEmail := TStringList.Create;
+
+			sMensagemEmail.Add(sMensagem);
+
+			with DMCadastro do
+			begin
+			  QCadastroEmail.Close;
+			  QCadastroEmail.Open;
+
+			  if QCadastroEmail.RecordCount > 0 then
+			  begin
+				FACBrMail.From := QCadastroEmailDESC_EMAIL.Text;
+				FACBrMail.FromName := Beneficiario.Nome;
+				FACBrMail.Host := QCadastroEmailDESC_SMTP.Text; // troque pelo seu servidor smtp
+				FACBrMail.Username := QCadastroEmailDESC_EMAIL.Text;
+				FACBrMail.Password := QCadastroEmailDESC_SENHA.Text;
+				FACBrMail.Port := QCadastroEmailNUM_PORTA_SMTP.Text; // troque pela porta do seu servidor smtp
+				FACBrMail.SetTLS := True;//FALSE;
+				FACBrMail.SetSSL := False;//(QCadastroEmailIND_SSL.Text = 'S'); // verifica configuração SSL
+				FACBrMail.SSLType := LT_SSLv3;
+
+			  end;
+			  QCadastroEmail.Close;
+			end;
+			
+			if (Trim(sEmailDanfe) <> '') then
+			begin
+			  AssociarRelatorioCPN;
+			  Boleto.EnviarEmail(sEmailDanfe, 'Boletos '+ Titulo.Sacado.NomeSacado, sMensagemEmail, True);
+			end;
+		end;
+    end;
+    
+  end;
+  FACBrMail.Clear;
+  FACBrMail.CleanupInstance;
+  
+
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.AdicionarBoletoNaLista;
+var
+  sNossoNum5, url, emv: string;
+begin
+
+  with DMContasReceber do
+  begin
+    Titulo := Boleto.CriarTituloNaLista;
+    Titulo.DataDocumento           := QBoletoAPIDT_EMISSAO.Value;
+    Titulo.Vencimento              := QBoletoAPIDT_VENCIMENTO.Value;
+    Titulo.NumeroDocumento         := QBoletoAPINUM_TITULO.AsString + '/' + QBoletoAPINUM_PARCELA.AsString;
+    Titulo.SeuNumero               := QBoletoAPINUM_TITULO.AsString; //QBoletoAPICOD_CONTA_RECEBER_CAB.AsString;    
+    Titulo.EspecieMod              := 'R$';
+    Titulo.Aceite                  := TConversoresApi.ConverteAceiteTitulo(QBoletoAPICOD_IDENTIF_ACEITO.asString);
+    Titulo.DataProcessamento       := Now;
+    Titulo.Carteira                := QBoletoAPICARTEIRA.AsString;
+
+    // Código da geração está vindo de algum lugar não identificado. Optado por pegar do nosso numero e usar
+    Titulo.CodigoGeracao           := '0'; //Copy(Trim(QBoletoAPICOD_NOSSO_NUMERO.AsString), 5, 6);
+    // necessário retirar os dígitos do ano e dígitos de validação pois retornam na própria API
+    sNossoNum5                     := Copy(QBoletoAPICOD_NOSSO_NUMERO.AsString, 6, 6);
+    Titulo.NossoNumero             := sNossoNum5;
+    Titulo.NossoNumeroCorrespondente := QBoletoAPIID_BOLETO.asString;
+
+
+    Titulo.ValorDocumento          := QBoletoAPIVAL_TITULO.Value;
+    Titulo.Sacado.NomeSacado       := QBoletoAPINOME.AsString;
+    Titulo.Sacado.CNPJCPF          := QBoletoAPINUM_CGC_CPF.AsString;
+    Titulo.Sacado.Logradouro       := QBoletoAPIDESC_ENDERECO_COBRANCA.AsString;
+    Titulo.Sacado.Numero           := '';
+    Titulo.Sacado.Bairro           := QBoletoAPIDESC_BAIRRO_COBRANCA.AsString;
+    Titulo.Sacado.Cidade           := QBoletoAPIDESC_CIDADE_COBRANCA.AsString;
+    Titulo.Sacado.UF               := QBoletoAPIDESC_ESTADO_COBRANCA.AsString;
+    Titulo.Sacado.CEP              := OnlyNumber(QBoletoAPIDESC_CEP_COBRANCA.AsString);
+    Titulo.Sacado.Email            := '';
+
+    if QBoletoAPIPERC_JURO_BLOQUETO.Value <> 0 then     //QBoletoAPICOD_MORA_JUROS.Value; //Verificar questão dos juros
+    begin
+      Titulo.CodigoMoraJuros :=  cjTaxaDiaria;
+      Titulo.ValorMoraJuros := RoundTo(((QBoletoAPIPERC_JURO_BLOQUETO.Value/DMoracle.DiasNoMes(QBoletoAPIDT_VENCIMENTO.Value))*(QBoletoAPIVal_Titulo.Value/100)), -2); //perc_juro_dia do remessa
+    end
+    else
+      Titulo.CodigoMoraJuros :=  cjIsento;
+    
+    Titulo.DataMoraJuros           := QBoletoAPIDT_VENCIMENTO.Value;
+    //Titulo.CodigoMora              := TConversoresApi.ConverteCodigoMora(QBoletoAPIIND_TIPO_JURO.AsString);
+    Titulo.ValorAbatimento         := 0;
+    Titulo.DataAbatimento          := 0;
+
+    If QBoletoAPINR_DIAS_PROTESTO.Value > 0 then   // entre 03 e 99 dias de protesto
+    begin
+      Titulo.DiasDeProtesto          := QBoletoAPINR_DIAS_PROTESTO.Value;
+      Titulo.DataProtesto            := QBoletoAPIDT_VENCIMENTO.Value + QBoletoAPINR_DIAS_PROTESTO.Value;
+    end
+    else
+    begin
+      Titulo.DiasDeProtesto          := 0;
+      Titulo.DataProtesto            := 0;
+    end;
+
+
+    Titulo.PercentualMulta         := (QBoletoAPIVAL_MULTA.Value / QBoletoAPIVAL_TITULO.Value) * 100 ;   // conferir com o junior
+    if QBoletoAPIPERC_JURO_MORA.Value > 0 then
+      Titulo.CodigoMora              := '2'
+    else
+      Titulo.CodigoMora              := '0';   
+    Titulo.Mensagem.Text           := '';
+    Titulo.Instrucao1              := QBoletoAPIDESC_LOCAL_PGTO_BLOQ.AsString;
+    Titulo.Instrucao2              := QBoletoAPIDESC_INSTRUCAO_BLOQUETO.AsString;
+    Titulo.QtdePagamentoParcial    := 1;
+    Titulo.TipoPagamento           := tpNao_Aceita_Valor_Divergente;
+    Titulo.PercentualMinPagamento  := 0;
+    Titulo.PercentualMaxPagamento  := 0;
+    Titulo.ValorMinPagamento       := 0;
+    Titulo.ValorMaxPagamento       := 0;
+    Titulo.TipoDesconto            := tdNaoConcederDesconto;
+    Titulo.DataDesconto            := 0;
+    Titulo.ValorDesconto           := 0;
+    Titulo.OcorrenciaOriginal.Tipo := toRemessaRegistrar;
+    SepararPorUltimaBarra(QBoletoAPIDESC_COPIA_COLA.AsString, url, emv);
+    Titulo.QrCode.emv              := QBoletoAPIDESC_COPIA_COLA.AsString;
+    Titulo.QrCode.url              := url;
+    //Titulo.QrCode.txId             := QBoletoAPIDESC_TXID.Text;
+    sEmailDanfe                    := QBoletoAPIDESC_E_MAIL1.AsString;
+
+    if IndProdutorRural then
+      Titulo.EspecieDoc            := 'DR';
+
+
+  end;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.SetaConfigBanco(IndAmbiente: String);
+var
+  sClientID, sClientSecret: String;
+begin
+
+  Boleto := FACBrBoleto;
+  Beneficiario := Boleto.Cedente;
+  BeneficiarioWS := Beneficiario.CedenteWS;
+  Boleto.Configuracoes.WebService.VersaoDF := 'V2';
+  Boleto.Configuracoes.WebService.Ambiente := TConversoresApi.ConverteTipoAmbiente(IndAmbiente);
+// Produção = taProducao, Homologacao = taHomologacao
+  Boleto.Configuracoes.Arquivos.LogNivel := logParanoico;
+  Boleto.Configuracoes.Arquivos.PathGravarRegistro := ExtractFilePath(ParamStr(0)) + 'Log';
+  Boleto.Configuracoes.WebService.Operacao := tpInclui;
+  WebService := Boleto.Configuracoes.WebService;
+  CobAnterior := Boleto.Banco.TipoCobranca;
+  WebService.SSLHttpLib := TSSLHttpLib(0);
+
+  Banco := Boleto.Banco;
+  Banco.TipoCobranca := cobBancoCresol;
+  Banco.LayoutVersaoArquivo := 0;
+  Banco.LayoutVersaoLote    := 0;
+  Banco.CIP                 := '';
+  Banco.DensidadeGravacao   := '';
+  Banco.LocalPagamento      := 'Pagar preferencialmente na Rede Cresol';
+
+  with DMContasReceber do
+  begin
+    sClientID := Trim(QBoletoAPIDESC_CHAVE_API_BOLETO.Value);
+    // Se for no ambiente de homologação, esses são os dados do manual
+    if (sIndAmbiente = 'H') or (sIndAmbiente = 'S') then
+      sClientSecret := Trim(QBoletoAPIDESC_KEY_USER_HOM.Value)
+    else
+      sClientSecret := Trim(QBoletoAPIDESC_KEY_USER_PROD.Value);
+  end;
+
+  BeneficiarioWS.ClientID := sClientID;
+  BeneficiarioWS.ClientSecret := sClientSecret;
+  BeneficiarioWS.Scope := 'read'; // escopo para CRESOL
+  BeneficiarioWS.IndicadorPix := True;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.ImprimirBoletosApi;
+var
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sLinhaDigitavel, sCodigoBarras, sMensagem: String;
+  sMensagemEmail: TStrings;
+begin
+  // FEITO DESSA FORMA PARA FACILITAR A MUDANÇA DE COMPONENTE NO CASO DE MIGRAÇÕES
+  with DMContasReceber do
+  begin
+
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaImpressao;
+
+      PreecherBeneficiario;
+
+      for I := 0 to QBoletoAPI.RecordCount - 1 do
+      begin
+
+        AdicionarBoletoNaLista;
+        QBoletoAPI.Next;
+      end;
+    end;
+  end;
+  GerarPDF;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.EnviaEmailBoletosApi;
+var
+  I, J: Integer;
+  SLRemessa: TStringList;
+  sNossoNum5, wComando, sLinhaDigitavel, sCodigoBarras, sMensagem: String;
+  sMensagemEmail: TStrings;
+begin
+  // FEITO DESSA FORMA PARA FACILITAR A MUDANÇA DE COMPONENTE NO CASO DE MIGRAÇÕES
+  with DMContasReceber do
+  begin
+
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaImpressao;
+
+      PreecherBeneficiario;
+
+      Boleto.MAIL := FACBrMail;
+
+      for I := 0 to QBoletoAPI.RecordCount - 1 do
+      begin
+
+        AdicionarBoletoNaLista;
+        QBoletoAPI.Next;
+      end;
+
+    end;
+    QBoletoAPI.Close;
+
+    //(Titulo.QrCode.emv <> EmptyStr) and //CRESOL NÃO TEM QRCODE
+    if (bEnviaEmailBoleto) then
+    begin
+
+      sMensagem := 'Esta mensagem refere-se ao título ' +
+          IntToStr(nCodNota) + ' emitido em ' +  FormatDateTime('dd/MM/yyyy', Titulo.DataDocumento) + '.' + chr(13);
+      sMensagem := sMensagem + 'Boleto emitido para:' + chr(13);
+
+      if Length(Titulo.Sacado.CNPJCPF) > 14 then
+      begin
+        sMensagem := sMensagem + 'Razão Social: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+        sMensagem := sMensagem + 'CNPJ: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+      end
+      else
+      begin
+        sMensagem := sMensagem + 'Nome: ' + Titulo.Sacado.NomeSacado + '.' + chr(13);
+        sMensagem := sMensagem + 'CPF: ' + Titulo.Sacado.CNPJCPF + '.' + chr(13);
+      end;
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Imprimir e pagar o boleto em anexo em qualquer banco até a data de vencimento.';
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Este e-mail foi enviado automaticamente pelo módulo de contas a receber da ' +
+        Beneficiario.Nome + '.';
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + chr(13);
+      sMensagem := sMensagem + 'Desenvolvido por: Sistema Cemapa Informática (45)3264-3773 Medianeira-PR.';
+
+      sMensagemEmail := TStringList.Create;
+
+      sMensagemEmail.Add(sMensagem);
+    
+      with DMCadastro do
+      begin
+        QCadastroEmail.Close;
+        QCadastroEmail.Open;
+
+        if QCadastroEmail.RecordCount > 0 then
+        begin
+          FACBrMail.From := QCadastroEmailDESC_EMAIL.Text;
+          FACBrMail.FromName := Beneficiario.Nome;
+          FACBrMail.Host := QCadastroEmailDESC_SMTP.Text; // troque pelo seu servidor smtp
+          FACBrMail.Username := QCadastroEmailDESC_EMAIL.Text;
+          FACBrMail.Password := QCadastroEmailDESC_SENHA.Text;
+          FACBrMail.Port := QCadastroEmailNUM_PORTA_SMTP.Text; // troque pela porta do seu servidor smtp
+          FACBrMail.SetTLS := True;//FALSE;
+          FACBrMail.SetSSL := False;//(QCadastroEmailIND_SSL.Text = 'S'); // verifica configuração SSL
+          FACBrMail.SSLType := LT_SSLv3;
+
+        end;
+        QCadastroEmail.Close;
+      end;
+      if Trim(sEmailDanfe) = '' then
+      begin
+        ShowMessage('O e-mail do cliente não existe no cadastro. Por favor, corrija!');
+      end
+      else
+      begin
+        AssociarRelatorioCPN;
+        Boleto.EnviarEmail(sEmailDanfe, 'Boletos '+ Titulo.Sacado.NomeSacado, sMensagemEmail, True);
+      end;
+
+    end;
+
+  end;
+  FACBrMail.Clear;
+  FACBrMail.CleanupInstance;
+  sMensagemEmail.Clear;
+  sMensagemEmail.CleanupInstance;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.SetaImpressao;
+var
+  sClientID, sClientSecret: String;
+begin
+
+  Boleto := FACBrBoleto;
+  Beneficiario := Boleto.Cedente;
+  BeneficiarioWS := Beneficiario.CedenteWS;
+  Boleto.Configuracoes.WebService.VersaoDF := 'V2';
+  Boleto.Configuracoes.WebService.Ambiente := TConversoresApi.ConverteTipoAmbiente(sIndAmbiente);
+// Produção = taProducao, Homologacao = taHomologacao
+  Boleto.Configuracoes.Arquivos.LogNivel := logParanoico;
+  Boleto.Configuracoes.Arquivos.PathGravarRegistro := ExtractFilePath(ParamStr(0)) + 'Log';
+  Boleto.Configuracoes.WebService.Operacao := tpInclui;
+  WebService := Boleto.Configuracoes.WebService;
+  CobAnterior := Boleto.Banco.TipoCobranca;
+  WebService.SSLHttpLib := TSSLHttpLib(0);
+
+  Banco := Boleto.Banco;
+  Banco.TipoCobranca := cobBancoCresol;
+  Banco.LayoutVersaoArquivo := 0;
+  Banco.LayoutVersaoLote    := 0;
+  Banco.CIP                 := '';
+  Banco.DensidadeGravacao   := '';
+  Banco.LocalPagamento      := 'Pagável preferencialmente nas cooperativas de crédito da Cresol';
+
+  BeneficiarioWS.ClientID := sClientID;
+  BeneficiarioWS.ClientSecret := sClientSecret;
+  BeneficiarioWS.Scope := 'read';
+  BeneficiarioWS.IndicadorPix := False;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.AssociarRelatorioCPN;
+begin
+  FACBrBoletoFCRL := TACBrBoletoFCFortes.Create(FACBrBoleto);
+  FACBrBoletoFCRL.MargemSuperior :=10;
+  FACBrBoletoFCRL.MargemInferior :=10;
+  FACBrBoletoFCRL.MargemEsquerda :=5;
+  FACBrBoletoFCRL.MargemDireita  :=5;
+  FACBrBoletoFCRL.AlterarEscalaPadrao := True;
+  // FACBrBoletoFCRL.NovaEscala := 1;
+  FACBrBoleto.ACBrBoletoFC := FACBrBoletoFCRL;
+  FACBrBoleto.ACBrBoletoFC.LayOut := lPadraoEntrega; //lPadrao;
+  if bGeraPdfPasta then
+  begin
+     if not DirectoryExists('C:\boletos') then
+        ForceDirectories('C:\boletos');
+     with DMContasReceber do
+     begin
+       FACBrBoletoFCRL.NomeArquivo := 'C:\boletos\' + Bib.LimpaCaracteresInvalidos(QBoletoAPINOME.Text) + '-'
+                                                    + QBoletoAPINUM_TITULO.Text + '-'
+                                                    + QBoletoAPINUM_PARCELA.Text + '.PDF';
+     end;
+  end;
+  FACBrBoleto.ACBrBoletoFC.DirLogo := ExtractFilePath(ParamStr(0));
+end;
+
+procedure TEnvioBoletoApiCresolCR.GerarPDF;
+begin
+  // Define o FortesReport como motor do relatório
+  if not IndTemRejeicao then
+  begin
+    AssociarRelatorioCPN;
+    if bGeraPdfPasta then
+      FACBrBoleto.GerarPDF
+    else
+      FACBrBoleto.Imprimir;
+  end;
+end;
+
+function TEnvioBoletoApiCresolCR.ConverteInstrucaoRemessa(
+  nCodInstrucao: Integer): String;
+begin
+
+  case nCodInstrucao of
+    028: Result := 'Após Vencimento pagar somente nas Agências BANSICREDI ou SICREDI';
+    148: Result := 'Após o Vencimento pgto somente no SICREDI e não receber após 30 dias do vencto';
+    174: Result := 'Após o Vencimento cobrar multa de R$ 5,00';
+    061: Result := 'Após o quinto dia cobrar R$ 5,00';
+    182: Result := 'Após 5 dias úteis - PROTESTAR';
+    197: Result := 'Após 15 dias do Vencimento, cobrar 1% A.M de juros';
+    098: Result := 'Após o Vencimento cobrar juros de 0,30% ao dia';
+    192: Result := 'Após o Vencimento cobrar juros de até 6% ao mes';
+    020: Result := 'Encaminhar ao SPC após 20 dias corridos de vencido';
+    022: Result := 'Cobrar Encargos (mora/juros) somente após 05 (cinco) dias do vencimento';
+    195: Result := 'Protestar após 03 dias do Vencimento';
+    073: Result := 'Protestar após 05 dias do Vencimento';
+    170: Result := 'Protestar após 10 dias do Vencimento';
+    193: Result := 'Protestar após 30 dias do Vencimento';
+    079: Result := 'Conceder desconto de 0,067% ao dia por antecipação de pagamento';
+    116: Result := 'Conceder desconto de R$ 1,00 se pago nas Agências Sicredi até o Vencimento';
+    204: Result := 'Desconto somente até o Vencimento';
+    194: Result := 'Dispensar juros de mora, para pagamento até 3(três) dias após Vencimento';
+    024: Result := 'Valor de R$ 10,00 Ref. custo de faturamento, incluído no valor do documento';
+    026: Result := 'Nesta parcela esta Incluído o custo da cobrança de R$ 3,00';
+    038: Result := 'Cobrar despesas Bancárias R$ 2,00';
+    142: Result := 'Incluído valor R$ 0,30 ref. Emissao de Cobrança';
+    143: Result := 'Juros Inadimpl. 0,27% ao dia';
+    133: Result := 'Multa por atraso será cobrada na próxima fatura';
+    044: Result := 'Substituição de Bloqueto Bancário';
+    045: Result := 'Desconsiderar Bloqueto anterior cujo Nr. do Documento e Valor são iguais';
+    054: Result := 'Este Bloqueto destina-se Pagamento Parcela(s) de Empréstimo Contraído no Sicredi';
+    055: Result := 'Caso já tenha havido a quitação junto ao Sicredi, desconsiderar este Bloqueto';
+    else Result := '';
+  end;
+end;
+
+function TEnvioBoletoApiCresolCR.GetIndTemRejeicao: Boolean;
+begin
+  Result := IndTemRejeicao;
+end;
+
+procedure TEnvioBoletoApiCresolCR.SepararPorUltimaBarra(const ATexto: string; out Parte1, Parte2: string);
+var
+  P: Integer;
+begin
+  // Encontra a última barra na string
+  P := LastDelimiter('/', ATexto);
+
+  if P > 0 then
+  begin
+    Parte1 := Copy(ATexto, 1, P - 1);              // tudo até antes da última barra
+    Parte2 := Copy(ATexto, P + 1, Length(ATexto)); // tudo depois da última barra
+  end
+  else
+  begin
+    Parte1 := ATexto;
+    Parte2 := '';
+  end;
+end;
+
+procedure TEnvioBoletoApiCresolCR.PreecherBeneficiario;
+var
+  iQtdCaracteres: Integer;
+begin
+
+  with DMContasReceber do
+  begin
+
+    with DMFilial do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', Filial);
+      QFilial.Open;
+       
+      Beneficiario.TipoInscricao := pJuridica;
+      Beneficiario.CNPJCPF := OnlyNumber(QFilialNUM_CGC.AsString);
+      Beneficiario.Nome := QFilialDESC_FILIAL.AsString;
+      // Beneficiario.FantasiaCedente := QFilialDESC_FILIAL.AsString;
+      Beneficiario.Logradouro := QFilialDESC_ENDERECO.AsString;
+      Beneficiario.NumeroRes := '';
+      Beneficiario.Complemento := QFilialDESC_COMPLEMENTO_ENDERECO.AsString;
+      Beneficiario.Bairro := QFilialDESC_BAIRRO.AsString;
+      Beneficiario.Cidade := QFilialDESC_CIDADE.AsString;
+      Beneficiario.UF := QFilialCOD_ESTADO.AsString;
+      Beneficiario.CEP := OnlyNumber(QFilialDESC_CEP.AsString);
+      Beneficiario.Telefone := QFilialDESC_TELEFONE.AsString;
+
+
+      // para o caso de produtor rural validar para mudar tipo de boleto
+      iQtdCaracteres := Length(OnlyNumber(QFilialNUM_CGC.Value));
+      if (iQtdCaracteres = 11) and
+         (Trim(QFilialDESC_INSCRICAO.Value) <> '')  then
+        IndProdutorRural := True
+      else
+        IndProdutorRural := False;
+
+
+
+    end;
+
+    // NÃO PREENCHE PARA SICREDI
+    {
+    BeneficiarioWS.ClientSecret := '';
+    BeneficiarioWS.KeyUser      := '';
+    BeneficiarioWS.Scope        := '';
+    }
+    BeneficiarioWS.IndicadorPix := True;
+    WebService.SSLHttpLib       := TSSLHttpLib(3);
+
+    Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+    Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+    Beneficiario.ContaDigito := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+    // Fixo até que o sistema seja preparado pra isso.
+    Beneficiario.TipoDocumento := TConversoresApi.ConverteTipoDocumento('TRADICIONAL');
+    // Tipo do ACBr para distrituição pelo cliente.
+    // criar function para retornar de acordo com o que está gravado na base
+    Beneficiario.IdentDistribuicao := TConversoresApi.ConverteIdentDistribuicao(QBoletoAPICOD_IDENTIF_DISTRIBUICAO.AsString);
+    // Tipo do ACBr para emissão pelo cliente.
+    // criar function para retornar de acordo com o que está gravado na base
+    Beneficiario.ResponEmissao := TConversoresApi.ConverteResponEmissao(QBoletoAPICOD_IDENTIF_EMISSAO_BLOQUETO.AsString);
+
+    // Nada consta na base, informado como simples.
+    Beneficiario.CaracTitulo := TConversoresApi.ConverteCaracTitulo('');
+    Beneficiario.TipoCarteira := TConversoresApi.ConverteTipoCarteira('');
+
+
+    Beneficiario.Agencia := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.AgenciaDigito := QBoletoAPIDIGITO_VERIFICADOR_AGENCIA.AsString;
+    Beneficiario.Conta := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+    Beneficiario.ContaDigito := QBoletoAPICOD_AGENCIA.AsString;
+    Beneficiario.DigitoVerificadorAgenciaConta := QBoletoAPIDIG_VERIFICADOR_AGENCIA_CONTA.AsString;
+
+    // VAZIO PARA SICREDI
+    Beneficiario.Convenio := '';
+    Beneficiario.Operacao := '';
+    Beneficiario.CodigoTransmissao := '';
+
+
+    Beneficiario.Modalidade := '1';
+    Beneficiario.CodigoCedente := QBoletoAPINUM_CONTA_CORRENTE.AsString;
+
+
+  end;
+end;
+
+procedure TEnvioBoletoApiCresolCR.ConsultarBoletos;
+var
+  I, J, iCodContaReceberCab: Integer;
+  SLRetorno: TStringList;
+  sNossoNum5, wComando, sMensagem: String;
+  sMensagemEmail: TStrings;
+  ListaContaReceber: Array of Integer;
+  Retorno: TListaACBrBoletoRetornoWS;
+  RetornoDetalhe: TACBrBoletoRetornoWS;
+  dDataInicio, dDataFim: TDate;
+begin
+
+  with DMContasReceber do
+  begin
+    QBoletoAPI.Open;
+    // RECUPERA AS DATAS PASSADAS PELA TELA PARA INSERIR NO FILTRO
+    dDataInicio := QBoletoAPI.GetVariable('DT_EMISSAO_INICIAL');
+    dDataFim  := QBoletoAPI.GetVariable('DT_EMISSAO_FINAL');
+
+    if QBoletoAPI.RecordCount = 0 then
+    begin
+      // PRECISA TER AO MENOS UM BOLETO COM OS DADOS PARA CONSEGUIR BUSCAR AS INFORMAÇÕES DA CONTA
+      QBoletoAPI.Close;
+      QBoletoAPI.ClearVariables;
+      QBoletoAPI.SetVariable('COD_CONTA_CORRENTE', iCodContaCorrente);
+      QBoletoAPI.Open;
+    end;
+    QBoletoAPI.First;
+
+    FACBrMail := TACBrMail.Create(FACBrBoleto);
+
+    if not QBoletoAPI.EOF then
+    begin
+      // PEGA AS INFORMAÇÕES DO BANCO PARA INSERIR NO COMPONENTE E DADOS DA API
+      SetaConfigBanco(sIndAmbiente);
+
+      // PREENCHE AS INFORMAÇÕES DO BENEFICIÁRIO COM BASE NA FILIAL
+      PreecherBeneficiario;
+
+      Boleto.MAIL := FACBrMail;
+
+      AdicionarBoletoNaLista;
+    end;
+    // INSERE OS FILTROS. A PRINCÍPIO O TESTE É DIÁRIO MAS PODE SER REALIZADO SEMANAL, ETC
+    FiltrosAPI := Boleto.Configuracoes.WebService.Filtro;
+    FiltrosAPI.Clear;
+    FiltrosAPI.indicadorSituacao  := isbBaixado;
+    FiltrosAPI.dataMovimento.DataInicio := dDataInicio;
+    FiltrosAPI.dataMovimento.DataFinal  := dDataFim;
+    FiltrosAPI.indiceContinuidade       := 0;
+
+    // tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe,
+    // tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket
+    Boleto.Configuracoes.WebService.Operacao := tpConsulta;  //unico funcional sicredi
+    Boleto.Enviar;
+
+    case Boleto.Configuracoes.WebService.Operacao of
+    tpConsulta:
+      begin
+        Retorno := Boleto.ListaConsultaRetornoWeb;
+        if Retorno.Count > 0 then
+        begin
+          CdRetornoRemessa.Open;
+          SLRetorno := TStringList.Create;
+          try
+            i := 0;
+            SLRetorno.Add('Cod_Retorno='+ Retorno[i].CodRetorno + sLineBreak +
+                               'Msg_Retorno='+ Retorno[i].MsgRetorno + sLineBreak +
+                               'Ori_Retorno='+ Retorno[i].OriRetorno + sLineBreak +
+                               'HTTP_Result='+ IntToStr(Retorno[i].HTTPResultCode) + sLineBreak +
+                               'JSON='+ Retorno[i].JSON);
+            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(Retorno[i].indicadorContinuidade));
+            SLRetorno.Add('proximoIndice=' + IntToStr(Retorno[i].proximoIndice));
+            SLRetorno.Add(' ');
+            SLRetorno.Add(' ');
+
+              for I := 0 to Pred(Retorno.Count) do
+              begin
+                {SLRetorno.Add('[Boletos Index            = ' + FormatFloat('000',I)+']');
+                SLRetorno.Add('NumeroBoleto              = ' + Retorno[I].DadosRet.TituloRet.Mensagem.Text);
+                SLRetorno.Add('NumeroBoleto              = ' + Retorno[I].DadosRet.TituloRet.Informativo.Text);
+                SLRetorno.Add('NumeroBoleto              = ' + Retorno[I].DadosRet.TituloRet.Instrucoes.Text);
+                SLRetorno.Add('NumeroBoleto              = ' + Retorno[I].DadosRet.TituloRet.NossoNumero);
+                SLRetorno.Add('SeuNumero                 = ' + Retorno[I].DadosRet.TituloRet.SeuNumero);
+                SLRetorno.Add('Sacado Doc                = ' + Retorno[I].DadosRet.TituloRet.Sacado.CNPJCPF);
+                SLRetorno.Add('Sacado Nome               = ' + Retorno[I].DadosRet.TituloRet.Sacado.NomeSacado);
+                SLRetorno.Add('Sacado Avalista nome      = ' + Retorno[I].DadosRet.TituloRet.SacadoAvalista.NomeAvalista);
+                SLRetorno.Add('Sacado Avalista doc       = ' + Retorno[I].DadosRet.TituloRet.SacadoAvalista.CNPJCPF);
+                SLRetorno.Add('CodBarras                 = ' + Retorno[I].DadosRet.IDBoleto.CodBarras);
+                SLRetorno.Add('ID_Boleto                 = ' + Retorno[I].DadosRet.IDBoleto.IDBoleto);
+                SLRetorno.Add('linha dig                 = ' + Retorno[I].DadosRet.IDBoleto.LinhaDig);
+                SLRetorno.Add('cod_retorno               = ' + Retorno[I].DadosRet.ControleNegocial.CodRetorno);
+                SLRetorno.Add('ori_retorno               = ' + Retorno[I].DadosRet.ControleNegocial.OriRetorno);
+                SLRetorno.Add('retorno                   = ' + Retorno[I].DadosRet.ControleNegocial.Retorno);
+                SLRetorno.Add('NSU                       = ' + Retorno[I].DadosRet.ControleNegocial.NSU);
+                SLRetorno.Add('dataRegistro              = ' + DateToStr(Retorno[I].DadosRet.TituloRet.DataRegistro));
+                SLRetorno.Add('dataVencimento            = ' + DateToStr(Retorno[I].DadosRet.TituloRet.Vencimento));
+                SLRetorno.Add('valorOriginal             = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorDocumento));
+                SLRetorno.Add('valorPago                 = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorPago));
+                SLRetorno.Add('dataMovimento             = ' + DateToStr(Retorno[I].DadosRet.TituloRet.dataMovimento));
+                SLRetorno.Add('dataCredito               = ' + DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
+                SLRetorno.Add('valorJuros                = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorMoraJuros));
+                SLRetorno.Add('valorMulta                = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorMulta));
+                SLRetorno.Add('valorOutrasDespesas       = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorOutrasDespesas));
+                SLRetorno.Add('valorDesconto             = ' + CurrToStr(Retorno[I].DadosRet.TituloRet.ValorDesconto));
+                SLRetorno.Add('NossoNumeroCorrespondente = ' + Retorno[I].DadosRet.TituloRet.NossoNumeroCorrespondente);
+                SLRetorno.Add('carteiraConvenio          = ' + Retorno[I].DadosRet.TituloRet.Carteira);
+                SLRetorno.Add('carteiraConvenio          = ' + Retorno[I].DadosRet.TituloRet.Mensagem.GetText);
+                SLRetorno.Add('variacaoCarteiraConvenio  = ' + intToStr(Retorno[I].DadosRet.TituloRet.Modalidade));
+                SLRetorno.Add('codigoEstadoTituloCobranca= ' + Retorno[I].DadosRet.TituloRet.codigoEstadoTituloCobranca);
+                SLRetorno.Add('estadoTituloCobranca      = ' + Retorno[I].DadosRet.TituloRet.estadoTituloCobranca);
+                SLRetorno.Add('contrato                  = ' + Retorno[I].DadosRet.TituloRet.Contrato);
+                SLRetorno.Add('EMV (QrCodePix)           = ' + Retorno[I].DadosRet.TituloRet.EMV);
+                SLRetorno.Add('LinhaDigitavel            = ' + Retorno[I].DadosRet.TituloRet.LinhaDig);
+                SLRetorno.Add('  ---  ');                                                    }
+                if Retorno[I].DadosRet.TituloRet.NossoNumero <> '' then
+                begin
+                  sNossoNum5 := Retorno[I].DadosRet.TituloRet.NossoNumero;
+                  sNossoNum5 := Bib.FormataTextoEsq(sNossoNum5, 11, '0');
+                  sNossoNum5 := sNossoNum5 + CalculaDVNN(QBoletoAPICARTEIRA.AsString + sNossoNum5);
+                  BaixaTituloRetorno(Retorno[I].DadosRet.TituloRet.ValorMoraJuros + Retorno[I].DadosRet.TituloRet.ValorMulta,
+                                                     Retorno[I].DadosRet.TituloRet.ValorDesconto,
+                                                     Retorno[I].DadosRet.TituloRet.ValorPago,
+                                                     Retorno[I].DadosRet.TituloRet.ValorMoraJuros + Retorno[I].DadosRet.TituloRet.ValorMulta,
+                                                     sNossoNum5,
+                                                     DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito),
+                                                     DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
+                  if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'REDE') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - PAGO NA REDE BANCÁRIA';
+                  end
+                  else if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'COMPE') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - COMPENSAÇÃO EM CONTA';
+                  end
+                  else if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'PIX') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - PAGO VIA QRCODE';
+                  end
+                  else
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+
+                  CdRetornoRemessa.Append;
+                  CdRetornoRemessaDESC_TITULO.Value := sNossoNum5;
+                  CdRetornoRemessaDESC_CLIENTE.Text := Retorno[I].DadosRet.TituloRet.Sacado.CNPJCPF;
+                  CdRetornoRemessaDESC_MENSAGEM.Value := sMensagem;
+                  CdRetornoRemessa.Post;
+                end;
+
+              end;
+
+
+//            end;
+
+            SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
+          finally
+            SLRetorno.Free;
+          end;
+        end;
+
+      end;
+    tpConsultaDetalhe:
+      begin
+        if Boleto.TotalListaRetornoWeb > 0 then
+        begin
+          i := 0;
+          RetornoDetalhe := Boleto.ListaRetornoWeb[i];
+          CdRetornoRemessa.Open;
+          SLRetorno := TStringList.Create;
+          try
+            SLRetorno.Add('Cod_Retorno='+ RetornoDetalhe.CodRetorno + sLineBreak +
+                               'Msg_Retorno='+ RetornoDetalhe.MsgRetorno + sLineBreak +
+                               'Ori_Retorno='+ RetornoDetalhe.OriRetorno + sLineBreak +
+                               'HTTP_Result='+ IntToStr(RetornoDetalhe.HTTPResultCode) + sLineBreak +
+                               'JSON='+ RetornoDetalhe.JSON);
+            SLRetorno.Add('indicadorContinuidade=' + BoolToStr(RetornoDetalhe.indicadorContinuidade));
+            SLRetorno.Add('proximoIndice=' + IntToStr(RetornoDetalhe.proximoIndice));
+            SLRetorno.Add(' ');
+            SLRetorno.Add(' ');
+            for I := 0 to Pred(Boleto.ListadeBoletos.Count) do
+            begin
+              { RetornoDetalhe := Boleto.ListaRetornoWeb[i];
+              SLRetorno.Add('[Boletos Index = '             + FormatFloat('000',I)+']');
+              SLRetorno.Add('numeroBoletoBB = '             + RetornoDetalhe.DadosRet.TituloRet.NossoNumero);
+              SLRetorno.Add('dataRegistro = '               + DateToStr(RetornoDetalhe.DadosRet.TituloRet.DataRegistro));
+              SLRetorno.Add('dataVencimento = '             + DateToStr(RetornoDetalhe.DadosRet.TituloRet.Vencimento));
+              SLRetorno.Add('valorOriginal = '              + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorDocumento));
+              SLRetorno.Add('carteiraConvenio = '           + RetornoDetalhe.DadosRet.TituloRet.Carteira);
+              SLRetorno.Add('variacaoCarteiraConvenio = '   + intToStr(RetornoDetalhe.DadosRet.TituloRet.Modalidade));
+              SLRetorno.Add('codigoEstadoTituloCobranca = ' + RetornoDetalhe.DadosRet.TituloRet.codigoEstadoTituloCobranca);
+              SLRetorno.Add('estadoTituloCobranca = '       + RetornoDetalhe.DadosRet.TituloRet.estadoTituloCobranca);
+              SLRetorno.Add('contrato = '                   + RetornoDetalhe.DadosRet.TituloRet.Contrato);
+              SLRetorno.Add('dataMovimento = '              + DateToStr(RetornoDetalhe.DadosRet.TituloRet.dataMovimento));
+              SLRetorno.Add('dataCredito = '                + DateToStr(RetornoDetalhe.DadosRet.TituloRet.dataCredito));
+              SLRetorno.Add('valorAtual = '                 + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.valorAtual));
+              SLRetorno.Add('valorPago = '                  + CurrToStr(RetornoDetalhe.DadosRet.TituloRet.ValorPago));
+              SLRetorno.Add('NossoNumeroCorrespondente = '  + RetornoDetalhe.DadosRet.TituloRet.NossoNumeroCorrespondente);
+              SLRetorno.Add('EMV (QrCode Pix) = '           + RetornoDetalhe.DadosRet.TituloRet.EMV);
+
+              SLRetorno.Add('  ---  ');  }
+              if Retorno[I].DadosRet.TituloRet.NossoNumero <> '' then
+                begin
+                  sNossoNum5 := Retorno[I].DadosRet.TituloRet.NossoNumero;
+                  sNossoNum5 := Bib.FormataTextoEsq(sNossoNum5, 11, '0');
+                  sNossoNum5 := sNossoNum5 + CalculaDVNN(QBoletoAPICARTEIRA.AsString + sNossoNum5);
+                  BaixaTituloRetorno(Retorno[I].DadosRet.TituloRet.ValorMoraJuros + Retorno[I].DadosRet.TituloRet.ValorMulta,
+                                                     Retorno[I].DadosRet.TituloRet.ValorDesconto,
+                                                     Retorno[I].DadosRet.TituloRet.ValorPago,
+                                                     Retorno[I].DadosRet.TituloRet.ValorMoraJuros + Retorno[I].DadosRet.TituloRet.ValorMulta,
+                                                     sNossoNum5,
+                                                     DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito),
+                                                     DateToStr(Retorno[I].DadosRet.TituloRet.dataCredito));
+                  if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'REDE') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - PAGO NA REDE BANCÁRIA';
+                  end
+                  else if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'COMPE') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - COMPENSAÇÃO EM CONTA';
+                  end
+                  else if (StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]) = 'PIX') then
+                  begin
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+                    sMensagem := sMensagem + ' - PAGO VIA QRCODE';
+                  end
+                  else
+                    sMensagem := StringReplace(Retorno[I].DadosRet.TituloRet.Mensagem.Text, #$D#$A, '', [rfReplaceAll, rfIgnoreCase]);
+
+                  CdRetornoRemessa.Append;
+                  CdRetornoRemessaDESC_TITULO.Value := sNossoNum5;
+                  CdRetornoRemessaDESC_CLIENTE.Text := Retorno[I].DadosRet.TituloRet.Sacado.CNPJCPF;
+                  CdRetornoRemessaDESC_MENSAGEM.Value := sMensagem;
+                  CdRetornoRemessa.Post;
+                end;
+            end;
+            SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsultaDetalhe.txt' );
+          finally
+            SLRetorno.Free;
+          end;
+        end;
+      end;
+    end;
+    CdRetornoRemessa.First;
+    QBoletoAPI.Close;
+  end;
+end;
+
+procedure TEnvioBoletoApiCresolCR.SetCodContaCorrente(codConta: integer);
+begin
+
+  iCodContaCorrente := codConta;
+
+end;
+
+procedure TEnvioBoletoApiCresolCR.BaixaTituloRetorno(wValor_Juro, wValor_Desconto,
+  wValor_Baixa, wPagto_Juro: Real;
+  NNumero, mDataLiquidacao, mDataCredito: string);
+var
+  wCodDoc, wCodCompl, wVlrLancto: Real;
+  wNum_Titulo, wNumDoc, wContaCred, wCodHistorico, wContaDeb: string;
+  CC, wFilial, wFilial_Contabil: Integer;
+begin
+  if DMParamSistema.QParamSistemaCod_Empresa.Value = 'ABATE' then
+  begin
+    mDataCredito := DateToStr(Date);
+    mDataLiquidacao := DateToStr(Date);
+  end;
+
+  DMContasReceber.pBaixaMagenetico := 'S';
+
+  CC := iCodContaCorrente;
+  with DMContasReceber do
+  begin
+    QContasReceberBaixaMov.Close;
+    QContasReceberBaixaMov.Master := nil;
+    QContasReceberBaixaMov.MasterFields := '';
+    QContasReceberBaixaMov.DetailFields := '';
+    QAchaTitulo.Close;
+    QAchaTitulo.SetVariable('NOSSO_NUMERO', NNumero);
+    if wNum_Titulo = '' then
+      QAchaTitulo.SetVariable('TITULO', Null)
+    else
+      QAchaTitulo.SetVariable('TITULO', wNum_Titulo);
+    QAchaTitulo.Open;
+    if not QAchaTitulo.Eof then
+      // titulo não foi localizado nos arquivo de titulos
+    begin
+      QContasReceber_Cab.Close;
+      QContasReceber_Cab.SetVariable('PK',
+        QAchaTituloCod_Conta_Receber_Cab.Value);
+      QContasReceber_Cab.Open;
+      if QContasReceber_CabInd_Situacao.Value <> 'BAIXA TOTAL' then
+      begin
+        if NNumero <> QContasReceber_CabCOD_NOSSO_NUMERO.Text then
+          raise exception.Create('Nosso número não confere! RETORNO : ' + NNumero
+            + ' - BASE DE DADOS : ' + QContasReceber_CabCOD_NOSSO_NUMERO.Text);
+        DMFinalidade.QFinalidade.Close;
+        DMFinalidade.QFinalidade.SetVariable('PK', DMContasReceber.QContasReceber_CabCOD_FINALIDADE.Value);
+        DMFinalidade.QFinalidade.Open;
+        if (wPagto_Juro = 0) and (wValor_Juro = 0) then
+          // foi colocado pelo cesar - esta vindo titulos da sicredi com valor a maior e zeros nos juros
+          if wValor_Baixa > QContasReceber_CabVal_Titulo.Value then
+          begin
+            wPagto_Juro := wValor_Baixa - QContasReceber_CabVal_Titulo.Value;
+            wValor_Juro := wValor_Baixa - QContasReceber_CabVal_Titulo.Value;
+          end;
+        wValor_Baixa := wValor_Baixa - wPagto_Juro;
+
+        if (wValor_Baixa <> 0) then // or (wValor_Juro<>0)
+        begin // Se o Lançamento não vai gerar um valor negativo.
+          try
+            if not DMOracle.DBCemapa.InTransaction then
+              // Verifica se já foi iniciada uma transação.
+              DMOracle.DBCemapa.StartTransaction; // Inicia a transação
+
+            //Inclui no Movimento o Juro no movimento contas a receber
+            if wValor_Juro > 0 then
+            begin
+              QContasReceberBaixaMov.Close;
+              QContasReceberBaixaMov.Open;
+              QContasReceberBaixaMov.Insert;
+              QContasReceberBaixaMovCod_Conta_Receber_Cab.Value := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+              QContasReceberBaixaMovVal_Movimento.Value := wValor_Juro;
+              QContasReceberBaixaMovDt_Movimento.Value := StrToDate(mDataCredito); // Data entrada ou liquidação
+              QContasReceberBaixaMovInd_Tipo_Movimento.Value := 'JUROS';
+              QContasReceberBaixaMov.Post;
+            end;
+
+            // Inclui no Movimento o Pagamento do Juro
+            if wPagto_Juro > 0 then
+            begin
+              QContasReceberBaixaMov.Close;
+              QContasReceberBaixaMov.Open;
+              QContasReceberBaixaMov.Insert;
+              QContasReceberBaixaMovCod_Conta_Receber_Cab.Value := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+              QContasReceberBaixaMovVal_Movimento.Value := wPagto_Juro;
+              QContasReceberBaixaMovDt_Movimento.Value := StrToDate(mDataCredito); // Data do credito.
+              QContasReceberBaixaMovInd_Tipo_Movimento.Value := 'RECEBTO. JUROS';
+              QContasReceberBaixaMovDESC_OBSERVACAO.Value := 'WEB API';
+              QContasReceberBaixaMovIND_FORMA_PAGAMENTO.Value := 'Bancos (';
+              if not (DMFinalidade.QFinalidadeCod_Historico_Juro.isNull) then
+              begin
+                if DMBancoAgencia.QBancoMovimento.Active = False then
+                  DMBancoAgencia.QBancoMovimento.Open;
+                DMBancoAgencia.QBancoMovimento.Insert;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Corrente.Value := CC;
+                DMBancoAgencia.QBancoMovimentoCod_Historico.Value := DMFinalidade.QFinalidadeCOD_HISTORICO_JURO.Value;
+                DMBancoAgencia.QBancoMovimentoDT_Movimento.Value := StrToDate(mDataCredito); // Data entrada ou liquidacao
+                DMBancoAgencia.QBancoMovimentoVal_Movimento.value := wPagto_Juro;
+                DMBancoAgencia.QBancoMovimentoCod_Cadastro.value := DMContasReceber.QContasReceber_CabCOD_CADASTRO.Value;
+                DMBancoAgencia.QBancoMovimentoNum_Cheque.Value := DMContasReceber.QContasReceber_CabNum_Titulo.AsInteger;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Receber_Cab.value := DMContasReceber.QContasReceber_CabCOD_CONTA_RECEBER_CAB.Value;
+                DMBancoAgencia.QBancoMovimentoDesc_Complemento1.Value := 'Título :' + FloatToStr(QContasReceber_CabNUM_TITULO.Value) + ' Parcela: ' + FloatToStr(QContasReceber_CabNUM_PARCELA.Value);
+                DMBancoAgencia.QBancoMovimentoCod_Departamento.Value := QContasReceber_CabCod_Departamento.Value;
+                DMBancoAgencia.QBancoMovimentoDESC_COMPLEMENTO2.Value := 'WEB API';
+                //No Extrato do BANCOS é mostrado o nome do cliente no campo de observação. Quando é feito baixa pelo arquivo de retorno
+                //a desc_observacao ficava em branco. Solitação do LEONIR - DEONA. Junior 24/02/2015. Autorizado pelo César.
+                DMBancoAgencia.QBancoMovimentoDESC_OBSERVACAO.Value := DMOracle.FastSelect('NOME','TB_CADASTRO','COD_CADASTRO = ' + DMContasReceber.QContasReceber_CabCOD_CADASTRO.Text);
+                DMBancoAgencia.QBancoMovimento.Post;
+                QContasReceberBaixaMovCod_Bco_Movimento.Value := DMBancoAgencia.QBancoMovimentoCod_Bco_Movimento.Value;
+              end;
+              if DMParamSistema.QParamSistemaInd_Contabiliza.Value = 'S' then
+              begin
+                wCodDoc := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+                wNumDoc := FloatToStr(QContasReceber_CabNum_Titulo.Value);
+                wFilial := QContasReceber_CabCod_Filial.Value;
+                //                wFilial_Contabil:= QContasReceber_CabCod_Filial.Value;
+                wFilial_Contabil := DMBancoAgencia.QContaCorrenteConsCod_Filial.Value;
+                wContaCred := DMFinalidade.QFinalidadeCOD_CONTABIL_VL_JURO_CRED.Value;
+                wContaDeb := DMBancoAgencia.QBancoAgenciaCod_Contabil_Vl_Juro_Bco_Deb.Value;
+                wCodCompl := QContasReceber_CabCod_Cadastro.Value;
+                wCodHistorico := DMFinalidade.QFinalidadeCOD_HISTORICO_CONTABIL.Text;
+                wVlrLancto := wPagto_Juro;
+                if (wContaCred <> '') and (wContaDeb <> '') then
+                begin
+                  //wDtLancto:= StrToDate(mDataLiquidacao);  // Data entrada ou liquidacao
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial,
+                    wContaCred, 'CREDITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaDeb);
+
+                  QContasReceberBaixaMovCOD_LANCTO_CONTABIL_CRED.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial_Contabil,
+                    wContaDeb, 'DEBITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaCred);
+
+                  QContasReceberBaixaMovCOD_LANCTO_CONTABIL_DEB.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                end;
+              end;
+              QContasReceberBaixaMov.Post;
+            end;
+
+            //Inclui no Movimento a Baixa
+            if wValor_Baixa > 0 then
+            begin
+              QContasReceberBaixaMov.Close;
+              QContasReceberBaixaMov.Open;
+              QContasReceberBaixaMov.Insert;
+              QContasReceberBaixaMovCod_Conta_Receber_Cab.Value := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+              QContasReceberBaixaMovVal_Movimento.Value := wValor_Baixa;
+              //SERGIO 25/11/02 - wValor_Desconto;
+              QContasReceberBaixaMovDt_Movimento.Value := StrToDate(mDataCredito); // Data da entrada ou liquidacao
+              QContasReceberBaixaMovInd_Tipo_Movimento.Value := 'RECEBTO. PRINCIPAL';
+              QContasReceberBaixaMovDESC_OBSERVACAO.Value := 'WEB API';
+              QContasReceberBaixaMovIND_FORMA_PAGAMENTO.Value := 'Bancos (';
+
+              if not (DMFinalidade.QFinalidadeCod_Historico_Cheque.isNull) then
+              begin
+                if DMBancoAgencia.QBancoMovimento.Active = false then
+                  DMBancoAgencia.QBancoMovimento.Open;
+                DMBancoAgencia.QBancoMovimento.Insert;
+                DMBancoAgencia.QBancoMovimentoCod_Historico.Value := DMFinalidade.QFinalidadeCOD_HISTORICO_CHEQUE.Value;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Corrente.Value := CC;
+                DMBancoAgencia.QBancoMovimentoDT_Movimento.value := StrToDate(mDataCredito); // data do credito ou liquidacao
+                if DMParamSistema.QParamSistemaInd_Tipo_Integracao.Value = 'C' then // Integracao via caixa    Cesar 05/10/2009
+                  DMBancoAgencia.QBancoMovimentoVal_Movimento.value := wValor_Baixa + wValor_Desconto
+                else
+                  DMBancoAgencia.QBancoMovimentoVal_Movimento.value := wValor_Baixa;
+                DMBancoAgencia.QBancoMovimentoCod_Cadastro.value := DMContasReceber.QContasReceber_CabCOD_CADASTRO.Value;
+                DMBancoAgencia.QBancoMovimentoNum_Cheque.Value := DMContasReceber.QContasReceber_CabNum_Titulo.AsInteger;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Receber_Cab.value := DMContasReceber.QContasReceber_CabCOD_CONTA_RECEBER_CAB.Value;
+                DMBancoAgencia.QBancoMovimentoDesc_Complemento1.Value := 'Título :' + FloatToStr(QContasReceber_CabNUM_TITULO.Value) + ' Parcela: ' + FloatToStr(QContasReceber_CabNUM_PARCELA.Value);
+                DMBancoAgencia.QBancoMovimentoCod_Departamento.Value := QContasReceber_CabCod_Departamento.Value;
+                DMBancoAgencia.QBancoMovimentoDESC_COMPLEMENTO2.Value := 'WEB API';
+                //No Extrato do BANCOS é mostrado o nome do cliente no campo de observação. Quando é feito baixa pelo arquivo de retorno
+                //a desc_observacao ficava em branco. Solitação do LEONIR - DEONA. Junior 24/02/2015. Autorizado pelo César.
+                DMBancoAgencia.QBancoMovimentoDESC_OBSERVACAO.Value := DMOracle.FastSelect('NOME','TB_CADASTRO','COD_CADASTRO = ' + DMContasReceber.QContasReceber_CabCOD_CADASTRO.Text);
+                DMBancoAgencia.QBancoMovimento.Post;
+                QContasReceberBaixaMovCod_Bco_Movimento.Value := DMBancoAGencia.QBancoMovimentoCOD_BCO_MOVIMENTO.Value;
+              end;
+
+              // Inclusão do Lançamento Contábil
+              if DMParamSistema.QParamSistemaInd_Contabiliza.Value = 'S' then
+              begin
+                wCodDoc := QContasReceber_CabCOD_CONTA_RECEBER_CAB.Value;
+                wNumDoc := FloatToStr(QContasReceber_CabNum_Titulo.Value);
+                wFilial := QContasReceber_CabCod_Filial.Value;
+                //                wFilial_Contabil:=QContasReceber_CabCod_Filial.Value;
+                wFilial_Contabil := DMBancoAgencia.QContaCorrenteConsCod_Filial.Value;
+                wContaCred := DMFinalidade.QFinalidadeCOD_CONTABIL_VL_BAIXA_CRED.Value;
+                wContaDeb := DMBancoAgencia.QBancoAgenciaCod_Contabil_Vl_Prin_Bco_Deb.Value;
+                wCodCompl := QContasReceber_CabCod_Cadastro.Value;
+                wCodHistorico := DMFinalidade.QFinalidadeCOD_HISTORICO_CONTABIL.Text;
+                wVlrLancto := wValor_Baixa;
+                if (wContaCred <> '') and (wContaDeb <> '') then
+                begin
+                  //wDtLancto:= StrToDate(mDataLiquidacao);   // Data entrada ou liquidação
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial,
+                    wContaCred, 'CREDITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaDeb);
+                  QContasReceberBaixaMovCod_lancto_contabil_Cred.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial_Contabil,
+                    wContaDeb, 'DEBITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaCred);
+                  QContasReceberBaixaMovCod_lancto_contabil_Deb.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                end;
+              end;
+              QContasReceberBaixaMov.Post;
+
+            end; // Termino da Inclusão dos Movimentos de Baixa
+
+            if wValor_Desconto > 0 then
+            begin //Inclui no Movimento o Desconto
+              QContasReceberBaixaMov.Close;
+              QContasReceberBaixaMov.Open;
+              QContasReceberBaixaMov.Insert;
+              QContasReceberBaixaMovCod_Conta_Receber_Cab.Value := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+              QContasReceberBaixaMovVal_Movimento.Value := wValor_Desconto;
+              QContasReceberBaixaMovDt_Movimento.Value := StrToDate(mDataCredito);
+              QContasReceberBaixaMovInd_Tipo_Movimento.Value := 'DESC. CONCEDIDO';
+
+              if not (DMFinalidade.QFinalidadeCod_Historico_Desc.isNull) then
+              begin
+                if DMBancoAgencia.QBancoMovimento.Active = False then
+                  DMBancoAgencia.QBancoMovimento.Open;
+                DMBancoAgencia.QBancoMovimento.Insert;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Corrente.Value := CC;
+                DMBancoAgencia.QBancoMovimentoCod_Historico.Value := DMFinalidade.QFinalidadeCOD_HISTORICO_DESC.Value;
+                DMBancoAgencia.QBancoMovimentoDT_Movimento.Value := StrToDate(mDataCredito); // Data entrada ou liquidacao
+                DMBancoAgencia.QBancoMovimentoVal_Movimento.value := wValor_Desconto;
+                DMBancoAgencia.QBancoMovimentoCod_Cadastro.value := DMContasReceber.QContasReceber_CabCOD_CADASTRO.Value;
+                DMBancoAgencia.QBancoMovimentoNum_Cheque.Value := DMContasReceber.QContasReceber_CabNum_Titulo.AsInteger;
+                DMBancoAgencia.QBancoMovimentoCod_Conta_Receber_Cab.value := DMContasReceber.QContasReceber_CabCOD_CONTA_RECEBER_CAB.Value;
+                DMBancoAgencia.QBancoMovimentoDesc_Complemento1.Value := 'Título :' + FloatToStr(QContasReceber_CabNUM_TITULO.Value) + ' Parcela: ' + FloatToStr(QContasReceber_CabNUM_PARCELA.Value);
+                DMBancoAgencia.QBancoMovimentoCod_Departamento.Value := QContasReceber_CabCod_Departamento.Value;
+                DMBancoAgencia.QBancoMovimentoDESC_OBSERVACAO.Value := 'WEB API';
+                //No Extrato do BANCOS é mostrado o nome do cliente no campo de observação. Quando é feito baixa pelo arquivo de retorno
+                //a desc_observacao ficava em branco. Solitação do LEONIR - DEONA. Junior 24/02/2015. Autorizado pelo César.
+                DMBancoAgencia.QBancoMovimentoDESC_OBSERVACAO.Value := DMOracle.FastSelect('NOME','TB_CADASTRO','COD_CADASTRO = ' + DMContasReceber.QContasReceber_CabCOD_CADASTRO.Text);
+                DMBancoAgencia.QBancoMovimento.Post;
+                QContasReceberBaixaMovCod_Bco_Movimento.Value := DMBancoAgencia.QBancoMovimentoCod_Bco_Movimento.Value;
+              end;
+
+              if DMParamSistema.QParamSistemaInd_Contabiliza.Value = 'S' then
+              begin
+                wCodDoc := QContasReceber_CabCod_Conta_Receber_Cab.Value;
+                wNumDoc := FloatToStr(QContasReceber_CabNum_Titulo.Value);
+                wFilial := QContasReceber_CabCod_Filial.Value;
+                //                wFilial_Contabil:=QContasReceber_CabCod_Filial.Value;
+                wFilial_Contabil := DMBancoAgencia.QContaCorrenteConsCod_Filial.Value;
+                wContaCred := DMBancoAgencia.QBancoAgenciaCod_Contabil_Vl_Desc_Bco_Cred.Value;
+                wContaDeb := DMFinalidade.QFinalidadeCOD_CONTABIL_VL_DESC_DEB.Value;
+                wCodCompl := QContasReceber_CabCod_Cadastro.Value;
+                wCodHistorico := DMFinalidade.QFinalidadeCOD_HISTORICO_CONTABIL.Text;
+                wVlrLancto := wValor_Desconto;
+                ;
+                if (wContaCred <> '') and (wContaDeb <> '') then
+                begin
+                  //wDtLancto:= StrToDate(mDataLiquidacao);   // Data entrada ou liquidação
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial_Contabil,
+                    wContaCred, 'CREDITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaDeb);
+                  QContasReceberBaixaMovCod_lancto_contabil_Cred.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                  DMPlanilha.GravaLanc('CR', wCodDoc, wNumDoc, wFilial,
+                    wContaDeb, 'DEBITO', wCodCompl, StrToFloat(wCodHistorico),
+                    wVlrlancto, StrToDate(mDataCredito), wContaCred);
+                  QContasReceberBaixaMovCod_lancto_contabil_Deb.Value := DMPlanilha.QLcto1COD_LANCTO_CONTABIL.Value;
+                end;
+              end;
+              QContasReceberBaixaMov.Post;
+            end; // Término da Inclusao do Movimento de Desconto
+
+            // Término da Inclusão de Movimentos
+            QContasReceber_Cab.Edit;
+            QContasReceber_CabVAL_JUROS.Value := 0;
+            QContasReceber_CabVAL_TITULO.Value := 0;
+            // Muda a Situção do Título
+            QContasReceber_CabDT_BAIXA.Value := DMOracle.DataServ;
+            QContasReceber_CabIND_SITUACAO.Value := 'BAIXA TOTAL';
+            QContasReceber_CabDT_CAPITALIZACAO.Value := StrToDate(mDataCredito);
+            // Data do credito
+            QContasReceber_CabDT_CAPITALIZACAO_MOEDA.Value :=
+              StrToDate(mDataCredito); // Data do credito
+            QContasReceber_Cab.Post;
+            DMOracle.DBCemapa.Commit; // Fim da transação
+            QContasReceberBaixaMov.Close;
+
+          except
+            on E: Exception do
+            begin
+                DMContasReceber.pBaixaMagenetico := '';
+                DMOracle.DBCemapa.RollBack;
+                //Por Gian 25/11/2020
+                //Agora a exception mostra a mensagem de erro que foi capturada.
+                //Antes mostrava apenas Transação não efetuada.
+                raise exception.create('Erro! Transação não efetuada: ' + E.Message);
+            end;
+          end //  End If
+        end;
+      end // teste de situacao do titulo 'BAIXA TOTAL'
+      else
+      begin
+        DMContasReceber.pBaixaMagenetico := '';
+        ShowMessage('Favor verificar. NN-'
+          + NNumero + #13 + #10 + 'Título com Baixa Total!');
+      end;
+    end; // End With
+  end;
+  DMContasReceber.QContasReceberBaixaMov.Close;
+  DMFinalidade.QFinalidade.Close;
+  DMContasReceber.QContasReceber_Cab.Close;
+  DMContasReceber.QContasReceberBaixaMov.Master :=
+    DMContasReceber.QContasReceberBaixa;
+  DMContasReceber.QContasReceberBaixaMov.MasterFields :=
+    'COD_CONTA_RECEBER_CAB';
+  DMContasReceber.QContasReceberBaixaMov.DetailFields :=
+    'COD_CONTA_RECEBER_CAB';
+  DMContasReceber.pBaixaMagenetico := '';
+end;
+
+procedure TEnvioBoletoApiCresolCR.CancelarBoleto;
+var
+  I, J, iCodContaReceberCab: Integer;
+  SLRetorno: TStringList;
+  sNossoNum5, wComando, sMensagem,
+  sCodigo, sData, sMsg: String;
+  sMensagemEmail: TStrings;
+  ListaContaReceber: Array of Integer;
+  Retorno: TListaACBrBoletoRetornoWS;
+  RetornoDetalhe: TACBrBoletoRetornoWS;
+  dDataInicio, dDataFim: TDate;
+begin
+
+
+
+  // ARRANQUEI TUDO PORQUE DÁ MUITO TRABALHO REESCREVER O CÓDIGO. NA PRÓXIMA VERSÃO EU CORRIJO TUDO
+
+  with DMContasReceber do
+  begin
+    QBoletoAPI.Open;
+    QBoletoAPI.First;
+
+    if not QBoletoAPI.EOF then
+    begin
+
+      SetaConfigBanco(sIndAmbiente);
+
+      PreecherBeneficiario;
+
+      for I := 0 to QBoletoAPI.RecordCount - 1 do
+      begin
+        AdicionarBoletoNaLista;
+        SetLength(ListaContaReceber, I + 1);
+        ListaContaReceber[I] := QBoletoAPICOD_CONTA_RECEBER_CAB.Value;
+        QBoletoAPI.Next;
+      end;
+    end;
+
+    QBoletoAPI.Close;
+
+    // tpInclui, tpAltera, tpBaixa, tpConsulta, tpConsultaDetalhe,
+    // tpPIXCriar, tpPIXCancelar, tpPIXConsultar, tpCancelar, tpTicket
+    Boleto.Configuracoes.WebService.Operacao := tpBaixa;  //unico funcional sicredi
+
+
+    Boleto.Enviar;
+    IndTemRejeicao := False;
+    IndTemErro := False;
+
+    // Abaixo verifica se houve retorno e se existem boletos que foram corretamente enviados
+    if Boleto.TotalListaRetornoWeb > 0 then
+    begin
+      SLRetorno := TStringList.Create;
+      SLRetorno.Delimiter := ',';
+      //  SLRemessa.QuoteChar := '';
+      try
+          for i:= 0 to Pred(Boleto.TotalListaRetornoWeb) do
+          begin
+
+          if (Boleto.ListadeBoletos.Count = Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) then
+          begin
+            sMensagem := Boleto.ListaRetornoWeb[i].ListaRejeicao[0].Mensagem;
+
+            MessageDlg('Problemas ao enviar os boletos! ' + sMensagem,
+                  mtWarning,
+                  [mbOK],
+                  0);
+            sMensagem := '';
+            IndTemRejeicao := True;
+          end
+          else
+          begin
+
+            for j:= 0 to Pred(Boleto.ListaRetornoWeb[i].ListaRejeicao.Count) do
+            begin
+            SLRetorno.Add('[Rejeicao'   +IntToStr(j)+']' + sLineBreak +
+                   'Campo='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Campo + sLineBreak +
+                   'Codigo='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Codigo + sLineBreak +
+                   'Versao='     + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Versao + sLineBreak +
+                   'Mensagem='   + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Mensagem + sLineBreak +
+                   'Ocorrencia=' + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Ocorrencia + sLineBreak +
+                   'Valor='      + Boleto.ListaRetornoWeb[i].ListaRejeicao[j].Valor + sLineBreak );
+                   IndTemRejeicao := True;
+            end;
+            SLRetorno.Add('Baixa' +  Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+                           'CodRegorno = ' +  Boleto.ListaRetornoWeb[i].CodRetorno + sLineBreak +
+                           'OriRetorno = ' +  Boleto.ListaRetornoWeb[i].OriRetorno + sLineBreak +
+                           'MsgRegorno = ' +  Boleto.ListaRetornoWeb[i].MsgRetorno  + sLineBreak +
+                           'JSON = ' + Boleto.ListaRetornoWeb[i].JSON + sLineBreak);
+                           sCodigo := ExtrairValorJSON(Boleto.ListaRetornoWeb[i].JSON, 'code');
+                           sMsg := ExtrairValorJSON(Boleto.ListaRetornoWeb[i].JSON, 'message');
+                           sData := ExtrairValorJSON(Boleto.ListaRetornoWeb[i].JSON, 'date');
+
+
+            SLRetorno.Add('HEADER'          + sLineBreak +
+                 'Versao='           + Boleto.ListaRetornoWeb[i].Header.Versao + sLineBreak +
+                 'Autenticacao='     + Boleto.ListaRetornoWeb[i].Header.Autenticacao + sLineBreak +
+                 'Usuario_Servico='  + Boleto.ListaRetornoWeb[i].Header.Usuario_Servico + sLineBreak +
+                 'Usuario='          + Boleto.ListaRetornoWeb[i].Header.Usuario + sLineBreak +
+                 'Operacao='         + TipoOperacaoToStr(Boleto.ListaRetornoWeb[i].Header.Operacao) + sLineBreak +
+                 'Indice='           + IntToStr(Boleto.ListaRetornoWeb[i].Header.Indice) + sLineBreak +
+                 'Sistema_Origem='   + Boleto.ListaRetornoWeb[i].Header.Sistema_Origem + sLineBreak +
+                 'Agencia='          + Boleto.ListaRetornoWeb[i].Header.Agencia + sLineBreak +
+                 'ID_Origem='        + Boleto.ListaRetornoWeb[i].Header.Id_Origem + sLineBreak +
+                 'Data_Hora='        +FormatDateTime('dd/mm/yyyy hh:nn:ss',Boleto.ListaRetornoWeb[i].Header.Data_Hora) + sLineBreak +
+                 'ID_Processo='      + Boleto.ListaRetornoWeb[i].Header.Id_Processo + sLineBreak +
+                 'DADOS'             + sLineBreak +
+                 'Excessao='         +Boleto.ListaRetornoWeb[i].DadosRet.Excecao + sLineBreak +
+                 'CONTROLE_NEGOCIAL' + sLineBreak +
+                 'Origem_Retorno='   + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.OriRetorno + sLineBreak +
+                 'NSU='              + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.NSU + sLineBreak +
+                 'Cod_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.CodRetorno + sLineBreak +
+                 'Msg_Retorno='      + Boleto.ListaRetornoWeb[i].DadosRet.ControleNegocial.Retorno + sLineBreak +
+                 'COMPROVANTE'       + sLineBreak +
+                 'Data='             +  FormatDateTime('dd/mm/yyyy', Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Data) + sLineBreak +
+                 'Hora='             +  Boleto.ListaRetornoWeb[i].DadosRet.Comprovante.Hora + sLineBreak +
+                 'ID_BOLETO'         + sLineBreak +
+                 'Codigo_Barras='    + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.CodBarras + sLineBreak +
+                 'Linha_Digitavel='  + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.LinhaDig + sLineBreak +
+                 'Nosso_Numero='     + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.NossoNum + sLineBreak +
+                 'URL='              + Boleto.ListaRetornoWeb[i].DadosRet.IDBoleto.URL + sLineBreak +
+                 'CONSULTA_BOLETO'   + sLineBreak +
+                 'Numero_Documento=' + Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NumeroDocumento + sLineBreak +
+                 'Data_Vencimento='  + FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento) + sLineBreak +
+                 'Valor='            + CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento) + sLineBreak
+                  );
+                  SLRetorno.SaveToFile( PathWithDelim(ExtractFilePath(Application.ExeName))+formatDateTime('yyyy.mm.dd.hh.nn.ss.zzz',now)+'-RetornoConsulta.txt' );
+            if (sMsg = 'Solicitação de Baixa registrada com sucesso.') and (sCodigo = '200') then
+            begin
+              SLRetorno.Add('TITULO_RETORNO'            + sLineBreak  +
+              'vencimento_titulo='                     +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Vencimento)+ sLineBreak +
+              'tipo_carteira_titulo='                  +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Carteira+ sLineBreak +
+              'nosso_numero='                          +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.NossoNumero+ sLineBreak +
+              'seu_numero='                            +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.SeuNumero+ sLineBreak +
+              'especie='                               +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.EspecieDoc+ sLineBreak +
+              'codigo_barras='                         +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.CodBarras+ sLineBreak +
+              'numero_linha_digitavel='                +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.LinhaDig+ sLineBreak +
+              'local_pagamento='                       +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Mensagem.Text+ sLineBreak +
+              'data_processamento='                    +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataProcessamento)+ sLineBreak +
+              'data_emissao='                          +FormatDateTime('dd/mm/yyyy',Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.DataDocumento)+ sLineBreak +
+              'uso_banco='                             +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.UsoBanco+ sLineBreak +
+              'valor_titulo='                          +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDocumento)+ sLineBreak +
+              'valor_desconto='                        +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDesconto)+ sLineBreak +
+              'valor_outra_deducao='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorDespesaCobranca)+ sLineBreak +
+              'valor_juro_multa='                      +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorMoraJuros)+ sLineBreak +
+              'valor_outro_acrescimo='                 +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorOutrosCreditos)+ sLineBreak +
+              'valor_total_cobrado='                   +CurrToStr(Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.ValorPago) + sLineBreak +
+              'texto_informacao_cliente_beneficiario=' +Boleto.ListaRetornoWeb[i].DadosRet.TituloRet.Informativo.Text  );
+              DMOracle.QExecSQL.Close;
+              DMOracle.QExecSQL.SQL.Clear;
+              wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET DESC_CODIGO_BARRAS = ' + QuotedStr('');
+              wComando := wComando + ', DESC_TXID = ' + QuotedStr('');
+              wComando := wComando + ', DESC_LINHA_DIGITAVEL = ' + QuotedStr('');
+              wComando := wComando + ', DESC_COPIA_COLA = ' + QuotedStr('');
+              wComando := wComando + ', IND_ENVIADO_BANCO = ' + QuotedStr('NAO');
+              wComando := wComando + ', COD_NOSSO_NUMERO = ' + QuotedStr('');
+              wComando := wComando + ', IND_SITUACAO = ' + QuotedStr('ABERTO');
+              wComando := wComando + ' WHERE COD_CONTA_RECEBER_CAB = ' + IntToStr(ListaContaReceber[I]);
+              DMOracle.QExecSQL.SQL.Add(wComando);
+              DMOracle.QExecSQL.ExecSQL;
+
+              if DMOracle.DBCemapa.InTransaction then
+                DMOracle.DBCemapa.Commit;
+            end; // if NaoEstaVazio
+          end; // if (Boleto.ListadeBoletos.Count
+        end;
+
+  		finally
+	  		SLRetorno.Free;
+		    // Ajustar aqui para lançar possíveis mensagens de erro ou mostrar os boletos gerados.
+		    // Necessário testes
+  		  //ShowMessage(SLRemessa);
+      end;
+
+		end;
+  end;
+
+end;
+
+function TEnvioBoletoApiCresolCR.CalculaDVNN(wstrNumeros:String):String;
+var
+  wintC, wintDV, wintMult : Integer;
+  wintValor: array of Integer;
+Begin
+  wintDV := 0;
+  wintMult := 2;
+  wstrNumeros:=wstrNumeros;
+  SetLength(wintValor, Length(wstrNumeros));
+
+  for wintC := Length(wstrNumeros)-1 downto 0 do
+  Begin
+    wintValor[wintC] := StrToInt(wstrNumeros[wintC+1]); //a matriz de inteiros começa em 0
+
+    If wintMult > 7 then
+      wintMult := 2;                                                    //string começa por 1
+
+    wintValor[wintC] := wintValor[wintC] * wintMult;
+    wintDV := wintDV + wintValor[wintC];
+
+    inc(wintMult);
+  End;
+  // Modificado por Djeison - 26/07/2013
+//  wintDV := wintDV div 11;
+//
+//  wintDV := 11 - (wintDV Mod 11);
+  wintDV := (wintDV * 10) mod 11;
+  Case wintDV of
+    10: wstrNumeros := 'P';
+    11: wstrNumeros := '0';
+  Else
+    wstrNumeros := IntToStr(wintDV);
+  End;
+  Result := wstrNumeros;
+end;
+
+function TEnvioBoletoApiCresolCR.ExtrairValorJSON(const Texto,
+  Campo: string): string;
+var
+  P1, P2: Integer;
+  Busca: string;
+begin
+  Result := '';
+  Busca := '"' + Campo + '":';
+  P1 := Pos(Busca, Texto);
+  if P1 > 0 then
+  begin
+    Inc(P1, Length(Busca));
+    // Pula possíveis espaços
+    while (P1 <= Length(Texto)) and (Texto[P1] in [' ', '"']) do
+      Inc(P1);
+
+    // Localiza o fim do valor
+    P2 := P1;
+    while (P2 <= Length(Texto)) and not (Texto[P2] in ['"', ',', '}']) do
+      Inc(P2);
+
+    Result := Copy(Texto, P1, P2 - P1);
+  end;
+end;
+
+end.
+

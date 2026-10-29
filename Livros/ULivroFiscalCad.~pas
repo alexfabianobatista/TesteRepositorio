@@ -1,0 +1,4635 @@
+unit ULivroFiscalCad;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCADSIMPLES, ImgList, Menus, Db, ComCtrls, StdCtrls, Mask, Buttons,
+  ExtCtrls, DBCtrls, Grids, DBGrids, OracleNavigator, variants, ComObj,
+  ActnList, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
+  IdHTTP;
+
+type
+  TFLivroFiscalCad = class(TFTCadSimples)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    ResumodaApuraodoImposto1: TMenuItem;
+    PageControl2: TPageControl;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    BtRecalcula: TBitBtn;
+    Label6: TLabel;
+    DBEdit6: TDBEdit;
+    Label7: TLabel;
+    DBEdit7: TDBEdit;
+    Label8: TLabel;
+    DBEdit8: TDBEdit;
+    Label10: TLabel;
+    DBEdit10: TDBEdit;
+    Label11: TLabel;
+    DBEdit11: TDBEdit;
+    DBRadioGroup1: TDBRadioGroup;
+    ApuraodoICMS1: TMenuItem;
+    Label9: TLabel;
+    DBEdit9: TDBEdit;
+    DBEdit12: TDBEdit;
+    RelaoNotasPorOperao1: TMenuItem;
+    ResumoNotasPorOperacao1: TMenuItem;
+    Resumodasoperaesnoperiodo1: TMenuItem;
+    RelaoNotasComImposto1: TMenuItem;
+    ListagemNFEntradapPrefeitura1: TMenuItem;
+    RelaodeNotasnoPerodo1: TMenuItem;
+    DBGrid1: TDBGrid;
+    LivroDFC1: TMenuItem;
+    Label12: TLabel;
+    DBEdit13: TDBEdit;
+    Label13: TLabel;
+    Label14: TLabel;
+    OracleNavigator1: TOracleNavigator;
+    RelaoNFsPeriodo1: TMenuItem;
+    RelaoPiseCofins1: TMenuItem;
+    RelaoSiscredi1: TMenuItem;
+    ApuraodoICMS2: TMenuItem;
+    RelaoImpostoPorClasse1: TMenuItem;
+    RelaoImpostoPorProduto1: TMenuItem;
+    NotascomRetornodeImposto1: TMenuItem;
+    Label15: TLabel;
+    DBEdit14: TDBEdit;
+    DBEdit15: TDBEdit;
+    Label16: TLabel;
+    DBRadioGroup2: TDBRadioGroup;
+    ResumoValorIPIICMSES1: TMenuItem;
+    Opes1: TMenuItem;
+    ArqRemessaNFSINCO1: TMenuItem;
+    RelatrioImpostoNotaProduto1: TMenuItem;
+    TabSheet2: TTabSheet;
+    Label17: TLabel;
+    DBEdit16: TDBEdit;
+    Label18: TLabel;
+    DBEdit17: TDBEdit;
+    Label19: TLabel;
+    DBEdit18: TDBEdit;
+    Label20: TLabel;
+    DBEdit19: TDBEdit;
+    Label21: TLabel;
+    DBEdit20: TDBEdit;
+    Label22: TLabel;
+    DBEdit21: TDBEdit;
+    TabSheet5: TTabSheet;
+    Label23: TLabel;
+    DBEdit22: TDBEdit;
+    Label24: TLabel;
+    DBEdit23: TDBEdit;
+    TabSheet6: TTabSheet;
+    Label25: TLabel;
+    DBEdit24: TDBEdit;
+    Label26: TLabel;
+    DBEdit25: TDBEdit;
+    Label27: TLabel;
+    DBEdit26: TDBEdit;
+    Label28: TLabel;
+    DBEdit27: TDBEdit;
+    Label29: TLabel;
+    DBEdit28: TDBEdit;
+    Label30: TLabel;
+    DBEdit29: TDBEdit;
+    Label31: TLabel;
+    DBEdit30: TDBEdit;
+    Label32: TLabel;
+    DBEdit31: TDBEdit;
+    Label33: TLabel;
+    DBEdit32: TDBEdit;
+    TabSheet7: TTabSheet;
+    Label34: TLabel;
+    DBEdit33: TDBEdit;
+    Label35: TLabel;
+    DBEdit34: TDBEdit;
+    Label36: TLabel;
+    DBEdit35: TDBEdit;
+    Label37: TLabel;
+    DBEdit36: TDBEdit;
+    Label38: TLabel;
+    DBEdit37: TDBEdit;
+    Label39: TLabel;
+    DBEdit38: TDBEdit;
+    Label40: TLabel;
+    DBEdit39: TDBEdit;
+    TabSheet8: TTabSheet;
+    Label41: TLabel;
+    DBEdit40: TDBEdit;
+    Label42: TLabel;
+    DBEdit41: TDBEdit;
+    Label43: TLabel;
+    DBEdit42: TDBEdit;
+    Label44: TLabel;
+    DBEdit43: TDBEdit;
+    Label45: TLabel;
+    DBEdit44: TDBEdit;
+    Label46: TLabel;
+    DBEdit45: TDBEdit;
+    Label47: TLabel;
+    DBEdit46: TDBEdit;
+    Label48: TLabel;
+    DBEdit47: TDBEdit;
+    Label49: TLabel;
+    DBEdit48: TDBEdit;
+    Label50: TLabel;
+    DBEdit49: TDBEdit;
+    Label51: TLabel;
+    DBEdit50: TDBEdit;
+    Label52: TLabel;
+    DBEdit51: TDBEdit;
+    Label53: TLabel;
+    DBEdit52: TDBEdit;
+    Label54: TLabel;
+    DBEdit53: TDBEdit;
+    Label55: TLabel;
+    DBEdit54: TDBEdit;
+    TabSheet9: TTabSheet;
+    Label56: TLabel;
+    DBEdit55: TDBEdit;
+    Label57: TLabel;
+    DBEdit56: TDBEdit;
+    Label58: TLabel;
+    DBEdit57: TDBEdit;
+    Label59: TLabel;
+    DBEdit58: TDBEdit;
+    TabSheet10: TTabSheet;
+    Label61: TLabel;
+    DBEdit60: TDBEdit;
+    Label62: TLabel;
+    DBEdit61: TDBEdit;
+    Label63: TLabel;
+    DBEdit62: TDBEdit;
+    Label64: TLabel;
+    DBEdit63: TDBEdit;
+    Label65: TLabel;
+    DBEdit64: TDBEdit;
+    Label67: TLabel;
+    DBEdit66: TDBEdit;
+    Label68: TLabel;
+    DBEdit67: TDBEdit;
+    Label60: TLabel;
+    DBEdit59: TDBEdit;
+    Label66: TLabel;
+    DBEdit65: TDBEdit;
+    Label69: TLabel;
+    DBEdit68: TDBEdit;
+    Label70: TLabel;
+    DBEdit69: TDBEdit;
+    RelatrioRegimeEspecialPR1: TMenuItem;
+    ArqRemessaNFSINCOSimplificado1: TMenuItem;
+    ArqRemessaNFSINCO4311: TMenuItem;
+    ArqRemessaNFSINCO4321: TMenuItem;
+    ArqRemessaNFSINCO4331: TMenuItem;
+    ArqRemessaNFSINCO4341: TMenuItem;
+    ArqRemessaNFSINCO4351: TMenuItem;
+    ArqRemessaNFSINCO4361: TMenuItem;
+    ArqRemessaNFSINCO4911: TMenuItem;
+    ArqRemessaNFSINCO4941: TMenuItem;
+    ArqRemessaNFSINCO4951: TMenuItem;
+    Label71: TLabel;
+    DBEdit70: TDBEdit;
+    ArqRemessaNFSINCO4211: TMenuItem;
+    ArqRemessaNFSINCO4411: TMenuItem;
+    GroupBox1: TGroupBox;
+    DBEdit71: TDBEdit;
+    Label72: TLabel;
+    DBEdit72: TDBEdit;
+    Label73: TLabel;
+    DBRadioGroup3: TDBRadioGroup;
+    RelatorioGiIcms1: TMenuItem;
+    N2: TMenuItem;
+    ADECOFIS5520091: TMenuItem;
+    CrditoPresumidoIcms1: TMenuItem;
+    RelatriodenotasporCFOPCSOSN1: TMenuItem;
+    RelatriodenotasporCFOPPAGTO1: TMenuItem;
+    procedure SBConsultaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BtRecalculaClick(Sender: TObject);
+    procedure ResumodaApuraodoImposto1Click(Sender: TObject);
+    procedure ApuraodoICMS1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SBConfirmarClick(Sender: TObject);
+    procedure RelaoNotasPorOperao1Click(Sender: TObject);
+    procedure ResumoNotasPorOperacao1Click(Sender: TObject);
+    procedure Resumodasoperaesnoperiodo1Click(Sender: TObject);
+    procedure RelaoNotasComImposto1Click(Sender: TObject);
+    procedure ListagemNFEntradapPrefeitura1Click(Sender: TObject);
+    procedure SBHelpClick(Sender: TObject);
+    procedure RelaodeNotasnoPerodo1Click(Sender: TObject);
+    procedure LivroDFC1Click(Sender: TObject);
+    procedure RelaoNFsPeriodo1Click(Sender: TObject);
+    procedure RelaoPiseCofins1Click(Sender: TObject);
+    procedure RelaoSiscredi1Click(Sender: TObject);
+    procedure ApuraodoICMS2Click(Sender: TObject);
+    procedure RelaoImpostoPorClasse1Click(Sender: TObject);
+    procedure RelaoImpostoPorProduto1Click(Sender: TObject);
+    procedure NotascomRetornodeImposto1Click(Sender: TObject);
+    procedure DBEdit14Change(Sender: TObject);
+    procedure ResumoValorIPIICMSES1Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO1Click(Sender: TObject);
+    procedure RelatrioImpostoNotaProduto1Click(Sender: TObject);
+    procedure RelatrioRegimeEspecialPR1Click(Sender: TObject);
+    procedure ArqRemessaNFSINCOSimplificado1Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4311Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4321Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4331Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4341Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4351Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4361Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4911Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4941Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4951Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4211Click(Sender: TObject);
+    procedure ArqRemessaNFSINCO4411Click(Sender: TObject);
+    procedure RelatorioGiIcms1Click(Sender: TObject);
+    procedure ADECOFIS5520091Click(Sender: TObject);
+    procedure CrditoPresumidoIcms1Click(Sender: TObject);
+    procedure RelatriodenotasporCFOPCSOSN1Click(Sender: TObject);
+    procedure RelatriodenotasporCFOPPAGTO1Click(Sender: TObject);
+  private
+    { Private declarations }
+    wStPIS, wStCOFINS: string;
+    wAliqPIS, wBasePIS, wValPIS: Double;
+    wAliqCOFINS, wBaseCOFINS, wValCOFINS: Double;
+    wValIRRF, wAliqIRRF, wBaseIRRF: Double;
+    wValCSLL, wAliqCSLL, wBaseCSLL: Double;
+    wValINSS, wAliqINSS, wBaseINSS: Double;
+    wValISS, wAliqISS, wBaseISS: Double;
+    procedure calculaImpostos(notaItem: Double; acumula: Boolean = False; tipo: string = 'NOTA');
+    procedure calculaImpostosCab(notaCab: Integer);
+    procedure zeraTotais;
+    procedure gera431;
+    procedure gera432;
+    procedure gera433;
+    procedure gera434;
+    procedure gera435;
+    procedure gera436;
+    procedure gera438;
+    procedure gera439;
+    procedure gera491;
+    procedure gera494;
+    procedure gera495;
+    procedure gera4101;
+    procedure gera4102;
+    procedure gera4104;
+    procedure gera4105;
+    procedure gera4106;
+  public
+    { Public declarations }
+  end;
+
+var
+  FLivroFiscalCad: TFLivroFiscalCad;
+
+implementation
+
+uses ULivroFiscal_Cl, ULivroFiscalCons, UOracle_cl, UUsuario_cl,
+  URApuracaoResumo, UFilial_cl, UBiblioteca, UApuracaoParam,
+  ULivroFiscalParam, URNotasOperacao, URNotasOperacaoResumo, ULivroFParamOp,
+  URLivroFResumoOp, URLivroFResumoOpS, FResumoApuracaoParam,
+  URLivroFiscalNotaImposto, UFRLivroNEPrefeitura, URLivroRel_NF_Periodo,
+  URLivro_DFC, URNFEmitidas, URNotasOperacao2, URPisCofins,
+  URLivro_Siscredi, URegEntrada_cl, URApuracaoS, URApuracaoE,
+  URApuracaoGrupoFiscalS, URApuracaoGrupoFiscalE, URImpostoClasse,
+  UrImpostoProduto, URRetornoImposto, URResumo_Valor_IPI_ICMS,
+  URImpostoProdutoNota, URRegimeEspecialPR, URLivroGiIcms, UNotaSaida_cl,
+  UParamSistema_cl, UrCreditoPresumidoIcms, UrResumoCFOPxCSOSN,
+  URNotasCfopPagto;
+
+{$R *.DFM}
+
+function RMaskCGC_CPF(wCgc1: string; Zeros: Integer): string;
+var S, Aux: string;
+  x, c: integer;
+begin
+
+  for x := 1 to length(wCgc1) do
+    if wCgc1[x] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'..'Z'] then
+      S := S + wCgc1[x];
+
+  while Length(S) < Zeros do
+    S := '0' + S;
+
+  for x := 1 to Zeros do
+    Aux := '0' + Aux;
+  C := Length(S);
+  for x := Zeros downto 1 do
+  begin
+    Aux[x] := S[C];
+    Dec(C, 1);
+    if C < 1 then
+      Break;
+  end;
+  S := Aux;
+
+  Result := S;
+
+end;
+
+function intdecimais(wValor: string; wTamanho, wDecimais: integer): string;
+var
+  C, Cont, Posicao: integer;
+  Res, Aux: string;
+begin
+  for Cont := 1 to wTamanho do
+    Aux := '0' + Aux;
+
+  if wValor <> '' then
+  begin
+    Str(StrToFloat(Trim(wValor)): wTamanho: wDecimais, Res);
+
+    while Pos(' ', Res) > 0 do
+      Res[Pos(' ', Res)] := '0';
+
+    while Pos('.', Res) > 0 do
+    begin
+      Posicao := Pos('.', Res);
+      Delete(Res, Posicao, 1);
+    end;
+
+    C := Length(Res);
+    for Cont := wTamanho downto 1 do
+    begin
+      Aux[Cont] := Res[C];
+      Dec(C, 1);
+      if C < 1 then
+        Break;
+    end;
+
+  end;
+  Res := Aux;
+  Result := Res;
+end;
+
+
+procedure TFLivroFiscalCad.SBConsultaClick(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalCons = nil then
+    FLivroFiscalCons := TFLivroFiscalCons.Create(Application);
+  if FLivroFiscalCons.ShowModal = mrOk then
+    with DMLivroFiscal do
+      SetaRegistro(QLivroFiscalConsCod_Filial.Value, QLivroFiscalConsNum_Ano.Value, QLivroFiscalConsNum_Mes.Value);
+
+end;
+
+procedure TFLivroFiscalCad.FormCreate(Sender: TObject);
+var
+  wAno, wMes, wDia: Word;
+begin
+  inherited;
+  DecodeDate(DMOracle.DataServ, wAno, wMes, wDia);
+  if wMes = 1 then
+  begin
+    wMes := 12;
+    wAno := wAno - 1;
+  end
+  else
+  begin
+    wMes := wMes - 1;
+  end;
+  DMLivroFiscal.SetaRegistro(1, wAno, wMes);
+
+end;
+
+procedure TFLivroFiscalCad.BtRecalculaClick(Sender: TObject);
+begin
+  inherited;
+  DmUsuario.Checar_Filial_Usuario(Trim(DMLivroFiscal.QLivroFiscalCOD_FILIAL.Text), 'LIVRO FISCAL');
+  DMLivroFiscal.CalculaApuracao;
+end;
+
+procedure TFLivroFiscalCad.ResumodaApuraodoImposto1Click(Sender: TObject);
+begin
+  inherited;
+  if FApuracaoResumoParam = nil then
+    FApuracaoResumoParam := TFApuracaoResumoParam.Create(Application);
+  FApuracaoResumoParam.PGRelatorio.Pages[0].TabVisible := True;
+  if FApuracaoResumoParam.ShowModal = mrOk then
+  begin
+    with DMLivroFiscal do
+    begin
+      QResumoApuracao.Close;
+      QResumoApuracao.SetVariable('FILIAL', QLivroFiscalCod_Filial.Value);
+      QResumoApuracao.SetVariable('ANO', QLivroFiscalNum_Ano.Value);
+      QResumoApuracao.SetVariable('MES', QLivroFiscalNum_Mes.Value);
+      if QLivroFiscalNum_Mes.Value = 1 then
+      begin
+        QResumoApuracao.SetVariable('ANO_ANT', QLivroFiscalNum_Ano.Value - 1);
+        QResumoApuracao.SetVariable('MES_ANT', 12);
+      end
+      else
+      begin
+        QResumoApuracao.SetVariable('ANO_ANT', QLivroFiscalNum_Ano.Value);
+        QResumoApuracao.SetVariable('MES_ANT', QLivroFiscalNum_Mes.Value - 1);
+      end;
+      QResumoApuracao.Open;
+      QRLcto.Open;
+      if FRApuracaoResumo = nil then
+        FRApuracaoResumo := TFRApuracaoResumo.Create(Application);
+      with DMFilial do
+      begin
+        QFilial.Close;
+        QFilial.SetVariable('PK', QLivroFiscalCod_Filial.Value);
+        QFilial.Open;
+        FRApuracaoResumo.QRLNomeFilial.Caption := QFilialDesc_Filial.Value;
+        FRApuracaoResumo.QRLCGCFilial.Caption := QFilialNum_CGC.Value;
+        FRApuracaoResumo.QRLInscricaoFilial.Caption := QFilialDesc_Inscricao.Value;
+        FRApuracaoResumo.QRLPeriodo.Caption := Bib.NomeMes(Trunc(QLivroFiscalNum_Mes.Value)) + '/' + FormatFloat('0000', QLivroFiscalNum_Ano.Value);
+      end;
+      FRApuracaoResumo.pPaginaCorrente := Trunc(StrToFloat(FApuracaoResumoParam.ME0PaginaI.Text));
+      if FApuracaoResumoParam.RGPreview.ItemIndex = 0 then
+        FRApuracaoResumo.QRPrimario.Preview
+      else
+        FRApuracaoResumo.QRPrimario.Print;
+      if FRApuracaoResumo.pSaldoTransportar <> QLivroFiscalVal_Saldo_Credor.Value then
+      begin
+        QLivroFiscal.Edit;
+        QLivroFiscalVal_Saldo_Credor.Value := FRApuracaoResumo.pSaldoTransportar;
+        QLivroFiscal.Post;
+        DMOracle.DBCemapa.Commit;
+      end;
+      QRLcto.Close;
+      QResumoApuracao.Close;
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.ApuraodoICMS1Click(Sender: TObject);
+var
+  wAno, wMes, wDia: Word;
+begin
+  inherited;
+  if FApuracaoParam = nil then
+    FApuracaoParam := TFApuracaoParam.Create(Application);
+  FApuracaoParam.PGRelatorio.Pages[0].TabVisible := True;
+  FApuracaoParam.ME0NatOperacao.Visible := False;
+  FApuracaoParam.Label2.Visible := False;
+  if FApuracaoParam.ShowModal = mrok then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FApuracaoParam.ME0Filial.Text), 'LIVRO FISCAL');
+    with DMRegEntrada do
+    begin
+      QApuracaoE.Close;
+      QApuracaoE.SetVariable('FILIAL', FApuracaoParam.ME0Filial.Text);
+      QApuracaoE.SetVariable('DATA_I', FApuracaoParam.ME0DataI.Text);
+      QApuracaoE.SetVariable('DATA_F', FApuracaoParam.ME0DataF.Text + ' 23:59:59');
+      QApuracaoE.Open;
+      QApuracaoS.Close;
+      QApuracaoS.SetVariable('FILIAL', FApuracaoParam.ME0Filial.Text);
+      QApuracaoS.SetVariable('DATA_I', FApuracaoParam.ME0DataI.Text);
+      QApuracaoS.SetVariable('DATA_F', FApuracaoParam.ME0DataF.Text + ' 23:59:59');
+      QApuracaoS.Open;
+    end;
+
+    if FRApuracaoS = nil then
+      FRApuracaoS := TFRApuracaoS.Create(Application);
+
+    if FRApuracaoE = nil then
+      FRApuracaoE := TFRApuracaoE.Create(Application);
+
+    with DMFilial do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', FApuracaoParam.ME0Filial.Text);
+      QFilial.Open;
+      FRApuracaoE.QRLNomeFilial.Caption := QFilialDesc_Filial.Value;
+      FRApuracaoE.QRLCGCFilial.Caption := QFilialNum_CGC.Value;
+      FRApuracaoE.QRLInscricaoFilial.Caption := QFilialDesc_Inscricao.Value;
+      DecodeDate(StrToDate(FApuracaoParam.ME0DataI.Text), wAno, wMes, wDia);
+      FRApuracaoE.QRLPeriodo.Caption := Bib.NomeMes(wMes) + '/' + FormatFloat('0000', wAno);
+  {    FRApuracaoE.QRLabel33.Caption := 'ENTRADAS';
+      FRApuracaoE.QRLabel30.Caption := 'OPERAÇÕES COM CRED. DO IMP.';
+      FRApuracaoE.QRLabel32.Caption := 'IMP. CREDITADO';
+      FRApuracaoE.QRLabel35.Caption := 'OPERAÇÕES SEM CRED. DO IMP.';
+   }
+      FRApuracaoS.QRLNomeFilial.Caption := QFilialDesc_Filial.Value;
+      FRApuracaoS.QRLCGCFilial.Caption := QFilialNum_CGC.Value;
+      FRApuracaoS.QRLInscricaoFilial.Caption := QFilialDesc_Inscricao.Value;
+      //DecodeDate(StrToDate(ME0DataI.Text),wAno,wMes,wDia);
+      FRApuracaoS.QRLPeriodo.Caption := Bib.NomeMes(wMes) + '/' + FormatFloat('0000', wAno);
+    end;
+    FRApuracaoE.pPaginaCorrente := Trunc(StrToFloat(FApuracaoParam.ME0PaginaI.Text));
+
+    if FApuracaoParam.RGPreview.ItemIndex = 0 then
+      FRApuracaoE.QRCompositeReport1.Preview
+    else
+      FRApuracaoE.QRCompositeReport1.Print;
+    DMRegEntrada.QApuracaoE.Close;
+    DMRegEntrada.QApuracaoS.Close;
+    DMFilial.QFilial.Close;
+  end;
+  FApuracaoParam.ME0NatOperacao.Visible := True;
+  FApuracaoParam.Label2.Visible := True;
+end;
+
+procedure TFLivroFiscalCad.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  if DMLivroFiscal.QLcto.State in [dsEdit, dsInsert] then
+    raise Exception.Create('Lançamento não confirmado!');
+  DMLivroFiscal.QLivroFiscal.Close;
+  DMLivroFiscal.Qlcto.Close;
+  Action := CaFree;
+  FLivroFiscalCad := nil;
+end;
+
+procedure TFLivroFiscalCad.SBConfirmarClick(Sender: TObject);
+begin
+  DmUsuario.Checar_Filial_Usuario(Trim(DMLivroFiscal.QLivroFiscalCOD_FILIAL.Text), 'LIVRO FISCAL');
+  inherited;
+  if DMOracle.DBCemapa.InTransaction = True then
+    DMOracle.DBCemapa.Commit;
+end;
+
+procedure TFLivroFiscalCad.RelaoNotasPorOperao1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[0].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME0Filial.Text), 'LIVRO FISCAL');
+      if FLivroFiscalParam.Rg0Ordem.ItemIndex = 0 then
+      begin
+        QRNotasOperacao.Close;
+        QRNotasOperacao.SetVariable('DATA_I', FLivroFiscalParam.ME0DataI.Text);
+        QRNotasOperacao.SetVariable('DATA_F', FLivroFiscalParam.ME0DataF.Text + ' 23:59:59');
+
+        if Trim(FLivroFiscalParam.ME0Filial.Text) = '' then
+          QRNotasOperacao.SetVariable('FILIAL', Null)
+        else
+          QRNotasOperacao.SetVariable('FILIAL', FLivroFiscalParam.ME0Filial.Text);
+        if Trim(FLivroFiscalParam.ME0Operacao.Text) = '' then
+          QRNotasOperacao.SetVariable('OPERACAO', Null)
+        else
+          QRNotasOperacao.SetVariable('OPERACAO', FLivroFiscalParam.ME0Operacao.Text);
+        if Trim(FLivroFiscalParam.ME0Departamento.Text) = '' then
+          QRNotasOperacao.SetVariable('DEPARTAMENTO', Null)
+        else
+          QRNotasOperacao.SetVariable('DEPARTAMENTO', FLivroFiscalParam.ME0Departamento.Text);
+        QRNotasOperacao.Open;
+        if FRNotasOperacao = nil then
+          FRNotasOperacao := TFRNotasOperacao.Create(Application);
+
+        FRNotasOperacao.QRLTitulo.Caption := 'Notas por Operacao de ' + FLivroFiscalParam.ME0DataI.Text + ' até ' + FLivroFiscalParam.ME0DataF.Text;
+        FRNotasOperacao.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.Ed0Filial.Text;
+        FRNotasOperacao.QRLDepartamento.Caption := 'Departamento: ' + FLivroFiscalParam.Ed0Departamento.Text;
+        if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+          FRNotasOperacao.QRPrimario.Preview
+        else
+          FRNotasOperacao.QRPrimario.Print;
+        QRNotasOperacao.Close;
+      end
+      else
+      begin
+        QRNotasOperacao2.Close;
+        QRNotasOperacao2.SetVariable('DATA_I', FLivroFiscalParam.ME0DataI.Text);
+        QRNotasOperacao2.SetVariable('DATA_F', FLivroFiscalParam.ME0DataF.Text + ' 23:59:59');
+        if Trim(FLivroFiscalParam.ME0Filial.Text) = '' then
+          QRNotasOperacao2.SetVariable('FILIAL', Null)
+        else
+          QRNotasOperacao2.SetVariable('FILIAL', FLivroFiscalParam.ME0Filial.Text);
+        if Trim(FLivroFiscalParam.ME0Operacao.Text) = '' then
+          QRNotasOperacao2.SetVariable('OPERACAO', Null)
+        else
+          QRNotasOperacao2.SetVariable('OPERACAO', FLivroFiscalParam.ME0Operacao.Text);
+        if Trim(FLivroFiscalParam.ME0Departamento.Text) = '' then
+          QRNotasOperacao.SetVariable('DEPARTAMENTO', Null)
+        else
+          QRNotasOperacao.SetVariable('DEPARTAMENTO', FLivroFiscalParam.ME0Departamento.Text);
+
+        QRNotasOperacao2.Open;
+        if FRNotasOperacao2 = nil then
+          FRNotasOperacao2 := TFRNotasOperacao2.Create(Application);
+        FRNotasOperacao2.QRLTitulo.Caption := 'Notas por Operacao de ' + FLivroFiscalParam.ME0DataI.Text + ' até ' + FLivroFiscalParam.ME0DataF.Text;
+        FRNotasOperacao2.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.Ed0Filial.Text;
+        FRNotasOperacao2.QRLDepartamento.Caption := 'Departamento: ' + FLivroFiscalParam.Ed0Departamento.Text;
+
+        if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+          FRNotasOperacao2.QRPrimario.Preview
+        else
+          FRNotasOperacao2.QRPrimario.Print;
+        QRNotasOperacao2.Close;
+      end;
+    end;
+
+end;
+
+procedure TFLivroFiscalCad.ResumoNotasPorOperacao1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[0].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME0Filial.Text), 'LIVRO FISCAL');
+      QRNotasOperacaoResumo.Close;
+      QRNotasOperacaoResumo.SetVariable('DATA_I', FLivroFiscalParam.ME0DataI.Text);
+      QRNotasOperacaoResumo.SetVariable('DATA_F', FLivroFiscalParam.ME0DataF.Text + ' 23:59:59');
+
+      if Trim(FLivroFiscalParam.ME0Filial.Text) = '' then
+        QRNotasOperacaoResumo.SetVariable('FILIAL', Null)
+      else
+        QRNotasOperacaoResumo.SetVariable('FILIAL', FLivroFiscalParam.ME0Filial.Text);
+      if Trim(FLivroFiscalParam.ME0Operacao.Text) = '' then
+        QRNotasOperacaoResumo.SetVariable('OPERACAO', Null)
+      else
+        QRNotasOperacaoResumo.SetVariable('OPERACAO', FLivroFiscalParam.ME0Operacao.Text);
+      QRNotasOperacaoResumo.SetVariable('TIPO_QUEBRA', FLivroFiscalParam.Rg0Tipo.Items[FLivroFiscalParam.Rg0Tipo.ItemIndex]);
+      QRNotasOperacaoResumo.Open;
+      if FRNotasOperacaoResumo = nil then
+        FRNotasOperacaoResumo := TFRNotasOperacaoResumo.Create(Application);
+
+      FRNotasOperacaoResumo.QRLTitulo.Caption := 'Resumo por Operacao de ' + FLivroFiscalParam.ME0DataI.Text + ' até ' + FLivroFiscalParam.ME0DataF.Text;
+      FRNotasOperacaoResumo.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.Ed0Filial.Text;
+      if FLivroFiscalParam.Rg0Tipo.ItemIndex = 0 then
+        FRNotasOperacaoResumo.QRGroup2.Enabled := True
+      else
+        FRNotasOperacaoResumo.QRGroup2.Enabled := False;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRNotasOperacaoResumo.QRPrimario.Preview
+      else
+        FRNotasOperacaoResumo.QRPrimario.Print;
+      QRNotasOperacaoResumo.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.Resumodasoperaesnoperiodo1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[1].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME1Filial.Text), 'LIVRO FISCAL');
+      if FLivroFiscalParam.RG1Opcao.ItemIndex = 0 then // Escolheu analitico.
+      begin
+        QRLivroFResumoOpA.Close;
+        QRLivroFResumoOpA.SetVariable('DATA_I', FLivroFiscalParam.ME1DataI.Text);
+        QRLivroFResumoOpA.SetVariable('DATA_F', FLivroFiscalParam.ME1DataF.Text + ' 23:59:59');
+        if Trim(FLivroFiscalParam.ME1Filial.Text) = '' then
+          QRLivroFResumoOPA.SetVariable('FILIAL', Null)
+        else
+          QRLivroFResumoOPA.SetVariable('FILIAL', FLivroFiscalParam.ME1Filial.Text);
+        if Trim(FLivroFiscalParam.ME1Operacao.Text) = '' then
+          QRLivroFResumoOPA.SetVariable('OPERACAO', Null)
+        else
+          QRLivroFResumoOPA.SetVariable('OPERACAO', FLivroFiscalParam.ME1Operacao.Text);
+
+        QRLivroFResumoOPA.Open;
+        if FRLivroFResumoOpA = nil then
+          FRLivroFResumoOpA := TFRLivroFResumoOpA.Create(Application);
+        FRLivroFResumoOpA.QRLTitulo.Caption := 'Resumo por Operacao de ' + FLivroFiscalParam.ME1DataI.Text + ' até ' + FLivroFiscalParam.ME1DataF.Text;
+        FRLivroFResumoOpA.QRLCod_Filial.Caption := FLivroFiscalParam.ME1Filial.Text;
+        FRLivroFResumoOpA.QRLDesc_Filial.Caption := FLivroFiscalParam.Ed1Filial.Text;
+
+        if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+          FRLivroFResumoOpA.QRPrimario.Preview
+        else
+          FRLivroFResumoOpA.QRPrimario.Print;
+        QRLivroFResumoOpA.Close;
+      end
+      else {Usuario optou por SINTETICO}
+      begin
+        QRLivroFResumoOpS.Close;
+        QRLivroFResumoOpS.SetVariable('DATA_I', FLivroFiscalParam.ME1DataI.Text);
+        QRLivroFResumoOpS.SetVariable('DATA_F', FLivroFiscalParam.ME1DataF.Text + ' 23:59:59');
+        if Trim(FLivroFiscalParam.ME1Filial.Text) = '' then
+          QRLivroFResumoOpS.SetVariable('FILIAL', Null)
+        else
+          QRLivroFResumoOpS.SetVariable('FILIAL', FLivroFiscalParam.ME1Filial.Text);
+        if Trim(FLivroFiscalParam.ME1Operacao.Text) = '' then
+          QRLivroFResumoOpS.SetVariable('OPERACAO', Null)
+        else
+          QRLivroFResumoOpS.SetVariable('OPERACAO', FLivroFiscalParam.ME1Operacao.Text);
+
+        QRLivroFResumoOpS.Open;
+        if FRLivroFResumoOpS = nil then
+          FRLivroFResumoOpS := TFRLivroFResumoOpS.Create(Application);
+        FRLivroFResumoOpS.QRLTitulo.Caption := 'Resumo por Operacao de ' + FLivroFiscalParam.ME1DataI.Text + ' até ' + FLivroFiscalParam.ME1DataF.Text;
+        FRLivroFResumoOpS.QRLCod_Filial.Caption := FLivroFiscalParam.ME1Filial.Text;
+        FRLivroFResumoOpS.QRLDesc_Filial.Caption := FLivroFiscalParam.Ed1Filial.Text;
+
+        if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+          FRLivroFResumoOpS.QRPrimario.Preview
+        else
+          FRLivroFResumoOpS.QRPrimario.Print;
+        QRLivroFResumoOpS.Close;
+      end;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelaoNotasComImposto1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[3].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME4Filial.Text), 'LIVRO FISCAL');
+      QRNotasImposto.Close;
+      QRNotasImposto.SetVariable('DATAI', FLivroFiscalParam.ME4DataI.Text);
+      QRNotasImposto.SetVariable('DATAF', FLivroFiscalParam.ME4DataF.Text);
+      if Trim(FLivroFiscalParam.ME4Filial.Text) = '' then
+        QRNotasImposto.SetVariable('FILIAL', Null)
+      else
+        QRNotasImposto.SetVariable('FILIAL', FLivroFiscalParam.ME4Filial.Text);
+      if Trim(FLivroFiscalParam.ME4Cadastro.Text) = '' then
+        QRNotasImposto.SetVariable('COD_CADASTRO', Null)
+      else
+        QRNotasImposto.SetVariable('COD_CADASTRO', FLivroFiscalParam.ME4Cadastro.Text);
+      if Trim(FLivroFiscalParam.Me4Operacao.Text) = '' then
+        QRNotasImposto.SetVariable('COD_OPERACAO', Null)
+      else
+        QRNotasImposto.SetVariable('COD_OPERACAO', FLivroFiscalParam.Me4Operacao.Text);
+      QRNotasImposto.Open;
+      if FRLivroFiscalNotasImposto = nil then
+        FRLivroFiscalNotasImposto := TFRLivroFiscalNotasImposto.Create(Application);
+      FRLivroFiscalNotasImposto.QRLTitulo.Caption := 'Notas Com Imposto de ' + FLivroFiscalParam.ME4DataI.Text + ' até ' + FLivroFiscalParam.ME4DataF.Text;
+      FRLivroFiscalNotasImposto.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.Ed4Filial.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivroFiscalNotasImposto.QRPrimario.Preview
+      else
+        FRLivroFiscalNotasImposto.QRPrimario.Print;
+      QRNotasImposto.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.ListagemNFEntradapPrefeitura1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+
+  FLivroFiscalParam.PGRelatorio.Pages[4].TabVisible := True;
+
+  if FLivroFiscalParam.ShowModal = mrOK then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME5Filial.Text), 'LIVRO FISCAL');
+      QRLivroNEPrefeitura.Close;
+      QRLivroNEPrefeitura.SetVariable('DATA_I', FLivroFiscalParam.ME5DataI.Text);
+      QRLivroNEPrefeitura.SetVariable('DATA_F', FLivroFiscalParam.ME5DataF.Text + ' 23:59:59');
+
+      if Trim(FLivroFiscalParam.ME5Filial.Text) = '' then
+        QRLivroNEPrefeitura.SetVariable('FILIAL', Null)
+      else
+        QRLivroNEPrefeitura.SetVariable('FILIAL', FLivroFiscalParam.ME5Filial.Text);
+
+      if Trim(FLivroFiscalParam.ME5Operacao.Text) = '' then
+        QRLivroNEPrefeitura.SetVariable('OPERACAO', Null)
+      else
+        QRLivroNEPrefeitura.SetVariable('OPERACAO', FLivroFiscalParam.ME5Operacao.Text);
+
+      if Trim(FLivroFiscalParam.ME5Regiao.Text) = '' then
+        QRLivroNEPrefeitura.SetVariable('REGIAO', Null)
+      else
+        QRLivroNEPrefeitura.SetVariable('REGIAO', FLivroFiscalParam.ME5Regiao.Text);
+      if Trim(FLivroFiscalParam.ME5Cadastro.Text) = '' then
+        QRLivroNEPrefeitura.SetVariable('CADASTRO', Null)
+      else
+        QRLivroNEPrefeitura.SetVariable('CADASTRO', FLivroFiscalParam.ME5Cadastro.Text);
+
+      QRLivroNEPrefeitura.Open;
+
+      if FRLivroNEPrefeitura = nil then
+        FRLivroNEPrefeitura := TFRLivroNEPrefeitura.Create(Application);
+
+      FRLivroNEPrefeitura.QRLTitulo.Caption := 'N.F.Entrada no período: ' + FLivroFiscalParam.ME5DataI.Text + ' até ' + FLivroFiscalParam.ME5DataF.Text;
+      FRLivroNEPrefeitura.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.Ed5Filial.Text;
+      FRLivroNEPrefeitura.QRLOperacao.Caption := 'Operação: ' + Trim(FLivroFiscalParam.ME5Operacao.Text) + '-' + FLivroFiscalParam.Ed5Operacao.Text;
+//    FRLivroNEPrefeitura.QRLRegiao.Caption := 'Região: '+Trim(FLivroFiscalParam.ME5Regiao.Text)+'-'+FLivroFiscalParam.Ed5Regiao.Text;
+
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivroNEPrefeitura.QRPrimario.Preview
+      else
+        FRLivroNEPrefeitura.QRPrimario.Print;
+      QRLivroNEPrefeitura.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.SBHelpClick(Sender: TObject);
+begin
+  inherited;
+  Application.HelpContext(4);
+end;
+
+procedure TFLivroFiscalCad.RelaodeNotasnoPerodo1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[5].TabVisible := True;
+
+  if FLivroFiscalParam.ShowModal = mrOK then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME6Filial.Text), 'LIVRO FISCAL');
+      QRLivroRelNFPeriodo.Close;
+      QRLivroRelNFPeriodo.SetVariable('DATA_I', FLivroFiscalParam.ME6DataI.Text);
+      QRLivroRelNFPeriodo.SetVariable('DATA_F', FLivroFiscalParam.ME6DataF.Text + ' 23:59:59');
+
+      if Trim(FLivroFiscalParam.ME6Filial.Text) = '' then
+        QRLivroRelNFPeriodo.SetVariable('COD_FILIAL', Null)
+      else
+        QRLivroRelNFPeriodo.SetVariable('COD_FILIAL', FLivroFiscalParam.ME6Filial.Text);
+
+      if FLivroFiscalParam.RG6EntradaSaida.ItemIndex = 0 then
+        QRLivroRelNFPeriodo.SetVariable('IND_ENTRADA_SAIDA', null);
+      if FLivroFiscalParam.RG6EntradaSaida.ItemIndex = 1 then
+        QRLivroRelNFPeriodo.SetVariable('IND_ENTRADA_SAIDA', 'E');
+      if FLivroFiscalParam.RG6EntradaSaida.ItemIndex = 2 then
+        QRLivroRelNFPeriodo.SetVariable('IND_ENTRADA_SAIDA', 'S');
+
+      QRLivroRelNFPeriodo.Open;
+
+      if FRLivroRel_NF_Periodo = nil then
+        FRLivroRel_NF_Periodo := TFRLivroRel_NF_Periodo.Create(Application);
+      FRLivroRel_NF_Periodo.QRLTitulo.Caption := 'Relação de Notas no Período (' + FLivroFiscalParam.ME6DataI.text + ' - ' + FLivroFiscalParam.ME6DataF.Text + ')';
+      FRLivroRel_NF_Periodo.QRLFilial.Caption := 'Filial:' + FLivroFiscalParam.Ed6Filial.text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivroRel_NF_Periodo.QRPrimario.Preview
+      else
+        FRLivroRel_NF_Periodo.QRPrimario.Print;
+      QRLivroRelNFPeriodo.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.LivroDFC1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[6].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME7_Filial.Text), 'LIVRO FISCAL');
+      QRLivro_DFC.Close;
+      if Trim(FLivroFiscalParam.ME7_Filial.Text) = '' then
+        QRLivro_DFC.SetVariable('FILIAL', Null)
+      else
+        QRLivro_DFC.SetVariable('FILIAL', FLivroFiscalParam.ME7_Filial.Text);
+      if Trim(FLivroFiscalParam.ME7_Cidade.Text) = '' then
+        QRLivro_DFC.SetVariable('DESC_CIDADE', Null)
+      else
+        QRLivro_DFC.SetVariable('DESC_CIDADE', FLivroFiscalParam.ME7_Cidade.Text);
+      if Trim(FLivroFiscalParam.ME7_Estado.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_ESTADO', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_ESTADO', FLivroFiscalParam.ME7_Estado.Text);
+      if FLivroFiscalParam.Rg7TipoOperacao.itemIndex = 0 then
+        QRLivro_DFC.SetVariable('IND_FIXACAO', Null)
+      else
+        QRLivro_DFC.SetVariable('IND_FIXACAO', 'F');
+      if Trim(FLivroFiscalParam.ME7Operacao1.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO1', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO1', FLivroFiscalParam.ME7Operacao1.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao2.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO2', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO2', FLivroFiscalParam.ME7Operacao2.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao3.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO3', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO3', FLivroFiscalParam.ME7Operacao3.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao4.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO4', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO4', FLivroFiscalParam.ME7Operacao4.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao5.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO5', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO5', FLivroFiscalParam.ME7Operacao5.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao6.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO6', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO6', FLivroFiscalParam.ME7Operacao6.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao7.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO7', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO7', FLivroFiscalParam.ME7Operacao7.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao8.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO8', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO8', FLivroFiscalParam.ME7Operacao8.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao9.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO9', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO9', FLivroFiscalParam.ME7Operacao9.Text);
+      if Trim(FLivroFiscalParam.ME7Operacao10.Text) = '' then
+        QRLivro_DFC.SetVariable('COD_OPERACAO10', Null)
+      else
+        QRLivro_DFC.SetVariable('COD_OPERACAO10', FLivroFiscalParam.ME7Operacao10.Text);
+      if Trim(FLivroFiscalParam.ME7_DataI.Text) <> '' then
+        QRLivro_DFC.SetVariable('DATA_I', FLivroFiscalParam.ME7_DataI.Text)
+      else
+        raise exception.Create('Data Inicial não pode ficar em Branco!');
+      if Trim(FLivroFiscalParam.ME7_DataF.Text) <> '' then
+        QRLivro_DFC.SetVariable('DATA_F', FLivroFiscalParam.ME7_DataF.Text + ' 23:59:59')
+      else
+        raise exception.Create('Data Final não pode ficar em Branco!');
+      QRLivro_DFC.Open;
+      if FRLivro_DFC = nil then
+        FRLivro_DFC := TFRLivro_DFC.Create(Application);
+      FRLivro_DFC.QRLTitulo.Caption := 'Livros DFC' + ' - ' + FLivroFiscalParam.ME7_DataI.Text + ' até ' + FLivroFiscalParam.ME7_DataF.Text;
+      FRLivro_DFC.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.ED7_Filial.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivro_DFC.QRPrimario.Preview
+      else
+        FRLivro_DFC.QRPrimario.Print;
+      QRLivro_DFC.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelaoNFsPeriodo1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[7].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOK then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.MECodFilial8.Text), 'LIVRO FISCAL');
+      QRNFSaida_Devolucao_Periodo.Close;
+      QRNFSaida_Devolucao_Periodo.SetVariable('DT_RECEBIMENTO_I', FLivroFiscalParam.MEDataI8.Text);
+      QRNFSaida_Devolucao_Periodo.SetVariable('DT_RECEBIMENTO_F', FLivroFiscalParam.MEDataF8.Text);
+      if Trim(FLivroFiscalParam.MEEstado8.Text) = '' then
+        QRNFSaida_Devolucao_Periodo.SetVariable('COD_ESTADO', Null)
+      else
+        QRNFSaida_Devolucao_Periodo.SetVariable('COD_ESTADO', FLivroFiscalParam.MEEstado8.Text);
+
+      if Trim(FLivroFiscalParam.MECodFilial8.Text) = '' then
+        QRNFSaida_Devolucao_Periodo.SetVariable('COD_FILIAL', Null)
+      else
+        QRNFSaida_Devolucao_Periodo.SetVariable('COD_FILIAL', FLivroFiscalParam.MECodFilial8.Text);
+      if FLivroFiscalParam.Rg8TipoNota.ItemIndex = 0 then
+        QRNFSaida_Devolucao_Periodo.SetVariable('VAL_ICM_BASE', Null)
+      else
+        QRNFSaida_Devolucao_Periodo.SetVariable('VAL_ICM_BASE', 0);
+      QRNFSaida_Devolucao_Periodo.Open;
+      if FRNF_Emitidas = nil then
+        FRNF_Emitidas := TFRNF_Emitidas.Create(Application);
+      FRNF_Emitidas.QRLTitulo.Caption := 'Relação de Notas no Período (' + FLivroFiscalParam.MEDataI8.text + ' - ' + FLivroFiscalParam.MEDataF8.Text + ')';
+      FRNF_Emitidas.QRLFilial.Caption := 'Filial:' + FLivroFiscalParam.EdDescFilial8.text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRNF_Emitidas.QRPrimario.Preview
+      else
+        FRNF_Emitidas.QRPrimario.Print;
+      QRNFSaida_Devolucao_Periodo.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelaoPiseCofins1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[10].TabVisible := True;
+
+  if FLivroFiscalParam.ShowModal = mrOK then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME10Filial.Text), 'LIVRO FISCAL');
+      QRPisCofins.Close;
+      if ((FlivroFiscalParam.ME10DtInicial.Text) = '') or ((FlivroFiscalParam.ME10DtFinal.Text) = '') then
+        raise Exception.create('Informe o período desejado');
+      QRPisCofins.SetVariable('DT_INICIAL', FLivroFiscalParam.ME10DtInicial.Text);
+      QRPisCofins.SetVariable('DT_FINAL', FLivroFiscalParam.ME10DtFinal.Text);
+
+      if Trim(FLivroFiscalParam.ME10Filial.Text) = '' then
+        QRPisCofins.SetVariable('FILIAL', Null)
+      else
+        QRPisCofins.SetVariable('FILIAL', FLivroFiscalParam.ME10Filial.Text);
+
+      if Trim(FLivroFiscalParam.ME10Operacao.Text) = '' then
+        QRPisCofins.SetVariable('OPERACAO', Null)
+      else
+        QRPisCofins.SetVariable('OPERACAO', FLivroFiscalParam.ME10Operacao.Text);
+
+      case FLivroFiscalParam.RG10Tipo.ItemIndex of
+        0: DMLivroFiscal.QRPisCofins.SetVariable('TIPO', 'E');
+        1: DMLivroFiscal.QRPisCofins.SetVariable('TIPO', 'S');
+        2: DMLivroFiscal.QRPisCofins.SetVariable('TIPO', 'F');
+        3: DMLivroFiscal.QRPisCofins.SetVariable('TIPO', null);
+      end;
+
+      QRPisCofins.Open;
+      if FRPisCofins = nil then
+        FRPisCofins := TFRPisCofins.Create(Application);
+      FRPisCofins.QRLPeriodo.Caption := 'De (' + FLivroFiscalParam.ME10DtInicial.text + ' Até ' + FLivroFiscalParam.ME10DtFinal.Text + ')';
+      FRPisCofins.QRLFilial.Caption := 'Filial:' + FLivroFiscalParam.Ed10Filial.text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRPisCofins.QRPrimario.Preview
+      else
+        FRPisCofins.QRPrimario.Print;
+      QRPisCofins.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelaoSiscredi1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[11].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOK then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Me11Filial.Text), 'LIVRO FISCAL');
+      QRLivroSiscredi.Close;
+      if ((FlivroFiscalParam.Me11DtInicial.Text) = '') or ((FlivroFiscalParam.Me11DtFinal.Text) = '') then
+        raise Exception.create('Informe o período desejado');
+      QRLivroSiscredi.SetVariable('DT_INICIAL', FLivroFiscalParam.Me11DtInicial.Text);
+      QRLivroSiscredi.SetVariable('DT_FINAL', FLivroFiscalParam.Me11DtFinal.Text);
+
+      if Trim(FLivroFiscalParam.Me11Filial.Text) = '' then
+        QRLivroSiscredi.SetVariable('COD_FILIAL', Null)
+      else
+        QRLivroSiscredi.SetVariable('COD_FILIAL', FLivroFiscalParam.Me11Filial.Text);
+      QRLivroSiscredi.Open;
+      if FRLivro_Siscredi = nil then
+        FRLivro_Siscredi := TFRLivro_Siscredi.Create(Application);
+      FRLivro_Siscredi.QRLTitulo.Caption := 'Relação Siscredi no Período (' + FLivroFiscalParam.Me11DtInicial.text + ' Até ' + FLivroFiscalParam.Me11DtFinal.Text + ')';
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivro_Siscredi.QRPrimario.Preview
+      else
+        FRLivro_Siscredi.QRPrimario.Print;
+      QRLivroSiscredi.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.ApuraodoICMS2Click(Sender: TObject);
+var
+  wAno, wMes, wDia: Word;
+begin
+  inherited;
+  if FApuracaoParam = nil then
+    FApuracaoParam := TFApuracaoParam.Create(Application);
+  FApuracaoParam.PGRelatorio.Pages[0].TabVisible := True;
+  FApuracaoParam.ME0NatOperacao.Visible := False;
+  FApuracaoParam.Label2.Visible := False;
+  if FApuracaoParam.ShowModal = mrok then
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FApuracaoParam.ME0Filial.Text), 'LIVRO FISCAL');
+    with DMRegEntrada do
+    begin
+      QApuracaoGrupoFiscalE.Close;
+      QApuracaoGrupoFiscalE.SetVariable('FILIAL', FApuracaoParam.ME0Filial.Text);
+      QApuracaoGrupoFiscalE.SetVariable('DATA_I', FApuracaoParam.ME0DataI.Text);
+      QApuracaoGrupoFiscalE.SetVariable('DATA_F', FApuracaoParam.ME0DataF.Text + ' 23:59:59');
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 0 then
+        QApuracaoGrupoFiscalE.SetVariable('IND_TIPO_GRUPO', null);
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 1 then
+        QApuracaoGrupoFiscalE.SetVariable('IND_TIPO_GRUPO', 'DFC');
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 2 then
+        QApuracaoGrupoFiscalE.SetVariable('IND_TIPO_GRUPO', 'ECO');
+      QApuracaoGrupoFiscalE.Open;
+      QApuracaoGrupoFiscalS.Close;
+      QApuracaoGrupoFiscalS.SetVariable('FILIAL', FApuracaoParam.ME0Filial.Text);
+      QApuracaoGrupoFiscalS.SetVariable('DATA_I', FApuracaoParam.ME0DataI.Text);
+      QApuracaoGrupoFiscalS.SetVariable('DATA_F', FApuracaoParam.ME0DataF.Text + ' 23:59:59');
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 0 then
+        QApuracaoGrupoFiscalS.SetVariable('IND_TIPO_GRUPO', null);
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 1 then
+        QApuracaoGrupoFiscalS.SetVariable('IND_TIPO_GRUPO', 'DFC');
+      if FApuracaoParam.RG0TipoGrupo.ItemIndex = 2 then
+        QApuracaoGrupoFiscalS.SetVariable('IND_TIPO_GRUPO', 'ECO');
+      QApuracaoGrupoFiscalS.Open;
+    end;
+
+    if FRApuracaoGrupoFiscalS = nil then
+      FRApuracaoGrupoFiscalS := TFRApuracaoGrupoFiscalS.Create(Application);
+
+    if FRApuracaoGrupoFiscalE = nil then
+      FRApuracaoGrupoFiscalE := TFRApuracaoGrupoFiscalE.Create(Application);
+
+    with DMFilial do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', FApuracaoParam.ME0Filial.Text);
+      QFilial.Open;
+      FRApuracaoGrupoFiscalE.QRLNomeFilial.Caption := QFilialDesc_Filial.Value;
+      FRApuracaoGrupoFiscalE.QRLCGCFilial.Caption := QFilialNum_CGC.Value;
+      FRApuracaoGrupoFiscalE.QRLInscricaoFilial.Caption := QFilialDesc_Inscricao.Value;
+      DecodeDate(StrToDate(FApuracaoParam.ME0DataI.Text), wAno, wMes, wDia);
+      FRApuracaoGrupoFiscalE.QRLPeriodo.Caption := Bib.NomeMes(wMes) + '/' + FormatFloat('0000', wAno);
+  {    FRApuracaoE.QRLabel33.Caption := 'ENTRADAS';
+      FRApuracaoE.QRLabel30.Caption := 'OPERAÇÕES COM CRED. DO IMP.';
+      FRApuracaoE.QRLabel32.Caption := 'IMP. CREDITADO';
+      FRApuracaoE.QRLabel35.Caption := 'OPERAÇÕES SEM CRED. DO IMP.';
+   }
+      FRApuracaoGrupoFiscalS.QRLNomeFilial.Caption := QFilialDesc_Filial.Value;
+      FRApuracaoGrupoFiscalS.QRLCGCFilial.Caption := QFilialNum_CGC.Value;
+      FRApuracaoGrupoFiscalS.QRLInscricaoFilial.Caption := QFilialDesc_Inscricao.Value;
+      //DecodeDate(StrToDate(ME0DataI.Text),wAno,wMes,wDia);
+      FRApuracaoGrupoFiscalS.QRLPeriodo.Caption := Bib.NomeMes(wMes) + '/' + FormatFloat('0000', wAno);
+    end;
+    FRApuracaoGrupoFiscalE.pPaginaCorrente := Trunc(StrToFloat(FApuracaoParam.ME0PaginaI.Text));
+
+    if FApuracaoParam.RGPreview.ItemIndex = 0 then
+      FRApuracaoGrupoFiscalE.QRCompositeReport1.Preview
+    else
+      FRApuracaoGrupoFiscalE.QRCompositeReport1.Print;
+    DMRegEntrada.QApuracaoGrupoFiscalE.Close;
+    DMRegEntrada.QApuracaoGrupoFiscalS.Close;
+    DMFilial.QFilial.Close;
+  end;
+  FApuracaoParam.ME0NatOperacao.Visible := True;
+  FApuracaoParam.Label2.Visible := True;
+end;
+
+procedure TFLivroFiscalCad.RelaoImpostoPorClasse1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[13].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Me13Filial.Text), 'LIVRO FISCAL');
+      QRImpostoClasse.Close;
+      QRImpostoClasse.SetVariable('DATAI', FLivroFiscalParam.Me13DataI.Text);
+      QRImpostoClasse.SetVariable('DATAF', FLivroFiscalParam.Me13DataF.Text);
+      if Trim(FLivroFiscalParam.Me13Filial.Text) = '' then
+        QRImpostoClasse.SetVariable('FILIAL', Null)
+      else
+        QRImpostoClasse.SetVariable('FILIAL', FLivroFiscalParam.Me13Filial.Text);
+      if Trim(FLivroFiscalParam.Me13Cadastro.Text) = '' then
+        QRImpostoClasse.SetVariable('COD_CADASTRO', Null)
+      else
+        QRImpostoClasse.SetVariable('COD_CADASTRO', FLivroFiscalParam.Me13Cadastro.Text);
+      if Trim(FLivroFiscalParam.Me13Operacao.Text) = '' then
+        QRImpostoClasse.SetVariable('COD_OPERACAO', Null)
+      else
+        QRImpostoClasse.SetVariable('COD_OPERACAO', FLivroFiscalParam.Me13Operacao.Text);
+      if Trim(FLivroFiscalParam.Me13NumClasse.Text) = '' then
+        QRImpostoClasse.SetVariable('Num_Classe', Null)
+      else
+        QRImpostoClasse.SetVariable('Num_Classe', FLivroFiscalParam.Me13NumClasse.Text);
+      if Trim(FLivroFiscalParam.Me13SubClasse.Text) = '' then
+        QRImpostoClasse.SetVariable('Num_SubClasse', Null)
+      else
+        QRImpostoClasse.SetVariable('Num_SubClasse', FLivroFiscalParam.Me13SubClasse.Text);
+      QRImpostoClasse.Open;
+      if FRImpostoClasse = nil then
+        FRImpostoClasse := TFRImpostoClasse.Create(Application);
+      if FLivroFiscalParam.Rg13Tipo.ItemIndex = 0 then
+        FRImpostoClasse.QRBand3.Enabled := True
+      else
+        FRImpostoClasse.QRBand3.Enabled := False;
+      FRImpostoClasse.QRLPeriodo.Caption := 'de ' + FLivroFiscalParam.Me13DataI.Text + ' até ' + FLivroFiscalParam.Me13DataF.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRImpostoClasse.QRPrimario.Preview
+      else
+        FRImpostoClasse.QRPrimario.Print;
+      QRImpostoClasse.Close;
+    end;
+
+end;
+
+procedure TFLivroFiscalCad.RelaoImpostoPorProduto1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[14].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Me14Filial.Text), 'LIVRO FISCAL');
+      QRImpostoProduto.Close;
+      QRImpostoProduto.SetVariable('DATAI', FLivroFiscalParam.Me14DataI.Text);
+      QRImpostoProduto.SetVariable('DATAF', FLivroFiscalParam.Me14DataF.Text);
+      if Trim(FLivroFiscalParam.Me14Filial.Text) = '' then
+        QRImpostoProduto.SetVariable('FILIAL', Null)
+      else
+        QRImpostoProduto.SetVariable('FILIAL', FLivroFiscalParam.Me14Filial.Text);
+      if Trim(FLivroFiscalParam.Me14Cadastro.Text) = '' then
+        QRImpostoProduto.SetVariable('COD_CADASTRO', Null)
+      else
+        QRImpostoProduto.SetVariable('COD_CADASTRO', FLivroFiscalParam.Me14Cadastro.Text);
+      if Trim(FLivroFiscalParam.Me14Operacao.Text) = '' then
+        QRImpostoProduto.SetVariable('COD_OPERACAO', Null)
+      else
+        QRImpostoProduto.SetVariable('COD_OPERACAO', FLivroFiscalParam.Me14Operacao.Text);
+      if Trim(FLivroFiscalParam.Me14NumClasse.Text) = '' then
+        QRImpostoProduto.SetVariable('Num_Classe', Null)
+      else
+        QRImpostoProduto.SetVariable('Num_Classe', FLivroFiscalParam.Me14NumClasse.Text);
+      if Trim(FLivroFiscalParam.Me14SubClasse.Text) = '' then
+        QRImpostoProduto.SetVariable('Num_SubClasse', Null)
+      else
+        QRImpostoProduto.SetVariable('Num_SubClasse', FLivroFiscalParam.Me14SubClasse.Text);
+      QRImpostoProduto.Open;
+      if FrImpostoProduto = nil then
+        FrImpostoProduto := TFrImpostoProduto.Create(Application);
+      FrImpostoProduto.QRLPeriodo.Caption := 'de ' + FLivroFiscalParam.Me14DataI.Text + ' até ' + FLivroFiscalParam.Me14DataF.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FrImpostoProduto.QRPrimario.Preview
+      else
+        FrImpostoProduto.QRPrimario.Print;
+      QRImpostoProduto.Close;
+    end;
+
+end;
+
+procedure TFLivroFiscalCad.NotascomRetornodeImposto1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[15].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Me14Filial.Text), 'LIVRO FISCAL');
+      QRRetornoImposto.Close;
+      if (FLivroFiscalParam.ME15Dt_Inicial.Text = '') or
+        (FLivroFiscalParam.ME15Dt_Final.Text = '') then
+        raise Exception.Create('Informe o Período!!');
+      QRRetornoImposto.SetVariable('DT_INICIAL', FLivroFiscalParam.Me15Dt_Inicial.Text);
+      QRRetornoImposto.SetVariable('DT_FINAL', FLivroFiscalParam.Me15Dt_Final.Text);
+
+      if Trim(FLivroFiscalParam.Me15Filial.Text) = '' then
+        QRRetornoImposto.SetVariable('FILIAL', Null)
+      else
+        QRRetornoImposto.SetVariable('FILIAL', FLivroFiscalParam.Me15Filial.Text);
+
+      if Trim(FLivroFiscalParam.Me15Estado.Text) = '' then
+        QRRetornoImposto.SetVariable('ESTADO', Null)
+      else
+        QRRetornoImposto.SetVariable('ESTADO', FLivroFiscalParam.Me15Estado.Text);
+
+      QRRetornoImposto.Open;
+
+      if FrRetornoImposto = nil then
+        FrRetornoImposto := TFrRetornoImposto.Create(Application);
+      FrRetornoImposto.QRLPeriodo.Caption := 'de ' + FLivroFiscalParam.Me15Dt_Inicial.Text + ' até ' + FLivroFiscalParam.Me15Dt_Final.Text;
+      FrRetornoImposto.QRLFilial.Caption := 'Filial :' + FLivroFiscalParam.ME15Filial.Text + ' ' + FLivroFiscalParam.Ed15Filial.Text +
+        '  Estado :' + FLivroFiscalParam.Ed15Estado.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FrRetornoImposto.QRPrimario.Preview
+      else
+        FrRetornoImposto.QRPrimario.Print;
+      QRRetornoImposto.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.DBEdit14Change(Sender: TObject);
+begin
+  inherited;
+  if DMLivroFiscal.QLctoCOD_GIA.Value in [55, 65] then
+  begin
+    DBEdit15.ReadOnly := false;
+    DBEdit15.Enabled := true;
+    DBEdit15.Color := clWindow;
+  end
+  else
+  begin
+    DBEdit15.ReadOnly := true;
+    DBEdit15.Enabled := false;
+    DBEdit15.Color := clBtnFace;
+    if DMLivroFiscal.QLcto.State in [dsEdit, dsInsert] then
+      DMLivroFiscal.QLctoDESC_GIA.Value := '';
+  end;
+end;
+
+procedure TFLivroFiscalCad.ResumoValorIPIICMSES1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[16].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      QRResumo_IPI_ICMS.Close;
+      if (FLivroFiscalParam.ME16DtInicial.Text = '') or
+        (FLivroFiscalParam.ME16DtFinal.Text = '') then
+        raise Exception.Create('Informe o Período!!');
+      QRResumo_IPI_ICMS.SetVariable('DT_INICIAL', FLivroFiscalParam.Me16DtInicial.Text);
+      QRResumo_IPI_ICMS.SetVariable('DT_FINAL', FLivroFiscalParam.Me16DtFinal.Text);
+      if Trim(FLivroFiscalParam.FMFilial16.MeFilial.Text) = '' then
+        QRResumo_IPI_ICMS.SetVariable('FILIAL', NULL)
+      Else
+        QRResumo_IPI_ICMS.SetVariable('FILIAL', FLivroFiscalParam.FMFilial16.MeFilial.Text);  
+
+      QRResumo_IPI_ICMS.Open;
+
+      if FRResumo_IPI_ICMS = nil then
+        FRResumo_IPI_ICMS := TFRResumo_IPI_ICMS.Create(Application);
+      FRResumo_IPI_ICMS.QRLPeriodo.Caption := 'de ' + FLivroFiscalParam.Me16DtInicial.Text + ' até ' + FLivroFiscalParam.Me16DtFinal.Text;
+
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRResumo_IPI_ICMS.QRPrimario.Preview
+      else
+        FRResumo_IPI_ICMS.QRPrimario.Print;
+      QRResumo_IPI_ICMS.Close;
+    end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO1Click(Sender: TObject);
+{var
+  S: string;
+  F: TextFile;
+  wProduto, wAux: string;
+  wVal: Real;  }
+begin
+  inherited;
+//  S :='';
+//  wVal := 0;
+//  If FLivroFiscalParam = Nil then
+//     FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 2;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex Of
+//        0 : QExportaNF_Sinco.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco.Open;
+//
+//      if QExportaNF_Sinco.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco.EOF do
+//        Begin
+//          if QExportaNF_SincoIND_CONDICAO_PAGTO.value <> '2' then
+//            QExportaNF_SincoIND_CONDICAO_PAGTO.value := '1';
+//          if QExportaNF_SincoIND_FISICA_JURIDICA.Value = 'F' then
+//            S:= S + Copy(RMaskCGC_CPF(QExportaNF_SincoNUM_CGC_CPF.value,11) + '              ',1,14)
+//          else
+//            S:= S + RMaskCGC_CPF(QExportaNF_SincoNUM_CGC_CPF.value,14);
+//
+//          S:= S +
+//            Copy(QExportaNF_SincoCOD_SERIE.value + '     ',1,5)                                     +
+//            RMaskCGC_CPF(FloatToStr(QExportaNF_SincoNUM_NOTA.value),6)                                +
+//            Copy(QExportaNF_SincoDT_EMISSAO.Text,1,2)                                               +
+//            Copy(QExportaNF_SincoDT_EMISSAO.Text,4,2)                                               +
+//            Copy(QExportaNF_SincoDT_EMISSAO.Text,7,4)                                               +
+//            intdecimais(QExportaNF_SincoVAL_TOTAL.Text,17,2)                                        +
+//            QExportaNF_SincoIND_CONDICAO_PAGTO.value;
+//            If QExportaNF_SincoCOD_SERIE.Value = 'CNH' Then
+//               wAux := 'FRETE'
+//            Else
+//             Begin
+//               wVal := StrToFloat(DMOracle.BuscaNome('SELECT MAX(VAL_TOTAL) FROM TB_NOTA_ITEM','COD_NOTA_CAB ='+QExportaNF_SincoCOD_NOTA_CAB.text));
+//               wProduto := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_NOTA_ITEM','COD_NOTA_CAB ='+ FloatToStr(QExportaNF_SincoCOD_NOTA_CAB.Value) + ' AND VAL_TOTAL ='+ StringReplace(FloatToStr(wval),',','.',[]));
+//               If wProduto = '' Then
+//                 wAux := 'OUTROS'
+//               Else
+////                  Raise exception.Create('Problema com o codigo de nota '+QExportaNF_SincoCOD_NOTA_CAB.Text);
+//                 wAux := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO ='+ wProduto);
+//             End;
+//          S:= S + copy(wAux + '                                             ',1,45)                 +
+//              Copy(QExportaNF_SincoNAT_OPERACAO.Text,1,4);
+//         //   waux:= DMOracle.BuscaNome('SELECT COD_CADASTRO FROM TB_NOTA_CAB','COD_NOTA_CAB ='+QExportaNF_SincoCOD_NOTA_CAB.text);
+//         //   wAux := DMOracle.BuscaNome('SELECT COD_ESTADO FROM TB_CADASTRO','COD_CADASTRO ='+waux);
+//         // If wAux = 'PR' Then
+//         //   S:= S + Copy(QExportaNF_SincoNUM_NATUREZA_EST_NOVO.Text,1,4)
+//         // else
+//         //   S:= S + Copy(QExportaNF_SincoNUM_NATUREZA_INT_NOVO.Text,1,4);
+//          QExportaNF_Sinco.Next;
+//          if not QExportaNF_Sinco.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+end;
+
+procedure TFLivroFiscalCad.RelatrioImpostoNotaProduto1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[19].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.FMFilial19.MeFilial.Text), 'LIVRO FISCAL');
+      QRImpostoNotaProduto.Close;
+      QRImpostoNotaProduto.SetVariable('DATAI', FLivroFiscalParam.Me19DataI.Text);
+      QRImpostoNotaProduto.SetVariable('DATAF', FLivroFiscalParam.Me19DataF.Text);
+      if Trim(FLivroFiscalParam.FMFilial19.MeFilial.Text) = '' then
+        QRImpostoNotaProduto.SetVariable('COD_FILIAL', Null)
+      else
+        QRImpostoNotaProduto.SetVariable('COD_FILIAL', FLivroFiscalParam.FMFilial19.MeFilial.Text);
+      if Trim(FLivroFiscalParam.FMProduto19.MeProduto.Text) = '' then
+        QRImpostoNotaProduto.SetVariable('COD_PRODUTO', Null)
+      else
+        QRImpostoNotaProduto.SetVariable('COD_PRODUTO', FLivroFiscalParam.FMProduto19.MeProduto.Text);
+      if Trim(FLivroFiscalParam.FMOperacao19.MeOperacao.Text) = '' then
+        QRImpostoNotaProduto.SetVariable('COD_OPERACAO', Null)
+      else
+        QRImpostoNotaProduto.SetVariable('COD_OPERACAO', FLivroFiscalParam.FMOperacao19.MeOperacao.Text);
+      if Trim(FLivroFiscalParam.ME19CFOP.Text) <> '' then
+        QRImpostoNotaProduto.SetVariable('CFOP', Trim(FLivroFiscalParam.ME19CFOP.Text))
+      else
+        QRImpostoNotaProduto.SetVariable('CFOP', null);
+      QRImpostoNotaProduto.Open;
+      if FRImpostoProdutoNota = nil then
+        FRImpostoProdutoNota := TFRImpostoProdutoNota.Create(Application);
+      FRImpostoProdutoNota.QRLPeriodo.Caption := 'De ' + FLivroFiscalParam.Me19DataI.Text + ' Até ' + FLivroFiscalParam.Me19DataF.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRImpostoProdutoNota.QRPrimario.Preview
+      else
+        FRImpostoProdutoNota.QRPrimario.Print;
+      QRImpostoNotaProduto.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelatrioRegimeEspecialPR1Click(Sender: TObject);
+var
+  wcont: integer;
+  wclasses, westado: string;
+  wfilial, woperacao, wproduto: integer;
+  wquantidade: real;
+  wdt_inicio, wdt_fim: TDateTime;
+begin
+  //Camila - 03/03/2008
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[21].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      wcont := 1;
+      QRRegimeEspecialPR.Close;
+
+    //Frames--------------------------------------------------------------------
+      if (Trim(FLivroFiscalParam.FmFilial25.MeFilial.Text) <> '') then
+      begin
+        QRRegimeEspecialPR.SetVariable('FILIAL', Trim(FLivroFiscalParam.FmFilial25.MeFilial.Text));
+        wfilial := strToInt(Trim(FLivroFiscalParam.FmFilial25.MeFilial.Text))
+      end
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('FILIAL', null);
+        wfilial := 0;
+      end;
+
+      if (Trim(FLivroFiscalParam.FmOperacao25.MeOperacao.Text) <> '') then
+      begin
+        QRRegimeEspecialPR.SetVariable('OPERACAO', Trim(FLivroFiscalParam.FmOperacao25.MeOperacao.Text));
+        woperacao := strToInt(Trim(FLivroFiscalParam.FmOperacao25.MeOperacao.Text))
+      end
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('OPERACAO', null);
+        woperacao := 0;
+      end;
+
+      if (Trim(FLivroFiscalParam.FmProduto25.MeProduto.Text) <> '') then
+      begin
+        QRRegimeEspecialPR.SetVariable('PRODUTO', Trim(FLivroFiscalParam.FmProduto25.MeProduto.Text));
+        wproduto := strToInt(Trim(FLivroFiscalParam.FmProduto25.MeProduto.Text))
+      end
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('PRODUTO', null);
+        wproduto := 0;
+      end;
+
+      if (Trim(FLivroFiscalParam.FmEstado25.MeEstado.Text) <> '') then
+      begin
+        QRRegimeEspecialPR.SetVariable('ESTADO', Trim(FLivroFiscalParam.FmEstado25.MeEstado.Text));
+        westado := Trim(FLivroFiscalParam.FmEstado25.MeEstado.Text)
+      end
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('ESTADO', null);
+        westado := '';
+      end;
+
+      if (Trim(FLivroFiscalParam.MeClasses25.Text) <> '') then
+        QRRegimeEspecialPR.SetVariable('CLASSES', 'TB_CLASSE.NUM_CLASSE IN (' + Trim(FLivroFiscalParam.MeClasses25.Text) + ')')
+      else
+        QRRegimeEspecialPR.SetVariable('CLASSES', '1 = 1');
+
+      if (Trim(FLivroFiscalParam.MePesoMinimo25.Text) <> '') then
+      begin
+        QRRegimeEspecialPR.SetVariable('QT_MINIMO', Trim(FLivroFiscalParam.MePesoMinimo25.Text));
+        wquantidade := strToFloat(Trim(FLivroFiscalParam.MePesoMinimo25.Text))
+      end
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('QT_MINIMO', 0);
+        wquantidade := 0;
+      end;
+
+      if ((Trim(FLivroFiscalParam.FmDatas25.MeDtInicial.Text) = '') or (Trim(FLivroFiscalParam.FmDatas25.MeDtFinal.Text) = '')) then
+        raise Exception.Create('Deve-se Informar uma Data Inicial e Final para o Relatório!')
+      else
+      begin
+        QRRegimeEspecialPR.SetVariable('DT_INICIO', Trim(FLivroFiscalParam.FmDatas25.MeDtInicial.Text));
+        QRRegimeEspecialPR.SetVariable('DT_FIM', Trim(FLivroFiscalParam.FmDatas25.MeDtFinal.Text));
+        wdt_inicio := strToDate(Trim(FLivroFiscalParam.FmDatas25.MeDtInicial.Text));
+        wdt_fim := strToDate(Trim(FLivroFiscalParam.FmDatas25.MeDtFinal.Text));
+      end;
+    //--------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------
+    //Grava as classes na TB_CLASSES_TEMP para ser acessada posteriormente pela funçao
+
+      with DMOracle do
+      begin
+      //limpa os dados na TB_CLASSES_TEMP
+        try
+          DBCemapa.StartTransaction;
+          QExecSQL.Close;
+          QExecSQL.SQL.Clear;
+          QExecSQL.SQL.Add('DELETE FROM TB_CLASSES_TEMP');
+          QExecSQL.ExecSQL;
+          DBCemapa.Commit;
+        except
+          DBCemapa.Rollback;
+          raise Exception.Create('Não foi possível limpar a tabela de classes');
+        end;
+
+        while wcont <= length(Trim(FLivroFiscalParam.MeClasses25.Text)) + 1 do
+        begin
+
+          if (copy(Trim(FLivroFiscalParam.MeClasses25.Text), wcont, 1) <> ',') and
+            (copy(Trim(FLivroFiscalParam.MeClasses25.Text), wcont, 1) <> '') then
+            wclasses := wclasses + copy(Trim(FLivroFiscalParam.MeClasses25.Text), wcont, 1)
+          else
+          begin
+          //grava os dados na tabela
+            try
+              DBCemapa.StartTransaction;
+              QExecSQL.Close;
+              QExecSQL.SQL.Clear;
+              QExecSQL.SQL.Add('INSERT INTO TB_CLASSES_TEMP(NUM_CLASSE) VALUES (' + wclasses + ')');
+              QExecSQL.ExecSQL;
+              DBCemapa.Commit;
+              wclasses := '';
+            except
+              DBCemapa.Rollback;
+              raise Exception.Create('Operação não realizada');
+            end;
+
+          end;
+          inc(wcont);
+        end; //while
+
+        OPLivros.CallProcedure('NOTAS_REGIME_ESPECIAL_PR', [wfilial, woperacao, westado, wproduto, wquantidade, wdt_inicio, wdt_fim]);
+
+      end;
+
+    //--------------------------------------------------------------------------
+
+      QRRegimeEspecialPR.open;
+
+      if FRRegimeEspecialPR = nil then
+        FRRegimeEspecialPR := TFRRegimeEspecialPR.Create(Application);
+
+    //Cabeçalho
+    //----------------------
+      FRRegimeEspecialPR.QRLFilial.Caption := Trim(FLivroFiscalParam.FmFilial25.EdFilial.Text);
+      FRRegimeEspecialPR.QRLDt_Inicial.Caption := Trim(FLivroFiscalParam.FmDatas25.MeDtInicial.Text);
+      FRRegimeEspecialPR.QRLDt_Final.Caption := Trim(FLivroFiscalParam.FmDatas25.MeDtFinal.Text);
+    //----------------------
+
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRRegimeEspecialPR.QRPrimario.Preview
+      else
+        FRRegimeEspecialPR.QRPrimario.Print;
+
+      QRRegimeEspecialPR.Close;
+    //--------------------------------------------------------------------------
+    end;
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCOSimplificado1Click(
+  Sender: TObject);
+{var S: string;
+  F: TextFile;
+  wProduto, wAux: string;
+  wVal: Real;
+ }
+begin
+  inherited;
+//  S :='';
+//  wVal := 0;
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 2;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco_Simplificado.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco_Simplificado.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco_Simplificado.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco_Simplificado.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco_Simplificado.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco_Simplificado.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco_Simplificado.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco_Simplificado.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco_Simplificado.Open;
+//
+//      if QExportaNF_Sinco_Simplificado.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco_Simplificado.EOF do
+//        Begin
+//          if QExportaNF_Sinco_SimplificadoIND_CONDICAO_PAGTO.value <> '2' then
+//            QExportaNF_Sinco_SimplificadoIND_CONDICAO_PAGTO.value := '1';
+//          if QExportaNF_Sinco_SimplificadoIND_FISICA_JURIDICA.Value = 'F' then
+//            S:= S + Copy(RMaskCGC_CPF(QExportaNF_Sinco_SimplificadoNUM_CGC_CPF.value,11) + '              ',1,14)
+//          else
+//            S:= S + RMaskCGC_CPF(QExportaNF_Sinco_SimplificadoNUM_CGC_CPF.value,14);
+//
+//          S:= S +
+//            Copy(QExportaNF_Sinco_SimplificadoCOD_SERIE.value + '     ',1,5)                                     +
+//            RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco_SimplificadoNUM_NOTA.value),6)                                +
+//            Copy(QExportaNF_Sinco_SimplificadoDT_EMISSAO.Text,1,2)                                               +
+//            Copy(QExportaNF_Sinco_SimplificadoDT_EMISSAO.Text,4,2)                                               +
+//            Copy(QExportaNF_Sinco_SimplificadoDT_EMISSAO.Text,7,4)                                               +
+//            intdecimais(QExportaNF_Sinco_SimplificadoVAL_TOTAL.Text,17,2)                                        +
+//            QExportaNF_Sinco_SimplificadoIND_CONDICAO_PAGTO.value;
+//            If QExportaNF_Sinco_SimplificadoCOD_SERIE.Value = 'CNH' Then
+//               wAux := 'FRETE'
+//            Else
+//             Begin
+//               wVal := StrToFloat(DMOracle.BuscaNome('SELECT MAX(VAL_TOTAL) FROM TB_NOTA_ITEM','COD_NOTA_CAB ='+QExportaNF_Sinco_SimplificadoCOD_NOTA_CAB.text));
+//               wProduto := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_NOTA_ITEM','COD_NOTA_CAB ='+ FloatToStr(QExportaNF_Sinco_SimplificadoCOD_NOTA_CAB.Value) + ' AND VAL_TOTAL ='+ StringReplace(FloatToStr(wval),',','.',[]));
+//               If wProduto = '' Then
+//                 wAux := 'OUTROS'
+//               Else
+////                  Raise exception.Create('Problema com o codigo de nota '+QExportaNF_SincoCOD_NOTA_CAB.Text);
+//                 wAux := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO ='+ wProduto);
+//             End;
+//          S:= S + copy(wAux + '                                             ',1,45)                 +
+//              Copy(QExportaNF_Sinco_SimplificadoNAT_OPERACAO.Text,1,4);
+//         //   waux:= DMOracle.BuscaNome('SELECT COD_CADASTRO FROM TB_NOTA_CAB','COD_NOTA_CAB ='+QExportaNF_SincoCOD_NOTA_CAB.text);
+//         //   wAux := DMOracle.BuscaNome('SELECT COD_ESTADO FROM TB_CADASTRO','COD_CADASTRO ='+waux);
+//         // If wAux = 'PR' Then
+//         //   S:= S + Copy(QExportaNF_SincoNUM_NATUREZA_EST_NOVO.Text,1,4)
+//         // else
+//         //   S:= S + Copy(QExportaNF_SincoNUM_NATUREZA_INT_NOVO.Text,1,4);
+//          QExportaNF_Sinco_Simplificado.Next;
+//          if not QExportaNF_Sinco_Simplificado.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco_Simplificado.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4311Click(Sender: TObject);
+//var S: string;
+//  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 2;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco2.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco2.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco2.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco2.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco2.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco2.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco2.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco2.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco2.Open;
+//
+//      if QExportaNF_Sinco2.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco2.EOF do
+//        Begin
+//          S := S + QExportaNF_Sinco2IND_ENTRADA_SAIDA.Text + ' U';
+//          S := S + Copy(QExportaNF_Sinco2COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco2NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco2DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco2DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco2DT_EMISSAO.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco2COD_CADASTRO.Text + '              ',1,14);
+//          S := S + Copy(QExportaNF_Sinco2DT_RECEBIMENTO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco2DT_RECEBIMENTO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco2DT_RECEBIMENTO.Text,7,4);
+//          S := S + intdecimais(QExportaNF_Sinco2VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco2SVAL_DESCONTO.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco2SVAL_FRETE.Text,17,2) + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco2SVAL_DESPESAS.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco2SVAL_IPI.Text,17,2) + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco2VAL_TOTAL.Text,17,2) + '              ';
+//          S := S + 'RODOVIARIO     ';
+//          S := S + Copy(QExportaNF_Sinco2COD_TRANSPORTADOR.Text + '              ',1,14);
+//          S := S + intdecimais(QExportaNF_Sinco2QT_VOLUMES.Text,17,2);
+//          S := S + 'CX/KG/PCT ';
+//          S := S + intdecimais(QExportaNF_Sinco2QT_PESO_BRUTO.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco2QT_PESO_LIQUIDO.Text,17,2);
+//          S := S + QExportaNF_Sinco2IND_TIPO_FRETE.Text;
+//          S := S + Copy(QExportaNF_Sinco2DESC_PLACA.Text + '               ',1,15);
+//          If QExportaNF_Sinco2IND_SITUACAO.Value = '2' Then
+//            S := S + 'N'
+//          Else
+//            S := S + 'S';
+//          S := S + QExportaNF_Sinco2IND_TIPO_PAGAMENTO.Text;
+//          S := S + Copy(QExportaNF_Sinco2OBS.Text + '                                             ',1,45);
+//
+//          QExportaNF_Sinco2.Next;
+//          if not QExportaNF_Sinco2.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco2.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4321Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 2;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco432.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco432.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco432.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco432.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco432.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco432.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco432.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco432.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco432.Open;
+//      wCod_nota := QExportaNF_Sinco432Cod_Nota_Cab.Value;
+//      wCont := 0;
+//      if QExportaNF_Sinco432.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco432.EOF do
+//        Begin
+//          S := S + QExportaNF_Sinco432IND_ENTRADA_SAIDA.Text + ' U';
+//          S := S + Copy(QExportaNF_Sinco432COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco432NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco432DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco432DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco432DT_EMISSAO.Text,7,4);
+//          If wCod_Nota <> QExportaNF_Sinco432Cod_Nota_Cab.Value Then
+//           Begin
+//             wCod_nota := QExportaNF_Sinco432Cod_Nota_Cab.Value;
+//             wCont := 0;
+//           End;
+//          Inc(wCont);
+//          S := S + Copy(IntToStr(wCont) + '   ',1,3);
+//          S := S + Copy(QExportaNF_Sinco432COD_PRODUTO.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco432DESC_PRODUTO.Text + '                                             ',1,45);
+//          S := S + intdecimais(QExportaNF_Sinco432NAT_OPERACAO.Text,3,0);
+//          S := S + intdecimais(QExportaNF_Sinco432COD_OPERACAO.Text,6,0);
+//          S := S + Copy(QExportaNF_Sinco432COD_NBM_SH.Text + '        ',1,8);
+//          S := S + intdecimais(QExportaNF_Sinco432QT_QUANTIDADE.Text,17,3);
+//          S := S + Copy(QExportaNF_Sinco432DESC_UNIDADE.Text + '   ',1,3);
+//          S := S + intdecimais(QExportaNF_Sinco432VAL_UNITARIO.Text,17,4);
+//          S := S + intdecimais(QExportaNF_Sinco432VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco432sVAL_DESCONTO.Text,17,2);
+//          S := S + QExportaNF_Sinco432IND_IPI.Value;
+//          S := S + intdecimais(QExportaNF_Sinco432PERC_IPI.Text,5,2);
+//          If QExportaNF_Sinco432VAL_IPI.Value > 0 Then
+//             S := S + intdecimais(QExportaNF_Sinco432VAL_TOTAL.Text,17,2)
+//          Else
+//             S := S + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco432VAL_IPI.Text,17,2);
+//          S := S + Copy(QExportaNF_Sinco432DESC_SITUACAO_TRIB.Text + '   ',1,3);
+//          If Trim(QExportaNF_Sinco432NUM_CLASSIFICACAO.Value) = '5' Then
+//             S := S + '3'
+//          Else
+//            If Trim(QExportaNF_Sinco432NUM_CLASSIFICACAO.Value) = '4' Then
+//               S := S + '2'
+//            Else
+//               S := S + '1';
+//          S := S + intdecimais(QExportaNF_Sinco432PERC_ALIQUOTA.Text,5,2);
+//          S := S + intdecimais(QExportaNF_Sinco432VAL_ICM_BASE.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco432VAL_ICM.Text,17,2);
+//          S := S + '00000000000000000';
+//          S := S + '00000000000000000';
+//          S := S + QExportaNF_Sinco432IND_ESTOQUE.Value;
+//
+//          QExportaNF_Sinco432.Next;
+//          if not QExportaNF_Sinco432.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco432.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4331Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 0;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco433.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco433.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco433.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco433.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco433.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//{      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//}      QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA','E');  // neste registro somente entradas
+//
+//      QExportaNF_Sinco433.Open;
+//
+//      if QExportaNF_Sinco433.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco433.EOF do
+//        Begin
+//          S := S + ' U';
+//          S := S + Copy(QExportaNF_Sinco433COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco433NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco433DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco433DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco433DT_EMISSAO.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco433COD_CADASTRO.Text + '              ',1,14);
+//          S := S + Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text,7,4);
+//          S := S + intdecimais(QExportaNF_Sinco433VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco433SVAL_DESCONTO.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco433SVAL_FRETE.Text,17,2) + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco433SVAL_DESPESAS.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco433SVAL_IPI.Text,17,2) + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco433VAL_TOTAL.Text,17,2) + '              ';
+//          S := S + QExportaNF_Sinco433IND_TIPO_PAGAMENTO.Text;
+//          S := S + Copy(QExportaNF_Sinco433OBS.Text + '                                             ',1,45);
+//
+//          QExportaNF_Sinco433.Next;
+//          if not QExportaNF_Sinco433.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco433.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4341Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  inherited;
+//  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 0;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco434.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco434.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco434.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco434.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco434.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//{      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//}      QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA','E');  // somente entradas neste arquivo
+//
+//      QExportaNF_Sinco434.Open;
+//      wCod_nota := QExportaNF_Sinco434Cod_Nota_Cab.Value;
+//      wCont := 1;
+//      if QExportaNF_Sinco434.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco434.EOF do
+//        Begin
+//          S := S + ' U';
+//          S := S + Copy(QExportaNF_Sinco434COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco434NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco434DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco434DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco434DT_EMISSAO.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco434COD_CADASTRO.Text + '              ',1,14);
+//          If wCod_Nota <> QExportaNF_Sinco434Cod_Nota_Cab.Value Then
+//           Begin
+//             wCod_nota := QExportaNF_Sinco434Cod_Nota_Cab.Value;
+//             wCont := 1;
+//           End;
+//          Inc(wCont);
+//          S := S + Copy(IntToStr(wCont) + '   ',1,3);
+//          S := S + Copy(QExportaNF_Sinco434COD_PRODUTO.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco434DESC_PRODUTO.Text + '                                             ',1,45);
+//          S := S + intdecimais(QExportaNF_Sinco434NAT_OPERACAO.Text,3,0);
+//          S := S + intdecimais(QExportaNF_Sinco434COD_OPERACAO.Text,6,0);
+//          S := S + Copy(QExportaNF_Sinco434COD_NBM_SH.Text + '        ',1,8);
+//          S := S + intdecimais(QExportaNF_Sinco434QT_QUANTIDADE.Text,17,3);
+//          S := S + Copy(QExportaNF_Sinco434DESC_UNIDADE.Text + '   ',1,3);
+//          S := S + intdecimais(QExportaNF_Sinco434VAL_UNITARIO.Text,17,4);
+//          S := S + intdecimais(QExportaNF_Sinco434VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco434sVAL_DESCONTO.Text,17,2);
+//          S := S + QExportaNF_Sinco434IND_IPI.Value;
+//          S := S + intdecimais(QExportaNF_Sinco434PERC_IPI.Text,5,2);
+//          If QExportaNF_Sinco434VAL_IPI.Value > 0 Then
+//             S := S + intdecimais(QExportaNF_Sinco434VAL_TOTAL.Text,17,2)
+//          Else
+//             S := S + '00000000000000000';
+//          S := S + intdecimais(QExportaNF_Sinco434VAL_IPI.Text,17,2);
+//          S := S + Copy(QExportaNF_Sinco434DESC_SITUACAO_TRIB.Text + '   ',1,3);
+//          If Trim(QExportaNF_Sinco434NUM_CLASSIFICACAO.Value) = '5' Then
+//             S := S + '3'
+//          Else
+//            If Trim(QExportaNF_Sinco432NUM_CLASSIFICACAO.Value) = '4' Then
+//               S := S + '2'
+//            Else
+//               S := S + '1';
+//          S := S + intdecimais(QExportaNF_Sinco434PERC_ALIQUOTA.Text,5,2);
+//          S := S + intdecimais(QExportaNF_Sinco434VAL_ICM_BASE.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco434VAL_ICM.Text,17,2);
+//          S := S + '00000000000000000';
+//          S := S + '00000000000000000';
+//          S := S + QExportaNF_Sinco434IND_ESTOQUE.Value;
+//
+//          QExportaNF_Sinco434.Next;
+//          if not QExportaNF_Sinco434.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco434.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4351Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 1;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco435.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco435.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco435.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco435.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco435.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//{      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//}     QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA','S');  // somente saidas neste arquivo
+//
+//      QExportaNF_Sinco435.Open;
+//
+//      if QExportaNF_Sinco435.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco435.EOF do
+//        Begin
+//          S := S + Copy(QExportaNF_Sinco435COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco435NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco435DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco435DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco435DT_EMISSAO.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco435COD_CADASTRO.Text + '              ',1,14);
+//          S := S + intdecimais(QExportaNF_Sinco435VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco435SVAL_DESCONTO.Text,17,2);
+//          S := S + '00000' + '00000000000000000' + '00000000000000000';
+//          If QExportaNF_Sinco435IND_SITUACAO.Value = '2' Then
+//            S := S + 'N'
+//          Else
+//            S := S + 'S';
+//
+//          QExportaNF_Sinco435.Next;
+//          if not QExportaNF_Sinco435.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco435.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4361Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 1;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco436.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco436.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco436.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco436.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco436.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//{      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//}     QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA','S');   // somente saidas
+//
+//      QExportaNF_Sinco436.Open;
+//      wCod_nota := QExportaNF_Sinco436Cod_Nota_Cab.Value;
+//      wCont := 1;
+//      if QExportaNF_Sinco436.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco436.EOF do
+//        Begin
+//          S := S + Copy(QExportaNF_Sinco436COD_SERIE.value + '     ',1,5);
+//          S := S + RMaskCGC_CPF(FloatToStr(QExportaNF_Sinco436NUM_NOTA.value),6);
+//          S := S + Copy(QExportaNF_Sinco436DT_EMISSAO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco436DT_EMISSAO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco436DT_EMISSAO.Text,7,4);
+//          If wCod_Nota <> QExportaNF_Sinco436Cod_Nota_Cab.Value Then
+//           Begin
+//             wCod_nota := QExportaNF_Sinco436Cod_Nota_Cab.Value;
+//             wCont := 1;
+//           End;
+//          Inc(wCont);
+//          S := S + Copy(IntToStr(wCont) + '   ',1,3);
+//          S := S + Copy(QExportaNF_Sinco436COD_PRODUTO.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco436DESC_PRODUTO.Text + '                                             ',1,45);
+//          S := S + intdecimais(QExportaNF_Sinco436VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco436sVAL_DESCONTO.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco436PERC_INSS.Text,5,2);
+//          S := S + intdecimais(QExportaNF_Sinco436VAL_TOTAL.Text,17,2);
+//          S := S + intdecimais(QExportaNF_Sinco436VAL_ISS.Text,17,2);
+//
+//          QExportaNF_Sinco436.Next;
+//          if not QExportaNF_Sinco436.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco436.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4911Click(Sender: TObject);
+var S, wAux: string;
+  F: TextFile;
+  I: Integer;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.ItemIndex := 2;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco491.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco491.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco491.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco491.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco491.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco491.Open;
+//      if QExportaNF_Sinco491.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco491.EOF do
+//        Begin
+//          S := S + Copy(QExportaNF_Sinco491DT_CADASTRO.Text,1,2) +
+//                   Copy(QExportaNF_Sinco491DT_CADASTRO.Text,4,2) +
+//                   Copy(QExportaNF_Sinco491DT_CADASTRO.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco491COD_CADASTRO.Text + '              ',1,14);
+//          If Trim(QExportaNF_Sinco491Num_Cgc_Cpf.Value) = 'SID' Then
+//             wAux := Trim(QExportaNF_Sinco491Num_Cgc_Cpf.Value)
+//          Else
+//           Begin
+//             wAux := '';
+//             for I := 1 to length(QExportaNF_Sinco491Num_Cgc_Cpf.Value) do
+//                 if QExportaNF_Sinco491Num_Cgc_Cpf.Value[I] in ['0','1','2','3','4','5','6','7','8','9'] then
+//                     wAux := wAux + QExportaNF_Sinco491Num_Cgc_Cpf.Value[I];
+//           End;
+//          S := S + Copy(wAux + '              ',1,14);
+//          If Trim(QExportaNF_Sinco491Num_Inscricao.Value) = 'ISENTO' Then
+//             wAux := Trim(QExportaNF_Sinco491Num_Inscricao.Value)
+//          Else
+//           Begin
+//             wAux := '';
+//             for I := 1 to length(QExportaNF_Sinco491Num_Inscricao.Value) do
+//                 if QExportaNF_Sinco491Num_Inscricao.Value[I] in ['0','1','2','3','4','5','6','7','8','9'] then
+//                     wAux := wAux + QExportaNF_Sinco491Num_Inscricao.Value[I];
+//           End;
+//          S := S + Copy(wAux + '              ',1,14);
+//          wAux := '';
+//          for I := 1 to length(QExportaNF_Sinco491Desc_Inscricao_Municipal.Value) do
+//              if QExportaNF_Sinco491Desc_Inscricao_Municipal.Value[I] in ['0','1','2','3','4','5','6','7','8','9'] then
+//                  wAux := wAux + QExportaNF_Sinco491Desc_Inscricao_Municipal.Value[I];
+//          S := S + Copy(wAux + '              ',1,14);
+//          S := S + Copy(QExportaNF_Sinco491NOME.Text + '                                                                      ',1,70);
+//          S := S + Copy(QExportaNF_Sinco491DESC_ENDERECO.Text + '                                                            ',1,60);
+//          S := S + Copy(QExportaNF_Sinco491DESC_BAIRRO.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco491DESC_CIDADE.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco491COD_ESTADO.Text + '  ',1,2);
+//          S := S + Copy(QExportaNF_Sinco491DESC_PAIS.Text + '                    ',1,20);
+//          wAux := '';
+//          for I := 1 to length(QExportaNF_Sinco491Desc_Cep.Value) do
+//              if QExportaNF_Sinco491Desc_Cep.Value[I] in ['0','1','2','3','4','5','6','7','8','9'] then
+//                  wAux := wAux + QExportaNF_Sinco491Desc_Cep.Value[I];
+//          S := S + Copy(wAux + '        ',1,8);
+//
+//          QExportaNF_Sinco491.Next;
+//          if not QExportaNF_Sinco491.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco491.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4941Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco494.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco494.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco494.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco494.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco494.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco494.Open;
+//      if QExportaNF_Sinco494.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco494.EOF do
+//        Begin
+//          S := S + Copy(DMOracle.QDataServDTSERVIDOR.Text,1,2) +
+//                   Copy(DMOracle.QDataServDTSERVIDOR.Text,4,2) +
+//                   Copy(DMOracle.QDataServDTSERVIDOR.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco494COD_OPERACAO.Text + '      ',1,6);
+//          S := S + Copy(QExportaNF_Sinco494DESC_OPERACAO.Text + '                                             ',1,45);
+//
+//          QExportaNF_Sinco494.Next;
+//          if not QExportaNF_Sinco494.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco494.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4951Click(Sender: TObject);
+var S: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco495.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco495.SetVariable('FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco495.SetVariable('FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco495.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco495.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      Case FLivroFiscalParam.RG18Nota.ItemIndex  Of
+//        0 : QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA','E');
+//        1 : QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA','S');
+//        2 : QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA',Null);
+//      End;
+//
+//      QExportaNF_Sinco495.Open;
+//      if QExportaNF_Sinco495.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco495.EOF do
+//        Begin
+//          S := S + Copy(DMOracle.QDataServDTSERVIDOR.Text,1,2) +
+//                   Copy(DMOracle.QDataServDTSERVIDOR.Text,4,2) +
+//                   Copy(DMOracle.QDataServDTSERVIDOR.Text,7,4);
+//          S := S + Copy(QExportaNF_Sinco495COD_PRODUTO.Text + '                    ',1,20);
+//          S := S + Copy(QExportaNF_Sinco495DESC_PRODUTO.Text + '                                             ',1,45);
+//
+//          QExportaNF_Sinco495.Next;
+//          if not QExportaNF_Sinco495.Eof then
+//            S:= S + Chr(13)+ Chr(10);
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco495.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4211Click(Sender: TObject);
+var S, S1, wAux, wOperacao, wTipo_Nota: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.Visible := False;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExporta_Sinco421.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExporta_Sinco421.SetVariable('COD_FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExporta_Sinco421.SetVariable('COD_FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExporta_Sinco421.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExporta_Sinco421.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      QExporta_Sinco421.Open;
+//      if QExporta_Sinco421.RecordCount>0 then
+//      begin
+//        while not QExporta_Sinco421.EOF do
+//        Begin
+//          wAux := '';
+//          If (QExporta_Sinco421COD_LANCTO_CONTABIL_CRED.Text <> '') And (QExporta_Sinco421COD_LANCTO_CONTABIL_CRED.Text <> '0') Then
+//             wAux := DMOracle.BuscaNome('SELECT NUM_PLANO_CONTA FROM TB_LANCTO_CONTABIL,TB_PLANO_CONTA','TB_LANCTO_CONTABIL.COD_PLANO_CONTA=TB_PLANO_CONTA.COD_PLANO_CONTA AND COD_LANCTO_CONTABIL ='+QExporta_Sinco421COD_LANCTO_CONTABIL_CRED.Text)
+//          Else
+//            If (QExporta_Sinco421COD_LANCTO_CONTABIL_DEB.Text <> '') And (QExporta_Sinco421COD_LANCTO_CONTABIL_DEB.Text <> '0') Then
+//               wAux := DMOracle.BuscaNome('SELECT NUM_PLANO_CONTA FROM TB_LANCTO_CONTABIL,TB_PLANO_CONTA','TB_LANCTO_CONTABIL.COD_PLANO_CONTA=TB_PLANO_CONTA.COD_PLANO_CONTA AND COD_LANCTO_CONTABIL ='+QExporta_Sinco421COD_LANCTO_CONTABIL_DEB.Text)
+//            Else
+//               If (QExporta_Sinco421COD_NOTA_CAB.Text <> '') And (QExporta_Sinco421COD_NOTA_CAB.Text <> '0') Then
+//                Begin
+//                  wOperacao := DMOracle.BuscaNome('SELECT COD_OPERACAO FROM TB_NOTA_CAB','COD_NOTA_CAB ='+QExporta_Sinco421COD_NOTA_CAB.Text);
+//                  wTipo_Nota := DMOracle.BuscaNome('SELECT IND_ENTRADA_SAIDA FROM TB_NOTA_CAB','COD_NOTA_CAB ='+QExporta_Sinco421COD_NOTA_CAB.Text);
+//                  If wTipo_Nota = 'E' Then
+//                     wAux := DMOracle.BuscaNome('SELECT COD_CONTABIL_VAL_NOTA_CRED FROM TB_OPERACAO','COD_OPERACAO ='+wOperacao)
+//                  Else
+//                     wAux := DMOracle.BuscaNome('SELECT COD_CONTABIL_VAL_NOTA_APRAZO FROM TB_OPERACAO','COD_OPERACAO ='+wOperacao);
+//                End;
+//          S1 := Copy(wAux + '                            ',1,28);
+//          S1 := S1 + Copy(QExporta_Sinco421COD_CADASTRO.Text + '              ',1,14);
+//          S1 := S1 + FormatDateTime('DDMMYYYY',QExporta_Sinco421DT_MOVIMENTO.Value);
+//          S1 := S1 + Copy(QExporta_Sinco421DESC_FINALIDADE.Text + '                                                  ',1,50);
+//          S1 := S1 + intdecimais(QExporta_Sinco421VAL_MOVIMENTO.Text,17,2);
+//          If QExporta_Sinco421IND_TIPO_MOVIMENTO.Value = 'PRINCIPAL' Then
+//             S1 := S1 + 'C'
+//          Else
+//            If (QExporta_Sinco421IND_TIPO_MOVIMENTO.Value = 'RECEBTO. JUROS') Or
+//               (QExporta_Sinco421IND_TIPO_MOVIMENTO.Value = 'RECEBTO. PRINCIPAL') Then
+//               S1 := S1 + 'R'
+//            Else
+//              If (QExporta_Sinco421IND_TIPO_MOVIMENTO.Value = 'PGTO. JUROS') Or
+//                 (QExporta_Sinco421IND_TIPO_MOVIMENTO.Value = 'PGTO. PRINCIPAL') Then
+//                 S1 := S1 + 'P'
+//              Else
+//                 S1 := S1 + 'B';
+//          S1 := S1 + 'DUP';
+//          S1 := S1 + Copy(QExporta_Sinco421NUM_TITULO.Text + '            ',1,12);
+//          S1 := S1 + intdecimais(QExporta_Sinco421VAL_ORIGINAL.Text,17,2);
+//          S1 := S1 + FormatDateTime('DDMMYYYY',QExporta_Sinco421DT_EMISSAO.Value);
+//          S1 := S1 + FormatDateTime('DDMMYYYY',QExporta_Sinco421DT_VENCIMENTO.Value);
+//          If QExporta_Sinco421COD_CONTA_RECEBER_MOV.Value > 0 Then
+//             S1 := S1 + Copy(QExporta_Sinco421COD_CONTA_RECEBER_MOV.Text + '            ',1,12)
+//          Else
+//             S1 := S1 + Copy(QExporta_Sinco421COD_CONTA_PAGAR_MOV.Text + '            ',1,12);
+//          QExporta_Sinco421.Next;
+//          if not QExporta_Sinco421.Eof then
+//            S1 := S1 + Chr(13)+ Chr(10);
+//          S := S + S1;
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExporta_Sinco421.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+
+end;
+
+procedure TFLivroFiscalCad.ArqRemessaNFSINCO4411Click(Sender: TObject);
+var S, S1, wAux: string;
+  F: TextFile;
+begin
+  inherited;
+//  S :='';
+//  If FLivroFiscalParam = Nil then
+//    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+//  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+//  FLivroFiscalParam.RG18Nota.Visible := False;
+//  If FLivroFiscalParam.ShowModal = mrOk then
+//  begin
+//    DmUsuario.Checar_Filial_Usuario( Trim(FLivroFiscalParam.ME18Filial.text),'LIVRO FISCAL');
+//    with DMLivroFiscal do
+//    begin
+//      QExportaNF_Sinco441.Close;
+//
+//      if Trim(FLivroFiscalParam.ME18Filial.text)<>'' then
+//        QExportaNF_Sinco441.SetVariable('COD_FILIAL',FLivroFiscalParam.ME18Filial.text)
+//      else
+//        QExportaNF_Sinco441.SetVariable('COD_FILIAL',Null);
+//
+//      if Trim(FLivroFiscalParam.ME18DtInicial.text)<>'' then
+//        QExportaNF_Sinco441.SetVariable('DT_INICIAL',FLivroFiscalParam.ME18DtInicial.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data inicial!');
+//
+//      if Trim(FLivroFiscalParam.ME18DtFinal.text)<>'' then
+//        QExportaNF_Sinco441.SetVariable('DT_FINAL',FLivroFiscalParam.ME18DtFinal.text)
+//      else
+//        Raise Exception.Create('É necessário informar a data final!');
+//
+//      QExportaNF_Sinco441.Open;
+//      if QExportaNF_Sinco441.RecordCount>0 then
+//      begin
+//        while not QExportaNF_Sinco441.EOF do
+//        Begin
+//          S1 := Copy(QExportaNF_Sinco441DESC_MODELO.Text + '  ',1,2);
+//          S1 := S1 + Copy(QExportaNF_Sinco441COD_SERIE.Text + '     ',1,5);
+//          S1 := S1 + Copy(QExportaNF_Sinco441NUM_NOTA.Text + '      ',1,6);
+//          S1 := S1 + FormatDateTime('DDMMYYYY',QExportaNF_Sinco441DT_EMISSAO.Value);
+//          S1 := S1 + Copy(QExportaNF_Sinco441NUMERO_RE.Text + '           ',1,11);
+//          S1 := S1 + Copy(QExportaNF_Sinco441NUM_CONHECIMENTO.Text + '           ',1,12);
+//          QExportaNF_Sinco441.Next;
+//          if not QExportaNF_Sinco441.Eof then
+//            S1 := S1 + Chr(13)+ Chr(10);
+//          S := S + S1;
+//        end;
+//        if FLivroFiscalParam.SDlgAMagnetico.Execute then
+//        begin
+//          AssignFile( F, FLivroFiscalParam.SDlgAMagnetico.FileName);
+//          Rewrite(F);
+//          Writeln(F, S);
+//          CloseFile(F);
+//          MessageDlg('Arquivo de Exportação de Notas Fiscais Gerado com Sucesso!', mtInformation,[mbOk], 0);
+//        end
+//        else
+//          MessageDlg('Arquivo não foi Gerado!', mtWarning,[mbOk], 0);
+//          QExportaNF_Sinco441.Close;
+//      end
+//      else
+//        Raise Exception.Create('Não há notas no péríodo selecionado!');
+//    end;
+//  end;
+//
+
+end;
+
+procedure TFLivroFiscalCad.RelatorioGiIcms1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[24].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.FmFilial24.MeFilial.Text), 'LIVRO FISCAL');
+      QrGiCms.Close;
+      QrGiCms.SetVariable('DATA_I', FLivroFiscalParam.FmDatas24.MeDtInicial.Text);
+      QrGiCms.SetVariable('DATA_F', FLivroFiscalParam.FmDatas24.MeDtFinal.Text + ' 23:59:59');
+      if Trim(FLivroFiscalParam.FMFilial19.MeFilial.Text) = '' then
+        QrGiCms.SetVariable('FILIAL', Null)
+      else
+        QrGiCms.SetVariable('FILIAL', FLivroFiscalParam.FMFilial19.MeFilial.Text);
+      QrGiCms.Open;
+      if FRLivroGiIcms = nil then
+        FRLivroGiIcms := TFRLivroGiIcms.Create(Application);
+      FRLivroGiIcms.QRLPeriodo.Caption := 'De ' + FLivroFiscalParam.FmDatas24.MeDtInicial.Text + ' Até ' + FLivroFiscalParam.FmDatas24.MeDtFinal.Text;
+      FRLivroGiIcms.QRLFilial.Caption := 'Filial: ' + FLivroFiscalParam.FmFilial24.EdFilial.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRLivroGiIcms.QRPrimario.Preview
+      else
+        FRLivroGiIcms.QRPrimario.Print;
+      QrGiCms.Close;
+    end;
+
+end;
+
+procedure TFLivroFiscalCad.ADECOFIS5520091Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[18].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+  begin
+    gera431;
+    gera432;
+    gera433;
+    gera434;
+    gera435;
+    gera436;
+    gera438;
+    gera439;
+    gera491;
+    gera494;
+    gera495;
+    gera4101;
+    gera4102;
+    gera4104;
+    gera4105;
+    gera4106;
+
+    MessageDlg('Exportação concluída.', mtInformation, [mbOK], 0);
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera431;
+var S: string;
+  F: TextFile;
+  wUnidade: string;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+      QExportaNF_Sinco.Open;
+
+      if QExportaNF_Sinco.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco.EOF do
+        begin
+          S := S + QExportaNF_SincoIND_ENTRADA_SAIDA.Text + bib.AjustaStr(QExportaNF_SincoDESC_MODELO.Value, 2);
+          S := S + Copy(QExportaNF_SincoCOD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_SincoNUM_NOTA.Value);
+          S := S + Copy(QExportaNF_SincoDT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_SincoDT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_SincoDT_EMISSAO.Text, 7, 4);
+          S := S + Copy(QExportaNF_SincoCOD_CADASTRO.Text + '              ', 1, 14);
+          S := S + Copy(QExportaNF_SincoDT_RECEBIMENTO.Text, 1, 2) +
+            Copy(QExportaNF_SincoDT_RECEBIMENTO.Text, 4, 2) +
+            Copy(QExportaNF_SincoDT_RECEBIMENTO.Text, 7, 4);
+          S := S + intdecimais(QExportaNF_SincoVAL_TOTAL_PRODUTOS.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_SincoVAL_DESCONTO.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_SincoSVAL_FRETE.Text, 17, 2) + '00000000000000000';
+          S := S + intdecimais(QExportaNF_SincoSVAL_DESPESAS.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_SincoSVAL_IPI.Text, 17, 2) + '00000000000000000';
+          S := S + intdecimais(QExportaNF_SincoVAL_TOTAL.Text, 17, 2) + '              ';
+          S := S + bib.AjustaStr(QExportaNF_SincoDESC_TIPO_TRANSPORTE.Value, 15);
+          S := S + Copy(QExportaNF_SincoCOD_TRANSPORTADOR.Text + '              ', 1, 14);
+          S := S + intdecimais(QExportaNF_SincoQT_VOLUMES.Text, 17, 0);
+          wUnidade := '';
+          DMLivroFiscal.QUnidades.Close;
+          DMLivroFiscal.QUnidades.SetVariable('COD_NOTA_CAB', QExportaNF_SincoCOD_NOTA_CAB.Value);
+          DMLivroFiscal.QUnidades.Open;
+          DMLivroFiscal.QUnidades.First;
+          while not DMLivroFiscal.QUnidades.Eof do
+          begin
+            wUnidade := wUnidade + DMLivroFiscal.QUnidadesDESC_UNIDADE.Value;
+            if DMLivroFiscal.QUnidades.RecNo <> DMLivroFiscal.QUnidades.RecordCount then
+              wUnidade := wUnidade + '/';
+            DMLivroFiscal.QUnidades.Next;
+          end;
+          S := S + bib.AjustaStr(wUnidade, 10);
+          //S := S + bib.AjustaStr(QExportaNF_SincoDESC_UNIDADE.Value, 10);
+          S := S + intdecimais(QExportaNF_SincoQT_PESO_BRUTO.Text, 17, 3);
+          S := S + intdecimais(QExportaNF_SincoQT_PESO_LIQUIDO.Text, 17, 3);
+          S := S + QExportaNF_SincoIND_TIPO_FRETE.Text;
+          S := S + Copy(QExportaNF_SincoDESC_PLACA.Text + '               ', 1, 15);
+          if QExportaNF_SincoIND_SITUACAO.Value = '2' then
+            S := S + 'N'
+          else
+            S := S + 'S';
+          S := S + QExportaNF_SincoIND_TIPO_PAGAMENTO.Text;
+          S := S + Copy(QExportaNF_SincoDESC_OBS.Text + '                                             ', 1, 45);
+
+          begin
+            S := S + Bib.AjustaStr('', 50);
+            S := S + Bib.AjustaStr('', 2);
+            S := S + Bib.AjustaStr('', 5);
+            S := S + '000000000';
+            S := S + '00000000';
+            S := S + Bib.AjustaStr('', 14);
+          end;
+
+          QExportaNF_Sinco.Next;
+          if not QExportaNF_Sinco.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.1.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco.Close;
+        DMLivroFiscal.QUnidades.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.1', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera4101;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco4101.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco4101.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco4101.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco4101.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco4101.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco4101.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco4101.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco4101.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco4101.Open;
+      wCod_Nota := QExportaNF_Sinco4101COD_NOTA_CAB.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco4101.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco4101.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco4101COD_NOTA_ITEM.Value);
+
+          if wCod_Nota <> QExportaNF_Sinco4101Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco4101Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4101DESC_MODELO.Text, 2);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4101COD_SERIE.Text, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco4101NUM_NOTA.Value);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco4101DT_EMISSAO.Value);
+          S := S + FormatFloat('000', wCont);
+          if wStPIS = '00' then
+            wStPIS := '08';
+          S := S + wStPIS;
+          if ((wStPIS = '08') or (wStPIS = '09')) then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+            S := S + intdecimais(FloatToStr(0), 17, 2);
+          end
+          else
+          begin
+            if wValPIS = 0 then
+            begin
+              S := S + intdecimais(FloatToStr(0), 8, 4);
+              S := S + intdecimais(FloatToStr(0), 17, 3);
+            end
+            else
+            begin
+              S := S + intdecimais(FloatToStr(wAliqPIS), 8, 4);
+              S := S + intdecimais(FloatToStr(wBasePIS), 17, 3);
+            end;
+            S := S + intdecimais(FloatToStr(wValPIS), 17, 2);
+          end;
+          if wStCOFINS = '00' then
+            wStCOFINS := '08';
+          S := S + wStCOFINS;
+          if ((wStCOFINS = '08') or (wStCOFINS = '09')) then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+            S := S + intdecimais(FloatToStr(0), 17, 2);
+          end
+          else
+          begin
+            if wValCOFINS = 0 then
+            begin
+              S := S + intdecimais(FloatToStr(0), 8, 4);
+              S := S + intdecimais(FloatToStr(0), 17, 3);
+            end
+            else
+            begin
+              S := S + intdecimais(FloatToStr(wAliqCOFINS), 8, 4);
+              S := S + intdecimais(FloatToStr(wBaseCOFINS), 17, 3);
+            end;
+            S := S + intdecimais(FloatToStr(wValCOFINS), 17, 2);
+          end;
+          S := S + FormatDateTime('DDMMYYYY', Date);
+
+          QExportaNF_Sinco4101.Next;
+          if not QExportaNF_Sinco4101.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.10.1.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco4101.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.10.1', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera4102;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco4102.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco4102.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco4102.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco4102.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco4102.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco4102.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco4102.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco4102.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco4102.Open;
+      wCod_nota := QExportaNF_Sinco4102Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco4102.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco4102.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco4102COD_NOTA_ITEM.Value);
+
+          if wCod_Nota <> QExportaNF_Sinco4102Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco4102Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4102COD_SERIE.Text, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco4102NUM_NOTA.Value);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco4102DT_EMISSAO.Value);
+          S := S + FormatFloat('000', wCont);
+          if wStPIS = '00' then
+            wStPIS := '08';
+          S := S + wStPIS;
+          if ((wStPIS = '08') or (wStPIS = '09')) then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+            S := S + intdecimais(FloatToStr(0), 17, 2);
+          end
+          else
+          begin
+            S := S + intdecimais(FloatToStr(wAliqPIS), 8, 4);
+            S := S + intdecimais(FloatToStr(wBasePIS), 17, 3);
+            S := S + intdecimais(FloatToStr(wValPIS), 17, 2);
+          end;
+          if wStCOFINS = '00' then
+            wStCOFINS := '08';
+          S := S + wStCOFINS;
+          if ((wStCOFINS = '08') or (wStCOFINS = '09')) then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+            S := S + intdecimais(FloatToStr(0), 17, 2);
+          end
+          else
+          begin
+            S := S + intdecimais(FloatToStr(wAliqCOFINS), 8, 4);
+            S := S + intdecimais(FloatToStr(wBaseCOFINS), 17, 3);
+            S := S + intdecimais(FloatToStr(wValCOFINS), 17, 2);
+          end;
+          S := S + FormatDateTime('DDMMYYYY', Date);
+
+          QExportaNF_Sinco4102.Next;
+          if not QExportaNF_Sinco4102.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.10.2.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco4102.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.10.2', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera4104;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco4104.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco4104.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco4104.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco4104.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco4104.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco4104.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco4104.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco4104.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco4104.Open;
+      wCod_nota := QExportaNF_Sinco4104Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco4104.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco4104.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco4104COD_NOTA_ITEM.Value);
+
+          if wCod_Nota <> QExportaNF_Sinco4104Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco4104Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4104DESC_MODELO.Text, 2);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4104COD_SERIE.Text, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco4104NUM_NOTA.Value);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco4104DT_EMISSAO.Value);
+          S := S + FormatFloat('000', wCont);
+          S := S + wStPIS;
+          S := S + intdecimais(FloatToStr(wAliqPIS), 8, 4);
+          S := S + intdecimais(FloatToStr(wBasePIS), 17, 3);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4104PERC_PIS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4104PERC_PIS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4104PERC_PIS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS), 17, 2);
+          S := S + wStCOFINS;
+          S := S + intdecimais(FloatToStr(wAliqCOFINS), 8, 4);
+          S := S + intdecimais(FloatToStr(wBaseCOFINS), 17, 3);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4104PERC_COFINS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4104PERC_COFINS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4104PERC_COFINS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS), 17, 2);
+          S := S + FormatDateTime('DDMMYYYY', Date);
+
+          QExportaNF_Sinco4104.Next;
+          if not QExportaNF_Sinco4104.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.10.4.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco4104.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.10.4', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera4105;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco4105.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco4105.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco4105.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco4105.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco4105.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco4105.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco4105.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco4105.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco4105.Open;
+      wCod_nota := QExportaNF_Sinco4105Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco4105.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco4105.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco4105COD_NOTA_ITEM.Value, False, QExportaNF_Sinco4105DESC_TIPO.Value);
+
+          if wCod_Nota <> QExportaNF_Sinco4105Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco4105Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4105DESC_MODELO.Text, 2);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4105COD_SERIE.Text, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco4105NUM_NOTA.Value);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco4105DT_EMISSAO.Value);
+          S := S + bib.AjustaStr(QExportaNF_Sinco4105COD_CADASTRO.Text, 14);
+          S := S + FormatFloat('000', wCont);
+          S := S + wStPIS;
+          if wValPIS = 0 then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+          end
+          else
+          begin
+            S := S + intdecimais(FloatToStr(wAliqPIS), 8, 4);
+            S := S + intdecimais(FloatToStr(wBasePIS), 17, 3);
+          end;
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4105PERC_PIS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4105PERC_PIS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4105PERC_PIS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS), 17, 2);
+          S := S + wStCOFINS;
+          if wValCOFINS = 0 then
+          begin
+            S := S + intdecimais(FloatToStr(0), 8, 4);
+            S := S + intdecimais(FloatToStr(0), 17, 3);
+          end
+          else
+          begin
+            S := S + intdecimais(FloatToStr(wAliqCOFINS), 8, 4);
+            S := S + intdecimais(FloatToStr(wBaseCOFINS), 17, 3);
+          end;
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4105PERC_COFINS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4105PERC_COFINS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4105PERC_COFINS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS), 17, 2);
+          S := S + FormatDateTime('DDMMYYYY', Date);
+
+          QExportaNF_Sinco4105.Next;
+          if not QExportaNF_Sinco4105.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.10.5.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco4105.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.10.5', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera4106;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco4106.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco4106.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco4106.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco4106.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco4106.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco4106.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco4106.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco4106.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco4106.Open;
+      wCod_nota := QExportaNF_Sinco4106COD_NOTA_CAB.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco4106.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco4106.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco4106COD_NOTA_ITEM.Value);
+
+          if wCod_Nota <> QExportaNF_Sinco4106COD_NOTA_CAB.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco4106COD_NOTA_CAB.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+
+//          S := S + Bib.AjustaStr(QExportaNF_Sinco4106DESC_MODELO.Text, 2);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco4106COD_SERIE.Text, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco4106NUM_NOTA.Value);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco4106DT_EMISSAO.Value);
+          S := S + bib.AjustaStr(QExportaNF_Sinco4106COD_CADASTRO.Text, 14);
+          S := S + FormatFloat('000', wCont);
+          S := S + wStPIS;
+          S := S + intdecimais(FloatToStr(wAliqPIS), 8, 4);
+          S := S + intdecimais(FloatToStr(wBasePIS), 17, 3);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4106PERC_PIS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4106PERC_PIS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS * QExportaNF_Sinco4106PERC_PIS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValPIS), 17, 2);
+          S := S + wStCOFINS;
+          S := S + intdecimais(FloatToStr(wAliqCOFINS), 8, 4);
+          S := S + intdecimais(FloatToStr(wBaseCOFINS), 17, 3);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4106PERC_COFINS_EXP.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4106PERC_COFINS_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS * QExportaNF_Sinco4106PERC_COFINS_NAO_TRIB.Value / 100), 17, 2);
+          S := S + intdecimais(FloatToStr(wValCOFINS), 17, 2);
+          S := S + FormatDateTime('DDMMYYYY', Date);
+
+          QExportaNF_Sinco4106.Next;
+          if not QExportaNF_Sinco4106.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.10.6.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco4106.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.10.6', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera432;
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco432.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco432.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco432.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco432.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco432.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+      QExportaNF_Sinco432.Open;
+      wCod_nota := QExportaNF_Sinco432Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco432.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco432.EOF do
+        begin
+          S := S + QExportaNF_Sinco432IND_ENTRADA_SAIDA.Text + bib.AjustaStr(QExportaNF_Sinco432DESC_MODELO.Value, 2);
+          S := S + Copy(QExportaNF_Sinco432COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco432NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco432DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco432DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco432DT_EMISSAO.Text, 7, 4);
+          if wCod_Nota <> QExportaNF_Sinco432Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco432Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+          S := S + Copy(IntToStr(wCont) + '   ', 1, 3);
+          S := S + Copy(QExportaNF_Sinco432COD_PRODUTO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco432DESC_PRODUTO.Text + '                                             ', 1, 45);
+          S := S + intdecimais(QExportaNF_Sinco432NAT_OPERACAO.Text, 4, 0);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco432COD_OPERACAO.Text, 6);
+          S := S + Copy(QExportaNF_Sinco432NUM_GENERO_NCM.Text + '        ', 1, 8);
+          S := S + intdecimais(QExportaNF_Sinco432QT_QUANTIDADE.Text, 17, 3);
+          S := S + Copy(QExportaNF_Sinco432DESC_UNIDADE.Text + '   ', 1, 3);
+          S := S + intdecimais(QExportaNF_Sinco432VAL_UNITARIO.Text, 17, 4);
+          S := S + intdecimais(QExportaNF_Sinco432VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco432VAL_DESCONTO.Text, 17, 2);
+          S := S + QExportaNF_Sinco432IND_IPI.Value;
+          S := S + intdecimais(QExportaNF_Sinco432PERC_IPI.Text, 5, 2);
+          if QExportaNF_Sinco432VAL_IPI.Value > 0 then
+            S := S + intdecimais(QExportaNF_Sinco432VAL_TOTAL.Text, 17, 2)
+          else
+            S := S + '00000000000000000';
+          S := S + intdecimais(QExportaNF_Sinco432VAL_IPI.Text, 17, 2);
+          S := S + Copy(QExportaNF_Sinco432DESC_SITUACAO_TRIB.Text + '   ', 1, 3);
+          if Trim(QExportaNF_Sinco432NUM_CLASSIFICACAO.Value) = '5' then
+            S := S + '3'
+          else
+            if Trim(QExportaNF_Sinco432NUM_CLASSIFICACAO.Value) = '4' then
+              S := S + '2'
+            else
+              S := S + '1';
+          S := S + intdecimais(QExportaNF_Sinco432PERC_ALIQUOTA.Text, 5, 2);
+          S := S + intdecimais(QExportaNF_Sinco432VAL_ICM_BASE.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco432VAL_ICM.Text, 17, 2);
+          S := S + '00000000000000000';
+          S := S + '00000000000000000';
+          S := S + QExportaNF_Sinco432IND_ESTOQUE.Value;
+
+          begin
+            if QExportaNF_Sinco432IND_ENTRADA_SAIDA.Value = 'S' then
+              S := S + '53'
+            else
+              S := S + '03';
+          end;
+
+          QExportaNF_Sinco432.Next;
+          if not QExportaNF_Sinco432.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.2.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco432.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.2', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera433;
+var S: string;
+  F: TextFile;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco433.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco433.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco433.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco433.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco433.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco433.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco433.Open;
+
+      if QExportaNF_Sinco433.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco433.EOF do
+        begin
+          S := S + bib.AjustaStr(QExportaNF_Sinco433DESC_MODELO.Value, 2);
+          S := S + Copy(QExportaNF_Sinco433COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco433NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco433DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco433DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco433DT_EMISSAO.Text, 7, 4);
+          S := S + Copy(QExportaNF_Sinco433COD_CADASTRO.Text + '              ', 1, 14);
+          S := S + Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco433DT_RECEBIMENTO.Text, 7, 4);
+          S := S + intdecimais(QExportaNF_Sinco433VAL_TOTAL_PRODUTOS.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco433VAL_DESCONTO.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco433SVAL_FRETE.Text, 17, 2) + '00000000000000000';
+          S := S + intdecimais(QExportaNF_Sinco433SVAL_DESPESAS.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco433SVAL_IPI.Text, 17, 2) + '00000000000000000';
+          S := S + intdecimais(QExportaNF_Sinco433VAL_TOTAL.Text, 17, 2) + '              ';
+          S := S + QExportaNF_Sinco433IND_TIPO_PAGAMENTO.Text;
+          S := S + Copy(QExportaNF_Sinco433DESC_OBS.Text + '                                             ', 1, 45);
+
+          begin
+            S := S + Bib.AjustaStr('', 50);
+            S := S + Bib.AjustaStr('', 2);
+            S := S + Bib.AjustaStr('', 5);
+            S := S + '000000000';
+            S := S + '00000000';
+            S := S + Bib.AjustaStr('', 14);
+          end;
+
+          QExportaNF_Sinco433.Next;
+          if not QExportaNF_Sinco433.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.3.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco433.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.3', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera434;
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco434.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco434.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco434.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco434.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco434.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco434.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco434.Open;
+      wCod_nota := QExportaNF_Sinco434COD_NOTA_CAB.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco434.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco434.EOF do
+        begin
+          S := S + bib.AjustaStr(QExportaNF_Sinco434DESC_MODELO.Value, 2);
+          S := S + Copy(QExportaNF_Sinco434COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco434NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco434DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco434DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco434DT_EMISSAO.Text, 7, 4);
+          S := S + Copy(QExportaNF_Sinco434COD_CADASTRO.Text + '              ', 1, 14);
+          if wCod_Nota <> QExportaNF_Sinco434Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco434COD_NOTA_CAB.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+          S := S + Copy(IntToStr(wCont) + '   ', 1, 3);
+          if QExportaNF_Sinco434COD_PRODUTO.Value = 0 then
+            S := S + bib.AjustaStr('FRETE', 20)
+          else
+            S := S + Copy(QExportaNF_Sinco434COD_PRODUTO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco434DESC_PRODUTO.Text + '                                             ', 1, 45);
+          S := S + intdecimais(QExportaNF_Sinco434NAT_OPERACAO.Text, 4, 0);
+          S := S + Bib.AjustaStr(QExportaNF_Sinco434COD_OPERACAO.Text, 6);
+          S := S + Copy(QExportaNF_Sinco434NUM_GENERO_NCM.Text + '        ', 1, 8);
+          S := S + intdecimais(QExportaNF_Sinco434QT_QUANTIDADE.Text, 17, 3);
+          S := S + Copy(QExportaNF_Sinco434DESC_UNIDADE.Text + '   ', 1, 3);
+          S := S + intdecimais(QExportaNF_Sinco434VAL_UNITARIO.Text, 17, 4);
+          S := S + intdecimais(QExportaNF_Sinco434VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco434VAL_DESCONTO.Text, 17, 2);
+          S := S + QExportaNF_Sinco434IND_IPI.Value;
+          S := S + intdecimais(QExportaNF_Sinco434PERC_IPI.Text, 5, 2);
+          if QExportaNF_Sinco434VAL_IPI.Value > 0 then
+            S := S + intdecimais(QExportaNF_Sinco434VAL_TOTAL.Text, 17, 2)
+          else
+            S := S + '00000000000000000';
+          S := S + intdecimais(QExportaNF_Sinco434VAL_IPI.Text, 17, 2);
+          S := S + Copy(QExportaNF_Sinco434DESC_SITUACAO_TRIB.Text + '   ', 1, 3);
+          if Trim(QExportaNF_Sinco434NUM_CLASSIFICACAO.Value) = '5' then
+            S := S + '3'
+          else
+            if Trim(QExportaNF_Sinco434NUM_CLASSIFICACAO.Value) = '4' then
+              S := S + '2'
+            else
+              S := S + '1';
+          S := S + intdecimais(QExportaNF_Sinco434PERC_ALIQUOTA.Text, 5, 2);
+          S := S + intdecimais(QExportaNF_Sinco434VAL_ICM_BASE.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco434VAL_ICM.Text, 17, 2);
+          S := S + '00000000000000000';
+          S := S + '00000000000000000';
+          S := S + QExportaNF_Sinco434IND_ESTOQUE.Value;
+
+          begin
+            if QExportaNF_Sinco434IND_ENTRADA_SAIDA.Value = 'S' then
+              S := S + '53'
+            else
+              S := S + '03';
+          end;
+
+          QExportaNF_Sinco434.Next;
+          if not QExportaNF_Sinco434.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.4.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco434.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.4', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera435;
+var S: string;
+  F: TextFile;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco435.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco435.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco435.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco435.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco435.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco435.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco435.Open;
+
+      if QExportaNF_Sinco435.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco435.EOF do
+        begin
+          S := S + Copy(QExportaNF_Sinco435COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco435NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco435DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco435DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco435DT_EMISSAO.Text, 7, 4);
+          S := S + Copy(QExportaNF_Sinco435COD_CADASTRO.Text + '              ', 1, 14);
+          S := S + intdecimais(QExportaNF_Sinco435VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco435VAL_DESCONTO.Text, 17, 2);
+          S := S + '00000' + '00000000000000000' + '00000000000000000';
+          if QExportaNF_Sinco435IND_SITUACAO.Value = '2' then
+            S := S + 'N'
+          else
+            S := S + 'S';
+
+          QExportaNF_Sinco435.Next;
+          if not QExportaNF_Sinco435.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.5.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco435.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.5', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera436;
+var S: string;
+  F: TextFile;
+  wCod_Nota, wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco436.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco436.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco436.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco436.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco436.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco436.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco436.Open;
+      wCod_nota := QExportaNF_Sinco436Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco436.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco436.EOF do
+        begin
+          S := S + Copy(QExportaNF_Sinco436COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco436NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco436DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco436DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco436DT_EMISSAO.Text, 7, 4);
+          if wCod_Nota <> QExportaNF_Sinco436Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco436Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+          S := S + Copy(IntToStr(wCont) + '   ', 1, 3);
+          S := S + Copy(QExportaNF_Sinco436COD_PRODUTO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco436DESC_PRODUTO.Text + '                                             ', 1, 45);
+          S := S + intdecimais(QExportaNF_Sinco436VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco436VAL_DESCONTO.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco436PERC_INSS.Text, 5, 2);
+          S := S + intdecimais(QExportaNF_Sinco436VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco436VAL_ISS.Text, 17, 2);
+
+          QExportaNF_Sinco436.Next;
+          if not QExportaNF_Sinco436.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.6.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco436.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.6', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera438;
+var S: string;
+  F: TextFile;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco438.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco438.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco438.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco438.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco438.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco438.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco438.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco438.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco438.Open;
+
+      if QExportaNF_Sinco438.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco438.EOF do
+        begin
+          calculaImpostosCab(QExportaNF_Sinco438COD_NOTA_CAB.Value);
+
+          S := S + Copy(QExportaNF_Sinco438COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco438NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco438DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco438DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco438DT_EMISSAO.Text, 7, 4);
+          S := S + Copy(QExportaNF_Sinco438COD_CADASTRO.Text + '              ', 1, 14);
+          S := S + intdecimais(QExportaNF_Sinco438VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco438VAL_DESCONTO.Text, 17, 2);
+          S := S + intdecimais(FloatToStr(wAliqIRRF), 5, 2);
+          S := S + intdecimais(FloatToStr(wBaseIRRF), 17, 2);
+          S := S + intdecimais(FloatToStr(wValIRRF), 17, 2);
+
+          QExportaNF_Sinco438.Next;
+          if not QExportaNF_Sinco438.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.8.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco438.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.8', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera439;
+var S: string;
+  F: TextFile;
+  wCod_Nota: Integer;
+  wCont: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco439.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco439.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco439.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco439.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco439.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco439.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco439.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco439.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco439.Open;
+      wCod_nota := QExportaNF_Sinco439Cod_Nota_Cab.AsInteger;
+      wCont := 0;
+      if QExportaNF_Sinco439.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco439.EOF do
+        begin
+          calculaImpostos(QExportaNF_Sinco439COD_NOTA_ITEM.Value);
+
+          S := S + Copy(QExportaNF_Sinco439COD_SERIE.value + '     ', 1, 5);
+          S := S + FormatFloat('000000000', QExportaNF_Sinco439NUM_NOTA.Value);
+          S := S + Copy(QExportaNF_Sinco439DT_EMISSAO.Text, 1, 2) +
+            Copy(QExportaNF_Sinco439DT_EMISSAO.Text, 4, 2) +
+            Copy(QExportaNF_Sinco439DT_EMISSAO.Text, 7, 4);
+          S := S + bib.AjustaStr(QExportaNF_Sinco439COD_CADASTRO.Text, 14);
+          if wCod_Nota <> QExportaNF_Sinco439Cod_Nota_Cab.AsInteger then
+          begin
+            wCod_nota := QExportaNF_Sinco439Cod_Nota_Cab.AsInteger;
+            wCont := 0;
+          end;
+          Inc(wCont);
+          S := S + Copy(IntToStr(wCont) + '   ', 1, 3);
+          S := S + Copy(QExportaNF_Sinco439COD_PRODUTO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco439DESC_PRODUTO.Text + '                                             ', 1, 45);
+          S := S + intdecimais(QExportaNF_Sinco439VAL_TOTAL.Text, 17, 2);
+          S := S + intdecimais(QExportaNF_Sinco439VAL_DESCONTO.Text, 17, 2);
+          S := S + intdecimais(FloatToStr(wAliqISS), 5, 2);
+          S := S + intdecimais(FloatToStr(wBaseISS), 17, 2);
+          S := S + intdecimais(FloatToStr(wValISS), 17, 2);
+
+          QExportaNF_Sinco439.Next;
+          if not QExportaNF_Sinco439.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.3.9.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco439.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.3.9', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera491;
+var S, wAux: string;
+  F: TextFile;
+  I: Integer;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco491.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco491.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco491.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco491.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco491.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco491.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco491.Open;
+      if QExportaNF_Sinco491.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco491.EOF do
+        begin
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco491DT_CADASTRO.Value);
+          S := S + Copy(QExportaNF_Sinco491COD_CADASTRO.Text + '              ', 1, 14);
+          if Trim(QExportaNF_Sinco491Num_Cgc_Cpf.Value) = 'SID' then
+            wAux := Trim(QExportaNF_Sinco491Num_Cgc_Cpf.Value)
+          else
+          begin
+            wAux := '';
+            for I := 1 to length(QExportaNF_Sinco491Num_Cgc_Cpf.Value) do
+              if QExportaNF_Sinco491Num_Cgc_Cpf.Value[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+                wAux := wAux + QExportaNF_Sinco491Num_Cgc_Cpf.Value[I];
+          end;
+          S := S + Copy(wAux + '              ', 1, 14);
+          if Trim(QExportaNF_Sinco491Num_Inscricao.Value) = 'ISENTO' then
+            wAux := Trim(QExportaNF_Sinco491Num_Inscricao.Value)
+          else
+          begin
+            wAux := '';
+            for I := 1 to length(QExportaNF_Sinco491Num_Inscricao.Value) do
+              if QExportaNF_Sinco491Num_Inscricao.Value[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+                wAux := wAux + QExportaNF_Sinco491Num_Inscricao.Value[I];
+          end;
+          S := S + Copy(wAux + '              ', 1, 14);
+          wAux := '';
+          for I := 1 to length(QExportaNF_Sinco491Desc_Inscricao_Municipal.Value) do
+            if QExportaNF_Sinco491Desc_Inscricao_Municipal.Value[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+              wAux := wAux + QExportaNF_Sinco491Desc_Inscricao_Municipal.Value[I];
+          S := S + Copy(wAux + '              ', 1, 14);
+          S := S + Copy(QExportaNF_Sinco491NOME.Text + '                                                                      ', 1, 70);
+          S := S + Copy(QExportaNF_Sinco491DESC_ENDERECO.Text + '                                                            ', 1, 60);
+          S := S + Copy(QExportaNF_Sinco491DESC_BAIRRO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco491DESC_CIDADE.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco491COD_ESTADO.Text + '  ', 1, 2);
+          S := S + Copy(QExportaNF_Sinco491DESC_PAIS.Text + '                    ', 1, 20);
+          wAux := '';
+          for I := 1 to length(QExportaNF_Sinco491Desc_Cep.Value) do
+            if QExportaNF_Sinco491Desc_Cep.Value[I] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+              wAux := wAux + QExportaNF_Sinco491Desc_Cep.Value[I];
+          S := S + Copy(wAux + '        ', 1, 8);
+
+          QExportaNF_Sinco491.Next;
+          if not QExportaNF_Sinco491.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.9.1.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco491.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.9.1', mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
+
+procedure TFLivroFiscalCad.gera494;
+var S: string;
+  F: TextFile;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco494.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco494.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco494.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco494.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco494.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco494.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco494.Open;
+      if QExportaNF_Sinco494.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco494.EOF do
+        begin
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco494DT_CADASTRO.Value);
+          S := S + Copy(QExportaNF_Sinco494COD_OPERACAO.Text + '      ', 1, 6);
+          S := S + Copy(QExportaNF_Sinco494DESC_OPERACAO.Text + '                                             ', 1, 45);
+
+          QExportaNF_Sinco494.Next;
+          if not QExportaNF_Sinco494.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.9.4.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco494.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.9.4', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.gera495;
+var S: string;
+  F: TextFile;
+begin
+  begin
+    DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.ME18Filial.text), 'LIVRO FISCAL');
+    with DMLivroFiscal do
+    begin
+      QExportaNF_Sinco495.Close;
+
+      if Trim(FLivroFiscalParam.ME18Filial.text) <> '' then
+        QExportaNF_Sinco495.SetVariable('FILIAL', FLivroFiscalParam.ME18Filial.text)
+      else
+        QExportaNF_Sinco495.SetVariable('FILIAL', Null);
+
+      if Trim(FLivroFiscalParam.ME18DtInicial.text) <> '' then
+        QExportaNF_Sinco495.SetVariable('DT_INICIAL', FLivroFiscalParam.ME18DtInicial.text)
+      else
+        raise Exception.Create('É necessário informar a data inicial!');
+
+      if Trim(FLivroFiscalParam.ME18DtFinal.text) <> '' then
+        QExportaNF_Sinco495.SetVariable('DT_FINAL', FLivroFiscalParam.ME18DtFinal.text)
+      else
+        raise Exception.Create('É necessário informar a data final!');
+
+//      case FLivroFiscalParam.RG18Nota.ItemIndex of
+//        0: QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA', 'E');
+//        1: QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA', 'S');
+//        2: QExportaNF_Sinco495.SetVariable('ENTRADA_SAIDA', Null);
+//      end;
+
+      QExportaNF_Sinco495.Open;
+      if QExportaNF_Sinco495.RecordCount > 0 then
+      begin
+        while not QExportaNF_Sinco495.EOF do
+        begin
+//          S := S + Copy(DMOracle.QDataServDTSERVIDOR.Text, 1, 2) +
+//            Copy(DMOracle.QDataServDTSERVIDOR.Text, 4, 2) +
+//            Copy(DMOracle.QDataServDTSERVIDOR.Text, 7, 4);
+          S := S + FormatDateTime('DDMMYYYY', QExportaNF_Sinco495DT_CADASTRO.Value);
+          if QExportaNF_Sinco495COD_PRODUTO.Value = 0 then
+            S := S + Bib.AjustaStr('FRETE', 20)
+          else
+            S := S + Copy(QExportaNF_Sinco495COD_PRODUTO.Text + '                    ', 1, 20);
+          S := S + Copy(QExportaNF_Sinco495DESC_PRODUTO.Text + '                                             ', 1, 45);
+
+          QExportaNF_Sinco495.Next;
+          if not QExportaNF_Sinco495.Eof then
+            S := S + Chr(13) + Chr(10);
+        end;
+
+        begin
+          AssignFile(F, FLivroFiscalParam.Dlb18Diretorio.Directory + '\4.9.5.txt');
+          Rewrite(F);
+          Writeln(F, S);
+          CloseFile(F);
+        end;
+        QExportaNF_Sinco495.Close;
+      end
+      else
+        MessageDlg('Não há notas no período selecionado para o arquivo 4.9.5', mtError, [mbOK], 0);
+    end;
+  end;
+end;
+
+procedure TFLivroFiscalCad.calculaImpostosCab(notaCab: Integer);
+var wAux: string;
+begin
+  DMNotaSaida.QTotalNota.Close;
+  DMNotaSaida.QTotalNota.SetVariable('COD_NOTA_CAB', notaCab);
+  DMNotaSaida.QTotalNota.Open;
+
+  try
+    wAliqIRRF := StrToFloat(DMOracle.FastSelect('I.PERC_ALIQUOTA', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%IRRF%')));
+    wBaseIRRF := DMNotaSaida.QTotalNotaVAL_TOTAL_NOTA.Value;
+    wValIRRF := StrToFloat(DMOracle.FastSelect('N.VAL_IMPOSTO', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%IRRF%')));
+  except
+    wAliqIRRF := 0;
+    wBaseIRRF := 0;
+    wValIRRF := 0;
+  end;
+
+  try
+    wAliqCSLL := StrToFloat(DMOracle.FastSelect('I.PERC_ALIQUOTA', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%CSLL%')));
+    wBaseCSLL := DMNotaSaida.QTotalNotaVAL_TOTAL_NOTA.Value;
+    wValCSLL := StrToFloat(DMOracle.FastSelect('N.VAL_IMPOSTO', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%CSLL%')));
+  except
+    wAliqCSLL := 0;
+    wBaseCSLL := 0;
+    wValCSLL := 0;
+  end;
+
+  try
+    wAliqINSS := StrToFloat(DMOracle.FastSelect('I.PERC_ALIQUOTA', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%INSS%')));
+    wBaseINSS := DMNotaSaida.QTotalNotaVAL_TOTAL_NOTA.Value;
+    wValINSS := StrToFloat(DMOracle.FastSelect('N.VAL_IMPOSTO', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = ' + IntToStr(notaCab) + ' AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%INSS%')));
+  except
+    wAliqINSS := 0;
+    wBaseINSS := 0;
+    wValINSS := 0;
+  end;
+end;
+
+procedure TFLivroFiscalCad.calculaImpostos(notaItem: Double; acumula: Boolean = False; tipo: string = 'NOTA');
+var wOperacao: Integer;
+  wNCM: string;
+  wValor, wPISNota, wCOFINSNota, wISSNota: Double;
+  wNotaCab : string;
+begin
+  if tipo = 'NOTA' then
+  begin
+    wNotaCab := DMOracle.FastSelect('COD_NOTA_CAB', 'TB_NOTA_ITEM', 'COD_NOTA_ITEM = ' + FloatToStr(notaItem));
+    wOperacao := StrToInt(DMOracle.FastSelect('COD_OPERACAO', 'TB_NOTA_CAB', 'COD_NOTA_CAB = ' + wNotaCab));
+    wNCM := DMOracle.FastSelect('TB_PRODUTO.NUM_GENERO_NCM', 'TB_NOTA_ITEM INNER JOIN TB_PRODUTO ON TB_PRODUTO.COD_PRODUTO = TB_NOTA_ITEM.COD_PRODUTO', 'COD_NOTA_ITEM = ' + FloatToStr(notaItem));
+    wValor := StrToFloat(DMOracle.FastSelect('VAL_TOTAL', 'TB_NOTA_ITEM', 'COD_NOTA_ITEM = ' + FloatToStr(notaItem)));
+//    wPISNota := StrToFloat(DMOracle.FastSelect('VAL_PIS', 'TB_NOTA_ITEM', 'COD_NOTA_ITEM = ' + FloatToStr(notaItem)));
+//    wCOFINSNota := StrToFloat(DMOracle.FastSelect('VAL_CONFINS', 'TB_NOTA_ITEM', 'COD_NOTA_ITEM = ' + FloatToStr(notaItem)));
+
+    //MessageDlg(IntToStr(wOperacao), mtWarning, [mbOK], 0);
+    //MessageDlg(wNCM, mtWarning, [mbOK], 0);
+
+    DMLivroFiscal.QCalculaImposto.Close;
+    DMLivroFiscal.QCalculaImposto.SetVariable('COD_OPERACAO', wOperacao);
+    if wNCM = '' then
+      DMLivroFiscal.QCalculaImposto.SetVariable('NUM_NCM', Null)
+    else
+      DMLivroFiscal.QCalculaImposto.SetVariable('NUM_NCM', wNCM);
+    DMLivroFiscal.QCalculaImposto.Open;
+
+    try
+      wAliqISS := StrToFloat(DMOracle.FastSelect('I.PERC_ALIQUOTA', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = (SELECT COD_NOTA_CAB FROM TB_NOTA_ITEM WHERE COD_NOTA_ITEM = ' + FloatToStr(notaItem) + ') AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%ISS%')));
+    except
+      wAliqISS := 0;
+    end;
+
+    try
+      wISSNota := StrToFloat(DMOracle.FastSelect('N.VAL_IMPOSTO', 'TB_NOTA_IMPOSTO_SERVICO N INNER JOIN TB_IMPOSTO I ON I.COD_IMPOSTO = N.COD_IMPOSTO', 'COD_NOTA_CAB = (SELECT COD_NOTA_CAB FROM TB_NOTA_ITEM WHERE COD_NOTA_ITEM = ' + FloatToStr(notaItem) + ') AND UPPER(I.DESC_IMPOSTO) LIKE ' + QuotedStr('%ISS%')));
+    except
+      wISSNota := 0;
+    end;
+
+    if acumula then
+    begin
+      if DMLivroFiscal.QCalculaImposto.IsEmpty then
+      begin
+        wStPIS := '00';
+        wAliqPIS := DMParamSistema.QParamSistemaPERC_PIS.Value;
+        wBasePIS := wBasePIS + wValor;
+
+        wStCOFINS := '00';
+        wAliqCOFINS := DMParamSistema.QParamSistemaPERC_COFINS.Value;
+        wBaseCOFINS := wBaseCOFINS + wValor;
+      end
+      else
+      begin
+        DMLivroFiscal.QCalculaImposto.First;
+
+        wStPIS := DMLivroFiscal.QCalculaImpostoCOD_CST_PIS.Value;
+        wAliqPIS := DMLivroFiscal.QCalculaImpostoVAL_ALIQ_PIS.Value;
+        wBasePIS := wBasePIS + (wValor * DMLivroFiscal.QCalculaImpostoVAL_BC_PIS.Value / 100);
+
+        wStCOFINS := DMLivroFiscal.QCalculaImpostoCOD_CST_COFINS.Value;
+        wAliqCOFINS := DMParamSistema.QParamSistemaPERC_COFINS.Value;
+        wBaseCOFINS := wBaseCOFINS + (wValor * DMLivroFiscal.QCalculaImpostoVAL_BC_COFINS.Value / 100);
+      end;
+      wBaseISS := wBaseISS + wValor;
+      wValISS := wValISS + wISSNota;
+
+      wPISNota := (wValor * wBasePIS * wAliqPIS) / 10000;
+      wCOFINSNota := (wValor * wBaseCOFINS * wAliqCOFINS) / 10000;
+
+      wValPIS := wValPIS + wPISNota;
+      wValCOFINS := wValCOFINS + wCOFINSNota;
+    end
+    else
+    begin
+      if DMLivroFiscal.QCalculaImposto.IsEmpty then
+      begin
+        wStPIS := '00';
+        wAliqPIS := DMParamSistema.QParamSistemaPERC_PIS.Value;
+        wBasePIS := wValor;
+
+        wStCOFINS := '00';
+        wAliqCOFINS := DMParamSistema.QParamSistemaPERC_COFINS.Value;
+        wBaseCOFINS := wValor;
+      end
+      else
+      begin
+        DMLivroFiscal.QCalculaImposto.First;
+
+        wStPIS := DMLivroFiscal.QCalculaImpostoCOD_CST_PIS.Value;
+        wAliqPIS := DMLivroFiscal.QCalculaImpostoVAL_ALIQ_PIS.Value;
+        wBasePIS := (wValor * DMLivroFiscal.QCalculaImpostoVAL_BC_PIS.Value / 100);;
+
+        wStCOFINS := DMLivroFiscal.QCalculaImpostoCOD_CST_COFINS.Value;
+        wAliqCOFINS := DMLivroFiscal.QCalculaImpostoVAL_ALIQ_COFINS.Value;
+        wBaseCOFINS := (wValor * DMLivroFiscal.QCalculaImpostoVAL_BC_COFINS.Value / 100);;
+      end;
+      wBaseISS := wValor;
+      wValISS := wISSNota;
+
+      wValPIS := wPISNota;
+      wValCOFINS := wCOFINSNota;
+
+      if wValPIS = 0 then
+      begin
+        wAliqPIS := 0;
+        wBasePIS := 0;
+//        wStPIS := '';
+      end;
+
+      if wValCOFINS = 0 then
+      begin
+        wAliqCOFINS := 0;
+        wBaseCOFINS := 0;
+//        wStCOFINS := '';
+      end;
+//    wValPIS := wBasePIS * wAliqPIS / 100;
+//    wValCOFINS := wBaseCOFINS * wAliqCOFINS / 100;
+    end;
+  end
+  else
+  begin
+    wValor := StrToFloat(DMOracle.FastSelect('VAL_FRETE - VAL_DESCONTO', 'TB_CONHECIMENTO_FRETE', 'COD_CONHECIMENTO_FRETE = ' + FloatToStr(notaItem)));
+    try
+      wPISNota := StrToFloat(DMOracle.FastSelect('VAL_PIS', 'TB_CONHECIMENTO_FRETE', 'COD_CONHECIMENTO_FRETE = ' + FloatToStr(notaItem)));
+    except
+      wPISNota := 0;
+    end;
+    try
+      wCOFINSNota := StrToFloat(DMOracle.FastSelect('VAL_COFINS', 'TB_CONHECIMENTO_FRETE', 'COD_CONHECIMENTO_FRETE = ' + FloatToStr(notaItem)));
+    except
+      wCOFINSNota := 0;
+    end;
+
+    if wPISNota > 0 then
+      wStPIS := '01'
+    else
+      wStPIS := '99';
+    wAliqPIS := 1.65;
+    wBasePIS := wValor;
+
+    if wCOFINSNota > 0 then
+      wStCOFINS := '01'
+    else
+      wStCOFINS := '99';
+    wAliqCOFINS := 7.6;
+    wBaseCOFINS := wValor;
+
+    wValPIS := wPISNota;
+    wValCOFINS := wCOFINSNota;
+  end;
+end;
+
+procedure TFLivroFiscalCad.zeraTotais;
+begin
+  wStPIS := '00';
+  wAliqPIS := 0;
+  wBasePIS := 0;
+  wValPIS := 0;
+
+  wStCOFINS := '00';
+  wAliqCOFINS := 0;
+  wBaseCOFINS := 0;
+  wValCOFINS := 0;
+end;
+
+procedure TFLivroFiscalCad.CrditoPresumidoIcms1Click(Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[26].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Fm27Filial.MeFilial.Text), 'LIVRO FISCAL');
+      QRCreditoPresumido.Close;
+      QRCreditoPresumido.SetVariable('DT_INICIO', FLivroFiscalParam.Fm27Datas.MeDtInicial.Text);
+      QRCreditoPresumido.SetVariable('DT_FIM', FLivroFiscalParam.Fm27Datas.MeDtFinal.Text);
+      if Trim(FLivroFiscalParam.FM27Filial.MeFilial.Text) = '' then
+        QRCreditoPresumido.SetVariable('FILIAL', Null)
+      else
+        QRCreditoPresumido.SetVariable('FILIAL', FLivroFiscalParam.FM27Filial.MeFilial.Text);
+      if Trim(FLivroFiscalParam.Me27Operacao.Text) = '' then
+        QRCreditoPresumido.SetVariable('OPERACAO', '1 = 1')
+      else
+        QRCreditoPresumido.SetVariable('OPERACAO', 'TB_NOTA_CAB.COD_OPERACAO In (' + Trim(FLivroFiscalParam.Me27Operacao.Text) + ')');
+      //AQUI É O ESTADO QUE DEVERÁ SER LISTADO
+      if Trim(FLivroFiscalParam.FM27Estado.MeEstado.Text) = '' then
+        QRCreditoPresumido.SetVariable('ESTADO', Null)
+      else
+        QRCreditoPresumido.SetVariable('ESTADO', FLivroFiscalParam.FM27Estado.MeEstado.Text);
+      //AQUI É O ESTADO QUE NÃO DEVERÁ SER LISTADO
+      if Trim(FLivroFiscalParam.Fm27EstadoNaoListar.MeEstado.Text) = '' then
+        QRCreditoPresumido.SetVariable('COD_ESTADO', Null)
+      else
+        QRCreditoPresumido.SetVariable('COD_ESTADO', FLivroFiscalParam.Fm27EstadoNaoListar.MeEstado.Text);
+      QRCreditoPresumido.SetVariable('PERC_PRESUMIDO',StrToFloat(Trim(FLivroFiscalParam.Me27Credito.Text)));
+      QRCreditoPresumido.Open;
+
+      if FrCreditoPresumidoIcms = nil then
+        FrCreditoPresumidoIcms := TFrCreditoPresumidoIcms.Create(Application);
+      FrCreditoPresumidoIcms.QRLPeriodo.Caption := 'Cnpj:'+QRCreditoPresumidoNum_Cgc.Text + ' Incrição:'+ QRCreditoPresumidoDesc_Inscricao.Text +
+           ' De ' + FLivroFiscalParam.Fm27Datas.MeDtInicial.Text + ' Até ' + FLivroFiscalParam.Fm27Datas.MeDtFinal.Text;
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FrCreditoPresumidoIcms.QRPrimario.Preview
+      else
+        FrCreditoPresumidoIcms.QRPrimario.Print;
+      QRCreditoPresumido.Close;
+    end;
+
+
+end;
+
+procedure TFLivroFiscalCad.RelatriodenotasporCFOPCSOSN1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[29].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Fm29Filial.MeFilial.Text), 'LIVRO FISCAL');
+      QRNotasCfop_Csosn.Close;
+      QRNotasCfop_Csosn.SetVariable('DATA_INICIAL', FLivroFiscalParam.Fm29Datas.MeDtInicial.Text);
+      QRNotasCfop_Csosn.SetVariable('DATA_FINAL', FLivroFiscalParam.Fm29Datas.MeDtFinal.Text);
+      if Trim(FLivroFiscalParam.Fm29Filial.MeFilial.Text) = '' then
+        QRNotasCfop_Csosn.SetVariable('COD_FILIAL', Null)
+      else
+        QRNotasCfop_Csosn.SetVariable('COD_FILIAL', FLivroFiscalParam.Fm29Filial.MeFilial.Text);
+      if Trim(FLivroFiscalParam.Fm29Estado.MeEstado.Text) = '' then
+        QRNotasCfop_Csosn.SetVariable('COD_ESTADO', Null)
+      else
+        QRNotasCfop_Csosn.SetVariable('COD_ESTADO', FLivroFiscalParam.Fm29Estado.MeEstado.Text);
+
+      case FLivroFiscalParam.Rg29Tipo.ItemIndex of
+        0: QRNotasCfop_Csosn.SetVariable('ENTRADA_SAIDA', 'E');
+        1: QRNotasCfop_Csosn.SetVariable('ENTRADA_SAIDA', 'S');
+        2: QRNotasCfop_Csosn.SetVariable('ENTRADA_SAIDA', Null);
+      end;
+      QRNotasCfop_Csosn.SetVariable('PC_101', FLivroFiscalParam.Me29Csosn101.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_102', FLivroFiscalParam.Me29Csosn102.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_103', FLivroFiscalParam.Me29Csosn103.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_201', FLivroFiscalParam.Me29Csosn201.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_202', FLivroFiscalParam.Me29Csosn202.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_203', FLivroFiscalParam.Me29Csosn203.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_300', FLivroFiscalParam.Me29Csosn300.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_400', FLivroFiscalParam.Me29Csosn400.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_500', FLivroFiscalParam.Me29Csosn500.Text);
+      QRNotasCfop_Csosn.SetVariable('PC_900', FLivroFiscalParam.Me29Csosn900.Text);
+      QRNotasCfop_Csosn.Open;
+      if FrResumoCFOPxCSOSN = nil then
+        FrResumoCFOPxCSOSN := TFrResumoCFOPxCSOSN.Create(Application);
+      FrResumoCFOPxCSOSN.QRLTitulo.Caption := 'Relatório Resumo por CFOP/CSOSN ' +
+         FLivroFiscalParam.Fm29Datas.MeDtInicial.Text + ' até ' + FLivroFiscalParam.Fm29Datas.MeDtFinal.Text;
+
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FrResumoCFOPxCSOSN.QRPrimario.Preview
+      else
+        FrResumoCFOPxCSOSN.QRPrimario.Print;
+      QRNotasCfop_Csosn.Close;
+    end;
+end;
+
+procedure TFLivroFiscalCad.RelatriodenotasporCFOPPAGTO1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FLivroFiscalParam = nil then
+    FLivroFiscalParam := TFLivroFiscalParam.Create(Application);
+  FLivroFiscalParam.PGRelatorio.Pages[30].TabVisible := True;
+  if FLivroFiscalParam.ShowModal = mrOk then
+    with DMLivroFiscal do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FLivroFiscalParam.Fm33Filial.MeFilial.Text), 'LIVRO FISCAL');
+      QRNotasCfopPagto.Close;
+      QRNotasCfopPagto.ClearVariables;
+      QRNotasCfopPagto.SetVariable('DATA_INICIAL', FLivroFiscalParam.Fm33Datas.MeDtInicial.Text);
+      QRNotasCfopPagto.SetVariable('DATA_FINAL', FLivroFiscalParam.Fm33Datas.MeDtFinal.Text);
+      if Trim(FLivroFiscalParam.Fm33Filial.MeFilial.Text) = '' then
+        QRNotasCfopPagto.SetVariable('COD_FILIAL', Null)
+      else
+        QRNotasCfopPagto.SetVariable('COD_FILIAL', FLivroFiscalParam.Fm33Filial.MeFilial.Text);
+      case FLivroFiscalParam.Rg33TipoNota.ItemIndex of
+        0: QRNotasCfopPagto.SetVariable('ENTRADA_SAIDA', 'E');
+        1: QRNotasCfopPagto.SetVariable('ENTRADA_SAIDA', 'S');
+        2: QRNotasCfopPagto.SetVariable('ENTRADA_SAIDA', Null);
+      end;
+      if trim(FLivroFiscalParam.FmOperacao1.MeOperacao.Text) = '' then
+        QRNotasCfopPagto.SetVariable('COD_OPERACAO',NULL)
+      else
+        QRNotasCfopPagto.SetVariable('COD_OPERACAO',trim(FLivroFiscalParam.FmOperacao1.MeOperacao.Text));
+      QRNotasCfopPagto.Open;
+      if FRNotasCfopPagto = nil then
+        FRNotasCfopPagto := tFRNotasCfopPagto.Create(Application);
+      FRNotasCfopPagto.QRLPeriodo.Caption := 'Relatório Resumo por CFOP/PAGTO ' +
+         FLivroFiscalParam.Fm33Datas.MeDtInicial.Text + ' até ' + FLivroFiscalParam.Fm33Datas.MeDtFinal.Text;
+
+      if FLivroFiscalParam.RGPreview.ItemIndex = 0 then
+        FRNotasCfopPagto.QRPrimario.Preview
+      else
+        FRNotasCfopPagto.QRPrimario.Print;
+      QRNotasCfopPagto.Close;
+    end;
+
+end;
+
+end.
+

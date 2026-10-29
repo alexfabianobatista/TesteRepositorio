@@ -1,0 +1,34 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_Indústria.hlp
+
+[FILES]
+P_Indústria.rtf
+
+[MAP]
+Boletim_de_Baixa_de_Matéria_Prima=16
+Boletim_de_Entrada_de_Produto_Acabado=18
+Botão_Click=19
+Cadastro_de_Boletim=11
+Cadastro_de_Fórmulas=8
+Cadastro_de_Produção=5
+Cadastro_de_Turnos=2
+Controle_de_Turnos=3
+Forma_Operação_Sistema=20
+Menu_Indústria=1
+Relatório_de_Acompanhamento=4
+Relatório_de_Custo_de_Fórmulas=10
+Relatório_de_Gastos_com_Matéria_Prima=14
+Relatório_de_Perdas=17
+Relatório_de_Produção_Analítico=6
+Relatório_de_Produção_Sintético=7
+Relatório_de_Produção=15
+Relatório_de_Projeção_de_Gastos=13
+Relatório_de_Relação_de_Boletins=12
+Relatório_de_Relação=9
+
+[BAGGAGE]
+P_Indústria.rtf

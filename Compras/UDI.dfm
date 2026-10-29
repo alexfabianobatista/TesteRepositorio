@@ -1,0 +1,642 @@
+object FDI: TFDI
+  Left = 465
+  Top = 16
+  Width = 519
+  Height = 490
+  Caption = 'Declara'#231#227'o de Importa'#231#227'o'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnActivate = FormActivate
+  DesignSize = (
+    511
+    459)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btnCancel: TBitBtn
+    Left = 420
+    Top = 422
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Cancelar'
+    ModalResult = 2
+    TabOrder = 1
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333FFFFF3333333333999993333333333F77777FFF333333999999999
+      3333333777333777FF3333993333339993333377FF3333377FF3399993333339
+      993337777FF3333377F3393999333333993337F777FF333337FF993399933333
+      399377F3777FF333377F993339993333399377F33777FF33377F993333999333
+      399377F333777FF3377F993333399933399377F3333777FF377F993333339993
+      399377FF3333777FF7733993333339993933373FF3333777F7F3399933333399
+      99333773FF3333777733339993333339933333773FFFFFF77333333999999999
+      3333333777333777333333333999993333333333377777333333}
+    NumGlyphs = 2
+  end
+  object btnOk: TBitBtn
+    Left = 332
+    Top = 422
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Ok'
+    TabOrder = 0
+    OnClick = btnOkClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      555555555555555555555555555555555555555555FF55555555555559055555
+      55555555577FF5555555555599905555555555557777F5555555555599905555
+      555555557777FF5555555559999905555555555777777F555555559999990555
+      5555557777777FF5555557990599905555555777757777F55555790555599055
+      55557775555777FF5555555555599905555555555557777F5555555555559905
+      555555555555777FF5555555555559905555555555555777FF55555555555579
+      05555555555555777FF5555555555557905555555555555777FF555555555555
+      5990555555555555577755555555555555555555555555555555}
+    NumGlyphs = 2
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 0
+    Width = 497
+    Height = 409
+    ActivePage = TabSheet1
+    TabOrder = 2
+    object TabSheet1: TTabSheet
+      Caption = 'DI'
+      DesignSize = (
+        489
+        381)
+      object PageControl2: TPageControl
+        Left = -2
+        Top = 0
+        Width = 493
+        Height = 345
+        ActivePage = TabSheet3
+        TabOrder = 0
+        object TabSheet3: TTabSheet
+          Caption = 'Geral'
+          DesignSize = (
+            485
+            317)
+          object Label1: TLabel
+            Left = 12
+            Top = 8
+            Width = 37
+            Height = 13
+            Caption = 'N'#250'mero'
+          end
+          object Label2: TLabel
+            Left = 12
+            Top = 48
+            Width = 80
+            Height = 13
+            Caption = 'Data de Registro'
+          end
+          object Label3: TLabel
+            Left = 12
+            Top = 128
+            Width = 108
+            Height = 13
+            Caption = 'Local do desembara'#231'o'
+          end
+          object Label4: TLabel
+            Left = 12
+            Top = 88
+            Width = 96
+            Height = 13
+            Caption = 'UF do desembara'#231'o'
+          end
+          object Label5: TLabel
+            Left = 240
+            Top = 48
+            Width = 105
+            Height = 13
+            Caption = 'Data do desembara'#231'o'
+          end
+          object Label6: TLabel
+            Left = 241
+            Top = 128
+            Width = 101
+            Height = 13
+            Caption = 'C'#243'digo do exportador'
+          end
+          object Label12: TLabel
+            Left = 12
+            Top = 192
+            Width = 197
+            Height = 13
+            Caption = 'Valor da base de c'#225'lculo para pis e cofins'
+          end
+          object Label13: TLabel
+            Left = 252
+            Top = 198
+            Width = 210
+            Height = 33
+            AutoSize = False
+            Caption = 
+              'O valor da base de c'#225'lculo para pis e cofins deve ser rateado en' +
+              'tre os itens da nota.'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clHotLight
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            WordWrap = True
+          end
+          object Label7: TLabel
+            Left = 12
+            Top = 232
+            Width = 84
+            Height = 13
+            Caption = 'Via de Transporte'
+          end
+          object Label14: TLabel
+            Left = 12
+            Top = 272
+            Width = 81
+            Height = 13
+            Caption = 'Valor da AFRMM'
+          end
+          object Label15: TLabel
+            Left = 239
+            Top = 232
+            Width = 106
+            Height = 13
+            Caption = 'Tipo de Intermedia'#231#227'o'
+          end
+          object Label16: TLabel
+            Left = 240
+            Top = 272
+            Width = 117
+            Height = 13
+            Caption = 'CNPJ do Encomendante'
+          end
+          object Label17: TLabel
+            Left = 368
+            Top = 272
+            Width = 104
+            Height = 13
+            Caption = 'UF do Encomendante'
+          end
+          object MENumero: TMaskEdit
+            Left = 12
+            Top = 24
+            Width = 463
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            TabOrder = 0
+          end
+          object MEData: TMaskEdit
+            Left = 12
+            Top = 64
+            Width = 217
+            Height = 21
+            EditMask = '!99/99/0000;1;_'
+            MaxLength = 10
+            TabOrder = 1
+            Text = '  /  /    '
+          end
+          object MEDataDesembaraco: TMaskEdit
+            Left = 240
+            Top = 64
+            Width = 237
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            EditMask = '!99/99/0000;1;_'
+            MaxLength = 10
+            TabOrder = 2
+            Text = '  /  /    '
+          end
+          object MMLocalDesemb: TMemo
+            Left = 12
+            Top = 144
+            Width = 218
+            Height = 41
+            Anchors = [akLeft, akTop, akRight]
+            ScrollBars = ssVertical
+            TabOrder = 4
+          end
+          object MMCodigoExp: TMemo
+            Left = 240
+            Top = 144
+            Width = 237
+            Height = 41
+            Anchors = [akLeft, akTop, akRight]
+            Lines.Strings = (
+              '')
+            ScrollBars = ssVertical
+            TabOrder = 5
+          end
+          object dblcUF: TDBLookupComboBox
+            Left = 12
+            Top = 104
+            Width = 465
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            KeyField = 'COD_ESTADO'
+            ListField = 'DESC_ESTADO'
+            ListSource = DMEstado.DSEstadoRel
+            TabOrder = 3
+          end
+          object MEBcDi: TMaskEdit
+            Left = 12
+            Top = 208
+            Width = 218
+            Height = 21
+            TabOrder = 6
+          end
+          object CBViaTransp: TComboBox
+            Left = 12
+            Top = 248
+            Width = 219
+            Height = 21
+            ItemHeight = 13
+            ItemIndex = 6
+            TabOrder = 7
+            Text = '7 - Rodovi'#225'ria;'
+            OnChange = CBViaTranspChange
+            Items.Strings = (
+              '1 - Mar'#237'tima;'
+              '2 - Fluvial;'
+              '3 - Lacustre;'
+              '4 - A'#233'rea;'
+              '5 - Postal'
+              '6 - Ferrovi'#225'ria;'
+              '7 - Rodovi'#225'ria;'
+              '8 - Conduto / Rede Transmiss'#227'o;'
+              '9 - Meios Pr'#243'prios;'
+              '10 - Entrada / Sa'#237'da ficta.')
+          end
+          object MEValorAFRMM: TMaskEdit
+            Left = 12
+            Top = 288
+            Width = 217
+            Height = 21
+            TabOrder = 8
+          end
+          object CBTipoIntermediacao: TComboBox
+            Left = 239
+            Top = 248
+            Width = 237
+            Height = 21
+            ItemHeight = 13
+            ItemIndex = 0
+            TabOrder = 9
+            Text = '1 - Importa'#231#227'o por conta pr'#243'pria;'
+            OnChange = CBTipoIntermediacaoChange
+            Items.Strings = (
+              '1 - Importa'#231#227'o por conta pr'#243'pria;'
+              '2 - Importa'#231#227'o por conta e ordem;'
+              '3 - Importa'#231#227'o por encomenda;')
+          end
+          object MECNPJEncomendante: TMaskEdit
+            Left = 240
+            Top = 288
+            Width = 121
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            TabOrder = 10
+          end
+          object MEUFEncomendante: TMaskEdit
+            Left = 368
+            Top = 288
+            Width = 31
+            Height = 21
+            Anchors = [akLeft, akTop, akRight]
+            TabOrder = 11
+          end
+        end
+        object TabSheet4: TTabSheet
+          Caption = 'Adi'#231#245'es'
+          ImageIndex = 1
+          DesignSize = (
+            485
+            317)
+          object Panel1: TPanel
+            Left = 8
+            Top = 32
+            Width = 465
+            Height = 241
+            Anchors = []
+            BevelOuter = bvLowered
+            TabOrder = 0
+            DesignSize = (
+              465
+              241)
+            object Label8: TLabel
+              Left = 8
+              Top = 8
+              Width = 73
+              Height = 13
+              Caption = 'N'#250'mero Adi'#231#227'o'
+            end
+            object Label9: TLabel
+              Left = 126
+              Top = 8
+              Width = 86
+              Height = 13
+              Caption = 'C'#243'digo Fabricante'
+            end
+            object Label10: TLabel
+              Left = 8
+              Top = 48
+              Width = 73
+              Height = 13
+              Caption = 'Valor Desconto'
+            end
+            object Label11: TLabel
+              Left = 8
+              Top = 100
+              Width = 99
+              Height = 13
+              Caption = 'Adi'#231#245'es Confirmadas'
+            end
+            object Label18: TLabel
+              Left = 302
+              Top = 8
+              Width = 89
+              Height = 13
+              Caption = 'N'#250'mero Drawback'
+            end
+            object MENumAdic: TMaskEdit
+              Left = 8
+              Top = 24
+              Width = 113
+              Height = 21
+              EditMask = '999'
+              MaxLength = 3
+              TabOrder = 0
+              Text = '   '
+            end
+            object MECodFabricante: TMaskEdit
+              Left = 126
+              Top = 24
+              Width = 171
+              Height = 21
+              Anchors = [akLeft, akTop, akRight]
+              TabOrder = 1
+            end
+            object MEDesconto: TMaskEdit
+              Left = 8
+              Top = 64
+              Width = 452
+              Height = 21
+              Anchors = [akLeft, akTop, akRight]
+              TabOrder = 3
+            end
+            object btnAdd: TBitBtn
+              Left = 305
+              Top = 88
+              Width = 75
+              Height = 25
+              Anchors = [akTop, akRight]
+              Caption = 'Adicionar'
+              TabOrder = 5
+              OnClick = btnAddClick
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000120B0000120B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333393333
+                333333333337F3333333333333397333333333333337FF333333333333C94333
+                3333333333737F333333333333C9473333333333337373F3333333333CC94433
+                3333333337F7F7F3333333333CC94473333333333737F73F33333333CCC94443
+                333333337F37F37F33333333CCC94447333333337337F373F333333CCCC94444
+                33333337F337F337F333333CCCC94444733333373337F3373F3333CCCCC94444
+                4333337F3337FF337F3333CCCCC94444473333733F7773FF73F33CCCCC393444
+                443337F37737F773F7F33CCC33393374447337F73337F33737FFCCC333393333
+                444377733337F333777FC3333339333337437333333733333373}
+              NumGlyphs = 2
+            end
+            object btnRem: TBitBtn
+              Left = 385
+              Top = 88
+              Width = 75
+              Height = 25
+              Anchors = [akTop, akRight]
+              Caption = 'Remover'
+              TabOrder = 6
+              OnClick = btnRemClick
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                999333777FF37FF377733339993000399933333777F777F77733333399970799
+                93333333777F7377733333333999399933333333377737773333333333990993
+                3333333333737F73333333333331013333333333333777FF3333333333910193
+                333333333337773FF3333333399000993333333337377737FF33333399900099
+                93333333773777377FF333399930003999333337773777F777FF339993370733
+                9993337773337333777333333333333333333333333333333333333333333333
+                3333333333333333333333333333333333333333333333333333}
+              NumGlyphs = 2
+            end
+            object DBGrid1: TDBGrid
+              Left = 8
+              Top = 115
+              Width = 452
+              Height = 117
+              Anchors = []
+              DataSource = DMNotaEntrada.DSNfeImportAdi
+              TabOrder = 4
+              TitleFont.Charset = DEFAULT_CHARSET
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -11
+              TitleFont.Name = 'MS Sans Serif'
+              TitleFont.Style = []
+              Columns = <
+                item
+                  Expanded = False
+                  FieldName = 'NUM_SEQ_ADIC'
+                  Title.Caption = 'Numero Seq.'
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'NUM_ADICAO'
+                  Title.Caption = 'N'#250'mero'
+                  Width = 50
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'COD_FABRICANTE'
+                  Title.Caption = 'Fabricante'
+                  Width = 200
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'VAL_DESCONTO'
+                  Title.Caption = 'Desconto'
+                  Width = 100
+                  Visible = True
+                end>
+            end
+            object MeNumDrawback: TMaskEdit
+              Left = 302
+              Top = 24
+              Width = 158
+              Height = 21
+              Anchors = [akLeft, akTop, akRight]
+              TabOrder = 2
+            end
+          end
+        end
+      end
+      object btnLimpar: TBitBtn
+        Left = 18
+        Top = 353
+        Width = 75
+        Height = 25
+        Anchors = []
+        Caption = 'Excluir DI'
+        TabOrder = 1
+        OnClick = btnLimparClick
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000130B0000130B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          333333333333333333333333333333333333333FFF33FF333FFF339993370733
+          999333777FF37FF377733339993000399933333777F777F77733333399970799
+          93333333777F7377733333333999399933333333377737773333333333990993
+          3333333333737F73333333333331013333333333333777FF3333333333910193
+          333333333337773FF3333333399000993333333337377737FF33333399900099
+          93333333773777377FF333399930003999333337773777F777FF339993370733
+          9993337773337333777333333333333333333333333333333333333333333333
+          3333333333333333333333333333333333333333333333333333}
+        NumGlyphs = 2
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'II'
+      ImageIndex = 1
+      DesignSize = (
+        489
+        381)
+      object DBPanel1: TDBPanel
+        Left = 16
+        Top = 24
+        Width = 457
+        Height = 37
+        BevelOuter = bvNone
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        CodigoTabStop = True
+        DataField = 'VAL_BC_II'
+        DataSource = DMNotaEntrada.DSItemNF
+        fkCache = False
+        fkChave = 'VAL_BC_II'
+        ForeignKey = False
+        LCaption = 'Base de c'#225'lculo'
+        ReadOnly = False
+        Required = False
+        ValidateOnExit = False
+        WidthCodigo = 20.000000000000000000
+      end
+      object DBPanel2: TDBPanel
+        Left = 16
+        Top = 64
+        Width = 457
+        Height = 37
+        BevelOuter = bvNone
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        CodigoTabStop = True
+        DataField = 'VAL_DESPADU_II'
+        DataSource = DMNotaEntrada.DSItemNF
+        fkCache = False
+        fkChave = 'VAL_DESPADU_II'
+        ForeignKey = False
+        LCaption = 'Valor das despesas aduaneiras'
+        ReadOnly = False
+        Required = False
+        ValidateOnExit = False
+        WidthCodigo = 20.000000000000000000
+      end
+      object DBPanel3: TDBPanel
+        Left = 16
+        Top = 104
+        Width = 457
+        Height = 37
+        BevelOuter = bvNone
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
+        CodigoTabStop = True
+        DataField = 'VAL_II'
+        DataSource = DMNotaEntrada.DSItemNF
+        fkCache = False
+        fkChave = 'VAL_II'
+        ForeignKey = False
+        LCaption = 'Valor do imposto de importa'#231#227'o'
+        ReadOnly = False
+        Required = False
+        ValidateOnExit = False
+        WidthCodigo = 20.000000000000000000
+      end
+      object DBPanel4: TDBPanel
+        Left = 16
+        Top = 144
+        Width = 457
+        Height = 37
+        BevelOuter = bvNone
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 3
+        CodigoTabStop = True
+        DataField = 'VAL_IOF_II'
+        DataSource = DMNotaEntrada.DSItemNF
+        fkCache = False
+        fkChave = 'VAL_IOF_II'
+        ForeignKey = False
+        LCaption = 'Valor do imposto sobre opera'#231#245'es  financeiras'
+        ReadOnly = False
+        Required = False
+        ValidateOnExit = False
+        WidthCodigo = 20.000000000000000000
+      end
+      object BitBtn1: TBitBtn
+        Left = 18
+        Top = 356
+        Width = 74
+        Height = 25
+        Anchors = [akLeft, akBottom]
+        Caption = 'Excluir II'
+        TabOrder = 4
+        OnClick = BitBtn1Click
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000130B0000130B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          333333333333333333333333333333333333333FFF33FF333FFF339993370733
+          999333777FF37FF377733339993000399933333777F777F77733333399970799
+          93333333777F7377733333333999399933333333377737773333333333990993
+          3333333333737F73333333333331013333333333333777FF3333333333910193
+          333333333337773FF3333333399000993333333337377737FF33333399900099
+          93333333773777377FF333399930003999333337773777F777FF339993370733
+          9993337773337333777333333333333333333333333333333333333333333333
+          3333333333333333333333333333333333333333333333333333}
+        NumGlyphs = 2
+      end
+    end
+  end
+end

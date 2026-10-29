@@ -1,0 +1,235 @@
+object DMConfiguracaoMarketplace: TDMConfiguracaoMarketplace
+  OldCreateOrder = False
+  Left = 705
+  Top = 270
+  Height = 307
+  Width = 460
+  object QConfiguracaoMarketplace: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_CONFIGURACAO_SKYHUB.*'
+      'FROM'
+      '  TB_CONFIGURACAO_SKYHUB'
+      'WHERE'
+      '  TB_CONFIGURACAO_SKYHUB.COD_CONFIGURACAO_SKYHUB = :PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_CONFIGURACAO_SKYHUB'
+    SequenceField.Sequence = 'SQCONFIGURACAO_SKYHUB'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000001F00000017000000434F445F434F4E46494755524143414F5F534B59
+      4855420100000000000A000000434F445F46494C49414C010000000000090000
+      00494E445F415449564F01000000000012000000444553435F5553554152494F
+      5F454D41494C01000000000015000000444553435F544F4B454E5F494E544547
+      524143414F01000000000012000000444553435F544F4B454E5F4143434F554E
+      540100000000000C000000434F445F4F5045524143414F010000000000120000
+      00434F445F434C4153535F434144415354524F0100000000000F000000434F44
+      5F52414D4F5F46495349434101000000000011000000434F445F52414D4F5F4A
+      5552494449434101000000000011000000434F445F5449504F5F434144415354
+      524F0100000000000D000000434F445F4C4F54455F5449504F01000000000010
+      000000434F445F444550415254414D454E544F01000000000012000000494E44
+      5F5449504F5F504147414D454E544F0100000000000C000000434F445F56454E
+      4445444F5201000000000011000000444553435F4D4C5F434C49454E545F4944
+      01000000000015000000444553435F4D4C5F434C49454E545F53454352455401
+      00000000000C000000494E445F4D4C5F415449564F0100000000000A00000043
+      4F445F52454749414F01000000000014000000444553435F4143434553535F54
+      4F4B454E5F4D4C0100000000000F000000444553435F555345525F49445F4D4C
+      0100000000001200000044545F4143434553535F544F4B454E5F4D4C01000000
+      00001800000044545F554C54494D415F415455414C495A4143414F5F4D4C0100
+      0000000011000000444553435F534B594855425F544F4B454E0000000000000F
+      00000044545F544F4B454E5F534B594855420100000000000F000000494D4755
+      525F434C49454E545F49440100000000000C000000494D4755525F5345435245
+      5401000000000013000000494D4755525F524546524553485F544F4B454E0100
+      0000000012000000494D4755525F4143434553535F544F4B454E010000000000
+      15000000494D4755525F44545F4143434553535F544F4B454E01000000000014
+      000000444553435F414D4249454E54455F534B59485542010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    AfterOpen = QConfiguracaoMarketplaceAfterOpen
+    AfterInsert = QConfiguracaoMarketplaceAfterInsert
+    AfterPost = QConfiguracaoMarketplaceAfterPost
+    AfterCancel = QConfiguracaoMarketplaceAfterCancel
+    AfterDelete = QConfiguracaoMarketplaceAfterDelete
+    Left = 72
+    Top = 16
+    object QConfiguracaoMarketplaceIND_ATIVO: TStringField
+      FieldName = 'IND_ATIVO'
+      Size = 1
+    end
+    object QConfiguracaoMarketplaceDESC_USUARIO_EMAIL: TStringField
+      FieldName = 'DESC_USUARIO_EMAIL'
+      Size = 40
+    end
+    object QConfiguracaoMarketplaceDESC_TOKEN_INTEGRACAO: TStringField
+      FieldName = 'DESC_TOKEN_INTEGRACAO'
+      Size = 30
+    end
+    object QConfiguracaoMarketplaceDESC_TOKEN_ACCOUNT: TStringField
+      FieldName = 'DESC_TOKEN_ACCOUNT'
+      Size = 30
+    end
+    object QConfiguracaoMarketplaceCOD_CONFIGURACAO_SKYHUB: TIntegerField
+      FieldName = 'COD_CONFIGURACAO_SKYHUB'
+      Required = True
+    end
+    object QConfiguracaoMarketplaceCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QConfiguracaoMarketplaceCOD_OPERACAO: TIntegerField
+      FieldName = 'COD_OPERACAO'
+      Required = True
+    end
+    object QConfiguracaoMarketplaceCOD_CLASS_CADASTRO: TIntegerField
+      FieldName = 'COD_CLASS_CADASTRO'
+    end
+    object QConfiguracaoMarketplaceCOD_RAMO_FISICA: TIntegerField
+      FieldName = 'COD_RAMO_FISICA'
+    end
+    object QConfiguracaoMarketplaceCOD_RAMO_JURIDICA: TIntegerField
+      FieldName = 'COD_RAMO_JURIDICA'
+    end
+    object QConfiguracaoMarketplaceCOD_TIPO_CADASTRO: TIntegerField
+      FieldName = 'COD_TIPO_CADASTRO'
+    end
+    object QConfiguracaoMarketplaceCOD_DEPARTAMENTO: TIntegerField
+      FieldName = 'COD_DEPARTAMENTO'
+    end
+    object QConfiguracaoMarketplaceCOD_LOTE_TIPO: TIntegerField
+      FieldName = 'COD_LOTE_TIPO'
+    end
+    object QConfiguracaoMarketplaceIND_TIPO_PAGAMENTO: TStringField
+      FieldName = 'IND_TIPO_PAGAMENTO'
+      Size = 12
+    end
+    object QConfiguracaoMarketplaceCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+    object QConfiguracaoMarketplaceCOD_REGIAO: TIntegerField
+      FieldName = 'COD_REGIAO'
+    end
+    object QConfiguracaoMarketplaceDESC_ML_CLIENT_SECRET: TStringField
+      FieldName = 'DESC_ML_CLIENT_SECRET'
+      Size = 32
+    end
+    object QConfiguracaoMarketplaceIND_ML_ATIVO: TStringField
+      FieldName = 'IND_ML_ATIVO'
+      Size = 1
+    end
+    object QConfiguracaoMarketplaceDESC_ML_CLIENT_ID: TStringField
+      FieldName = 'DESC_ML_CLIENT_ID'
+      Size = 16
+    end
+    object QConfiguracaoMarketplaceIMGUR_CLIENT_ID: TStringField
+      FieldName = 'IMGUR_CLIENT_ID'
+    end
+    object QConfiguracaoMarketplaceIMGUR_SECRET: TStringField
+      FieldName = 'IMGUR_SECRET'
+      Size = 45
+    end
+    object QConfiguracaoMarketplaceIMGUR_REFRESH_TOKEN: TStringField
+      FieldName = 'IMGUR_REFRESH_TOKEN'
+      Size = 45
+    end
+    object QConfiguracaoMarketplaceDESC_AMBIENTE_SKYHUB: TStringField
+      FieldName = 'DESC_AMBIENTE_SKYHUB'
+      Size = 15
+    end
+    object QConfiguracaoMarketplaceDESC_ACCESS_TOKEN_ML: TStringField
+      FieldName = 'DESC_ACCESS_TOKEN_ML'
+      Size = 100
+    end
+    object QConfiguracaoMarketplaceDESC_SKYHUB_TOKEN: TMemoField
+      FieldName = 'DESC_SKYHUB_TOKEN'
+      BlobType = ftOraClob
+    end
+    object QConfiguracaoMarketplaceIMGUR_ACCESS_TOKEN: TStringField
+      FieldName = 'IMGUR_ACCESS_TOKEN'
+      Size = 45
+    end
+  end
+  object QConfiguracaoMarketplaceCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_CONFIGURACAO_SKYHUB.*'
+      'FROM'
+      '  TB_CONFIGURACAO_SKYHUB'
+      'WHERE'
+      '  (:FILIAL IS NULL OR'
+      '  TB_CONFIGURACAO_SKYHUB.COD_FILIAL = :FILIAL)')
+    Variables.Data = {0300000001000000070000003A46494C49414C050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000F00000009000000494E445F415449564F0100000000001200000044
+      4553435F5553554152494F5F454D41494C01000000000015000000444553435F
+      544F4B454E5F494E544547524143414F01000000000012000000444553435F54
+      4F4B454E5F4143434F554E5401000000000017000000434F445F434F4E464947
+      55524143414F5F534B594855420100000000000A000000434F445F46494C4941
+      4C0100000000000C000000434F445F4F5045524143414F010000000000120000
+      00434F445F434C4153535F434144415354524F0100000000000F000000434F44
+      5F52414D4F5F46495349434101000000000011000000434F445F52414D4F5F4A
+      5552494449434101000000000011000000434F445F5449504F5F434144415354
+      524F01000000000010000000434F445F444550415254414D454E544F01000000
+      00000D000000434F445F4C4F54455F5449504F01000000000012000000494E44
+      5F5449504F5F504147414D454E544F0100000000000C000000434F445F56454E
+      4445444F52010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 232
+    Top = 16
+    object QConfiguracaoMarketplaceConsDESC_USUARIO_EMAIL: TStringField
+      FieldName = 'DESC_USUARIO_EMAIL'
+      Size = 40
+    end
+    object QConfiguracaoMarketplaceConsCOD_CONFIGURACAO_SKYHUB: TIntegerField
+      FieldName = 'COD_CONFIGURACAO_SKYHUB'
+      Required = True
+    end
+    object QConfiguracaoMarketplaceConsCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QConfiguracaoMarketplaceConsIND_ATIVO: TStringField
+      FieldName = 'IND_ATIVO'
+      Size = 1
+    end
+  end
+  object QEmailNotificacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_EMAIL_NOTIFICACAO.*'
+      'FROM'
+      '  TB_EMAIL_NOTIFICACAO'
+      ''
+      'where cod_configuracao_skyhub = :cod_configuracao_skyhub')
+    Variables.Data = {
+      0300000001000000180000003A434F445F434F4E46494755524143414F5F534B
+      59485542030000000000000000000000}
+    SequenceField.Field = 'COD_EMAIL_NOTIFICACAO'
+    SequenceField.Sequence = 'SQEMAIL_NOTIFICACAO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000015000000434F445F454D41494C5F4E4F5449464943414341
+      4F01000000000017000000434F445F434F4E46494755524143414F5F534B5948
+      55420100000000000A000000444553435F454D41494C010000000000}
+    Master = QConfiguracaoMarketplace
+    MasterFields = 'COD_CONFIGURACAO_SKYHUB'
+    DetailFields = 'COD_CONFIGURACAO_SKYHUB'
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 88
+    object QEmailNotificacaoCOD_EMAIL_NOTIFICACAO: TIntegerField
+      FieldName = 'COD_EMAIL_NOTIFICACAO'
+      Required = True
+    end
+    object QEmailNotificacaoCOD_CONFIGURACAO_SKYHUB: TIntegerField
+      FieldName = 'COD_CONFIGURACAO_SKYHUB'
+      Required = True
+    end
+    object QEmailNotificacaoDESC_EMAIL: TStringField
+      FieldName = 'DESC_EMAIL'
+      Size = 150
+    end
+  end
+end

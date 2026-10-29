@@ -1,0 +1,134 @@
+object FProdutos_UltimasCompras: TFProdutos_UltimasCompras
+  Left = 190
+  Top = 187
+  Width = 1149
+  Height = 417
+  Caption = #218'ltimas Compras'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  DesignSize = (
+    1141
+    386)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object LbDiasUltimasCompras: TLabel
+    Left = 350
+    Top = 5
+    Width = 129
+    Height = 13
+    Hint = 
+      'A data de refer'#234'ncia '#233' configurado na tela de par'#226'metros do sist' +
+      'ema, aba Vendas'
+    Caption = 'LbDiasUltimasCompras'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 24
+    Width = 1118
+    Height = 302
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    DataSource = DSUltCompra
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'NUM_NOTA'
+        Title.Caption = 'N'#250'mero'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT_EMISSAO'
+        Title.Caption = 'Dt. Emiss'#227'o'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'FORNECEDOR'
+        Title.Caption = 'Fornecedor'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'QT_QUANTIDADE'
+        Title.Caption = 'Quantidade'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VAL_UNITARIO'
+        Title.Caption = 'Vl. Unit'#225'rio'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VAL_CUSTO'
+        Title.Caption = 'Custo'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_OPERACAO'
+        Title.Caption = 'Opera'#231#227'o'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_CFOP'
+        Title.Caption = 'CFOP'
+        Visible = True
+      end>
+  end
+  object BitBtn1: TBitBtn
+    Left = 1037
+    Top = 332
+    Width = 89
+    Height = 25
+    Anchors = [akRight, akBottom]
+    TabOrder = 1
+    Kind = bkOK
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 367
+    Width = 1141
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end>
+  end
+  object DSUltCompra: TDataSource
+    DataSet = DMProduto.QProdutoConsUltCompras
+    Left = 4
+    Top = 328
+  end
+  object ActionList1: TActionList
+    Left = 40
+    Top = 328
+    object Action1: TAction
+      Caption = 'Action1'
+      ShortCut = 49222
+      OnExecute = Action1Execute
+    end
+  end
+end

@@ -1,0 +1,17 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_Controle_Veiculo.hlp
+
+[FILES]
+P_ControleVeiculo.rtf
+
+[MAP]
+Cadastro_Cor=4
+Cadastro_Fabricante=5
+Cadastro_Modelo=6
+Cadastro_Mov_Custo_Veiculo=8
+Cadastro_Veiculo=7
+Menu_Controle_Veiculo=1

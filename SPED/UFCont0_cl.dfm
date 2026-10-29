@@ -1,0 +1,89 @@
+object DmFCont0: TDmFCont0
+  OldCreateOrder = False
+  Left = 717
+  Top = 364
+  Height = 150
+  Width = 215
+  object QReg000: TOracleDataSet1
+    SQL.Strings = (
+      'Select'
+      '  DESC_FILIAL,'
+      '  NUM_CGC,'
+      '  DESC_NIT,'
+      '  E.DESC_SIGLA_ESTADO,'
+      '  DESC_INSCRICAO,'
+      '  C.COD_CIDADE_IBGE,'
+      '  E.COD_UF_IBGE + 0.00 as COD_UF_IBGE,'
+      '  DESC_INSCRICAO_MUNICIPAL,'
+      '  DESC_SUFRAMA,'
+      '  IND_PERFIL_SPED,'
+      '  IND_TIPO_ATIVIDADE'
+      'FROM'
+      '  TB_FILIAL F'
+      'LEFT JOIN TB_CIDADE C ON F.COD_CIDADE = C.COD_CIDADE'
+      'LEFT JOIN TB_ESTADO E ON F.COD_ESTADO = E.COD_ESTADO'
+      'WHERE'
+      '  F.COD_FILIAL IN :FILIAIS')
+    Variables.Data = {
+      0300000001000000080000003A46494C4941495301000000230000002853454C
+      45435420434F445F46494C49414C2046524F4D2054425F46494C49414C290000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B0000000B000000444553435F46494C49414C010000000000070000
+      004E554D5F43474301000000000008000000444553435F4E4954010000000000
+      11000000444553435F5349474C415F45535441444F0100000000000E00000044
+      4553435F494E5343524943414F0100000000000F000000434F445F4349444144
+      455F4942474501000000000018000000444553435F494E5343524943414F5F4D
+      554E49434950414C0100000000000C000000444553435F53554652414D410100
+      000000000B000000434F445F55465F494247450100000000000F000000494E44
+      5F50455246494C5F5350454401000000000012000000494E445F5449504F5F41
+      5449564944414445010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 16
+    object QReg000DESC_FILIAL: TStringField
+      FieldName = 'DESC_FILIAL'
+      Size = 50
+    end
+    object QReg000NUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 18
+    end
+    object QReg000DESC_NIT: TStringField
+      FieldName = 'DESC_NIT'
+      Size = 15
+    end
+    object QReg000DESC_SIGLA_ESTADO: TStringField
+      FieldName = 'DESC_SIGLA_ESTADO'
+      Required = True
+      Size = 2
+    end
+    object QReg000DESC_INSCRICAO: TStringField
+      FieldName = 'DESC_INSCRICAO'
+      Size = 12
+    end
+    object QReg000DESC_INSCRICAO_MUNICIPAL: TStringField
+      FieldName = 'DESC_INSCRICAO_MUNICIPAL'
+      Size = 15
+    end
+    object QReg000DESC_SUFRAMA: TStringField
+      FieldName = 'DESC_SUFRAMA'
+      Size = 15
+    end
+    object QReg000COD_CIDADE_IBGE: TStringField
+      FieldName = 'COD_CIDADE_IBGE'
+      Size = 5
+    end
+    object QReg000COD_UF_IBGE: TFloatField
+      FieldName = 'COD_UF_IBGE'
+    end
+    object QReg000IND_PERFIL_SPED: TStringField
+      FieldName = 'IND_PERFIL_SPED'
+      Size = 1
+    end
+    object QReg000IND_TIPO_ATIVIDADE: TStringField
+      FieldName = 'IND_TIPO_ATIVIDADE'
+      Size = 1
+    end
+  end
+end

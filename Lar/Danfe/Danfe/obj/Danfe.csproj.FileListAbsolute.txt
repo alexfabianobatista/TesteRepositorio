@@ -1,0 +1,22 @@
+F:\Delphi_New\Lar\Danfe\Danfe\bin\Debug\Danfe.exe
+F:\Delphi_New\Lar\Danfe\Danfe\bin\Debug\Danfe.pdb
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\ResolveAssemblyReference.cache
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.Properties.Resources.resources
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.csproj.GenerateResource.Cache
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.exe
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.pdb
+c:\GeraExe\Danfe.exe
+c:\GeraExe\Danfe.pdb
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.relatorios.crDanfeDefault.rpt
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.relatorios.crFatura.rpt
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.FPrincipal.resources
+F:\Delphi_New\Lar\Danfe\Danfe\obj\Debug\Danfe.FServidor.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.relatorios.crDanfeDefault.rpt
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.relatorios.crFatura.rpt
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.FPrincipal.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.Properties.Resources.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.exe
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.pdb
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Danfe\Danfe\obj\Debug\Danfe.relatorios.crDanfeFormulario.rpt

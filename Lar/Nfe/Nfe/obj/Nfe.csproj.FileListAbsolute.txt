@@ -1,0 +1,27 @@
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\ResolveAssemblyReference.cache
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FServidor.resources
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.Properties.Resources.resources
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.csproj.GenerateResource.Cache
+F:\Delphi_New\Lar\Nfe\Nfe\bin\Debug\Nfe.exe
+F:\Delphi_New\Lar\Nfe\Nfe\bin\Debug\Nfe.pdb
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.exe
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.pdb
+C:\GeraExe\Nfe.exe
+C:\GeraExe\Nfe.pdb
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.exe
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.pdb
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FServidor.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.Properties.Resources.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Interop.Scripting.dll
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.csproj.ResolveComReference.cache
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FConfiguracao.resources
+C:\GeraExe\Nfe.exe.config
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Interop.Scripting.dll
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.csproj.ResolveComReference.cache
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FConfiguracao.resources
+F:\Delphi_New\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FContingencia.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FContingencia.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.forms.FReConsulta.resources
+C:\Documents and Settings\Administrador\Meus documentos\Visual Studio 2005\Projects\Lar\Nfe\Nfe\obj\Debug\Nfe.negocios.email.pdf.crDanfeDefault.rpt

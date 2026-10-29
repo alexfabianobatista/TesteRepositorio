@@ -1,0 +1,11 @@
+c:\GeraExe\Danfe.exe
+c:\GeraExe\Danfe.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Danfe.relatorios.crDanfeDefault.rpt
+obj\Debug\Danfe.relatorios.crFatura.rpt
+obj\Debug\Danfe.FPrincipal.resources
+obj\Debug\Danfe.Properties.Resources.resources
+obj\Debug\Danfe.csproj.GenerateResource.Cache
+obj\Debug\Danfe.exe
+obj\Debug\Danfe.pdb
+obj\Debug\Danfe.relatorios.crDanfeFormulario.rpt

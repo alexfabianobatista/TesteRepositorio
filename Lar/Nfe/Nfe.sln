@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nfe", "Nfe\Nfe.csproj", "{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Danfe", "..\Danfe\Danfe\Danfe.csproj", "{5BE468A7-5FCF-4DA2-BBBA-CD512452E2B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA5BBFC-0B4A-4D3D-8BC1-34FC830E1EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE468A7-5FCF-4DA2-BBBA-CD512452E2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE468A7-5FCF-4DA2-BBBA-CD512452E2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE468A7-5FCF-4DA2-BBBA-CD512452E2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE468A7-5FCF-4DA2-BBBA-CD512452E2B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

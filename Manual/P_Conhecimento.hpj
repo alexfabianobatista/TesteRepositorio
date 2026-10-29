@@ -1,0 +1,17 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_Conhecimento.hlp
+
+[FILES]
+P_Conhecimento.rtf
+
+[MAP]
+cad_base=6
+cad_conhecimento=4
+cad_motorista=1
+cad_proprietario=3
+cad_rpa=5
+cad_veiculo=2

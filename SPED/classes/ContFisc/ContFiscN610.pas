@@ -1,0 +1,34 @@
+unit ContFiscN610;
+
+interface
+
+uses Arquivo, Controls, Registro;
+
+type
+  TContFiscN610 = class(TRegistro)
+  private
+
+  public
+    CODIGO: string; //C
+    DESCRICAO: string; //C
+    VALOR: double; //N(19,2)
+
+    procedure grava;
+  end;
+
+implementation
+
+uses UFuncoes;
+
+procedure TContFiscN610.grava;
+begin
+  inherited;
+  addCampo(bloco + registro);
+  addCampo(CODIGO);
+  addCampo(DESCRICAO);
+  addCampo(VALOR, 2);
+
+  gravaLinha(arquivoPadrao, TRegistro(self));
+  aftergravacao;
+end;
+end.

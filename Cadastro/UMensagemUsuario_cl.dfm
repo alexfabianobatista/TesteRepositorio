@@ -1,0 +1,222 @@
+object DmMensagemUsuario: TDmMensagemUsuario
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  Left = 549
+  Top = 206
+  Height = 250
+  Width = 390
+  object QMensagemUsuario: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_MENSAGEM_USUARIO.*'
+      'FROM'
+      '  TB_MENSAGEM_USUARIO'
+      'WHERE'
+      '  TB_MENSAGEM_USUARIO.COD_MENSAGEM_USUARIO = :PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_MENSAGEM_USUARIO'
+    SequenceField.Sequence = 'SQMENSAGEM_USUARIO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000700000014000000434F445F4D454E534147454D5F5553554152494F
+      01000000000015000000444553435F5449504F5F46554E43494F4E4152494F01
+      00000000000F00000044545F564947454E4349415F494E490100000000000F00
+      000044545F564947454E4349415F46494E0100000000000D000000444553435F
+      4D454E534147454D01000000000012000000434F445F5553554152494F5F4F52
+      4947454D01000000000013000000434F445F5553554152494F5F44455354494E
+      4F010000000000}
+    Session = DMOracle.DBCemapa
+    AfterInsert = QMensagemUsuarioAfterInsert
+    Left = 48
+    Top = 16
+    object QMensagemUsuarioCOD_MENSAGEM_USUARIO: TIntegerField
+      FieldName = 'COD_MENSAGEM_USUARIO'
+      Required = True
+    end
+    object QMensagemUsuarioCOD_USUARIO_ORIGEM: TIntegerField
+      FieldName = 'COD_USUARIO_ORIGEM'
+      Required = True
+    end
+    object QMensagemUsuarioCOD_USUARIO_DESTINO: TIntegerField
+      FieldName = 'COD_USUARIO_DESTINO'
+    end
+    object QMensagemUsuarioDESC_TIPO_FUNCIONARIO: TStringField
+      FieldName = 'DESC_TIPO_FUNCIONARIO'
+      Size = 11
+    end
+    object QMensagemUsuarioDT_VIGENCIA_INI: TDateTimeField
+      FieldName = 'DT_VIGENCIA_INI'
+      Required = True
+      EditMask = '!99/99/##00;1;_'
+    end
+    object QMensagemUsuarioDT_VIGENCIA_FIN: TDateTimeField
+      FieldName = 'DT_VIGENCIA_FIN'
+      Required = True
+      EditMask = '!99/99/##00;1;_'
+    end
+    object QMensagemUsuarioDESC_MENSAGEM: TStringField
+      FieldName = 'DESC_MENSAGEM'
+      Required = True
+      Size = 100
+    end
+  end
+  object QMensagemUsuarioCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_MENSAGEM_USUARIO.*,'
+      '  TB_USUARIO_ORIGEM.NOME AS NOME_USUARIO_ORIGEM,'
+      '  TB_USUARIO_DESTINO.NOME AS NOME_USUARIO_DESTINO'
+      'FROM'
+      '  TB_MENSAGEM_USUARIO'
+      
+        'INNER JOIN TB_USUARIO TB_USUARIO_ORIGEM ON TB_USUARIO_ORIGEM.COD' +
+        '_USUARIO = TB_MENSAGEM_USUARIO.COD_USUARIO_ORIGEM'
+      
+        'LEFT JOIN TB_USUARIO TB_USUARIO_DESTINO ON TB_USUARIO_DESTINO.CO' +
+        'D_USUARIO = TB_MENSAGEM_USUARIO.COD_USUARIO_DESTINO'
+      'WHERE'
+      '  (:COD_USUARIO_ORIGEM IS NULL'
+      '    OR'
+      '  TB_MENSAGEM_USUARIO.COD_USUARIO_ORIGEM = :COD_USUARIO_ORIGEM)')
+    Variables.Data = {
+      0300000001000000130000003A434F445F5553554152494F5F4F524947454D03
+      0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000900000014000000434F445F4D454E534147454D5F5553554152494F
+      01000000000015000000444553435F5449504F5F46554E43494F4E4152494F01
+      00000000000F00000044545F564947454E4349415F494E490100000000000F00
+      000044545F564947454E4349415F46494E0100000000000D000000444553435F
+      4D454E534147454D01000000000012000000434F445F5553554152494F5F4F52
+      4947454D01000000000013000000434F445F5553554152494F5F44455354494E
+      4F010000000000130000004E4F4D455F5553554152494F5F4F524947454D0100
+      00000000140000004E4F4D455F5553554152494F5F44455354494E4F01000000
+      0000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 64
+    object QMensagemUsuarioConsCOD_MENSAGEM_USUARIO: TIntegerField
+      FieldName = 'COD_MENSAGEM_USUARIO'
+      Required = True
+    end
+    object QMensagemUsuarioConsCOD_USUARIO_ORIGEM: TIntegerField
+      FieldName = 'COD_USUARIO_ORIGEM'
+      Required = True
+    end
+    object QMensagemUsuarioConsCOD_USUARIO_DESTINO: TIntegerField
+      FieldName = 'COD_USUARIO_DESTINO'
+    end
+    object QMensagemUsuarioConsDESC_TIPO_FUNCIONARIO: TStringField
+      FieldName = 'DESC_TIPO_FUNCIONARIO'
+      Size = 11
+    end
+    object QMensagemUsuarioConsDT_VIGENCIA_INI: TDateTimeField
+      FieldName = 'DT_VIGENCIA_INI'
+      Required = True
+    end
+    object QMensagemUsuarioConsDT_VIGENCIA_FIN: TDateTimeField
+      FieldName = 'DT_VIGENCIA_FIN'
+      Required = True
+    end
+    object QMensagemUsuarioConsDESC_MENSAGEM: TStringField
+      FieldName = 'DESC_MENSAGEM'
+      Required = True
+      Size = 100
+    end
+    object QMensagemUsuarioConsNOME_USUARIO_ORIGEM: TStringField
+      FieldName = 'NOME_USUARIO_ORIGEM'
+      Required = True
+      Size = 30
+    end
+    object QMensagemUsuarioConsNOME_USUARIO_DESTINO: TStringField
+      FieldName = 'NOME_USUARIO_DESTINO'
+      Required = True
+      Size = 30
+    end
+  end
+  object QMostraMensagem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_MENSAGEM_USUARIO.*,'
+      '  TB_USUARIO_ORIGEM.NOME AS NOME_USUARIO_ORIGEM'
+      'FROM'
+      '  TB_MENSAGEM_USUARIO'
+      
+        'INNER JOIN TB_USUARIO TB_USUARIO_ORIGEM ON TB_USUARIO_ORIGEM.COD' +
+        '_USUARIO = TB_MENSAGEM_USUARIO.COD_USUARIO_ORIGEM'
+      'WHERE'
+      '('
+      '('
+      
+        '  ((TB_MENSAGEM_USUARIO.COD_USUARIO_DESTINO IS NULL AND (SELECT ' +
+        'DESC_TIPO_FUNCIONARIO FROM TB_USUARIO WHERE COD_USUARIO = :COD_U' +
+        'SUARIO_DESTINO) = TB_MENSAGEM_USUARIO.DESC_TIPO_FUNCIONARIO)'
+      '    OR'
+      
+        '     TB_MENSAGEM_USUARIO.COD_USUARIO_DESTINO = :COD_USUARIO_DEST' +
+        'INO)'
+      '    OR'
+      '     TB_MENSAGEM_USUARIO.DESC_TIPO_FUNCIONARIO = '#39'TODOS'#39' )'
+      '  AND'
+      
+        '  (SELECT COUNT(*) FROM TB_MENSAGEM_USUARIO_LIDA WHERE TB_MENSAG' +
+        'EM_USUARIO_LIDA.COD_MENSAGEM_USUARIO = TB_MENSAGEM_USUARIO.COD_M' +
+        'ENSAGEM_USUARIO AND TB_MENSAGEM_USUARIO_LIDA.COD_USUARIO = :COD_' +
+        'USUARIO_DESTINO) = 0'
+      '  )'
+      'AND'
+      
+        '  (:DT_ATUAL BETWEEN TB_MENSAGEM_USUARIO.DT_VIGENCIA_INI AND TB_' +
+        'MENSAGEM_USUARIO.DT_VIGENCIA_FIN)')
+    Variables.Data = {
+      0300000002000000140000003A434F445F5553554152494F5F44455354494E4F
+      030000000000000000000000090000003A44545F415455414C0C000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000800000014000000434F445F4D454E534147454D5F5553554152494F
+      01000000000015000000444553435F5449504F5F46554E43494F4E4152494F01
+      00000000000F00000044545F564947454E4349415F494E490100000000000F00
+      000044545F564947454E4349415F46494E0100000000000D000000444553435F
+      4D454E534147454D01000000000012000000434F445F5553554152494F5F4F52
+      4947454D01000000000013000000434F445F5553554152494F5F44455354494E
+      4F010000000000130000004E4F4D455F5553554152494F5F4F524947454D0100
+      00000000}
+    Session = DMOracle.DBCemapa
+    Left = 48
+    Top = 112
+    object QMostraMensagemCOD_MENSAGEM_USUARIO: TIntegerField
+      FieldName = 'COD_MENSAGEM_USUARIO'
+      Required = True
+    end
+    object QMostraMensagemCOD_USUARIO_ORIGEM: TIntegerField
+      FieldName = 'COD_USUARIO_ORIGEM'
+      Required = True
+    end
+    object QMostraMensagemCOD_USUARIO_DESTINO: TIntegerField
+      FieldName = 'COD_USUARIO_DESTINO'
+    end
+    object QMostraMensagemDESC_TIPO_FUNCIONARIO: TStringField
+      FieldName = 'DESC_TIPO_FUNCIONARIO'
+      Size = 11
+    end
+    object QMostraMensagemDT_VIGENCIA_INI: TDateTimeField
+      FieldName = 'DT_VIGENCIA_INI'
+      Required = True
+    end
+    object QMostraMensagemDT_VIGENCIA_FIN: TDateTimeField
+      FieldName = 'DT_VIGENCIA_FIN'
+      Required = True
+    end
+    object QMostraMensagemDESC_MENSAGEM: TStringField
+      FieldName = 'DESC_MENSAGEM'
+      Required = True
+      Size = 100
+    end
+    object QMostraMensagemNOME_USUARIO_ORIGEM: TStringField
+      FieldName = 'NOME_USUARIO_ORIGEM'
+      Required = True
+      Size = 30
+    end
+  end
+end

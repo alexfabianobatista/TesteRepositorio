@@ -1,0 +1,693 @@
+unit UBibVenda;
+
+interface
+
+uses Forms, Controls, Dialogs, SysUtils, Math, OraTeste, Messages, Windows,
+  Variants, DBCtrls, ComObj;
+
+  type TBibVenda = Class
+
+  private
+    function PersonalizaBCPisCofinsDebona(
+    wValTotal, wValIpi, wValIcmsSubst, wBasePisCofins
+      , wAliqPisCofins: double): double;
+    function PersonalizaDadosDeion(wItemNF: TOracleDataSet1; wNF: TOracleDataSet1
+      ; wFilial: integer): TOracleDataSet1;
+
+  public
+    constructor Create; overload;
+    function ImprimeObs(wCodEmpresa : String) : String;
+    function ImprimeDataHora(wCodEmpresa: String) : String;
+    function ImprimeVendedor(wCodEmpresa: String) : String;
+
+    function PersonalizaMapaVenda(wCodEmpresa : String;
+      pMapaVenda : TForm) : TForm;
+    function PersonalizaMapaVendaRes(wCodEmpresa : String;
+      pMapaVendaRes : TForm) : TForm;
+    function MapaVendaPollyana(pMapaVenda : TForm) : TForm;
+    function MapaVendaResPollyana(pMapaVendaRes : TForm) : TForm;
+
+    function MapaVendaDeion(pMapaVenda : TForm) : TForm;
+    function MapaVendaResDeion(pMapaVendaRes : TForm) : TForm;
+
+    procedure PersonalizaNotaSaidaParam(wCodEmpresa : String; pNotaSaidaParam: TForm);
+    procedure PersonalizaNota(wCod_empresa : String; pNotaSaidaCad: TForm);
+    procedure PersonalizaNotaDiniz(pNotaSaidaCad: TForm);
+    procedure PersonalizaNotaZito(pNotaSaidaCad: TForm);
+
+    function PersonalizaPreco(wCodEmpresa: String; wPreco: double;
+      wCodProduto: string): double;
+    function PersonalizaPrecoBarraus(wCodProduto: string): double;
+    function PersonalizaBCPisCofins(wCodEmpresa: string
+      ; wValTotal, wValIpi, wValIcmsSubst, wBasePisCofins
+      , wAliqPisCofins, wValorCalculado: double): double;
+    function PersonalizaDados(wItemNF: TOracleDataSet1; wNF: TOracleDataSet1
+      ; wFilial: integer): TOracleDataSet1;
+    function LiberaBloqueioTabelaPreco: Boolean;
+    //procedure SetProp(var pForm: TForm; pComponentName: String; pPropertyName: String; pValue: Variant);
+    procedure PersonalizaPagamento(var wRadioGroup: TDBRadioGroup);
+    function ImportaPedidoExcelRetifoz(wQPedido,  wQPedItem: TOracleDataSet1; ArquivoXLS: string): Boolean;
+  end;
+
+var BibVenda : TBibVenda;
+
+implementation
+
+uses UOracle_cl, UNotaSaida_cl, TypInfo, UParamSistema_cl, UUsuario_cl, USenha,
+  UBiblioteca, DB, USequencia_cl;
+
+
+{ TBibVenda }
+
+
+//Adiciona novos dados na impressão do pedido
+function TBibVenda.ImprimeObs(wCodEmpresa: String) : String;
+begin
+  if wCodEmpresa = 'SRTERRA' then
+  begin
+   result := ' ' + Dmnotasaida.QNotaSaidaCOD_OBRA.Text +' '+
+    DmOracle.FastSelect('DESC_OBRA', 'TB_OBRA','COD_OBRA = '
+    + Dmnotasaida.QNotaSaidaCOD_OBRA.Text);
+  end
+  else
+  result := '';
+end;
+
+//Imprime Data e Hora
+function TBibVenda.ImprimeDataHora(wCodEmpresa: String) : String;
+begin
+  if (wCodEmpresa = 'NUTRIPET') or (wCodEmpresa = 'FERRAGMED') or (wCodEmpresa = 'PERON') or
+     (wCodEmpresa = 'LACARNES')  then
+    result := Dmnotasaida.QNFE_EmiteDT_USUARIO.Text
+  else
+    result := DMNotaSaida.QNFE_EmiteDT_EMISSAO.Text;
+end;
+
+//Imprime Código ou Nome do Vendedor
+function TBibVenda.ImprimeVendedor(wCodEmpresa: String) : String;
+begin
+  if wCodEmpresa = 'NUTRIPET' then
+    result := Dmnotasaida.QNFE_EmiteCOD_VENDEDOR.Text
+  else
+    result := DMNotaSaida.QNFE_EmiteNOME_VENDEDOR.Text;
+end;
+
+function TBibVenda.MapaVendaPollyana(
+  pMapaVenda: TForm): TForm;
+begin
+  //Peso bruto sobrepõe a coluna Lucro. - Vanessa 27/07/2015
+  SetPropValue(pMapaVenda.FindComponent('QRLLucro'),'Caption','P.Bruto');
+  SetPropValue(pMapaVenda.FindComponent('QRExprLucro'),'Expression','QRMapaVenda.SPESO_BRUTO');
+  SetPropValue(pMapaVenda.FindComponent('QRExprSumLucro'),'Expression','SUM(QRMapaVenda.SPESO_BRUTO)');
+  //pMapaVenda.QRLLucro.Caption := 'P.Bruto';
+//  pMapaVenda.QRExprLucro.Expression := 'QRMapaVenda.SPESO_BRUTO';
+//  pMapaVenda.QRExprSumLucro.Expression := 'SUM(QRMapaVenda.SPESO_BRUTO)';
+  result := pMaPaVenda;
+end;
+
+function TBibVenda.MapaVendaResPollyana(
+  pMapaVendaRes: TForm): TForm;
+begin
+  //Peso Bruto sobrepõe a coluna Lucro. Vanessa 27/07/2015
+  SetPropValue(pMapaVendaRes.FindComponent('QRLLucro'),'Caption','P.Bruto');
+  SetPropValue(pMapaVendaRes.FindComponent('QRExprLucro'),'Expression','QRMapaVendaRes.SPESO_BRUTO');
+  SetPropValue(pMapaVendaRes.FindComponent('QRExprSumLucro'),'Expression','SUM(QRMapaVendaRes.SPESO_BRUTO)');
+ // pMapaVendaRes.QRLLucro.Caption := 'P.Bruto';
+//  pMapaVendaRes.QRExprLucro.Expression := 'QRMapaVendaRes.SPESO_BRUTO';
+//  pMapaVendaRes.QRExprSumLucro.Expression := 'SUM(QRMapaVendaRes.SPESO_BRUTO)';
+  result := pMapaVendaRes;
+end;
+
+function TBibVenda.MapaVendaDeion(
+  pMapaVenda: TForm): TForm;
+begin
+  //SQT_Litragem sobrepoe a QTDE_Estoque - Junior 25/11/2024 - Kely e Jr (Deion).
+  SetPropValue(pMapaVenda.FindComponent('QRLEmbalagem'),'Caption','T.Litros');
+    SetPropValue(pMapaVenda.FindComponent('QRDBNumEmbalagem'),'Enabled','False');
+  SetPropValue(pMapaVenda.FindComponent('QRDBDescUnidade'),'DataField','SQT_LITRAGEM');
+  SetPropValue(pMapaVenda.FindComponent('QRDBDescUnidade'),'Width','20');
+  SetPropValue(pMapaVenda.FindComponent('QRExpTLitros'),'Enabled','True');
+//  SetPropValue(pMapaVenda.FindComponent('QRExpTLitros'),'Expression','SUM(QRMapaVenda.SQT_LITRAGEM)');
+  result := pMapaVenda;
+end;
+
+function TBibVenda.MapaVendaResDeion(
+  pMapaVendaRes: TForm): TForm;
+begin
+  //SQT_Litragem sobrepoe a QTDE_Estoque - Junior 25/11/2024 - Kely e Jr (Deion).
+  SetPropValue(pMapaVendaRes.FindComponent('QRLQtdeEstoque'),'Caption','T. Litros');
+  SetPropValue(pMapaVendaRes.FindComponent('QRDBTQtdeEstoque'),'DataField','SQT_LITRAGEM');
+  SetPropValue(pMapaVendaRes.FindComponent('QRExpr5'),'Expression','SUM(QRMapaVendaRes.SQT_LITRAGEM)');
+  SetPropValue(pMapaVendaRes.FindComponent('QRExpr6'),'Expression','SUM(QRMapaVendaRes.SQT_LITRAGEM)');
+  result := pMapaVendaRes;
+end;
+
+//Funcão criada para alterar o mapa de vendas por empresa - Vanessa 27/07/2015
+function TBibVenda.PersonalizaMapaVenda(wCodEmpresa: String;
+  pMapaVenda : TForm) : TForm;
+begin
+  result := pMapaVenda;
+  if wCodEmpresa = 'POLLYANA' then
+    result := MapaVendaPollyana(pMapaVenda);
+  if wCodEmpresa = 'DEION' then
+    Result := MapaVendaDeion(pMapaVenda)
+end;
+
+//Funcão criada para alterar o mapa de vendas resumido por empresa - Vanessa 27/07/2015
+function TBibVenda.PersonalizaMapaVendaRes(wCodEmpresa: String;
+  pMapaVendaRes: TForm): TForm;
+begin
+  result := pMapaVendaRes;
+  if wCodEmpresa = 'POLLYANA' then
+    result := MapaVendaResPollyana(pMapaVendaRes);
+  if wCodEmpresa = 'DEION' then
+    result := MapaVendaResDeion(pMapaVendaRes);
+end;
+
+procedure TBibVenda.PersonalizaNota(wCod_empresa: String; pNotaSaidaCad: TForm);
+begin
+  {if wCod_empresa = 'DINIZ' then
+    PersonalizaNotaDiniz(pNotaSaidaCad); //Diniz quer que todas as notas se iniciem a prazo. Vanessa 21/08/2015}
+
+  if wCod_empresa = 'ZITO' then
+    PersonalizaNotaZito(pNotaSaidaCad);
+end;
+
+procedure TBibVenda.PersonalizaNotaDiniz(pNotaSaidaCad: TForm);
+begin
+  if GetPropValue(pNotaSaidaCad.FindComponent('DBRGCondicaoPagamento'),'Visible') then
+    DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value := '2';
+end;
+
+procedure TBibVenda.PersonalizaNotaSaidaParam(wCodEmpresa: String; pNotaSaidaParam: TForm);
+begin
+  if wCodEmpresa = 'POLLYANA' then
+    SetPropValue(pNotaSaidaParam.FindComponent('CBCusto2'),'Caption','Exibir Custo e Peso Bruto');
+   // FNotaSaidaParam.CBCusto2.Caption := 'Exibir Custo e Peso Bruto'; //Para a Pollyana não tem coluna Lucro, porque mudei para Peso Bruto. Vanessa 27/07/2015
+end;
+
+
+function TBibVenda.PersonalizaPreco(wCodEmpresa: String;
+  wPreco: double; wCodProduto: string): double;
+begin
+  result := wPreco;
+  if wCodEmpresa = 'BARRAUS' then
+    result := PersonalizaPrecoBarraus(wCodProduto);
+end;
+
+function TBibVenda.PersonalizaPrecoBarraus(wCodProduto: string): double;
+begin
+  with DMNotaSaida do
+  begin
+    if ((QNotaSaidaIND_CONDICAO_PAGTO.Value = '1') or (QNotaSaidaIND_CONDICAO_PAGTO.Value = '5')) then
+      result := strToFloat(DMOracle.FastSelect(
+        'NVL(VAL_VAREJO,0)', 'TB_PRODUTO', 'COD_PRODUTO = ' + wCodProduto
+      ))
+    else
+      result := strToFloat(DMOracle.FastSelect(
+        'NVL(VAL_ATACADO,0)', 'TB_PRODUTO', 'COD_PRODUTO = ' + wCodProduto
+      ));
+  end;
+end;
+
+procedure TBibVenda.PersonalizaNotaZito(pNotaSaidaCad: TForm);
+begin
+  if GetPropValue(pNotaSaidaCad.FindComponent('DBRGCondicaoPagamento'),'Visible') then
+  begin
+    if DMNotaSaida.QNotaSaidaCOD_CADASTRO.Value = 1775 then  //Consumidor sempre puxar à vista.
+      DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value := '1'
+    else
+      DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value := '2';
+  end;
+end;
+
+function TBibVenda.PersonalizaBCPisCofins(wCodEmpresa: string
+  ; wValTotal, wValIpi, wValIcmsSubst, wBasePisCofins
+  , wAliqPisCofins, wValorCalculado: double): double;
+begin
+  result := wValorCalculado;
+  if wCodEmpresa = 'DEBONA' then
+    PersonalizaBCPisCofinsDebona(
+      wValTotal, wValIpi, wValIcmsSubst, wBasePisCofins
+      , wAliqPisCofins);
+end;
+
+function TBibVenda.PersonalizaBCPisCofinsDebona(
+  wValTotal, wValIpi, wValIcmsSubst, wBasePisCofins
+  , wAliqPisCofins: double): double;
+begin
+  result := RoundTo(
+              ((wValTotal - wValIpi - wValIcmsSubst) *
+              wBasePisCofins / 100) *
+              wAliqPisCofins / 100,-2);
+end;
+
+function TBibVenda.PersonalizaDados(
+  wItemNF: TOracleDataSet1; wNF: TOracleDataSet1; wFilial: integer): TOracleDataSet1;
+begin
+  result := wItemnf;
+  if wItemNF.State in [DsBrowse] then
+    exit;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DEION' then
+    result := PersonalizaDadosDeion(wItemNF, wNF, wFilial);
+end;
+
+function TBibVenda.PersonalizaDadosDeion(
+  wItemNF: TOracleDataSet1; wNF: TOracleDataSet1; wFilial: integer): TOracleDataSet1;
+  var wDescProduto: string;
+    wTipoConsumidor: string;
+    wEstado: string;
+    wTemStProduto: boolean;
+    wPedido: boolean;
+    wTributacaoIntEst: integer;
+    wEstadoFilial: string;
+    wTemStProdutoFilial1: boolean;
+begin
+  result := wItemNF;
+
+  if wItemNF.Name = 'QItemNF' then
+    wTipoConsumidor
+      := DMOracle.FastSelect('NVL(IND_CONSUMIDOR_FINAL,' + QuotedStr('N') + ')'
+        , 'TB_NOTA_CAB', 'COD_NOTA_CAB = ' + intToStr(wItemNF.FieldValues['COD_NOTA_CAB']))
+  else
+    wTipoConsumidor
+      := DMOracle.FastSelect('NVL(IND_CONSUMIDOR_FINAL,' + QuotedStr('N') + ')'
+        , 'TB_PEDIDO_CAB', 'COD_PEDIDO_CAB = ' + intToStr(wItemNF.FieldValues['COD_PEDIDO_CAB']));
+
+  // Se a filial trabalha com ipi atribui cst de tributação
+  if DMOracle.FastSelect('IND_IPI', 'TB_FILIAL', 'COD_FILIAL = ' + IntToStr(wFilial)) = 'S' then
+  begin
+    if wItemNF.Name = 'QItemNF' then // Apenas para notas
+    begin
+      if wItemNF.FieldValues['PERC_IPI'] > 0 then
+        wItemNF.FieldValues['COD_CST_IPI'] := 50;
+    end;
+  end
+  else
+  begin
+    if wItemNF.Name = 'QItemNF' then // Apenas para notas
+    begin
+      wItemNF.FieldValues['COD_CST_IPI'] := 99;
+    end;
+  end;
+
+  wEstadoFilial := DMOracle.FastSelect('COD_ESTADO', 'TB_FILIAL', 'COD_FILIAL = '
+    + IntToStr(wFilial));
+
+  // Se o produto está na tabela de substituição tributária por produtos
+  // não deve fazer alterações
+  if wItemNF.Name = 'QItemNF' then
+    wEstado := wNF.FieldValues['COD_ESTADO']
+  else
+    wEstado := DMOracle.FastSelect('COD_ESTADO', 'TB_CADASTRO',
+      'COD_CADASTRO = ' + IntToStr(wNF.FieldValues['COD_CADASTRO']));
+
+  wTemStProduto := (StrToInt(
+    DMOracle.FastSelect('COUNT(*)', 'TB_PRODUTO_SUBST_TRIB'
+      , 'COD_PRODUTO = ' + IntToStr(wItemNF.FieldValues['COD_PRODUTO'])
+        + ' AND COD_FILIAL = ' + IntToStr(wFilial)
+        + ' AND COD_ESTADO = ' + QuotedStr(wEstado))) > 0)
+    and (wTipoConsumidor = 'N'); // Consumidor final
+
+  wTemStProdutoFilial1 := (StrToInt(
+    DMOracle.FastSelect('COUNT(*)', 'TB_PRODUTO_SUBST_TRIB'
+      , 'COD_PRODUTO = ' + IntToStr(wItemNF.FieldValues['COD_PRODUTO'])
+        + ' AND COD_FILIAL = 1'
+        + ' AND COD_ESTADO = ' + QuotedStr(wEstado))) > 0);
+
+  if wItemNF.Name = 'QItemNF' then
+    wPedido := (DMOracle.FastSelect('O.IND_EMITE', 'TB_OPERACAO O INNER JOIN TB_NOTA_CAB N ON O.COD_OPERACAO = N.COD_OPERACAO'
+      , 'N.COD_NOTA_CAB = ' + IntToStr(wItemNF.FieldValues['COD_NOTA_CAB'])) = 'P')
+  else
+    wPedido := (DMOracle.FastSelect('O.IND_EMITE', 'TB_OPERACAO O INNER JOIN TB_PEDIDO_CAB P ON O.COD_OPERACAO = P.COD_OPERACAO'
+      , 'P.COD_PEDIDO_CAB = ' + IntToStr(wItemNF.FieldValues['COD_PEDIDO_CAB'])) = 'P');
+
+  if (not wTemStProduto) and (not wPedido) then
+  begin
+    {if (wTipoConsumidor = 'S') and (wFilial = 2) then
+    begin
+      wItemNF.FieldValues['COD_CFOP'] := 5101;
+      // Comentado quando a filial 2 passou a ser SIMPLES - EXCESSO SUBLIMITE
+      // A filial 2 deve destacar o ICMS como se fosse do regime normal
+      //wItemNF.FieldValues['COD_TRIBUTACAO'] := 10;
+      wItemNF.FieldValues['COD_TRIBUTACAO'] := 19;
+    end;}
+
+    if wFilial = 1 then
+    begin
+      if wTipoConsumidor = 'S' then // Consumidor final
+      begin
+        if wEstado = wEstadoFilial then
+          wItemNF.FieldValues['COD_CFOP'] := 5101
+        else
+          wItemNF.FieldValues['COD_CFOP'] := 6101;
+        wItemNF.FieldValues['COD_TRIBUTACAO'] := 19;
+      end
+      else // Não consumidor final (revenda)
+      begin
+        // Se a venda for no PR deve ter diferimento
+        if wEstado = 'PR' then
+          wItemNF.FieldValues['COD_TRIBUTACAO'] := 21; // 18% com diferimento 33.33%
+        if wEstado = 'MS' then
+          wItemNF.FieldValues['COD_TRIBUTACAO'] := 29; // 7% sem ST
+      end;
+      wItemNF.FieldValues['COD_CST_PIS'] := '01';
+      wItemNF.FieldValues['COD_CST_COFINS'] := '01';
+    end;
+
+    if (wFilial = 2) or (wFilial = 3) then
+    begin
+      // Produto com ST na filial 1 influencia na filial 2
+      if wTemStProdutoFilial1 then
+      begin
+        if wEstado = wEstadoFilial then
+          wItemNF.FieldValues['COD_CFOP'] := 5405
+        else
+          wItemNF.FieldValues['COD_CFOP'] := 6403;
+        wItemNF.FieldValues['COD_TRIBUTACAO'] :=  9;  // COD 9 QUANDO FOR NORMAL - 10 simples é isento - alterado para
+      end                                                                                         //9 novamente por solicitacao od Jr. Em 28/04 - Email
+      else
+      begin
+        if wFilial = 2 then
+        begin
+          if wTipoConsumidor = 'S' then // Consumidor final
+          begin
+            wItemNF.FieldValues['COD_TRIBUTACAO'] := 10;  // cod 19 quando for normal - simples é isento
+          end
+          else // revenda
+          begin
+            // Se a venda for no PR deve ter diferimento
+            if wEstado = 'PR' then
+                wItemNF.FieldValues['COD_TRIBUTACAO'] := 10; // 31 - 18% com diferimento 33.33% quando normal - simples isento
+          end;
+        end
+        else // Filial 3
+        begin
+          wItemNF.FieldValues['COD_TRIBUTACAO'] := 10; // Isento
+          if wEstado = wEstadoFilial then
+            wItemNF.FieldValues['COD_CFOP'] := 5102
+          else
+            wItemNF.FieldValues['COD_CFOP'] := 6102;
+        end;
+      end;
+    end;
+    
+    // Configuração feita para as 2 filiais em regimes tributários diferentes
+    // Caso a filial 1 volte para o regime simples, basta descomentar o código abaixo
+    // e comentar o código acima
+
+  {
+    if (wTipoConsumidor = 'S') then
+    begin
+      wItemNF.FieldValues['COD_CFOP'] := 5101;
+      wItemNF.FieldValues['COD_TRIBUTACAO'] := 10;
+    end;
+  }
+    // Comentar apenas o if se as duas filiais passarem a ser do simples
+    //if wFilial = 2 then
+    //begin
+      {wDescProduto :=
+        DMOracle.FastSelect('DESC_PRODUTO', 'TB_PRODUTO', 'COD_PRODUTO = '
+          + FloatToStr(wItemNF.FieldValues['COD_PRODUTO']));
+      if (Pos('INTERCAP', wDescProduto) > 0) and (wFilial = 1) then  //INTERCAP DEIXOU DE TER ST. JUNIOR 28/08/2024. SOLIC. JUNIOR (DEION).
+      begin
+        if wTipoConsumidor = 'N' then // revenda
+        begin
+          if wEstado = wEstadoFilial then
+          begin
+            wItemNF.FieldValues['COD_CFOP'] := 5401;
+            wItemNF.FieldValues['COD_TRIBUTACAO'] := 21;
+          end
+          else
+          begin
+            wItemNF.FieldValues['COD_CFOP'] := 6401;
+            wTributacaoIntEst := StrToInt(
+              DMOracle.FastSelect('NVL(PERC_TRIBUTACAO, 0)', 'TB_ESTADO'
+                , 'COD_ESTADO = ' + QuotedStr(wEstado))
+            );
+            if wTributacaoIntEst > 0 then
+              wItemNF.FieldValues['COD_TRIBUTACAO'] := wTributacaoIntEst;
+          end;
+        end
+        else // consumidor final
+        begin
+          if wEstado = wEstadoFilial then
+            wItemNF.FieldValues['COD_CFOP'] := 5101
+          else
+            wItemNF.FieldValues['COD_CFOP'] := 6101;
+          wItemNF.FieldValues['COD_TRIBUTACAO'] := 19;
+        end;
+      end;}// INTERCAP DEIXOU DE TER ST. JUNIOR 28/08/2024. SOLIC. JUNIOR (DEION).
+
+      if (Pos('FUTURO', wDescProduto) > 0) or
+         ((Pos('SABONETE', wDescProduto) > 0) {and (wFilial = 2)}) then
+      begin
+        if wEstado = wEstadoFilial then
+          wItemNF.FieldValues['COD_CFOP'] := 5405
+        else
+          wItemNF.FieldValues['COD_CFOP'] := 6403;
+        wItemNF.FieldValues['COD_TRIBUTACAO'] := 9;
+      end;
+    //end;
+
+    // Se a venda for para fora do PR deve utilizar a tributação informada no cadastro do estado
+    // Vai sobrescrever as configurações anteriores menos para INTERCAP  - Exceto quando houver substituição
+    if (Pos('INTERCAP', wDescProduto) = 0) and (not wTemStProdutoFilial1) then
+    begin
+//      if wItemNF.Name = 'QItemNF' then
+//      begin
+        if wEstado <> 'PR' then
+        begin
+          wItemNF.FieldValues['COD_CFOP'] := null;
+          wTributacaoIntEst := StrToInt(
+            DMOracle.FastSelect('NVL(PERC_TRIBUTACAO, 0)', 'TB_ESTADO'
+              , 'COD_ESTADO = ' + QuotedStr(wEstado))
+          );
+          if wTributacaoIntEst > 0 then
+            wItemNF.FieldValues['COD_TRIBUTACAO'] := wTributacaoIntEst;
+        end;
+//      end;
+    end;
+  end;
+  if wPedido then
+  begin
+    wItemNF.FieldValues['COD_TRIBUTACAO'] := 10;
+    wItemNF.FieldValues['VAL_IPI'] := 0;
+  end
+  else
+  begin
+    if (wItemNF.Name = 'QItemNF') and (wFilial = 3) then
+      wItemNF.FieldValues['PERC_IPI'] := 0;
+  end;
+  result := wItemNF;
+end;
+
+function TBibVenda.LiberaBloqueioTabelaPreco: Boolean;
+var FSenha: TFSenha;
+  wDescTipoFuncionario, wsenhaCrypt: string;
+begin
+
+  Result := true;
+
+  with DMParamSistema, DMUsuario do
+  begin
+    if (QParamSistemaIND_BLOQUEIO_TABELA_PRECO.Value = 'LIBERADO') then
+      Exit;
+
+    if QParamSistemaIND_BLOQUEIO_TABELA_PRECO.Value = 'BLOQUEADO' then
+    begin
+      Result := Privilegiado;
+      Exit;
+    end;
+
+    if (QParamSistemaIND_BLOQUEIO_TABELA_PRECO.Value = 'SENHA') then // Senha - Deve pedir senha ao alterar a lista
+    begin
+      FSenha := TFSenha.Create(Application);
+      if (FSenha.ShowModal = MrOK) and (Trim(FSenha.MeUsuario.Text) <> '') then
+      begin
+        DMUsuario.QUsuario.Close;
+        DMUsuario.QUsuario.SetVariable('PK',StrToInt(Trim(FSenha.MeUsuario.Text)));
+        DMUsuario.QUsuario.Open;
+        wDescTipoFuncionario := DMUsuario.QUsuarioDESC_TIPO_FUNCIONARIO.Text;
+        if (wDescTipoFuncionario = 'DIRETOR') or (wDescTipoFuncionario = 'GERENTE') or
+           (wDescTipoFuncionario = 'SUPERVISOR') or
+           (DMUsuario.QUsuarioIND_PRIVILEGIO.Value = 'P') then
+        begin
+          wsenhaCrypt := bib.Decode(DMUsuario.QUsuarioDesc_Senha.Value);
+          If (UpperCase(Trim(FSenha.EdSenha.Text)) <> Trim(wsenhaCrypt))then
+          begin
+            Result := false;
+            MessageDlg('Informe a senha de liberação correta.', mtError,
+              [mbOk], 0);
+          end;
+        end
+        else
+        begin
+          Result := false;
+          MessageDlg('Usuário sem permissão para alterar tabela de preço.', mtError,
+            [mbOk], 0);
+        end;
+      end
+      else
+      begin
+        Result := false;
+        MessageDlg('Usuário não informado', mtError,
+          [mbOk], 0);
+      end;
+    end;
+  end;
+end;
+
+constructor TBibVenda.Create;
+begin
+
+end;
+
+procedure TBibVenda.PersonalizaPagamento(var wRadioGroup: TDBRadioGroup);
+begin
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'SONOBOM' then
+    wRadioGroup.Items.Delete(
+      wRadioGroup.Items.IndexOf('OUTROS')
+    );
+end;
+
+function TBibVenda.ImportaPedidoExcelRetifoz(wQPedido,  wQPedItem: TOracleDataSet1; ArquivoXLS: string): Boolean;
+const
+   xlCellTypeLastCell = $0000000B;
+var
+   XLSAplicacao, AbaXLS: OLEVariant;
+   wCodProd, maxLinha, maxColuna, i, wCodigo, wCodTributacao,
+   wCodTribProduto, wCodTribEstado : Integer;
+   wCnpj, wCodCadastro, wCodEstado, wCodEstadoCad, wCodEstadoFilial , wObs: string;
+begin
+   Result := False;
+   // Cria Excel- OLE Object
+   XLSAplicacao := CreateOleObject('Excel.Application');
+   with DMOracle do
+   begin
+    try
+      // Esconde Excel
+        XLSAplicacao.Visible := False;
+        // Abre o Workbook
+        XLSAplicacao.Workbooks.Open(ArquivoXLS);
+
+        {Selecione aqui a aba que você deseja abrir primeiro - 1,2,3,4....}
+        XLSAplicacao.WorkSheets[1].Activate;
+        {Selecione aqui a aba que você deseja ativar - começando sempre no 1 (1,2,3,4) }
+        AbaXLS := XLSAplicacao.Workbooks[ExtractFileName(ArquivoXLS)].WorkSheets[1];
+
+        AbaXLS.Cells.SpecialCells(xlCellTypeLastCell, EmptyParam).Activate;
+        // Pegar o número da última linha
+        maxLinha := XLSAplicacao.ActiveCell.Row - 1;
+        // Pegar o número da última coluna
+        maxColuna := XLSAplicacao.ActiveCell.Column;
+
+        // Associaca a variant WorkSheet com a variant do Delphi
+        //RangeMatrix := XLSAplicacao.Range['A1', XLSAplicacao.Cells.Item[x, y]].Value;
+
+
+
+
+        wCnpj := Bib.LimpaString(Bib.LimpaString(Bib.LimpaString(XLSAplicacao.Cells.Item[3, 2].Value, '.'), '/'), '-'); //CNPJ EM B3 [LINHA 3 , COLUNA B]
+        wCodCadastro := DmOracle.FastSelect('COD_CADASTRO', 'TB_CADASTRO','LIMPA_CNPJ(NUM_CGC_CPF) = '+ QuotedStr(wCnpj));
+
+        if (wCodCadastro = '' ) or (wCodCadastro = null) then
+        begin
+          result := false;
+          Raise Exception.Create('Cliente não encontrado, por favor, cadastrar o cliente antes de importar');
+        end;
+
+        wObs :=  Concat(XLSAplicacao.Cells.Item[4, 1].Value, ' ', XLSAplicacao.Cells.Item[4, 2].Value);
+
+        wQPedido.Close;
+        wQPedido.Open;
+        wQPedido.Append;
+
+        wCodigo := wQPedido.FieldByName('COD_PEDIDO_CAB').Value;
+
+        wCodEstadoFilial := FastSelect('COD_ESTADO', 'TB_FILIAL', 'COD_FILIAL = ' + IntToStr(DMUsuario.CodFilialUsuario));
+        wCodEstadoCad :=  FastSelect('COD_ESTADO', 'TB_CADASTRO', 'COD_CADASTRO = ' + wCodCadastro);
+        if  wCodEstadoFilial <>  wCodEstadoCad then
+          wCodTribEstado :=  StrToInt(FastSelect('PERC_TRIBUTACAO', 'TB_ESTADO', 'COD_ESTADO = ' + QuotedStr(wCodEstadoCad)));
+
+        wQPedido.FieldByName('COD_CADASTRO').Text := wCodCadastro;
+        wQPedido.FieldByName('COD_OPERACAO').Value := DMUsuario.CodOperacaoPadrao;
+        wQPedido.FieldByName('COD_FILIAL').Value := DMUsuario.CodFilialUsuario;
+        wQPedido.FieldByName('NUM_PEDIDO').Value := DMSequencia.Sequencia(DMUsuario.CodFilialUsuario, 'PEDIDO');
+        wQPedido.FieldByName('IND_TIPO_PAGAMENTO').Value := 'A PRAZO';
+        wQPedido.FieldByName('DT_EMISSAO').Value := Now;
+        wQPedido.FieldByName('DESC_OBSERVACAO').Value := wObs;
+        wQPedido.Post;
+        wQPedido.Edit;
+
+        wQPedItem.Close;
+        wQPedItem.ClearVariables;
+        wQPedItem.SetVariable('COD_PEDIDO_CAB', wCodigo);
+        wQPedItem.Open;
+
+         for i:= 11 to maxLinha do
+        begin
+          if Trim(XLSAplicacao.Cells.Item[I, 3].Value) <> 'TOTAL R$' then
+          begin
+            wQPedItem.Append;
+
+
+
+            wQPedItem.FieldByName('COD_PEDIDO_CAB').Value := wCodigo;
+            //PARA TESTES
+            {wCodProd := StrToInt(DmOracle.FastSelect('COALESCE((SELECT COD_PRODUTO FROM TB_PRODUTO WHERE NUM_FABRICANTE = '
+                                                              + QuotedStr(XLSAplicacao.Cells.Item[I, 2].Value)
+                                                              + '), 1)', 'DUAL','')); }
+            wCodProd := StrToInt(FastSelect('COALESCE((SELECT COD_PRODUTO FROM TB_PRODUTO WHERE NUM_FABRICANTE = '
+                                                              + QuotedStr(XLSAplicacao.Cells.Item[I, 2].Value)
+                                                              + '), 1)', 'DUAL',''));
+
+            wCodTribProduto := StrToInt(FastSelect('COD_TRIBUTACAO', 'TB_PRODUTO', 'COD_PRODUTO = ' + IntToStr(wCodProd)));
+
+
+            wQPedItem.FieldByName('COD_PRODUTO').Value := wCodProd;
+            wQPedItem.FieldByName('COD_TRIBUTACAO').Value  := IfThen(wCodEstadoCad <> wCodEstadoFilial, wCodTribEstado, wCodTribProduto);
+            DmOracle.FastSelect('COD_TRIBUTACAO', 'TB_PRODUTO','COD_PRODUTO = '+ IntToStr(wCodProd));
+            wQPedItem.FieldByName('QT_PEDIDO').Text :=  XLSAplicacao.Cells.Item[I, 1].Value;
+            wQPedItem.FieldByName('VAL_UNITARIO').Text :=  XLSAplicacao.Cells.Item[I, 3].Value;
+            wQPedItem.Post;
+          end
+          else
+          begin
+            wQPedItem.Refresh;
+            wQPedido.Refresh;
+
+            // Fecha o Microsoft Excel
+            if not VarIsEmpty(XLSAplicacao) then
+            begin
+              XLSAplicacao.Workbooks.Close;
+              XLSAplicacao.Quit;
+              AbaXLS := Unassigned;
+              XLSAplicacao := Unassigned;
+
+              Result := True;
+            end;
+
+            exit;
+
+          end
+        end;
+
+        wQPedItem.Refresh;
+        wQPedido.Refresh;      
+      finally
+          // Fecha o Microsoft Excel
+          if not VarIsEmpty(XLSAplicacao) then
+          begin
+                XLSAplicacao.Workbooks.Close;
+                XLSAplicacao.Quit;
+                AbaXLS := Unassigned;
+                XLSAplicacao := Unassigned;
+                Result := True;
+          end;
+      end;
+    end;
+end;
+end.
+
+

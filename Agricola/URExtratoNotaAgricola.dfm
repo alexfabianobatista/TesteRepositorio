@@ -1,0 +1,772 @@
+inherited FRExtratoNotaAgricola: TFRExtratoNotaAgricola
+  Left = 195
+  Top = 131
+  Width = 1155
+  HorzScrollBar.Position = 0
+  Caption = 'FRExtratoNotaAgricola'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited QRPrimario: TQuickRep
+    Left = 0
+    Width = 1123
+    Height = 794
+    DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+    Functions.DATA = (
+      '0'
+      '0'
+      #39#39)
+    Page.Orientation = poLandscape
+    Page.Values = (
+      50.000000000000000000
+      2100.000000000000000000
+      60.000000000000000000
+      2970.000000000000000000
+      50.000000000000000000
+      50.000000000000000000
+      0.000000000000000000)
+    PrinterSettings.Duplex = False
+    inherited QRBand1: TQRBand
+      Width = 1085
+      Height = 72
+      Size.Values = (
+        190.500000000000000000
+        2870.729166666667000000)
+      inherited QRSysData2: TQRSysData
+        Left = 1056
+        Size.Values = (
+          44.979166666666670000
+          2794.000000000000000000
+          0.000000000000000000
+          68.791666666666670000)
+        FontSize = 10
+      end
+      inherited QRLabel2: TQRLabel
+        Left = 1017
+        Size.Values = (
+          44.979166666666670000
+          2690.812500000000000000
+          0.000000000000000000
+          87.312500000000000000)
+        FontSize = 10
+      end
+      inherited QRLTitulo: TQRLabel
+        Width = 911
+        Size.Values = (
+          44.979166666666670000
+          21.166666666666670000
+          47.625000000000000000
+          2410.354166666667000000)
+        AutoSize = False
+        AutoStretch = True
+        FontSize = 10
+      end
+      inherited QRLEmpresa: TQRLabel
+        Size.Values = (
+          44.979166666666670000
+          21.166666666666670000
+          0.000000000000000000
+          171.979166666666700000)
+        FontSize = 10
+      end
+      inherited QRSysData1: TQRSysData
+        Left = 923
+        Size.Values = (
+          44.979166666666670000
+          2442.104166666667000000
+          42.333333333333330000
+          425.979166666666700000)
+        FontSize = 10
+      end
+      object QRLabel3: TQRLabel
+        Left = 0
+        Top = 56
+        Width = 57
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          0.000000000000000000
+          148.166666666666700000
+          150.812500000000000000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'N'#176' Nota'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel4: TQRLabel
+        Left = 62
+        Top = 56
+        Width = 57
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          164.041666666666700000
+          148.166666666666700000
+          150.812500000000000000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Cliente'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel5: TQRLabel
+        Left = 993
+        Top = 56
+        Width = 89
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2627.312500000000000000
+          148.166666666666700000
+          235.479166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Dt. Vencto.'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel6: TQRLabel
+        Left = 882
+        Top = 56
+        Width = 73
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2333.625000000000000000
+          148.166666666666700000
+          193.145833333333300000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Val.Total'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel7: TQRLabel
+        Left = 723
+        Top = 56
+        Width = 65
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1912.937500000000000000
+          148.166666666666700000
+          171.979166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Funrural'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel8: TQRLabel
+        Left = 641
+        Top = 56
+        Width = 65
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1695.979166666667000000
+          148.166666666666700000
+          171.979166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Val.Nota'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel9: TQRLabel
+        Left = 528
+        Top = 56
+        Width = 73
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1397.000000000000000000
+          148.166666666666700000
+          193.145833333333300000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Val.Unit.'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel10: TQRLabel
+        Left = 446
+        Top = 56
+        Width = 49
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1180.041666666667000000
+          148.166666666666700000
+          129.645833333333300000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Quant.'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel11: TQRLabel
+        Left = 332
+        Top = 56
+        Width = 89
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          878.416666666666700000
+          148.166666666666700000
+          235.479166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Dt. Emiss'#227'o'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel13: TQRLabel
+        Left = 814
+        Top = 56
+        Width = 41
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2153.708333333333000000
+          148.166666666666700000
+          108.479166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Senar'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+    end
+    inherited QRBand2: TQRBand
+      Top = 167
+      Width = 1085
+      Height = 18
+      Size.Values = (
+        47.625000000000000000
+        2870.729166666667000000)
+      inherited QRLabel1: TQRLabel
+        Size.Values = (
+          44.979166666666670000
+          21.166666666666670000
+          0.000000000000000000
+          383.645833333333300000)
+        FontSize = 10
+      end
+      inherited QRLNomeRel: TQRLabel
+        Left = 912
+        Width = 169
+        Size.Values = (
+          44.979166666666670000
+          2413.000000000000000000
+          0.000000000000000000
+          447.145833333333300000)
+        Caption = 'FRExtratoNotaAgricola'
+        FontSize = 10
+      end
+    end
+    object QRBand4: TQRBand
+      Left = 19
+      Top = 95
+      Width = 1085
+      Height = 41
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        108.479166666666700000
+        2870.729166666667000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbDetail
+      object QRDBText1: TQRDBText
+        Left = 0
+        Top = 2
+        Width = 56
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          0.000000000000000000
+          5.291666666666667000
+          148.166666666666700000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'NUM_NOTA'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText2: TQRDBText
+        Left = 63
+        Top = 2
+        Width = 266
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          166.687500000000000000
+          5.291666666666667000
+          703.791666666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'NOME_CADASTRO'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText3: TQRDBText
+        Left = 330
+        Top = 2
+        Width = 87
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          873.125000000000000000
+          5.291666666666667000
+          230.187500000000000000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'DT_EMISSAO'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText4: TQRDBText
+        Left = 431
+        Top = 2
+        Width = 73
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1140.354166666667000000
+          5.291666666666667000
+          193.145833333333300000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'QT_QUANTIDADE'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText5: TQRDBText
+        Left = 529
+        Top = 2
+        Width = 68
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1399.645833333333000000
+          5.291666666666667000
+          179.916666666666700000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'TRUNC(VAL_UNITARIO,4)'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText6: TQRDBText
+        Left = 625
+        Top = 2
+        Width = 83
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1653.645833333333000000
+          5.291666666666667000
+          219.604166666666700000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'SVAL_TOTAL'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText7: TQRDBText
+        Left = 722
+        Top = 2
+        Width = 58
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1910.291666666667000000
+          5.291666666666667000
+          153.458333333333300000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'VAL_DESC_FUNRURAL'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText8: TQRDBText
+        Left = 869
+        Top = 2
+        Width = 87
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2299.229166666667000000
+          5.291666666666667000
+          230.187500000000000000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'VAL_TOTAL_NOTA'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText9: TQRDBText
+        Left = 991
+        Top = 2
+        Width = 102
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2622.020833333333000000
+          5.291666666666667000
+          269.875000000000000000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'DT_VENCIMENTO'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText10: TQRDBText
+        Left = 797
+        Top = 2
+        Width = 62
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          2108.729166666667000000
+          5.291666666666667000
+          164.041666666666700000)
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'VAL_DESC_SENAR'
+        Mask = '###,###,##0.00'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRDBText11: TQRDBText
+        Left = 148
+        Top = 23
+        Width = 266
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          391.583333333333300000
+          60.854166666666670000
+          703.791666666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = False
+        Color = clWhite
+        DataSet = DMNotaEntrada.QRExtratoNotaAgricola
+        DataField = 'IND_SITUACAO'
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+      object QRLabel14: TQRLabel
+        Left = 0
+        Top = 23
+        Width = 145
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          0.000000000000000000
+          60.854166666666670000
+          383.645833333333300000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Situa'#231#227'o da Nota: '
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+    end
+    object QRBand5: TQRBand
+      Left = 19
+      Top = 136
+      Width = 1085
+      Height = 31
+      Frame.Color = clBlack
+      Frame.DrawTop = False
+      Frame.DrawBottom = False
+      Frame.DrawLeft = False
+      Frame.DrawRight = False
+      AlignToBottom = False
+      Color = clWhite
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        82.020833333333330000
+        2870.729166666667000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbSummary
+      object QRExpr1: TQRExpr
+        Left = 742
+        Top = 16
+        Width = 329
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1963.208333333333000000
+          42.333333333333330000
+          870.479166666666700000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Color = clWhite
+        ResetAfterPrint = False
+        Transparent = False
+        WordWrap = True
+        Expression = 'SUM(QRExtratoNotaAgricola.VAL_TOTAL_NOTA)'
+        Mask = '###,###,##0.00'
+        FontSize = 10
+      end
+      object QRLabel12: TQRLabel
+        Left = 606
+        Top = 16
+        Width = 121
+        Height = 17
+        Frame.Color = clBlack
+        Frame.DrawTop = False
+        Frame.DrawBottom = False
+        Frame.DrawLeft = False
+        Frame.DrawRight = False
+        Size.Values = (
+          44.979166666666670000
+          1603.375000000000000000
+          42.333333333333330000
+          320.145833333333300000)
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = True
+        AutoStretch = False
+        Caption = 'Valor Total NF:'
+        Color = clWhite
+        Transparent = False
+        WordWrap = True
+        FontSize = 10
+      end
+    end
+  end
+end

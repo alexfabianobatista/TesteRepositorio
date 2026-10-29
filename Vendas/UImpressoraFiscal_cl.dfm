@@ -1,0 +1,4548 @@
+object DMImpressoraFiscal: TDMImpressoraFiscal
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Left = 362
+  Top = 58
+  Height = 665
+  Width = 768
+  object QRTabProd: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') as NUM_CGC,'
+      '  P.COD_PRODUTO, '
+      '  P.DESC_COD_BARRA,'
+      '  P.DESC_PRODUTO, '
+      '  P.DESC_UNIDADE, '
+      
+        '  NVL(P.IND_ARREDONDAMENTO_TRUNCAMENTO, '#39' '#39') AS IND_ARREDONDAMEN' +
+        'TO_TRUNCAMENTO,'
+      
+        '  NVL(P.IND_PROD_PROPRIA_TERCEIRO, '#39' '#39') AS IND_PROD_PROPRIA_TERC' +
+        'EIRO,'
+      '  T.COD_TRIB_IMP_FISCAL, '
+      
+        '  CASE WHEN T.COD_TRIB_IMP_FISCAL IN ('#39'T'#39','#39'S'#39') THEN T.PERC_ALIQU' +
+        'OTA ELSE 0 END AS ALIQUOTA,'
+      '  NVL(ROUND(P.VAL_VAREJO, 2), 0) AS VAL_VAREJO,'
+      '  P.DESC_HASH_MD5,'
+      '  T.COD_TRIBUTACAO,'
+      '  T.DESC_HASH_MD5 AS DESC_HASH_MD5_TRIB,'
+      '  T.COD_TRIB_IMP_FISCAL,'
+      '  T.PERC_ALIQUOTA,'
+      '  T.DESC_SITUACAO_TRIB,'
+      '  T.DESC_CSOSN'
+      'FROM'
+      '  TB_PRODUTO P'
+      'INNER JOIN TB_TRIBUTACAO T ON'
+      '  P.COD_TRIBUTACAO = T.COD_TRIBUTACAO'
+      'INNER JOIN TB_FILIAL F ON'
+      '  F.COD_FILIAL = :FILIAL'
+      'ORDER BY'
+      '  P.DESC_COD_BARRA')
+    Variables.Data = {0300000001000000070000003A46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000011000000070000004E554D5F4347430100000000000B000000434F44
+      5F50524F4455544F0100000000000C000000444553435F50524F4455544F0100
+      000000000C000000444553435F554E49444144450100000000001E000000494E
+      445F41525245444F4E44414D454E544F5F5452554E43414D454E544F01000000
+      000019000000494E445F50524F445F50524F505249415F544552434549524F01
+      000000000013000000434F445F545249425F494D505F46495343414C01000000
+      000008000000414C4951554F54410100000000000A00000056414C5F56415245
+      4A4F0100000000000D000000444553435F484153485F4D44350100000000000E
+      000000434F445F5452494255544143414F01000000000012000000444553435F
+      484153485F4D44355F5452494201000000000015000000434F445F545249425F
+      494D505F46495343414C5F3101000000000012000000444553435F5349545541
+      43414F5F545249420100000000000A000000444553435F43534F534E01000000
+      00000D000000504552435F414C4951554F54410100000000000E000000444553
+      435F434F445F4241525241010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 88
+    object QRTabProdNUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 4000
+    end
+    object QRTabProdCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QRTabProdDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QRTabProdDESC_UNIDADE: TStringField
+      FieldName = 'DESC_UNIDADE'
+      Size = 3
+    end
+    object QRTabProdIND_ARREDONDAMENTO_TRUNCAMENTO: TStringField
+      FieldName = 'IND_ARREDONDAMENTO_TRUNCAMENTO'
+      Size = 1
+    end
+    object QRTabProdIND_PROD_PROPRIA_TERCEIRO: TStringField
+      FieldName = 'IND_PROD_PROPRIA_TERCEIRO'
+      Size = 1
+    end
+    object QRTabProdCOD_TRIB_IMP_FISCAL: TStringField
+      FieldName = 'COD_TRIB_IMP_FISCAL'
+      Size = 30
+    end
+    object QRTabProdALIQUOTA: TFloatField
+      FieldName = 'ALIQUOTA'
+    end
+    object QRTabProdVAL_VAREJO: TFloatField
+      FieldName = 'VAL_VAREJO'
+    end
+    object QRTabProdDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QRTabProdCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object QRTabProdDESC_HASH_MD5_TRIB: TStringField
+      FieldName = 'DESC_HASH_MD5_TRIB'
+      Size = 32
+    end
+    object QRTabProdCOD_TRIB_IMP_FISCAL_1: TStringField
+      FieldName = 'COD_TRIB_IMP_FISCAL_1'
+      Size = 30
+    end
+    object QRTabProdDESC_SITUACAO_TRIB: TStringField
+      FieldName = 'DESC_SITUACAO_TRIB'
+      Size = 3
+    end
+    object QRTabProdDESC_CSOSN: TStringField
+      FieldName = 'DESC_CSOSN'
+      Size = 3
+    end
+    object QRTabProdPERC_ALIQUOTA: TFloatField
+      FieldName = 'PERC_ALIQUOTA'
+      Required = True
+    end
+    object QRTabProdDESC_COD_BARRA: TStringField
+      FieldName = 'DESC_COD_BARRA'
+    end
+  end
+  object QRIdentificEmpresa: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') as NUM_CGC,'
+      '  F.DESC_INSCRICAO as DESC_INSCRICAO,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO_MUNICIPAL, '#39'[^0-9]'#39', '#39#39') as DE' +
+        'SC_INSCRICAO_MUNICIPAL,'
+      '  F.DESC_FILIAL'
+      'FROM'
+      '  TB_FILIAL F '
+      'WHERE'
+      '  F.COD_FILIAL = :FILIAL'
+      '')
+    Variables.Data = {0300000001000000070000003A46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000004000000070000004E554D5F4347430100000000000E000000444553
+      435F494E5343524943414F01000000000018000000444553435F494E53435249
+      43414F5F4D554E49434950414C0100000000000B000000444553435F46494C49
+      414C010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 136
+    Top = 88
+    object QRIdentificEmpresaNUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 4000
+    end
+    object QRIdentificEmpresaDESC_INSCRICAO: TStringField
+      FieldName = 'DESC_INSCRICAO'
+      Size = 4000
+    end
+    object QRIdentificEmpresaDESC_INSCRICAO_MUNICIPAL: TStringField
+      FieldName = 'DESC_INSCRICAO_MUNICIPAL'
+      Size = 4000
+    end
+    object QRIdentificEmpresaDESC_FILIAL: TStringField
+      FieldName = 'DESC_FILIAL'
+      Size = 50
+    end
+  end
+  object QRIdentificEmpresaE1: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') AS NUM_CGC,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO,'#39'[^0-9]'#39', '#39#39') as DESC_INSCRICA' +
+        'O,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO_MUNICIPAL, '#39'[^0-9]'#39', '#39#39') as DE' +
+        'SC_INSCRICAO_MUNICIPAL,'
+      '  F.DESC_FILIAL,'
+      '  ED.COD_FILIAL,'
+      '  ED.NUM_FABRICACAO_ECF,'
+      '  ED.IND_MF_ADICIONAL,'
+      '  ED.DESC_TIPO_ECF,'
+      '  ED.DESC_MARCA_ECF,'
+      '  ED.DESC_MODELO_ECF,'
+      '  ED.DT_ESTOQUE,'
+      '  ED.HORA_ESTOQUE,'
+      '  ED.DESC_HASH_MD5'
+      'FROM'
+      '  TB_FILIAL F'
+      'INNER JOIN TB_ESTOQUE_DIARIO_CAB ED ON'
+      '  F.COD_FILIAL = ED.COD_FILIAL'
+      'WHERE'
+      '  F.COD_FILIAL = :FILIAL'
+      'AND'
+      '  ED.DT_ESTOQUE = :DT_ESTOQUE'
+      '')
+    Variables.Data = {
+      0300000002000000070000003A46494C49414C0300000000000000000000000B
+      0000003A44545F4553544F515545050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000D000000070000004E554D5F4347430100000000000E000000444553
+      435F494E5343524943414F01000000000018000000444553435F494E53435249
+      43414F5F4D554E49434950414C0100000000000B000000444553435F46494C49
+      414C010000000000120000004E554D5F4641425249434143414F5F4543460100
+      0000000010000000494E445F4D465F41444943494F4E414C0100000000000D00
+      0000444553435F5449504F5F4543460100000000000E000000444553435F4D41
+      5243415F4543460100000000000F000000444553435F4D4F44454C4F5F454346
+      0100000000000A00000044545F4553544F5155450100000000000C000000484F
+      52415F4553544F5155450100000000000A000000434F445F46494C49414C0100
+      000000000D000000444553435F484153485F4D4435010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 144
+    Top = 152
+    object QRIdentificEmpresaE1NUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 4000
+    end
+    object QRIdentificEmpresaE1DESC_INSCRICAO: TStringField
+      FieldName = 'DESC_INSCRICAO'
+      Size = 12
+    end
+    object QRIdentificEmpresaE1DESC_INSCRICAO_MUNICIPAL: TStringField
+      FieldName = 'DESC_INSCRICAO_MUNICIPAL'
+      Size = 4000
+    end
+    object QRIdentificEmpresaE1DESC_FILIAL: TStringField
+      FieldName = 'DESC_FILIAL'
+      Size = 50
+    end
+    object QRIdentificEmpresaE1NUM_FABRICACAO_ECF: TStringField
+      FieldName = 'NUM_FABRICACAO_ECF'
+    end
+    object QRIdentificEmpresaE1IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QRIdentificEmpresaE1DESC_TIPO_ECF: TStringField
+      FieldName = 'DESC_TIPO_ECF'
+      Size = 7
+    end
+    object QRIdentificEmpresaE1DESC_MARCA_ECF: TStringField
+      FieldName = 'DESC_MARCA_ECF'
+    end
+    object QRIdentificEmpresaE1DESC_MODELO_ECF: TStringField
+      FieldName = 'DESC_MODELO_ECF'
+    end
+    object QRIdentificEmpresaE1DT_ESTOQUE: TStringField
+      FieldName = 'DT_ESTOQUE'
+      Size = 8
+    end
+    object QRIdentificEmpresaE1HORA_ESTOQUE: TStringField
+      FieldName = 'HORA_ESTOQUE'
+      Size = 6
+    end
+    object QRIdentificEmpresaE1COD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QRIdentificEmpresaE1DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QREstoqueE2: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  NUM_CGC,'
+      '  COD_FILIAL,'
+      '  COD_PRODUTO,'
+      '  COD_ESTOQUE_DIARIO_ITEM,'
+      '  COD_ESTOQUE_DIARIO_CAB,'
+      '  DESC_PRODUTO,'
+      '  DESC_UNIDADE,'
+      '  DESC_HASH_MD5,'
+      '  COD_TRIBUTACAO,'
+      '  CASE WHEN QT_QUANTIDADE >= 0'
+      '    THEN '#39'+'#39
+      '  ELSE '#39'-'#39' END AS MENSURACAO,'
+      '  CASE WHEN QT_QUANTIDADE >= 0'
+      '    THEN QT_QUANTIDADE'
+      '  ELSE QT_QUANTIDADE * -1 END AS QT_QUANTIDADE'
+      'FROM('
+      '  SELECT '
+      '    REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') as NUM_CGC,'
+      '    F.COD_FILIAL,'
+      '    EDI.COD_PRODUTO,'
+      '    EDI.COD_ESTOQUE_DIARIO_ITEM,'
+      '    ED.COD_ESTOQUE_DIARIO_CAB,'
+      '    P.DESC_PRODUTO, '
+      '    P.DESC_UNIDADE, '
+      '    EDI.DESC_HASH_MD5,'
+      '    P.COD_TRIBUTACAO,'
+      '    SUM(EDI.QT_QUANTIDADE) AS QT_QUANTIDADE'
+      '  FROM'
+      '    TB_ESTOQUE_DIARIO_ITEM EDI'
+      '  INNER JOIN TB_ESTOQUE_DIARIO_CAB ED ON'
+      '    EDI.COD_ESTOQUE_DIARIO_CAB = ED.COD_ESTOQUE_DIARIO_CAB'
+      '  INNER JOIN TB_FILIAL F ON'
+      '    ED.COD_FILIAL = F.COD_FILIAL'
+      '  INNER JOIN TB_PRODUTO P ON'
+      '    EDI.COD_PRODUTO = P.COD_PRODUTO'
+      '  INNER JOIN TB_TRIBUTACAO T ON'
+      '    T.COD_TRIBUTACAO = P.COD_TRIBUTACAO'
+      '  WHERE '
+      '    ED.DT_ESTOQUE = :DT_ESTOQUE'
+      '  AND'
+      '    ED.COD_FILIAL = :FILIAL'
+      '  AND'
+      '    :CODIGO_DESCRICAO'
+      
+        '  GROUP BY REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39'), F.COD_FILIAL' +
+        ',EDI.COD_PRODUTO, EDI.COD_ESTOQUE_DIARIO_ITEM, ED.COD_ESTOQUE_DI' +
+        'ARIO_CAB, P.DESC_PRODUTO, P.DESC_UNIDADE, EDI.DESC_HASH_MD5, P.C' +
+        'OD_TRIBUTACAO'
+      '  ORDER BY'
+      '    EDI.COD_PRODUTO'
+      ')')
+    Variables.Data = {
+      0300000003000000070000003A46494C49414C0300000000000000000000000B
+      0000003A44545F4553544F515545050000000000000000000000110000003A43
+      4F4449474F5F44455343524943414F0100000004000000313D310000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B000000070000004E554D5F4347430100000000000B000000434F44
+      5F50524F4455544F0100000000000C000000444553435F50524F4455544F0100
+      000000000C000000444553435F554E49444144450100000000000A0000004D45
+      4E5355524143414F0100000000000D00000051545F5155414E54494441444501
+      00000000000D000000444553435F484153485F4D443501000000000017000000
+      434F445F4553544F5155455F44494152494F5F4954454D010000000000160000
+      00434F445F4553544F5155455F44494152494F5F4341420100000000000E0000
+      00434F445F5452494255544143414F0100000000000A000000434F445F46494C
+      49414C010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 152
+    object QREstoqueE2NUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 4000
+    end
+    object QREstoqueE2COD_PRODUTO: TIntegerField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QREstoqueE2DESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QREstoqueE2DESC_UNIDADE: TStringField
+      FieldName = 'DESC_UNIDADE'
+      Size = 3
+    end
+    object QREstoqueE2MENSURACAO: TStringField
+      FieldName = 'MENSURACAO'
+      Size = 1
+    end
+    object QREstoqueE2QT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+    end
+    object QREstoqueE2DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QREstoqueE2COD_ESTOQUE_DIARIO_ITEM: TIntegerField
+      FieldName = 'COD_ESTOQUE_DIARIO_ITEM'
+      Required = True
+    end
+    object QREstoqueE2COD_ESTOQUE_DIARIO_CAB: TIntegerField
+      FieldName = 'COD_ESTOQUE_DIARIO_CAB'
+      Required = True
+    end
+    object QREstoqueE2COD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object QREstoqueE2COD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+  end
+  object cdsParametrosEstoque: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'cod_produto'
+        DataType = ftInteger
+      end
+      item
+        Name = 'desc_produto'
+        DataType = ftString
+        Size = 50
+      end>
+    IndexDefs = <>
+    Params = <>
+    StoreDefs = True
+    Left = 248
+    Top = 88
+    Data = {
+      4F0000009619E0BD0100000018000000020000000000030000004F000B636F64
+      5F70726F6475746F04000100000000000C646573635F70726F6475746F010049
+      00000001000557494454480200020032000000}
+    object cdsParametrosEstoquecod_produto: TIntegerField
+      FieldName = 'cod_produto'
+    end
+    object cdsParametrosEstoquedesc_produto: TStringField
+      FieldName = 'desc_produto'
+      Size = 50
+    end
+  end
+  object dsParametrosEstoque: TDataSource
+    DataSet = cdsParametrosEstoque
+    Left = 264
+    Top = 152
+  end
+  object QR01: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ECF.DESC_MARCA,'
+      '  ECF.DESC_MODELO,'
+      '  ECF.DESC_TIPO,'
+      
+        '  TO_CHAR(ECF.DT_HORA_INSTALACAO_SB, '#39'YYYYMMDD'#39') AS DT_INSTALACA' +
+        'O_SB,'
+      
+        '  TO_CHAR(ECF.DT_HORA_INSTALACAO_SB, '#39'HH24MISS'#39') AS HORA_INSTALA' +
+        'CAO_SB,'
+      '  ECF.IND_MF_ADICIONAL,'
+      '  ECF.NUM_SEQ_ECF,'
+      '  ECF.NUM_SERIE,'
+      '  ECF.NUM_VERSAO_SB,'
+      '  ECF.DESC_HASH_MD5,'
+      '  F.NUM_CGC,'
+      '  F.DESC_INSCRICAO,'
+      '  F.DESC_HASH_MD5 AS DESC_HASH_MD5_FILIAL'
+      'FROM'
+      '  TB_ECF ECF'
+      'INNER JOIN TB_FILIAL F ON'
+      '  F.COD_FILIAL = :FILIAL'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  ECF.NUM_SERIE = :NUM_SERIE)'
+      '')
+    Variables.Data = {
+      0300000002000000070000003A46494C49414C0300000000000000000000000A
+      0000003A4E554D5F5345524945050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000D000000070000004E554D5F4347430100000000000E000000444553
+      435F494E5343524943414F01000000000010000000494E445F4D465F41444943
+      494F4E414C0100000000000A000000444553435F4D415243410100000000000B
+      000000444553435F4D4F44454C4F01000000000009000000444553435F544950
+      4F0100000000001000000044545F494E5354414C4143414F5F53420100000000
+      0012000000484F52415F494E5354414C4143414F5F53420100000000000B0000
+      004E554D5F5345515F454346010000000000090000004E554D5F534552494501
+      00000000000D0000004E554D5F56455253414F5F53420100000000000D000000
+      444553435F484153485F4D443501000000000014000000444553435F48415348
+      5F4D44355F46494C49414C010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 336
+    object QR01DESC_MARCA: TStringField
+      FieldName = 'DESC_MARCA'
+      Required = True
+      Size = 15
+    end
+    object QR01DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QR01DESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Required = True
+      Size = 7
+    end
+    object QR01DT_INSTALACAO_SB: TStringField
+      FieldName = 'DT_INSTALACAO_SB'
+      Size = 8
+    end
+    object QR01HORA_INSTALACAO_SB: TStringField
+      FieldName = 'HORA_INSTALACAO_SB'
+      Size = 6
+    end
+    object QR01IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR01NUM_SEQ_ECF: TIntegerField
+      FieldName = 'NUM_SEQ_ECF'
+    end
+    object QR01NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR01NUM_VERSAO_SB: TStringField
+      FieldName = 'NUM_VERSAO_SB'
+      Size = 10
+    end
+    object QR01NUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 18
+    end
+    object QR01DESC_INSCRICAO: TStringField
+      FieldName = 'DESC_INSCRICAO'
+      Size = 12
+    end
+    object QR01DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR01DESC_HASH_MD5_FILIAL: TStringField
+      FieldName = 'DESC_HASH_MD5_FILIAL'
+      Size = 32
+    end
+  end
+  object QECF: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_ECF.*'
+      'FROM'
+      '  TB_ECF'
+      'WHERE'
+      '  TB_ECF.NUM_SERIE = :PK'
+      '  AND'
+      '  (:SEQ IS NULL OR'
+      #9'TB_ECF.NUM_SEQ_ECF = CAST(:SEQ AS NUMBER(3,0)))'
+      '')
+    Variables.Data = {
+      0300000002000000030000003A504B050000000000000000000000040000003A
+      53455105000000050000004E554C4C0000000000}
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000000B000000090000004E554D5F53455249450100000000000A00000044
+      4553435F4D415243410100000000000B000000444553435F4D4F44454C4F0100
+      0000000009000000444553435F5449504F0100000000000D0000004E554D5F56
+      455253414F5F53420100000000001500000044545F484F52415F494E5354414C
+      4143414F5F53420100000000000B0000004E554D5F5345515F45434601000000
+      000010000000494E445F4D465F41444943494F4E414C0100000000000B000000
+      4E554D5F5553554152494F0100000000000A000000434F445F46494C49414C01
+      00000000000D000000444553435F484153485F4D4435010000000000}
+    RefreshOptions = [roAfterInsert]
+    Session = DMOracle.DBCemapa
+    AfterPost = QECFAfterPost
+    BeforeDelete = QECFBeforeDelete
+    AfterDelete = QECFAfterDelete
+    Left = 32
+    Top = 216
+    object QECFNUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QECFDESC_MARCA: TStringField
+      FieldName = 'DESC_MARCA'
+      Required = True
+      Size = 15
+    end
+    object QECFDESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QECFDESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Required = True
+      Size = 7
+    end
+    object QECFNUM_VERSAO_SB: TStringField
+      FieldName = 'NUM_VERSAO_SB'
+      Size = 10
+    end
+    object QECFDT_HORA_INSTALACAO_SB: TDateTimeField
+      FieldName = 'DT_HORA_INSTALACAO_SB'
+    end
+    object QECFNUM_SEQ_ECF: TIntegerField
+      FieldName = 'NUM_SEQ_ECF'
+    end
+    object QECFIND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QECFCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+    end
+    object QECFDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QReg60M: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_REGISTRO_TIPO60_MESTRE.*'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_MESTRE'
+      'WHERE'
+      '  TB_REGISTRO_TIPO60_MESTRE.COD_REGISTRO_MESTRE = :PK'
+      '')
+    Variables.Data = {0300000001000000030000003A504B050000000000000000000000}
+    SequenceField.Field = 'COD_REGISTRO_MESTRE'
+    SequenceField.Sequence = 'SQREGISTRO_TIPO60_MESTRE'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      04000000100000000B000000444553435F4D4F44454C4F010000000000130000
+      00434F445F524547495354524F5F4D45535452450100000000000A0000004454
+      5F454D495353414F0100000000000A000000444553435F534552494501000000
+      00000E0000004E554D5F53455155454E4349414C0100000000000B0000004E55
+      4D5F434F4F5F494E490100000000000B0000004E554D5F434F4F5F46494E0100
+      00000000150000004E554D5F434F4E5441444F525F5245445543414F5A010000
+      000000160000004E554D5F5245494E4943494F5F4F505245524143414F010000
+      0000000F00000056414C5F56454E44415F42525554410100000000000F000000
+      56414C5F544F54414C5F474552414C0100000000001200000044545F484F5241
+      5F454D495353414F5F525A0100000000000B0000004E554D5F5553554152494F
+      0100000000000A0000004E554D5F434F4F5F525A01000000000012000000494E
+      445F444553434F4E544F5F495353514E0100000000000D000000444553435F48
+      4153485F4D4435010000000000}
+    RefreshOptions = [roAfterInsert]
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    BeforePost = QReg60MBeforePost
+    AfterPost = QReg60MAfterPost
+    BeforeDelete = QReg60MBeforeDelete
+    AfterDelete = QReg60MAfterDelete
+    Left = 152
+    Top = 216
+    object QReg60MCOD_REGISTRO_MESTRE: TIntegerField
+      FieldName = 'COD_REGISTRO_MESTRE'
+      Required = True
+    end
+    object QReg60MDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QReg60MDESC_SERIE: TStringField
+      FieldName = 'DESC_SERIE'
+      Required = True
+    end
+    object QReg60MNUM_SEQUENCIAL: TIntegerField
+      FieldName = 'NUM_SEQUENCIAL'
+      Required = True
+    end
+    object QReg60MDESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+      Size = 2
+    end
+    object QReg60MNUM_COO_INI: TIntegerField
+      FieldName = 'NUM_COO_INI'
+      Required = True
+    end
+    object QReg60MNUM_COO_FIN: TIntegerField
+      FieldName = 'NUM_COO_FIN'
+      Required = True
+    end
+    object QReg60MNUM_CONTADOR_REDUCAOZ: TIntegerField
+      FieldName = 'NUM_CONTADOR_REDUCAOZ'
+      Required = True
+    end
+    object QReg60MNUM_REINICIO_OPRERACAO: TIntegerField
+      FieldName = 'NUM_REINICIO_OPRERACAO'
+      Required = True
+    end
+    object QReg60MVAL_VENDA_BRUTA: TFloatField
+      FieldName = 'VAL_VENDA_BRUTA'
+      Required = True
+    end
+    object QReg60MVAL_TOTAL_GERAL: TFloatField
+      FieldName = 'VAL_TOTAL_GERAL'
+      Required = True
+    end
+    object QReg60MDT_HORA_EMISSAO_RZ: TDateTimeField
+      FieldName = 'DT_HORA_EMISSAO_RZ'
+    end
+    object QReg60MNUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QReg60MNUM_COO_RZ: TIntegerField
+      FieldName = 'NUM_COO_RZ'
+    end
+    object QReg60MIND_DESCONTO_ISSQN: TStringField
+      FieldName = 'IND_DESCONTO_ISSQN'
+      Size = 1
+    end
+    object QReg60MDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QReg60A: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_REGISTRO_TIPO60_ANALITICO.*'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_ANALITICO'
+      'WHERE'
+      '  TB_REGISTRO_TIPO60_ANALITICO.COD_REGISTRO_ANALITICO= :PK'
+      '')
+    Variables.Data = {0300000001000000030000003A504B050000000000000000000000}
+    SequenceField.Field = 'COD_REGISTRO_ANALITICO'
+    SequenceField.Sequence = 'SQREGISTRO_TIPO60_ANALITICO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000000700000013000000434F445F524547495354524F5F4D455354524501
+      00000000000A00000044545F454D495353414F0100000000000A000000444553
+      435F534552494501000000000016000000434F445F524547495354524F5F414E
+      414C495449434F01000000000017000000494E445F534954554143414F5F5452
+      49425554415249410100000000001B000000564C525F4143554D554C41444F5F
+      544F54414C5F5041524349414C0100000000000D000000444553435F48415348
+      5F4D4435010000000000}
+    RefreshOptions = [roAfterInsert]
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    BeforePost = QReg60ABeforePost
+    AfterPost = QReg60AAfterPost
+    BeforeDelete = QReg60ABeforeDelete
+    AfterDelete = QReg60AAfterDelete
+    Left = 208
+    Top = 216
+    object QReg60ACOD_REGISTRO_ANALITICO: TIntegerField
+      FieldName = 'COD_REGISTRO_ANALITICO'
+      Required = True
+    end
+    object QReg60ADT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QReg60ADESC_SERIE: TStringField
+      FieldName = 'DESC_SERIE'
+      Required = True
+    end
+    object QReg60AIND_SITUACAO_TRIBUTARIA: TStringField
+      DisplayWidth = 7
+      FieldName = 'IND_SITUACAO_TRIBUTARIA'
+      Required = True
+      Size = 7
+    end
+    object QReg60AVLR_ACUMULADO_TOTAL_PARCIAL: TFloatField
+      FieldName = 'VLR_ACUMULADO_TOTAL_PARCIAL'
+      Required = True
+    end
+    object QReg60ACOD_REGISTRO_MESTRE: TIntegerField
+      FieldName = 'COD_REGISTRO_MESTRE'
+    end
+    object QReg60ADESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QReg60R: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_REGISTRO_TIPO60_RESUMO.*'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_RESUMO'
+      'WHERE'
+      '  TB_REGISTRO_TIPO60_RESUMO.COD_REGISTRO_RESUMO= :PK'
+      '')
+    Variables.Data = {0300000001000000030000003A504B050000000000000000000000}
+    SequenceField.Field = 'COD_REGISTRO_RESUMO'
+    SequenceField.Sequence = 'SQREGISTRO_TIPO60_RESUMO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000000900000013000000434F445F524547495354524F5F524553554D4F01
+      0000000000070000004E554D5F4D4553010000000000070000004E554D5F414E
+      4F0100000000000B000000434F445F50524F4455544F0100000000000D000000
+      51545F5155414E5449444144450100000000000B00000056414C5F50524F4455
+      544F0100000000000D00000056414C5F424153455F49434D5301000000000017
+      000000494E445F534954554143414F5F54524942555441524941010000000000
+      0D000000504552435F414C4951554F5441010000000000}
+    RefreshOptions = [roAfterInsert]
+    Session = DMOracle.DBCemapa
+    Left = 256
+    Top = 216
+    object QReg60RCOD_REGISTRO_RESUMO: TIntegerField
+      FieldName = 'COD_REGISTRO_RESUMO'
+      Required = True
+    end
+    object QReg60RNUM_MES: TIntegerField
+      FieldName = 'NUM_MES'
+      Required = True
+    end
+    object QReg60RNUM_ANO: TIntegerField
+      FieldName = 'NUM_ANO'
+      Required = True
+    end
+    object QReg60RCOD_PRODUTO: TStringField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+      Size = 14
+    end
+    object QReg60RQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QReg60RVAL_PRODUTO: TFloatField
+      FieldName = 'VAL_PRODUTO'
+      Required = True
+    end
+    object QReg60RVAL_BASE_ICMS: TFloatField
+      FieldName = 'VAL_BASE_ICMS'
+      Required = True
+    end
+    object QReg60RIND_SITUACAO_TRIBUTARIA: TStringField
+      FieldName = 'IND_SITUACAO_TRIBUTARIA'
+      Size = 4
+    end
+    object QReg60RPERC_ALIQUOTA: TFloatField
+      FieldName = 'PERC_ALIQUOTA'
+      Required = True
+    end
+  end
+  object QR02: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      ' R60M.DESC_SERIE AS NUM_SERIE,'
+      ' E.IND_MF_ADICIONAL,'
+      ' E.DESC_MODELO,'
+      ' R60M.COD_REGISTRO_MESTRE,'
+      ' R60M.NUM_USUARIO,'
+      ' R60M.NUM_CONTADOR_REDUCAOZ,'
+      ' R60M.NUM_COO_RZ,'
+      ' R60M.NUM_REINICIO_OPRERACAO,'
+      ' TO_CHAR(R60M.DT_EMISSAO, '#39'YYYYMMDD'#39') AS DT_MOVIMENTO,'
+      ' TO_CHAR(R60M.DT_HORA_EMISSAO_RZ, '#39'YYYYMMDD'#39') AS DT_EMISSAO,'
+      ' TO_CHAR(R60M.DT_HORA_EMISSAO_RZ, '#39'HH24MMSS'#39') AS HORA_EMISSAO,'
+      ' R60M.VAL_VENDA_BRUTA,'
+      ' NVL(R60M.IND_DESCONTO_ISSQN,'#39'S'#39') AS IND_DESCONTO_ISSQN,'
+      ' R60M.DESC_HASH_MD5,'
+      ' DT_HORA_EMISSAO_RZ,'
+      ' NUM_COO_INI,'
+      ' NUM_COO_FIN,'
+      ' DT_EMISSAO AS DT_EMISSAO_SEM_MASCARA'
+      'FROM'
+      '  TB_ECF E'
+      'INNER JOIN TB_REGISTRO_TIPO60_MESTRE R60M ON'
+      '  E.NUM_SERIE = R60M.DESC_SERIE'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  R60M.DESC_SERIE = :NUM_SERIE)'
+      'AND'
+      '  R60M.DT_EMISSAO >= :DT_INICIAL'
+      'AND'
+      '  R60M.DT_EMISSAO <= :DT_FINAL'
+      'ORDER BY'
+      '  R60M.NUM_COO_RZ')
+    Variables.Data = {
+      03000000030000000A0000003A4E554D5F534552494505000000000000000000
+      00000B0000003A44545F494E494349414C0C0000000000000000000000090000
+      003A44545F46494E414C0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000001200000010000000494E445F4D465F41444943494F4E414C01000000
+      00000B000000444553435F4D4F44454C4F010000000000090000004E554D5F53
+      455249450100000000000B0000004E554D5F5553554152494F01000000000015
+      0000004E554D5F434F4E5441444F525F5245445543414F5A0100000000000A00
+      00004E554D5F434F4F5F525A010000000000160000004E554D5F5245494E4943
+      494F5F4F505245524143414F0100000000000C00000044545F4D4F56494D454E
+      544F0100000000000A00000044545F454D495353414F0100000000000C000000
+      484F52415F454D495353414F0100000000000F00000056414C5F56454E44415F
+      425255544101000000000012000000494E445F444553434F4E544F5F49535351
+      4E0100000000000D000000444553435F484153485F4D44350100000000001200
+      000044545F484F52415F454D495353414F5F525A0100000000000B0000004E55
+      4D5F434F4F5F494E490100000000000B0000004E554D5F434F4F5F46494E0100
+      000000001600000044545F454D495353414F5F53454D5F4D4153434152410100
+      0000000013000000434F445F524547495354524F5F4D45535452450100000000
+      00}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 64
+    Top = 336
+    object QR02NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR02IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR02DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QR02NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR02NUM_CONTADOR_REDUCAOZ: TIntegerField
+      FieldName = 'NUM_CONTADOR_REDUCAOZ'
+      Required = True
+    end
+    object QR02NUM_COO_RZ: TIntegerField
+      FieldName = 'NUM_COO_RZ'
+    end
+    object QR02NUM_REINICIO_OPRERACAO: TIntegerField
+      FieldName = 'NUM_REINICIO_OPRERACAO'
+      Required = True
+    end
+    object QR02DT_MOVIMENTO: TStringField
+      FieldName = 'DT_MOVIMENTO'
+      Size = 8
+    end
+    object QR02DT_EMISSAO: TStringField
+      FieldName = 'DT_EMISSAO'
+      Size = 8
+    end
+    object QR02HORA_EMISSAO: TStringField
+      FieldName = 'HORA_EMISSAO'
+      Size = 6
+    end
+    object QR02VAL_VENDA_BRUTA: TFloatField
+      FieldName = 'VAL_VENDA_BRUTA'
+      Required = True
+    end
+    object QR02IND_DESCONTO_ISSQN: TStringField
+      FieldName = 'IND_DESCONTO_ISSQN'
+      Size = 1
+    end
+    object QR02DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR02DT_HORA_EMISSAO_RZ: TDateTimeField
+      FieldName = 'DT_HORA_EMISSAO_RZ'
+    end
+    object QR02NUM_COO_INI: TIntegerField
+      FieldName = 'NUM_COO_INI'
+      Required = True
+    end
+    object QR02NUM_COO_FIN: TIntegerField
+      FieldName = 'NUM_COO_FIN'
+      Required = True
+    end
+    object QR02DT_EMISSAO_SEM_MASCARA: TDateTimeField
+      FieldName = 'DT_EMISSAO_SEM_MASCARA'
+      Required = True
+    end
+    object QR02COD_REGISTRO_MESTRE: TIntegerField
+      FieldName = 'COD_REGISTRO_MESTRE'
+      Required = True
+    end
+  end
+  object QR03: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      ' NUM_SERIE,'
+      ' IND_MF_ADICIONAL,'
+      ' DESC_MODELO,'
+      ' NUM_USUARIO,'
+      ' NUM_CONTADOR_REDUCAOZ,'
+      ' COD_REGISTRO_MESTRE,'
+      ' TO_DATE(DT_EMISSAO,'#39'DD/MM/YYYY'#39') DT_EMISSAO,'
+      ' IND_SITUACAO_TRIBUTARIA, '
+      ' SUM(VLR_ACUMULADO_TOTAL_PARCIAL) VLR_ACUMULADO_TOTAL_PARCIAL,'
+      ' SUM(COD_REGISTRO_ANALITICO) COD_REGISTRO_ANALITICO,'
+      ' '#39#39' DESC_HASH_MD5'
+      'FROM ('
+      'SELECT DISTINCT'
+      ' R60M.DESC_SERIE AS NUM_SERIE,'
+      ' E.IND_MF_ADICIONAL,'
+      ' E.DESC_MODELO,'
+      ' R60M.NUM_SEQUENCIAL NUM_USUARIO,'
+      ' R60M.NUM_CONTADOR_REDUCAOZ,'
+      ' R60M.COD_REGISTRO_MESTRE,'
+      ' R60M.DT_EMISSAO,'
+      ' R60A.IND_SITUACAO_TRIBUTARIA, '
+      ' R60A.VLR_ACUMULADO_TOTAL_PARCIAL,'
+      ' R60A.COD_REGISTRO_ANALITICO'
+      'FROM'
+      '  TB_ECF E'
+      'INNER JOIN TB_REGISTRO_TIPO60_MESTRE R60M ON'
+      '  E.NUM_SERIE = R60M.DESC_SERIE'
+      'INNER JOIN TB_REGISTRO_TIPO60_ANALITICO R60A ON'
+      '  R60M.COD_REGISTRO_MESTRE = R60A.COD_REGISTRO_MESTRE'
+      'WHERE'
+      
+        '  R60A.IND_SITUACAO_TRIBUTARIA NOT IN ('#39'CANC'#39','#39'DESC'#39','#39'I'#39','#39'F'#39','#39'N'#39 +
+        ','#39'FS'#39','#39'ISS'#39','#39'NSS'#39','#39'DS'#39','#39'AT'#39','#39'AS'#39','#39'CAN-S'#39')'
+      'AND'
+      '  (:NUM_SERIE IS NULL OR'
+      '  R60M.DESC_SERIE = :NUM_SERIE)'
+      'AND'
+      '  R60M.DT_EMISSAO >= :DT_INICIAL'
+      'AND'
+      '  R60M.DT_EMISSAO <= :DT_FINAL'
+      '  '
+      'UNION ALL'
+      ''
+      'SELECT DISTINCT'
+      ' R60M.DESC_SERIE AS NUM_SERIE,'
+      ' E.IND_MF_ADICIONAL,'
+      ' E.DESC_MODELO,'
+      ' R60M.NUM_SEQUENCIAL NUM_USUARIO,'
+      ' R60M.NUM_CONTADOR_REDUCAOZ,'
+      ' R60M.COD_REGISTRO_MESTRE,'
+      ' R60M.DT_EMISSAO,'
+      
+        ' A.INDICE||A.IND_ICM_ISS||A.PERC_ALIQUOTA AS IND_SITUACAO_TRIBUT' +
+        'ARIA,'
+      ' 0 VLR_ACUMULADO_TOTAL_PARCIAL,'
+      ' 0 COD_REGISTRO_ANALITICO'
+      'FROM'
+      '  TB_ECF E'
+      'INNER JOIN TB_REGISTRO_TIPO60_MESTRE R60M ON'
+      '  E.NUM_SERIE = R60M.DESC_SERIE'
+      'INNER JOIN TB_REGISTRO_TIPO60_ANALITICO R60A ON'
+      '  R60M.COD_REGISTRO_MESTRE = R60A.COD_REGISTRO_MESTRE'
+      'INNER JOIN TB_ALIQUOTA_ECF A ON'
+      '  E.NUM_SERIE = R60M.DESC_SERIE'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  R60M.DESC_SERIE = :NUM_SERIE)'
+      'AND'
+      '  R60M.DT_EMISSAO >= :DT_INICIAL'
+      'AND'
+      '  R60M.DT_EMISSAO <= :DT_FINAL'
+      ')'
+      'WHERE'
+      
+        '  IND_SITUACAO_TRIBUTARIA NOT IN ('#39'CANC'#39','#39'DESC'#39','#39'I'#39','#39'F'#39','#39'N'#39','#39'FS'#39 +
+        ','#39'ISS'#39','#39'NSS'#39','#39'DS'#39','#39'AT'#39','#39'AS'#39','#39'CAN-S'#39')'
+      'GROUP BY'
+      ' NUM_SERIE,'
+      ' IND_MF_ADICIONAL,'
+      ' DESC_MODELO,'
+      ' NUM_USUARIO,'
+      ' NUM_CONTADOR_REDUCAOZ,'
+      ' COD_REGISTRO_MESTRE,'
+      ' DT_EMISSAO,'
+      ' IND_SITUACAO_TRIBUTARIA,'
+      ' '#39#39
+      'ORDER BY'
+      ' IND_SITUACAO_TRIBUTARIA')
+    Variables.Data = {
+      03000000030000000A0000003A4E554D5F534552494505000000000000000000
+      00000B0000003A44545F494E494349414C0C0000000000000000000000090000
+      003A44545F46494E414C0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B00000016000000434F445F524547495354524F5F414E414C495449
+      434F0100000000000D000000444553435F484153485F4D443501000000000017
+      000000494E445F534954554143414F5F54524942555441524941010000000000
+      090000004E554D5F534552494501000000000010000000494E445F4D465F4144
+      4943494F4E414C0100000000000B000000444553435F4D4F44454C4F01000000
+      00000B0000004E554D5F5553554152494F010000000000150000004E554D5F43
+      4F4E5441444F525F5245445543414F5A01000000000013000000434F445F5245
+      47495354524F5F4D45535452450100000000000A00000044545F454D49535341
+      4F0100000000001B000000564C525F4143554D554C41444F5F544F54414C5F50
+      41524349414C010000000000}
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 104
+    Top = 336
+    object QR03NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+    end
+    object QR03IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR03DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+    end
+    object QR03NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR03NUM_CONTADOR_REDUCAOZ: TIntegerField
+      FieldName = 'NUM_CONTADOR_REDUCAOZ'
+    end
+    object QR03COD_REGISTRO_MESTRE: TIntegerField
+      FieldName = 'COD_REGISTRO_MESTRE'
+    end
+    object QR03DT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+    end
+    object QR03IND_SITUACAO_TRIBUTARIA: TStringField
+      FieldName = 'IND_SITUACAO_TRIBUTARIA'
+      Size = 7
+    end
+    object QR03VLR_ACUMULADO_TOTAL_PARCIAL: TFloatField
+      FieldName = 'VLR_ACUMULADO_TOTAL_PARCIAL'
+    end
+    object QR03COD_REGISTRO_ANALITICO: TFloatField
+      FieldName = 'COD_REGISTRO_ANALITICO'
+    end
+    object QR03DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 1
+    end
+  end
+  object QCupomFiscalCab: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      #9'COD_NOTA_CAB,'
+      #9'COD_USUARIO,'
+      #9'COD_FILIAL,'
+      #9'COD_OPERACAO,'
+      #9'COD_ESTADO,'
+      #9'COD_VENDEDOR,'
+      #9'COD_CADASTRO,'
+      #9'TRUNC(NUM_NOTA) AS NUM_NOTA,'
+      #9'COD_SERIE,'
+      #9'IND_SITUACAO,'
+      #9'IND_CONDICAO_PAGTO,'
+      #9'DT_EMISSAO,'
+      #9'DT_MOVIMENTO,'
+      '  '#9'DT_RECEBIMENTO,'
+      #9'VAL_DESPESAS,'
+      #9'IND_ENTRADA_SAIDA,'
+      #9'VAL_FRETE,'
+      #9'VAL_DESCONTO,'
+      #9'OBS_COMPLEMENTO,'
+      #9'DT_USUARIO,'
+      #9'VAL_ICM_FRETE,'
+      #9'VAL_ICM_BASE_FRETE,'
+      #9'VAL_FUNRURAL,'
+      #9'DESC_PLACA,        '
+      #9'NUM_KM,'
+      #9'COD_SERIE_MODELO,'
+      '  '#9'IND_CUPOM_TOTALIZADO,'
+      '  '#9'NUM_SERIE_ECF,'
+      '  '#9'NUM_COO,'
+      #9'DESC_HASH_MD5'
+      'FROM'
+      #9'TB_NOTA_CAB'
+      'WHERE'
+      #9'COD_NOTA_CAB = :PK'
+      '')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_NOTA_CAB'
+    SequenceField.Sequence = 'SQNOTA'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000001E0000000C000000434F445F4E4F54415F4341420100000000000B00
+      0000434F445F5553554152494F0100000000000A000000434F445F46494C4941
+      4C0100000000000C000000434F445F4F5045524143414F0100000000000A0000
+      00434F445F45535441444F0100000000000C000000434F445F56454E4445444F
+      520100000000000C000000434F445F434144415354524F010000000000080000
+      004E554D5F4E4F544101000000000009000000434F445F534552494501000000
+      00000C000000494E445F534954554143414F01000000000012000000494E445F
+      434F4E444943414F5F504147544F0100000000000A00000044545F454D495353
+      414F0100000000000C00000044545F4D4F56494D454E544F0100000000000C00
+      000056414C5F444553504553415301000000000011000000494E445F454E5452
+      4144415F53414944410100000000000900000056414C5F465245544501000000
+      00000C00000056414C5F444553434F4E544F0100000000000F0000004F42535F
+      434F4D504C454D454E544F0100000000000A00000044545F5553554152494F01
+      00000000000D00000056414C5F49434D5F465245544501000000000012000000
+      56414C5F49434D5F424153455F46524554450100000000000C00000056414C5F
+      46554E525552414C0100000000000A000000444553435F504C41434101000000
+      0000060000004E554D5F4B4D01000000000010000000434F445F53455249455F
+      4D4F44454C4F0100000000000E00000044545F5245434542494D454E544F0100
+      0000000014000000494E445F4355504F4D5F544F54414C495A41444F01000000
+      00000D0000004E554D5F53455249455F454346010000000000070000004E554D
+      5F434F4F0100000000000D000000444553435F484153485F4D44350100000000
+      00}
+    RefreshOptions = [roAfterUpdate]
+    Session = DMOracle.DBCemapa
+    AfterOpen = QCupomFiscalCabAfterOpen
+    AfterInsert = QCupomFiscalCabAfterInsert
+    BeforePost = QCupomFiscalCabBeforePost
+    AfterPost = QCupomFiscalCabAfterPost
+    BeforeDelete = QCupomFiscalCabBeforeDelete
+    AfterDelete = QCupomFiscalCabAfterDelete
+    OnCalcFields = QCupomFiscalCabCalcFields
+    OnPostError = QCupomFiscalCabPostError
+    Left = 32
+    Top = 16
+    object QCupomFiscalCabCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QCupomFiscalCabCOD_USUARIO: TIntegerField
+      FieldName = 'COD_USUARIO'
+    end
+    object QCupomFiscalCabCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QCupomFiscalCabCOD_OPERACAO: TIntegerField
+      FieldName = 'COD_OPERACAO'
+      Required = True
+    end
+    object QCupomFiscalCabCOD_ESTADO: TStringField
+      FieldName = 'COD_ESTADO'
+      Required = True
+      Size = 2
+    end
+    object QCupomFiscalCabCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+    object QCupomFiscalCabCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QCupomFiscalCabCOD_SERIE: TStringField
+      FieldName = 'COD_SERIE'
+      Required = True
+      Size = 3
+    end
+    object QCupomFiscalCabIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+      Size = 1
+    end
+    object QCupomFiscalCabIND_CONDICAO_PAGTO: TStringField
+      FieldName = 'IND_CONDICAO_PAGTO'
+      Required = True
+      Size = 1
+    end
+    object QCupomFiscalCabDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QCupomFiscalCabDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+      Required = True
+    end
+    object QCupomFiscalCabVAL_DESPESAS: TFloatField
+      FieldName = 'VAL_DESPESAS'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object QCupomFiscalCabIND_ENTRADA_SAIDA: TStringField
+      FieldName = 'IND_ENTRADA_SAIDA'
+      Size = 1
+    end
+    object QCupomFiscalCabVAL_FRETE: TFloatField
+      FieldName = 'VAL_FRETE'
+      Required = True
+    end
+    object QCupomFiscalCabVAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+      DisplayFormat = '#,##0.00'
+    end
+    object QCupomFiscalCabOBS_COMPLEMENTO: TStringField
+      FieldName = 'OBS_COMPLEMENTO'
+      Size = 255
+    end
+    object QCupomFiscalCabDT_USUARIO: TDateTimeField
+      FieldName = 'DT_USUARIO'
+      Required = True
+    end
+    object QCupomFiscalCabVAL_ICM_FRETE: TFloatField
+      FieldName = 'VAL_ICM_FRETE'
+      Required = True
+    end
+    object QCupomFiscalCabVAL_ICM_BASE_FRETE: TFloatField
+      FieldName = 'VAL_ICM_BASE_FRETE'
+      Required = True
+    end
+    object QCupomFiscalCabVAL_FUNRURAL: TFloatField
+      FieldName = 'VAL_FUNRURAL'
+      Required = True
+    end
+    object QCupomFiscalCabDESC_PLACA: TStringField
+      FieldName = 'DESC_PLACA'
+      Size = 8
+    end
+    object QCupomFiscalCabNUM_KM: TIntegerField
+      FieldName = 'NUM_KM'
+    end
+    object QCupomFiscalCabCOD_SERIE_MODELO: TStringField
+      FieldName = 'COD_SERIE_MODELO'
+      Size = 2
+    end
+    object QCupomFiscalCabdesc_situacao: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_situacao'
+      Size = 10
+      Calculated = True
+    end
+    object QCupomFiscalCabDT_RECEBIMENTO: TDateTimeField
+      FieldName = 'DT_RECEBIMENTO'
+    end
+    object QCupomFiscalCabIND_CUPOM_TOTALIZADO: TStringField
+      FieldName = 'IND_CUPOM_TOTALIZADO'
+      Size = 1
+    end
+    object QCupomFiscalCabNUM_SERIE_ECF: TStringField
+      FieldName = 'NUM_SERIE_ECF'
+    end
+    object QCupomFiscalCabNUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+    end
+    object QCupomFiscalCabDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QCupomFiscalCabNUM_NOTA: TFloatField
+      FieldName = 'NUM_NOTA'
+    end
+  end
+  object QCupomFiscalItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  COD_NOTA_ITEM,'
+      '  COD_NOTA_CAB,'
+      '  COD_TRIBUTACAO,'
+      '  QT_QUANTIDADE,'
+      '  VAL_TOTAL,'
+      '  PERC_IPI,'
+      '  PERC_COMISSAO,'
+      '  COD_PRODUTO,'
+      '  COD_LOTE_TIPO,'
+      '  VAL_DESCONTO,'
+      '  VAL_DESPESAS,'
+      '  VAL_FRETE,'
+      '  PERC_DESCONTO,'
+      '  VAL_IPI,'
+      '  VAL_UNITARIO,'
+      '  VAL_ICM_BASE,'
+      '  VAL_ICM,'
+      '  IND_CLASS_IPI,'
+      '  VAL_CUSTO,'
+      '  VAL_ISS,'
+      '  NUM_ITEM_CF,'
+      '  IND_CANC_ITEM_CF,'
+      '  VAL_DESCONTO_RATEIO,'
+      '  DESC_HASH_MD5'
+      'FROM'
+      #9'TB_NOTA_ITEM'
+      'where cod_nota_cab = :cod_nota_cab')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    SequenceField.Field = 'COD_NOTA_ITEM'
+    SequenceField.Sequence = 'SQNOTA_ITEM'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000180000000C000000434F445F4E4F54415F4341420100000000000C00
+      000056414C5F44455350455341530100000000000900000056414C5F46524554
+      450100000000000C00000056414C5F444553434F4E544F0100000000000D0000
+      00434F445F4E4F54415F4954454D0100000000000E000000434F445F54524942
+      55544143414F0100000000000D00000051545F5155414E544944414445010000
+      0000000900000056414C5F544F54414C01000000000008000000504552435F49
+      50490100000000000D000000504552435F434F4D495353414F0100000000000B
+      000000434F445F50524F4455544F0100000000000D000000434F445F4C4F5445
+      5F5449504F0100000000000D000000504552435F444553434F4E544F01000000
+      00000700000056414C5F4950490100000000000C00000056414C5F554E495441
+      52494F0100000000000C00000056414C5F49434D5F4241534501000000000007
+      00000056414C5F49434D0100000000000D000000494E445F434C4153535F4950
+      490100000000000900000056414C5F435553544F010000000000070000005641
+      4C5F4953530100000000000B0000004E554D5F4954454D5F4346010000000000
+      10000000494E445F43414E435F4954454D5F4346010000000000130000005641
+      4C5F444553434F4E544F5F52415445494F0100000000000D000000444553435F
+      484153485F4D4435010000000000}
+    Master = QCupomFiscalCab
+    MasterFields = 'COD_NOTA_CAB'
+    DetailFields = 'COD_NOTA_CAB'
+    Session = DMOracle.DBCemapa
+    AfterInsert = QCupomFiscalItemAfterInsert
+    BeforePost = QCupomFiscalItemBeforePost
+    AfterPost = QCupomFiscalItemAfterPost
+    BeforeDelete = QCupomFiscalItemBeforeDelete
+    AfterDelete = QCupomFiscalItemAfterDelete
+    OnCalcFields = QCupomFiscalItemCalcFields
+    Left = 128
+    Top = 16
+    object QCupomFiscalItemCOD_NOTA_ITEM: TIntegerField
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+    object QCupomFiscalItemCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QCupomFiscalItemCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object QCupomFiscalItemQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+      DisplayFormat = '#0.000'
+    end
+    object QCupomFiscalItemVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object QCupomFiscalItemPERC_IPI: TFloatField
+      FieldName = 'PERC_IPI'
+      Required = True
+    end
+    object QCupomFiscalItemPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+      Required = True
+    end
+    object QCupomFiscalItemCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QCupomFiscalItemCOD_LOTE_TIPO: TIntegerField
+      FieldName = 'COD_LOTE_TIPO'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+      DisplayFormat = '#,##0.000'
+    end
+    object QCupomFiscalItemVAL_DESPESAS: TFloatField
+      FieldName = 'VAL_DESPESAS'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_FRETE: TFloatField
+      FieldName = 'VAL_FRETE'
+      Required = True
+    end
+    object QCupomFiscalItemPERC_DESCONTO: TFloatField
+      FieldName = 'PERC_DESCONTO'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_IPI: TFloatField
+      FieldName = 'VAL_IPI'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+      DisplayFormat = '#,##0.000'
+    end
+    object QCupomFiscalItemVAL_ICM_BASE: TFloatField
+      FieldName = 'VAL_ICM_BASE'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_ICM: TFloatField
+      FieldName = 'VAL_ICM'
+      Required = True
+    end
+    object QCupomFiscalItemIND_CLASS_IPI: TStringField
+      FieldName = 'IND_CLASS_IPI'
+      Required = True
+      Size = 1
+    end
+    object QCupomFiscalItemVAL_CUSTO: TFloatField
+      FieldName = 'VAL_CUSTO'
+      Required = True
+    end
+    object QCupomFiscalItemVAL_ISS: TFloatField
+      FieldName = 'VAL_ISS'
+      Required = True
+    end
+    object QCupomFiscalItemdesc_unidade: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_unidade'
+      Size = 2
+      Calculated = True
+    end
+    object QCupomFiscalItemdesc_produto: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_produto'
+      Size = 200
+      Calculated = True
+    end
+    object QCupomFiscalItemNUM_ITEM_CF: TIntegerField
+      FieldName = 'NUM_ITEM_CF'
+    end
+    object QCupomFiscalItemIND_CANC_ITEM_CF: TStringField
+      FieldName = 'IND_CANC_ITEM_CF'
+      Size = 1
+    end
+    object QCupomFiscalItemval_desconto_total_item: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'val_desconto_total_item'
+      DisplayFormat = '#,##0.00'
+      Calculated = True
+    end
+    object QCupomFiscalItemVAL_DESCONTO_RATEIO: TFloatField
+      FieldName = 'VAL_DESCONTO_RATEIO'
+    end
+    object QCupomFiscalItemdesc_cancelado: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_cancelado'
+      Size = 10
+      Calculated = True
+    end
+    object QCupomFiscalItemval_total_com_desconto: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'val_total_com_desconto'
+      DisplayFormat = '#,##0.00'
+      Calculated = True
+    end
+    object QCupomFiscalItemdesc_sit_tributaria: TStringField
+      DisplayWidth = 5
+      FieldKind = fkCalculated
+      FieldName = 'desc_sit_tributaria'
+      Size = 5
+      Calculated = True
+    end
+    object QCupomFiscalItemdesc_cod_barra: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_cod_barra'
+      Calculated = True
+    end
+    object QCupomFiscalItemDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QPagamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      #9'TB_PAGAMENTO.*'
+      'FROM'
+      #9'TB_PAGAMENTO'
+      'WHERE'
+      #9'TB_PAGAMENTO.COD_NOTA_CAB = :COD_NOTA_CAB'
+      'ORDER BY'
+      #9'COD_PAGAMENTO'
+      '')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    SequenceField.Field = 'COD_PAGAMENTO'
+    SequenceField.Sequence = 'SQPAGAMENTO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000070000000C000000434F445F4E4F54415F4341420100000000000D00
+      0000434F445F504147414D454E544F0100000000000E000000444553435F5041
+      47414D454E544F0100000000000D00000056414C5F504147414D454E544F0100
+      000000000900000056414C5F56414C4F520100000000000D000000444553435F
+      484153485F4D443501000000000017000000434F445F504147414D454E544F5F
+      4553544F524E41444F010000000000}
+    Session = DMOracle.DBCemapa
+    AfterInsert = QPagamentoAfterInsert
+    BeforePost = QPagamentoBeforePost
+    AfterPost = QPagamentoAfterPost
+    BeforeDelete = QPagamentoBeforeDelete
+    AfterDelete = QPagamentoAfterDelete
+    Left = 216
+    Top = 16
+    object QPagamentoCOD_PAGAMENTO: TIntegerField
+      FieldName = 'COD_PAGAMENTO'
+      Required = True
+    end
+    object QPagamentoCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QPagamentoDESC_PAGAMENTO: TStringField
+      FieldName = 'DESC_PAGAMENTO'
+      Required = True
+      Size = 16
+    end
+    object QPagamentoVAL_PAGAMENTO: TFloatField
+      FieldName = 'VAL_PAGAMENTO'
+      Required = True
+      DisplayFormat = '#,##0.00'
+    end
+    object QPagamentoVAL_VALOR: TFloatField
+      FieldName = 'VAL_VALOR'
+    end
+    object QPagamentoCOD_PAGAMENTO_ESTORNADO: TIntegerField
+      FieldName = 'COD_PAGAMENTO_ESTORNADO'
+    end
+    object QPagamentoIND_ESTORNO: TStringField
+      FieldName = 'IND_ESTORNO'
+      KeyFields = 'IND_ESTORNO'
+      Size = 1
+    end
+  end
+  object QSomaCupom: TOracleDataSet1
+    SQL.Strings = (
+      
+        'SELECT SUM(VAL_TOTAL) VAL_TOTAL, SUM(VAL_PAGO) VAL_PAGO, SUM(VAL' +
+        '_TOTAL_TRIB) VAL_TOTAL_TRIB FROM('
+      '  SELECT'
+      
+        '    SUM(IT.VAL_TOTAL - (IT.VAL_DESCONTO * IT.QT_QUANTIDADE)) AS ' +
+        'VAL_TOTAL,'
+      '    0 AS VAL_PAGO,'
+      '    SUM(CASE'
+      '    WHEN OP.NUM_NATUREZA_INT_NOVO BETWEEN 3000 AND 4000 THEN'
+      '      IT.VAL_TOTAL * NCM.PERC_TRIBUTO_IMPORTADO/100'
+      '    ELSE'
+      '      IT.VAL_TOTAL * NCM.PERC_TRIBUTO_NACIONAL/100'
+      '    END) AS VAL_TOTAL_TRIB'
+      '  FROM'
+      '    TB_NOTA_CAB'
+      '  INNER JOIN TB_NOTA_ITEM IT ON'
+      '    TB_NOTA_CAB.COD_NOTA_CAB = IT.COD_NOTA_CAB'
+      '  INNER JOIN TB_OPERACAO OP ON'
+      '    TB_NOTA_CAB.COD_OPERACAO = OP.COD_OPERACAO'
+      '  INNER JOIN TB_PRODUTO P ON'
+      '    IT.COD_PRODUTO = P.COD_PRODUTO'
+      '  LEFT JOIN TB_NCM NCM  ON'
+      '    TO_CHAR(NCM.COD_NCM) = P.NUM_GENERO_NCM'
+      '  WHERE TB_NOTA_CAB.COD_NOTA_CAB = :COD_NOTA_CAB'
+      '    AND'
+      '  IT.IND_CANC_ITEM_CF <> '#39'S'#39' GROUP BY 0'
+      '  '
+      '  UNION ALL'
+      '  --PAGAMENTOS NORMAIS'
+      '  SELECT'
+      '    0 AS VAL_TOTAL,'
+      '    SUM(PG.VAL_PAGAMENTO) AS VAL_PAGO,'
+      '    0 VAL_TOTAL_TRIB'
+      '  FROM'
+      '    TB_NOTA_CAB'
+      '  INNER JOIN TB_PAGAMENTO PG ON'
+      '    TB_NOTA_CAB.COD_NOTA_CAB = PG.COD_NOTA_CAB'
+      '  WHERE'
+      '    PG.IND_ESTORNO = '#39'N'#39' '
+      '    AND'
+      '    PG.COD_PAGAMENTO_ESTORNADO IS NULL'
+      '    AND'
+      '    TB_NOTA_CAB.COD_NOTA_CAB = :COD_NOTA_CAB'
+      '    '
+      '  UNION ALL'
+      '  --ESTORNOS PARCIAIS'
+      '  SELECT'
+      '    0 AS VAL_TOTAL,'
+      
+        '    SUM(PG.VAL_PAGAMENTO - (SELECT NVL(P.VAL_PAGAMENTO,0) FROM T' +
+        'B_PAGAMENTO P WHERE P.COD_PAGAMENTO_ESTORNADO = PG.COD_PAGAMENTO' +
+        ' '
+      
+        '      AND P.VAL_PAGAMENTO < PG.VAL_PAGAMENTO AND P.DESC_PAGAMENT' +
+        'O = '#39'ESTORNO'#39')) AS VAL_PAGO,'
+      '    0 VAL_TOTAL_TRIB'
+      '  FROM '
+      '    TB_PAGAMENTO PG     '
+      '  WHERE'
+      '    PG.DESC_PAGAMENTO <> '#39'ESTORNO'#39'    '
+      '    AND'
+      '    PG.COD_NOTA_CAB = :COD_NOTA_CAB'
+      ')')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000900000056414C5F544F54414C0100000000000800000056
+      414C5F5041474F0100000000000E00000056414C5F544F54414C5F5452494201
+      0000000000}
+    Master = QCupomFiscalCab
+    MasterFields = 'COD_NOTA_CAB'
+    DetailFields = 'COD_NOTA_CAB'
+    ReadOnly = True
+    Session = DMOracle.DBCemapa
+    Left = 296
+    Top = 16
+    object QSomaCupomVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      DisplayFormat = '#,##0.00'
+    end
+    object QSomaCupomVAL_PAGO: TFloatField
+      FieldName = 'VAL_PAGO'
+      DisplayFormat = '#,##0.00'
+    end
+    object QSomaCupomVAL_TOTAL_TRIB: TFloatField
+      FieldName = 'VAL_TOTAL_TRIB'
+    end
+  end
+  object DSSomaCupom: TDataSource
+    AutoEdit = False
+    DataSet = QSomaCupom
+    Left = 376
+    Top = 16
+  end
+  object QContaReceberMov: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_CONTA_RECEBER_MOV.*'
+      'FROM'
+      '  TB_CONTA_RECEBER_MOV'
+      'where cod_conta_receber_cab = :cod_conta_receber_cab')
+    Variables.Data = {
+      0300000001000000160000003A434F445F434F4E54415F524543454245525F43
+      4142030000000000000000000000}
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000001100000015000000434F445F434F4E54415F524543454245525F4D4F
+      5601000000000015000000434F445F434F4E54415F524543454245525F434142
+      0100000000000C00000044545F4D4F56494D454E544F0100000000000D000000
+      56414C5F4D4F56494D454E544F0100000000000F000000444553435F4F425345
+      52564143414F0100000000000B000000434F445F5553554152494F0100000000
+      000A00000044545F5553554152494F01000000000012000000494E445F544950
+      4F5F4D4F56494D454E544F01000000000011000000434F445F42434F5F4D4F56
+      494D454E544F0100000000000D000000434F445F43414958415F4D4F56010000
+      00000018000000434F445F4C414E43544F5F434F4E544142494C5F4352454401
+      000000000017000000434F445F4C414E43544F5F434F4E544142494C5F444542
+      0100000000000C000000434F445F4E4F54415F4341420100000000000D000000
+      494E445F4445564F4C5543414F01000000000013000000494E445F464F524D41
+      5F504147414D454E544F01000000000009000000494E445F54524F4341010000
+      00000010000000434F445F414449414E54414D454E544F010000000000}
+    Master = QContaReceber
+    MasterFields = 'COD_CONTA_RECEBER_CAB'
+    DetailFields = 'COD_CONTA_RECEBER_CAB'
+    RefreshOptions = [roBeforeEdit, roAllFields]
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 416
+    Top = 232
+    object QContaReceberMovCOD_CONTA_RECEBER_MOV: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_MOV'
+      Required = True
+    end
+    object QContaReceberMovCOD_CONTA_RECEBER_CAB: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_CAB'
+    end
+    object QContaReceberMovDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+    end
+    object QContaReceberMovVAL_MOVIMENTO: TFloatField
+      FieldName = 'VAL_MOVIMENTO'
+    end
+    object QContaReceberMovDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 50
+    end
+    object QContaReceberMovCOD_USUARIO: TIntegerField
+      FieldName = 'COD_USUARIO'
+    end
+    object QContaReceberMovDT_USUARIO: TDateTimeField
+      FieldName = 'DT_USUARIO'
+    end
+    object QContaReceberMovIND_TIPO_MOVIMENTO: TStringField
+      FieldName = 'IND_TIPO_MOVIMENTO'
+      Required = True
+    end
+    object QContaReceberMovCOD_BCO_MOVIMENTO: TIntegerField
+      FieldName = 'COD_BCO_MOVIMENTO'
+    end
+    object QContaReceberMovCOD_CAIXA_MOV: TIntegerField
+      FieldName = 'COD_CAIXA_MOV'
+    end
+    object QContaReceberMovCOD_LANCTO_CONTABIL_CRED: TIntegerField
+      FieldName = 'COD_LANCTO_CONTABIL_CRED'
+    end
+    object QContaReceberMovCOD_LANCTO_CONTABIL_DEB: TIntegerField
+      FieldName = 'COD_LANCTO_CONTABIL_DEB'
+    end
+    object QContaReceberMovCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QContaReceberMovIND_DEVOLUCAO: TStringField
+      FieldName = 'IND_DEVOLUCAO'
+      Size = 3
+    end
+    object QContaReceberMovIND_FORMA_PAGAMENTO: TStringField
+      FieldName = 'IND_FORMA_PAGAMENTO'
+      Size = 8
+    end
+    object QContaReceberMovIND_TROCA: TStringField
+      FieldName = 'IND_TROCA'
+      Size = 3
+    end
+    object QContaReceberMovCOD_ADIANTAMENTO: TIntegerField
+      FieldName = 'COD_ADIANTAMENTO'
+    end
+  end
+  object QContaReceber: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  TB_CONTA_RECEBER_CAB.*'
+      'FROM'
+      '  TB_CONTA_RECEBER_CAB'
+      'where'
+      '  TB_CONTA_RECEBER_CAB.COD_NOTA_CAB = :nota_cab'
+      '')
+    Variables.Data = {
+      0300000001000000090000003A4E4F54415F4341420300000000000000000000
+      00}
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000002D00000015000000434F445F434F4E54415F524543454245525F4341
+      420100000000000E000000434F445F46494E414C494441444501000000000011
+      000000434F445F42414E434F5F4147454E4349410100000000000A000000434F
+      445F46494C49414C0100000000000A0000004E554D5F544954554C4F01000000
+      00000B0000004E554D5F50415243454C4101000000000013000000444553435F
+      5449504F5F444F43554D454E544F0100000000000C00000044545F4D4F56494D
+      454E544F0100000000000800000044545F42414958410100000000000D000000
+      44545F56454E43494D454E544F0100000000000A00000044545F454D49535341
+      4F0100000000001000000044545F4341504954414C495A4143414F0100000000
+      000A00000056414C5F544954554C4F0100000000000B00000056414C5F4E4547
+      4F43494F0100000000000A000000494E445F4143454954450100000000000C00
+      0000494E445F534954554143414F0100000000000F000000444553435F4F4253
+      4552564143414F0100000000000C000000434F445F4E4F54415F434142010000
+      0000000C000000434F445F434144415354524F0100000000000C00000056414C
+      5F4F524947494E414C01000000000010000000434F445F4E4F53534F5F4E554D
+      45524F0100000000000900000056414C5F4A55524F5301000000000010000000
+      434F445F444550415254414D454E544F01000000000011000000434F445F434F
+      4E545241544F5F56454E440100000000000E000000444553435F4156414C4953
+      5441310100000000000E000000444553435F4156414C49535441320100000000
+      000C000000434F445F56454E4445444F520100000000000D000000504552435F
+      434F4D495353414F0100000000001600000044545F4341504954414C495A4143
+      414F5F4D4F4544410100000000000F00000056414C5F50524F4D4953534F5249
+      4101000000000011000000494E445F454E564941444F5F42414E434F01000000
+      000012000000434F445F434F4E54415F434F5252454E54450100000000001400
+      0000434F445F4F5244454D5F434F4D5052415F43414201000000000011000000
+      434F445F4F4252415F434F4E545241544F01000000000011000000494E445F45
+      4D495449444F5F4341524E4501000000000015000000434F445F4F4252415F43
+      4F4E545241544F5F4D4F56010000000000060000004E554D5F4F530100000000
+      0015000000434F445F4F5244454D5F5345525649434F5F434142010000000000
+      08000000444553435F4F42530100000000000D000000434F445F56454E444544
+      4F52310100000000000E000000504552435F434F4D495353414F310100000000
+      000F000000434F445F4F464943494E415F4341420100000000000B000000434F
+      445F424F524445524F01000000000008000000434F445F4F4252410100000000
+      0014000000434F445F434F4E545241544F5F4C4F4341444F52010000000000}
+    RefreshOptions = [roBeforeEdit, roAllFields]
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 415
+    Top = 159
+    object QContaReceberCOD_CONTA_RECEBER_CAB: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_CAB'
+      Required = True
+    end
+    object QContaReceberCOD_FINALIDADE: TIntegerField
+      FieldName = 'COD_FINALIDADE'
+    end
+    object QContaReceberCOD_BANCO_AGENCIA: TIntegerField
+      FieldName = 'COD_BANCO_AGENCIA'
+    end
+    object QContaReceberCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+    end
+    object QContaReceberNUM_TITULO: TFloatField
+      FieldName = 'NUM_TITULO'
+    end
+    object QContaReceberNUM_PARCELA: TIntegerField
+      FieldName = 'NUM_PARCELA'
+    end
+    object QContaReceberDESC_TIPO_DOCUMENTO: TStringField
+      FieldName = 'DESC_TIPO_DOCUMENTO'
+      Size = 3
+    end
+    object QContaReceberDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+    end
+    object QContaReceberDT_BAIXA: TDateTimeField
+      FieldName = 'DT_BAIXA'
+    end
+    object QContaReceberDT_VENCIMENTO: TDateTimeField
+      FieldName = 'DT_VENCIMENTO'
+      Required = True
+    end
+    object QContaReceberDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+    end
+    object QContaReceberDT_CAPITALIZACAO: TDateTimeField
+      FieldName = 'DT_CAPITALIZACAO'
+    end
+    object QContaReceberVAL_TITULO: TFloatField
+      FieldName = 'VAL_TITULO'
+    end
+    object QContaReceberVAL_NEGOCIO: TFloatField
+      FieldName = 'VAL_NEGOCIO'
+    end
+    object QContaReceberIND_ACEITE: TStringField
+      FieldName = 'IND_ACEITE'
+      Size = 3
+    end
+    object QContaReceberIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Size = 13
+    end
+    object QContaReceberDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 50
+    end
+    object QContaReceberCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QContaReceberCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QContaReceberVAL_ORIGINAL: TFloatField
+      FieldName = 'VAL_ORIGINAL'
+    end
+    object QContaReceberCOD_NOSSO_NUMERO: TStringField
+      FieldName = 'COD_NOSSO_NUMERO'
+      Size = 17
+    end
+    object QContaReceberVAL_JUROS: TFloatField
+      FieldName = 'VAL_JUROS'
+    end
+    object QContaReceberCOD_DEPARTAMENTO: TIntegerField
+      FieldName = 'COD_DEPARTAMENTO'
+      Required = True
+    end
+    object QContaReceberCOD_CONTRATO_VEND: TIntegerField
+      FieldName = 'COD_CONTRATO_VEND'
+    end
+    object QContaReceberDESC_AVALISTA1: TStringField
+      FieldName = 'DESC_AVALISTA1'
+      Size = 40
+    end
+    object QContaReceberDESC_AVALISTA2: TStringField
+      FieldName = 'DESC_AVALISTA2'
+      Size = 40
+    end
+    object QContaReceberCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+    object QContaReceberPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+      Required = True
+    end
+    object QContaReceberDT_CAPITALIZACAO_MOEDA: TDateTimeField
+      FieldName = 'DT_CAPITALIZACAO_MOEDA'
+    end
+    object QContaReceberVAL_PROMISSORIA: TFloatField
+      FieldName = 'VAL_PROMISSORIA'
+    end
+    object QContaReceberIND_ENVIADO_BANCO: TStringField
+      FieldName = 'IND_ENVIADO_BANCO'
+      Size = 3
+    end
+    object QContaReceberCOD_CONTA_CORRENTE: TIntegerField
+      FieldName = 'COD_CONTA_CORRENTE'
+    end
+    object QContaReceberCOD_ORDEM_COMPRA_CAB: TIntegerField
+      FieldName = 'COD_ORDEM_COMPRA_CAB'
+    end
+    object QContaReceberCOD_OBRA_CONTRATO: TIntegerField
+      FieldName = 'COD_OBRA_CONTRATO'
+    end
+    object QContaReceberIND_EMITIDO_CARNE: TStringField
+      FieldName = 'IND_EMITIDO_CARNE'
+      Size = 3
+    end
+    object QContaReceberCOD_OBRA_CONTRATO_MOV: TIntegerField
+      FieldName = 'COD_OBRA_CONTRATO_MOV'
+    end
+    object QContaReceberNUM_OS: TIntegerField
+      FieldName = 'NUM_OS'
+    end
+    object QContaReceberCOD_ORDEM_SERVICO_CAB: TIntegerField
+      FieldName = 'COD_ORDEM_SERVICO_CAB'
+    end
+    object QContaReceberDESC_OBS: TStringField
+      FieldName = 'DESC_OBS'
+      Size = 1000
+    end
+    object QContaReceberCOD_VENDEDOR1: TIntegerField
+      FieldName = 'COD_VENDEDOR1'
+    end
+    object QContaReceberPERC_COMISSAO1: TFloatField
+      FieldName = 'PERC_COMISSAO1'
+      Required = True
+    end
+    object QContaReceberCOD_OFICINA_CAB: TIntegerField
+      FieldName = 'COD_OFICINA_CAB'
+    end
+    object QContaReceberCOD_BORDERO: TIntegerField
+      FieldName = 'COD_BORDERO'
+    end
+    object QContaReceberCOD_OBRA: TIntegerField
+      FieldName = 'COD_OBRA'
+    end
+    object QContaReceberCOD_CONTRATO_LOCADOR: TIntegerField
+      FieldName = 'COD_CONTRATO_LOCADOR'
+    end
+  end
+  object QRUltimaRZ: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DT_EMISSAO,'
+      '  NUM_CONTADOR_REDUCAOZ,'
+      '  NUM_REINICIO_OPRERACAO,'
+      '  VAL_VENDA_BRUTA'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_MESTRE'
+      'WHERE'
+      
+        '  COD_REGISTRO_MESTRE = (SELECT MAX(COD_REGISTRO_MESTRE) FROM TB' +
+        '_REGISTRO_TIPO60_MESTRE WHERE DESC_SERIE = :NUM_SERIE)'
+      '')
+    Variables.Data = {
+      03000000010000000A0000003A4E554D5F534552494505000000000000000000
+      0000}
+    SequenceField.Field = 'COD_REGISTRO_RESUMO'
+    SequenceField.Sequence = 'SQREGISTRO_TIPO60_RESUMO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000A00000044545F454D495353414F01000000000015000000
+      4E554D5F434F4E5441444F525F5245445543414F5A010000000000160000004E
+      554D5F5245494E4943494F5F4F505245524143414F0100000000000F00000056
+      414C5F56454E44415F4252555441010000000000}
+    RefreshOptions = [roAfterInsert]
+    Session = DMOracle.DBCemapa
+    Left = 416
+    Top = 88
+    object QRUltimaRZDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QRUltimaRZNUM_CONTADOR_REDUCAOZ: TIntegerField
+      FieldName = 'NUM_CONTADOR_REDUCAOZ'
+      Required = True
+    end
+    object QRUltimaRZNUM_REINICIO_OPRERACAO: TIntegerField
+      FieldName = 'NUM_REINICIO_OPRERACAO'
+      Required = True
+    end
+    object QRUltimaRZVAL_VENDA_BRUTA: TFloatField
+      FieldName = 'VAL_VENDA_BRUTA'
+      Required = True
+    end
+  end
+  object QR04: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  E.IND_MF_ADICIONAL,'
+      '  E.DESC_MODELO,'
+      '  E.NUM_SEQ_ECF NUM_USUARIO,'
+      '  E.NUM_SERIE,'
+      '  N.COD_NOTA_CAB,'
+      '  N.NUM_NOTA,'
+      '  N.NUM_COO,'
+      '  N.VAL_DESCONTO AS DESCONTO_SUBTOTAL,'
+      '  N.IND_CUPOM_TOTALIZADO,'
+      '  N.DESC_HASH_MD5,'
+      '  N.IND_SITUACAO,'
+      '  TO_CHAR(N.DT_RECEBIMENTO, '#39'YYYYMMDD'#39') AS DT_INICIO,'
+      '  '#39'V'#39' AS TP_DESCONTO,'
+      '  '#39'V'#39' AS TP_ACRESCIMO,'
+      '  N.VAL_DESPESAS AS ACRESCIMO_SUBTOTAL,'
+      '  0 AS CANCELAMENTO_ACRESCIMO,'
+      '  CASE'
+      
+        '    WHEN (N.IND_SITUACAO = 3 AND N.IND_CUPOM_TOTALIZADO = '#39'N'#39') T' +
+        'HEN -1'
+      
+        '    ELSE  SUM(I.VAL_TOTAL) - SUM(I.VAL_DESCONTO * I.QT_QUANTIDAD' +
+        'E) '
+      '  END AS SUBTOTAL,'
+      '  CASE'
+      
+        '    WHEN (N.IND_SITUACAO = 3 AND N.IND_CUPOM_TOTALIZADO = '#39'N'#39') T' +
+        'HEN -1'
+      
+        '    ELSE (SUM(I.VAL_TOTAL) - SUM(I.VAL_DESCONTO * I.QT_QUANTIDAD' +
+        'E)) - '
+      '      N.VAL_DESCONTO + N.VAL_DESPESAS '
+      '  END AS TOTAL_LIQ,'
+      '  DECODE(N.IND_SITUACAO, 3, '#39'S'#39', '#39'N'#39') IND_CANCELADO,'
+      '  '
+      '  CASE '
+      '    WHEN N.VAL_DESCONTO > 0 THEN '#39'D'#39
+      '    WHEN N.VAL_DESPESAS > 0 THEN '#39'A'#39
+      '    ELSE '#39#39
+      '  END AS ORDEM_DESCONTO_ACRESCIMO,'
+      '  C.NOME,'
+      '  REGEXP_REPLACE(C.NUM_CGC_CPF, '#39'[^0-9]'#39', '#39#39') AS NUM_CGC_CPF'
+      'FROM'
+      '  TB_ECF E'
+      '  INNER JOIN TB_NOTA_CAB N'
+      '    ON E.NUM_SERIE = N.NUM_SERIE_ECF'
+      '    AND N.DT_RECEBIMENTO BETWEEN :DT_INICIAL AND :DT_FINAL'
+      '  LEFT JOIN TB_NOTA_ITEM I'
+      '    ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      '    AND I.IND_CANC_ITEM_CF = '#39'N'#39
+      '  INNER JOIN TB_CADASTRO C '
+      '    ON N.COD_CADASTRO = C.COD_CADASTRO'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  E.NUM_SERIE = :NUM_SERIE)'
+      '  AND'
+      '  N.COD_SERIE_MODELO = '#39'2D'#39
+      
+        'GROUP BY E.IND_MF_ADICIONAL, E.DESC_MODELO, E.NUM_SEQ_ECF, E.NUM' +
+        '_SERIE, N.COD_NOTA_CAB, N.NUM_NOTA, N.NUM_COO, N.VAL_DESCONTO, N' +
+        '.IND_CUPOM_TOTALIZADO, N.DESC_HASH_MD5, N.IND_SITUACAO, TO_CHAR(' +
+        'N.DT_RECEBIMENTO, '#39'YYYYMMDD'#39'), '#39'V'#39', '#39'V'#39', N.VAL_DESPESAS, 0, DECO' +
+        'DE(N.IND_SITUACAO, 3, '#39'S'#39', '#39'N'#39'), CASE '
+      '    WHEN N.VAL_DESCONTO > 0 THEN '#39'D'#39
+      '    WHEN N.VAL_DESPESAS > 0 THEN '#39'A'#39
+      '    ELSE '#39#39
+      '  END, C.NOME, REGEXP_REPLACE(C.NUM_CGC_CPF, '#39'[^0-9]'#39', '#39#39')'
+      'ORDER BY'
+      '  N.NUM_COO')
+    Variables.Data = {
+      03000000030000000B0000003A44545F494E494349414C0C0000000000000000
+      000000090000003A44545F46494E414C0C00000000000000000000000A000000
+      3A4E554D5F5345524945050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000001600000010000000494E445F4D465F41444943494F4E414C01000000
+      00000B000000444553435F4D4F44454C4F0100000000000B0000004E554D5F55
+      53554152494F010000000000080000004E554D5F4E4F54410100000000000700
+      00004E554D5F434F4F01000000000011000000444553434F4E544F5F53554254
+      4F54414C0100000000000900000044545F494E4943494F0100000000000B0000
+      0054505F444553434F4E544F0100000000000C00000054505F41435245534349
+      4D4F01000000000012000000414352455343494D4F5F535542544F54414C0100
+      000000001600000043414E43454C414D454E544F5F414352455343494D4F0100
+      0000000008000000535542544F54414C01000000000009000000544F54414C5F
+      4C49510100000000000D000000494E445F43414E43454C41444F010000000000
+      180000004F5244454D5F444553434F4E544F5F414352455343494D4F01000000
+      0000040000004E4F4D450100000000000B0000004E554D5F4347435F43504601
+      0000000000090000004E554D5F534552494501000000000014000000494E445F
+      4355504F4D5F544F54414C495A41444F0100000000000D000000444553435F48
+      4153485F4D44350100000000000C000000494E445F534954554143414F010000
+      0000000C000000434F445F4E4F54415F434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 144
+    Top = 336
+    object QR04IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR04DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QR04NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR04NUM_NOTA: TIntegerField
+      FieldName = 'NUM_NOTA'
+      Required = True
+    end
+    object QR04NUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+    end
+    object QR04DESCONTO_SUBTOTAL: TFloatField
+      FieldName = 'DESCONTO_SUBTOTAL'
+    end
+    object QR04TP_DESCONTO: TStringField
+      FieldName = 'TP_DESCONTO'
+      Size = 1
+    end
+    object QR04TP_ACRESCIMO: TStringField
+      FieldName = 'TP_ACRESCIMO'
+      Size = 1
+    end
+    object QR04ACRESCIMO_SUBTOTAL: TFloatField
+      FieldName = 'ACRESCIMO_SUBTOTAL'
+      Required = True
+    end
+    object QR04CANCELAMENTO_ACRESCIMO: TFloatField
+      FieldName = 'CANCELAMENTO_ACRESCIMO'
+    end
+    object QR04SUBTOTAL: TFloatField
+      FieldName = 'SUBTOTAL'
+    end
+    object QR04TOTAL_LIQ: TFloatField
+      FieldName = 'TOTAL_LIQ'
+    end
+    object QR04IND_CANCELADO: TStringField
+      FieldName = 'IND_CANCELADO'
+      Size = 1
+    end
+    object QR04ORDEM_DESCONTO_ACRESCIMO: TStringField
+      FieldName = 'ORDEM_DESCONTO_ACRESCIMO'
+      Size = 1
+    end
+    object QR04NOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+    object QR04NUM_CGC_CPF: TStringField
+      FieldName = 'NUM_CGC_CPF'
+      Size = 18
+    end
+    object QR04NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR04IND_CUPOM_TOTALIZADO: TStringField
+      FieldName = 'IND_CUPOM_TOTALIZADO'
+      Size = 1
+    end
+    object QR04DT_INICIO: TStringField
+      FieldName = 'DT_INICIO'
+      Size = 8
+    end
+    object QR04DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR04IND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+      Size = 1
+    end
+    object QR04COD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+  end
+  object QR05: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  E.NUM_SERIE,'
+      '  E.IND_MF_ADICIONAL,'
+      '  E.DESC_MODELO,'
+      '  E.NUM_SEQ_ECF NUM_USUARIO,'
+      '  N.COD_NOTA_CAB,'
+      '  N.NUM_SERIE_ECF AS NUM_SERIE,'
+      '  N.NUM_NOTA,'
+      '  N.NUM_COO,'
+      '  N.IND_SITUACAO,  '
+      '  I.NUM_ITEM_CF,'
+      '  I.IND_CANC_ITEM_CF,'
+      '  I.COD_PRODUTO,'
+      '  P.DESC_COD_BARRA,'
+      '  P.DESC_PRODUTO,'
+      '  I.QT_QUANTIDADE,'
+      '  P.DESC_UNIDADE,'
+      '  I.VAL_UNITARIO,'
+      '  I.VAL_DESCONTO * I.QT_QUANTIDADE AS VAL_DESCONTO,'
+      '  I.VAL_DESCONTO AS DESCONTO_UNITARIO,'
+      '  I.DESC_HASH_MD5,'
+      '  I.COD_NOTA_ITEM,'
+      '  0 AS ACRESCIMO,'
+      '  T.COD_TRIBUTACAO,'
+      '  T.COD_TRIB_IMP_FISCAL,'#9
+      
+        '  (I.VAL_TOTAL - (I.VAL_DESCONTO * I.QT_QUANTIDADE)) AS TOTAL_LI' +
+        'Q, /*Verificar a quest'#227'o de descontos dados no cupom fiscal */'
+      '  --totalizador parcial'
+      '  CASE '
+      '    WHEN TRIM(T.COD_TRIB_IMP_FISCAL) IN ('#39'T'#39','#39'S'#39') THEN '
+      
+        '      T.NUM_INDICE_TRIB_ECF ||TRIM(T.COD_TRIB_IMP_FISCAL) || RPA' +
+        'D(T.PERC_ALIQUOTA,4,'#39'0'#39')    '
+      
+        '    WHEN TRIM(T.COD_TRIB_IMP_FISCAL) IN ('#39'F'#39','#39'I'#39','#39'N'#39','#39'FS'#39','#39'IS'#39','#39 +
+        'NS'#39') THEN'
+      '      TRIM(T.COD_TRIB_IMP_FISCAL) || '#39'1'#39
+      '  END AS TOTALIZADOR_PARCIAL,'
+      '  '
+      '--  CASE '
+      '--    WHEN I.IND_CANC_ITEM_CF = '#39'N'#39' THEN 0 '
+      '--    ELSE I.QT_QUANTIDADE'
+      '--  END AS QT_CANCELADO,'
+      '--  CASE '
+      '--    WHEN I.IND_CANC_ITEM_CF = '#39'N'#39' THEN 0 '
+      '--    ELSE (I.VAL_TOTAL - (I.VAL_DESCONTO * I.QT_QUANTIDADE))'
+      '--  END AS VAL_CANCELADO,'
+      '  0 AS QT_CANCELADO,'
+      '  0 AS VAL_CANCELADO,'
+      '  0 AS CANCELAMENTO_ACRESCIMO,'
+      '  '#39'T'#39' AS IND_ARREDONDAMENTO_TRUNCAMENTO,'
+      '  P.IND_PROD_PROPRIA_TERCEIRO,'
+      '  2 AS IND_CASAS_DEC_QT,'
+      '  2 AS IND_CASAS_DEC_UNIT,  '
+      
+        '  I.VAL_TOTAL - (I.VAL_DESCONTO * I.QT_QUANTIDADE) AS SUBTOTAL, ' +
+        ' '
+      '  N.VAL_DESCONTO AS DESCONTO_SUBTOTAL,'
+      '  TO_CHAR(N.DT_RECEBIMENTO, '#39'YYYYMMDD'#39') AS DT_INICIO,'
+      '  '#39'V'#39' AS TP_DESCONTO,'
+      '  '#39'V'#39' AS TP_ACRESCIMO,'
+      '  N.VAL_DESPESAS AS ACRESCIMO_SUBTOTAL,'
+      '  0 AS CANCELAMENTO_ACRESCIMO'
+      'FROM'
+      '  TB_ECF E'
+      '  INNER JOIN TB_NOTA_CAB N'
+      '    ON E.NUM_SERIE = N.NUM_SERIE_ECF'
+      '    AND N.DT_RECEBIMENTO BETWEEN :DT_INICIAL AND :DT_FINAL'
+      '  INNER JOIN TB_NOTA_ITEM I'
+      '    ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      '  INNER JOIN TB_CADASTRO C '
+      '    ON N.COD_CADASTRO = C.COD_CADASTRO'
+      '  INNER JOIN TB_PRODUTO P'
+      '    ON I.COD_PRODUTO = P.COD_PRODUTO'
+      '  INNER JOIN TB_TRIBUTACAO T'
+      '    ON I.COD_TRIBUTACAO = T.COD_TRIBUTACAO'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  E.NUM_SERIE = :NUM_SERIE)'
+      '  AND'
+      '  N.COD_SERIE_MODELO = '#39'2D'#39
+      'ORDER BY'
+      '  N.NUM_COO,'
+      '  I.NUM_ITEM_CF')
+    Variables.Data = {
+      0300000003000000090000003A44545F46494E414C0C00000000000000000000
+      000A0000003A4E554D5F53455249450500000000000000000000000B0000003A
+      44545F494E494349414C0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000002800000010000000494E445F4D465F41444943494F4E414C01000000
+      00000B000000444553435F4D4F44454C4F0100000000000B0000004E554D5F55
+      53554152494F010000000000090000004E554D5F534552494501000000000008
+      0000004E554D5F4E4F5441010000000000070000004E554D5F434F4F01000000
+      00000B0000004E554D5F4954454D5F43460100000000000B000000434F445F50
+      524F4455544F0100000000000C000000444553435F50524F4455544F01000000
+      00000D00000051545F5155414E5449444144450100000000000C000000444553
+      435F554E49444144450100000000000C00000056414C5F554E49544152494F01
+      00000000000C00000056414C5F444553434F4E544F0100000000000900000041
+      4352455343494D4F01000000000009000000544F54414C5F4C49510100000000
+      0013000000544F54414C495A41444F525F5041524349414C0100000000000C00
+      000051545F43414E43454C41444F0100000000000D00000056414C5F43414E43
+      454C41444F0100000000001600000043414E43454C414D454E544F5F41435245
+      5343494D4F0100000000001E000000494E445F41525245444F4E44414D454E54
+      4F5F5452554E43414D454E544F01000000000019000000494E445F50524F445F
+      50524F505249415F544552434549524F01000000000010000000494E445F4341
+      5341535F4445435F515401000000000012000000494E445F43415341535F4445
+      435F554E495401000000000008000000535542544F54414C0100000000001100
+      0000444553434F4E544F5F535542544F54414C0100000000000900000044545F
+      494E4943494F0100000000000B00000054505F444553434F4E544F0100000000
+      000C00000054505F414352455343494D4F010000000000120000004143524553
+      43494D4F5F535542544F54414C0100000000001800000043414E43454C414D45
+      4E544F5F414352455343494D4F5F3101000000000011000000444553434F4E54
+      4F5F554E49544152494F01000000000013000000434F445F545249425F494D50
+      5F46495343414C0100000000000D000000444553435F484153485F4D44350100
+      000000000C000000494E445F534954554143414F0100000000000D000000434F
+      445F4E4F54415F4954454D0100000000000C000000434F445F4E4F54415F4341
+      420100000000000B0000004E554D5F53455249455F310100000000000E000000
+      434F445F5452494255544143414F01000000000010000000494E445F43414E43
+      5F4954454D5F43460100000000000E000000444553435F434F445F4241525241
+      010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 336
+    object QR05IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR05DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QR05NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR05NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR05NUM_NOTA: TIntegerField
+      FieldName = 'NUM_NOTA'
+      Required = True
+    end
+    object QR05NUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+    end
+    object QR05NUM_ITEM_CF: TIntegerField
+      FieldName = 'NUM_ITEM_CF'
+    end
+    object QR05COD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QR05DESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QR05QT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QR05DESC_UNIDADE: TStringField
+      FieldName = 'DESC_UNIDADE'
+      Size = 3
+    end
+    object QR05VAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+    end
+    object QR05VAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+    end
+    object QR05ACRESCIMO: TFloatField
+      FieldName = 'ACRESCIMO'
+    end
+    object QR05TOTAL_LIQ: TFloatField
+      FieldName = 'TOTAL_LIQ'
+    end
+    object QR05TOTALIZADOR_PARCIAL: TStringField
+      FieldName = 'TOTALIZADOR_PARCIAL'
+      Size = 36
+    end
+    object QR05QT_CANCELADO: TFloatField
+      FieldName = 'QT_CANCELADO'
+    end
+    object QR05VAL_CANCELADO: TFloatField
+      FieldName = 'VAL_CANCELADO'
+    end
+    object QR05CANCELAMENTO_ACRESCIMO: TFloatField
+      FieldName = 'CANCELAMENTO_ACRESCIMO'
+    end
+    object QR05IND_ARREDONDAMENTO_TRUNCAMENTO: TStringField
+      FieldName = 'IND_ARREDONDAMENTO_TRUNCAMENTO'
+      Size = 1
+    end
+    object QR05IND_PROD_PROPRIA_TERCEIRO: TStringField
+      FieldName = 'IND_PROD_PROPRIA_TERCEIRO'
+      Size = 1
+    end
+    object QR05IND_CASAS_DEC_QT: TFloatField
+      FieldName = 'IND_CASAS_DEC_QT'
+    end
+    object QR05IND_CASAS_DEC_UNIT: TFloatField
+      FieldName = 'IND_CASAS_DEC_UNIT'
+    end
+    object QR05SUBTOTAL: TFloatField
+      FieldName = 'SUBTOTAL'
+    end
+    object QR05DESCONTO_SUBTOTAL: TFloatField
+      FieldName = 'DESCONTO_SUBTOTAL'
+    end
+    object QR05DT_INICIO: TStringField
+      FieldName = 'DT_INICIO'
+      Size = 8
+    end
+    object QR05TP_DESCONTO: TStringField
+      FieldName = 'TP_DESCONTO'
+      Size = 1
+    end
+    object QR05TP_ACRESCIMO: TStringField
+      FieldName = 'TP_ACRESCIMO'
+      Size = 1
+    end
+    object QR05ACRESCIMO_SUBTOTAL: TFloatField
+      FieldName = 'ACRESCIMO_SUBTOTAL'
+      Required = True
+    end
+    object QR05CANCELAMENTO_ACRESCIMO_1: TFloatField
+      FieldName = 'CANCELAMENTO_ACRESCIMO_1'
+    end
+    object QR05DESCONTO_UNITARIO: TFloatField
+      FieldName = 'DESCONTO_UNITARIO'
+    end
+    object QR05COD_TRIB_IMP_FISCAL: TStringField
+      FieldName = 'COD_TRIB_IMP_FISCAL'
+      Size = 30
+    end
+    object QR05DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR05IND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+      Size = 1
+    end
+    object QR05COD_NOTA_ITEM: TIntegerField
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+    object QR05COD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QR05NUM_SERIE_1: TStringField
+      FieldName = 'NUM_SERIE_1'
+    end
+    object QR05COD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object QR05IND_CANC_ITEM_CF: TStringField
+      FieldName = 'IND_CANC_ITEM_CF'
+      Size = 1
+    end
+    object QR05DESC_COD_BARRA: TStringField
+      FieldName = 'DESC_COD_BARRA'
+    end
+  end
+  object QR06: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  E.NUM_SERIE,'
+      '  E.IND_MF_ADICIONAL,'
+      '  E.DESC_MODELO,'
+      '  E.NUM_SEQ_ECF NUM_USUARIO,'
+      '  D.COD_DEMAIS_DOCUMENTOS_ECF,'
+      '  D.NUM_COO,'
+      '  D.NUM_GNF,'
+      
+        '  CASE WHEN DESC_DENOMINACAO = '#39'RG'#39' THEN D.NUM_GRG END AS NUM_GR' +
+        'G,'
+      '  D.NUM_CDC,'
+      '  D.DESC_DENOMINACAO,'
+      '  D.DESC_HASH_MD5,'
+      
+        '  TO_CHAR(D.DT_HR_FINAL_EMISSAO, '#39'YYYYMMDD'#39') AS DT_FINAL_EMISSAO' +
+        ','
+      
+        '  TO_CHAR(D.DT_HR_FINAL_EMISSAO, '#39'hh24miss'#39') AS HR_FINAL_EMISSAO' +
+        ','
+      '  D.DT_HR_FINAL_EMISSAO'
+      'FROM'
+      '  TB_ECF E'
+      '  INNER JOIN TB_DEMAIS_DOCUMENTOS_ECF D'
+      '    ON E.NUM_SERIE = D.NUM_SERIE_ECF'
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  E.NUM_SERIE = :NUM_SERIE)'
+      '  AND'
+      '  TO_CHAR(D.DT_HR_FINAL_EMISSAO,'#39'DD/MM/YYYY'#39') BETWEEN'
+      '    :DT_INICIAL AND :DT_FINAL'
+      'ORDER BY'
+      '  D.NUM_COO')
+    Variables.Data = {
+      03000000030000000A0000003A4E554D5F534552494505000000000000000000
+      00000B0000003A44545F494E494349414C0C0000000000000000000000090000
+      003A44545F46494E414C0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000E000000090000004E554D5F53455249450100000000001000000049
+      4E445F4D465F41444943494F4E414C0100000000000B000000444553435F4D4F
+      44454C4F0100000000000B0000004E554D5F5553554152494F01000000000007
+      0000004E554D5F434F4F010000000000070000004E554D5F474E460100000000
+      00070000004E554D5F43444301000000000010000000444553435F44454E4F4D
+      494E4143414F0100000000001000000044545F46494E414C5F454D495353414F
+      0100000000001000000048525F46494E414C5F454D495353414F010000000000
+      070000004E554D5F4752470100000000001300000044545F48525F46494E414C
+      5F454D495353414F0100000000000D000000444553435F484153485F4D443501
+      000000000019000000434F445F44454D4149535F444F43554D454E544F535F45
+      4346010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 224
+    Top = 336
+    object QR06NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR06IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR06DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QR06NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR06NUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+      Required = True
+    end
+    object QR06NUM_GNF: TIntegerField
+      FieldName = 'NUM_GNF'
+    end
+    object QR06NUM_CDC: TIntegerField
+      FieldName = 'NUM_CDC'
+    end
+    object QR06DESC_DENOMINACAO: TStringField
+      FieldName = 'DESC_DENOMINACAO'
+      Required = True
+      Size = 2
+    end
+    object QR06HR_FINAL_EMISSAO: TStringField
+      FieldName = 'HR_FINAL_EMISSAO'
+      Size = 8
+    end
+    object QR06DT_FINAL_EMISSAO: TStringField
+      FieldName = 'DT_FINAL_EMISSAO'
+      Size = 8
+    end
+    object QR06DT_HR_FINAL_EMISSAO: TDateTimeField
+      FieldName = 'DT_HR_FINAL_EMISSAO'
+      Required = True
+    end
+    object QR06DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR06COD_DEMAIS_DOCUMENTOS_ECF: TIntegerField
+      FieldName = 'COD_DEMAIS_DOCUMENTOS_ECF'
+      Required = True
+    end
+    object QR06NUM_GRG: TFloatField
+      FieldName = 'NUM_GRG'
+    end
+  end
+  object QR07: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  E.NUM_SERIE,'
+      '  E.IND_MF_ADICIONAL,'
+      '  E.DESC_MODELO,'
+      '  E.NUM_SEQ_ECF NUM_USUARIO,'
+      '  N.COD_NOTA_CAB,'
+      '  N.NUM_COO,'
+      '  N.NUM_NOTA AS CCF,'
+      '  N.VAL_DESCONTO AS DESCONTO_SUBTOTAL,'
+      '  N.VAL_DESPESAS AS ACRESCIMO_SUBTOTAL,'
+      '  N.IND_SITUACAO,'
+      '  N.DESC_HASH_MD5,'
+      '  0 AS NUM_GNF,'
+      '  P.COD_PAGAMENTO,'
+      '  P.DESC_PAGAMENTO,'
+      '  P.VAL_PAGAMENTO,'
+      '  DECODE(N.IND_SITUACAO,3,'#39'S'#39','#39'N'#39') AS IND_ESTORNO,'
+      '  DECODE(N.IND_SITUACAO,3,P.VAL_PAGAMENTO, 0) AS VAL_ESTORNO'
+      'FROM'
+      '  TB_ECF E'
+      '  INNER JOIN TB_NOTA_CAB N'
+      '    ON N.NUM_SERIE_ECF = E.NUM_SERIE'
+      '    AND N.DT_RECEBIMENTO BETWEEN :DT_INICIAL AND :DT_FINAL'
+      '  INNER JOIN TB_PAGAMENTO P'
+      '    ON N.COD_NOTA_CAB = P.COD_NOTA_CAB    '
+      'WHERE'
+      '  (:NUM_SERIE IS NULL OR'
+      '  E.NUM_SERIE = :NUM_SERIE)'
+      ''
+      'UNION'
+      ''
+      'SELECT '
+      '  E.NUM_SERIE,'
+      '  E.IND_MF_ADICIONAL,'
+      '  E.DESC_MODELO,'
+      '  E.NUM_SEQ_ECF NUM_USUARIO,'
+      '  N.COD_NOTA_CAB,'
+      '  D.NUM_COO,'
+      '  N.NUM_NOTA,'
+      '  0 DESCONTO_SUBTOTAL,'
+      '  0 ACRESCIMO_SUBTOTAL,'
+      '  '#39'2'#39' IND_SITUACAO,'
+      '  D.DESC_HASH_MD5, '
+      '  D.NUM_GNF,'
+      '  0 COD_PAGAMENTO,'
+      '  '#39'DINHEIRO'#39' DESC_DENOMINACAO,'
+      '  D.VAL_MOVIMENTO,'
+      '  '#39'N'#39' IND_ESTORNO,'
+      '  0 VAL_ESTORNO'
+      'FROM'
+      '  TB_DEMAIS_DOCUMENTOS_ECF D'
+      '    LEFT JOIN TB_NOTA_CAB N ON D.COD_NOTA_CAB = N.COD_NOTA_CAB'
+      '    LEFT JOIN TB_ECF E ON D.NUM_SERIE_ECF = E.NUM_SERIE'
+      'WHERE'
+      
+        '  TO_CHAR(D.DT_HR_FINAL_EMISSAO,'#39'DD/MM/YYYY'#39') BETWEEN :DT_INICIA' +
+        'L AND :DT_FINAL'
+      '  AND'
+      '  (:NUM_SERIE IS NULL OR'
+      '    D.NUM_SERIE_ECF = :NUM_SERIE) '
+      '  AND '
+      '  D.DESC_DENOMINACAO = '#39'CN'#39
+      '  '
+      'ORDER BY '
+      '  NUM_COO')
+    Variables.Data = {
+      03000000030000000B0000003A44545F494E494349414C0C0000000000000000
+      000000090000003A44545F46494E414C0C00000000000000000000000A000000
+      3A4E554D5F5345524945050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000011000000090000004E554D5F53455249450100000000001000000049
+      4E445F4D465F41444943494F4E414C0100000000000B000000444553435F4D4F
+      44454C4F0100000000000B0000004E554D5F5553554152494F01000000000007
+      0000004E554D5F434F4F01000000000003000000434346010000000000070000
+      004E554D5F474E460100000000000E000000444553435F504147414D454E544F
+      0100000000000D00000056414C5F504147414D454E544F0100000000000B0000
+      00494E445F4553544F524E4F0100000000000B00000056414C5F4553544F524E
+      4F01000000000011000000444553434F4E544F5F535542544F54414C01000000
+      000012000000414352455343494D4F5F535542544F54414C0100000000000C00
+      0000494E445F534954554143414F0100000000000D000000444553435F484153
+      485F4D44350100000000000C000000434F445F4E4F54415F4341420100000000
+      000D000000434F445F504147414D454E544F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 264
+    Top = 336
+    object QR07NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+    end
+    object QR07IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR07DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+    end
+    object QR07NUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR07COD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QR07NUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+    end
+    object QR07CCF: TIntegerField
+      FieldName = 'CCF'
+    end
+    object QR07DESCONTO_SUBTOTAL: TFloatField
+      FieldName = 'DESCONTO_SUBTOTAL'
+    end
+    object QR07ACRESCIMO_SUBTOTAL: TFloatField
+      FieldName = 'ACRESCIMO_SUBTOTAL'
+    end
+    object QR07IND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Size = 1
+    end
+    object QR07DESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+    object QR07NUM_GNF: TFloatField
+      FieldName = 'NUM_GNF'
+    end
+    object QR07COD_PAGAMENTO: TFloatField
+      FieldName = 'COD_PAGAMENTO'
+    end
+    object QR07DESC_PAGAMENTO: TStringField
+      FieldName = 'DESC_PAGAMENTO'
+      Size = 16
+    end
+    object QR07VAL_PAGAMENTO: TFloatField
+      FieldName = 'VAL_PAGAMENTO'
+    end
+    object QR07IND_ESTORNO: TStringField
+      FieldName = 'IND_ESTORNO'
+      Size = 1
+    end
+    object QR07VAL_ESTORNO: TFloatField
+      FieldName = 'VAL_ESTORNO'
+    end
+  end
+  object QECFCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'*'
+      'FROM'
+      #9'TB_ECF'
+      'ORDER BY'
+      #9'NUM_SERIE')
+    QBEDefinition.QBEFieldDefs = {
+      0400000009000000090000004E554D5F53455249450100000000000A00000044
+      4553435F4D415243410100000000000B000000444553435F4D4F44454C4F0100
+      0000000009000000444553435F5449504F0100000000000D0000004E554D5F56
+      455253414F5F53420100000000001500000044545F484F52415F494E5354414C
+      4143414F5F53420100000000000B0000004E554D5F5345515F45434601000000
+      000010000000494E445F4D465F41444943494F4E414C0100000000000B000000
+      4E554D5F5553554152494F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 80
+    Top = 216
+    object QECFConsNUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QECFConsDESC_MARCA: TStringField
+      FieldName = 'DESC_MARCA'
+      Required = True
+      Size = 15
+    end
+    object QECFConsDESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QECFConsDESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Required = True
+      Size = 7
+    end
+    object QECFConsNUM_VERSAO_SB: TStringField
+      FieldName = 'NUM_VERSAO_SB'
+      Size = 10
+    end
+    object QECFConsDT_HORA_INSTALACAO_SB: TDateTimeField
+      FieldName = 'DT_HORA_INSTALACAO_SB'
+    end
+    object QECFConsNUM_SEQ_ECF: TIntegerField
+      FieldName = 'NUM_SEQ_ECF'
+    end
+    object QECFConsIND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QECFConsNUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+  end
+  object DSECFCons: TDataSource
+    DataSet = QECFCons
+    Left = 80
+    Top = 264
+  end
+  object QRMeiosPagto: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT  '
+      '  N.DT_RECEBIMENTO,'
+      '  P.DESC_PAGAMENTO,'
+      '  CASE '
+      '    WHEN M.COD_SERIE_MODELO = '#39'55'#39' THEN '#39'3'#39
+      '    WHEN M.COD_SERIE_MODELO = '#39'2D'#39' THEN '#39'1'#39
+      '  END AS COD_SERIE_MODELO,'
+      '  SUM(P.VAL_VALOR) AS VAL_TOTAL'
+      'FROM'
+      '  TB_NOTA_CAB N  '
+      '  INNER JOIN TB_PAGAMENTO P'
+      '    ON N.COD_NOTA_CAB = P.COD_NOTA_CAB'
+      '  INNER JOIN TB_SERIE_MODELO M'
+      '    ON N.COD_SERIE_MODELO = M.COD_SERIE_MODELO   '
+      '  INNER JOIN TB_NOTA_ITEM I'
+      '    ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'WHERE'
+      '  N.DT_RECEBIMENTO BETWEEN :DT_INI AND :DT_FIN'
+      'GROUP BY N.DT_RECEBIMENTO, P.DESC_PAGAMENTO, CASE '
+      '    WHEN M.COD_SERIE_MODELO = '#39'55'#39' THEN '#39'3'#39
+      '    WHEN M.COD_SERIE_MODELO = '#39'2D'#39' THEN '#39'1'#39
+      '  END'
+      'ORDER BY'
+      '  P.DESC_PAGAMENTO,'
+      '  N.DT_RECEBIMENTO')
+    Variables.Data = {
+      0300000002000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000E00000044545F5245434542494D454E544F010000000000
+      0E000000444553435F504147414D454E544F0100000000000900000056414C5F
+      544F54414C01000000000010000000434F445F53455249455F4D4F44454C4F01
+      0000000000}
+    Session = DMOracle.DBCemapa
+    Left = 328
+    Top = 336
+    object QRMeiosPagtoDT_RECEBIMENTO: TDateTimeField
+      FieldName = 'DT_RECEBIMENTO'
+    end
+    object QRMeiosPagtoDESC_PAGAMENTO: TStringField
+      FieldName = 'DESC_PAGAMENTO'
+      Required = True
+      Size = 16
+    end
+    object QRMeiosPagtoVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+    object QRMeiosPagtoCOD_SERIE_MODELO: TStringField
+      FieldName = 'COD_SERIE_MODELO'
+      Size = 1
+    end
+  end
+  object QReducaoRepositorio: TOracleDataSet1
+    SQL.Strings = (
+      'INSERT INTO TB_REPOSITORIO_REDUCAO_Z VALUES('
+      #9':NUM_SERIE,'
+      #9':DT_REDUCAO,'
+      #9':DESC_ARQUIVO,'
+      #9':DESC_DADOS_REDUCAO,'
+      #9':NUM_SEQ_IMPRESSORA)')
+    Variables.Data = {
+      03000000050000000A0000003A4E554D5F534552494505000000000000000000
+      00000B0000003A44545F5245445543414F0C00000000000000000000000D0000
+      003A444553435F4152515549564F700000000000000000000000130000003A44
+      4553435F4441444F535F5245445543414F700000000000000000000000130000
+      003A4E554D5F5345515F494D50524553534F5241030000000000000000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 424
+    Top = 336
+  end
+  object QCupomFiscalRel: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'N.COD_NOTA_CAB,'
+      #9'N.NUM_NOTA,'
+      #9'N.DT_EMISSAO,'
+      #9'N.NUM_SERIE_ECF,'
+      #9'N.OBS,'
+      #9'N.VAL_DESCONTO AS VAL_DESCONTO_CUPOM,'
+      #9'N.VAL_DESPESAS AS VAL_DESPESAS_CUPOM,'
+      #9'I.NUM_ITEM_CF,'
+      #9'I.QT_QUANTIDADE,'
+      #9'P.DESC_UNIDADE,'
+      #9'P.DESC_COD_BARRA,'
+      #9'P.COD_PRODUTO,'
+      #9'P.DESC_PRODUTO,'
+      #9'T.COD_TRIB_IMP_FISCAL,'
+      #9'I.VAL_UNITARIO,'
+      
+        #9'I.VAL_TOTAL - NVL(I.VAL_DESCONTO * I.QT_QUANTIDADE,0) AS VAL_SU' +
+        'BTOTAL,'
+      #9'I.VAL_DESCONTO * I.QT_QUANTIDADE AS VAL_DESCONTO_ITEM,'
+      #9'I.VAL_DESPESAS AS VAL_DESPESAS_ITEM,'
+      #9'C.COD_CADASTRO,'
+      #9'C.NOME'
+      'FROM'
+      #9'TB_NOTA_ITEM I'
+      #9#9'INNER JOIN TB_NOTA_CAB N'
+      #9#9'ON I.COD_NOTA_CAB = N.COD_NOTA_CAB'#9#9
+      #9#9'INNER JOIN TB_PRODUTO P'
+      #9#9'ON I.COD_PRODUTO = P.COD_PRODUTO'
+      #9#9'INNER JOIN TB_TRIBUTACAO T'
+      #9#9'ON I.COD_TRIBUTACAO = T.COD_TRIBUTACAO'
+      #9#9'INNER JOIN TB_CADASTRO C'
+      #9#9'ON N.COD_CADASTRO = C.COD_CADASTRO'
+      'WHERE'
+      #9'N.NUM_SERIE_ECF IS NOT NULL'
+      #9'AND'
+      #9'N.DT_RECEBIMENTO BETWEEN :DT_INI AND :DT_FIN'
+      #9'AND'
+      #9'N.NUM_SERIE_ECF = :NUM_SERIE_ECF'
+      #9'AND'
+      #9'(:NUM_CUPOM IS NULL OR'
+      #9'N.NUM_NOTA = :NUM_CUPOM) '
+      
+        'GROUP BY N.COD_NOTA_CAB, N.NUM_NOTA, N.DT_EMISSAO, N.NUM_SERIE_E' +
+        'CF, N.OBS, N.VAL_DESCONTO, N.VAL_DESPESAS, I.NUM_ITEM_CF, I.QT_Q' +
+        'UANTIDADE, P.DESC_UNIDADE, P.DESC_COD_BARRA, P.COD_PRODUTO, P.DE' +
+        'SC_PRODUTO, T.COD_TRIB_IMP_FISCAL, I.VAL_UNITARIO, I.VAL_TOTAL -' +
+        ' NVL(I.VAL_DESCONTO * I.QT_QUANTIDADE,0), I.VAL_DESCONTO * I.QT_' +
+        'QUANTIDADE, I.VAL_DESPESAS, C.COD_CADASTRO, C.NOME'
+      'ORDER BY'
+      '  N.NUM_NOTA,'
+      '  I.NUM_ITEM_CF')
+    Variables.Data = {
+      0300000004000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494E0C00000000000000000000000E0000003A4E554D5F53
+      455249455F4543460500000000000000000000000A0000003A4E554D5F435550
+      4F4D030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000140000000C000000434F445F4E4F54415F4341420100000000000800
+      00004E554D5F4E4F54410100000000000A00000044545F454D495353414F0100
+      000000000D0000004E554D5F53455249455F454346010000000000030000004F
+      42530100000000001200000056414C5F444553434F4E544F5F4355504F4D0100
+      000000001200000056414C5F44455350455341535F4355504F4D010000000000
+      0B0000004E554D5F4954454D5F43460100000000000D00000051545F5155414E
+      5449444144450100000000000C000000444553435F554E494441444501000000
+      00000E000000444553435F434F445F42415252410100000000000B000000434F
+      445F50524F4455544F0100000000000C000000444553435F50524F4455544F01
+      000000000013000000434F445F545249425F494D505F46495343414C01000000
+      00000C00000056414C5F554E49544152494F0100000000001100000056414C5F
+      444553434F4E544F5F4954454D0100000000001100000056414C5F4445535045
+      5341535F4954454D0100000000000C000000434F445F434144415354524F0100
+      00000000040000004E4F4D450100000000000C00000056414C5F535542544F54
+      414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 504
+    Top = 296
+    object QCupomFiscalRelCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QCupomFiscalRelNUM_NOTA: TIntegerField
+      FieldName = 'NUM_NOTA'
+      Required = True
+    end
+    object QCupomFiscalRelDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QCupomFiscalRelNUM_SERIE_ECF: TStringField
+      FieldName = 'NUM_SERIE_ECF'
+    end
+    object QCupomFiscalRelOBS: TStringField
+      FieldName = 'OBS'
+      Size = 60
+    end
+    object QCupomFiscalRelVAL_DESCONTO_CUPOM: TFloatField
+      FieldName = 'VAL_DESCONTO_CUPOM'
+    end
+    object QCupomFiscalRelVAL_DESPESAS_CUPOM: TFloatField
+      FieldName = 'VAL_DESPESAS_CUPOM'
+      Required = True
+    end
+    object QCupomFiscalRelNUM_ITEM_CF: TIntegerField
+      FieldName = 'NUM_ITEM_CF'
+    end
+    object QCupomFiscalRelQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QCupomFiscalRelDESC_UNIDADE: TStringField
+      FieldName = 'DESC_UNIDADE'
+      Size = 3
+    end
+    object QCupomFiscalRelDESC_COD_BARRA: TStringField
+      FieldName = 'DESC_COD_BARRA'
+    end
+    object QCupomFiscalRelCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+    object QCupomFiscalRelDESC_PRODUTO: TStringField
+      FieldName = 'DESC_PRODUTO'
+      Size = 200
+    end
+    object QCupomFiscalRelCOD_TRIB_IMP_FISCAL: TStringField
+      FieldName = 'COD_TRIB_IMP_FISCAL'
+      Size = 30
+    end
+    object QCupomFiscalRelVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+    end
+    object QCupomFiscalRelVAL_SUBTOTAL: TFloatField
+      FieldName = 'VAL_SUBTOTAL'
+    end
+    object QCupomFiscalRelVAL_DESCONTO_ITEM: TFloatField
+      FieldName = 'VAL_DESCONTO_ITEM'
+    end
+    object QCupomFiscalRelVAL_DESPESAS_ITEM: TFloatField
+      FieldName = 'VAL_DESPESAS_ITEM'
+      Required = True
+    end
+    object QCupomFiscalRelCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QCupomFiscalRelNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+  end
+  object QRU1: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'U1'#39' AS TIPO,'
+      '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') AS NUM_CGC,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO,'#39'[^0-9]'#39', '#39#39') as DESC_INSCRICA' +
+        'O,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO_MUNICIPAL, '#39'[^0-9]'#39', '#39#39') as DE' +
+        'SC_INSCRICAO_MUNICIPAL,'
+      '  F.DESC_FILIAL  '
+      'FROM'
+      '  TB_FILIAL F'
+      'WHERE'
+      '  F.COD_FILIAL = :COD_FILIAL')
+    Variables.Data = {
+      03000000010000000B0000003A434F445F46494C49414C030000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000005000000040000005449504F010000000000070000004E554D5F4347
+      430100000000000E000000444553435F494E5343524943414F01000000000018
+      000000444553435F494E5343524943414F5F4D554E49434950414C0100000000
+      000B000000444553435F46494C49414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 384
+    object QRU1TIPO: TStringField
+      FieldName = 'TIPO'
+      Size = 2
+    end
+    object QRU1NUM_CGC: TStringField
+      FieldName = 'NUM_CGC'
+      Size = 4000
+    end
+    object QRU1DESC_INSCRICAO: TStringField
+      FieldName = 'DESC_INSCRICAO'
+      Size = 4000
+    end
+    object QRU1DESC_INSCRICAO_MUNICIPAL: TStringField
+      FieldName = 'DESC_INSCRICAO_MUNICIPAL'
+      Size = 4000
+    end
+    object QRU1DESC_FILIAL: TStringField
+      FieldName = 'DESC_FILIAL'
+      Size = 50
+    end
+  end
+  object QRE3: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ECF.NUM_SERIE,'
+      '  ECF.IND_MF_ADICIONAL,'
+      '  ECF.DESC_TIPO,'
+      '  ECF.DESC_MARCA,'
+      '  ECF.DESC_MODELO,'
+      '  '#39'20'#39'||SUBSTR(ED.DT_ESTOQUE,5,2)||SUBSTR(ED.DT_ESTOQUE,3,2)||'
+      '    SUBSTR(ED.DT_ESTOQUE,0,2) AS DT_ESTOQUE,'
+      '  ED.HORA_ESTOQUE,'
+      '  ED.COD_ESTOQUE_DIARIO_CAB'
+      'FROM'
+      '  TB_ESTOQUE_DIARIO_CAB ED'
+      '  INNER JOIN TB_ECF ECF ON'
+      '  ED.NUM_FABRICACAO_ECF = ECF.NUM_SERIE'
+      'WHERE'
+      
+        '  TO_DATE(ED.DT_ESTOQUE,'#39'DDMMYY'#39') BETWEEN TO_DATE(:DT_INI,'#39'DD/MM' +
+        '/YY'#39') AND'
+      '  TO_DATE(:DT_FIN,'#39'DD/MM/YY'#39')'
+      'ORDER BY'
+      #39'20'#39'||SUBSTR(ED.DT_ESTOQUE,5,2)||SUBSTR(ED.DT_ESTOQUE,3,2)||'
+      '    SUBSTR(ED.DT_ESTOQUE,0,2)')
+    Variables.Data = {
+      0300000002000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      0400000008000000090000004E554D5F53455249450100000000001000000049
+      4E445F4D465F41444943494F4E414C01000000000009000000444553435F5449
+      504F0100000000000A000000444553435F4D415243410100000000000B000000
+      444553435F4D4F44454C4F0100000000000A00000044545F4553544F51554501
+      00000000000C000000484F52415F4553544F5155450100000000001600000043
+      4F445F4553544F5155455F44494152494F5F434142010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 64
+    Top = 384
+    object QRE3NUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QRE3IND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QRE3DESC_TIPO: TStringField
+      FieldName = 'DESC_TIPO'
+      Required = True
+      Size = 7
+    end
+    object QRE3DESC_MARCA: TStringField
+      FieldName = 'DESC_MARCA'
+      Required = True
+      Size = 15
+    end
+    object QRE3DESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+    end
+    object QRE3DT_ESTOQUE: TStringField
+      FieldName = 'DT_ESTOQUE'
+      Size = 8
+    end
+    object QRE3HORA_ESTOQUE: TStringField
+      FieldName = 'HORA_ESTOQUE'
+      Required = True
+      Size = 7
+    end
+    object QRE3COD_ESTOQUE_DIARIO_CAB: TIntegerField
+      FieldName = 'COD_ESTOQUE_DIARIO_CAB'
+      Required = True
+    end
+  end
+  object QChecaMD5ECF: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'*'
+      'FROM'
+      #9'TB_ECF'
+      'WHERE'
+      #9'NUM_SERIE = :NUM_SERIE')
+    Variables.Data = {
+      03000000010000000A0000003A4E554D5F534552494505000000000000000000
+      0000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B000000090000004E554D5F53455249450100000000000A00000044
+      4553435F4D415243410100000000000B000000444553435F4D4F44454C4F0100
+      0000000009000000444553435F5449504F0100000000000D0000004E554D5F56
+      455253414F5F53420100000000001500000044545F484F52415F494E5354414C
+      4143414F5F53420100000000000B0000004E554D5F5345515F45434601000000
+      000010000000494E445F4D465F41444943494F4E414C0100000000000B000000
+      4E554D5F5553554152494F0100000000000A000000434F445F46494C49414C01
+      00000000000D000000444553435F484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 32
+    Top = 456
+    object QChecaMD5ECFNUM_SERIE: TStringField
+      Tag = 1
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+  end
+  object QChecaMD5Filial: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_FILIAL'
+      'WHERE'
+      '  COD_FILIAL = :COD_FILIAL')
+    Variables.Data = {
+      03000000010000000B0000003A434F445F46494C49414C030000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000780000000A000000434F445F46494C49414C0100000000000B000000
+      444553435F46494C49414C0100000000000B000000444553435F434944414445
+      01000000000008000000444553435F4345500100000000000D00000044455343
+      5F454E44455245434F010000000000070000004E554D5F434743010000000000
+      0E000000444553435F494E5343524943414F0100000000000D00000044455343
+      5F54454C45464F4E450100000000000F0000004E554D5F4E4F54415F46495343
+      414C0100000000000A0000004E554D5F544954554C4F0100000000000B000000
+      494E445F4553544F5155450100000000000D0000004E554D5F4F5243414D454E
+      544F0100000000000A0000004E554D5F50454449444F0100000000000B000000
+      4E554D5F524543454954410100000000000C0000004E554D5F434F4E54524154
+      4F010000000000070000004E554D5F435052010000000000080000004E554D5F
+      475549410100000000000B0000004E554D5F424F4C4554494D01000000000010
+      0000004E554D5F43414958415F504F5354414C0100000000000A0000004E554D
+      5F52454349424F0100000000000A000000434F445F45535441444F0100000000
+      001600000044545F46454348414D454E544F5F434F4E544142494C0100000000
+      000C0000004E554D5F524F4D414E45494F0100000000000D0000004E554D5F50
+      41475F52415A414F0100000000000D000000444553435F4C50545F4E4F544101
+      00000000000F000000444553435F4C50545F50454449444F0100000000000900
+      0000434F445F53455249450100000000000C0000004E554D5F454E4445524543
+      4F01000000000019000000444553435F434F4D504C454D454E544F5F454E4445
+      5245434F0100000000000B000000444553435F42414952524F01000000000011
+      000000444553435F4E4F4D455F434F4E5441544F01000000000018000000494E
+      445F50414452414F5F4152515F4D41474E455449434F0100000000001C000000
+      494E445F50414452414F5F46494E5F4152515F4D41474E455449434F01000000
+      000008000000444553435F4641580100000000000B000000444553435F455F4D
+      41494C01000000000011000000494E445F504F5254415F42414C414E43410100
+      000000000B000000444553435F4C50545F4F5301000000000011000000444553
+      435F5449504F5F42414C414E434101000000000013000000434F445F43524544
+      454E4349414C5F5345414201000000000008000000504552435F495353010000
+      0000001A0000004E554D5F4D494E4953544552494F5F4147524943554C545552
+      4101000000000017000000494E445F424C4F515545494F5F56454E44415F5643
+      544F01000000000016000000444553435F494D50524553534F52415F46495343
+      414C01000000000018000000494E445F4C49424552415F5045534F5F524F4D41
+      4E45494F01000000000014000000494E445F4553544F5155455F4E4547415449
+      564F01000000000012000000444553435F504F5254415F4348524F4E4F530100
+      0000000010000000494E445F53554253544954554943414F0100000000000C00
+      0000434F445F434144415354524F01000000000014000000444553435F435046
+      5F524553504F4E534156454C01000000000008000000444553435F4E49540100
+      0000000018000000444553435F494E5343524943414F5F4D554E49434950414C
+      0100000000000C000000444553435F53554652414D410100000000000A000000
+      434F445F43494441444501000000000019000000434F445F434144415354524F
+      5F434F4E544142494C4953544101000000000010000000494E445F4352454449
+      544F5F49434D5301000000000012000000494E445F494D5052494D455F504544
+      49444F01000000000010000000494E445F434F4E54494E47454E434941010000
+      000000080000004E554D5F4E49524501000000000010000000494E445F414D42
+      49454E54455F4E46450100000000000D000000494E445F5449504F5F4E4F5441
+      01000000000018000000434F445F434144415354524F5F524553504F4E534156
+      454C0100000000000F000000494E445F53495354454D415F4E46450100000000
+      000F000000444553435F4C50545F434845515545010000000000150000004445
+      53435F4C50545F434F4E484543494D454E544F01000000000014000000444553
+      435F5245504F5349544F52494F5F4E46450100000000000E000000494E445F56
+      4941535F44414E46450100000000000E0000004E554D5F564941535F44414E46
+      450100000000000C000000444553435F5553554152494F0100000000000A0000
+      00444553435F53454E48410100000000000D000000494E445F4C4F47494E5F4E
+      464501000000000010000000444553435F434552544946494341444F01000000
+      000013000000444553435F4C4F474F5449504F5F44414E464501000000000015
+      000000494E445F524547494D455F5452494255544152494F0100000000000F00
+      0000444553435F56455253414F5F4E46450100000000000F00000044545F434F
+      4E54494E47454E43494101000000000016000000444553435F4A5553545F434F
+      4E54494E47454E43494101000000000015000000494E445F4F43554C54415F46
+      4F4E455F44414E464501000000000012000000434F445F454E45524749415F54
+      454E53414F01000000000012000000434F445F434C415353455F434F4E53554D
+      4F01000000000010000000494E445F5449504F5F454E45524749410100000000
+      0012000000494E445F5449504F5F4154495649444144450100000000000F0000
+      00494E445F50455246494C5F5350454401000000000006000000494E445F5354
+      01000000000013000000494E445F524547494D455F455350454349414C010000
+      0000000C000000434F445F494E435F5452494201000000000014000000434F44
+      5F4150524F5052494143414F5F435245440100000000000D000000434F445F54
+      49504F5F434F4E5401000000000013000000434F445F435249544552494F5F45
+      534352495401000000000007000000494E445F49504901000000000013000000
+      494E445F5045524D4954455F494D505F45585001000000000010000000434F44
+      5F53455249455F4D4F44454C4F0100000000000C000000504552435F42435F4E
+      46534501000000000010000000444553435F454E56494F5F454D41494C010000
+      00000010000000444553435F53454E48415F454D41494C010000000000090000
+      00444553435F534D54500100000000000E0000004E554D5F504F5254415F534D
+      545001000000000007000000494E445F53534C01000000000009000000444553
+      435F434E414501000000000011000000434F445F494E435F545249425F505245
+      5601000000000014000000494E445F434F4E54494E47454E4349415F43544501
+      000000000010000000494E445F414D4249454E54455F4354450100000000000E
+      000000494E445F564941535F44414354450100000000000E0000004E554D5F56
+      4941535F44414354450100000000001300000044545F434F4E54494E47454E43
+      49415F4354450100000000001B000000444553435F4A555354495F434F4E5449
+      4E47454E4349415F4354450100000000000F000000444553435F56455253414F
+      5F4354450100000000000A000000444553435F524E5452430100000000000900
+      0000444553435F43494F5401000000000013000000444553435F4C4F474F5449
+      504F5F444143544501000000000014000000444553435F434552544946494341
+      444F5F4354450100000000000B000000444553435F49505F5445460100000000
+      0014000000444553435F49445F5445524D494E414C5F54454601000000000010
+      000000444553435F49445F4C4F4A415F5445460100000000000E000000434F44
+      5F4E42535F50414452414F0100000000000F000000444553435F4C50545F5245
+      4349424F01000000000011000000494E445F414D4249454E54455F4D44464501
+      00000000000F000000494E445F564941535F44414D4446450100000000000F00
+      00004E554D5F564941535F44414D44464501000000000010000000444553435F
+      56455253414F5F4D4446450100000000000D000000444553435F484153485F4D
+      4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 120
+    Top = 456
+    object QChecaMD5FilialCOD_FILIAL: TIntegerField
+      Tag = 1
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+  end
+  object QChecaMD5NotaCab: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  *'
+      'FROM'
+      '  TB_NOTA_CAB'
+      'WHERE'
+      '  COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000007E0000000C000000434F445F4E4F54415F4341420100000000000B00
+      0000434F445F5553554152494F0100000000000A000000434F445F46494C4941
+      4C0100000000000C000000434F445F4D454E534147454D0100000000000E0000
+      00434F445F5452414E53504F5254450100000000000C000000434F445F4F5045
+      524143414F0100000000000A000000434F445F45535441444F0100000000000C
+      000000434F445F56454E4445444F520100000000000C000000434F445F434144
+      415354524F010000000000080000004E554D5F4E4F5441010000000000090000
+      00434F445F53455249450100000000000C000000494E445F534954554143414F
+      01000000000012000000494E445F434F4E444943414F5F504147544F01000000
+      00000A00000044545F454D495353414F0100000000000C00000044545F4D4F56
+      494D454E544F0100000000000E00000044545F5245434542494D454E544F0100
+      000000000F000000434F445F4D4F5449564F5F43414E430100000000000C0000
+      0056414C5F444553504553415301000000000011000000494E445F454E545241
+      44415F53414944410100000000000900000056414C5F46524554450100000000
+      000C00000056414C5F444553434F4E544F01000000000011000000434F445F54
+      52414E53504F525441444F52010000000000160000004E554D5F434F4E484543
+      494D454E544F5F46524554450100000000000A00000056414C5F415649535441
+      0100000000000E000000494E445F5449504F5F46524554450100000000000B00
+      00004E554D5F564F4C554D4553010000000000030000004F4253010000000000
+      0F0000004F42535F434F4D504C454D454E544F0100000000000A00000044545F
+      5553554152494F01000000000014000000434F445F5452494255544143414F5F
+      46524554450100000000000D00000056414C5F544F54414C5F49504901000000
+      00000D00000056414C5F49434D5F46524554450100000000001200000056414C
+      5F49434D5F424153455F46524554450100000000000C00000056414C5F46554E
+      525552414C0100000000000A000000444553435F504C41434101000000000013
+      000000444553435F5452414E53504F525441444F524101000000000017000000
+      434F445F4E4F54415F434F4E54415F434F5252454E54450100000000000D0000
+      0044545F454D495353414F5F43460100000000000F000000434F445F4F504552
+      4143414F5F43460100000000000E0000004E525F444941535F43484551554501
+      000000000010000000434F445F434F4E545241544F5F4D4F5601000000000013
+      000000434F445F434F4E545241544F5F47505F4D4F560100000000000F000000
+      4E525F444941535F434845515545310100000000000F0000004E525F44494153
+      5F434845515545320100000000000F000000494E445F4E4F54415F5345475552
+      4F01000000000011000000434F445F434F4E545241544F5F56454E4401000000
+      0000070000004E525F524F54410100000000000D000000504552435F434F4D49
+      5353414F0100000000000C000000494E445F4D494C484147454D010000000000
+      060000004E554D5F4F5301000000000010000000434F445F444550415254414D
+      454E544F0100000000000B00000056414C5F5045444147494F01000000000015
+      000000434F445F56454E4445444F525F505245504F53544F0100000000000F00
+      00004E525F444941535F434845515545330100000000000D00000056414C5F46
+      524554455F544F4E01000000000013000000444553435F4F42535F434F52504F
+      5F4E4F544101000000000014000000434F445F4F5244454D5F434F4D5052415F
+      43414201000000000015000000434F445F434144415354524F5F504152434549
+      524F0100000000000A0000004E554D5F50454449444F0100000000001A000000
+      434F445F4F5244454D5F434152524547414D454E544F5F434142010000000000
+      0F0000004E525F444941535F4348455155453401000000000012000000444553
+      435F4F42535F4445564F4C5543414F01000000000014000000434F445F505241
+      5A4F5F56454E43494D454E544F010000000000110000004E554D5F444941535F
+      434152454E4349410100000000000B000000434F445F43554C54555241010000
+      0000000D000000434F445F4D4F544F524953544101000000000016000000434F
+      445F434F4E545241544F5F504A555249444943410100000000001A000000434F
+      445F434144415354524F5F434C415353494649434143414F0100000000001100
+      0000494E445F494D5052494D455F465245544501000000000015000000444553
+      435F474152414E544941535F4F5554524153010000000000070000004E554D5F
+      44434F01000000000016000000434F445F4E4F54415F4341425F5452414E535F
+      454E54010000000000170000004E554D5F444553504143484F5F4558504F5254
+      4143414F01000000000019000000444553435F4D454D4F52414E444F5F455850
+      4F52544143414F0100000000001200000056414C5F444553434F4E544F5F4649
+      5441530100000000000F000000494E445F494D5052494D455F43414201000000
+      00000B00000056414C5F494D504F53544F01000000000015000000494E445F42
+      414958415F434F4E545241544F5F43460100000000000E000000434F445F464C
+      55584F5F5452454D0100000000001000000056414C5F53554253545F54524942
+      55540100000000000A000000444553435F4D415243410100000000000C000000
+      444553435F4553504543494501000000000011000000444553435F4348415645
+      5F41434553534F0100000000000D000000494E445F5449504F5F4E4F54410100
+      0000000010000000494E445F434F4E54494E47454E4349410100000000001600
+      0000434F445F4E4F54415F4341425F4445565F46495841520100000000001500
+      0000494E445F5449504F5F434F4E484543494D454E544F010000000000170000
+      00434F445F41524D415A454D5F414C46414E44454741444F0100000000001000
+      0000434F445F4E4F54415F4341425F5245460100000000000900000056414C5F
+      53454E41520100000000000B00000042494E5F584D4C5F4E4645000000000000
+      10000000494E445F414D4249454E54455F4E464501000000000010000000434F
+      445F4F4252415F5245515F43414201000000000008000000434F445F4F425241
+      010000000000060000004E554D5F4B4D0100000000000C00000056414C5F434F
+      4D495353414F01000000000015000000434F445F4F5244454D5F534552564943
+      4F5F4341420100000000000C000000434F445F53455249455F43460100000000
+      0006000000494E445F53540100000000001A000000434F445F52454345495441
+      5F4F425249474143414F5F49434D530100000000001C00000044545F56454E43
+      494D454E544F5F4F425249474143414F5F49434D530100000000001200000043
+      4F445F4F425249474143414F5F49434D530100000000001B0000004E554D5F50
+      524F434553534F5F4F425249474143414F5F49434D530100000000001B000000
+      494E445F50524F434553534F5F4F425249474143414F5F49434D530100000000
+      001C000000444553435F50524F434553534F5F4F425249474143414F5F49434D
+      5301000000000019000000444553435F434F4D504C5F4F425249474143414F5F
+      49434D5301000000000013000000434F445F45535441444F5F454D4241525155
+      4501000000000013000000444553435F4C4F43414C5F454D4241525155450100
+      000000000E000000434F445F55465F56454943554C4F0100000000000E000000
+      4E554D5F5045534F5F425255544F010000000000100000004E554D5F5045534F
+      5F4C49515549444F0100000000000A000000444553435F534552494501000000
+      00000B0000004E554D5F50454449444F5301000000000014000000494E445F43
+      4F4E53554D45444F525F46494E414C01000000000014000000494E445F434F4E
+      53554D49444F525F46494E414C01000000000010000000434F445F5345524945
+      5F4D4F44454C4F01000000000013000000434F445F53455249455F4D4F44454C
+      4F5F4346010000000000080000004E554D5F4E46534501000000000015000000
+      444553435F43484156455F41434553534F5F4354450100000000000D00000056
+      414C5F5049535F46524554450100000000001000000056414C5F434F46494E53
+      5F465245544501000000000014000000494E445F4355504F4D5F544F54414C49
+      5A41444F0100000000000D0000004E554D5F53455249455F4543460100000000
+      00070000004E554D5F434F4F01000000000015000000444553435F4D44355F43
+      55504F4D5F46495343414C0100000000000D000000444553435F484153485F4D
+      4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 224
+    Top = 456
+    object QChecaMD5NotaCabCOD_NOTA_CAB: TIntegerField
+      Tag = 1
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+  end
+  object QChecaMD5NotaItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_NOTA_ITEM'
+      'WHERE'
+      '  COD_NOTA_ITEM = :COD_NOTA_ITEM')
+    Variables.Data = {
+      03000000010000000E0000003A434F445F4E4F54415F4954454D030000000000
+      000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000470000000D000000434F445F4E4F54415F4954454D0100000000000C
+      000000434F445F4E4F54415F4341420100000000000E000000434F445F545249
+      4255544143414F0100000000000D00000051545F5155414E5449444144450100
+      000000000900000056414C5F544F54414C01000000000008000000504552435F
+      4950490100000000000D000000504552435F434F4D495353414F010000000000
+      0B000000434F445F50524F4455544F0100000000000D000000434F445F4C4F54
+      455F5449504F0100000000000C00000056414C5F444553434F4E544F01000000
+      00000C00000056414C5F44455350455341530100000000000900000056414C5F
+      46524554450100000000000D000000504552435F444553434F4E544F01000000
+      00000700000056414C5F4950490100000000000C00000056414C5F554E495441
+      52494F0100000000000C00000056414C5F49434D5F4241534501000000000007
+      00000056414C5F49434D0100000000000D000000494E445F434C4153535F4950
+      490100000000000900000056414C5F435553544F010000000000070000005641
+      4C5F49535301000000000009000000504552435F494E53530100000000001000
+      0000504552435F42454E454649434941444F01000000000011000000494E445F
+      42585F434F4E54525F56454E44010000000000110000004E554D5F4E4F54415F
+      50524F4455544F5201000000000010000000494E445F5449504F5F434F4E5355
+      4D4F0100000000000A00000051545F4348454741444101000000000007000000
+      56414C5F5049530100000000000B00000056414C5F434F4E46494E5301000000
+      000009000000504552435F444553430100000000000E00000056414C5F424153
+      455F53554253540100000000000E00000056414C5F49434D535F535542535401
+      00000000001300000056414C5F554E49544152494F5F544142454C4101000000
+      00000B000000434F445F43554C545552410100000000001400000056414C5F44
+      50495F5452414E5347454E49434F530100000000001700000051545F43524544
+      49544F5F5452414E5347454E49434F5301000000000015000000434F445F524F
+      4D414E45494F5F41475249434F4C410100000000000800000056414C5F464143
+      530100000000000A00000056414C5F4645544841420100000000000900000049
+      4E445F435553544F0100000000000A000000444553435F52454E444101000000
+      00000E0000004E554D5F464142524943414E54450100000000000B0000004E55
+      4D5F564F4C554D45530100000000000B0000004E554D5F434142454341530100
+      0000000008000000434F445F43464F5001000000000013000000444553435F43
+      4F4D504C454D454E544F5F4F5301000000000014000000434F445F4E4F54415F
+      4954454D5F4F524947454D0100000000000C000000434F445F4F504552414341
+      4F01000000000010000000444553435F434F4D504C454D454E544F0100000000
+      0012000000444553435F494E465F41444943494F4E414C0100000000000B0000
+      00434F445F4353545F495049010000000000060000004E554D5F444901000000
+      00000500000044545F444901000000000014000000444553435F4C4F43414C5F
+      444553454D425F444901000000000010000000434F445F55465F444553454D42
+      5F44490100000000000C00000044545F444553454D425F44490100000000000E
+      000000434F445F4558504F525441444F5201000000000018000000434F445F44
+      4554414C48414D454E544F5F56454943554C4F0100000000000900000056414C
+      5F42435F49490100000000000E00000056414C5F444553504144555F49490100
+      000000000600000056414C5F49490100000000000A00000056414C5F494F465F
+      49490100000000000B000000434F445F4353545F5049530100000000000E0000
+      00434F445F4353545F434F46494E5301000000000014000000434F445F4E4154
+      5552455A415F52454345495441010000000000080000004E554D5F4954454D01
+      00000000001300000056414C5F444553434F4E544F5F52415445494F01000000
+      00000900000056414C5F42435F44490100000000000B0000004E554D5F495445
+      4D5F434601000000000010000000494E445F43414E435F4954454D5F43460100
+      000000000D000000444553435F484153485F4D44350100000000001C00000049
+      4E445F434F4E5349444552415F444553504553415F42435F4950490100000000
+      00}
+    Session = DMOracle.DBCemapa
+    Left = 336
+    Top = 456
+    object QChecaMD5NotaItemCOD_NOTA_ITEM: TIntegerField
+      Tag = 1
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+  end
+  object QChecaMD5DemaisDoc: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_DEMAIS_DOCUMENTOS_ECF'
+      'WHERE'
+      '  COD_DEMAIS_DOCUMENTOS_ECF = :COD_DEMAIS_DOCUMENTOS_ECF')
+    Variables.Data = {
+      03000000010000001A0000003A434F445F44454D4149535F444F43554D454E54
+      4F535F454346030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000A00000019000000434F445F44454D4149535F444F43554D454E544F
+      535F4543460100000000000D0000004E554D5F53455249455F45434601000000
+      0000070000004E554D5F434F4F010000000000070000004E554D5F474E460100
+      00000000070000004E554D5F475247010000000000070000004E554D5F434443
+      01000000000010000000444553435F44454E4F4D494E4143414F010000000000
+      1300000044545F48525F46494E414C5F454D495353414F0100000000000D0000
+      00444553435F484153485F4D44350100000000000C00000056414C5F4F504552
+      4143414F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 456
+    Top = 456
+    object QChecaMD5DemaisDocCOD_DEMAIS_DOCUMENTOS_ECF: TIntegerField
+      Tag = 1
+      FieldName = 'COD_DEMAIS_DOCUMENTOS_ECF'
+      Required = True
+    end
+  end
+  object QChecaMD5Reg60M: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_MESTRE'
+      'WHERE'
+      '  COD_REGISTRO_MESTRE = :COD_REGISTRO_MESTRE')
+    Variables.Data = {
+      0300000001000000140000003A434F445F524547495354524F5F4D4553545245
+      030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000001000000013000000434F445F524547495354524F5F4D455354524501
+      00000000000A00000044545F454D495353414F0100000000000A000000444553
+      435F53455249450100000000000E0000004E554D5F53455155454E4349414C01
+      00000000000B000000444553435F4D4F44454C4F0100000000000B0000004E55
+      4D5F434F4F5F494E490100000000000B0000004E554D5F434F4F5F46494E0100
+      00000000150000004E554D5F434F4E5441444F525F5245445543414F5A010000
+      000000160000004E554D5F5245494E4943494F5F4F505245524143414F010000
+      0000000F00000056414C5F56454E44415F42525554410100000000000F000000
+      56414C5F544F54414C5F474552414C0100000000001200000044545F484F5241
+      5F454D495353414F5F525A0100000000000B0000004E554D5F5553554152494F
+      0100000000000A0000004E554D5F434F4F5F525A01000000000012000000494E
+      445F444553434F4E544F5F495353514E0100000000000D000000444553435F48
+      4153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 56
+    Top = 520
+    object QChecaMD5Reg60MCOD_REGISTRO_MESTRE: TIntegerField
+      Tag = 1
+      FieldName = 'COD_REGISTRO_MESTRE'
+      Required = True
+    end
+  end
+  object QChecaMD5Reg60A: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_ANALITICO'
+      'WHERE'
+      ' COD_REGISTRO_ANALITICO = :COD_REGISTRO_ANALITICO')
+    Variables.Data = {
+      0300000001000000170000003A434F445F524547495354524F5F414E414C4954
+      49434F030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000700000016000000434F445F524547495354524F5F414E414C495449
+      434F0100000000000A00000044545F454D495353414F0100000000000A000000
+      444553435F534552494501000000000017000000494E445F534954554143414F
+      5F545249425554415249410100000000001B000000564C525F4143554D554C41
+      444F5F544F54414C5F5041524349414C01000000000013000000434F445F5245
+      47495354524F5F4D45535452450100000000000D000000444553435F48415348
+      5F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 168
+    Top = 520
+    object QChecaMD5Reg60ACOD_REGISTRO_ANALITICO: TIntegerField
+      Tag = 1
+      FieldName = 'COD_REGISTRO_ANALITICO'
+      Required = True
+    end
+  end
+  object QChecaMD5Pagamento: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_PAGAMENTO'
+      'WHERE'
+      '  COD_PAGAMENTO = :COD_PAGAMENTO')
+    Variables.Data = {
+      03000000010000000E0000003A434F445F504147414D454E544F030000000000
+      000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000D000000434F445F504147414D454E544F0100000000000C
+      000000434F445F4E4F54415F4341420100000000000E000000444553435F5041
+      47414D454E544F0100000000000D00000056414C5F504147414D454E544F0100
+      000000000900000056414C5F56414C4F520100000000000D000000444553435F
+      484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 288
+    Top = 520
+    object QChecaMD5PagamentoCOD_PAGAMENTO: TIntegerField
+      Tag = 1
+      FieldName = 'COD_PAGAMENTO'
+      Required = True
+    end
+  end
+  object QChecaMD5Produto: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT '
+      '  *'
+      'FROM'
+      '  TB_PRODUTO'
+      'WHERE'
+      '  COD_PRODUTO = :COD_PRODUTO')
+    Variables.Data = {
+      03000000010000000C0000003A434F445F50524F4455544F0300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000005D0000000B000000434F445F50524F4455544F0100000000000A0000
+      00434F445F434C415353450100000000000E000000434F445F54524942555441
+      43414F0100000000000C000000444553435F50524F4455544F0100000000000D
+      0000004E554D5F454D42414C4147454D0100000000000C000000444553435F55
+      4E4944414445010000000000160000004E554D5F545249425F5452414E534645
+      52454E4349410100000000000A00000056414C5F564152454A4F010000000000
+      0B00000056414C5F4154414341444F01000000000014000000504552435F4445
+      53434F4E544F5F4D4158494D4F01000000000008000000504552435F49504901
+      000000000011000000444553435F434C4153535F46495343414C010000000000
+      10000000494E445F5449504F5F50524F4455544F010000000000120000004454
+      5F414C5445524143414F5F505245434F0100000000000E0000004E554D5F4641
+      42524943414E54450100000000000C000000434F445F434144415354524F0100
+      000000000D000000504552435F434F4D495353414F0100000000000800000050
+      4552435F49535301000000000009000000504552435F494E5353010000000000
+      0E000000505245434F5F50524F4D4F43414F0100000000001000000044545F50
+      5245434F5F50524F5F494E490100000000001000000044545F505245434F5F50
+      524F5F46494E0100000000000C000000494E445F534954554143414F01000000
+      000019000000444553435F434F4D504C454D454E544F5F50524F4D4F43414F01
+      000000000010000000444553435F434F4D504C454D454E544F0100000000000D
+      000000434F445F50524F4455544F5F420100000000000E000000494E445F434C
+      415353455F544F580100000000000F000000444553435F464F524D554C414341
+      4F01000000000012000000444553435F475255504F5F5155494D49434F010000
+      0000000B0000004E554D5F564F4C554D455301000000000010000000494E445F
+      43455354415F424153494341010000000000120000004E554D5F4D4554524F53
+      5F43554249434F5301000000000012000000494E445F5449504F5F454D42414C
+      4147454D01000000000012000000444553435F434F4D504C454D454E544F5F32
+      01000000000012000000494E445F5449504F5F564153494C48414D4501000000
+      00000F000000505245434F5F50524F4D4F43414F310100000000000D00000049
+      4E445F4553544F46415249410100000000000B000000494E445F50494E545552
+      410100000000000F00000056414C5F505245434F5F4652455445010000000000
+      0E000000494E445F5245544F524E4156454C0100000000000D0000004E554D5F
+      43585F50414C45544501000000000006000000494E445F4B4D01000000000009
+      000000434F445F4D415243410100000000000F00000044545F56454E43544F5F
+      505245434F0100000000000D000000434F445F4C4F54455F5449504F01000000
+      00000A000000434F445F4E424D5F534801000000000013000000494E445F5355
+      4253544954554943414F5F524A0100000000000B000000504552435F4D415247
+      454D01000000000012000000504552435F4D415247454D5F564152454A4F0100
+      0000000013000000504552435F4D415247454D5F4154414341444F0100000000
+      000900000051545F54454349444F01000000000010000000444553435F4C4F43
+      414C495A4143414F010000000000120000004E554D5F434F4E56455254455F46
+      4152444F0100000000000B000000434F445F45585F544950490100000000000E
+      0000004E554D5F47454E45524F5F4E434D01000000000012000000434F445F47
+      454E45524F5F50524F4455544F01000000000011000000434F445F4C49535441
+      5F5345525649434F0100000000001100000051545F5045534F5F43414958415F
+      4D494E0100000000001100000051545F5045534F5F43414958415F4D41580100
+      00000000110000004E554D5F444941535F56414C49444144450100000000000F
+      000000494E445F5045534F5F50414452414F0100000000000B000000434F445F
+      43554C545552410100000000000A000000444553435F534543414F0100000000
+      000C000000444553435F424F51554554410100000000000F000000444553435F
+      4F42534552564143414F0100000000000E0000004E554D5F5045534F5F425255
+      544F010000000000100000004E554D5F5045534F5F4C49515549444F01000000
+      000012000000434F445F50524F4455544F5F53494147524F0100000000001000
+      0000434F445F5449504F5F50524F4455544F0100000000000B000000434F445F
+      4353545F4950490100000000000A0000004E554D5F4F524947454D0100000000
+      0011000000444553435F434F4E43454E54524143414F0100000000000E000000
+      434F445F4353545F434F46494E530100000000000B000000434F445F4353545F
+      50495301000000000014000000434F445F4E41545552455A415F524543454954
+      410100000000000A000000444553435F4C494E48410100000000001500000043
+      4F445F5345525649434F5F4D554E49434950414C0100000000000E0000004445
+      53435F434F445F42415252410100000000000F000000434F445F50524F445554
+      4F5F414E500100000000000700000051545F54454D500100000000000E000000
+      434F445F55465F434F4E53554D4F01000000000011000000434F445F4353545F
+      5049535F534149444101000000000014000000434F445F4353545F434F46494E
+      535F534149444101000000000015000000434F445F4154495649444144455F43
+      4F4E545249420100000000000E000000494E445F53554253545F545249420100
+      000000001E000000494E445F41525245444F4E44414D454E544F5F5452554E43
+      414D454E544F01000000000019000000494E445F50524F445F50524F50524941
+      5F544552434549524F01000000000016000000434F445F50524F4455544F5F49
+      4D504F52544143414F01000000000011000000444553435F5449504F5F415353
+      454E544F01000000000011000000494E445F5449504F5F455449515545544101
+      00000000000E000000494E445F4D415243454E41524941010000000000110000
+      00494E445F5154445F4554495155455441530100000000000D00000044455343
+      5F484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 400
+    Top = 520
+    object QChecaMD5ProdutoCOD_PRODUTO: TFloatField
+      Tag = 1
+      FieldName = 'COD_PRODUTO'
+      Required = True
+    end
+  end
+  object QChecaMD5Tributacao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_TRIBUTACAO'
+      'WHERE'
+      '  COD_TRIBUTACAO = :COD_TRIBUTACAO')
+    Variables.Data = {
+      03000000010000000F0000003A434F445F5452494255544143414F0300000000
+      00000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000D0000000E000000434F445F5452494255544143414F010000000000
+      0F000000444553435F5452494255544143414F0100000000000E000000504552
+      435F54524942555441444F0100000000000D000000504552435F414C4951554F
+      5441010000000000110000004E554D5F434C415353494649434143414F010000
+      00000013000000434F445F545249425F494D505F46495343414C010000000000
+      12000000444553435F534954554143414F5F545249420100000000000F000000
+      444553435F4F42534552564143414F01000000000011000000494E445F424153
+      455F524544555A49444101000000000013000000504552435F54524942555441
+      444F5F4E4F54410100000000000A000000444553435F43534F534E0100000000
+      00130000004E554D5F494E444943455F545249425F4543460100000000000D00
+      0000444553435F484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 56
+    Top = 568
+    object QChecaMD5TributacaoCOD_TRIBUTACAO: TIntegerField
+      Tag = 1
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+  end
+  object QChecaMD5EstoqueDiarioCab: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_ESTOQUE_DIARIO_CAB'
+      'WHERE'
+      '  COD_ESTOQUE_DIARIO_CAB = :COD_ESTOQUE_DIARIO_CAB')
+    Variables.Data = {
+      0300000001000000170000003A434F445F4553544F5155455F44494152494F5F
+      434142030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000A00000016000000434F445F4553544F5155455F44494152494F5F43
+      41420100000000000A000000434F445F46494C49414C0100000000000A000000
+      44545F4553544F5155450100000000000C000000484F52415F4553544F515545
+      010000000000120000004E554D5F4641425249434143414F5F45434601000000
+      00000D000000444553435F5449504F5F4543460100000000000E000000444553
+      435F4D415243415F4543460100000000000F000000444553435F4D4F44454C4F
+      5F45434601000000000010000000494E445F4D465F41444943494F4E414C0100
+      000000000D000000444553435F484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 192
+    Top = 568
+    object QChecaMD5EstoqueDiarioCabCOD_ESTOQUE_DIARIO_CAB: TIntegerField
+      Tag = 1
+      FieldName = 'COD_ESTOQUE_DIARIO_CAB'
+      Required = True
+    end
+  end
+  object QChecaMD5EstoqueDiarioItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_ESTOQUE_DIARIO_ITEM'
+      'WHERE'
+      '  COD_ESTOQUE_DIARIO_ITEM = :COD_ESTOQUE_DIARIO_ITEM')
+    Variables.Data = {
+      0300000001000000180000003A434F445F4553544F5155455F44494152494F5F
+      4954454D030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000600000017000000434F445F4553544F5155455F44494152494F5F49
+      54454D01000000000016000000434F445F4553544F5155455F44494152494F5F
+      4341420100000000000B000000434F445F50524F4455544F0100000000000D00
+      0000434F445F4C4F54455F5449504F0100000000000D00000051545F5155414E
+      5449444144450100000000000D000000444553435F484153485F4D4435010000
+      000000}
+    Session = DMOracle.DBCemapa
+    Left = 368
+    Top = 568
+    object QChecaMD5EstoqueDiarioItemCOD_ESTOQUE_DIARIO_ITEM: TIntegerField
+      Tag = 1
+      FieldName = 'COD_ESTOQUE_DIARIO_ITEM'
+      Required = True
+    end
+  end
+  object QBuscaEstoqueDiarioItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_ESTOQUE_DIARIO_ITEM'
+      'FROM'
+      '  TB_ESTOQUE_DIARIO_ITEM'
+      'WHERE'
+      '  COD_ESTOQUE_DIARIO_CAB = :COD_ESTOQUE_DIARIO_CAB')
+    Variables.Data = {
+      0300000001000000170000003A434F445F4553544F5155455F44494152494F5F
+      434142030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000100000017000000434F445F4553544F5155455F44494152494F5F49
+      54454D010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 512
+    Top = 568
+    object QBuscaEstoqueDiarioItemCOD_ESTOQUE_DIARIO_ITEM: TIntegerField
+      FieldName = 'COD_ESTOQUE_DIARIO_ITEM'
+      Required = True
+    end
+  end
+  object QBuscaPagamentos: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT  '
+      '  P.COD_PAGAMENTO,'
+      '  P.DESC_PAGAMENTO  '
+      'FROM'
+      '  TB_NOTA_CAB N  '
+      '  INNER JOIN TB_PAGAMENTO P'
+      '    ON N.COD_NOTA_CAB = P.COD_NOTA_CAB'
+      '  INNER JOIN TB_SERIE_MODELO M'
+      '    ON N.COD_SERIE_MODELO = M.COD_SERIE_MODELO   '
+      '  INNER JOIN TB_NOTA_ITEM I'
+      '    ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      'WHERE'
+      '  N.DT_RECEBIMENTO = :DT_PAGAMENTO'
+      '  AND'
+      '  P.DESC_PAGAMENTO = :DESC_PAGAMENTO'
+      'ORDER BY'
+      '  P.DESC_PAGAMENTO,'
+      '  N.DT_RECEBIMENTO')
+    Variables.Data = {
+      03000000020000000F0000003A444553435F504147414D454E544F0500000000
+      000000000000000D0000003A44545F504147414D454E544F0C00000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D000000434F445F504147414D454E544F0100000000000E
+      000000444553435F504147414D454E544F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 512
+    Top = 520
+    object QBuscaPagamentosCOD_PAGAMENTO: TIntegerField
+      FieldName = 'COD_PAGAMENTO'
+      Required = True
+    end
+    object QBuscaPagamentosDESC_PAGAMENTO: TStringField
+      FieldName = 'DESC_PAGAMENTO'
+      Required = True
+      Size = 16
+    end
+  end
+  object QNotaItemIteracao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_NOTA_ITEM,'
+      '  COD_PRODUTO,'
+      '  COD_TRIBUTACAO'
+      'FROM'
+      '  TB_NOTA_ITEM'
+      'WHERE'
+      '  COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000D000000434F445F4E4F54415F4954454D0100000000000B
+      000000434F445F50524F4455544F0100000000000E000000434F445F54524942
+      55544143414F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 568
+    Top = 456
+    object QNotaItemIteracaoCOD_NOTA_ITEM: TIntegerField
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+    object QNotaItemIteracaoCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QNotaItemIteracaoCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+  end
+  object QDemaisDocIteracao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_DEMAIS_DOCUMENTOS_ECF,'
+      '  COD_NOTA_CAB'
+      'FROM'
+      '  TB_DEMAIS_DOCUMENTOS_ECF'
+      'WHERE'
+      '  COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414205000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000200000019000000434F445F44454D4149535F444F43554D454E544F
+      535F4543460100000000000C000000434F445F4E4F54415F4341420100000000
+      00}
+    Session = DMOracle.DBCemapa
+    Left = 624
+    Top = 520
+    object QDemaisDocIteracaoCOD_DEMAIS_DOCUMENTOS_ECF: TIntegerField
+      FieldName = 'COD_DEMAIS_DOCUMENTOS_ECF'
+      Required = True
+    end
+    object QDemaisDocIteracaoCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+  end
+  object QNotaManualCab: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      #9'COD_NOTA_CAB,'
+      #9'COD_USUARIO,'
+      #9'COD_FILIAL,'
+      #9'COD_OPERACAO,'
+      #9'COD_ESTADO,'
+      #9'COD_VENDEDOR,'
+      #9'COD_CADASTRO,'
+      #9'TRUNC(NUM_NOTA) AS NUM_NOTA,'
+      #9'COD_SERIE,'
+      #9'IND_SITUACAO,'
+      #9'IND_CONDICAO_PAGTO,'
+      #9'DT_EMISSAO,'
+      #9'DT_MOVIMENTO,'
+      '  '#9'DT_RECEBIMENTO,'
+      #9'VAL_DESPESAS,'
+      #9'IND_ENTRADA_SAIDA,'
+      #9'VAL_FRETE,'
+      #9'VAL_DESCONTO,'
+      #9'OBS_COMPLEMENTO,'
+      #9'DT_USUARIO,'
+      #9'VAL_ICM_FRETE,'
+      #9'VAL_ICM_BASE_FRETE,'
+      #9'VAL_FUNRURAL,'
+      #9'DESC_PLACA,        '
+      #9'NUM_KM,'
+      #9'COD_SERIE_MODELO,'
+      '  '#9'IND_CUPOM_TOTALIZADO,'
+      '  '#9'NUM_SERIE_ECF,'
+      '  '#9'NUM_COO,'
+      #9'DESC_HASH_MD5'
+      'FROM'
+      #9'TB_NOTA_CAB'
+      'WHERE'
+      #9'COD_NOTA_CAB = :PK'
+      ''
+      '')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_NOTA_CAB'
+    SequenceField.Sequence = 'SQNOTA'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000001E0000000C000000434F445F4E4F54415F4341420100000000000B00
+      0000434F445F5553554152494F0100000000000A000000434F445F46494C4941
+      4C0100000000000C000000434F445F4F5045524143414F0100000000000A0000
+      00434F445F45535441444F0100000000000C000000434F445F56454E4445444F
+      520100000000000C000000434F445F434144415354524F010000000000080000
+      004E554D5F4E4F544101000000000009000000434F445F534552494501000000
+      00000C000000494E445F534954554143414F01000000000012000000494E445F
+      434F4E444943414F5F504147544F0100000000000A00000044545F454D495353
+      414F0100000000000C00000044545F4D4F56494D454E544F0100000000000E00
+      000044545F5245434542494D454E544F0100000000000C00000056414C5F4445
+      53504553415301000000000011000000494E445F454E54524144415F53414944
+      410100000000000900000056414C5F46524554450100000000000C0000005641
+      4C5F444553434F4E544F0100000000000F0000004F42535F434F4D504C454D45
+      4E544F0100000000000A00000044545F5553554152494F0100000000000D0000
+      0056414C5F49434D5F46524554450100000000001200000056414C5F49434D5F
+      424153455F46524554450100000000000C00000056414C5F46554E525552414C
+      0100000000000A000000444553435F504C414341010000000000060000004E55
+      4D5F4B4D01000000000010000000434F445F53455249455F4D4F44454C4F0100
+      0000000014000000494E445F4355504F4D5F544F54414C495A41444F01000000
+      00000D0000004E554D5F53455249455F454346010000000000070000004E554D
+      5F434F4F0100000000000D000000444553435F484153485F4D44350100000000
+      00}
+    Session = DMOracle.DBCemapa
+    AfterPost = QNotaManualCabAfterPost
+    BeforeDelete = QNotaManualCabBeforeDelete
+    AfterDelete = QNotaManualCabAfterDelete
+    Left = 528
+    Top = 24
+    object QNotaManualCabCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QNotaManualCabCOD_USUARIO: TIntegerField
+      FieldName = 'COD_USUARIO'
+    end
+    object QNotaManualCabCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+    object QNotaManualCabCOD_OPERACAO: TIntegerField
+      FieldName = 'COD_OPERACAO'
+      Required = True
+    end
+    object QNotaManualCabCOD_ESTADO: TStringField
+      FieldName = 'COD_ESTADO'
+      Required = True
+      Size = 2
+    end
+    object QNotaManualCabCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+    object QNotaManualCabCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QNotaManualCabNUM_NOTA: TFloatField
+      FieldName = 'NUM_NOTA'
+    end
+    object QNotaManualCabCOD_SERIE: TStringField
+      FieldName = 'COD_SERIE'
+      Required = True
+      Size = 3
+    end
+    object QNotaManualCabIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+      Size = 1
+    end
+    object QNotaManualCabIND_CONDICAO_PAGTO: TStringField
+      FieldName = 'IND_CONDICAO_PAGTO'
+      Required = True
+      Size = 1
+    end
+    object QNotaManualCabDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QNotaManualCabDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+      Required = True
+    end
+    object QNotaManualCabDT_RECEBIMENTO: TDateTimeField
+      FieldName = 'DT_RECEBIMENTO'
+    end
+    object QNotaManualCabVAL_DESPESAS: TFloatField
+      FieldName = 'VAL_DESPESAS'
+      Required = True
+    end
+    object QNotaManualCabIND_ENTRADA_SAIDA: TStringField
+      FieldName = 'IND_ENTRADA_SAIDA'
+      Size = 1
+    end
+    object QNotaManualCabVAL_FRETE: TFloatField
+      FieldName = 'VAL_FRETE'
+      Required = True
+    end
+    object QNotaManualCabVAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+    end
+    object QNotaManualCabOBS_COMPLEMENTO: TStringField
+      FieldName = 'OBS_COMPLEMENTO'
+      Size = 255
+    end
+    object QNotaManualCabDT_USUARIO: TDateTimeField
+      FieldName = 'DT_USUARIO'
+      Required = True
+    end
+    object QNotaManualCabVAL_ICM_FRETE: TFloatField
+      FieldName = 'VAL_ICM_FRETE'
+      Required = True
+    end
+    object QNotaManualCabVAL_ICM_BASE_FRETE: TFloatField
+      FieldName = 'VAL_ICM_BASE_FRETE'
+      Required = True
+    end
+    object QNotaManualCabVAL_FUNRURAL: TFloatField
+      FieldName = 'VAL_FUNRURAL'
+      Required = True
+    end
+    object QNotaManualCabDESC_PLACA: TStringField
+      FieldName = 'DESC_PLACA'
+      Size = 8
+    end
+    object QNotaManualCabNUM_KM: TIntegerField
+      FieldName = 'NUM_KM'
+    end
+    object QNotaManualCabCOD_SERIE_MODELO: TStringField
+      FieldName = 'COD_SERIE_MODELO'
+      Size = 2
+    end
+    object QNotaManualCabIND_CUPOM_TOTALIZADO: TStringField
+      FieldName = 'IND_CUPOM_TOTALIZADO'
+      Size = 1
+    end
+    object QNotaManualCabNUM_SERIE_ECF: TStringField
+      FieldName = 'NUM_SERIE_ECF'
+    end
+    object QNotaManualCabNUM_COO: TIntegerField
+      FieldName = 'NUM_COO'
+    end
+    object QNotaManualCabDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QNotaManualItem: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  COD_NOTA_ITEM,'
+      '  COD_NOTA_CAB,'
+      '  COD_TRIBUTACAO,'
+      '  QT_QUANTIDADE,'
+      '  VAL_TOTAL,'
+      '  PERC_IPI,'
+      '  PERC_COMISSAO,'
+      '  COD_PRODUTO,'
+      '  COD_LOTE_TIPO,'
+      '  VAL_DESCONTO,'
+      '  VAL_DESPESAS,'
+      '  VAL_FRETE,'
+      '  PERC_DESCONTO,'
+      '  VAL_IPI,'
+      '  VAL_UNITARIO,'
+      '  VAL_ICM_BASE,'
+      '  VAL_ICM,'
+      '  IND_CLASS_IPI,'
+      '  VAL_CUSTO,'
+      '  VAL_ISS,'
+      '  NUM_ITEM_CF,'
+      '  IND_CANC_ITEM_CF,'
+      '  VAL_DESCONTO_RATEIO,'
+      '  DESC_HASH_MD5'
+      'FROM'
+      #9'TB_NOTA_ITEM'
+      'where cod_nota_cab = :cod_nota_cab')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    SequenceField.Field = 'COD_NOTA_ITEM'
+    SequenceField.Sequence = 'SQNOTA_ITEM'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000180000000D000000434F445F4E4F54415F4954454D0100000000000C
+      000000434F445F4E4F54415F4341420100000000000E000000434F445F545249
+      4255544143414F0100000000000D00000051545F5155414E5449444144450100
+      000000000900000056414C5F544F54414C01000000000008000000504552435F
+      4950490100000000000D000000504552435F434F4D495353414F010000000000
+      0B000000434F445F50524F4455544F0100000000000D000000434F445F4C4F54
+      455F5449504F0100000000000C00000056414C5F444553434F4E544F01000000
+      00000C00000056414C5F44455350455341530100000000000900000056414C5F
+      46524554450100000000000D000000504552435F444553434F4E544F01000000
+      00000700000056414C5F4950490100000000000C00000056414C5F554E495441
+      52494F0100000000000C00000056414C5F49434D5F4241534501000000000007
+      00000056414C5F49434D0100000000000D000000494E445F434C4153535F4950
+      490100000000000900000056414C5F435553544F010000000000070000005641
+      4C5F4953530100000000000B0000004E554D5F4954454D5F4346010000000000
+      10000000494E445F43414E435F4954454D5F4346010000000000130000005641
+      4C5F444553434F4E544F5F52415445494F0100000000000D000000444553435F
+      484153485F4D4435010000000000}
+    Master = QNotaManualCab
+    MasterFields = 'COD_NOTA_CAB'
+    DetailFields = 'COD_NOTA_CAB'
+    Session = DMOracle.DBCemapa
+    AfterPost = QNotaManualItemAfterPost
+    BeforeDelete = QNotaManualItemBeforeDelete
+    AfterDelete = QNotaManualItemAfterDelete
+    Left = 632
+    Top = 24
+    object QNotaManualItemCOD_NOTA_ITEM: TIntegerField
+      FieldName = 'COD_NOTA_ITEM'
+      Required = True
+    end
+    object QNotaManualItemCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QNotaManualItemCOD_TRIBUTACAO: TIntegerField
+      FieldName = 'COD_TRIBUTACAO'
+      Required = True
+    end
+    object QNotaManualItemQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Required = True
+    end
+    object QNotaManualItemVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      Required = True
+    end
+    object QNotaManualItemPERC_IPI: TFloatField
+      FieldName = 'PERC_IPI'
+      Required = True
+    end
+    object QNotaManualItemPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+      Required = True
+    end
+    object QNotaManualItemCOD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QNotaManualItemCOD_LOTE_TIPO: TIntegerField
+      FieldName = 'COD_LOTE_TIPO'
+      Required = True
+    end
+    object QNotaManualItemVAL_DESCONTO: TFloatField
+      FieldName = 'VAL_DESCONTO'
+    end
+    object QNotaManualItemVAL_DESPESAS: TFloatField
+      FieldName = 'VAL_DESPESAS'
+      Required = True
+    end
+    object QNotaManualItemVAL_FRETE: TFloatField
+      FieldName = 'VAL_FRETE'
+      Required = True
+    end
+    object QNotaManualItemPERC_DESCONTO: TFloatField
+      FieldName = 'PERC_DESCONTO'
+      Required = True
+    end
+    object QNotaManualItemVAL_IPI: TFloatField
+      FieldName = 'VAL_IPI'
+      Required = True
+    end
+    object QNotaManualItemVAL_UNITARIO: TFloatField
+      FieldName = 'VAL_UNITARIO'
+      Required = True
+    end
+    object QNotaManualItemVAL_ICM_BASE: TFloatField
+      FieldName = 'VAL_ICM_BASE'
+      Required = True
+    end
+    object QNotaManualItemVAL_ICM: TFloatField
+      FieldName = 'VAL_ICM'
+      Required = True
+    end
+    object QNotaManualItemIND_CLASS_IPI: TStringField
+      FieldName = 'IND_CLASS_IPI'
+      Required = True
+      Size = 1
+    end
+    object QNotaManualItemVAL_CUSTO: TFloatField
+      FieldName = 'VAL_CUSTO'
+      Required = True
+    end
+    object QNotaManualItemVAL_ISS: TFloatField
+      FieldName = 'VAL_ISS'
+      Required = True
+    end
+    object QNotaManualItemNUM_ITEM_CF: TIntegerField
+      FieldName = 'NUM_ITEM_CF'
+    end
+    object QNotaManualItemIND_CANC_ITEM_CF: TStringField
+      FieldName = 'IND_CANC_ITEM_CF'
+      Size = 1
+    end
+    object QNotaManualItemVAL_DESCONTO_RATEIO: TFloatField
+      FieldName = 'VAL_DESCONTO_RATEIO'
+    end
+    object QNotaManualItemDESC_HASH_MD5: TStringField
+      FieldName = 'DESC_HASH_MD5'
+      Size = 32
+    end
+  end
+  object QR03Nova: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  M.COD_REGISTRO_MESTRE,'
+      '  M.DESC_SERIE NUM_SERIE,'
+      '  M.DT_EMISSAO DT_REDUCAO,'
+      '  REP.DESC_DADOS_REDUCAO,'
+      '  M.DESC_MODELO,'
+      '  M.NUM_USUARIO,'
+      '  M.NUM_CONTADOR_REDUCAOZ,'
+      '  E.IND_MF_ADICIONAL'
+      'FROM'
+      #9'TB_REPOSITORIO_REDUCAO_Z REP'
+      
+        '    INNER JOIN TB_REGISTRO_TIPO60_MESTRE M ON REP.NUM_SERIE = M.' +
+        'DESC_SERIE'
+      '    AND M.DT_EMISSAO = REP.DT_REDUCAO'
+      '    INNER JOIN TB_ECF E ON REP.NUM_SERIE = E.NUM_SERIE'
+      'WHERE'
+      #9'REP.DT_REDUCAO BETWEEN :DT_INI AND :DT_FIN'
+      #9'AND'
+      #9'(:NUM_SERIE IS NULL OR'
+      #9'REP.NUM_SERIE = :NUM_SERIE)')
+    Variables.Data = {
+      0300000003000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494E0C00000000000000000000000A0000003A4E554D5F53
+      45524945050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000800000012000000444553435F4441444F535F5245445543414F0000
+      000000000B000000444553435F4D4F44454C4F0100000000000B0000004E554D
+      5F5553554152494F01000000000010000000494E445F4D465F41444943494F4E
+      414C010000000000150000004E554D5F434F4E5441444F525F5245445543414F
+      5A010000000000090000004E554D5F53455249450100000000000A0000004454
+      5F5245445543414F01000000000013000000434F445F524547495354524F5F4D
+      4553545245010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 120
+    Top = 392
+    object QR03NovaNUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+      Required = True
+    end
+    object QR03NovaDT_REDUCAO: TDateTimeField
+      FieldName = 'DT_REDUCAO'
+      Required = True
+    end
+    object QR03NovaDESC_DADOS_REDUCAO: TMemoField
+      FieldName = 'DESC_DADOS_REDUCAO'
+      Required = True
+      BlobType = ftOraClob
+    end
+    object QR03NovaDESC_MODELO: TStringField
+      FieldName = 'DESC_MODELO'
+      Required = True
+      Size = 2
+    end
+    object QR03NovaNUM_USUARIO: TIntegerField
+      FieldName = 'NUM_USUARIO'
+    end
+    object QR03NovaIND_MF_ADICIONAL: TStringField
+      FieldName = 'IND_MF_ADICIONAL'
+      Size = 1
+    end
+    object QR03NovaNUM_CONTADOR_REDUCAOZ: TIntegerField
+      FieldName = 'NUM_CONTADOR_REDUCAOZ'
+      Required = True
+    end
+    object QR03NovaCOD_REGISTRO_MESTRE: TIntegerField
+      FieldName = 'COD_REGISTRO_MESTRE'
+      Required = True
+    end
+  end
+  object QChecaMD5RepositorioReducao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'*'
+      'FROM'
+      #9'TB_REPOSITORIO_REDUCAO_Z'
+      'WHERE'
+      #9'NUM_SERIE = :NUM_SERIE'
+      #9'AND'
+      #9'DT_REDUCAO = :DT_REDUCAO'
+      #9'AND'
+      #9'NUM_SEQ_IMPRESSORA = :NUM_SEQ_IMPRESSORA')
+    QBEDefinition.QBEFieldDefs = {
+      0400000006000000090000004E554D5F53455249450100000000000A00000044
+      545F5245445543414F0100000000000C000000444553435F4152515549564F00
+      000000000012000000444553435F4441444F535F5245445543414F0000000000
+      00120000004E554D5F5345515F494D50524553534F52410100000000000D0000
+      00444553435F484153485F4D4435010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 464
+    Top = 392
+  end
+  object QR03MD5Helper: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_REGISTRO_ANALITICO,'
+      '  VLR_ACUMULADO_TOTAL_PARCIAL'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_ANALITICO'
+      'WHERE'
+      '  DT_EMISSAO BETWEEN :DT_INI AND :DT_FIN'
+      '  AND'
+      
+        '  IND_SITUACAO_TRIBUTARIA IN ('#39'CANC'#39','#39'DESC'#39','#39'I'#39','#39'F'#39','#39'N'#39','#39'FS'#39','#39'IS' +
+        'S'#39','#39'NSS'#39','#39'DS'#39','#39'AT'#39','#39'AS'#39','#39'CAN-S'#39')'
+      '  AND'
+      '  IND_SITUACAO_TRIBUTARIA = :ST')
+    Variables.Data = {
+      0300000003000000070000003A44545F494E490C000000000000000000000007
+      0000003A44545F46494E0C0000000000000000000000030000003A5354050000
+      000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000200000016000000434F445F524547495354524F5F414E414C495449
+      434F0100000000001B000000564C525F4143554D554C41444F5F544F54414C5F
+      5041524349414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 192
+    Top = 392
+    object QR03MD5HelperCOD_REGISTRO_ANALITICO: TIntegerField
+      FieldName = 'COD_REGISTRO_ANALITICO'
+      Required = True
+    end
+    object QR03MD5HelperVLR_ACUMULADO_TOTAL_PARCIAL: TFloatField
+      FieldName = 'VLR_ACUMULADO_TOTAL_PARCIAL'
+      Required = True
+    end
+  end
+  object QDemaisDocMD5Helper: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'COD_DEMAIS_DOCUMENTOS_ECF'
+      'FROM'
+      #9'TB_DEMAIS_DOCUMENTOS_ECF'
+      'WHERE'
+      #9'(:NUM_SERIE IS NULL'
+      #9'OR NUM_SERIE_ECF = :NUM_SERIE)'
+      #9'AND'
+      
+        #9'TO_DATE(DT_HR_FINAL_EMISSAO,'#39'DD/MM/YYYY'#39') BETWEEN :DT_INI AND :' +
+        'DT_FIN'
+      #9'AND'
+      #9'DESC_DENOMINACAO = '#39'CN'#39
+      #9
+      '')
+    Variables.Data = {
+      03000000030000000A0000003A4E554D5F534552494505000000000000000000
+      0000070000003A44545F494E490C0000000000000000000000070000003A4454
+      5F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000100000019000000434F445F44454D4149535F444F43554D454E544F
+      535F454346010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 312
+    Top = 392
+    object QDemaisDocMD5HelperCOD_DEMAIS_DOCUMENTOS_ECF: TIntegerField
+      FieldName = 'COD_DEMAIS_DOCUMENTOS_ECF'
+      Required = True
+    end
+  end
+  object QFilialIteracao: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      #9'COD_FILIAL'
+      'FROM'
+      #9'TB_FILIAL'
+      'ORDER BY '
+      #9'COD_FILIAL')
+    QBEDefinition.QBEFieldDefs = {04000000010000000A000000434F445F46494C49414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 656
+    Top = 456
+    object QFilialIteracaoCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+      Required = True
+    end
+  end
+  object QReg60D: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  COD_REGISTRO_DIARIO,    '
+      '  DESC_SUBTIPO,           '
+      '  DT_EMISSAO,             '
+      '  NUM_SERIE,              '
+      '  DESC_COD_BARRA,         '
+      '  QT_QUANTIDADE,          '
+      '  VAL_TOTAL,              '
+      '  VAL_BASE_ICMS,          '
+      '  DESC_ST,                '
+      '  VAL_ICMS'
+      'FROM'
+      '  TB_REGISTRO_TIPO60_DIARIO'
+      'WHERE'
+      '  COD_REGISTRO_DIARIO = :PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_REGISTRO_DIARIO'
+    SequenceField.Sequence = 'SQREGISTRO_DIARIO'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000A00000013000000434F445F524547495354524F5F44494152494F01
+      00000000000C000000444553435F5355425449504F0100000000000A00000044
+      545F454D495353414F010000000000090000004E554D5F534552494501000000
+      00000E000000444553435F434F445F42415252410100000000000D0000005154
+      5F5155414E5449444144450100000000000900000056414C5F544F54414C0100
+      000000000D00000056414C5F424153455F49434D530100000000000700000044
+      4553435F53540100000000000800000056414C5F49434D53010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 304
+    Top = 216
+    object QReg60DCOD_REGISTRO_DIARIO: TIntegerField
+      FieldName = 'COD_REGISTRO_DIARIO'
+      Required = True
+    end
+    object QReg60DDESC_SUBTIPO: TStringField
+      FieldName = 'DESC_SUBTIPO'
+      Size = 1
+    end
+    object QReg60DDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      EditMask = '!99/99/0000;1;_'
+    end
+    object QReg60DNUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+    end
+    object QReg60DDESC_COD_BARRA: TStringField
+      FieldName = 'DESC_COD_BARRA'
+    end
+    object QReg60DQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      DisplayFormat = '#0.000'
+      EditFormat = '#0.000'
+    end
+    object QReg60DVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+      DisplayFormat = '#0.00'
+      EditFormat = '#0.00'
+    end
+    object QReg60DVAL_BASE_ICMS: TFloatField
+      FieldName = 'VAL_BASE_ICMS'
+      DisplayFormat = '#0.00'
+      EditFormat = '#0.00'
+    end
+    object QReg60DDESC_ST: TStringField
+      FieldName = 'DESC_ST'
+      Size = 4
+    end
+    object QReg60DVAL_ICMS: TFloatField
+      FieldName = 'VAL_ICMS'
+      DisplayFormat = '#0.00'
+      EditFormat = '#0.00'
+    end
+  end
+  object QReg60DCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9
+      #9'COD_REGISTRO_DIARIO,'
+      #9'DT_EMISSAO,'
+      #9'NUM_SERIE,'
+      #9'DESC_COD_BARRA,'
+      #9'QT_QUANTIDADE,'
+      #9'DESC_ST,'
+      #9'VAL_BASE_ICMS,'
+      #9'VAL_ICMS,'
+      #9'VAL_TOTAL'
+      'FROM'
+      #9'TB_REGISTRO_TIPO60_DIARIO'
+      'WHERE'
+      #9'(:DT_EMISSAO IS NULL'
+      #9'OR :DT_EMISSAO = DT_EMISSAO)'
+      'ORDER BY'
+      #9'DT_EMISSAO DESC,'
+      #9'NUM_SERIE'
+      #9)
+    Variables.Data = {
+      03000000010000000B0000003A44545F454D495353414F0C0000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000090000000A00000044545F454D495353414F01000000000009000000
+      4E554D5F53455249450100000000000E000000444553435F434F445F42415252
+      410100000000000D00000051545F5155414E5449444144450100000000000700
+      0000444553435F53540100000000000D00000056414C5F424153455F49434D53
+      0100000000000800000056414C5F49434D530100000000000900000056414C5F
+      544F54414C01000000000013000000434F445F524547495354524F5F44494152
+      494F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 304
+    Top = 264
+    object QReg60DConsDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+    end
+    object QReg60DConsNUM_SERIE: TStringField
+      FieldName = 'NUM_SERIE'
+    end
+    object QReg60DConsDESC_COD_BARRA: TStringField
+      FieldName = 'DESC_COD_BARRA'
+    end
+    object QReg60DConsQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+    end
+    object QReg60DConsDESC_ST: TStringField
+      FieldName = 'DESC_ST'
+      Size = 4
+    end
+    object QReg60DConsVAL_BASE_ICMS: TFloatField
+      FieldName = 'VAL_BASE_ICMS'
+    end
+    object QReg60DConsVAL_ICMS: TFloatField
+      FieldName = 'VAL_ICMS'
+    end
+    object QReg60DConsVAL_TOTAL: TFloatField
+      FieldName = 'VAL_TOTAL'
+    end
+    object QReg60DConsCOD_REGISTRO_DIARIO: TIntegerField
+      FieldName = 'COD_REGISTRO_DIARIO'
+      Required = True
+    end
+  end
+end

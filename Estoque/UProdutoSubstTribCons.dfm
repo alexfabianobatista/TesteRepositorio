@@ -1,0 +1,185 @@
+inherited FProdutoSubstTribCons: TFProdutoSubstTribCons
+  Left = 376
+  Top = 229
+  Width = 738
+  Height = 402
+  Caption = 'Consulta de Substitui'#231#227'o Tribut'#225'ria por Produto'
+  PixelsPerInch = 96
+  TextHeight = 14
+  inherited Label1: TLabel
+    Width = 37
+    Caption = 'Produto'
+  end
+  object SpeedButton1: TSpeedButton [1]
+    Left = 85
+    Top = 24
+    Width = 26
+    Height = 22
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+      55555575555555775F55509999999901055557F55555557F75F5001111111101
+      105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+      01105777F555557F7FF75500FFFFFF0F00105577F555FF7F77575550FF70000F
+      0F0055575FF777757F775555000FFFFF0F005555777555FF7F77555550FF7000
+      0F055555575FF777757F555555000FFFFF05555555777555FF7F55555550FF70
+      0005555555575FF7777555555555000555555555555577755555555555555555
+      5555555555555555555555555555555555555555555555555555}
+    NumGlyphs = 2
+    OnClick = SpeedButton1Click
+  end
+  object Label2: TLabel [2]
+    Left = 136
+    Top = 8
+    Width = 33
+    Height = 14
+    Caption = 'Estado'
+  end
+  object SpeedButton2: TSpeedButton [3]
+    Left = 213
+    Top = 24
+    Width = 26
+    Height = 22
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+      55555575555555775F55509999999901055557F55555557F75F5001111111101
+      105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+      01105777F555557F7FF75500FFFFFF0F00105577F555FF7F77575550FF70000F
+      0F0055575FF777757F775555000FFFFF0F005555777555FF7F77555550FF7000
+      0F055555575FF777757F555555000FFFFF05555555777555FF7F55555550FF70
+      0005555555575FF7777555555555000555555555555577755555555555555555
+      5555555555555555555555555555555555555555555555555555}
+    NumGlyphs = 2
+    OnClick = SpeedButton2Click
+  end
+  object SpeedButton3: TSpeedButton [4]
+    Left = 325
+    Top = 24
+    Width = 26
+    Height = 22
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+      55555575555555775F55509999999901055557F55555557F75F5001111111101
+      105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+      01105777F555557F7FF75500FFFFFF0F00105577F555FF7F77575550FF70000F
+      0F0055575FF777757F775555000FFFFF0F005555777555FF7F77555550FF7000
+      0F055555575FF777757F555555000FFFFF05555555777555FF7F55555550FF70
+      0005555555575FF7777555555555000555555555555577755555555555555555
+      5555555555555555555555555555555555555555555555555555}
+    NumGlyphs = 2
+    OnClick = SpeedButton3Click
+  end
+  object Label3: TLabel [5]
+    Left = 248
+    Top = 8
+    Width = 20
+    Height = 14
+    Caption = 'Filial'
+  end
+  inherited BtOk: TBitBtn
+    Left = 632
+    Top = 341
+    TabOrder = 6
+  end
+  inherited BtCancela: TBitBtn
+    Left = 544
+    Top = 341
+    TabOrder = 5
+  end
+  inherited BtProcurar: TBitBtn
+    Left = 633
+    TabOrder = 3
+    OnClick = BtProcurarClick
+  end
+  inherited METexto: TMaskEdit
+    Width = 73
+    Text = ''
+  end
+  inherited DBGrid1: TDBGrid
+    Width = 706
+    Height = 270
+    TabOrder = 4
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'COD_PRODUTO_SUBST_TRIB'
+        Width = 51
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_PRODUTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DESC_PRODUTO'
+        Width = 229
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_ESTADO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_FILIAL'
+        Title.Caption = 'Filial'
+        Width = 30
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_TRIBUTADO'
+        Title.Caption = '% Base de C'#225'lculo'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_TRIBUTADO_SN'
+        Title.Caption = '% Base C'#225'lculo SN'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_ALIQUOTA'
+        Title.Caption = '% Al'#237'quota'
+        Visible = True
+      end>
+  end
+  object MEEstado: TMaskEdit [11]
+    Left = 136
+    Top = 24
+    Width = 73
+    Height = 22
+    TabOrder = 1
+  end
+  object MEFilial: TMaskEdit [12]
+    Left = 248
+    Top = 24
+    Width = 73
+    Height = 22
+    TabOrder = 2
+  end
+  inherited DSConsulta: TDataSource
+    DataSet = DMTributacao.QProdutoSubstTribCons
+    Left = 40
+    Top = 328
+  end
+  inherited PopupMenu1: TPopupMenu
+    Left = 8
+    Top = 328
+  end
+end

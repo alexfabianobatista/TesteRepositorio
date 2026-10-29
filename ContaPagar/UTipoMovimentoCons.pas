@@ -1,0 +1,38 @@
+unit UTipoMovimentoCons;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCONSULTA, Grids, DBGrids, StdCtrls, Mask, Buttons, DB, Menus;
+
+type
+  TFTipoMovimentoCons = class(TFTConsulta)
+    procedure BtProcurarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FTipoMovimentoCons: TFTipoMovimentoCons;
+
+implementation
+
+uses UTipoMovimento_cl;
+
+{$R *.DFM}
+
+procedure TFTipoMovimentoCons.BtProcurarClick(Sender: TObject);
+begin
+  inherited;
+  With DMTipoMovimento do
+    Begin
+      QTipoMovimentoCons.Close;
+      QTipoMovimentoCons.ParamByName('DESC_TIPO_MOVIMENTO').AsString:=METexto.Text;
+      QTipoMovimentoCons.Open;
+    End;
+end;
+
+end.

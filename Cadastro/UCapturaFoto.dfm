@@ -1,0 +1,92 @@
+object FCapturaFoto: TFCapturaFoto
+  Left = 597
+  Top = 222
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Capturar foto'
+  ClientHeight = 323
+  ClientWidth = 388
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  DesignSize = (
+    388
+    323)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object tsCapWebCam: TtsCap32
+    Left = 0
+    Top = 0
+    Width = 388
+    Height = 280
+    Logo = False
+    PreventMessageHook = False
+    Taborder = 0
+    CapOrder = start
+    Parameter.BufferFile = 'Capture.avi'
+    Parameter.BufferFileSize_Mb = 100
+    Parameter.SaveFile = 'Capture.avi'
+    Parameter.PreviewRate_mspf = 100
+    Parameter.PreviewRate_fps = 10
+    Parameter.Overlay = False
+    Parameter.CaptureRate_uspf = 71428
+    Parameter.CaptureRate_fps = 14
+    Parameter.CapTechnique = ctStreamIntoFile
+    Parameter.DlgFormat = False
+    Parameter.DlgCompression = False
+    Parameter.DlgSource = False
+    Parameter.DlgDisplay = False
+    Parameter.TimeLimit = 10
+    Parameter.TimeLimitEnabled = False
+    Parameter.UserHitToCapture = False
+    Parameter.AbortKey = 0
+    Parameter.ImageWidth = 0
+    Parameter.ImageHeight = 0
+    Parameter.MCIControl = False
+    Parameter.MCIDeviceStep = False
+    Parameter.MCIStartTime = 0
+    Parameter.MCIStopTime = 0
+    Parameter.IndexSize = 34952
+    Parameter.NumVideoRequested = 5
+    Parameter.NumAudioRequested = 4
+    DriverCaps.HasOverlay = False
+    DriverCaps.HasDlgVideoSource = False
+    DriverCaps.HasDlgVideoFormat = False
+    DriverCaps.HasDlgVideoDisplay = False
+    DriverCaps.DriverSuppliesPalettes = False
+    AudioParameter.AudioHardware = False
+    AudioParameter.SplFrequ = fdefault
+    AudioParameter.SplWidth = wdefault
+    AudioParameter.Channels = chdefault
+    CapWndDimensions.x = 0
+    CapWndDimensions.y = 0
+    CapWndDimensions.w = 370
+    CapWndDimensions.h = 280
+    Driver = 0
+    AboutAuthor = '(c) 1997 Thomas St'#252'fe'
+    AboutVersion = 'v3.1 open - Published under LGPL'
+    Error = 'No Error'
+    CopyToClipBoard = False
+  end
+  object btnCapturar: TBitBtn
+    Left = -3
+    Top = 279
+    Width = 394
+    Height = 47
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Caption = 'Capturar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ModalResult = 1
+    ParentFont = False
+    TabOrder = 1
+  end
+end

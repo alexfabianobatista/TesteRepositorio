@@ -1,0 +1,15 @@
+C:\GeraExe\Nfe.exe.config
+obj\Debug\Nfe.exe
+obj\Debug\Nfe.pdb
+C:\GeraExe\Nfe.exe
+C:\GeraExe\Nfe.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Interop.Scripting.dll
+obj\Debug\Nfe.csproj.ResolveComReference.cache
+obj\Debug\Nfe.forms.FConfiguracao.resources
+obj\Debug\Nfe.forms.FServidor.resources
+obj\Debug\Nfe.Properties.Resources.resources
+obj\Debug\Nfe.csproj.GenerateResource.Cache
+obj\Debug\Nfe.negocios.email.pdf.crDanfeDefault.rpt
+obj\Debug\Nfe.forms.FContingencia.resources
+obj\Debug\Nfe.forms.FReConsulta.resources

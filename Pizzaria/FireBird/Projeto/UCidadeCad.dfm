@@ -1,0 +1,239 @@
+inherited FCidadeCad: TFCidadeCad
+  Caption = 'Cadastro de Cidades'
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited DbGDados: TDBGrid
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'CODCIDADE'
+        Title.Alignment = taRightJustify
+        Title.Caption = 'C'#243'digo'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DSCCIDADE'
+        Title.Caption = 'Descri'#231#227'o'
+        Width = 320
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'dscestado'
+        Title.Caption = 'Estado'
+        Width = 120
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CODESTADO'
+        Visible = False
+      end>
+  end
+  inherited PnDados: TPanel
+    Left = 176
+    Top = 152
+    Width = 287
+    Height = 169
+    inherited PnBotoes: TPanel
+      Top = 131
+      Width = 285
+      inherited BtnGravar: TBitBtn
+        Left = 71
+      end
+      inherited BtnCancelar: TBitBtn
+        Left = 177
+      end
+    end
+    inherited PnEdits: TPanel
+      Width = 285
+      Height = 130
+      object Label1: TLabel
+        Left = 8
+        Top = 8
+        Width = 33
+        Height = 13
+        Caption = 'C'#243'digo'
+        FocusControl = DBEdit1
+      end
+      object Label2: TLabel
+        Left = 8
+        Top = 48
+        Width = 48
+        Height = 13
+        Caption = 'Descri'#231#227'o'
+        FocusControl = DBEFoco
+      end
+      object Label6: TLabel
+        Left = 8
+        Top = 88
+        Width = 33
+        Height = 13
+        Caption = 'Estado'
+        FocusControl = DBEdit3
+      end
+      object SpeedButton2: TSpeedButton
+        Left = 55
+        Top = 102
+        Width = 24
+        Height = 24
+        Glyph.Data = {
+          36060000424D3606000000000000360000002800000020000000100000000100
+          1800000000000006000000000000000000000000000000000000FF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF3434344B4B4B333333FF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF85
+          8585929292858585FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF636363C9C9C9F6F6F6A1A1A1454545FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9F9FD6
+          D6D6DFDFDFC1C1C18E8E8EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF676767BDBDBDF6F6F69D9D9D4D4D4DFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA1A1A1D0
+          D0D0DFDFDFBFBFBF939393FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF6E6E6EB8B8B8F3F3F39A9A9A525252FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA5A5A5CD
+          CDCDDFDFDFBDBDBD959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FF4343434A4A4A4C4C4C666666ADADADE8E8E89191915050504D4D4D4A4A
+          4A434343FF00FFFF00FFFF00FFFF00FFFF00FF8D8D8D919191929292A1A1A1C8
+          C8C8DFDFDFB8B8B89494949393939191918D8D8DFF00FFFF00FFFF00FFFF00FF
+          323232E6E6E6DFDFDFE0E0E0DADADAD7D7D7D3D3D3D9D9D9E1E1E1E5E5E5E8E8
+          E8F2F2F2333333FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+          DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF858585FF00FFFF00FFFF00FF
+          666666E6E6E6D4D4D4D5D5D5D4D4D4D3D3D3D0D0D0D3D3D3D7D7D7DADADADCDC
+          DCF2F2F2606060FF00FFFF00FFFF00FFA1A1A1DFDFDFDDDDDDDEDEDEDDDDDDDC
+          DCDCDADADADCDCDCDFDFDFDFDFDFDFDFDFDFDFDF9D9D9DFF00FFFF00FFFF00FF
+          323232E7E7E7E0E0E0E1E1E1DDDDDDD7D7D7D3D3D3DADADAE1E1E1E6E6E6EAEA
+          EAF6F6F6444444FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+          DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF8E8E8EFF00FFFF00FFFF00FF
+          FF00FF3B3B3B434343474747434343A3A3A3D3D3D38787874A4A4A4949494343
+          433F3F3FFF00FFFF00FFFF00FFFF00FFFF00FF8989898D8D8D9090908D8D8DC2
+          C2C2DCDCDCB3B3B39191919090908D8D8D8B8B8BFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF4C4C4CA9A9A9D1D1D1929292525252FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF929292C6
+          C6C6DBDBDBB9B9B9959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF454545A7A7A7CCCCCC919191505050FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8E8E8EC4
+          C4C4D8D8D8B8B8B8949494FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FF3E3E3EA8A8A8D3D3D3919191474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8A8A8AC5
+          C5C5DCDCDCB8B8B8909090FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF4B4B4B646464464646FF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF92
+          9292A0A0A08F8F8FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+        NumGlyphs = 2
+        OnClick = SpeedButton2Click
+      end
+      object DBEdit1: TDBEdit
+        Left = 8
+        Top = 24
+        Width = 134
+        Height = 21
+        Color = clBtnFace
+        DataField = 'CODCIDADE'
+        DataSource = DS
+        ReadOnly = True
+        TabOrder = 0
+      end
+      object DBEFoco: TDBEdit
+        Left = 8
+        Top = 64
+        Width = 268
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'DSCCIDADE'
+        DataSource = DS
+        TabOrder = 1
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 81
+        Top = 104
+        Width = 197
+        Height = 21
+        DataField = 'CODESTADO'
+        DataSource = DS
+        DropDownRows = 15
+        KeyField = 'CODESTADO'
+        ListField = 'DSCESTADO'
+        ListSource = DmEstado.DsSelEstado
+        TabOrder = 3
+      end
+      object DBEdit3: TDBEdit
+        Left = 8
+        Top = 104
+        Width = 45
+        Height = 21
+        DataField = 'CODESTADO'
+        DataSource = DS
+        TabOrder = 2
+      end
+    end
+  end
+  inherited TB: TIBQuery
+    OnCalcFields = TBCalcFields
+    SQL.Strings = (
+      'Select * From Tb_Cidade')
+    GeneratorField.Field = 'CODCIDADE'
+    GeneratorField.Generator = 'GEN_CIDADE'
+    object TBCODCIDADE: TIntegerField
+      FieldName = 'CODCIDADE'
+      Origin = 'TB_CIDADE.CODCIDADE'
+      Required = True
+    end
+    object TBDSCCIDADE: TIBStringField
+      DisplayWidth = 80
+      FieldName = 'DSCCIDADE'
+      Origin = 'TB_CIDADE.DSCCIDADE'
+      Required = True
+      Size = 80
+    end
+    object TBCODESTADO: TIntegerField
+      FieldName = 'CODESTADO'
+      Origin = 'TB_CIDADE.CODESTADO'
+      Required = True
+    end
+    object TBdscestado: TStringField
+      DisplayWidth = 80
+      FieldKind = fkCalculated
+      FieldName = 'dscestado'
+      Size = 80
+      Calculated = True
+    end
+  end
+  inherited IBU: TIBUpdateSQL
+    RefreshSQL.Strings = (
+      'Select '
+      '  CODCIDADE,'
+      '  DSCCIDADE,'
+      '  CODESTADO'
+      'from Tb_Cidade '
+      'where'
+      '  CODCIDADE = :CODCIDADE')
+    ModifySQL.Strings = (
+      'update Tb_Cidade'
+      'set'
+      '  CODCIDADE = :CODCIDADE,'
+      '  DSCCIDADE = :DSCCIDADE,'
+      '  CODESTADO = :CODESTADO'
+      'where'
+      '  CODCIDADE = :OLD_CODCIDADE')
+    InsertSQL.Strings = (
+      'insert into Tb_Cidade'
+      '  (CODCIDADE, DSCCIDADE, CODESTADO)'
+      'values'
+      '  (:CODCIDADE, :DSCCIDADE, :CODESTADO)')
+    DeleteSQL.Strings = (
+      'delete from Tb_Cidade'
+      'where'
+      '  CODCIDADE = :OLD_CODCIDADE')
+  end
+end

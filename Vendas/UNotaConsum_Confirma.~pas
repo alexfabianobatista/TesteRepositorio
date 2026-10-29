@@ -1,0 +1,1603 @@
+  unit UNotaConsum_Confirma;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  ComCtrls, StdCtrls, Buttons, Mask, DBCtrls, ExtCtrls, Db, DBTables, variants, maskutils,
+  // USES PARA O PIX
+  Cemapa.Conversoes.API, Cemapa.NotaSaida.Vendas.Pix.PSPController,
+  Cemapa.NotaSaida.Vendas.Pix.Interfaces, ACBrBase,
+  ACBrPIXCD, ACBrPIXBase;
+
+type
+  TFNotaConsum_Confirma = class(TForm)
+    PCConfirma: TPageControl;
+    BtAvancar: TBitBtn;
+    BtCancelar: TBitBtn;
+    TsConfirma: TTabSheet;
+    RGTipoPgto: TRadioGroup;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    EdVenda: TEdit;
+    EdRecebido: TEdit;
+    EdTroco: TEdit;
+    MEValorDesconto: TMaskEdit;
+    MEPercDesconto: TMaskEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    TSContaReceber: TTabSheet;
+    GBCPNota: TGroupBox;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    MEDataCP: TMaskEdit;
+    MEValorCP: TMaskEdit;
+    BtApagaParcela: TBitBtn;
+    LBContaReceber: TListBox;
+    MEFinalidade: TMaskEdit;
+    BtConsFinalidade: TBitBtn;
+    EdFinalidade: TEdit;
+    MEDiasCP: TMaskEdit;
+    Label10: TLabel;
+    Label16: TLabel;
+    EdTotalNF: TEdit;
+    Label31: TLabel;
+    MEDepartamento: TMaskEdit;
+    EdDepartamento: TEdit;
+    BtConsDepartamento: TBitBtn;
+    Label19: TLabel;
+    MeBanco: TMaskEdit;
+    BtConsBanco: TBitBtn;
+    EdBanco: TEdit;
+    Label11: TLabel;
+    BtConsCadastro: TBitBtn;
+    MeCadastro: TMaskEdit;
+    EdCadastro: TEdit;
+    GroupBox1: TGroupBox;
+    Label13: TLabel;
+    Label12: TLabel;
+    Label14: TLabel;
+    EdDolar: TEdit;
+    EdPesos: TEdit;
+    EdGuarani: TEdit;
+    Label15: TLabel;
+    MeEntrada: TMaskEdit;
+    Label23: TLabel;
+    MePrazo: TMaskEdit;
+    BtPrazo: TBitBtn;
+    MeContaCorrente: TMaskEdit;
+    Label25: TLabel;
+    Label18: TLabel;
+    MeContaCorrente_Cheque: TMaskEdit;
+    Label20: TLabel;
+    MeDepartamento_Cheque: TMaskEdit;
+    MeHistorico: TMaskEdit;
+    Label26: TLabel;
+    Label27: TLabel;
+    MeNrCheque: TMaskEdit;
+    BtConsContaCorrente: TBitBtn;
+    BtDepartamento: TBitBtn;
+    BtConsHistorico: TBitBtn;
+    Label28: TLabel;
+    MeValorCheque: TMaskEdit;
+    MeDtCheque: TMaskEdit;
+    Label29: TLabel;
+    Label30: TLabel;
+    MeObservacao: TMaskEdit;
+    MeObservacao1: TMaskEdit;
+    BtInsertContaCorrente: TBitBtn;
+    BtExcluiContaCorrente: TBitBtn;
+    LbCheques: TListBox;
+    Label21: TLabel;
+    MeVendedor: TMaskEdit;
+    lbRestante: TLabel;
+    EdRestante: TEdit;
+    cpPixCemapa: TACBrPixCD;
+    procedure EdRecebidoExit(Sender: TObject);
+    procedure MEPercDescontoExit(Sender: TObject);
+    procedure FormDeactivate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure BtAvancarClick(Sender: TObject);
+    procedure MEDiasCPExit(Sender: TObject);
+    procedure MEValorCPExit(Sender: TObject);
+    procedure BtConsFinalidadeClick(Sender: TObject);
+    procedure BtApagaParcelaClick(Sender: TObject);
+    procedure BtCancelarClick(Sender: TObject);
+    procedure BtConsDepartamentoClick(Sender: TObject);
+    procedure BtConsBancoClick(Sender: TObject);
+    procedure BtConsCadastroClick(Sender: TObject);
+    procedure BtPrazoClick(Sender: TObject);
+    procedure MePrazoExit(Sender: TObject);
+    procedure MeContaCorrenteExit(Sender: TObject);
+    procedure BtConsContaCorrenteClick(Sender: TObject);
+    procedure BtDepartamentoClick(Sender: TObject);
+    procedure BtConsHistoricoClick(Sender: TObject);
+    procedure BtInsertContaCorrenteClick(Sender: TObject);
+    procedure BtExcluiContaCorrenteClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure MEFinalidadeChange(Sender: TObject);
+    procedure MeCadastroChange(Sender: TObject);
+    procedure MEDepartamentoChange(Sender: TObject);
+    procedure ValidaDesconto(Sender: TObject);
+    procedure MEValorDescontoExit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure MeEntradaExit(Sender: TObject);
+    procedure MEFinalidadeExit(Sender: TObject);
+    procedure TSContaReceberShow(Sender: TObject);
+  private
+    // para uso do PIX
+    cControllerPix: IPSPPixController;
+    procedure LimpaStatusPix(var StatusPix: TFluxoPagtoDados);
+    function FormatarJson(const AJSON: String): String;
+    { Private declarations }
+  public
+    procedure Finaliza;
+    { Public declarations }
+  end;
+
+var
+  FNotaConsum_Confirma: TFNotaConsum_Confirma;
+implementation
+
+uses UNotaSaida_cl, UParamSistema_cl, UBiblioteca, UOracle_cl, USerie_cl,
+  UNotaEntrada_cl, UOperacao_cl, URBloqueto, UNotaSaidaCad, UFinalidadeCons,
+  UFinalidade_cl, UDepartamentoCons, UDepartamento_cl, UCadastro_cl,
+  UBancosCons, UBancoAgencia_cl, UCadastroCons, UUsuario_cl,
+  UImpressoraFiscal, UNotaConsumidor, UNotaComprovanteEntrega,
+  UPrazoVencimentoCons, UPrazoVencimento_cl, UContaCorrenteCons, URRecibo,
+  UFilial_cl, UFidelidade_cl, UPromissoria, UContasReceber_cl,
+  USenha, UHistoricoCons, UHistorico_cl,
+  URContasReceber_Duplicatas_MEDIBENS, Math, UNfe_cl, UNotaImpressao,UInformaBancoPix,
+  URecibo_Dos, UPagamentosNFe4, UNotaFrenteCaixaConfirma, URPromissorias, ULancamentoCartaoCad,
+  // Uso no envio e geração do PIX
+  ACBrPIXPSPShipay, UFQrCodePix, ACBrUtil, ACBrPIXSchemasCob;
+
+{$R *.DFM}
+
+procedure TFNotaConsum_Confirma.ValidaDesconto(Sender: TObject);
+var
+  wTotalVenda: Real;
+  wDescontoPermitido, wDescTipoFuncionario, wsenhaCrypt : String;
+  wPrecoMinimo : Real;
+  wTotalPermitido: Real;
+begin
+ // ---- ALTERAÇÃO PARA PEDIR SENHA NO DESCONTOS PARA USUARIOS NÃO PRIVILEGIADOS - JUNIOR 02/09/2013
+  if (DMParamSistema.QParamSistemaIND_DESCONTO_MAXIMO.Value = 'U') and
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'FERRAGMED') and
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'DONABENTA') then
+  begin
+    wTotalPermitido := DMNotaSaida.QSomaItemNotaSVAL_TOTAL.Value;
+    if (Trim(MEValorDesconto.Text) <> '') then
+    begin
+      with DMNotaSaida do
+      begin
+        wTotalVenda := QSomaItemNotaSVal_Total_Nota.Value + QNotaSaidaVAL_DESCONTO.Value - StrToFloat(MEValorDesconto.Text)
+                        - DMNotaSaida.QSomaValessval_vale_compras_menos_novo.Value -
+                          DMNotaSaida.QSomaValessval_vale_presente_menos_novo.Value;
+        wDescontoPermitido := DMOracle.BuscaNome('SELECT PERC_DESCONTO_MAXIMO FROM TB_USUARIO',
+                                        'COD_USUARIO = ' + IntToStr(DmUsuario.CodUsuarioCorrente));
+        if Trim(MEValorDesconto.Text) <> '0' then
+          wTotalPermitido := wTotalPermitido * (1 - StrToFloat(wDescontoPermitido) / 100);
+        if (not DmUsuario.Privilegiado) then
+          if wTotalVenda < wTotalPermitido then
+          begin
+            if Fsenha = nil then
+              FSenha := TFSenha.Create(Application);
+            if (FSenha.ShowModal = MrOK) and
+               (not FSenha.MeUsuario.Visible or (trim(FSenha.MeUsuario.Text) <> '')) then
+            begin
+              if not FSenha.MeUsuario.Visible then
+              begin
+                if UpperCase(Trim(FSenha.EdSenha.Text)) <> UpperCase(DmParamSistema.QParamSistemaDesc_Senha_Oficina.Value) then
+                begin
+                  if TForm(Sender).Name = 'FNotaConsum_Confirma' then
+                  begin
+                    MEValorDesconto.Text := '0,00';
+                    MEValorDesconto.SetFocus;
+                  end;
+                  if TForm(Sender).Name = 'FNotaFrenteCaixaConfirma' then
+                  begin
+                      FNotaFrenteCaixaConfirma.MEValorDesconto.Text := '0,00';
+                      FNotaFrenteCaixaConfirma.MEValorDesconto.SetFocus;
+                  end;
+                  raise Exception.Create('Senha Incorreta.');
+                end;
+              end
+              else
+              begin
+                DMUsuario.QUsuario.Close;
+                DMUsuario.QUsuario.SetVariable('PK',StrToInt(Trim(FSenha.MeUsuario.Text)));
+                DMUsuario.QUsuario.Open;
+                wDescTipoFuncionario := DMUsuario.QUsuarioDESC_TIPO_FUNCIONARIO.Text;
+                if (wDescTipoFuncionario = 'DIRETOR') or (wDescTipoFuncionario = 'GERENTE') or
+                   (wDescTipoFuncionario = 'SUPERVISOR') then
+                begin
+                  wsenhaCrypt := bib.Decode(DMUsuario.QUsuarioDesc_Senha.Value);
+                  If (UpperCase(Trim(FSenha.EdSenha.Text)) <> Trim(wsenhaCrypt))then
+                  begin
+                    MEValorDesconto.Text := '0,00';
+                    MEValorDesconto.SetFocus;
+                    raise Exception.Create('Informe a senha de liberação correta.');
+                  end;
+                end
+                else
+                begin
+                  MEValorDesconto.Text := '0,00';
+                  MEValorDesconto.SetFocus;
+                  raise Exception.Create('Usuário sem permissão para desconto.');
+                end;
+              end;
+            end
+            else
+            begin
+
+                if TForm(Sender).Name = 'FNotaConsum_Confirma' then
+                begin
+                  MEValorDesconto.Text := '0,00';
+                  MEValorDesconto.SetFocus;
+                end;
+                if TForm(Sender).Name = 'FNotaFrenteCaixaConfirma' then
+                begin
+                    FNotaFrenteCaixaConfirma.MEValorDesconto.Text := '0,00';
+                    FNotaFrenteCaixaConfirma.MEValorDesconto.SetFocus;
+                end;
+                Abort;
+            end;
+        end;// Privilegiado
+      end;
+    end;  // Valor Desconto <> ''
+  end;  // Desconto por usuario
+end;
+
+procedure TFNotaConsum_Confirma.EdRecebidoExit(Sender: TObject);
+var Perc_aplicar, wTotalVenda: Real;
+  wVlMoeda: string;
+  wDescontoPermitido : String;
+begin
+  Perc_Aplicar := 1;
+  case RGTipoPgto.ItemIndex of
+    0: Perc_Aplicar := 1 - DMParamSistema.QParamSistemaPerc_Desconto_Vista.Value / 100;
+    1: Perc_Aplicar := 1;
+    2: Perc_Aplicar := 1 + DMParamSistema.QParamSistemaPerc_Acrescimo_Mes.Value / 100;
+  end;
+  wTotalVenda := DMNotaSaida.QSomaItemNotaSVal_Total_Nota.Value * Perc_Aplicar
+                 - DMNotaSaida.pValorValeCompras - DMNotaSaida.pValorValePresente;
+  if (Trim(MEValorDesconto.Text) <> '') then
+  begin
+    with DMNotaSaida do
+    begin
+      //wTotalVenda := wTotalVenda - StrToFloat(MEValorDesconto.Text);
+      wTotalVenda := QSomaItemNotaSVal_Total_Nota.Value + QNotaSaidaVAL_DESCONTO.Value - StrToFloat(MEValorDesconto.Text)
+                     - DMNotaSaida.QSomaValessval_vale_compras_menos_novo.Value -
+                       DMNotaSaida.QSomaValessval_vale_presente_menos_novo.Value;
+    end;
+  end;
+
+   wVlMoeda := DMOracle.BuscaNome('SELECT VLR_COTACAO FROM TB_COTACAO', 'COD_MOEDA = 2  AND  DT_COTACAO= TO_DATE('+ CHR(39) + DMNotaSaida.QNotaSaidaDt_Emissao.Text + CHR(39) + ',' + CHR(39)+'dd/mm/yyyy hh24:mi:ss'+CHR(39)+')');
+  EdDolar.Text := '';
+  if (Trim(wVlMoeda) <> '') and (Trim(wVlMoeda) <> '0') then // Dólar
+    EdDolar.Text := FormatFloat('###,###,##0.00', wTotalVenda / StrToFloat(wVlMoeda));
+  wVlMoeda := DMOracle.BuscaNome('SELECT VLR_COTACAO FROM TB_COTACAO', 'COD_MOEDA = 3  AND  DT_COTACAO= TO_DATE('+ CHR(39) + DMNotaSaida.QNotaSaidaDt_Emissao.Text + CHR(39) + ',' + CHR(39)+'dd/mm/yyyy hh24:mi:ss'+CHR(39)+')');
+  EdPesos.Text := '';
+  if (Trim(wVlMoeda) <> '') and (Trim(wVlMoeda) <> '0') then // Pesos
+    EdPesos.Text := FormatFloat('###,###,##0.00', wTotalVenda / StrToFloat(wVlMoeda));
+  wVlMoeda := DMOracle.BuscaNome('SELECT VLR_COTACAO FROM TB_COTACAO', 'COD_MOEDA = 4  AND  DT_COTACAO= TO_DATE('+ CHR(39) + DMNotaSaida.QNotaSaidaDt_Emissao.Text + CHR(39) + ',' + CHR(39)+'dd/mm/yyyy hh24:mi:ss'+CHR(39)+')');
+  EdGuarani.Text := '';
+  if (Trim(wVlMoeda) <> '') and (Trim(wVlMoeda) <> '0') then // Guarani
+    EdGuarani.Text := FormatFloat('###,###,##0.00', wTotalVenda * StrToFloat(wVlMoeda));
+
+  EdVenda.Text := FormatFloat('###,###,##0.00', wTotalVenda);
+  EdTroco.Text := FormatFloat('###,###,##0.00', StrToFloat(Bib.LimpaString(EdRecebido.Text, '.')) - wTotalVenda);
+  if (DMParamSistema.CodEmpresa = 'NFCE-DOCES') or (DMParamSistema.CodEmpresa = 'NFCE-DOGAO') then
+    if (BtAvancar.Showing) then
+      BtAvancar.SetFocus;
+end;
+
+procedure TFNotaConsum_Confirma.MEPercDescontoExit(Sender: TObject);
+begin
+  if Trim(MEPercDesconto.Text) <> '' then
+  begin
+    MEValorDesconto.Text := FormatFloat('#,##0.00',(DMNotaSaida.QSomaItemNotaSVal_Total_Nota.Value
+      * StrToFloat(MEPercDesconto.Text) / 100));
+    MEPercDesconto.Text := '';
+    ValidaDesconto(Self);
+  end;
+  EdRecebidoExit(Self);
+end;
+
+procedure TFNotaConsum_Confirma.FormDeactivate(Sender: TObject);
+var wQtdePagina: Integer;
+begin
+  for wQtdePagina := 0 to PCConfirma.PageCount - 1 do
+  begin
+    PCConfirma.Pages[wQtdePagina].TabVisible := False;
+  end;
+  tag := 0;
+end;
+
+procedure TFNotaConsum_Confirma.FormActivate(Sender: TObject);
+begin
+  with DMNotaSaida do
+  begin
+    if QSomaItemNotaCod_Nota_Cab.Value <> QNotaSaidaCod_Nota_Cab.Value then
+    begin
+      QSomaItemNota.Close;
+      QSomaItemNota.SetVariable('COD_NOTA_CAB', QNotaSaidaCod_Nota_Cab.Value);
+      QSomaItemNota.Open;
+    end;
+  end;
+
+  if (DMParamSistema.CodEmpresa <> 'ARISTIDES') And (DMParamSistema.CodEmpresa <> 'CONSTRUIR') Then
+  begin
+    LBContaReceber.Items.Clear;
+    LBCheques.Items.Clear;
+    MeContaCorrente_Cheque.Clear;
+    MeDepartamento_Cheque.Clear;
+    MeHistorico.Clear;
+    MeNrCheque.Clear;
+    MeValorCheque.Clear;
+    MeDtCheque.Clear;
+    MeObservacao.Clear;
+    MeObservacao1.Clear;
+  //  MEValorDesconto.Text :='0';
+  //  MeEntrada.Text :='0';
+    EdRecebido.Text := '0';
+    RGTipoPgto.ItemIndex := 1;
+    EdRecebidoExit(Self);
+    PCConfirma.Pages[0].TabVisible := True;
+    if (DMParamSistema.CodEmpresa = 'NFCE-DOCES') or (DMParamSistema.CodEmpresa = 'NFCE-DOGAO') then
+      if EdRecebido.Showing then
+        EdRecebido.SetFocus;
+  end
+  else
+   If (DMParamSistema.QparamSistemaCod_Empresa.Value <> 'CONSTRUIR') then
+    begin
+      BtApagaParcela.Visible := false;
+      Label9.Visible := false;
+      MEDiasCP.Visible := false;
+      Label23.Visible := false;
+      MePrazo.Visible := false;
+      BtPrazo.Visible := false;
+      Label6.Visible := false;
+      MEDataCP.Visible := false;
+      Label7.Visible := false;
+      MEValorCP.Visible := false;
+      MeCadastro.Enabled := False;
+      BtConsCadastro.Enabled := False;
+      MeFinalidade.Enabled := False;
+      BtConsFinalidade.Enabled := False;
+      MeDepartamento.Enabled := False;
+      BtConsDepartamento.Enabled := False;
+    end;
+  Tag := 0;
+  ModalResult := mrNone;
+  if ((pos('NFC',DMParamSistema.CodEmpresa) > 0) and
+      (DMParamSistema.CodEmpresa <> 'NFCE-BAHIA') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-DOCES') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-CASAP') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-HORTF') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-TROPI') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-PAOC') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-DOGAO') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-MAIA') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-TMT') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-ITALI') ) then
+  begin
+    Tag := 777; // para não resetar o modalResult do form
+    BtAvancarClick(Self);
+  end; 
+
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'CEREAIS' then
+    BtAvancar.SetFocus;
+
+  if ((DMParamSistema.CodEmpresa = 'COZER') or (DMParamSistema.CodEmpresa = 'PROPE')) then
+  begin
+    EdRestante.Visible := True;
+    lbRestante.Visible := True;
+    EdRestante.Text := FormatFloat('###,###,##0.00', DMNotaSaida.QSomaItemNotaSVal_Total_Nota.Value);
+  end;
+  if (DMParamSistema.CodEmpresa = 'NFCE-CASAP') then
+  Begin
+    EdRecebido.SetFocus;
+    GroupBox1.Enabled := False;
+    Label18.Enabled := False;
+    Label20.Enabled := False;
+    Label26.Enabled := False;
+    Label27.Enabled := False;
+    Label28.Enabled := False;
+    Label29.Enabled := False;
+    Label30.Enabled := False;
+    MeContaCorrente_Cheque.Enabled := False;
+    MeDepartamento_Cheque.Enabled := False;
+    MeHistorico.Enabled := False;
+    MeNrCheque.Enabled := False;
+    MeValorCheque.Enabled := False;
+    MeDtCheque.Enabled := False;
+    MeObservacao.Enabled := False;
+    MeObservacao1.Enabled := False;
+    BtInsertContaCorrente.Enabled := False;
+    BtExcluiContaCorrente.Enabled := False;
+    LbCheques.Enabled := False;
+    BtConsContaCorrente.Enabled := False;
+    BtConsHistorico.Enabled := False;
+    BtDepartamento.Enabled := False;
+
+    GroupBox1.Visible := False;
+    Label18.Visible := False;
+    Label20.Visible := False;
+    Label26.Visible := False;
+    Label27.Visible := False;
+    Label28.Visible := False;
+    Label29.Visible := False;
+    Label30.Visible := False;
+    MeContaCorrente_Cheque.Visible := False;
+    MeDepartamento_Cheque.Visible := False;
+    MeHistorico.Visible := False;
+    MeNrCheque.Visible := False;
+    MeValorCheque.Visible := False;
+    MeDtCheque.Visible := False;
+    MeObservacao.Visible := False;
+    MeObservacao1.Visible := False;
+    BtInsertContaCorrente.Visible := False;
+    BtExcluiContaCorrente.Visible := False;
+    LbCheques.Visible := False;
+    BtConsContaCorrente.Visible := False;
+    BtConsHistorico.Visible := False;
+    BtDepartamento.Visible := False; 
+  end;
+  if DMParamSistema.CodEmpresa = 'RETIFOZ' then //Fizeram nota para 1 cliente e ao informar o contas a receber informaram outro cliente. Junior 21/01/2021
+  begin
+    Label11.Enabled        := False;
+    MeCadastro.Enabled     := False;
+    BtConsCadastro.Enabled := False;
+  end;
+  if DMParamSistema.CodEmpresa = 'DINGLIS' then //Solicitado por Malcides. Junior 17/04/2023
+  begin
+    EdRecebido.Visible := False;
+    EdTroco.Visible    := False;
+    Label2.Visible := False;
+    Label3.Visible := False
+  end;
+{Adicionado para a Empresa Scala sempre utilizar o tipo de pagamento 1, indepentende do cliente. Alex 19/03/2026}  
+  if (DMParamSistema.CodEmpresa = 'SCALA') then
+    MePrazo.Text := '1';
+end;
+
+procedure TFNotaConsum_Confirma.Finaliza;
+var wTotal_Desconto, wEntrada: Real;
+  wAVista, wLibera_Bloqueto, wPrazo, wResult, wNome_Recibo: string;
+  x, y: array of string;
+  wLote, i: Integer;
+  wDescontoAcrescimo, wTotal: Double;
+  // Para o pix
+  vDigCpfCnpj, iItem, wBanco : integer;
+  aCpfCnpj, aCodBarra, aProduto, wPadrao, wComando: string;
+label
+  lDispensaQrCode;
+begin
+  FNotaImpressao := TFNotaImpressao.Create;
+  if StrToFloat(MEValorDesconto.Text) > DMNotaSaida.QSomaItemNotaSVal_Total_Nota.Value then
+    raise Exception.Create('Valor de Desconto maior que o valor da nota!');
+
+  wTotal_Desconto := 0; // INICIALIZA VALOR DA VARIAVEL - Robson 26/06/2000
+  wTotal := StrToFloat(Trim(Bib.LimpaString(EdVenda.Text, '.')));
+  wDescontoAcrescimo := RoundTo(DMNotaSaida.QSomaItemNotaSVal_Total_Nota.Value, -2) - RoundTo(wTotal, -2)
+    - DMNotaSaida.QSomaValessval_vale_compras_menos_novo.Value - DMNotaSaida.QSomaValessval_vale_presente_menos_novo.Value;
+  wEntrada := StrToFloat(Bib.LimpaString(MeEntrada.Text, '.'));
+  try
+    with DMNotaSaida do
+    begin
+      QItemNF.AutoCalcFields := False;
+      QSomaItemNota.AutoCalcFields := False;
+      QNotaSaida.AutoCalcFields := False;
+
+      QItemNF.DisableControls;
+      try
+        QNotaSaida.Edit;
+        if QNotaSaidaNum_Nota.Value = 0 then
+            QNotaSaidaNum_Nota.Value := DMSerie.NumeroSerie(QNotaSaidaCod_Filial.Value, QNotaSaidaCod_Serie.Value,
+              QNotaSaidaCOD_SERIE_MODELO.Value);
+
+        if wDescontoAcrescimo > 0 then
+        begin
+          if (wDescontoAcrescimo <= QNotaSaidaVal_Despesas.Value) then
+            QNotaSaidaVal_Despesas.Value := QNotaSaidaVal_Despesas.Value - wDescontoAcrescimo
+          else
+          begin
+            wDescontoAcrescimo := wDescontoAcrescimo - QNotaSaidaVAL_DESPESAS.Value;
+            QNotaSaidaVAL_DESPESAS.Value := 0;
+            QNotaSaidaVAL_DESCONTO.Value := QNotaSaidaVAL_DESCONTO.Value + wDescontoAcrescimo;
+          end
+        end
+        else
+          if wDescontoAcrescimo < -0.01 then
+          begin
+            if (Abs(wDescontoAcrescimo) <= QNotaSaidaVAL_DESCONTO.Value) then
+            begin
+              QNotaSaidaVal_Desconto.Value := QNotaSaidaVal_Desconto.Value + wDescontoAcrescimo
+            end
+            else
+            begin
+              wDescontoAcrescimo := wDescontoAcrescimo + QNotaSaidaVAL_DESCONTO.Value;
+              QNotaSaidaVAL_DESCONTO.Value := 0;
+              QNotaSaidaVal_Despesas.Value := QNotaSaidaVal_Despesas.Value + Abs(wDescontoAcrescimo);
+            end;
+          end;
+        DMNfe.QNfeEmissao.Close;
+        DMNfe.QNfeEmissao.SetVariable('NOTA_CAB', QNotaSaidaCOD_NOTA_CAB.Value);
+        DMNfe.QNfeEmissao.Open;
+
+        if wEntrada > 0 then
+        begin
+          QNotaSaidaVal_AVista.Value := wEntrada;
+          if (DMParamSistema.CodEmpresa = 'DINGLIS') then
+            QNotaSaidaOBS.Value := QNotaSaidaOBS.Value + ' ENTRADA R$: ' + FloatToStr(wEntrada);
+          AtuCaixa(QNotaSaidaVal_AVista.Value, 'ENTRADA', QNotaSaidaCod_Operacao.Text, QNotaSaidaCod_Filial.Text,
+            QNotaSaidaCod_Departamento.Text, QNotaSaidaNum_Nota.Text, QNotaSaidaCod_Cadastro.Text, QNotaSaidaCod_Nota_Cab.Text,
+            '', Trunc(QNotaSaidaDt_Recebimento.Value));
+        end;
+
+        if Trim(EdTroco.Text) <> '' then
+          QNotaSaidaVAL_TROCO.Value := Bib.ift(StrToFloat(StringReplace(EdTroco.Text,'.','', [rfReplaceAll])) > 0,
+            StrToFloat(StringReplace(EdTroco.Text,'.','', [rfReplaceAll])), 0);
+
+        QNotaSaida.Post;      //Post feito para ratear o desconto nos itens, e considerar no valor da nota.   Alessandro 18/08/12
+        QNotaSaida.Edit;
+        QSomaItemNota.close;
+        QSomaItemNota.Open;
+        
+        // vai gerar o movimento bancario dos cheques lançados
+        DMBancoAgencia.GeraMovBancario(LBCheques.Items, QNotaSaidaCod_Nota_Cab.Value, QNotaSaidaNum_Nota.Value, QNotaSaidaCod_Cadastro.Value, QNotaSaidaCod_Vendedor.Value, QNotaSaidaCod_Serie.Value);
+        QSomaItemNota.Refresh;
+
+        //Para fazer lançamento no caixa
+        if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES' then
+        begin
+          wPrazo := UpperCase(Trim(DMOracle.FastSelect('DESC_PRAZO_VENCIMENTO','TB_PRAZO_VENCIMENTO',
+              'COD_PRAZO_VENCIMENTO = ' +
+              QNotaSaidaCOD_PRAZO_VENCIMENTO.Text)));
+          if ((QNotaSaidaInd_Condicao_Pagto.Value = '1') or
+              (QNotaSaidaInd_Condicao_Pagto.Value = '4')) and
+              (QNotaSaidaCOD_PRAZO_VENCIMENTO.Text <> '') then
+          begin
+            if Pos('CARTAO',wPrazo) = 0 then
+            begin
+              wAVista := 'A VISTA';
+              if QNotaSaidaObs.Text <> '' then // somente para lancar a obs no caixa
+                wAVista := QNotaSaidaObs.Text;
+              if RoundTo(QSomaItemNotasval_total_nota.Value -
+                 pValorValeCompras - pValorValePresente, -2) > 0 then
+                AtuCaixa(QSomaItemNotasval_total_nota.Value -
+                  pValorValeCompras - pValorValePresente, wAVista,
+                  QNotaSaidaCod_Operacao.Text, QNotaSaidaCod_Filial.Text,
+                  QNotaSaidaCod_Departamento.Text, QNotaSaidaNum_Nota.Text,
+                  QNotaSaidaCod_Cadastro.Text, QNotaSaidaCod_Nota_Cab.Text,
+                  '', Trunc(QNotaSaidaDt_Recebimento.Value)); // - wDescontoAcrescimo retirado pelo cesar esta no query QSOMAITEMNOTA
+              if (QNotaSaidaCOD_SERIE_MODELO.Value = '65') or (DMNfe.QNfeEmissaoDESC_VERSAO_NFE.Value = '4.00') then
+                if StrToInt('0' + DMNfe.QNfeEmissaoDESC_RETORNO_PROCESSAMENTO.Value) in SIT_NFE_ACEITO then
+                begin
+                  if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                    ConfirmaPagamentoNFCe;
+                end
+                else
+                begin
+                  if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                    InserePagamentoNFCe(QSomaItemNotaSVal_Total_Nota.Value - QNotaSaidaVAL_AVISTA.Value -
+                      pValorValeCompras - pValorValePresente,
+                      Bib.ift(QNotaSaidaIND_FINALIDADE_NFE.Value < 3, 'Dinheiro', 'Sem pagamento'));
+                end;
+            end
+            else
+              if (QNotaSaidaCOD_SERIE_MODELO.Value = '65') or (DMNfe.QNfeEmissaoDESC_VERSAO_NFE.Value = '4.00') then
+              begin
+                if StrToInt('0' + DMNfe.QNfeEmissaoDESC_RETORNO_PROCESSAMENTO.Value) in SIT_NFE_ACEITO then
+                begin
+                  if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                    ConfirmaPagamentoNFCe;
+                end
+                else
+                begin
+                  if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                  begin
+                    if FNotaConsumidor.DBCBTipoCartao.ItemIndex mod 2 = 0  then //0 = Cartão de Crédito ---- 1 = Cartão de Débito
+                      InserePagamentoNFCe(QSomaItemNotaSVal_Total_Nota.Value -
+                        QNotaSaidaVAL_AVISTA.Value - pValorValeCompras - pValorValePresente,
+                        Bib.ift(QNotaSaidaIND_FINALIDADE_NFE.Value < 3, 'Cartão de Crédito', 'Sem pagamento'))
+                    else
+                      InserePagamentoNFCe(QSomaItemNotaSVal_Total_Nota.Value -
+                        QNotaSaidaVAL_AVISTA.Value - pValorValeCompras - pValorValePresente,
+                        Bib.ift(QNotaSaidaIND_FINALIDADE_NFE.Value < 3, 'Cartão de Débito', 'Sem pagamento'));
+                  end;
+                end;
+              end;
+          end;
+        end
+        else
+        begin
+          if ((QNotaSaidaInd_Condicao_Pagto.Value = '1') or (QNotaSaidaInd_Condicao_Pagto.Value = '6')) and
+                  (QNotaSaidaCOD_SERIE_MODELO.Value <> '65') then // A Vista
+          begin
+            if QNotaSaidaInd_Condicao_Pagto.Value = '1' then
+              wAVista := 'A VISTA'
+            else
+              wAvista := 'PIX';
+            if DMParamSistema.CodEmpresa <> 'PRAIASMI' then
+            begin
+              if QNotaSaidaObs.Text <> '' then // somente para lancar a obs no caixa
+                wAVista := QNotaSaidaObs.Text;
+            end;
+
+            //Inicio do PIX
+            with DMNotaSaida do
+            begin
+              QContaPix.Open;
+              if QContaPix.RecordCount > 0 then
+              begin
+                // PIX QRCODE --> Atribui as configurações padrão salvas no form do módulo bancos
+                cControllerPix.Configuracao
+                        .PSP(TTipoBancoPix(QContaPixCOD_PSP_BANCO.Value))
+                        .ClientID(QContaPixDESC_CLIENT_ID.Text)
+                        .ClientSecret(QContaPixDESC_CLIENT_SECRET.Text)
+                        .ConsumerKey(QContaPixDESC_CONSUMER_KEY.Text)
+                        .ConsumerSecret(QContaPixDESC_CONSUMER_SECRET.Text)
+                        .DevelopApplication(QContaPixDESC_DEVELOPER_APPLICATION_KEY.Text)
+                        .AccountID(QContaPixDESC_ACCOUNT_ID.Text)
+                        .ChavePrivada(QContaPixDESC_ARQUIVO_CHAVE_PRIVADA.Text)
+                        .Certificado(QContaPixDESC_ARQUIVO_CERTIFICADO.Text)
+                        .CertificadoRoot(QContaPixDESC_ARQUIVO_ROOT_CERTIFICADO.Text)
+                        .SecretKey(QContaPixDESC_SECRET_KEY.Text)
+                        .AccessKey(QContaPixDESC_ACCESS_KEY.Text)
+                        .CertificadoPFX(QContaPixDESC_ARQUIVO_PFX.Text)
+                        .SenhaCertificado(QContaPixDESC_SENHA_PFX.Text)
+                        .Token(QContaPixDESC_TOKEN.Text)
+                        .TokenSandbox(QContaPixDESC_ACCESS_TOKEN.Text)
+                        .MediatorFee(QContaPixDESC_MEDIATOR_FEE.Value)
+                        .APIVersion(QContaPixCOD_API_VERSION.Text)
+                        .Ambiente(QContaPixIND_AMBIENTE_PSP.Text)
+                        .ChavePIX(QContaPixDESC_CHAVE_PIX.Text);
+                // Executa o componente que vai gerar a comunicação com o banco de forma dinâmica
+                // De acorodo com o banco cadastrado, sobe o componente.
+                cpPixCemapa.PSP :=  cControllerPix.Contexto.ExecutarStrategy.PSP;
+                // Define o ambiente com base na informação trazida do cadastro pix
+                cpPixCemapa.Ambiente := TACBrPixCDAmbiente(StrToInt(cControllerPix.Configuracao.Ambiente));
+                cpPixCemapa.TimeOut := 3600;
+                cpPixCemapa.ArqLOG := './defaultFailPix.log';
+                cpPixCemapa.NivelLog := 4;
+                // Constantes da classe Cemapa.Conversoes.API
+                cpPixCemapa.Recebedor.Nome := QNFE_EmiteNOME_FILIAL.Text; //SOFTWARE_HOUSE;
+                cpPixCemapa.Recebedor.CEP := QNFE_EmiteCEP_FILIAL.Text; //SOFTWARE_HOUSE_CEP;
+                cpPixCemapa.Recebedor.Cidade := QNFE_EmiteCIDADE_FILIAL.Text; //SOFTWARE_HOUSE_CIDADE;
+                cpPixCemapa.Recebedor.UF := QNFE_EmiteUF_FILIAL.Text; // SOFTWARE_HOUSE_UF;
+              end;
+              if (QNotaSaidaIND_CONDICAO_PAGTO.Text = '6') and (QContaPixIND_PIX_PADRAO.Text = 'S') and (QNotaSaidaDESC_TXID.Text = '') then
+              begin
+                // preenche as informaçoes pix caso seja esse o método e exista uma conta cadastrada
+                with cpPixCemapa.PSP.epCob.CobSolicitada do
+                begin
+                  chave := cControllerPix.Configuracao.ChavePIX;
+                  calendario.expiracao := 3600;
+
+                  devedor.nome := Trim(QNotaNomeNOME.Value);
+                  aCpfCnpj := trim(QNotaNomeDESC_CGC_CPF.Value);
+                  aCpfCnpj := Bib.LimpaString(Bib.LimpaString(aCpfCnpj, '-'), '.');
+                  aCpfCnpj := Bib.LimpaString(aCpfCnpj, '/');
+
+                  vDigCpfCnpj := Length(aCpfCnpj);
+
+                  if (vDigCpfCnpj > 11) then
+                    devedor.cnpj := aCpfCnpj
+                  else
+                    devedor.cpf := aCpfCnpj;
+
+
+                   QItemNfCons.Close;
+                   QItemNfCons.SetVariable('COD_NOTA_CAB', QItemNFCOD_NOTA_CAB.Value);
+                   QItemNfCons.Open;
+                   QItemNfCons.First;
+                // quando é pra este prestador de serviço de pagamento
+                // precisa mandar os itens da nota
+                 if (cpPixCemapa.PSP is TACBrPSPShipay) then
+                 begin
+
+                 with infoAdicionais.New do
+                 begin
+                   nome := 'order_ref';
+                   valor := FormatDateTime('yymmddhhnnss', Now);
+                 end;
+
+                 for iItem := 0 to QItemNfCons.RecordCount -1 do
+                 begin
+                   with infoAdicionais.New do
+                   begin
+                     aCodBarra := DMOracle.BuscaNome('SELECT DESC_CODIGO_BARRA FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(QItemNfConsCOD_PRODUTO.Value));
+                     nome := 'item_' + IntToStr(iItem + 1);
+                     aProduto := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(QItemNfConsCOD_PRODUTO.Value));
+                     valor := '{' + '"ean": "' + aCodBarra + '", ' +
+                        '"item_title": "' + aProduto + '", ' +
+                        '"quantity":'+  QItemNfConsQT_QUANTIDADE.Text  +', ' +
+                        '"sku": "' + 'EAN' + '", ' +
+                        '"unit_price": ' + StringReplace(QItemNfConsVAL_UNITARIO.Text, '.', '', []) + '}';
+                   end; // preenchimento das informações
+                   QItemNfCons.Next;
+                 end; // for
+                 QItemNfCons.Close;
+               end; //  if shipay
+               QSomaItemNota.Close;
+               QSomaItemNota.SetVariable('COD_NOTA_CAB',QNotaSaidaCOD_NOTA_CAB.Value);
+               QSomaItemNota.Open;
+               // busca o valor total da nota, não encontrei em outro lugar
+
+               valor.original := QSomaItemNotaSVAL_TOTAL.Value + QSomaItemNotaSVAL_DESPESAS.Value - QSomaItemNotaSVAL_DESCONTO.Value - QNotaSaidaVal_AVista.Value - pValorValeCompras - pValorValePresente ;
+
+               LimpaStatusPix(fPixDadosStatus);
+
+               fPixDadosStatus.Total := valor.original;
+
+                 // Começa a executar a cobrança
+                 if cpPixCemapa.PSP.epCob.CriarCobrancaImediata then
+                 begin
+                 fPixDadosStatus.TxID := cpPixCemapa.PSP.epCob.CobGerada.txId;
+                 fPixDadosStatus.QRCode := Trim(cpPixCemapa.PSP.epCob.CobGerada.pixCopiaECola);
+
+                 if (fPixDadosStatus.QRCode = EmptyStr) then
+                   fPixDadosStatus.QRCode := cpPixCemapa.GerarQRCodeDinamico(cpPixCemapa.PSP.epCob.CobGerada.location);
+
+                 if FQrCodePix = nil then
+                   FQrCodePix := TFQrCodePix.Create(nil);
+
+                 FQrCodePix.recebeDados(cpPixCemapa, fPixDadosStatus);
+
+                 end
+                 else
+                 begin
+                   fPixDadosStatus.EmErro := True;
+                   Raise Exception.Create('Erro ao Criar Cobrança Pix: ' + sLineBreak +
+                           FormatarJSON(cpPixCemapa.PSP.epCob.Problema.AsJSON));
+                 end;
+                 FQrCodePix.ShowModal;
+                 if (FQrCodePix.isAbort) then
+                   goto lDispensaQrCode;
+                 if (FQrCodePix.ModalResult = MRCancel) and not (fPixDadosStatus.EmErro)then
+                 begin
+                   cpPixCemapa.PSP.epCob.CobRevisada.status := stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
+                   if cpPixCemapa.PSP.epCob.RevisarCobrancaImediata(fPixDadosStatus.TxID) then
+                   begin
+                     cpPixCemapa.PSP.Clear;
+                     Raise Exception.Create('Operação com o Pix CANCELADA!')
+                   end
+                   else if (FQrCodePix.ModalResult = MRCancel) and (fPixDadosStatus.EmErro)then
+                   begin
+                     Raise Exception.Create('Falha ao CANCELAR a Cobrança!')
+                   end;
+                 end
+                 else if (fPixDadosStatus.EmErro) then
+                 begin
+                   Raise Exception.Create('Erro ao realizar a cobrança!')
+                 end;
+               end;
+               //// Aqui daria continidade para pegar os dados do pix e do valor.
+               //// FPixDadosStatus.TxID é onde fica o codigo único do pix
+               //// fPixDadosStatus.QRCode é onde está a url para gerar o qrcode
+               //// fPixDadosStatus.Total é o valor da cobrança
+               //// fPixDadosStatus.EmErro Caso dê erro, vai ser aqui que pega a informaçao
+               //// fPixDadosStatus.QtdConsultas quantidade de consultas tentadas. Vou limitar em 36
+               QNotaSaidaDESC_TXID.Value := fPixDadosStatus.TxID;
+               QContaPix.Close;
+               FQrCodePix := nil;
+             end;
+            end;  //FIM DO PIX
+            lDispensaQrCode: //vem pra cá para dispensar QRCODE
+            if QSomaItemNotasval_total_nota.Value -
+               pValorValeCompras - pValorValePresente -
+               QSomaItemNotaSVAL_CHEQUE_CAIXA.Value > 0 then
+            begin
+              AtuCaixa(QSomaItemNotasval_total_nota.Value - DMNotaSaida.QNotaSaidaVAL_AVISTA.Value -
+                pValorValeCompras - pValorValePresente - QSomaItemNotaSVAL_CHEQUE_CAIXA.Value, wAVista, QNotaSaidaCod_Operacao.Text,
+                QNotaSaidaCod_Filial.Text, QNotaSaidaCod_Departamento.Text, QNotaSaidaNum_Nota.Text,
+                QNotaSaidaCod_Cadastro.Text, QNotaSaidaCod_Nota_Cab.Text,
+                '', Trunc(QNotaSaidaDt_Recebimento.Value)); // - wDescontoAcrescimo retirado pelo cesar esta no query QSOMAITEMNOTA
+            end;
+
+          end;
+        end;
+        //Comentado pois a nutrivet não é mais nosso cliente. Alex 03/04/2023
+        //Solicitacao: Nutrivet (SIMONI)
+        //para nutrivet estava gerando as parcelas do cts receber com a condicao de pgto cartao de credito.
+        if (QNotaSaidaIND_CONDICAO_PAGTO.Value = '4') or
+           (QNotaSaidaIND_CONDICAO_PAGTO.Value = '5') then
+        begin
+          {if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NUTRIVET') then
+            wAVista := 'A CARTAO'
+          else
+          begin }
+            if (QNotaSaidaIND_CONDICAO_PAGTO.Value = '4') then
+              wAVista := 'CARTAO CREDITO'
+            else
+              wAVista := 'CARTAO DEBITO';
+          //end;
+          //if QNotaSaidaObs.Text <> '' then // somente para lancar a obs no caixa
+          //  wAVista := QNotaSaidaObs.Text;
+          if (QSomaItemNotasval_total_nota.Value -
+             pValorValeCompras - pValorValePresente -
+             QSomaItemNotaSVAL_CHEQUE_CAIXA.Value > 0) and (QNotaSaidaCOD_SERIE_MODELO.Value <> '65') then
+            AtuCaixa(QSomaItemNotaSVal_Total_Nota.Value - QNotaSaidaVal_AVista.Value -
+              DMNotaSaida.pValorValeCompras - DMNotaSaida.pValorValePresente - QSomaItemNotaSVAL_CHEQUE_CAIXA.Value, wAVista, QNotaSaidaCod_Operacao.Text,
+              QNotaSaidaCod_Filial.Text, QNotaSaidaCod_Departamento.Text, QNotaSaidaNum_Nota.Text,
+              QNotaSaidaCod_Cadastro.Text, QNotaSaidaCod_Nota_Cab.Text,
+              '', Trunc(QNotaSaidaDt_Recebimento.Value));
+        end;
+        if (QNotaSaidaIND_CONDICAO_PAGTO.Value = '7') then // Convênio
+        begin
+          wAVista := 'CONVENIO';
+          if (QSomaItemNotasval_total_nota.Value -
+             pValorValeCompras - pValorValePresente -
+             QSomaItemNotaSVAL_CHEQUE_CAIXA.Value > 0) and (QNotaSaidaCOD_SERIE_MODELO.Value <> '65') then
+          begin
+            if (DMParamSistema.CodEmpresa <> 'DINGLIS') then
+              AtuCaixa(QSomaItemNotaSVal_Total_Nota.Value - QNotaSaidaVal_AVista.Value -
+                DMNotaSaida.pValorValeCompras - DMNotaSaida.pValorValePresente - QSomaItemNotaSVAL_CHEQUE_CAIXA.Value, wAVista, QNotaSaidaCod_Operacao.Text,
+                QNotaSaidaCod_Filial.Text, QNotaSaidaCod_Departamento.Text, QNotaSaidaNum_Nota.Text,
+                QNotaSaidaCod_Cadastro.Text, QNotaSaidaCod_Nota_Cab.Text,
+                '', Trunc(QNotaSaidaDt_Recebimento.Value));
+          end;
+        end;
+        //---------------------------------///
+
+        //a geração do contas a receber era feita aqui, agora entá sendo feita depois do calculo do desconto dos itens.
+
+        QNotaSaidaInd_Situacao.Value := '2';
+
+//Adicionado cod_empresa ACOESTE. 13/09/2023. Alex /  Adicionado para cartão débito Guilherme 13/11/2023
+      if (DMParamSistema.CodEmpresa = 'ACOESTE') and
+       ((DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value = '5') or  (DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value = '6'))
+       and (DMNotaSaida.QNotaSaidaCOD_SERIE.Value <> '65') then
+    begin
+      if FInformaBancoPix = nil then
+        FInformaBancoPix := TFInformaBancoPix.create(Application);
+      FInformaBancoPix.ShowModal;
+    end;
+  //      DMNotaSaida.Contabiliza;   // RETIRADO PELO CÉSAR PARA PERFORMANCE
+        AtualizaEstoque(-1);
+        AtuPedido(1);  // RETIRADO PELO CÉSAR PARA PERFORMANCE
+        IncluiNotaAux; //Adicionado pois a nutripet emite nota de venda futura utilizando esta tela. Alex 12/05/2023.
+  //      Else
+  //       Begin
+        //QItemNF.First;
+//        while not QItemNF.Eof do
+//        begin
+//          QItemNF.Edit;
+//  //            CalculaItem;
+//          CalculaICM;
+//          QItemNF.Post;
+//          //wTotal_Desconto := wTotal_Desconto + trunc(QItemNFVal_Desconto.Value * 100) / 100;
+//              //wTotal_Desconto := wTotal_Desconto + strtofloat(formatFloat('#,##0.00', QItemNFVal_Desconto.Value));
+//          QItemNF.Next;
+//        end;
+  //         End;           //  fim
+          // esta rotina é apenas para acertar a diferença que pode ser causada no rateio do desconto
+
+{        if wTotal_Desconto <> QNotaSaidaVal_Desconto.Value then
+        begin
+          QItemNF.First;
+          QItemNF.Edit;
+
+          wTotal_Desconto := QNotaSaidaVal_Desconto.Value - QSomaItemNotaSVAL_DESCONTO.Value;
+            //wTotal_Desconto           := strtofloat(formatFloat('#,##0.00', QItemNFVal_Desconto.Value + wTotal_Desconto));
+          wTotal_Desconto := trunc(QItemNFVal_Desconto.Value * 100) / 100 + wTotal_Desconto;
+          QItemNFVal_Desconto.Value := wTotal_Desconto;
+
+          QItemNF.Post;
+        end;
+        }
+        //O post era feito aqui para que o rateio fosse feito, agora está sendo feito antes com essa finalidade, pode ser trocado de lugar se necessario. Alessandro 18/08/12
+        DMNotaSaida.QNotaSaida.Post;
+        //NÃO MANDAVA OS VALORES PARA A CONTABILIDADE. Junior 11/02/2021.
+        if DMParamSistema.QparamSistemaInd_Contabiliza.Value = 'S' then
+          Contabiliza;
+//Controle de lançamento bandeira do cartão
+        if DMParamSistema.QParamSistemaIND_CONTROLE_CARTAO.Value = 'S' then
+        begin
+          DMNotaSaida.wLancCartaoIndividual := False;
+          if ((DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value = '5') or//cartão débito
+              (DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value = '4')) then //cartão Crédito
+          begin
+            if FLancamentoCartao = nil then
+              FLancamentoCartao := TFLancamentoCartao.Create(Application);
+            FLancamentoCartao.ShowModal;
+          end;
+        end;
+//Fim
+
+        if (QNotaSaidaInd_Condicao_Pagto.Value = '2') then //or //A Prazo
+           //((QNotaSaidaInd_Condicao_Pagto.Value = '3') and (DMParamSistema.CodEmpresa = 'NUTRIVET')) then //estava aparecendo gerar cts_receber para nutrivet. Junior 30/08/2017
+          //(((QNotaSaidaInd_Condicao_Pagto.Value = '4') or
+          //  (QNotaSaidaInd_Condicao_Pagto.Value = '5')) and
+          //(DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'NUTRIVET') and
+          //(DMParamSistema.CodEmpresa <> 'ARISTIDES') and
+          //(DMParamSistema.CodEmpresa <> 'BARRAUS')) then // Cartão de Crédito
+        begin
+          PCadastro := StrToInt(Trim(MECadastro.Text));
+          GeraContaReceber(LBContaReceber.Items, StrToInt(MEFinalidade.Text), MEBanco.Text, MEDepartamento.Text, Trim(MeContaCorrente.Text));
+          if ((DMParamSistema.CodEmpresa = 'ARISTIDES') and
+             (QNotaSaidaCOD_SERIE_MODELO.Value = '65')) then
+          begin
+            if StrToInt('0' + DMNfe.QNfeEmissaoDESC_RETORNO_PROCESSAMENTO.Value) in SIT_NFE_ACEITO then
+            begin
+              if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                ConfirmaPagamentoNFCe;
+            end
+            else
+              if (RoundTo(QSomaItemNotasval_total_nota.Value - pValorValeCompras - pValorValePresente, -2) > 0) then
+                InserePagamentoNFCe(QSomaItemNotasval_total_nota.Value - QNotaSaidaVAL_AVISTA.Value -
+                  pValorValeCompras - pValorValePresente,
+                  Bib.ift(QNotaSaidaIND_FINALIDADE_NFE.Value < 3, 'Crédito Loja', 'Sem pagamento'));
+          end;
+          PCadastro := 0;
+        end;
+        PagamentosNFe4.GeraPagamentos('S');
+//Adicionado lançamento PIX para a Refrigeração SMI. Alex 23/09/2022
+//Adicionado Ferragem Medianeira por Solicitação da Dani. Alex 05/04/2024
+        if ( (DMParamSistema.CodEmpresa = 'REFRISM') or (DMParamSistema.CodEmpresa = 'FERRAGMED') ) and (DMNotaSaida.QNotaSaidaIND_CONDICAO_PAGTO.Value = '6') and
+           (DMNotaSaida.QNotaSaidaCOD_SERIE.Value <> '65') then
+        begin
+          if FInformaBancoPix = nil then
+            FInformaBancoPix := TFInformaBancoPix.create(Application);
+          FInformaBancoPix.ShowModal;
+        end;
+
+        if (QSomaItemNotaSVAL_CHEQUE_CAIXA.Value > 0) and (QNotaSaidaCOD_SERIE_MODELO.Value <> '65') then
+          AtuCaixa(QSomaItemNotaSVAL_CHEQUE_CAIXA.Value, 'CHEQUE', QNotaSaidaCOD_OPERACAO.Text, QNotaSaidaCOD_FILIAL.Text,
+            QNotaSaidaCOD_DEPARTAMENTO.Text, QNotaSaidaNUM_NOTA.Text, QNotaSaidaCOD_CADASTRO.Text,
+            QNotaSaidaCOD_NOTA_CAB.Text, '', trunc(QNotaSaidaDT_RECEBIMENTO.Value));
+        QItemNF.AutoCalcFields := True;
+        QSomaItemNota.AutoCalcFields := True;
+        QNotaSaida.AutoCalcFields := True;
+        QItemNF.EnableControls;
+        DMOracle.DBCemapa.Commit;
+
+        with DMOperacao do
+        begin
+          QOperacao.Close;
+          QOperacao.SetVariable('PK', QNotaSaidaCOD_OPERACAO.Value);//FNotaConsumidor.DBECodOperacao.Text);
+          QOperacao.open;
+        end;
+
+        if (DMOperacao.QOperacaoInd_Cupom_Fiscal.Value = 'S') and (DMNotaSaida.QNotaSaidaCOD_SERIE_MODELO.Value <> '65') then
+        begin
+          if FImpressoraFiscal = nil then
+            FImpressoraFiscal := TFImpressoraFiscal.Create(Application);
+          FimpressoraFiscal.EmiteCF_Yanco(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+        end
+        else
+        begin
+          wResult := DMOracle.BuscaNome('SELECT ID_LOTE FROM TB_NF_ELETRONICA','COD_NOTA_CAB = '+QNotaSaidaCod_Nota_Cab.Text);
+          if wResult = '' then
+            wLote := 0
+          else
+            wLote := StrToInt(wResult);
+
+          //FNotaImpressao.EmiteNF(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value,'', wLote,true);
+          //Alterado para fazer a checagem nesse lugar para imprimir ou não Nota/Pedido. Junior-11/04/2017
+          if (DMOperacao.QOperacaoInd_Emite.Value <> 'N') then
+          begin
+            if (DMParamSistema.QParamSistemaIND_CONFIRMA_EMISSAO.Value = 'N') Or // não solicita uma confirmação para imprimir
+                 (DMOperacao.QOperacaoInd_Emite.Value = 'F') Then                  // Quando for nota fiscal nao solicita confirmação
+              FNotaImpressao.EmiteNF(QNotaSaidaCod_Nota_Cab.Value,'', wLote,true)
+            else
+            if MessageDlg('Deseja emitir a NOTA/PEDIDO Nº ' + DMNotaSaida.QNotaSaidaNUM_NOTA.AsString + ' ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+              FNotaImpressao.EmiteNF(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value,'', wLote,true);
+
+          end;
+        end;
+
+        if (QNotaSaidaInd_Condicao_Pagto.Value <> '1') and
+           ((DMOperacao.QOperacaoInd_Duplicata.Value   = 'S')      Or
+            (DMOperacao.QOperacaoIND_PROMISSORIA.Value = 'S'))     then
+        begin
+          with DMContasReceber do
+          begin
+            QRContasReceber_Duplicatas.Close;
+            QRContasReceber_Duplicatas.SetVariable('COD_NOTA_CAB', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+            QRContasReceber_Duplicatas.SetVariable('COD_FILIAL', DMNotaSaida.QNotaSaidaCod_Filial.Value);
+            QRContasReceber_Duplicatas.SetVariable('COD_DEPARTAMENTO', Null);
+            QRContasReceber_Duplicatas.SetVariable('COD_CONTA_RECEBER_CAB', Null);
+            QRContasReceber_Duplicatas.Open;
+          end;
+          if (DMOperacao.QOperacaoInd_Duplicata.Value = 'S')  then
+            if MessageDlg('Emitir Duplicata?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+            begin
+              if FRContasReceberDuplicatas_MEDIBENS = nil then
+                FRContasReceberDuplicatas_MEDIBENS := TFRContasReceberDuplicatas_MEDIBENS.Create(Application);
+              setLength(x, 8); //8 sql diferentes
+              setLength(y, 8);
+              x[0] := 'SELECT DESC_FILIAL FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[1] := 'SELECT DESC_ENDERECO FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[2] := 'SELECT DESC_CIDADE FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[3] := 'SELECT NUM_CGC FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[4] := 'SELECT DESC_INSCRICAO FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[5] := 'SELECT COD_ESTADO FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[6] := 'SELECT DESC_CEP FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[7] := 'SELECT DESC_TELEFONE FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              DMOracle.BuscaNomes(x, y);
+              FRContasReceberDuplicatas_MEDIBENS.QRLEmpresa.caption := Y[0];
+              FRContasReceberDuplicatas_MEDIBENS.QRLEmpresa2.caption := Y[0];
+              FRContasReceberDuplicatas_MEDIBENS.QRLEmpresa3.caption := Y[0];
+              FRContasReceberDuplicatas_MEDIBENS.QRLEndereco.caption := Y[1];
+              FRContasReceberDuplicatas_MEDIBENS.QRLCidade.caption := Y[2];
+              FRContasReceberDuplicatas_MEDIBENS.QRLCGC.caption := Y[3];
+              FRContasReceberDuplicatas_MEDIBENS.QRLInscricao.caption := Y[4];
+              FRContasReceberDuplicatas_MEDIBENS.QRLEstado.caption := Y[5];
+              FRContasReceberDuplicatas_MEDIBENS.QRLCEP.caption := Y[6];
+              FRContasReceberDuplicatas_MEDIBENS.QRLfone.caption := Y[7];
+              FRContasReceberDuplicatas_MEDIBENS.QRPrimario.Preview
+            end;
+            If DMOperacao.QOperacaoIND_PROMISSORIA.Value = 'S' then
+              if MessageDlg('Emitir Nota Promissória?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+              begin
+                if DMParamSistema.QParamSistemaIND_IMPRESSAO_PROMISSORIA.Value = 'M' then
+                  FPromissoria.Promissoria_Dos
+                else
+                begin
+                  if FRPromissorias = nil then
+                    FRPromissorias := TFRPromissorias.Create(Application);
+                  FRPromissorias.QRPrimario.Preview;
+                end;
+              end;
+        end;
+
+        if (DMNotaSaida.QNotaSaidaInd_Condicao_Pagto.Value = '2') and
+           (DMOperacao.QOperacaoInd_Bloqueto.Value = 'S') then
+        begin
+          wLibera_Bloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+            'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+          if (wLibera_Bloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+          // Verifica se usa API do banco para geração do boleto. Se sim, não imprime mas gera
+          // os dados para envio da API.
+            QBoletoAPINota.Close;
+            QBoletoAPINota.SetVariable('COD_NOTA_CAB', QNotaSaidaCOD_NOTA_CAB.Value);
+            QBoletoAPINota.Open;
+            if (QBoletoAPINotaIND_API_BOLETO.Text <> 'SIM') then  // Se não usar api, segue fluxo antigo
+            begin
+              if (MessageDlg('Deseja emitir o(s) boleto(s)?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+              begin
+                with DMContasReceber do
+                begin
+                  QRBloqueto.Close;
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                  QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                  DMContasReceber.Chama_Emissao_Bloqueto(2); //pDefineEmissaoBoleto: pImprime = 0, pEnviaEmail = 1, pImprimeEnviaEmail = 2
+                end;
+              end;
+            end
+            else
+          begin
+            with DMContasReceber do
+            begin
+              QRBloqueto.Close;
+              QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+              QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+              QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+              QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+              Chama_Emissao_Bloqueto_API;
+              with DMOracle do
+              begin
+                DMOracle.QExecSQL.Close;
+                DMOracle.QExecSQL.SQL.Clear;
+                wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET IND_WEB_API = ' + QuotedStr('S');
+                wComando := wComando + ' WHERE COD_NOTA_CAB = ' + FloatToStr(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+                DMOracle.QExecSQL.SQL.Add(wComando);
+                DMOracle.QExecSQL.ExecSQL;
+                DMOracle.DBCemapa.Commit;
+                if DMOracle.DBCemapa.InTransaction then
+                  DMOracle.DBCemapa.Commit;
+              end;
+            end;
+          end;
+        end;
+      end;
+      except
+        if QNotaSaida.State in [dsEdit, dsInsert] then
+          QNotaSaida.Cancel; // RollBack
+        raise;
+      end;
+    end;
+  except
+    DmNotaSaida.QItemNF.AutoCalcFields := True;
+    DmNotaSaida.QSomaItemNota.AutoCalcFields := True;
+    DmNotaSaida.QNotaSaida.AutoCalcFields := True;
+    DmNotaSaida.QItemNF.EnableControls;
+    raise;
+  end;
+
+  FNotaImpressao.Free;
+  ModalResult := mrOk;
+end;
+
+procedure TFNotaConsum_Confirma.BtAvancarClick(Sender: TObject);
+var wMes, wAno, wDia: Word;
+    wDescCadastro : String;
+begin
+  if ( (DMNotaSaida.QNotaSaidaInd_Condicao_Pagto.Value = '2') or
+      ( (DMNotaSaida.QNotaSaidaInd_Condicao_Pagto.Value = '4') and
+      (DMParamSistema.CodEmpresa <> 'CASACARNES') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-DOCES') and
+      (DMParamSistema.CodEmpresa <> 'OSARE') and
+      (DMParamSistema.CodEmpresa <> 'DONABENTA')and
+      (DMParamSistema.CodEmpresa <> 'FERRAGMED')and
+      (DMParamSistema.CodEmpresa <> 'BRASIL')and
+      (DMParamSistema.CodEmpresa <> 'SOLDAR') and
+      (DMParamSistema.CodEmpresa <> 'QUERENCIA') and
+      (DMParamSistema.CodEmpresa <> 'LACARNES') and
+      (DMParamSistema.CodEmpresa <> 'MEUPET') and
+      (DMParamSistema.CodEmpresa <> 'MAVENIDA') and
+      (DMParamSistema.CodEmpresa <> 'AGROCAMPO') and
+      (DMParamSistema.CodEmpresa <> 'JASOL')     and
+      (DMParamSistema.CodEmpresa <> 'REFRISM') and
+      (DMParamSistema.CodEmpresa <> 'FRACTA') and
+      (DMParamSistema.CodEmpresa <> 'DONNA') and
+      (DMParamSistema.CodEmpresa <> 'IMPCHOPP') and
+      (DMParamSistema.CodEmpresa <> 'EMBGARCIA') and
+      (DMParamSistema.CodEmpresa <> 'EMBVAL') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-PAOC') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-DOGAO') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-MAIA') and
+      (DMParamSistema.CodEmpresa <> 'DINGLIS') and
+      (DMParamSistema.CodEmpresa <> 'NFCE-ITALI') and
+      (DMParamSistema.CodEmpresa <> 'PROPE') and
+      (DMParamSistema.CodEmpresa <> 'REPUBLICA') ) ) and  //NUTRIVET e BARRAUS pediram para não aparecer as parcelas do cts receber quando for venda por c. credito
+     (PCConfirma.ActivePage <> TSContaReceber) then
+  begin
+    MeCadastro.Text := FloatToStr(DmNotaSaida.QNotaSaidaCod_Cadastro.Value);
+    if DMParamSistema.CodEmpresa = 'SCALA' then
+    begin
+      DMCadastro.QCadastro.Close;
+      DMCadastro.QCadastro.SetVariable('PK', DMNotaSaida.QNotaSaidaCOD_CADASTRO.Value);
+      DMCadastro.QCadastro.Open;
+      wDescCadastro := FormatFloat('0.00',((DMNotaSaida.QSomaItemNotasval_total_nota.Value -
+                      DMNotaSaida.QNotaSaidaVAL_AVISTA.Value -
+                      DMNotaSaida.pValorValeCompras -
+                      DMNotaSaida.pValorValePresente) * (DMCadastro.QCadastroPERC_DESCONTO.Value/100) ));
+
+      if wDescCadastro <> '0,00' then
+        EdTotalNF.Text := FormatFloat('#,##0.00',(DMNotaSaida.QSomaItemNotasval_total_nota.Value -
+                      DMNotaSaida.QNotaSaidaVAL_AVISTA.Value -
+                      DMNotaSaida.pValorValeCompras -
+                      DMNotaSaida.pValorValePresente - StrToFloat(wDescCadastro) ))
+      else
+        EdTotalNF.Text := FormatFloat('#,##0.00',StrToFloat(Bib.LimpaString(EdVenda.Text, '.')) -
+                      StrToFloat(Bib.LimpaString(MeEntrada.Text, '.')));
+    end
+    else
+    begin
+      EdTotalNF.Text := FormatFloat('#,##0.00',StrToFloat(Bib.LimpaString(EdVenda.Text, '.')) -
+                      StrToFloat(Bib.LimpaString(MeEntrada.Text, '.')));
+    end;
+    PCConfirma.Pages[0].TabVisible := False;
+    PCConfirma.Pages[1].TabVisible := True;
+    StrToFloat(Bib.LimpaString(EdRecebido.Text, '.'));
+
+    FNotaConsum_Confirma.MeDepartamento.Text := IntToStr(DMUsuario.CodDepartamentoUsuario);
+   //Buscar finalidade da operação, caso não tiver busca do usuario. Junior 23/09/2020. Suporte(1061).
+    with DMOperacao do
+    begin
+      QOperacao.Close;
+      QOperacao.SetVariable('Pk', StrToInt('0'+Trim(DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text)));
+      QOperacao.Open;
+      if DMOperacao.QOperacaoCOD_FINALIDADE.Text <> '' then
+        FNotaConsum_Confirma.MeFinalidade.Text := DMOperacao.QOperacaoCOD_FINALIDADE.Text
+      else
+        FNotaConsum_Confirma.MeFinalidade.Text := IntToStr(DMUsuario.CodFinalidadeUsuario);
+    end;
+//    FNotaConsum_Confirma.MEFinalidade.Text := IntToStr(DMUsuario.CodFinalidadeUsuario);
+    MeContaCorrenteExit(sender);
+
+    if DMCadastro.QCadastroNum_Dia_Vencto.Text <> '' then // esta rotina é quando foi colocado um dia para vencimento
+    begin // das contas do cliente no cadastro
+      DecodeDate(Date, wAno, wMes, wDia); // o sistema gera automaticamente para o proximo mes o C.R.
+      Inc(wMes);
+      if wMes > 12 then
+      begin
+        wMes := 1;
+        Inc(wAno);
+      end;
+      if DMOracle.DiasNoMes(StrToDate('01/' + IntToStr(wMes) + '/' + IntToStr(wAno))) < DMCadastro.QCadastroNum_Dia_Vencto.Value then // isto serve para o caso de informar 31 e o mes so tem 30 dias
+        wDia := DMOracle.DiasNoMes(StrToDate('01/' + IntToStr(wMes) + '/' + IntToStr(wAno)))
+      else
+        wDia := DMCadastro.QCadastroNum_Dia_Vencto.Value;
+      MEDataCP.Text := IntToStr(wDia) + '/' + IntToStr(wMes) + '/' + IntToStr(wAno);
+      MeValorCp.Text := EdTotalNF.Text;
+      MEValorCPExit(Self);
+    end;
+  end
+  else
+    Finaliza;
+{Adicionado para remover a guia de pagamento. Alex 20/05/2025}
+  if DMParamSistema.QParamSistemaIND_GUIA_PAGAMENTO.Value = 'SIM' then
+  begin
+    if (DMUsuario.pTipoFuncionario <> 'VENDEDOR') and (DMUsuario.pTipoFuncionario <> 'COLABORADOR') then
+    begin
+      DMOracle.ExecutaSql('UPDATE TB_NOTA_CAB SET COD_GUIA_PAGAMENTO = NULL, COD_DEPARTAMENTO = ' + IntToStr(DMUsuario.CodDepartamentoUsuario) +
+      ' WHERE COD_NOTA_CAB = ' + DMNotaSaida.QNotaSaidaCOD_NOTA_CAB.Text);
+    end;
+  end;
+end;
+
+procedure TFNotaConsum_Confirma.MEDiasCPExit(Sender: TObject);
+begin
+  if Trim(MEDiasCP.Text) <> '' then
+  begin
+    MEDataCP.Text := DateToStr(DMNotaSaida.QNotaSaidaDt_Emissao.Value + StrToFloat(MEDiasCP.Text));
+    MEDiasCP.Text := '';
+  end;
+end;
+
+procedure TFNotaConsum_Confirma.MEValorCPExit(Sender: TObject);
+var wLinha, wAux: string;
+const wBranco: string = '                            ';
+begin
+  if (MEDataCP.Text <> '') and
+    (MEValorCP.Text <> '') then
+  begin
+    if StrToDate(MEDataCp.Text) < Date then
+      raise Exception.Create('Data de Vencimento Menor que Data Atual!');
+
+    wLinha := DateToStr(StrToDate(MEDataCP.Text));
+    wAux := FormatFloat('###,###,##0.00', StrToFloat(bib.LimpaString(MEValorCP.Text, '.')));
+    wAux := Copy(wBranco, 1, 15 - Length(waux)) + wAux;
+    wLinha := wLinha + wAux;
+
+    LBContaReceber.Items.Add(wLinha);
+
+    MEDataCP.Text := '';
+    MEValorCP.Text := '';
+
+    if MEDiasCP.visible then
+      MEDiasCP.SetFocus;
+  end;
+
+end;
+
+procedure TFNotaConsum_Confirma.BtConsFinalidadeClick(Sender: TObject);
+begin
+  if FFinalidadeCons = nil then
+    FFinalidadeCons := TFFinalidadeCons.Create(Application);
+  if FFinalidadeCons.showModal = mrOk then
+    MEFinalidade.Text := DMFinalidade.QFinalidadeConsCod_Finalidade.Text;
+end;
+
+procedure TFNotaConsum_Confirma.BtApagaParcelaClick(Sender: TObject);
+begin
+  LBContaReceber.Items.Delete(LBContaReceber.ItemIndex);
+end;
+
+procedure TFNotaConsum_Confirma.BtCancelarClick(Sender: TObject);
+begin
+  if DMNotaSaida.QNotaSaida.State <> dsBrowse then
+    DMNotaSaida.QNotaSaida.Cancel;
+  if DMOracle.DBCemapa.InTransaction then
+  begin
+    DMOracle.DBCemapa.RollBack;
+    DMNotaSaida.QNotaSaida.Close;
+    DMNotaSaida.QNotaSaida.Open;
+  end;
+end;
+
+procedure TFNotaConsum_Confirma.BtConsDepartamentoClick(Sender: TObject);
+begin
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.showModal = mrOk then
+    MEDepartamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+end;
+
+procedure TFNotaConsum_Confirma.BtConsBancoClick(Sender: TObject);
+begin
+  if FContaCorrenteCons = nil then
+    FContaCorrenteCons := TFContaCorrenteCons.Create(Application);
+  if FContaCorrenteCons.showModal = mrOk then
+  begin
+    MeBanco.Text := DMBancoAgencia.QContaCorrenteConsCod_Banco_Agencia.Text;
+    MeContaCorrente.Text := DMBancoAgencia.QContaCorrenteConsCod_Conta_Corrente.Text;
+    MeContaCorrenteExit(Self);
+  end;
+
+end;
+
+procedure TFNotaConsum_Confirma.BtConsCadastroClick(Sender: TObject);
+begin
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.showModal = mrOk then
+    MECadastro.Text := DMCadastro.QCadastroConsCod_Cadastro.Text;
+end;
+
+procedure TFNotaConsum_Confirma.BtPrazoClick(Sender: TObject);
+begin
+  if FPrazoVencimentoCons = nil then
+    FPrazoVencimentoCons := TFPrazoVencimentoCons.Create(Application);
+  if FPrazoVencimentoCons.showModal = MrOk then
+  begin
+    MePrazo.Text := DMPrazoVencimento.QPrazoVencimento_ConsCod_Prazo_Vencimento.Text;
+    MePrazoExit(Self);
+  end;
+end;
+
+procedure TFNotaConsum_Confirma.MePrazoExit(Sender: TObject);
+var wLinha, wAux, wParc: string;
+  wParcela, wSoma, wDiferenca: Real;
+  wCont: Integer;
+const wBranco: string = '                            ';
+begin
+  if Trim(MePrazo.Text) <> '' then
+  begin
+    if DMOracle.FastSelect('IND_SITUACAO','TB_PRAZO_VENCIMENTO','COD_PRAZO_VENCIMENTO = ' + MePrazo.Text) <> 'ATIVO' then
+    begin
+      MePrazo.Text := '';
+      raise Exception.Create('O Prazo de Vencimento Selecionado Precisa estar "ATIVO".');
+    end;
+    if RoundTo(StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll])) ,-2) <= 0 then
+      exit;
+    wParc := DMOracle.BuscaNome('SELECT NUM_PARCELAS FROM TB_PRAZO_VENCIMENTO', 'COD_PRAZO_VENCIMENTO = ' + Trim(MePrazo.Text));
+    if wParc = '' then
+      raise Exception.Create('Código de parcelas inexistente');
+    wAux := DMOracle.BuscaNome('SELECT VAL_MINIMO_VENDA FROM TB_PRAZO_VENCIMENTO', 'COD_PRAZO_VENCIMENTO = ' + Trim(MePrazo.Text));
+    if StrToFloat(wAux) <> 0 then
+      if (StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll]))) < StrToFloat(wAux) then
+      begin
+        MePrazo.SetFocus;
+        raise Exception.Create('Valor da nota menor que mínimo exigido para este prazo');
+      end;
+    DMPrazoVencimento.QPrazoVencimentoDias.Close;
+    DMPrazoVencimento.QPrazoVencimentoDias.SetVariable('COD_PRAZO_VENCIMENTO', Trim(MePrazo.Text));
+    DMPrazoVencimento.QPrazoVencimentoDias.SetVariable('NUM_DIAS', Null);
+    DMPrazoVencimento.QPrazoVencimentoDias.Open;
+    if DMParamSistema.QParamSistemaCod_Empresa.Value = 'ARISTIDES' then
+      wParcela := Trunc((StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll]))) / StrToFloat(wParc) + 0.50)
+    else
+      wParcela := Trunc((StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll]))) / StrToFloat(wParc) * 100) / 100;
+    wCont := 0;
+    wSoma := 0;
+    while not (DMPrazoVencimento.QPrazoVencimentoDias.Eof) do
+    begin
+      Inc(wCont);
+      wSoma := wSoma + wParcela;
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES' then
+      begin
+         //aplica a diferenca na primeira parcela
+        if wCont = 1 then
+        begin
+          wDiferenca := (StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll]))) - wParcela * strtoint(wParc);
+          wParcela := wParcela + wDiferenca;
+        end;
+      end
+      else
+      begin
+         //aplica a diferenca na ultima parcela
+        if wCont = StrToInt(wParc) then
+        begin
+          wDiferenca := StrToFloat(StringReplace(EdTotalNF.Text,'.','',[rfReplaceAll])) - wSoma;
+          wParcela := wParcela + wDiferenca;
+        end;
+      end;
+      wLinha := DateToStr(DMNotaSaida.QNotaSaidaDt_Emissao.Value + DMPrazoVencimento.QPrazoVencimentoDiasNum_Dias.Value);
+      wAux := FormatFloat('###,###,##0.00', wParcela);
+      wAux := Copy(wBranco, 1, 15 - Length(waux)) + wAux;
+      wLinha := wLinha + wAux;
+      LBContaReceber.Items.Add(wLinha);
+
+       //desconta o valor da difenrenca pra nao ter problema nas demais parcelas - somente para a aristides, que deve ter a primeira parcela com o valor diferente.
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES' then
+        if wCont = 1 then
+          wParcela := wParcela - wDiferenca;
+
+      DMPrazoVencimento.QPrazoVencimentoDias.Next;
+    end;
+    MEDataCP.Text := '';
+    MEValorCP.Text := '';
+    if (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'CONSTRUIR') then
+    begin
+      if MeDiasCP.visible then
+        MeDiasCP.SetFocus;
+      MePrazo.Text := '';
+      BtAvancarClick(Self);
+    end;
+  end;
+end;
+
+procedure TFNotaConsum_Confirma.MeContaCorrenteExit(Sender: TObject);
+begin
+  if Trim(MeContaCorrente.Text) <> '' then
+  begin
+    MeBanco.Text := DMOracle.BuscaNome('SELECT COD_BANCO_AGENCIA FROM TB_CONTA_CORRENTE', 'COD_CONTA_CORRENTE = ' + Trim(MeContaCorrente.Text));
+    EdBanco.Text := DMOracle.BuscaNome('SELECT DESC_BANCO_AGENCIA FROM TB_BANCO_AGENCIA', 'COD_BANCO_AGENCIA = ' + MEBanco.Text);
+  end
+  else
+    EdBanco.Text := '';
+end;
+
+procedure TFNotaConsum_Confirma.BtConsContaCorrenteClick(Sender: TObject);
+begin
+  if FContaCorrenteCons = nil then
+    FContaCorrenteCons := TFContaCorrenteCons.Create(Application);
+  if FContaCorrenteCons.showModal = mrOk then
+    MeContaCorrente_Cheque.Text := DMBancoAgencia.QContaCorrenteConsCod_Conta_Corrente.Text;
+
+end;
+
+procedure TFNotaConsum_Confirma.BtDepartamentoClick(Sender: TObject);
+begin
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.showModal = mrOk then
+    MEDepartamento_Cheque.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+
+end;
+
+procedure TFNotaConsum_Confirma.BtConsHistoricoClick(Sender: TObject);
+begin
+  if FHistoricoCons = nil then
+    FHistoricoCons := TFHistoricoCons.Create(Application);
+  if FHistoricoCons.showModal = mrOk then
+    MEHistorico.Text := DMHistorico.QHistoricoConsCod_Historico.Text;
+
+end;
+
+procedure TFNotaConsum_Confirma.BtInsertContaCorrenteClick(
+  Sender: TObject);
+var wLinha, wAux: string;
+const wBranco: string = '                            ';
+begin
+  if StrToDate(MeDtCheque.Text) < Date then
+    raise Exception.Create('Data do Cheque Menor que Data Atual!');
+  wLinha := FormatMaskText('CCCCCC', Trim(MeContaCorrente_Cheque.Text)) + ' - ';
+  wLinha := wLinha + FormatMaskText('CCCCCC', Trim(MeDepartamento_Cheque.Text)) + ' - ';
+  wLinha := wLinha + FormatMaskText('CCCCCC', Trim(MeHistorico.Text)) + ' - ';
+  wLinha := wLinha + FormatMaskText('CCCCCC', Trim(MeNrCheque.Text)) + ' - ';
+  wAux := FormatFloat('###,###,##0.00', StrToFloat(MeValorCheque.Text)) + ' - ';
+  wAux := Copy(wBranco, 1, 15 - Length(waux)) + wAux;
+  wLinha := wLinha + wAux;
+  wLinha := wLinha + DateToStr(StrToDate(MeDtCheque.Text)) + ' - ';
+  wLinha := wLinha + FormatMaskText('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC', MeObservacao.Text) + ' - ';
+  wLinha := wLinha + FormatMaskText('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC', MeObservacao1.Text);
+  LbCheques.Items.Add(wLinha);
+
+end;
+
+procedure TFNotaConsum_Confirma.BtExcluiContaCorrenteClick(
+  Sender: TObject);
+begin
+  LBCheques.Items.Delete(LBCheques.ItemIndex);
+
+end;
+
+procedure TFNotaConsum_Confirma.FormCreate(Sender: TObject);
+begin
+  if DmParamSistema.QParamSistemaCod_Empresa.Value = 'ARISTIDES' then
+    self.Top := 0;
+  cControllerPix := TPSPPixController.New;
+end;
+
+procedure TFNotaConsum_Confirma.MEFinalidadeChange(Sender: TObject);
+begin
+  if Trim(MEFinalidade.Text) <> '' then
+    EdFinalidade.Text := DMOracle.BuscaNome('SELECT DESC_FINALIDADE FROM TB_FINALIDADE', 'COD_FINALIDADE = ' + MEFinalidade.Text);
+
+end;
+
+procedure TFNotaConsum_Confirma.MeCadastroChange(Sender: TObject);
+begin
+  if Trim(MECadastro.Text) <> '' then
+    EdCadastro.Text := DMOracle.BuscaNome('SELECT NOME FROM TB_CADASTRO', 'COD_CADASTRO = ' + MECadastro.Text);
+
+end;
+
+procedure TFNotaConsum_Confirma.MEDepartamentoChange(Sender: TObject);
+begin
+  if Trim(MEDepartamento.Text) <> '' then
+    EdDepartamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO = ' + MEDepartamento.Text)
+  else
+    EdDepartamento.Text := '';
+end;
+
+procedure TFNotaConsum_Confirma.MEValorDescontoExit(Sender: TObject);
+begin
+  ValidaDesconto(Self);
+  EdRecebidoExit(Self);
+end;
+
+procedure TFNotaConsum_Confirma.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action := CaFree;
+  FNotaConsum_Confirma := nil;
+end;
+
+procedure TFNotaConsum_Confirma.MeEntradaExit(Sender: TObject);
+begiN
+  if ((DMParamSistema.CodEmpresa = 'COZER') or (DMParamSistema.CodEmpresa = 'PROPE')) then
+    EdRestante.Text := FormatFloat('###,###,##0.00', DMNotaSaida.QSomaItemNotasval_total_nota.Value - StrToFloat(MeEntrada.Text));
+end;
+
+function TFNotaConsum_Confirma.FormatarJson(const AJSON: String): String;
+{$IfDef FPC}
+var
+  jpar: TJSONParser;
+  j: TJsonObject;
+{$EndIf}
+begin
+  Result := AJSON;
+  {$IfDef FPC}
+  try
+    j := TJSONObject.Create();
+    try
+      Result := j.Decode(Result);
+    finally
+      j.Free;
+    end;
+    jpar := TJSONParser.Create(Result, [joUTF8]);
+    try
+      Result := jpar.Parse.FormatJSON([], 2);
+    finally
+      jpar.Free;
+    end;
+  except
+    Result := AJSON;
+  end;
+  {$EndIf}
+end;
+
+procedure TFNotaConsum_Confirma.LimpaStatusPix(var StatusPix: TFluxoPagtoDados);
+begin
+  //Limpa a estrutura para retornar os dados novos ao reiniciar a cobrança
+  with StatusPix do
+  begin
+    TxID := EmptyStr;
+    E2E := EmptyStr;
+    QRCode := EmptyStr;
+    Total := 0;
+    StatusCobranca := stcNENHUM;
+    StatusDevolucao := stdNENHUM;
+    EmErro := False;
+    QtdConsultas := 0;
+  end;      
+end;
+
+procedure TFNotaConsum_Confirma.MEFinalidadeExit(Sender: TObject);
+var
+  IndFinalidade: string;
+begin
+  if Trim(MEFinalidade.Text) <> '' then
+    begin
+      EdFinalidade.Text := DMOracle.BuscaNome('SELECT DESC_FINALIDADE FROM TB_FINALIDADE',
+                                              'COD_FINALIDADE = ' + MEFinalidade.Text);
+      if UpperCase(Trim(DMOracle.BuscaNome('SELECT IND_LIBERADO FROM TB_FINALIDADE',
+                                            'COD_FINALIDADE = ' + MEFinalidade.Text))) <> 'SIM' then
+        begin
+          MEFinalidade.SetFocus;
+          raise Exception.Create('Finalidade não liberada para uso.');
+        end;
+      IndFinalidade := DMOracle.BuscaNome('SELECT IND_FINALIDADE FROM TB_FINALIDADE', 'COD_FINALIDADE = ' + MEFinalidade.Text);
+      if UpperCase(Trim(IndFinalidade)) = 'P' then
+        begin
+          MEFinalidade.SetFocus;
+          raise Exception.Create('Não é permitido selecionar uma finalidade de "Pagar" em Contas a Receber.');
+        end;
+    end
+  else
+    EdFinalidade.Text := '';
+end;
+
+procedure TFNotaConsum_Confirma.TSContaReceberShow(Sender: TObject);
+begin
+{Adicionado para a Empresa Scala sempre utilizar o tipo de pagamento 1, indepentende do cliente. Alex 19/03/2026}
+  if (DMParamSistema.CodEmpresa = 'SCALA') then
+    FNotaConsum_Confirma.MePrazo.SetFocus;
+end;
+
+end.

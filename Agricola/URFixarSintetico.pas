@@ -1,0 +1,79 @@
+unit URFixarSintetico;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTRELSIMPLES, Qrctrls, QuickRpt, ExtCtrls, QRExport, QRWebFilt, QRPDFFilt;
+
+type
+  TFRFixarSintetico = class(TFTRelSimples)
+    QRBand3: TQRBand;
+    QRDBText1: TQRDBText;
+    QRDBText2: TQRDBText;
+    QRDBText4: TQRDBText;
+    QRDBText5: TQRDBText;
+    QRBand4: TQRBand;
+    QRExpr1: TQRExpr;
+    QRExpr2: TQRExpr;
+    QRLabel3: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLabel7: TQRLabel;
+    QRLabel8: TQRLabel;
+    QRLPeriodo: TQRLabel;
+    QRGroup1: TQRGroup;
+    QRLabel10: TQRLabel;
+    QRDBText6: TQRDBText;
+    QRDBText3: TQRDBText;
+    QRBand5: TQRBand;
+    QRLabel11: TQRLabel;
+    QRExpr3: TQRExpr;
+    QRExpr4: TQRExpr;
+    QRLabel12: TQRLabel;
+    QRDBText7: TQRDBText;
+    QRExpr5: TQRExpr;
+    QRExpr6: TQRExpr;
+    QRLDepartamento: TQRLabel;
+    QRDBText8: TQRDBText;
+    QRDBText9: TQRDBText;
+    QRLabel6: TQRLabel;
+    QRLabel9: TQRLabel;
+    QRDBText10: TQRDBText;
+    QRLabel13: TQRLabel;
+    QRLote: TQRLabel;
+    QRLabel14: TQRLabel;
+    QRExpr7: TQRExpr;
+    QRLabel15: TQRLabel;
+    QRLabel16: TQRLabel;
+    QRLabel17: TQRLabel;
+    QRExpr8: TQRExpr;
+    QRLSaldo: TQRLabel;
+    procedure QRGroup1BeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FRFixarSintetico: TFRFixarSintetico;
+
+implementation
+
+uses URomaneioAgricola_cl;
+
+{$R *.DFM}
+
+procedure TFRFixarSintetico.QRGroup1BeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin
+  inherited;
+  If DMRomaneioAgricola.QRSaldoFixarCod_Lote_Tipo.Value <> 1 Then
+     QRLote.Caption := 'Ph: '+ DMRomaneioAgricola.QRSaldoFixarCod_Lote_Tipo.Text
+  Else
+     QRLote.Caption := '';
+end;
+
+end.

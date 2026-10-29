@@ -1,0 +1,707 @@
+object DMSped: TDMSped
+  OldCreateOrder = False
+  Left = 364
+  Top = 259
+  Height = 388
+  Width = 523
+  object QInsSped: TOracleDataSet1
+    SQL.Strings = (
+      'INSERT INTO TB_SPED'
+      '('
+      '  COD_REGISTRO,'
+      '  DESC_BLOCO,'
+      '  DESC_REGISTRO,'
+      '  DESC_CONTEUDO,'
+      '  DESC_CONTEUDO_LONGO'
+      ')'
+      'VALUES'
+      '('
+      '  :COD_REGISTRO,'
+      '  :DESC_BLOCO,'
+      '  :DESC_REGISTRO,'
+      '  :DESC_CONTEUDO,'
+      '  :DESC_CONTEUDO_LONGO'
+      ')')
+    Variables.Data = {
+      03000000050000000D0000003A434F445F524547495354524F03000000000000
+      00000000000E0000003A444553435F524547495354524F050000000000000000
+      0000000B0000003A444553435F424C4F434F0500000000000000000000000E00
+      00003A444553435F434F4E544555444F05000000000000000000000014000000
+      3A444553435F434F4E544555444F5F4C4F4E474F700000000000000000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 16
+  end
+  object QBuscaTodos: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DESC_CONTEUDO,'
+      '  DESC_CONTEUDO_LONGO'
+      'FROM'
+      '('
+      '  SELECT'
+      '    S.DESC_CONTEUDO,'
+      '    S.DESC_CONTEUDO_LONGO,'
+      '    ROWNUM AS LINHA'
+      '  FROM'
+      '    TB_SPED S'
+      '  INNER JOIN TB_SPED_BLOCO B ON'
+      '    B.DESC_BLOCO = S.DESC_BLOCO'
+      '  ORDER BY'
+      '    B.NUM_ORDEM,'
+      '    S.COD_REGISTRO'
+      ')'
+      'WHERE'
+      '  LINHA BETWEEN :LINHA_INI AND :LINHA_FIN')
+    Variables.Data = {
+      03000000020000000A0000003A4C494E48415F494E4903000000000000000000
+      00000A0000003A4C494E48415F46494E030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D000000444553435F434F4E544555444F01000000000013
+      000000444553435F434F4E544555444F5F4C4F4E474F000000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 64
+    object QBuscaTodosDESC_CONTEUDO: TStringField
+      FieldName = 'DESC_CONTEUDO'
+      Required = True
+      Size = 2000
+    end
+    object QBuscaTodosDESC_CONTEUDO_LONGO: TMemoField
+      FieldName = 'DESC_CONTEUDO_LONGO'
+      BlobType = ftOraClob
+    end
+  end
+  object QContaBloco: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COUNT(*) + 0.00 as TOTAL'
+      'FROM'
+      '  TB_SPED'
+      'WHERE'
+      '  DESC_BLOCO = :DESC_BLOCO')
+    Variables.Data = {
+      03000000010000000B0000003A444553435F424C4F434F050000000000000000
+      000000}
+    QBEDefinition.QBEFieldDefs = {040000000100000005000000544F54414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 104
+    Top = 16
+    object QContaBlocoTOTAL: TFloatField
+      FieldName = 'TOTAL'
+    end
+  end
+  object QContaRegistro: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COUNT(*) + 0.00 as TOTAL'
+      'FROM'
+      '  TB_SPED'
+      'WHERE'
+      '  DESC_BLOCO = :DESC_BLOCO'
+      'AND'
+      '  DESC_REGISTRO = :DESC_REGISTRO')
+    Variables.Data = {
+      03000000020000000B0000003A444553435F424C4F434F050000000000000000
+      0000000E0000003A444553435F524547495354524F0500000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {040000000100000005000000544F54414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 104
+    Top = 64
+    object QContaRegistroTOTAL: TFloatField
+      FieldName = 'TOTAL'
+    end
+  end
+  object QProcuraRegistro: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COD_REGISTRO + 0.00 as COD_REGISTRO,'
+      '  DESC_BLOCO,'
+      '  DESC_REGISTRO,'
+      '  DESC_CONTEUDO'
+      'FROM'
+      '  TB_SPED'
+      'WHERE'
+      '  DESC_BLOCO = :DESC_BLOCO'
+      'AND'
+      '  DESC_REGISTRO = :DESC_REGISTRO')
+    Variables.Data = {
+      03000000020000000B0000003A444553435F424C4F434F050000000000000000
+      0000000E0000003A444553435F524547495354524F0500000000000000000000
+      00}
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000C000000434F445F524547495354524F0100000000000A00
+      0000444553435F424C4F434F0100000000000D000000444553435F5245474953
+      54524F0100000000000D000000444553435F434F4E544555444F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 16
+    object QProcuraRegistroCOD_REGISTRO: TFloatField
+      FieldName = 'COD_REGISTRO'
+    end
+    object QProcuraRegistroDESC_BLOCO: TStringField
+      FieldName = 'DESC_BLOCO'
+      Required = True
+      Size = 1
+    end
+    object QProcuraRegistroDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 3
+    end
+    object QProcuraRegistroDESC_CONTEUDO: TStringField
+      FieldName = 'DESC_CONTEUDO'
+      Required = True
+      Size = 2000
+    end
+  end
+  object QConta: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  COUNT(*) + 0.00 as TOTAL'
+      'FROM'
+      '  TB_SPED')
+    QBEDefinition.QBEFieldDefs = {040000000100000005000000544F54414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 104
+    Top = 112
+    object QContaTOTAL: TFloatField
+      FieldName = 'TOTAL'
+    end
+  end
+  object QDelSped: TOracleDataSet1
+    SQL.Strings = (
+      'DELETE'
+      'FROM'
+      '  TB_SPED')
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 64
+  end
+  object QUpSped: TOracleDataSet1
+    SQL.Strings = (
+      'UPDATE TB_SPED'
+      'SET'
+      '  DESC_CONTEUDO = :DESC_CONTEUDO'
+      'WHERE'
+      '  COD_REGISTRO = :COD_REGISTRO')
+    Variables.Data = {
+      03000000020000000E0000003A444553435F434F4E544555444F050000000000
+      0000000000000D0000003A434F445F524547495354524F030000000000000000
+      000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 112
+  end
+  object QRegistros: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DISTINCT'
+      '  DESC_BLOCO,'
+      '  DESC_REGISTRO'
+      'FROM'
+      '  TB_SPED')
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000A000000444553435F424C4F434F0100000000000D000000
+      444553435F524547495354524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 112
+    object QRegistrosDESC_BLOCO: TStringField
+      FieldName = 'DESC_BLOCO'
+      Required = True
+      Size = 1
+    end
+    object QRegistrosDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 3
+    end
+  end
+  object QBlocos: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  DESC_BLOCO'
+      'FROM'
+      '  TB_SPED_BLOCO'
+      'ORDER BY'
+      '  NUM_ORDEM')
+    QBEDefinition.QBEFieldDefs = {04000000010000000A000000444553435F424C4F434F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 248
+    Top = 112
+    object QBlocosDESC_BLOCO: TStringField
+      FieldName = 'DESC_BLOCO'
+      Required = True
+      Size = 1
+    end
+  end
+  object QMaxRegistro: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  MAX(COD_REGISTRO) + 0.00 AS MAXIMO'
+      'FROM'
+      '  TB_SPED')
+    QBEDefinition.QBEFieldDefs = {0400000001000000060000004D4158494D4F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 312
+    Top = 112
+    object QMaxRegistroMAXIMO: TFloatField
+      FieldName = 'MAXIMO'
+    end
+  end
+  object QAlteraCodigo: TOracleDataSet1
+    SQL.Strings = (
+      'UPDATE TB_SPED'
+      'SET'
+      '  COD_REGISTRO = :COD_REGISTRO_NOVO'
+      'WHERE'
+      '  COD_REGISTRO = :COD_REGISTRO')
+    Variables.Data = {
+      03000000020000000D0000003A434F445F524547495354524F03000000000000
+      0000000000120000003A434F445F524547495354524F5F4E4F564F0300000000
+      00000000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 24
+    Top = 160
+  end
+  object QPlanoConta: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_PLANO_CONTA'
+      'WHERE'
+      '  COD_PLANO_CONTA = :COD_PLANO_CONTA')
+    Variables.Data = {
+      0300000001000000100000003A434F445F504C414E4F5F434F4E544103000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B0000000C000000434F445F524544555A49444F0100000000000A00
+      0000434F445F46494C49414C01000000000010000000444553435F504C414E4F
+      5F434F4E5441010000000000080000004E554D5F475241550100000000000F00
+      0000434F445F504C414E4F5F434F4E54410100000000000F0000004E554D5F50
+      4C414E4F5F434F4E544101000000000009000000434F445F475255504F010000
+      00000010000000434F445F444550415254414D454E544F010000000000130000
+      00444553435F4E41545552455A415F434F4E54410100000000001B000000434F
+      445F504C414E4F5F434F4E54415F5245464552454E4349414C01000000000010
+      000000494E445F4C4942455241444F5F55534F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 368
+    Top = 16
+    object QPlanoContaCOD_REDUZIDO: TIntegerField
+      FieldName = 'COD_REDUZIDO'
+    end
+    object QPlanoContaCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+    end
+    object QPlanoContaDESC_PLANO_CONTA: TStringField
+      FieldName = 'DESC_PLANO_CONTA'
+      Required = True
+      Size = 40
+    end
+    object QPlanoContaNUM_GRAU: TIntegerField
+      FieldName = 'NUM_GRAU'
+      Required = True
+    end
+    object QPlanoContaCOD_PLANO_CONTA: TIntegerField
+      FieldName = 'COD_PLANO_CONTA'
+      Required = True
+    end
+    object QPlanoContaNUM_PLANO_CONTA: TStringField
+      FieldName = 'NUM_PLANO_CONTA'
+      Required = True
+      Size = 15
+    end
+    object QPlanoContaCOD_GRUPO: TIntegerField
+      FieldName = 'COD_GRUPO'
+    end
+    object QPlanoContaCOD_DEPARTAMENTO: TIntegerField
+      FieldName = 'COD_DEPARTAMENTO'
+    end
+    object QPlanoContaDESC_NATUREZA_CONTA: TStringField
+      FieldName = 'DESC_NATUREZA_CONTA'
+      Size = 2
+    end
+    object QPlanoContaCOD_PLANO_CONTA_REFERENCIAL: TIntegerField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+    end
+    object QPlanoContaIND_LIBERADO_USO: TStringField
+      FieldName = 'IND_LIBERADO_USO'
+      Size = 3
+    end
+  end
+  object QPlanoContaNum: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  *'
+      'FROM'
+      '  TB_PLANO_CONTA'
+      'WHERE'
+      '  NUM_PLANO_CONTA = :NUM_PLANO_CONTA')
+    Variables.Data = {
+      0300000001000000100000003A4E554D5F504C414E4F5F434F4E544105000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000B0000000C000000434F445F524544555A49444F0100000000000A00
+      0000434F445F46494C49414C01000000000010000000444553435F504C414E4F
+      5F434F4E5441010000000000080000004E554D5F475241550100000000000F00
+      0000434F445F504C414E4F5F434F4E54410100000000000F0000004E554D5F50
+      4C414E4F5F434F4E544101000000000009000000434F445F475255504F010000
+      00000010000000434F445F444550415254414D454E544F010000000000130000
+      00444553435F4E41545552455A415F434F4E54410100000000001B000000434F
+      445F504C414E4F5F434F4E54415F5245464552454E4349414C01000000000010
+      000000494E445F4C4942455241444F5F55534F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 368
+    Top = 64
+    object QPlanoContaNumCOD_REDUZIDO: TIntegerField
+      FieldName = 'COD_REDUZIDO'
+    end
+    object QPlanoContaNumCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+    end
+    object QPlanoContaNumDESC_PLANO_CONTA: TStringField
+      FieldName = 'DESC_PLANO_CONTA'
+      Required = True
+      Size = 40
+    end
+    object QPlanoContaNumNUM_GRAU: TIntegerField
+      FieldName = 'NUM_GRAU'
+      Required = True
+    end
+    object QPlanoContaNumCOD_PLANO_CONTA: TIntegerField
+      FieldName = 'COD_PLANO_CONTA'
+      Required = True
+    end
+    object QPlanoContaNumNUM_PLANO_CONTA: TStringField
+      FieldName = 'NUM_PLANO_CONTA'
+      Required = True
+      Size = 15
+    end
+    object QPlanoContaNumCOD_GRUPO: TIntegerField
+      FieldName = 'COD_GRUPO'
+    end
+    object QPlanoContaNumCOD_DEPARTAMENTO: TIntegerField
+      FieldName = 'COD_DEPARTAMENTO'
+    end
+    object QPlanoContaNumDESC_NATUREZA_CONTA: TStringField
+      FieldName = 'DESC_NATUREZA_CONTA'
+      Size = 2
+    end
+    object QPlanoContaNumCOD_PLANO_CONTA_REFERENCIAL: TIntegerField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+    end
+    object QPlanoContaNumIND_LIBERADO_USO: TStringField
+      FieldName = 'IND_LIBERADO_USO'
+      Size = 3
+    end
+  end
+  object QInsSpedApuracao: TOracleDataSet1
+    SQL.Strings = (
+      'INSERT INTO TB_SPED_APURACAO(COD_REGISTRO,'
+      #9'DESC_REGISTRO,'
+      #9'VAL_REGISTRO,'
+      #9'COD_CST_PIS,'
+      #9'COD_CST_COFINS,'
+      #9'COD_NATUREZA_RECEITA,'
+      #9'COD_CTA,'
+      #9'PERC_ALIQUOTA,'
+      #9'VAL_BC,'
+      #9'COD_CONT,'
+      #9'COD_NAT_BC_CRED,'
+      #9'DESC_OBS,'
+      #9'VAL_RECEITA_BRUTA) '
+      #9'VALUES ('
+      #9':COD_REGISTRO,'
+      #9':DESC_REGISTRO,'
+      #9':VAL_REGISTRO,'
+      #9':COD_CST_PIS,'
+      #9':COD_CST_COFINS,'
+      #9':COD_NATUREZA_RECEITA,'
+      #9':COD_CTA,'
+      #9':PERC_ALIQUOTA,'
+      #9':VAL_BC,'
+      #9':COD_CONT,'
+      #9':COD_NAT_BC_CRED,'
+      #9':DESC_OBS,'
+      #9':VAL_RECEITA_BRUTA)'#9)
+    Variables.Data = {
+      030000000D0000000D0000003A434F445F524547495354524F03000000000000
+      00000000000E0000003A444553435F524547495354524F050000000000000000
+      0000000D0000003A56414C5F524547495354524F040000000000000000000000
+      0C0000003A434F445F4353545F50495305000000000000000000000015000000
+      3A434F445F4E41545552455A415F524543454954410300000000000000000000
+      000F0000003A434F445F4353545F434F46494E53050000000000000000000000
+      080000003A434F445F4354410500000000000000000000000E0000003A504552
+      435F414C4951554F5441040000000000000000000000070000003A56414C5F42
+      43040000000000000000000000090000003A434F445F434F4E54050000000000
+      000000000000100000003A434F445F4E41545F42435F43524544030000000000
+      000000000000090000003A444553435F4F425305000000000000000000000012
+      0000003A56414C5F524543454954415F42525554410400000000000000000000
+      00}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 288
+    Top = 248
+  end
+  object QApuracaoPisCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9
+      #9'DESC_REGISTRO,'#9
+      #9'COD_CST_PIS,'
+      #9'SUM(VAL_REGISTRO) VAL_REGISTRO'
+      'FROM'
+      #9'TB_SPED_APURACAO'
+      'WHERE'
+      #9'DESC_REGISTRO = :REGISTRO'
+      #9'AND'
+      #9'COD_CST_PIS = :CST'
+      #9'AND'
+      #9'COD_CTA = :COD_CTA'
+      'GROUP BY'
+      #9'DESC_REGISTRO,'#9
+      #9'COD_CST_PIS')
+    Variables.Data = {
+      0300000003000000090000003A524547495354524F0500000000000000000000
+      00040000003A435354050000000000000000000000080000003A434F445F4354
+      41050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000D000000444553435F524547495354524F0100000000000B
+      000000434F445F4353545F5049530100000000000C00000056414C5F52454749
+      5354524F010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 248
+    object QApuracaoPisConsDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 4
+    end
+    object QApuracaoPisConsCOD_CST_PIS: TStringField
+      FieldName = 'COD_CST_PIS'
+      Size = 3
+    end
+    object QApuracaoPisConsVAL_REGISTRO: TFloatField
+      FieldName = 'VAL_REGISTRO'
+    end
+  end
+  object QApuracaoPisNatCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9'DISTINCT'
+      #9'DESC_REGISTRO,'
+      
+        #9'CAST(NVL(COD_NATUREZA_RECEITA,999) AS INTEGER) AS COD_NATUREZA_' +
+        'RECEITA,'
+      #9'PERC_ALIQUOTA,'
+      #9'SUM(VAL_REGISTRO) VAL_REGISTRO,'
+      #9'SUM(VAL_BC) AS VAL_BC'
+      ''
+      'FROM'
+      #9'TB_SPED_APURACAO'
+      'WHERE'
+      #9'(:CST IS NULL OR'
+      #9'COD_CST_PIS = :CST)'
+      #9'AND'
+      #9'DESC_REGISTRO = :REGISTRO'
+      #9'AND'
+      #9'(:COD_CTA IS NULL OR'
+      #9'COD_CTA = :COD_CTA)'
+      'GROUP BY'
+      #9'DESC_REGISTRO,'#9
+      #9'CAST(NVL(COD_NATUREZA_RECEITA,999) AS INTEGER),'
+      #9'PERC_ALIQUOTA')
+    Variables.Data = {
+      0300000003000000090000003A524547495354524F0500000000000000000000
+      00040000003A435354050000000000000000000000080000003A434F445F4354
+      41050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000060000000D000000444553435F524547495354524F0100000000000C
+      00000056414C5F524547495354524F01000000000014000000434F445F4E4154
+      5552455A415F524543454954410100000000000D000000504552435F414C4951
+      554F54410100000000000600000056414C5F424301000000000008000000434F
+      445F434F4E54010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 160
+    Top = 248
+    object QApuracaoPisNatConsDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 4
+    end
+    object QApuracaoPisNatConsVAL_REGISTRO: TFloatField
+      FieldName = 'VAL_REGISTRO'
+    end
+    object QApuracaoPisNatConsCOD_NATUREZA_RECEITA: TFloatField
+      FieldName = 'COD_NATUREZA_RECEITA'
+    end
+    object QApuracaoPisNatConsPERC_ALIQUOTA: TFloatField
+      FieldName = 'PERC_ALIQUOTA'
+    end
+    object QApuracaoPisNatConsVAL_BC: TFloatField
+      FieldName = 'VAL_BC'
+    end
+  end
+  object QApuracaoCofinsCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9
+      #9'DESC_REGISTRO,'#9
+      #9'COD_CST_COFINS,'
+      #9'SUM(VAL_REGISTRO) VAL_REGISTRO'
+      'FROM'
+      #9'TB_SPED_APURACAO'
+      'WHERE'
+      #9'DESC_REGISTRO = :REGISTRO'
+      #9'AND'
+      #9'COD_CST_COFINS = :COFINS'
+      #9'AND'
+      #9'COD_CTA = :COD_CTA'
+      'GROUP BY'
+      #9'DESC_REGISTRO,'#9
+      #9'COD_CST_COFINS')
+    Variables.Data = {
+      0300000003000000090000003A524547495354524F0500000000000000000000
+      00070000003A434F46494E53050000000000000000000000080000003A434F44
+      5F435441050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000D000000444553435F524547495354524F0100000000000C
+      00000056414C5F524547495354524F0100000000000E000000434F445F435354
+      5F434F46494E53010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 296
+    object QApuracaoCofinsConsDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 4
+    end
+    object QApuracaoCofinsConsCOD_CST_COFINS: TStringField
+      FieldName = 'COD_CST_COFINS'
+      Size = 3
+    end
+    object QApuracaoCofinsConsVAL_REGISTRO: TFloatField
+      FieldName = 'VAL_REGISTRO'
+    end
+  end
+  object QApuracaoCofinsNatCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'#9'DISTINCT'
+      #9'DESC_REGISTRO,'
+      
+        #9'CAST(NVL(COD_NATUREZA_RECEITA,999) AS INTEGER) AS COD_NATUREZA_' +
+        'RECEITA,'#9
+      #9'SUM(VAL_REGISTRO) VAL_REGISTRO'
+      'FROM'#9
+      #9'TB_SPED_APURACAO'
+      'WHERE'
+      #9'COD_CST_COFINS = :CST'
+      #9'AND'
+      #9'DESC_REGISTRO = :REGISTRO'
+      #9'AND'
+      #9'COD_CTA = :COD_CTA'
+      'GROUP BY'
+      #9'DESC_REGISTRO,'#9
+      #9'CAST(NVL(COD_NATUREZA_RECEITA,999) AS INTEGER)')
+    Variables.Data = {
+      0300000003000000090000003A524547495354524F0500000000000000000000
+      00040000003A435354050000000000000000000000080000003A434F445F4354
+      41050000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000D000000444553435F524547495354524F0100000000000C
+      00000056414C5F524547495354524F01000000000014000000434F445F4E4154
+      5552455A415F52454345495441010000000000}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    Left = 160
+    Top = 296
+    object QApuracaoCofinsNatConsDESC_REGISTRO: TStringField
+      FieldName = 'DESC_REGISTRO'
+      Required = True
+      Size = 4
+    end
+    object QApuracaoCofinsNatConsVAL_REGISTRO: TFloatField
+      FieldName = 'VAL_REGISTRO'
+    end
+    object QApuracaoCofinsNatConsCOD_NATUREZA_RECEITA: TFloatField
+      FieldName = 'COD_NATUREZA_RECEITA'
+    end
+  end
+  object QPlanoContaCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT DISTINCT'
+      '  P.COD_PLANO_CONTA COD_PLANO_CONTA,'
+      '  P.COD_REDUZIDO COD_REDUZIDO,'
+      '  P.DESC_PLANO_CONTA DESC_PLANO_CONTA,'
+      '  P.NUM_GRAU NUM_GRAU,'
+      '  P.NUM_PLANO_CONTA NUM_PLANO_CONTA,'
+      '  P.DESC_NATUREZA_CONTA DESC_NATUREZA_CONTA,'
+      '  S.NUM_GRAUS_CONTABIL NUM_GRAUS_CONTABIL,'
+      '  R.NUM_PLANO_CONTA_REFERENCIAL COD_PLANO_CONTA_REFERENCIAL'
+      'FROM'
+      '  TB_PLANO_CONTA P,'
+      '  TB_PLANO_CONTA_REFERENCIAL R,'
+      '  TB_PARAM_SISTEMA S'
+      '  '
+      'WHERE  '
+      
+        '  P.COD_PLANO_CONTA_REFERENCIAL = R.COD_PLANO_CONTA_REFERENCIAL(' +
+        '+)'
+      '  AND'
+      '  P.NUM_PLANO_CONTA = :NUM_PLANO_CONTA  '
+      'ORDER BY'
+      '  P.NUM_PLANO_CONTA')
+    Variables.Data = {
+      0300000001000000100000003A4E554D5F504C414E4F5F434F4E544105000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000080000000F000000434F445F504C414E4F5F434F4E54410100000000
+      000C000000434F445F524544555A49444F01000000000010000000444553435F
+      504C414E4F5F434F4E5441010000000000080000004E554D5F47524155010000
+      0000000F0000004E554D5F504C414E4F5F434F4E544101000000000013000000
+      444553435F4E41545552455A415F434F4E5441010000000000120000004E554D
+      5F47524155535F434F4E544142494C0100000000001B000000434F445F504C41
+      4E4F5F434F4E54415F5245464552454E4349414C010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 288
+    Top = 296
+    object QPlanoContaConsCOD_PLANO_CONTA: TIntegerField
+      FieldName = 'COD_PLANO_CONTA'
+      Required = True
+    end
+    object QPlanoContaConsCOD_REDUZIDO: TIntegerField
+      FieldName = 'COD_REDUZIDO'
+    end
+    object QPlanoContaConsDESC_PLANO_CONTA: TStringField
+      FieldName = 'DESC_PLANO_CONTA'
+      Required = True
+      Size = 200
+    end
+    object QPlanoContaConsNUM_GRAU: TIntegerField
+      FieldName = 'NUM_GRAU'
+      Required = True
+    end
+    object QPlanoContaConsNUM_PLANO_CONTA: TStringField
+      FieldName = 'NUM_PLANO_CONTA'
+      Required = True
+    end
+    object QPlanoContaConsDESC_NATUREZA_CONTA: TStringField
+      FieldName = 'DESC_NATUREZA_CONTA'
+      Size = 2
+    end
+    object QPlanoContaConsNUM_GRAUS_CONTABIL: TIntegerField
+      FieldName = 'NUM_GRAUS_CONTABIL'
+      Required = True
+    end
+    object QPlanoContaConsCOD_PLANO_CONTA_REFERENCIAL: TStringField
+      FieldName = 'COD_PLANO_CONTA_REFERENCIAL'
+    end
+  end
+end

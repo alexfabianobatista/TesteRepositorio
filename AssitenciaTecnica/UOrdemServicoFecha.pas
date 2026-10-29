@@ -1,0 +1,1859 @@
+unit UOrdemServicoFecha;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons, Mask, ComCtrls, ExtCtrls, Db, Variants, DateUtils,
+   // USES PARA O PIX
+  Cemapa.Conversoes.API, Cemapa.NotaSaida.Vendas.Pix.PSPController,
+  Cemapa.NotaSaida.Vendas.Pix.Interfaces, ACBrBase,
+  ACBrPIXCD, ACBrPIXBase;
+
+type
+  TFOrdemServicoFecha = class(TForm)
+    BtConfirma: TBitBtn;
+    BtCancela: TBitBtn;
+    PCFecha: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    MEDtFechamento: TMaskEdit;
+    Label1: TLabel;
+    RGTipoPgto: TRadioGroup;
+    Label2: TLabel;
+    GBCPNota: TGroupBox;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label8: TLabel;
+    Label31: TLabel;
+    MEDataCP: TMaskEdit;
+    MEValorCP: TMaskEdit;
+    BtApagaParcela: TBitBtn;
+    LBContaReceber: TListBox;
+    MEFinalidade: TMaskEdit;
+    BtConsFinalidade: TBitBtn;
+    EdFinalidade: TEdit;
+    MEDiasCP: TMaskEdit;
+    MEDepartamento: TMaskEdit;
+    BtConsDepartamento: TBitBtn;
+    EdDepartamento: TEdit;
+    Label3: TLabel;
+    METotalOS: TMaskEdit;
+    Label7: TLabel;
+    MeContaCorrente: TMaskEdit;
+    BtConsBanco: TBitBtn;
+    EdContaCorrente: TEdit;
+    MEEntrada: TMaskEdit;
+    Label9: TLabel;
+    Label10: TLabel;
+    MeObs: TMaskEdit;
+    rgParcela: TRadioGroup;
+    ME2TotalServico: TMaskEdit;
+    ME2TotalPeca: TMaskEdit;
+    Label11: TLabel;
+    Label12: TLabel;
+    MEAcrescimo: TMaskEdit;
+    Label13: TLabel;
+    MEEntrada2: TMaskEdit;
+    Label14: TLabel;
+    cpPixCemapa: TACBrPixCD;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDeactivate(Sender: TObject);
+    procedure BtConfirmaClick(Sender: TObject);
+    procedure BtConsDepartamentoClick(Sender: TObject);
+    procedure MEDepartamentoExit(Sender: TObject);
+    procedure MEFinalidadeExit(Sender: TObject);
+    procedure BtApagaParcelaClick(Sender: TObject);
+    procedure MEValorCPExit(Sender: TObject);
+    procedure BtConsFinalidadeClick(Sender: TObject);
+    procedure MEDiasCPExit(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure MeContaCorrenteExit(Sender: TObject);
+    procedure BtConsBancoClick(Sender: TObject);
+    procedure TabSheet2Show(Sender: TObject);
+    procedure MEEntradaExit(Sender: TObject);
+    procedure rgParcelaClick(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure LimpaStatusPix(var StatusPix: TFluxoPagtoDados);
+    procedure RGTipoPgtoClick(Sender: TObject);
+  private
+    cControllerPix: IPSPPixController;
+    wNotaSeparada: Boolean;
+    procedure Finaliza;
+    procedure CalculaISS;
+    procedure GeraNota(Items: TList; Operacao, Filial: Integer; Serie: String = ''; SerieModelo: String = '');
+    procedure VerficaTotal;
+    procedure ChecaNotaSeparada;
+    
+{Movido para publico para excutar a chamada no FOrdemServicoCad. Alex 11/03/2025    procedure LimpaStatusPix(var StatusPix: TFluxoPagtoDados);}
+    function FormatarJson(const AJSON: String): String;
+  public
+    { Public declarations }
+    fTXID, fPIXCopiaCola: String;
+  end;
+
+var
+  FOrdemServicoFecha: TFOrdemServicoFecha;
+
+implementation
+
+uses UOrdemServico_cl, UOracle_cl, UDepartamentoCons, UDepartamento_cl,
+  UContasReceber_cl, UBiblioteca, UFinalidade_cl, UFinalidadeCons,
+  UCaixa_cl, UParamSistema_cl, UEstoque_cl, UBancoAgencia_cl, UBancosCons,
+  UBloqueto, UNotaSaida_cl, USerie_cl, UOperacao_cl, UNotaImpressao,
+  UPromissoria, UUsuario_cl, UContaCorrenteCons, UOrdemServicoParam, Math,
+  UPrazoVencimento_cl, UCadastro_cl, URPromissorias, UNfe_cl,
+  UPagamentosNFe4, ULancamentoCartaoCad,
+  // Uso no envio e geração do PIX
+  ACBrPIXPSPShipay, UFQrCodePix, ACBrPIXSchemasCob, UOrdemServicoCad;
+
+{$R *.DFM}
+
+procedure TFOrdemServicoFecha.FormCreate(Sender: TObject);
+var
+  wCont: Byte;
+begin
+  MEDtFechamento.Text := DateToStr(Date);
+  MEDepartamento.Text := DMUsuario.QUsuarioCOD_DEPARTAMENTO.Text;
+  MEFinalidade.Text := DMUsuario.QUsuarioCOD_FINALIDADE.Text;
+  for wCont := 0 to PCFecha.PageCount - 1 do
+  begin
+    PCFecha.Pages[wCont].TabVisible := False;
+  end;
+ 
+  if DMParamSistema.CodEmpresa = 'RETIFOZ' then
+  begin
+    Label10.Visible := False;
+    MeObs.Visible := False;
+  end;
+  cControllerPix := TPSPPixController.New;
+end;
+
+procedure TFOrdemServicoFecha.FormDeactivate(Sender: TObject);
+var
+  wCont: Byte;
+begin
+  RGParcela.ItemIndex := -1;
+  for wCont := 0 to PCFecha.PageCount - 1 do
+  begin
+    PCFecha.Pages[wCont].TabVisible := False;
+  end;
+end;
+
+procedure TFOrdemServicoFecha.VerficaTotal;
+var
+  wCont :integer;
+  wLinha :String;
+  wTipo :String;
+  wTotalPeca :Extended;
+  wTotalServico :Extended;
+  wValor :String;
+  wDiferencaPecas, wDiferencaServicos: Extended;
+begin
+  wTotalPeca := 0;
+  wTotalServico := 0;
+  for wCont := 0 to LBContaReceber.Count - 1 do
+  begin
+    wLinha := LBContaReceber.Items[wCont];
+    wTipo := Copy(wLinha, 12, 1);
+    wValor := Copy(wLinha,13,Length(wLinha));
+    wValor := StringReplace(wValor,'.','',[rfReplaceAll]);
+    if wTipo = 'P' then
+      wTotalPeca := wTotalPeca + StrToFloat(Trim(wValor))
+    else
+      if wTipo = 'S' then
+        wTotalServico := wTotalServico + StrToFloat(Trim(wValor));
+  end;
+  wDiferencaPecas := wTotalPeca - StrToFloat(StringReplace(ME2TotalPeca.Text,'.','',[rfReplaceAll]));
+  wDiferencaServicos := wTotalServico - StrToFloat(StringReplace(ME2TotalServico.Text,'.','',[rfReplaceAll]));
+
+  if ((wDiferencaPecas > 0.009) or (wDiferencaPecas < -0.009)) and
+    ((wDiferencaServicos > 0.009) or (wDiferencaServicos < -0.009)) then
+  begin
+    MessageDlg('Valor total das peças e serviços diferente das parcelas', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (wDiferencaPecas > 0.009) or (wDiferencaPecas < -0.009) then
+  begin
+    MessageDlg('Valor total das peças diferente das parcelas', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (wDiferencaServicos > 0.009) or (wDiferencaServicos < -0.009) then
+  begin
+    MessageDlg('Valor total dos serviços diferente das parcelas', mtError, [mbOk], 0);
+    Abort;
+  end;
+end;
+
+procedure TFOrdemServicoFecha.ChecaNotaSeparada;
+begin
+  wNotaSeparada := false;
+  if (DMParamSistema.QParamSistemaIND_OS_NOTA_SEPARADA.AsString = 'S') then
+    wNotaSeparada := (MessageDlg('Deseja emitir nota de serviço separada?', mtConfirmation, [mbYes, mbNo], 0) = mrYes)
+  else
+    wNotaSeparada := false;
+end;
+
+procedure TFOrdemServicoFecha.BtConfirmaClick(Sender: TObject);
+var
+  permite,wval_limite : string;
+begin
+  wval_limite := DMOracle.FastSelect('VAL_LIMITE', 'TB_CADASTRO', 'COD_CADASTRO = ' + DMOrdemServico.QOrdemServicoCOD_CADASTRO.AsString);
+  permite := DMOrdemServico.QOrdemServicoConsIND_VENDA.Text;
+  if ((permite = 'N') and (RGTipoPgto.ItemIndex = 1)) then //Vanessa 23/07/2015
+   raise exception.Create('Cliente '+DMOrdemServico.QOrdemServicoCOD_CADASTRO.Text+' sem permisão de venda a prazo.');
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'TRENTO') and
+     (RGTipoPgto.ItemIndex = 1) and
+     (wval_limite <> '0') then //Respeitar o limite informado no cadastro do cliente a pedido do Aurélio. Vanessa 10/11/2017
+  begin
+    DMCadastro.ValidaCredito(DMOrdemServico.QOrdemServicoCOD_CADASTRO.Value,DMOrdemServico.QOrdemServicoItvl_total.Value);
+  end;
+
+  case PCFecha.ActivePage.PageIndex of
+    0:
+      begin
+        ChecaNotaSeparada;
+        if (RGTipoPgto.ItemIndex = 0) then //cortesia
+          Finaliza
+        else if (RGTipoPgto.ItemIndex = 2) then //outros
+          Finaliza
+        else if (RGTipoPgto.ItemIndex = 3) then //Cartao
+          Finaliza
+        else if (RGTipoPgto.ItemIndex = 4) then //Cheque //débito
+          Finaliza
+        else if (RGTipoPgto.ItemIndex = 5) then //pix
+          Finaliza
+        else
+        begin
+          ///SOLICITADO POR JUNIOR - CASO A OPERAÇÃO SEJA FISCAL: FINALIDADE 1, CASO PE: FINALIDADE 3 - CLEBER - 12/01/2021
+          if DMParamSistema.CodEmpresa = 'RETIFOZ' then
+          begin
+            if DMOracle.FastSelect('IND_EMITE', 'TB_OPERACAO', 'COD_OPERACAO = ' + DMOrdemServico.QOrdemServicoCOD_OPERACAO.AsString) = 'F' then
+              MEFinalidade.Text := '1'
+            else
+              MEFinalidade.Text := '3';
+            MEFinalidadeExit(Self);
+          end;
+          PCFecha.Pages[0].TabVisible := False;
+          PCFecha.Pages[1].TabVisible := True;
+          Label11.Visible := wNotaSeparada;
+          Label12.Visible := wNotaSeparada;
+          ME2TotalPeca.Visible := wNotaSeparada;
+          ME2TotalServico.Visible := wNotaSeparada;
+          ME2TotalPeca.Text := FormatFloat('#,##0.00', DMOrdemServico.pTotalPeca);
+          ME2TotalServico.Text := FormatFloat('#,##0.00', DMOrdemServico.pTotalServico);
+          rgParcela.Visible := wNotaSeparada;
+          ModalResult := mrNone;
+        end;
+      end;
+    1:
+      begin
+        RGParcela.ItemIndex := -1;
+        if (Trim(MEDepartamento.Text) = '') or
+           (Trim(MEFinalidade.Text) = '') then
+        begin
+          MessageDlg('Obrigatório informar departamento e finalidade', mtError,
+          [mbOk],0);
+          Abort;
+        end;
+        if wNotaSeparada then
+          VerficaTotal;
+        Finaliza;
+      end;
+    2:
+      begin
+        Finaliza;
+      end;
+  end;
+end;
+
+procedure TFOrdemServicoFecha.GeraNota(Items: TList; Operacao, Filial: Integer;
+    Serie: String = ''; SerieModelo: String = '');
+var
+  i: Integer;
+  Item: TItemNota;
+  wBuscador: TBuscador;
+  wModelo, wTipoProduto, wChassi, wCaracteristica : string;
+  wPercComissao : double;
+begin
+  with DMNotaSaida do
+    with DMOrdemServico do
+    begin
+      QNotaSaida.Close;
+      QNotaSaida.Open;
+      QItemNF.Close;
+      QItemNF.Open;
+      QNotaSaida.Insert;
+      if Filial = 0 then
+        Filial := QOrdemServicoCOD_FILIAL.Value;
+      QNotaSaidaCOD_FILIAL.Value := Filial;
+      QNotaSaidaCOD_CADASTRO.Value := QOrdemServicoCOD_CADASTRO.Value;
+      QNotaSaidaCOD_VENDEDOR.Value := QOrdemServicoCOD_TECNICO.Value;//estava passando vendedor 1 para a nota.
+
+      if (DMParamSistema.CodEmpresa = 'RENATOAUTO') then
+      begin
+        QNotaSaidaDT_EMISSAO.Value := StrToDate(MEDtFechamento.Text);
+        QNotaSaidaDT_RECEBIMENTO.Value := StrToDate(MEDtFechamento.Text);
+      end;
+
+      if (DMParamSistema.CodEmpresa = 'PATELI') or (DMParamSistema.CodEmpresa = 'NFCE-IVO') then
+      begin
+        QNotaSaidaCOD_VENDEDOR.Value := QOrdemServicoCOD_VENDEDOR.Value;
+        QNotaSaidaCOD_TECNICO.Value := QOrdemServicoCOD_TECNICO.Value;
+      end;
+
+      if QOrdemServicoCOD_CIDADE_PRESTACAO.AsString <> '' then //Add Cidade Prestação de Serviço para GEOPRO. Solicitado por Wagner. Aut. Marcos. Junior 16/06/2021
+        QNotaSaidaCOD_CIDADE_PRESTACAO.Value := QOrdemServicoCOD_CIDADE_PRESTACAO.Value;
+      if Operacao = 0 then
+        Operacao := QOrdemServicoCOD_OPERACAO.Value;
+      QNotaSaidaCOD_OPERACAO.Value := Operacao;
+
+      if (QOrdemServicoCOD_MENSAGEM.Value <> 0)then
+        QNotaSaidaCOD_MENSAGEM.Value := QOrdemServicoCOD_MENSAGEM.Value
+      Else
+        QNotaSaidaCOD_MENSAGEM.Text := DMOracle.BuscaNome('SELECT COD_MENSAGEM FROM TB_OPERACAO','COD_OPERACAO='+InttoStr(operacao));
+
+      wBuscador := TBuscador.Create;
+      wBuscador.Limpa;
+      wBuscador.Adiciona('COD_ESTADO', 'TB_CADASTRO','COD_CADASTRO = ' + QOrdemServicoCOD_CADASTRO.Text);
+      wBuscador.Adiciona('COD_SERIE', 'TB_OPERACAO','COD_OPERACAO = ' + QOrdemServicoCOD_OPERACAO.Text);
+      wBuscador.Adiciona('COD_SERIE_MODELO', 'TB_OPERACAO','COD_OPERACAO = ' + QOrdemServicoCOD_OPERACAO.Text);
+      wBuscador.Adiciona('NUM_PLACA', 'TB_VEICULO','COD_VEICULO = 0' + QOrdemServicoCOD_VEICULO.Text);
+      wBuscador.Buscar;
+      QNotaSaidaCOD_ESTADO.Value := wBuscador.Proximo;
+      QNotaSaidaCOD_SERIE.Value := wBuscador.Proximo;
+      QNotaSaidaCOD_SERIE_MODELO.Value := wBuscador.Proximo;
+      QNotaSaidaDESC_PLACA.Value := wBuscador.Proximo;
+      
+
+      if Serie <> '' then
+      begin
+        QNotaSaidaCOD_SERIE.Value := Serie;
+        QNotaSaidaCOD_SERIE_MODELO.Value := SerieModelo;
+      end;
+      wBuscador.Fecha;
+      if QNotaSaidaCOD_SERIE.IsNull then
+        raise Exception.Create('Operação sem série. Por favor, informe uma série para a operação usada na OS.');
+      QNotaSaidaVAL_AVISTA.Value := StrToFloat(MEEntrada.Text);
+
+      if (DMParamSistema.CodEmpresa = 'NIR') or (DMParamSistema.CodEmpresa = 'BENINI') then
+      begin
+        QNotaSaidaOBS.Value := DMOrdemServico.QOrdemServicoDESC_SOLICITACAO.Text;
+        QNotaSaidaOBS_COMPLEMENTO.Value := Trim(MeObs.Text) + ' OS-' + QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + '  ' +
+          QOrdemServicoDESC_EQUIPAMENTO.Text;
+        QNotaSaidaCOD_VENDEDOR.Value := QOrdemServicoCOD_TECNICO.Value;
+      end
+      else if (DMParamSistema.CodEmpresa = 'TRENTO') then  //APARECER EQUIP. E SERV. SOLIC. PARA TRENTO. JUNIOR - 14/03/2019. Solicitacao MARCOS.
+      begin
+        QNotaSaidaOBS.Value := Trim(MeObs.Text) + ' - ' + QOrdemServicoDESC_SOLICITACAO.Text;
+      end
+      else if (DMParamSistema.CodEmpresa = 'MEDSYSTEM') or (DMParamSistema.CodEmpresa = 'PATELI')  or (DMParamSistema.CodEmpresa = 'JOFER')      or
+              (DMParamSistema.CodEmpresa = 'NFCE-IVO')  or (DMParamSistema.CodEmpresa = 'RRPECAS') or (DMParamSistema.CodEmpresa = 'RSMECANICA') or
+              (DMParamSistema.CodEmpresa = 'ZANONI')    or (DMParamSistema.CodEmpresa = 'ALFA')    or (DMParamSistema.CodEmpresa = 'RENATOAUTO') then
+      begin{Para imprimir na nf as informações do veiculo.}
+        if (QOrdemServicoCOD_VEICULO.Text <> '') then
+        begin
+          wModelo := DMOracle.BuscaNome('SELECT COD_MODELO FROM TB_VEICULO','COD_VEICULO = ' + QOrdemServicoCOD_VEICULO.Text);
+          wModelo := DMOracle.BuscaNome('SELECT DESC_MODELO FROM TB_VEICULO_MODELO','COD_MODELO = '+ wModelo);
+          wCaracteristica := DMOracle.BuscaNome('SELECT DESC_CARACTERISTICA FROM TB_VEICULO','COD_VEICULO = ' + QOrdemServicoCOD_VEICULO.Text);
+          wChassi := DMOracle.BuscaNome('SELECT NUM_CHASSI FROM TB_VEICULO','COD_VEICULO = '+ QOrdemServicoCOD_VEICULO.Text);
+          //QNotaSaidaOBS.Value := Trim(MeObs.Text);   //Obs da OS - Solicitado pelo Marcos (Cemapa). Junior 16/01/2021
+          if (DMParamSistema.CodEmpresa = 'MEDSYSTEM')  or (DMParamSistema.CodEmpresa = 'RRPECAS') or (DMParamSistema.CodEmpresa = 'RSMECANICA') or
+             (DMParamSistema.CodEmpresa = 'ZANONI') then
+            QNotaSaidaOBS_COMPLEMENTO.Value :=  QOrdemServicoDESC_OBS.Value +  ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + ' Veículo:'+ wModelo +
+                                                ' Placa :'+ QNotaSaidaDESC_PLACA.Text + ' KM.:'+ QOrdemServicoKM_CHEGADA.Text + Trim(MeObs.Text) +
+                                                ' Chassi: ' + wChassi;
+          if (DMParamSistema.CodEmpresa = 'JOFER') then
+            QNotaSaidaOBS_COMPLEMENTO.Value :=  QOrdemServicoDESC_OBS.Value + ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + ' Veículo:'+ wModelo +
+                                                ' Placa:'+ QNotaSaidaDESC_PLACA.Text + ' KM.:'+ QOrdemServicoKM_CHEGADA.Text + Trim(MeObs.Text);
+          if (DMParamSistema.CodEmpresa = 'ALFA') then
+            QNotaSaidaDESC_OBS_CORPO_NOTA.Value := ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + ' Descrição: ' + QOrdemServicoDESC_SOLICITACAO.Text +
+                                                     QOrdemServicoDESC_OBS.Value + ' Veículo:'+ wCaracteristica + ' Placa :' + QNotaSaidaDESC_PLACA.Text +
+                                                     ' Altura Cabeçote Entrada: ' + QOrdemServicoNUM_ALT_CABECOTE_E.Text + ', Altura Cabeçote Saída: '   +
+                                                     QOrdemServicoNUM_ALT_CABECOTE_S.Text;
+          if (DMParamSistema.CodEmpresa = 'NFCE-IVO') then
+            QNotaSaidaOBS_COMPLEMENTO.Value := ' Placa: ' + QNotaSaidaDESC_PLACA.Text + ', Veiculo: ' + wCaracteristica;
+          if (DMParamSistema.CodEmpresa = 'RENATOAUTO') then
+            QNotaSaidaDESC_OBS_CORPO_NOTA.Value := ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + ' Descrição: ' + QOrdemServicoDESC_SOLICITACAO.Text +
+                                                     QOrdemServicoDESC_OBS.Value + ' Veículo: '+ wCaracteristica + ' Placa : '+ QNotaSaidaDESC_PLACA.Text;
+        end
+//Adicionado para a Pateli, pois alguns clientes não possuem veiculo cadastrados na O.S. / Alex 09/08/2022
+        else if (DMParamSistema.CodEmpresa = 'PATELI') and (QOrdemServicoCOD_VEICULO.Text = '') then
+        begin
+            QNotaSaidaDESC_OBS_CORPO_NOTA.Value := ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + ' Descrição: ' + QOrdemServicoDESC_SOLICITACAO.Text +
+                                                     QOrdemServicoDESC_OBS.Value + ' Veículo:'+ wCaracteristica + ' Placa :'+ QNotaSaidaDESC_PLACA.Text +
+                                                     ' Chassi: ' + wChassi  ;
+        end
+        else if ( (DMParamSistema.CodEmpresa = 'MEDSYSTEM')  or (DMParamSistema.CodEmpresa = 'JOFER')  or (DMParamSistema.CodEmpresa = 'RRPECAS') or
+                  (DMParamSistema.CodEmpresa = 'RSMECANICA') or (DMParamSistema.CodEmpresa = 'ZANONI') or (DMParamSistema.CodEmpresa = 'ALFA')    or
+                  (DMParamSistema.CodEmpresa = 'RENATOAUTO') )
+                and (QOrdemServicoCOD_VEICULO.Text = '') then
+        begin
+          QNotaSaidaOBS_COMPLEMENTO.Value :=  ' OS-' +QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text + QOrdemServicoDESC_OBS.Value +  Trim(MeObs.Text);
+        end;
+      end
+      else
+        QNotaSaidaOBS.Value := Trim(MeObs.Text);
+      //JUNIOR - 18-11-2013
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'MEDIPECAS' then
+        QNotaSaidaDESC_OBS_CORPO_NOTA.Value := QOrdemServicoDESC_SOLICITACAO.Value;
+
+      if (DMParamSistema.CodEmpresa = 'CENTERFRIO') then //modificado para separar observações
+      begin                                              //de nota de serviço e de peças
+        if QNotaSaidaCOD_SERIE_MODELO.Value = '98' then //Adriel 26-04-22
+          QNotaSaidaDESC_OBS_CORPO_NOTA.Value := QOrdemServicoDESC_OBS_CAB.Value
+        else
+          QNotaSaidaDESC_OBS_CORPO_NOTA.Value := QOrdemServicoDESC_OBS.Value;
+      end;
+
+      if DMParamSistema.CodEmpresa = 'REGINATO' then
+        QNotaSaidaDESC_OBS_CORPO_NOTA.Value := QOrdemServicoDESC_EQUIPAMENTO.Value;
+
+      if (DMParamSistema.CodEmpresa = 'NIR') or // Adicionado para medsystem-- 13/09/2022. Alex - suporte = 5742.
+         (DMParamSistema.CodEmpresa = 'MEDSYSTEM') or (DMParamSistema.CodEmpresa = 'COMIN') or //Adicionado 23/01/2024 - Alex.
+         (DMParamSistema.CodEmpresa = 'RRPECAS') or (DMParamSistema.CodEmpresa = 'RSMECANICA') or {Adicionado RRPECAS. Alex 18/10/2023 }
+         (DMParamSistema.CodEmpresa = 'ALFA') or (DMParamSistema.CodEmpresa = 'RENATOAUTO') {adicionado  04/03/2026 - Alex} then
+      Begin
+        if RGTipoPgto.ItemIndex = 0 then
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '1' //a vista
+        else if RGTipoPgto.ItemIndex = 1 then // a prazo
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '2'
+        else if RGTipoPgto.ItemIndex = 2 then // cartão crédito
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '4'
+        else if RGTipoPgto.ItemIndex = 3 then //cartão débito
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '5'
+        else if RGTipoPgto.ItemIndex = 4 then //pix
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '6'; //pix
+      end
+      else
+//Adicionado para a Jofer, para que ao finalizar a O.S. apareça a opção de tipo de pagamento: Outros. Alex 09/01/2023
+      if (DMParamSistema.CodEmpresa = 'JOFER') or (DMParamSistema.CodEmpresa = 'NFCE-IVO') or
+         (DMParamSistema.CodEmpresa = 'CENTERFRIO') then
+      begin
+        if RGTipoPgto.ItemIndex = 0 then //a vista
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '1'
+        else if RGTipoPgto.ItemIndex = 1 then // a prazo
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '2'
+        else if RGTipoPgto.ItemIndex = 2 then // cartão crédito
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '4'
+        else if RGTipoPgto.ItemIndex = 3 then //cartão débito
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '5'
+        else if RGTipoPgto.ItemIndex = 4 then //pix
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '6'
+        else if RGTipoPgto.ItemIndex = 5 then //Outros
+          QNotaSaidaIND_CONDICAO_PAGTO.Value := '3';
+      end
+      else
+      begin
+       if RGTipoPgto.ItemIndex = 0 then
+         QNotaSaidaIND_CONDICAO_PAGTO.Value := '1'
+       else if RGTipoPgto.ItemIndex = 2 then // outros
+         QNotaSaidaIND_CONDICAO_PAGTO.Value := '3' //outros
+       else
+         QNotaSaidaIND_CONDICAO_PAGTO.Value := '2';
+      end;
+      {----------------------------------------------
+        Na procedure FINALIZA tem o ATUALIZA_ESTOQUE e quando chegava nessa parte dava COMMIT na nota_cab, mas se gerasse algum
+        erro o estoque não voltava e a OS continuava em aberto. Foi comentado as 2 linhas de baixo para evitar a baixa do estoque.
+        Caso tiver errado descomentar. Junior - 26/06/2015.
+
+      QNotaSaida.Post;
+      QNotaSaida.Edit;
+
+      ----------------------------------------------}
+
+      for i := 0 to Items.Count - 1 do
+      begin
+        QItemNF.Insert;
+
+        Item := TItemNota(Items.Items[i]);
+        if Item.FCFOP > 0 then
+          QItemNFCOD_CFOP.Value := Item.FCFOP;
+
+        QItemNFCOD_PRODUTO.Value := Item.FCodProduto;
+        QItemNFQT_QUANTIDADE.Value := Item.FQtQuantidade;
+        QItemNFVAL_UNITARIO.Value := Item.FValUn;
+        QItemNFCOD_LOTE_TIPO.Value := Item.FCodLote;
+       // if (Item.FCodTrib > 0) and (QItemNFCOD_TRIBUTACAO.IsNull) then COMENTADO MARCOS 22/05/13 DANDO PAU
+
+        QItemNFCOD_TRIBUTACAO.Value := Item.FCodTrib;
+        QItemNFVAL_TOTAL.Value := Item.FValTotal;
+        QItemNFDESC_INF_ADICIONAL.Value := Item.FDescCpl;
+        QItemNFVAL_CUSTO.Value := Item.FValCusto;
+        QItemNFVAL_IPI.Value := Item.FValIpi;
+        QItemNFVAL_DESCONTO.Value := Item.FValDesc;
+        //QNotaSaidaVAL_DESCONTO.Value := QNotaSaidaVAL_DESCONTO.Value +
+        //    Item.FValDesc;
+        //if Item.FTipoItem = tiServico then
+//          CalculaISS;
+        QItemNFVAL_ISS.Value := Item.FValISS;
+
+        if (DMParamSistema.CodEmpresa = 'MEDSYSTEM') or (DMParamSistema.CodEmpresa = 'JOFER') or (DMParamSistema.CodEmpresa = 'RRPECAS')
+        or (DMParamSistema.CodEmpresa = 'RSMECANICA') then
+        begin
+          if QNotaSaidaCOD_VENDEDOR.Value > 0 then
+            QItemNFPERC_COMISSAO.Value := StrToFloat('0'+
+                DMOracle.BuscaNome('SELECT PERC_COMISSAO1 FROM TB_VENDEDOR','COD_VENDEDOR = '+
+                QNotaSaidaCOD_VENDEDOR.Text,True));
+        end;
+        if (DMParamSistema.CodEmpresa = 'CENTERFRIO') or (DMParamSistema.CodEmpresa = 'NFCE-IVO') then
+        begin
+           wTipoProduto := (DMOracle.FastSelect('IND_TIPO_PRODUTO','TB_PRODUTO','COD_PRODUTO = ' + FloatToStr(Item.FCodProduto)));
+           if wTipoProduto = 'COMERCIAL' then
+             wPercComissao := strtofloat('0'+ DMOracle.FastSelect('PERC_COMISSAO1','TB_VENDEDOR','COD_VENDEDOR = ' + (QOrdemServicoCOD_VENDEDOR.Text)))
+           else
+             wPercComissao := strtofloat('0'+ DMOracle.FastSelect('PERC_COMISSAO2','TB_VENDEDOR','COD_VENDEDOR = ' + (QOrdemServicoCOD_TECNICO.Text)));
+          QItemNFPERC_COMISSAO.Value := wPercComissao;
+        end;
+
+        QItemNF.Post;
+      end;
+      QNotaSaidaIND_SITUACAO.Value := '2'; //lancar como nota confirmada
+      if (((DMParamSistema.CodEmpresa = 'NIR')       or
+          (DMParamSistema.CodEmpresa  = 'MEDIPECAS') or
+          (DMParamSistema.CodEmpresa  = 'TRENTO') and
+          (DMParamSistema.CodEmpresa <> 'CENTERFRIO'))   and
+          (DMNotaSaida.QNotaSaidaCOD_SERIE.Text = 'OS')) then
+      begin
+        QNotaSaidaNUM_NOTA.Value := QOrdemServicoCOD_ORDEM_SERVICO_CAB.Value;
+        QNotaSaidaCOD_VENDEDOR.Value := QOrdemServicoCOD_TECNICO.Value;
+      end
+      else
+        QNotaSaidaNUM_NOTA.Value := DMSerie.NumeroSerie(QOrdemServicoCOD_FILIAL.Value,
+            QNotaSaidaCOD_SERIE.Value,QNotaSaidaCOD_SERIE_MODELO.Value);
+
+      {QItemNF.First;
+      while not QItemNF.Eof do
+      begin
+        QItemNF.Edit;
+        QItemNF.Post;
+        QItemNF.Next;
+      end;}
+
+      QNotaSaida.Post;
+      PagamentosNFe4.GeraPagamentos('S');
+      DMOracle.ExecutaSql(MontaUpdate('COD_ORDEM_SERVICO_CAB',
+          QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text, 'TB_NOTA_CAB',
+          'COD_NOTA_CAB = ' + QNotaSaidaCOD_NOTA_CAB.Text));
+
+      if DMParamSistema.QParamSistemaIND_CONTROLE_CARTAO.Value = 'S' then
+        if ((QNotaSaidaIND_CONDICAO_PAGTO.Value = '4') or (QNotaSaidaIND_CONDICAO_PAGTO.Value = '5')) then
+        Begin
+          DMNotaSaida.wLancCartaoIndividual := False;
+          if FLancamentoCartao = nil then
+            FLancamentoCartao := TFLancamentoCartao.Create(Application);
+          FLancamentoCartao.ShowModal;
+        end;
+    end;
+end;
+
+//-------------------------------------
+
+procedure TFOrdemServicoFecha.Finaliza;
+var
+  wCont: Byte;
+  wValor, wVal, wSerieProd, wSerieModeloProd, wSerieServ, wSerieModeloServ, teste: string;
+  wTotal, wCusto, wEntrada, wDesconto, wTotalServicos, wDescontoServicos: Real;
+  wParcela: Byte;
+  wDepartamento, wOpProd, wOpServ, wFilialProd, wFilialServ, wNota1, wNota2, wNotaSimples, wNumOS: Integer;
+  wTotalParcela, wTotalOS, teste2: Real;
+  wServicos, wProdutos: TList;
+  wItem: TItemNota;
+  wTipo, wTipoNota, wNumNota1, wNumNota2, wNumNotaSimples, wVlCustoMedio, wLiberaBloqueto :String;
+  exec : TExecutador;
+  // Para o pix
+  vDigCpfCnpj, iItem, wBanco : integer;
+  aCpfCnpj, aCodBarra, aProduto, wPadrao,wComando: string;
+  x, y: array of string;
+label
+  lDispensaQrCode, lErroQrCode;
+begin
+  wTotal := 0;
+  wParcela := 0;
+  wEntrada := StrToFloat(MEEntrada.Text);
+  wNota1 := -1;
+  wNota2 := -1;
+  wNotaSimples := -1;
+  wNumNota1 := '';
+  wNumNota2 := '';
+  wNumNotaSimples := '';
+  wNumOS := DMOrdemServico.QOrdemServicoCOD_ORDEM_SERVICO_CAB.Value;
+  //wNotaSeparada := false;
+  //if (DMParamSistema.QParamSistemaIND_OS_NOTA_SEPARADA.AsString = 'S') then
+  //  wNotaSeparada := (MessageDlg('Deseja emitir nota de serviço separada?', mtConfirmation, [mbYes, mbNo], 0) = mrYes)
+  //else
+  //  wNotaSeparada := false;
+
+  with DMOrdemServico do
+  begin
+    try
+      if RGTipoPgto.ItemIndex = 1 then
+        for wCont := 0 to LBContaReceber.Items.Count - 1 do
+        begin
+          wValor := Copy(LBContaReceber.Items[wCont], 13, Length(LBContaReceber.Items[wCont]));
+          wValor := Bib.LimpaString(wValor, '.');
+          wTotal := wTotal + StrToFloat(wValor);
+        end;
+
+      wTotalParcela := wTotal + wEntrada;
+      wTotalOS := QSomaItemOSsval_total_os.Value;
+
+      if (((wTotalParcela - wTotalOS) > 0.009) or ((wTotalParcela - wTotalOS) < -0.009))
+        and (RGTipoPgto.ItemIndex = 1) then
+        raise Exception.Create('Soma das parcelas diferente do total da OS!');
+    except
+      ModalResult := mrNone;
+      raise;
+    end;
+    try
+      QOrdemServico.Edit;
+      QOrdemServicoDT_SAIDA.Value := StrToDate(MEDtFechamento.Text);
+      QOrdemServicoIND_SITUACAO_OS.Value := 'FECHADA';
+
+      QOrdemServicoIt.First;
+      wProdutos := TList.Create;
+      wServicos := TList.Create;
+      while not DMOrdemServico.QOrdemServicoIt.Eof do
+      begin
+        wItem := TItemNota.Create;
+        wItem.FCFOP := QOrdemServicoItCOD_CFOP.Value;
+        wItem.FCodProduto := QOrdemServicoItCOD_PRODUTO.Value;
+        wItem.FQtQuantidade := QOrdemServicoItQT_PRODUTO.Value;
+        wItem.FValUn := ((QOrdemServicoItVL_UNITARIO.Value*QOrdemServicoItQT_PRODUTO.Value)+QOrdemServicoItVAL_ACRESCIMO.Value)/QOrdemServicoItQT_PRODUTO.Value;
+        wItem.FCodLote := 1;
+        wItem.FCodTrib := StrToInt(DMOracle.BuscaNome('SELECT COD_TRIBUTACAO FROM TB_PRODUTO','COD_PRODUTO='+ FloatToStr(QOrdemServicoItCOD_PRODUTO.Value)));
+        if not QOrdemServicoItCOD_TRIBUTACAO.IsNull then
+          wItem.FCodTrib := QOrdemServicoItCOD_TRIBUTACAO.Value;
+        if not QOrdemServicoItCOD_LOTE_TIPO.IsNull then
+           wItem.FCodLote := QOrdemServicoItCOD_LOTE_TIPO.Value;
+        wItem.FValTotal := QOrdemServicoItvl_total.Value;
+        wItem.FDescProduto := QOrdemServicoItnome_produto.Value;
+        wItem.FDescCpl := QOrdemServicoItDESC_COMPLEMENTO.Value;
+        wItem.FValIpi := 0;
+        wItem.FValDesc := QOrdemServicoItVAL_DESCONTO.Value;
+        Buscador.Limpa;
+        Buscador.Adiciona('NVL(VL_CUSTO_MEDIO,0) VL_CUSTO_MEDIO', 'TB_ESTOQUE',
+          'COD_PRODUTO = ' + QOrdemServicoItCOD_PRODUTO.AsString +
+          ' AND COD_FILIAL = ' + QOrdemServicoCOD_FILIAL.AsString +
+          ' AND COD_LOTE_TIPO = ' + IntToStr(wItem.FCodLote));
+        Buscador.Adiciona('IND_TIPO_PRODUTO', 'TB_PRODUTO',
+          'COD_PRODUTO = ' + FloatToStr(wItem.FCodProduto));
+        Buscador.Buscar;
+        wVlCustoMedio := Buscador.Proximo;
+        if wVlCustoMedio <> '' then
+          wItem.FValCusto := StrToFloat(wVlCustoMedio)
+        else
+          wItem.FValCusto := 0;
+        if Buscador.Proximo = 'SERVIÇO' then
+          wItem.FTipoItem := tiServico
+        else
+          wItem.FTipoItem := tiProduto;
+        Buscador.Fecha;
+        wItem.FValISS := QOrdemServicoItVAL_ISS.Value;
+        DMParamSistema.QParamSistema.RefreshRecord;
+        if (wNotaSeparada) and (wItem.FTipoItem = tiServico) then
+        begin
+          //if not DMParamSistema.QParamSistemaCOD_PRODUTO_SERVICO.IsNull then
+//          begin
+//            if wServicos.Count = 0 then
+//            begin
+//              wServicos.Add(wItem);
+//              wTotalServicos := wItem.FValTotal;
+//              wDescontoServicos := wItem.FValDesc
+//            end
+//            else
+//            begin
+//              wTotalServicos := wTotalServicos + wItem.FValTotal;
+//             // wDescontoServicos := wDescontoServicos + wItem.FValDesc;
+//            end
+//          end
+//          else
+            wServicos.Add(wItem)
+        end
+        else
+          wProdutos.Add(wItem);
+        DMOrdemServico.QOrdemServicoIt.Next;
+      end;
+      //if (not DMParamSistema.QParamSistemaCOD_PRODUTO_SERVICO.IsNull) and (wNotaSeparada)
+//        and (wServicos.Count > 0) then
+//      begin
+//        TItemNota(wServicos.Items[0]).FDescProduto := DMOracle.FastSelect('DESC_PRODUTO', 'TB_PRODUTO', 'COD_PRODUTO = ' + DMParamSistema.QParamSistemaCOD_PRODUTO_SERVICO.AsString);
+//        TItemNota(wServicos.Items[0]).FCodProduto := DMParamSistema.QParamSistemaCOD_PRODUTO_SERVICO.Value;
+//        TItemNota(wServicos.Items[0]).FValTotal := wTotalServicos;
+//        TItemNota(wServicos.Items[0]).FValDesc := 0;
+//        TItemNota(wServicos.Items[0]).FValUn := wTotalServicos;
+//        TItemNota(wServicos.Items[0]).FQtQuantidade := 1;
+//      end;
+      wOpProd := DMOrdemServico.QOrdemServicoCOD_OPERACAO.Value;
+      wOpServ := DMParamSistema.QParamSistemaCOD_OPERACAO_OS_SERVICO.Value;
+      wSerieProd := DMOracle.FastSelect('COD_SERIE', 'TB_OPERACAO',
+          'COD_OPERACAO = ' + IntToStr(wOpProd));
+      wSerieModeloProd := DMOracle.FastSelect('COD_SERIE_MODELO', 'TB_OPERACAO',
+          'COD_OPERACAO = ' + IntToStr(wOpProd));
+       wSerieServ := DMParamSistema.QParamSistemaCOD_SERIE_OS_SERVICO.Value;
+      wSerieModeloServ := DMParamSistema.QParamSistemaCOD_SERIE_MODELO_OS_SERVICO.Value;
+      if (wNotaSeparada) then
+      begin
+        if FOrdemServicoParam = nil then
+          FOrdemServicoParam := TFOrdemServicoParam.Create(Application);
+        with FOrdemServicoParam do
+        begin
+          AtivaPagina(6);
+          P6Produtos.Visible := wProdutos.Count > 0;
+          if P6Produtos.Visible then
+          begin
+            MeSerieProd.Text := wSerieProd;
+            MeModeloSerieProd.Text := wSerieModeloProd;
+            FM6OperacaoProduto.MeOperacao.Text := IntToStr(wOpProd);
+            FM6OperacaoProduto.MeOperacaoExit(Self);
+            FMFilialProdutos.MeFilial.Text := DMOrdemServico.QOrdemServicoCOD_FILIAL.Text;
+            FMFilialProdutos.MeFilialExit(Self);
+            Produtos6 := wProdutos;
+          end;
+          P6Servicos.Visible := wServicos.Count > 0;
+          if P6Servicos.Visible then
+          begin
+            MeSerieServ.Text := wSerieServ;
+            MeModeloSerieServ.Text := wSerieModeloServ;
+            FM6OperacaoServico.MeOperacao.Text := IntToStr(wOpServ);
+            FM6OperacaoServico.MeOperacaoExit(Self);
+            FMFilialServico.MeFilial.Text := DMOrdemServico.QOrdemServicoCOD_FILIAL.Text;
+            FMFilialServico.MeFilialExit(Self);
+            Servicos6 := wServicos;
+          end;
+          if ShowModal <> mrOk then
+          begin
+            FOrdemServicoParam.CleanupInstance;
+            FOrdemServicoParam := nil;
+            QOrdemServicoDT_SAIDA.Text := ''; //Dta de Saída e preenchida no código acima e mesmo cancelando a O.S ficava fechada mas sem ter gerado caixa, contas a receber..... Junior 09/04/2021. Solicitado pelo César.
+            raise Exception.Create('Fechamento de OS cancelado.');
+          end;
+          wOpProd := StrToInt('0' + Trim(FM6OperacaoProduto.MeOperacao.Text));
+          wOpServ := StrToInt('0' + Trim(FM6OperacaoServico.MeOperacao.Text));
+          wSerieProd := MeSerieProd.Text;
+          wSerieModeloProd := MeModeloSerieProd.Text;
+          wSerieServ := MeSerieServ.Text;
+          wSerieModeloServ := MeModeloSerieServ.Text;
+          wFilialProd := StrToInt('0' + Trim(FMFilialProdutos.MeFilial.Text));
+          wFilialServ := StrToInt('0' + Trim(FMFilialServico.MeFilial.Text));
+        end;
+      end;
+      // --------------------------------------------------
+      //Atualizar Estoque - Modificado 12/03/2008 - Camila.
+
+      // Trecho de código deslocado pra cá para realizar atualização do estoque
+      // antes de gerar a Nota -  Djeison A. Selzlein - 04/04/2013
+
+      QOrdemServicoIt.First;
+      while not QOrdemServicoIt.Eof do
+      begin
+        if DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + QOrdemServicoItCod_Produto.Text) <> 'SERVIÇO' then
+          DMEstoque.AtualizaEstoque(
+            QOrdemServicoCOD_OPERACAO.Value, //Passava-se (-2), agora COD_OPERACAO. Alteração necessária para Procedure basear-se tbm na operação quando for baixar estoque. Mais detalhes, na própria procedure em DMEstoque.AtualizaEstoque.
+            QOrdemServicoCod_Filial.Value,
+            QOrdemServicoItCod_Produto.Value, 1,
+            QOrdemServicoItQt_Produto.Value * -1,
+            QOrdemServicoItvl_Total.Value * -1, 0, QOrdemServicoDt_Saida.Value);
+        QOrdemServicoIt.Next;
+      end;
+      //------------------------------------------------
+
+      if wServicos.Count > 0 then
+      begin
+        GeraNota(wServicos, wOpServ, wFilialServ, wSerieServ, wSerieModeloServ);
+        wNota1 := DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value;
+        if DMParamSistema.QparamSistemaInd_Contabiliza.Value = 'S' then
+          DMNotaSaida.Contabiliza;
+      end;
+      if wProdutos.Count > 0 then
+      begin
+        GeraNota(wProdutos, wOpProd, wFilialProd, wSerieProd, wSerieModeloProd);
+        wNota2 := DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value;
+        if DMParamSistema.QparamSistemaInd_Contabiliza.Value = 'S' then
+          DMNotaSaida.Contabiliza;
+      end;
+
+      if RGTipoPgto.ItemIndex = 0 then // atualiza Caixa
+      begin
+        if QOrdemServicoTotal.Value > 0 then
+        begin
+          wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+          {if wVal = '' then
+            raise Exception.Create('Não tem código histórico na operação informada para a nota.');}
+          if wVal <> '' then //Precisei colocar esse if para em caso de não haver histórico caixa na Operação
+          begin
+            wDepartamento := StrToInt(DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_USUARIO', 'COD_USUARIO = ' + intToStr(DMUsuario.CodUsuarioCorrente)));
+            wNumOS := QOrdemServicoCOD_ORDEM_SERVICO_CAB.Value;
+            DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+              QOrdemServicoTotal.Value,
+              QOrdemServicoCod_Ordem_Servico_Cab.Value,
+              QOrdemServicoCod_Cadastro.Value,
+              'Pagamento a Vista de OS', date, '', '', '', '',wNumOS);
+            QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+          end;
+        end
+      end;
+      {Adicionado os tipos de PGTO - CARTAO E CHEQUE (SOMENTE PARA TRENTO) Junior 20/03/2013 INICIO}
+      if (RGTipoPgto.ItemIndex = 2) and (RGTipoPgto.Items[RGTipoPgto.ItemIndex] <> 'Outros') then // atualiza Caixa 3 - Cartão Crédito
+      begin //Para a maioria dos clientes o RgTipoPgto {A Vista, A Prazo, Outros} mesmo sendo pgto Outros entrava nesse bloco
+        if QOrdemServicoTotal.Value > 0 then
+        begin   //comentado marcos  14/03/2022 para pegar historico cartao de credito pra todos
+         // if (DMParamSistema.CodEmpresa = 'ANDROID') then //Junior. 10/11/2020. Suporte(1361)
+            wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA_CREDITO FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+         // else
+        //    wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+          if wVal = '' then
+            raise Exception.Create('Não tem código histórico na operação informada para a nota.');
+          wDepartamento := StrToInt(DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_USUARIO', 'COD_USUARIO = ' + intToStr(DMUsuario.CodUsuarioCorrente)));
+
+          if MEEntrada2.Text <> '0' then //marcos 18/03/2022 se tiver entrada no pagto e mais o restante no cartão
+            QOrdemServicototal.Value := QOrdemServicototal.Value - StrToFloat(MEEntrada2.Text);
+
+          DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+            QOrdemServicoTotal.Value,
+            QOrdemServicoCod_Ordem_Servico_Cab.Value,
+            QOrdemServicoCod_Cadastro.Value,
+            'Pagamento com Cartão de Crédito OS', date, '', '', '', '',wNumOS);
+          QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+        end;
+      end;
+      if (RGTipoPgto.ItemIndex = 3)  then // atualiza Caixa //Cartão de Débito
+      begin
+        if QOrdemServicoTotal.Value > 0 then
+        begin  //comentado marcos  14/03/2022 para pegar historico cartao de credito pra todos
+          wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA_DEBITO FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+         // else
+          //  wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+          if wVal = '' then
+            raise Exception.Create('Não tem código histórico na operação informada para a nota.');
+          wDepartamento := StrToInt(DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_USUARIO', 'COD_USUARIO = ' + intToStr(DMUsuario.CodUsuarioCorrente)));
+
+          if MEEntrada2.Text <> '0' then //marcos 18/03/2022 se tiver entrada no pagto e mais o restante no cartão
+            QOrdemServicototal.Value := QOrdemServicototal.Value - StrToFloat(MEEntrada2.Text);
+
+          DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+            QOrdemServicoTotal.Value,
+            QOrdemServicoCod_Ordem_Servico_Cab.Value,
+            QOrdemServicoCod_Cadastro.Value,
+            'Pagamento com Cartão de Débito de OS', date, '', '', '', '',wNumOS);
+          QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+        end
+      end;
+      if (RGTipoPgto.ItemIndex = 4) then // atualiza Caixa //pix
+      begin
+        if QOrdemServicoTotal.Value > 0 then
+        begin
+          wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA_PIX FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+          if wVal = '' then
+            raise Exception.Create('Não tem código histórico na operação informada para a nota.');
+          wDepartamento := StrToInt(DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_USUARIO', 'COD_USUARIO = ' + intToStr(DMUsuario.CodUsuarioCorrente)));
+
+          if MEEntrada2.Text <> '0' then //marcos 18/03/2022 se tiver entrada no pagto e mais o restante no cartão
+            QOrdemServicototal.Value := QOrdemServicototal.Value - StrToFloat(MEEntrada2.Text);
+          with DMNotaSaida do
+          begin
+            QContaPix.Open;
+            if QContaPix.RecordCount > 0 then
+            begin
+              // PIX QRCODE --> Atribui as configurações padrão salvas no form do módulo bancos
+              cControllerPix.Configuracao
+                    .PSP(TTipoBancoPix(QContaPixCOD_PSP_BANCO.Value))
+                    .ClientID(QContaPixDESC_CLIENT_ID.Text)
+                    .ClientSecret(QContaPixDESC_CLIENT_SECRET.Text)
+                    .ConsumerKey(QContaPixDESC_CONSUMER_KEY.Text)
+                    .ConsumerSecret(QContaPixDESC_CONSUMER_SECRET.Text)
+                    .DevelopApplication(QContaPixDESC_DEVELOPER_APPLICATION_KEY.Text)
+                    .AccountID(QContaPixDESC_ACCOUNT_ID.Text)
+                    .ChavePrivada(QContaPixDESC_ARQUIVO_CHAVE_PRIVADA.Text)
+                    .Certificado(QContaPixDESC_ARQUIVO_CERTIFICADO.Text)
+                    .CertificadoRoot(QContaPixDESC_ARQUIVO_ROOT_CERTIFICADO.Text)
+                    .SecretKey(QContaPixDESC_SECRET_KEY.Text)
+                    .AccessKey(QContaPixDESC_ACCESS_KEY.Text)
+                    .CertificadoPFX(QContaPixDESC_ARQUIVO_PFX.Text)
+                    .SenhaCertificado(QContaPixDESC_SENHA_PFX.Text)
+                    .Token(QContaPixDESC_TOKEN.Text)
+                    .TokenSandbox(QContaPixDESC_ACCESS_TOKEN.Text)
+                    .MediatorFee(QContaPixDESC_MEDIATOR_FEE.Value)
+                    .APIVersion(QContaPixCOD_API_VERSION.Text)
+                    .Ambiente(QContaPixIND_AMBIENTE_PSP.Text)
+                    .ChavePIX(QContaPixDESC_CHAVE_PIX.Text);
+              //Executa o componente que vai gerar a comunicação com o banco de forma dinâmica
+              //De acorodo com o banco cadastrado, sobe o componente.
+              cpPixCemapa.PSP :=  cControllerPix.Contexto.ExecutarStrategy.PSP;
+              //Define o ambiente com base na informação trazida do cadastro pix
+              cpPixCemapa.Ambiente := TACBrPixCDAmbiente(StrToInt(cControllerPix.Configuracao.Ambiente));
+              cpPixCemapa.TimeOut := 3600;
+              cpPixCemapa.ArqLOG := './defaultFailPix.log';
+              cpPixCemapa.NivelLog := 4;
+              // Constantes da classe Cemapa.Conversoes.API
+              setLength(x, 4); //8 sql diferentes
+              setLength(y, 4);
+              x[0] := 'SELECT DESC_FILIAL FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[1] := 'SELECT DESC_CEP FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[2] := 'SELECT DESC_CIDADE FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              x[3] := 'SELECT COD_ESTADO FROM TB_FILIAL WHERE COD_FILIAL= ' + DMNotaSaida.QNotaSaidaCod_Filial.Text;
+              DMOracle.BuscaNomes(x, y);
+              cpPixCemapa.Recebedor.Nome  := Y[0];; //SOFTWARE_HOUSE;
+              cpPixCemapa.Recebedor.CEP   := Y[1];; //SOFTWARE_HOUSE_CEP;
+              cpPixCemapa.Recebedor.Cidade:= Y[2];; //SOFTWARE_HOUSE_CIDADE;
+              cpPixCemapa.Recebedor.UF    := Y[3];; // SOFTWARE_HOUSE_UF;
+            end;
+            if (QContaPixIND_PIX_PADRAO.Text = 'S') and (QNotaSaidaDESC_TXID.Text = '') then
+            begin
+             with cpPixCemapa.PSP.epCob.CobSolicitada do
+             begin
+               chave := cControllerPix.Configuracao.ChavePIX;
+               calendario.expiracao := 3600;
+               devedor.nome := DMOracle.FastSelect('NOME','TB_CADASTRO','COD_CADASTRO = ' +QOrdemServicoCOD_CADASTRO.Text);
+
+               aCpfCnpj := DMOracle.FastSelect('NUM_CGC_CPF','TB_CADASTRO','COD_CADASTRO = ' +QOrdemServicoCOD_CADASTRO.Text);
+               aCpfCnpj := Bib.LimpaString(Bib.LimpaString(aCpfCnpj, '-'), '.');
+               aCpfCnpj := Bib.LimpaString(aCpfCnpj, '/');
+
+               vDigCpfCnpj := Length(aCpfCnpj);
+
+               if (vDigCpfCnpj > 11) then
+                 devedor.cnpj := aCpfCnpj
+               else
+                 devedor.cpf := aCpfCnpj;
+
+               QItemNfCons.Close;
+               QItemNfCons.SetVariable('COD_NOTA_CAB', DMOracle.FastSelect('COD_NOTA_CAB','TB_NOTA_CAB','COD_ORDEM_SERVICO_CAB = ' + QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text)); //QItemNFCOD_NOTA_CAB.Value);
+               QItemNfCons.Open;
+               QItemNfCons.First;
+
+               //quando é pra este prestador de serviço de pagamento
+              //precisa mandar os itens da nota
+               if (cpPixCemapa.PSP is TACBrPSPShipay) then
+               begin
+                 with infoAdicionais.New do
+                 begin
+                   nome := 'order_ref';
+                   valor := FormatDateTime('yymmddhhnnss', Now);
+                 end;
+                 for iItem := 0 to QItemNfCons.RecordCount -1 do
+                 begin
+                   with infoAdicionais.New do
+                   begin
+                     aCodBarra := DMOracle.BuscaNome('SELECT DESC_CODIGO_BARRA FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(QItemNfConsCOD_PRODUTO.Value));
+                     nome := 'item_' + IntToStr(iItem + 1);
+                     aProduto := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(QItemNfConsCOD_PRODUTO.Value));
+                     valor := '{' + '"ean": "' + aCodBarra + '", ' +
+                        '"item_title": "' + aProduto + '", ' +
+                        '"quantity":'+  QItemNfConsQT_QUANTIDADE.Text  +', ' +
+                        '"sku": "' + 'EAN' + '", ' +
+                        '"unit_price": ' + StringReplace(QItemNfConsVAL_UNITARIO.Text, '.', '', []) + '}';
+                   end; // preenchimento das informações
+                   QItemNfCons.Next;
+                 end; // for
+                 QItemNfCons.Close;
+               end; //  if shipay
+               valor.original := QOrdemServicoTotal.Value;
+               LimpaStatusPix(fPixDadosStatus);
+               fPixDadosStatus.Total := valor.original;
+               // Começa a executar a cobrança
+               if cpPixCemapa.PSP.epCob.CriarCobrancaImediata then
+               begin
+                 fPixDadosStatus.TxID := cpPixCemapa.PSP.epCob.CobGerada.txId;
+                 fPixDadosStatus.QRCode := Trim(cpPixCemapa.PSP.epCob.CobGerada.pixCopiaECola);
+                 if (fPixDadosStatus.QRCode = EmptyStr) then
+                   fPixDadosStatus.QRCode := cpPixCemapa.GerarQRCodeDinamico(cpPixCemapa.PSP.epCob.CobGerada.location);
+                 if FQrCodePix = nil then
+                   FQrCodePix := TFQrCodePix.Create(nil);
+                 FQrCodePix.recebeDados(cpPixCemapa, fPixDadosStatus);
+               end
+               else
+               begin
+                 fPixDadosStatus.EmErro := True;
+                 Raise Exception.Create('Erro ao Criar Cobrança Pix: ' + sLineBreak +
+                      FormatarJSON(cpPixCemapa.PSP.epCob.Problema.AsJSON));
+               end;
+               FQrCodePix.ShowModal;
+               if (FQrCodePix.isAbort) then
+                 goto lDispensaQrCode;
+               if (FQrCodePix.ModalResult = MRCancel) and not (fPixDadosStatus.EmErro)then
+               begin
+                 cpPixCemapa.PSP.epCob.CobRevisada.status := stcREMOVIDA_PELO_USUARIO_RECEBEDOR;
+                 if cpPixCemapa.PSP.epCob.RevisarCobrancaImediata(fPixDadosStatus.TxID) then
+                 begin
+                   cpPixCemapa.PSP.Clear;
+                   fPixDadosStatus.EmErro := true;
+                   ShowMessage('Operação com o Pix CANCELADA!');
+                   goto lErroQrCode;
+                 end
+                 else if (FQrCodePix.ModalResult = MRCancel) and (fPixDadosStatus.EmErro) then
+                 begin
+                    cpPixCemapa.PSP.Clear;
+                    fPixDadosStatus.EmErro := true;
+                    ShowMessage('Falha ao CANCELAR a Cobrança!');
+                    goto lErroQrCode;
+                 end;
+               end
+               else if (fPixDadosStatus.EmErro) then
+               begin
+                 cpPixCemapa.PSP.Clear;
+                 fPixDadosStatus.EmErro := true;
+                 ShowMessage('Erro ao realizar a Cobrança!');
+                 goto lErroQrCode;
+               end;
+             end; //with cpPixCemapa.PSP.epCob.CobSolicitada
+             //// Aqui daria continidade para pegar os dados do pix e do valor.
+             //// FPixDadosStatus.TxID é onde fica o codigo único do pix
+             //// fPixDadosStatus.QRCode é onde está a url para gerar o qrcode
+             //// fPixDadosStatus.Total é o valor da cobrança
+             //// fPixDadosStatus.EmErro Caso dê erro, vai ser aqui que pega a informaçao
+             //// fPixDadosStatus.QtdConsultas quantidade de consultas tentadas. Vou limitar em 36
+             DMOracle.ExecutaSql('UPDATE TB_NOTA_CAB SET DESC_TXID = ' + QuotedStr(fPixDadosStatus.TxID) + ' WHERE COD_ORDEM_SERVICO_CAB = ' + QOrdemServicoCOD_ORDEM_SERVICO_CAB.Text);
+             DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+                QOrdemServicoTotal.Value,
+                QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                QOrdemServicoCod_Cadastro.Value,
+                'Pagamento com PIX de OS', date, '', '', '', '',wNumOS);
+                QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+             QContaPix.Close;
+             FQrCodePix := nil;
+            end
+            else
+            begin
+              lDispensaQrCode: //vem pra cá para dispensar QRCODE
+              DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+                QOrdemServicoTotal.Value,
+                QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                QOrdemServicoCod_Cadastro.Value,
+                'Pagamento com PIX de OS', date, '', '', '', '',wNumOS);
+              QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+            end;
+          end;
+        end;
+      end;
+      //else {FIM DA ALTERAÇÃO - Junior 20/03/2013
+
+      if RGTipoPgto.ItemIndex = 1 then //se for a prazo
+      begin // Atualiza Contas a Receber
+        wNumNota1 :=
+          DMOracle.FastSelect('NUM_NOTA', 'TB_NOTA_CAB', 'COD_NOTA_CAB = ' + IntToStr(wNota1));
+        wNumNota2 :=
+          DMOracle.FastSelect('NUM_NOTA', 'TB_NOTA_CAB', 'COD_NOTA_CAB = ' + IntToStr(wNota2));
+        for wcont := 0 to LBContaReceber.Items.Count - 1 do
+        begin
+          wTipo := Copy(LBContaReceber.Items[wCont],12,1);
+          if Trim(wTipo) = 'P' then //Peças
+          begin
+            wTipoNota := wTipo;
+            inc(wParcela);
+            wValor := Copy(LBContaReceber.Items[wCont], 13, Length(LBContaReceber.Items[wCont]));
+            wValor := Bib.LimpaString(wValor, '.');
+            if trim(MeContaCorrente.Text) <> '' then
+            begin
+              DMContasReceber.IncluiCR(wNota2, // MODIFICADO 21/05/2007 .. PASSAVA '0' ANTES DA MODIFICAÇÃO
+                //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                StrToInt(wNumNota2),
+                wParcela, StrToInt(Trim(MEFinalidade.Text)),
+                StrToInt(Trim(MEDepartamento.Text)),
+                StrToInt(Trim(MeContaCorrente.Text)),
+                QOrdemServicoCod_Cadastro.Value,                                        
+                DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //Estava COD_SERIE no lugar do 'NF' e estava dando problema. voltei ao original por não saber quem fez a solicitação Junior - 22/06/2015
+                StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+                StrToDate(Trim(MEDtFechamento.Text)),
+                QOrdemServicoCod_Ordem_Servico_Cab.Value);
+            end
+            else
+            begin
+              DMContasReceber.IncluiCR(wNota2, //
+              //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                StrToInt(wNumNota2),
+                wParcela, StrToInt(Trim(MEFinalidade.Text)),
+                StrToInt(Trim(MEDepartamento.Text)),
+                0,
+                QOrdemServicoCod_Cadastro.Value,
+                DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //Estava COD_SERIE no lugar do 'NF' e estava dando problema. voltei ao original por não saber quem fez a solicitação Junior - 22/06/2015
+                StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+                StrToDate(Trim(MEDtFechamento.Text)),
+                QOrdemServicoCod_Ordem_Servico_Cab.Value);
+            end;
+              //JOGA O VALOR DO CODIGO DA ORDEM DE SERVIÇO NO CONTAS A RECEBER GERADO
+            DMContasReceber.QContasReceber_Cab.Edit;
+            DMContasReceber.QContasReceber_CabCOD_ORDEM_SERVICO_CAB.Value := QOrdemServicoCod_Ordem_Servico_Cab.Value;
+//Adicionado para salvar o cod_vendedor ou o cod_tecnico, estava salvando por default o codigo 1 em qualquer conta a receber. Alex 09/05/2022
+            if (DMParamSistema.CodEmpresa = 'CENTERFRIO') then
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_VENDEDOR.Value
+            else
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_TECNICO.Value;
+            DMContasReceber.QContasReceber_Cab.Post;
+          end
+        end;
+//--------------------------------------------------------
+//INICIO EMISSÃO DE BOLETOS PARA PEÇAS. Esse trecho não existia, tirei do final da função, pois emitia apenas boleto de venda e
+//não gerava o boleto de serviço. JUNIOR 20/05/2020.
+//--------------------------------------------------------
+        DMNotaSaida.QBoletoAPINota.Close;
+        DMNotaSaida.QBoletoAPINota.SetVariable('COD_NOTA_CAB', wNota2);
+        DMNotaSaida.QBoletoAPINota.Open;
+        if (trim(MeContaCorrente.Text) <> '') and (Trim(wTipoNota) = 'P') then
+        begin
+          wLiberaBloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+              'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+          if (wLiberaBloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+            if (DMNotaSaida.QBoletoAPINotaIND_API_BOLETO.Text <> 'SIM') then
+            begin
+              if (MessageDlg('Deseja emitir o(s) boleto(s) peças?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+              begin
+                with DMContasReceber do
+                begin
+                  QRBloqueto.Close;
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', wNota2);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNota2);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                  QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                  Chama_Emissao_Bloqueto(2); // VAI IMPRIMIR O BLOQUETO ESTÁ NO DATA MODULO CONTAS A RECEBER
+                end;
+              end;
+            end
+            else
+            begin
+              with DMContasReceber do   // VAI FAZER A GERAÇÃO QUANDO FOR API WEB
+              begin
+                QRBloqueto.Close;
+                QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL',wNota2); //DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNota2);  //DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                Chama_Emissao_Bloqueto_API;
+                with DMOracle do
+                begin
+                  DMOracle.QExecSQL.Close;
+                  DMOracle.QExecSQL.SQL.Clear;
+                  wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET IND_WEB_API = ' + QuotedStr('S');
+                  wComando := wComando + ' WHERE COD_NOTA_CAB = ' + FloatToStr(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+                  DMOracle.QExecSQL.SQL.Add(wComando);
+                  DMOracle.QExecSQL.ExecSQL;
+                end;
+              end;
+            end;
+          end;
+        end;
+//--------------------------------------------------------
+//FIM DA EMISSÃO DE BOLETOS PARA PEÇAS. JUNIOR 20/05/2020.
+//--------------------------------------------------------
+        for wcont := 0 to LBContaReceber.Items.Count - 1 do
+        begin
+          wTipo := Copy(LBContaReceber.Items[wCont],12,1);
+          if Trim(wTipo) = 'S' then  // Serviços
+          begin
+            wTipoNota := wTipo;
+            inc(wParcela);
+            wValor := Copy(LBContaReceber.Items[wCont], 13, Length(LBContaReceber.Items[wCont]));
+            wValor := Bib.LimpaString(wValor, '.');
+            if trim(MeContaCorrente.Text) <> '' then
+            begin
+              DMContasReceber.IncluiCR(wNota1, // MODIFICADO 21/05/2007 .. PASSAVA '0' ANTES DA MODIFICAÇÃO
+                //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                StrToInt(wNumNota1), // Alterado pois ao emitir serviços e peças da restrição de integridade
+                wParcela, StrToInt(Trim(MEFinalidade.Text)),
+                StrToInt(Trim(MEDepartamento.Text)),
+                StrToInt(Trim(MeContaCorrente.Text)),
+                QOrdemServicoCod_Cadastro.Value,
+                //DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //MODIFICADO  21/05/2007 .. PASSAVA '1' NO LUGAR DE COD_FILIAL
+                DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //Estava COD_SERIE no lugar do 'NF' e estava dando problema. voltei ao original por não saber quem fez a solicitação Junior - 22/06/2015
+                StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+                StrToDate(Trim(MEDtFechamento.Text)),
+                QOrdemServicoCod_Ordem_Servico_Cab.Value); // passado o código da O.S pois o número esta em branco
+            end
+            else
+            begin
+              DMContasReceber.IncluiCR(wNota1,
+                //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                StrToInt(wNumNota1),
+                wParcela, StrToInt(Trim(MEFinalidade.Text)),
+                StrToInt(Trim(MEDepartamento.Text)),
+                0,
+                QOrdemServicoCod_Cadastro.Value,
+                DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //
+                StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+                StrToDate(Trim(MEDtFechamento.Text)),
+                QOrdemServicoCod_Ordem_Servico_Cab.Value);
+            end;
+
+              //JOGA O VALOR DO CODIGO DA ORDEM DE SERVIÇO NO CONTAS A RECEBER GERADO
+            DMContasReceber.QContasReceber_Cab.Edit;
+            DMContasReceber.QContasReceber_CabCOD_ORDEM_SERVICO_CAB.Value := QOrdemServicoCod_Ordem_Servico_Cab.Value;
+//Adicionado para salvar o cod_vendedor ou o cod_tecnico, estava salvando por default o codigo 1 em qualquer conta a receber. Alex 09/05/2022            
+            if (DMParamSistema.CodEmpresa = 'CENTERFRIO') then
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_VENDEDOR.Value
+            else
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_TECNICO.Value;
+            DMContasReceber.QContasReceber_Cab.Post;
+          end
+        end;
+//--------------------------------------------------------
+//INICIO EMISSÃO DE BOLETOS PARA SERVIÇOS. Esse trecho não existia, tirei do final da função, pois emitia apenas boleto de venda e
+//não gerava o boleto de serviço. JUNIOR 20/05/2020.
+//--------------------------------------------------------
+        if (trim(MeContaCorrente.Text) <> '') and (Trim(wTipoNota) = 'S') then
+        begin
+          wLiberaBloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+              'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+          if (wLiberaBloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+            // Verifica se usa API do banco para geração do boleto. Se sim, não imprime mas gera
+            // os dados para envio da API.
+            DMNotaSaida.QBoletoAPINota.Close;
+            DMNotaSaida.QBoletoAPINota.SetVariable('COD_NOTA_CAB', wNota1);
+            DMNotaSaida.QBoletoAPINota.Open;
+            if (DMNotaSaida.QBoletoAPINotaIND_API_BOLETO.Text <> 'SIM') then  // Se não usar api, segue fluxo antigo
+            begin
+              if (MessageDlg('Deseja emitir o(s) boleto(s) de serviço?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+              begin
+                with DMContasReceber do
+                begin
+                  QRBloqueto.Close;
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', wNota1);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNota1);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                  QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                  Chama_Emissao_Bloqueto(2); // VAI IMPRIMIR O BLOQUETO ESTÁ NO DATA MODULO CONTAS A RECEBER
+                end;
+              end;
+            end
+            else
+            begin
+              with DMContasReceber do   // VAI FAZER A GERAÇÃO QUANDO FOR API WEB 
+              begin
+                QRBloqueto.Close;
+                QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', wNota1);
+                QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNota1);
+                QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                Chama_Emissao_Bloqueto_API;
+                with DMOracle do
+                begin
+                  DMOracle.QExecSQL.Close;
+                  DMOracle.QExecSQL.SQL.Clear;
+                  wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET IND_WEB_API = ' + QuotedStr('S');
+                  wComando := wComando + ' WHERE COD_NOTA_CAB = ' + FloatToStr(wNota1);
+                  DMOracle.QExecSQL.SQL.Add(wComando);
+                  DMOracle.QExecSQL.ExecSQL;
+                end;
+              end;
+            end;
+          end;
+        end;
+//--------------------------------------------------------
+//FIM EMISSÃO DE BOLETO DE SERVIÇO.
+//--------------------------------------------------------
+        wParcela := 0;
+        for wcont := 0 to LBContaReceber.Items.Count - 1 do
+        begin
+          wTipo := Copy(LBContaReceber.Items[wCont],12,1);
+          if Trim(wTipo) = '' then
+          begin
+            wTipoNota := wTipo;
+            inc(wParcela);
+            wValor := Copy(LBContaReceber.Items[wCont], 13, Length(LBContaReceber.Items[wCont]));
+            wValor := Bib.LimpaString(wValor, '.');
+            wNotaSimples := bib.ift(wNota1 > -1, wNota1, wNota2);
+            wNumNotaSimples := bib.ift(wNumNota1 <> '', wNumNota1, wNumNota2);
+            if trim(MeContaCorrente.Text) <> '' then
+            begin
+              DMContasReceber.IncluiCR(wNotaSimples, // MODIFICADO 21/05/2007 .. PASSAVA '0' ANTES DA MODIFICAÇÃO
+              //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+                StrToInt(wNumNotaSimples),
+                wParcela, StrToInt(Trim(MEFinalidade.Text)),
+                StrToInt(Trim(MEDepartamento.Text)),
+                StrToInt(Trim(MeContaCorrente.Text)),
+                QOrdemServicoCod_Cadastro.Value,
+                DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //Estava COD_SERIE no lugar do 'NF' e estava dando problema. voltei ao original por não saber quem fez a solicitação Junior - 22/06/2015
+                StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+                StrToDate(Trim(MEDtFechamento.Text)),
+                QOrdemServicoCod_Ordem_Servico_Cab.Value);
+            end
+            else
+            begin
+              DMContasReceber.IncluiCR(wNotaSimples, //
+              //QOrdemServicoCod_Ordem_Servico_Cab.Value,
+              StrToInt(wNumNotaSimples),
+              wParcela, StrToInt(Trim(MEFinalidade.Text)),
+              StrToInt(Trim(MEDepartamento.Text)),
+              0,
+              QOrdemServicoCod_Cadastro.Value,
+              DMNotaSaida.QNotaSaidaCod_Filial.Value, StrToFloat(Trim(wValor)), 'NF', //Estava COD_SERIE no lugar do 'NF' e estava dando problema. voltei ao original por não saber quem fez a solicitação Junior - 22/06/2015
+              StrToDate(Copy(LBContaReceber.Items[wCont], 1, 10)),
+              StrToDate(Trim(MEDtFechamento.Text)),
+              QOrdemServicoCod_Ordem_Servico_Cab.Value);
+            end;
+              //JOGA O VALOR DO CODIGO DA ORDEM DE SERVIÇO NO CONTAS A RECEBER GERADO
+            DMContasReceber.QContasReceber_Cab.Edit;
+            DMContasReceber.QContasReceber_CabCOD_ORDEM_SERVICO_CAB.Value := QOrdemServicoCod_Ordem_Servico_Cab.Value;
+//Adicionado para salvar o cod_vendedor ou o cod_tecnico, estava salvando por default o codigo 1 em qualquer conta a receber. Alex 09/05/2022            
+            if (DMParamSistema.CodEmpresa = 'CENTERFRIO') then
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_VENDEDOR.Value
+            else
+              DMContasReceber.QContasReceber_CabCOD_VENDEDOR.Value := DMOrdemServico.QOrdemServicoCOD_TECNICO.Value;
+            DMContasReceber.QContasReceber_Cab.Post;
+          end//end; //end if
+        end; //for
+//--------------------------------------------------------
+//INICIO EMISSÃO DE BOLETOS SEM SEPARAR NOTA. Esse trecho não existia, tirei do final da função, pois emitia apenas boleto de venda e
+//não gerava o boleto de serviço. JUNIOR 20/05/2020.
+//--------------------------------------------------------
+        if (trim(MeContaCorrente.Text) <> '') and (Trim(wTipoNota) = '') then
+        begin
+          wLiberaBloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+              'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+          if (wLiberaBloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+            DMNotaSaida.QBoletoAPINota.Close;
+            DMNotaSaida.QBoletoAPINota.SetVariable('COD_NOTA_CAB', wNotaSimples);
+            DMNotaSaida.QBoletoAPINota.Open;
+            if (DMNotaSaida.QBoletoAPINotaIND_API_BOLETO.Text <> 'SIM') then  // Se não usar api, segue fluxo antigo
+            begin
+              if (MessageDlg('Deseja emitir o(s) boleto(s)?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+              begin
+                with DMContasReceber do
+                begin
+                  QRBloqueto.Close;
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', wNotaSimples);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNotaSimples);//DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                  QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                  QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                  Chama_Emissao_Bloqueto(2); // VAI IMPRIMIR O BLOQUETO ESTÁ NO DATA MODULO CONTAS A RECEBER
+                end;
+              end;
+            end
+            else
+            begin
+              with DMContasReceber do  // VAI FAZER A GERAÇÃO QUANDO FOR API WEB
+              begin
+                QRBloqueto.Close;
+                QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', wNotaSimples);
+                QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', wNotaSimples);
+                QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                Chama_Emissao_Bloqueto_API;
+                with DMOracle do
+                begin
+                  DMOracle.QExecSQL.Close;
+                  DMOracle.QExecSQL.SQL.Clear;
+                  wComando := 'UPDATE TB_CONTA_RECEBER_CAB SET IND_WEB_API = ' + QuotedStr('S');
+                  wComando := wComando + ' WHERE COD_NOTA_CAB = ' + FloatToStr(wNotaSimples);
+                  DMOracle.QExecSQL.SQL.Add(wComando);
+                  DMOracle.QExecSQL.ExecSQL;
+                end;
+              end;
+            end;
+          end;
+        end;
+//--------------------------------------------------------
+//FIM EMISSÃO DE BOLETOS SEM SEPARAR NOTA.
+//--------------------------------------------------------
+      end; //if
+      if wEntrada <> 0 then
+      begin
+        wVal := DMOracle.BuscaNome('SELECT COD_HISTORICO_CAIXA FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMNotaSaida.QNotaSaidaCOD_OPERACAO.Text, True);
+        if wVal = '' then
+          raise Exception.Create('Não tem código histórico na operação informada para a nota.');
+        wDepartamento := StrToInt(DMOracle.BuscaNome('SELECT COD_DEPARTAMENTO FROM TB_USUARIO', 'COD_USUARIO = ' + intToStr(DMUsuario.CodUsuarioCorrente)));
+        DMCaixa.IncluiCaixa(QOrdemServicoCOD_FILIAL.Value, wDepartamento, StrToInt(wVal),
+          wEntrada, QOrdemServicoCod_Ordem_Servico_Cab.Value,
+          QOrdemServicoCod_Cadastro.Value, 'Entrada da OS', date, '', '', '', '',wNumOS);
+        QOrdemServicoCOD_CAIXA.Value := DMCaixa.QCaixa_MovCOD_CAIXA_MOV.value;
+      end;
+      //------------------------------------------------
+      //IMPRIMI PROMISSORIA SE EMPRESA = BENINI
+      if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'BENINI') then
+      begin
+        if (DMOperacao.QOperacaoInd_Duplicata.Value = 'S') then
+        begin
+          with DMContasReceber do
+          begin
+            QRContasReceber_Duplicatas.Close;
+            QRContasReceber_Duplicatas.SetVariable('COD_NOTA_CAB', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+            QRContasReceber_Duplicatas.SetVariable('COD_FILIAL', DMNotaSaida.QNotaSaidaCod_Filial.Value);
+            QRContasReceber_Duplicatas.SetVariable('COD_DEPARTAMENTO', Null);
+            QRContasReceber_Duplicatas.SetVariable('COD_CONTA_RECEBER_CAB', Null);
+            QRContasReceber_Duplicatas.Open;
+          end;
+          if MessageDlg('Emitir Nota Promissória?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+          begin
+            for wcont := 0 to LBContaReceber.Items.Count - 1 do
+            begin
+              FPromissoria.Promissoria_Dos;
+              DMContasReceber.QRContasReceber_Duplicatas.Next;
+            end;
+          end;
+          wLiberaBloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+            'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+          // QRBloqueto.Open;
+          if (wLiberaBloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+            if (MessageDlg('Deseja emitir o(s) boleto(s)?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+            begin
+              with DMContasReceber do
+              begin
+                QRBloqueto.Close;
+                QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                Chama_Emissao_Bloqueto(2); // VAI IMPRIMIR O BLOQUETO ESTÁ NO DATA MODULO CONTAS A RECEBER
+              end;
+            end;
+          end;
+        end;
+      end  //AJUSTADO PARA CHAMAR BOLETO BANCARIO PARA TODOS - AUTORIZADO PELO MARCOS - JUNIOR 28/11/2016;
+      else
+      begin //Promissoria pelo Ass Técnica - A pedido do Aurelio - Vanessa 17/01/2018
+          if (DMOperacao.QOperacaoIND_PROMISSORIA.Value = 'S') and (RGTipoPgto.ItemIndex = 1) then
+          begin
+            if MessageDlg('Emitir Nota Promissória?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+              with DMContasReceber do
+              begin
+                QRContasReceber_Duplicatas.Close;
+                QRContasReceber_Duplicatas.SetVariable('COD_NOTA_CAB', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+                QRContasReceber_Duplicatas.SetVariable('COD_FILIAL', DMNotaSaida.QNotaSaidaCod_Filial.Value);
+                QRContasReceber_Duplicatas.SetVariable('COD_DEPARTAMENTO', Null);
+                QRContasReceber_Duplicatas.SetVariable('COD_CONTA_RECEBER_CAB', Null);
+                QRContasReceber_Duplicatas.Open;
+              end;
+            begin
+              if DMParamSistema.QParamSistemaIND_IMPRESSAO_PROMISSORIA.Value = 'M' then
+                FPromissoria.Promissoria_Dos
+              else
+              begin
+                if FRPromissorias = nil then
+                   FRPromissorias := TFRPromissorias.Create(Application);
+                FRPromissorias.QRPrimario.Preview;
+              end;
+            end;
+          end;
+//--------------------------------------------------------
+//TIREI ESSE BLOCO DE CÓDIGO POIS SÓ EMITIDA O BOLETO DE VENDA E NÃO GERAVA O BOLETO DE SERVIÇO. JUNIOR 20/05/2020.
+//--------------------------------------------------------
+{          wLiberaBloqueto := DMOracle.BuscaNome('SELECT IND_LIBERA_BLOQUETO FROM TB_CADASTRO',
+              'COD_CADASTRO = ' + IntToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)); //somente emite bloqueto se estiver liberado no cadastro de clientes
+            // QRBloqueto.Open;
+          if (wLiberaBloqueto = 'SIM') and (Trim(MeContaCorrente.Text) <> '') then
+          begin
+            if (MessageDlg('Deseja emitir o(s) boleto(s) de peças?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+            begin
+              with DMContasReceber do
+              begin
+                QRBloqueto.Close;
+                QRBloqueto.SetVariable('COD_NOTA_CAB_INICIAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_NOTA_CAB_FINAL', DMNotaSaida.QNotaSaidaCod_Nota_Cab.Text);
+                QRBloqueto.SetVariable('COD_CONTA_CORRENTE', Trim(MeContaCorrente.Text));
+                QRBloqueto.SetVariable('NUMERO_TITULOS', '1 = 1');
+                Chama_Emissao_Bloqueto(2); // VAI IMPRIMIR O BLOQUETO ESTÁ NO DATA MODULO CONTAS A RECEBER
+              end;
+            end;
+          end;}
+//--------------------------------------------------------
+//FIM
+//--------------------------------------------------------
+      end;
+
+      //------------------------------------------------
+      // Atualização do Estoque era aqui, foi jogada pra cima, antes de Gerar a Nota - por Djeison A. Selzlein 04/04/2013
+      //------------------------------------------------
+      QOrdemServico.Post;
+      DMOracle.DBCemapa.Commit;
+      DMOperacao.QOperacao.Close;
+      DMOperacao.QOperacao.SetVariable('pk', DMNotaSaida.QNotaSaidaCod_Operacao.Value);
+      DMOperacao.QOperacao.Open;
+      //if DMOperacao.QOperacaoInd_Emite.Value <> 'N' then
+      //  FNotaImpressao.EmiteNF(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+      //if ((wnota1 <> -1) and (wnota2 <> -1))  then
+      //begin
+      if wNota1 > -1 then
+      begin
+        DMNotaSaida.QNotaSaida.Close;
+        DMNotaSaida.QNotaSaida.SetVariable('pk', wNota1);
+        DMNotaSaida.QNotaSaida.Open;
+        DMOperacao.QOperacao.Close;
+        DMOperacao.QOperacao.SetVariable('pk', DMNotaSaida.QNotaSaidaCod_Operacao.Value);
+        DMOperacao.QOperacao.Open;
+        try
+          if DMOperacao.QOperacaoInd_Emite.Value <> 'N' then
+            FNotaImpressao.EmiteNF(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value,'',0,true);
+        except // Se der erro 103 não permite lançar outra nota no sistema
+          DMOracle.DBCemapa.Rollback;
+          ModalResult := mrCancel;
+          self.Close;
+          raise;
+        end;
+      end;
+      if wNota2 > -1 then
+      begin
+        DMNotaSaida.QNotaSaida.Close;
+        DMNotaSaida.QNotaSaida.SetVariable('pk', wNota2);
+        DMNotaSaida.QNotaSaida.Open;
+        DMOperacao.QOperacao.Close;
+        DMOperacao.QOperacao.SetVariable('pk', DMNotaSaida.QNotaSaidaCod_Operacao.Value);
+        DMOperacao.QOperacao.Open;
+        try
+          if DMOperacao.QOperacaoInd_Emite.Value <> 'N' then
+            FNotaImpressao.EmiteNF(DMNotaSaida.QNotaSaidaCod_Nota_Cab.Value);
+        except // Se der erro 103 não permite lançar outra nota no sistema
+          DMOracle.DBCemapa.Rollback;
+          ModalResult := mrCancel;
+          self.Close;
+          raise;
+        end;
+      end;
+      ModalResult := mrOk;
+
+      lErroQrCode:
+      if fPixDadosStatus.EmErro = true then
+        FOrdemServicoCad.VoltarOS1Click(Self);
+    except
+      if QOrdemServico.State in [dsEdit, dsInsert] then
+        QOrdemServico.post;
+        self.Close;
+         //DMOracle.DBCemapa.Rollback;
+         //ModalResult := mrCancel;
+      raise;
+    end;
+  end;
+  MEEntrada.Text := '0';
+
+end;
+
+//-----------------Procedure Copiada do PjVendas -> UNotaSaida_Cl -> TDMNotaSaida.CalculaISS
+
+procedure TFOrdemServicoFecha.CalculaISS;
+var
+  wPercISS, wBaseISS: string;
+begin
+  with DMNotaSaida do
+  begin
+    if QNotaSaidaCOD_SERIE_MODELO.Value = '98' then
+    begin
+      wPercISS := DMOracle.BuscaNome('SELECT PERC_ISS FROM TB_FILIAL','COD_FILIAL = ' + QNotaSaidaCOD_FILIAL.Text, True);
+      wBaseISS := DMOracle.BuscaNome('SELECT PERC_BC_NFSE FROM TB_FILIAL','COD_FILIAL = ' + QNotaSaidaCOD_FILIAL.Text, True);
+      if (wBaseISS <> '') and (wPercISS <> '') then
+        QItemNFVal_ISS.Value := QItemNFVal_Total.Value * StrToFloat(wPercISS) / StrToFloat(wBaseISS);
+    end
+    else
+    begin
+      wPercISS := DMOracle.BuscaNome('SELECT PERC_ISS FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(DMNotaSaida.QItemNFCod_Produto.Value), True);
+      if Trim(wPercISS) <> '' then
+        if DMOracle.BuscaNome('SELECT IND_REGIME_ESPECIAL FROM TB_CADASTRO', 'COD_CADASTRO = ' + FloatToStr(DMNotaSaida.QNotaSaidaCod_Cadastro.Value)) <> 'SIM' then
+          QItemNFVal_ISS.Value := DMNotaSaida.QItemNFVal_Total.Value * StrToFloat(wPercISS) / 100;
+    end;
+  end;
+end;
+//-----------------
+
+procedure TFOrdemServicoFecha.BtConsDepartamentoClick(Sender: TObject);
+begin
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.showModal = mrOk then
+  begin
+    MEDepartamento.Text := DMDepartamento.QDepartamentoConsCod_Departamento.Text;
+    MEDepartamentoExit(Self);
+  end;
+end;
+
+procedure TFOrdemServicoFecha.MEDepartamentoExit(Sender: TObject);
+begin
+  if Trim(MEDepartamento.Text) <> '' then
+    EdDepartamento.Text := DMOracle.BuscaNome('SELECT DESC_DEPARTAMENTO FROM TB_DEPARTAMENTO', 'COD_DEPARTAMENTO = ' + MEDepartamento.Text)
+  else
+    EdDepartamento.Text := '';
+end;
+
+procedure TFOrdemServicoFecha.MEFinalidadeExit(Sender: TObject);
+var
+  IndFinalidade: string;
+begin
+  if Trim(MEFinalidade.Text) <> '' then
+    begin
+      EdFinalidade.Text := DMOracle.BuscaNome('SELECT DESC_FINALIDADE FROM TB_FINALIDADE',
+                                              'COD_FINALIDADE = ' + MEFinalidade.Text);
+    if UpperCase(Trim(DMOracle.BuscaNome('SELECT IND_LIBERADO FROM TB_FINALIDADE',
+                                            'COD_FINALIDADE = ' + MEFinalidade.Text))) <> 'SIM' then
+    begin
+      MEFinalidade.SetFocus;
+      Raise Exception.Create('Finalidade não liberada para uso.');
+    end;
+      IndFinalidade := DMOracle.BuscaNome('SELECT IND_FINALIDADE FROM TB_FINALIDADE',
+                                          'COD_FINALIDADE = ' + MEFinalidade.Text);
+    if UpperCase(Trim(IndFinalidade)) = 'P' then
+    begin
+      MEFinalidade.SetFocus;
+      Raise Exception.Create('Não é permitido selecionar uma finalidade de "Pagar" em Contas a Receber.');
+    end;
+    end
+  else
+    EdFinalidade.Text := '';
+end;
+
+procedure TFOrdemServicoFecha.BtApagaParcelaClick(Sender: TObject);
+var
+  wTotal, wVal: string;
+begin
+  If LBContaReceber.ItemIndex < 0 then
+    raise Exception.Create('Você precisa selecionar uma parcela para poder apagar.');
+
+  wVal := StringReplace(Copy(LBContaReceber.Items[LBContaReceber.ItemIndex], 11, Length(LBContaReceber.Items[LBContaReceber.ItemIndex]) - 9), '.', '', [rfReplaceAll, rfIgnoreCase]);
+  wTotal := StringReplace(METotalOS.Text, '.', '', [rfReplaceAll, rfIgnoreCase]);
+  METotalOS.Text := FormatFloat('###,###,##0.00', StrToFloat(wTotal) + StrToFloat(wVal)); // 25/11/2023 Cod. Suporte 7781 / Pedro e André
+  LBContaReceber.Items.Delete(LBContaReceber.ItemIndex);
+end;
+
+procedure TFOrdemServicoFecha.MEValorCPExit(Sender: TObject);
+var
+  wLinha, wAux: string;
+const
+  wBranco: string = '                            ';//28
+begin
+  if (MEDataCP.Text <> '') and
+    (MEValorCP.Text <> '') then
+  begin
+    if (RGParcela.ItemIndex = -1)  and (wNotaSeparada) then
+    begin
+      MessageDlg('Tipo de parcela não informmada (Peça ou Serviço).', mtError, [mbOk],0);
+      Abort;
+    end;
+    wLinha := DateToStr(StrToDate(MEDataCP.Text));
+    if RGParcela.ItemIndex = 0 then
+      wLinha := wLinha + ' P'
+    else
+      if RGParcela.ItemIndex = 1 then
+        wLinha := wLinha + ' S';
+        
+    wAux := FormatFloat('###,###,##0.00', StrToFloat(StringReplace(MEValorCP.Text, '.', '', [rfReplaceAll, rfIgnoreCase])));
+    wAux := Copy(wBranco, 1, 21 - Length(wAux)) + wAux;
+    wLinha := wLinha + wAux;
+    METotalOS.Text := FormatFloat('###,###,##0.00', StrToFloat(StringReplace(METotalOS.Text, '.', '', [rfReplaceAll, rfIgnoreCase])) - StrToFloat(StringReplace(MEValorCP.Text, '.', '', [rfReplaceAll, rfIgnoreCase])) ); // 25/11/2023 Cod. Suporte 7781 / Pedro e André
+    LBContaReceber.Items.Add(wLinha);
+
+    MEDataCP.Text := '';
+    MEValorCP.Text := '';
+    MEDiasCP.SetFocus;
+  end;
+end;
+
+procedure TFOrdemServicoFecha.BtConsFinalidadeClick(Sender: TObject);
+begin
+  if FFinalidadeCons = nil then
+    FFinalidadeCons := TFFinalidadeCons.Create(Application);
+  if FFinalidadeCons.showModal = mrOk then
+  begin
+    MEFinalidade.Text := DMFinalidade.QFinalidadeConsCod_Finalidade.Text;
+    MEFinalidadeExit(Self);
+  end;
+end;
+
+procedure TFOrdemServicoFecha.MEDiasCPExit(Sender: TObject);
+begin
+  if Trim(MEDiasCP.Text) <> '' then
+  begin
+    MEDataCP.Text := DateToStr(StrToFloat(MEDiasCP.Text) + StrToDate(MEDtFechamento.Text));
+    MEDiasCP.Text := '';
+  end;
+end;
+
+procedure TFOrdemServicoFecha.FormActivate(Sender: TObject);
+var
+  wValParcela, wSobraParcela: Real;
+  wParcelas, wContaParcela :Integer;
+  wData : TDateTime;
+  wLinha, wAux : String;
+  const wBranco: string = '                            ';//28
+begin
+  LBContaReceber.Items.Clear;
+  METotalOS.Text := DMOrdemServico.QSomaItemOSsval_total_os.Text;
+  MEAcrescimo.Text := DMOrdemServico.QSomaItemOSSVAL_ACRESCIMO.Text;
+  if (DMParamSistema.CodEmpresa = 'MEDFRIG') and (DMOrdemServico.QOrdemServicoDESC_OBS.Text <> '') then
+    MeObs.Text := DMOrdemServico.QOrdemServicoDESC_OBS.Value;
+  if (DMParamSistema.CodEmpresa = 'NIR') or  //Aparecer Cartão de Crédito/Débito - marcos 15/03/2022
+      (DMParamSistema.CodEmpresa = 'ALFA')      or (DMParamSistema.CodEmpresa = 'COMIN')   or (DMParamSistema.CodEmpresa = 'RSMECANICA') or
+      (DMParamSistema.CodEmpresa = 'MEDSYSTEM') or (DMParamSistema.CodEmpresa = 'RRPECAS') or (DMParamSistema.CodEmpresa = 'RENATOAUTO') Then
+   Begin
+     RGTipoPgto.Items.Clear;
+     RGTipoPgto.Items.Add('A Vista');
+     RGTipoPgto.Items.Add('A Prazo');
+     //RGTipoPgto.Items.Add('Outros');
+     RGTipoPgto.Items.Add('Cartão Crédito');
+     RGTipoPgto.Items.Add('Cartão Débito');
+     RGTipoPgto.Items.Add('Pix');
+     RGTipoPgto.ItemIndex := 1;
+     If (DMOrdemServico.QOrdemServicoCOD_OPERACAO.Text = '40') then
+        RGTipoPgto.ItemIndex := 2;
+   End;
+
+  if (DMParamSistema.CodEmpresa = 'JOFER') or (DMParamSistema.CodEmpresa = 'NFCE-IVO') or
+     (DMParamSistema.CodEmpresa = 'CENTERFRIO') then
+  begin
+     RGTipoPgto.Items.Clear;
+     RGTipoPgto.Items.Add('A Vista');
+     RGTipoPgto.Items.Add('A Prazo');
+     RGTipoPgto.Items.Add('Cartão Crédito');
+     RGTipoPgto.Items.Add('Cartão Débito');
+     RGTipoPgto.Items.Add('Pix');
+     RGTipoPgto.Items.Add('Outros');
+     RGTipoPgto.ItemIndex := 0;
+  end;
+
+  with DMOrdemServico do
+  begin
+    if QOrdemServicoCOD_PRAZO_VENCIMENTO.IsNull then
+    begin
+      FOrdemServicoFecha.PCFecha.Pages[0].TabVisible := True;
+    end
+    else
+    begin
+      wParcelas := StrToInt(DMOracle.FastSelect('NUM_PARCELAS','TB_PRAZO_VENCIMENTO','COD_PRAZO_VENCIMENTO = ' + QOrdemServicoCOD_PRAZO_VENCIMENTO.Text));
+      wValParcela := RoundTo(QSomaItemOSsval_total_os.Value/wParcelas,-2);
+      wSobraParcela := QSomaItemOSsval_total_os.Value-(wValParcela*wParcelas);
+
+      DMPrazoVencimento.QPrazoVencimentoDias_Cons.Close;
+      DMPrazoVencimento.QPrazoVencimentoDias_Cons.SetVariable('COD_PRAZO_VENCIMENTO',QOrdemServicoCOD_PRAZO_VENCIMENTO.Text);
+      DMPrazoVencimento.QPrazoVencimentoDias_Cons.Open;
+
+      if DMPrazoVencimento.QPrazoVencimentoDias_Cons.IsEmpty then
+        raise Exception.Create('Prazo de vencimento não encontrado ou não possui parcelas cadastradas.');
+
+      DMPrazoVencimento.QPrazoVencimentoDias_Cons.First;
+      wContaParcela := 0;
+
+      while not DMPrazoVencimento.QPrazoVencimentoDias_Cons.Eof do
+      begin
+        wContaParcela := wContaParcela+1;
+        wData := Now;
+
+        wLinha := DateToStr(IncDay(wData, DMPrazoVencimento.QPrazoVencimentoDias_ConsNUM_DIAS.Value));
+        if wContaParcela = wParcelas then
+          wAux := FormatFloat('###,###,##0.00', wValParcela+wSobraParcela)
+        else
+          wAux := FormatFloat('###,###,##0.00', wValParcela);
+
+        wAux := Copy(wBranco, 1, 21 - Length(wAux)) + wAux;
+        wLinha := wLinha + wAux;
+        FOrdemServicoFecha.LBContaReceber.Items.Add(wLinha);
+
+        DMPrazoVencimento.QPrazoVencimentoDias_Cons.Next;
+      end;
+
+      rgParcela.Visible := False;
+      Label11.Visible := False;
+      Label12.Visible := False;
+      ME2TotalPeca.Visible := False;
+      ME2TotalServico.Visible := False;
+      FOrdemServicoFecha.PCFecha.Pages[1].TabVisible := True;
+      MEDepartamento.SetFocus;  
+    end;
+  end;
+end;
+
+procedure TFOrdemServicoFecha.MeContaCorrenteExit(Sender: TObject);
+begin
+  if Trim(MeContaCorrente.Text) <> '' then
+    EdContaCorrente.Text := DMOracle.BuscaNome('SELECT DESC_CONTA_CORRENTE FROM TB_CONTA_CORRENTE', 'COD_CONTA_CORRENTE = ' + MeContaCorrente.Text)
+  else
+    EdContaCorrente.Text := '';
+end;
+
+procedure TFOrdemServicoFecha.BtConsBancoClick(Sender: TObject);
+begin
+  if FContaCorrenteCons = nil then
+    FContaCorrenteCons := TFContaCorrenteCons.Create(Application);
+  if FContaCorrenteCons.showModal = mrOk then
+  begin
+    MeContaCorrente.Text := DMBancoAgencia.QContaCorrenteConsCod_Conta_Corrente.Text;
+    MeContaCorrenteExit(Self);
+  end;
+end;
+
+procedure TFOrdemServicoFecha.TabSheet2Show(Sender: TObject);
+begin
+  FOrdemServicoFecha.helpcontext := 11;
+end;
+
+procedure TFOrdemServicoFecha.MEEntradaExit(Sender: TObject);
+begin
+  if (Trim(MEEntrada2.Text) <> '') and (MEEntrada2.Text <> '0') then
+  begin
+    MeEntrada.Text := MeEntrada2.Text;
+    METotalOS.Text := FLoatToStr(StrToFloat(Bib.LimpaString(METotalOS.Text, '.')) - StrToFloat(MEEntrada.Text));
+  end
+  else
+    MEEntrada.Text := '0';
+end;
+
+procedure TFOrdemServicoFecha.rgParcelaClick(Sender: TObject);
+begin
+  if MEValorCP.Text <> '' then
+    MEValorCPExit(Sender);
+end;
+
+procedure TFOrdemServicoFecha.TabSheet1Show(Sender: TObject);
+begin
+  MEEntrada2.Text := '0';
+  if (RGTipoPgto.ItemIndex = 0) then
+    MEEntrada2.ReadOnly := true
+  else
+    MEEntrada2.ReadOnly := false;
+end;
+
+function TFOrdemServicoFecha.FormatarJson(const AJSON: String): String;
+{$IfDef FPC}
+var
+  jpar: TJSONParser;
+  j: TJsonObject;
+{$EndIf}
+begin
+  Result := AJSON;
+  {$IfDef FPC}
+  try
+    j := TJSONObject.Create();
+    try
+      Result := j.Decode(Result);
+    finally
+      j.Free;
+    end;
+    jpar := TJSONParser.Create(Result, [joUTF8]);
+    try
+      Result := jpar.Parse.FormatJSON([], 2);
+    finally
+      jpar.Free;
+    end;
+  except
+    Result := AJSON;
+  end;
+  {$EndIf}
+end;
+
+procedure TFOrdemServicoFecha.LimpaStatusPix(var StatusPix: TFluxoPagtoDados);
+begin
+  //Limpa a estrutura para retornar os dados novos ao reiniciar a cobrança
+  with StatusPix do
+  begin
+    TxID := EmptyStr;
+    E2E := EmptyStr;
+    QRCode := EmptyStr;
+    Total := 0;
+    StatusCobranca := stcNENHUM;
+    StatusDevolucao := stdNENHUM;
+    EmErro := False;
+    QtdConsultas := 0;
+  end;
+end;
+
+
+procedure TFOrdemServicoFecha.RGTipoPgtoClick(Sender: TObject);
+begin
+  if (RGTipoPgto.ItemIndex = 0) then
+    MEEntrada2.ReadOnly := true
+  else
+    MEEntrada2.ReadOnly := false;
+end;
+
+end.
+

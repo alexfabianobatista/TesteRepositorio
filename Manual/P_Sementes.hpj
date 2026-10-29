@@ -1,0 +1,22 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_Sementes.hlp
+
+[FILES]
+P_Sementes.rtf
+
+[MAP]
+cadastro_area_cultivar=3
+cadastro_campo_plantio=4
+cadastro_classe_plantio=1
+cadastro_doenca=10
+cadastro_estimativa_meta=5
+cadastro_laudo_floracao=8
+cadastro_laudo_pre_colheita=9
+cadastro_plantio_safra=2
+cadastro_previsao_laudos=6
+cadastro_producao=7
+menu_semente=0

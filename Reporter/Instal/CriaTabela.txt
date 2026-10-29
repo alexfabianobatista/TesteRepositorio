@@ -1,0 +1,55 @@
+CREATE TABELE TR_CAMPOS (
+ NOME_TABELA                               NOT NULL VARCHAR2(30)
+ NOME_CAMPO                                NOT NULL VARCHAR2(30)
+ DESC_ALIAS                                         VARCHAR2(30)
+ DESC_LISTA_VALIDA                                  VARCHAR2(400)
+) TABLESPACE TSD_SISTEMA;
+
+CREATE TABELE TR_FROM (
+COD_RELATORIO                                      NUMBER(6)
+NOME_TABELA                                        VARCHAR2(20)
+COD_FROM                                  NOT NULL NUMBER(6)
+) TABLESPACE TSD_SISTEMA;
+
+CREATE TABLE TR_RELATORIO (
+COD_RELATORIO                             NOT NULL NUMBER(6)
+NOME_RELATORIO                            NOT NULL VARCHAR2(30)
+DESC_TITULO                                        VARCHAR2(40)
+DESC_ORDER                                         VARCHAR2(200)
+) TABLESPACE TSD_SISTEMA;
+
+
+CREATE TABLE TR_RELACAO (
+ COD_RELATORIO                             NOT NULL NUMBER(6)
+ NOME_TABELA1                              NOT NULL VARCHAR2(20)
+ NOME_CAMPO1                               NOT NULL VARCHAR2(30)
+ NOME_TABELA2                              NOT NULL VARCHAR2(20)
+ NOME_CAMPO2                               NOT NULL VARCHAR2(30)
+ COD_RELACAO                               NOT NULL NUMBER(6)
+) TABLESPACE TSD_SISTEMA;
+
+CREATE TABLE TR_SELECT (
+COD_RELATORIO                                      NUMBER
+NOME_TABELA                                        VARCHAR2(20)
+NOME_CAMPO                                         VARCHAR2(30)
+NUM_TAMANHO                                        NUMBER(3)
+NUM_POS_X                                          NUMBER(6)
+NUM_POS_Y                                          NUMBER(6)
+NUM_ORDEM                                          NUMBER
+NOME_ALIAS                                         VARCHAR2(30)
+COD_SELECT                                NOT NULL NUMBER(6)
+DESC_CALCULO                                       VARCHAR2(10)
+DESC_TIPO_DADO                                     VARCHAR2(10)
+COD_FROM                                           NUMBER(6)
+) TABLESPACE TSD_SISTEMA;
+
+CREATE TABLE TR_WHERE(
+COD_RELATORIO                             NOT NULL NUMBER(6)
+NOME_TABELA                               NOT NULL VARCHAR2(20)
+NOME_CAMPO                                NOT NULL VARCHAR2(30)
+DESC_CONDICAO                             NOT NULL VARCHAR2(20)
+NOME_FILTRO                               NOT NULL VARCHAR2(30)
+IND_VARIAVEL                              NOT NULL CHAR(3)
+IND_TIPO_VARIAVEL                                  VARCHAR2(10)
+COD_WHERE                                 NOT NULL NUMBER(6)
+) TABLESPACE TSD_SISTEMA;

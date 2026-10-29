@@ -1,0 +1,3054 @@
+unit URomaneioAgricola_cl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, DBTables, OracleData, OraTeste, Variants, Provider, DBClient, Math;
+
+type
+  TDMRomaneioAgricola = class(TDataModule)
+    DsRomaneio: TDataSource;
+    DsBalanca: TDataSource;
+    DsRateio: TDataSource;
+    DSRomConsFixar: TDataSource;
+    DSContaPagarTotal: TDataSource;
+    DSContaReceberTotal: TDataSource;
+    DSContratoTotal: TDataSource;
+    QRRomaneios_no_Periodo: TOracleDataSet1;
+    QRRomaneios_no_PeriodoNOME: TStringField;
+    QRRomaneios_no_PeriodoCOD_CADASTRO: TIntegerField;
+    QRRomaneios_no_PeriodoNUM_ROMANEIO: TIntegerField;
+    QRRomaneios_no_PeriodoPERC_PH: TFloatField;
+    QRRomaneios_no_PeriodoDT_EMISSAO: TDateTimeField;
+    QRRomaneios_no_PeriodoDESC_PLACA: TStringField;
+    QRRomaneios_no_PeriodoQT_PESO_BRUTO: TIntegerField;
+    QRRomaneios_no_PeriodoQT_TARA: TIntegerField;
+    QRRomaneios_no_PeriodoQT_RATEIO: TIntegerField;
+    QRRomaneios_no_PeriodoPERC_RATEIO: TFloatField;
+    QRRomaneios_no_PeriodoPERC_UMIDADE: TFloatField;
+    QRRomaneios_no_PeriodoPERC_IMPUREZA: TFloatField;
+    QRRomaneios_no_PeriodoPERC_ARDIDOS: TFloatField;
+    QRRomaneios_no_PeriodoPERC_TRIGUILHO: TFloatField;
+    QRRomaneios_no_PeriodoCOD_PRODUTO: TFloatField;
+    QRRomaneios_no_PeriodoPERC_AVARIADO: TFloatField;
+    QRRomaneios_no_PeriodoPERC_QUEBRADOS: TFloatField;
+    QRRomaneios_no_PeriodoPERC_DIVERSOS: TFloatField;
+    QRRomaneios_no_PeriodoCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRRomaneios_no_Periodoardidos: TFloatField;
+    QRRomaneios_no_Periodoimpureza: TFloatField;
+    QRRomaneios_no_Periodoavariados: TFloatField;
+    QRRomaneios_no_Periodoumidade: TFloatField;
+    QRRomaneios_no_Periodoquebrados: TFloatField;
+    QRRomaneios_no_Periodotriguilho: TFloatField;
+    QRRomaneios_no_Periododiversos: TFloatField;
+    QRRomaneios_no_Periodototaldesconto: TFloatField;                                                           
+    QRRomaneios_no_Periodoliquido: TFloatField;
+    QContaReceberTotal: TOracleDataSet1;
+    QrRomaneio: TOracleDataSet1;
+    QrRomaneioCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QrRomaneioCOD_PRODUTO: TFloatField;
+    QrRomaneioCOD_CADASTRO: TIntegerField;
+    QrRomaneioCOD_FILIAL: TIntegerField;
+    QrRomaneioNUM_ROMANEIO: TIntegerField;
+    QrRomaneioDT_EMISSAO: TDateTimeField;
+    QrRomaneioDESC_PLACA: TStringField;
+    QrRomaneioDT_MOVIMENTO: TDateTimeField;
+    QrRomaneioIND_EMITIDO: TStringField;
+    QrRomaneioPERC_UMIDADE: TFloatField;
+    QrRomaneioPERC_IMPUREZA: TFloatField;
+    QrRomaneioPERC_ARDIDOS: TFloatField;
+    QrRomaneioPERC_AVARIADO: TFloatField;
+    QrRomaneioPERC_QUEBRADOS: TFloatField;
+    QrRomaneioPERC_DIVERSOS: TFloatField;
+    QrRomaneioPERC_TRIGUILHO: TFloatField;
+    QrRomaneioNOME: TStringField;
+    QRRomaneioPesagem: TOracleDataSet1;
+    QRRomaneioPesagemCOD_FILIAL: TIntegerField;
+    QRRomaneioPesagemNUM_ROMANEIO: TIntegerField;
+    QRRomaneioPesagemDT_EMISSAO: TDateTimeField;
+    QRRomaneioPesagemNOME: TStringField;
+    QRRomaneioPesagemQT_PESO_BRUTO: TIntegerField;
+    QRRomaneioPesagemQT_TARA: TIntegerField;
+    QRRomaneioPesagemDESC_PLACA: TStringField;
+    QAtzRomaneio: TOracleDataSet1;
+    QContaPagarTotal: TOracleDataSet1;
+    QContaPagarTotalTOTAL_CP: TFloatField;
+    QContaReceberTotalTOTAL_CR: TFloatField;
+    QrRateio: TOracleDataSet1;
+    QrRateioCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QrRateioCOD_CADASTRO: TIntegerField;
+    QrRateioPERC_RATEIO: TFloatField;
+    QrRateioQT_RATEIO: TIntegerField;
+    QrRateioNOME: TStringField;
+    QrRateioliquido: TFloatField;
+    QrRateiodesconto: TFloatField;
+    QrRateioAtualiza: TOracleDataSet1;
+    QRCadastro: TOracleDataSet1;
+    QRCadastroCOD_CADASTRO: TIntegerField;
+    QRCadastroNOME: TStringField;
+    QRCadastroCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRCadastroNUM_ROMANEIO: TIntegerField;
+    QRCadastroDT_EMISSAO: TDateTimeField;
+    QRCadastroCOD_PRODUTO: TFloatField;
+    QRCadastroPERC_UMIDADE: TFloatField;
+    QRCadastroPERC_IMPUREZA: TFloatField;
+    QRCadastroPERC_DESCONTO: TFloatField;
+    QRCadastroPERC_ARDIDOS: TFloatField;
+    QRCadastroPERC_QUEBRADOS: TFloatField;
+    QRCadastroPERC_TRIGUILHO: TFloatField;
+    QRCadastroPERC_AVARIADO: TFloatField;
+    QRCadastroPERC_DIVERSOS: TFloatField;
+    QRCadastrosqt_ardidos: TFloatField;
+    QRCadastrosqt_impureza: TFloatField;
+    QRCadastrosqt_avariado: TFloatField;
+    QRCadastrosqt_umidade: TFloatField;
+    QRCadastrosqt_triguilho_quebrados: TFloatField;
+    QRCadastrosqt_outros: TFloatField;
+    QrRomEmissao: TOracleDataSet1;
+    QrRomEmissaoCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QrRomEmissaoCOD_PRODUTO: TFloatField;
+    QrRomEmissaoCOD_USUARIO: TIntegerField;
+    QrRomEmissaoNUM_ROMANEIO: TIntegerField;
+    QrRomEmissaoDT_EMISSAO: TDateTimeField;
+    QrRomEmissaoDESC_PLACA: TStringField;
+    QrRomEmissaoPERC_UMIDADE: TFloatField;
+    QrRomEmissaoPERC_ARDIDOS: TFloatField;
+    QrRomEmissaoPERC_IMPUREZA: TFloatField;
+    QrRomEmissaoPERC_DESCONTO: TFloatField;
+    QrRomEmissaoDESC_OBSERVACAO: TStringField;
+    QrRomEmissaoDT_MOVIMENTO: TDateTimeField;
+    QrRomEmissaoPERC_AVARIADO: TFloatField;
+    QrRomEmissaoNUM_CLASSIFICACAO: TIntegerField;
+    QrRomEmissaoNUM_TICKET: TIntegerField;
+    QrRomEmissaoPERC_DIVERSOS: TFloatField;
+    QrRomEmissaoNUM_NOTA_PRODUTOR: TIntegerField;
+    QrRomEmissaoIND_EMITIDO: TStringField;
+    QrRomEmissaoPERC_QUEBRADOS: TFloatField;
+    QrRomEmissaoPERC_TRIGUILHO: TFloatField;
+    QrRomEmissaoPERC_PH: TFloatField;
+    QrRomEmissaoCOD_CADASTRO: TIntegerField;
+    QrRomEmissaoPERC_RATEIO: TFloatField;
+    QrRomEmissaoQT_RATEIO: TIntegerField;
+    QrRomEmissaoESTADO_CADASTRO: TStringField;
+    QrRomEmissaoNOME: TStringField;
+    QrRomEmissaoCGC_CPF_CLIENTE: TStringField;
+    QrRomEmissaoENDERECO_CADASTRO: TStringField;
+    QrRomEmissaoCIDADE_CADASTRO: TStringField;
+    QrRomEmissaoNUM_INSCRICAO: TStringField;
+    QrRomEmissaoDESC_FILIAL: TStringField;
+    QrRomEmissaoCIDADE_FILIAL: TStringField;
+    QrRomEmissaoENDERECO_FILIAL: TStringField;
+    QrRomEmissaoNUM_CGC: TStringField;
+    QrRomEmissaoDESC_INSCRICAO: TStringField;
+    QrRomEmissaoCOD_FILIAL: TIntegerField;
+    QrRomEmissaoardidos: TFloatField;
+    QrRomEmissaoimpureza: TFloatField;
+    QrRomEmissaoavariados: TFloatField;
+    QrRomEmissaoumidade: TFloatField;
+    QrRomEmissaoquebrados: TFloatField;
+    QrRomEmissaotriguilho: TFloatField;
+    QrRomEmissaodiversos: TFloatField;
+    QrRomEmissaoliquido: TFloatField;
+    QrRomEmissaototaldesconto: TFloatField;
+    QrRomEmissaodesc_usuario: TStringField;
+    QrRomEmissaoperc_liq_impureza: TFloatField;
+    QrRomEmissaoperc_liq_ardidos: TFloatField;
+    QrRomEmissaoperc_liq_avariado: TFloatField;
+    QContratoTotal: TOracleDataSet1;
+    QContratoTotalSALDO: TFloatField;
+    QRSaldoFixar: TOracleDataSet1;
+    QRSaldoFixarCOD_CADASTRO: TIntegerField;
+    QRSaldoFixarNOME: TStringField;
+    QRSaldoFixarCOD_PRODUTO: TFloatField;
+    QRSaldoFixarSCONSUMO: TFloatField;
+    QRSaldoFixarSAFIXAR: TFloatField;
+    QRSaldoFixarSVALORAFIXAR: TFloatField;
+    QRomaneioCons: TOracleDataSet1;
+    QRomaneioConsNOME: TStringField;
+    QRomaneioConsCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRomaneioConsCOD_PRODUTO: TFloatField;
+    QRomaneioConsCOD_CADASTRO: TIntegerField;
+    QRomaneioConsCOD_FILIAL: TIntegerField;
+    QRomaneioConsNUM_ROMANEIO: TIntegerField;
+    QRomaneioConsDT_EMISSAO: TDateTimeField;
+    QRomaneioConsIND_SITUACAO: TStringField;
+    QrRomNota: TOracleDataSet1;
+    QrRomNotaCOD_PRODUTO: TFloatField;
+    QrRomNotaCOD_FILIAL: TIntegerField;
+    QrRomNotaNUM_ROMANEIO: TIntegerField;
+    QrRomNotaDT_EMISSAO: TDateTimeField;
+    QrRomNotaPERC_UMIDADE: TFloatField;
+    QrRomNotaPERC_ARDIDOS: TFloatField;
+    QrRomNotaPERC_IMPUREZA: TFloatField;
+    QrRomNotaPERC_AVARIADO: TFloatField;
+    QrRomNotaPERC_DIVERSOS: TFloatField;
+    QrRomNotaPERC_QUEBRADOS: TFloatField;
+    QrRomNotaPERC_QUEBRADOS_ARROZ: TFloatField;
+    QrRomNotaPERC_INTEIROS_ARROZ: TFloatField;
+    QrRomNotaPERC_TRIGUILHO: TFloatField;
+    QrRomNotaPERC_PH: TFloatField;
+    QrRomNotaCOD_CADASTRO: TIntegerField;
+    QrRomNotaQT_RATEIO: TIntegerField;
+    QrRomNotaIND_FIXAR_CONSUMO: TStringField;
+    QrRomNotaVAL_VAREJO: TFloatField;
+    QrRomNotaCOD_TRIBUTACAO: TIntegerField;
+    QrRomNotaNUM_EMBALAGEM: TFloatField;
+    QrRomNotaCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QrRomNotacod_estado: TStringField;
+    QRelSaldo: TOracleDataSet1;
+    QRelSaldo2: TOracleDataSet1;
+    QrNotaItem: TOracleDataSet1;
+    QrNotaItemCOD_NOTA_ITEM: TIntegerField;
+    QrNotaItemCOD_NOTA_CAB: TIntegerField;
+    QrNotaItemCOD_TRIBUTACAO: TIntegerField;
+    QrNotaItemQT_QUANTIDADE: TFloatField;
+    QrNotaItemVAL_TOTAL: TFloatField;
+    QrNotaItemPERC_IPI: TFloatField;
+    QrNotaItemPERC_COMISSAO: TFloatField;
+    QrNotaItemCOD_PRODUTO: TFloatField;
+    QrNotaItemCOD_LOTE_TIPO: TIntegerField;
+    QrNotaItemVAL_DESCONTO: TFloatField;
+    QrNotaItemVAL_DESPESAS: TFloatField;
+    QrNotaItemVAL_FRETE: TFloatField;
+    QrNotaItemPERC_DESCONTO: TFloatField;
+    QrNotaItemVAL_IPI: TFloatField;
+    QrNotaItemVAL_UNITARIO: TFloatField;
+    QrNotaItemVAL_ICM_BASE: TFloatField;
+    QrNotaItemVAL_ICM: TFloatField;
+    QrNotaItemIND_CLASS_IPI: TStringField;
+    QrNotaItemVAL_CUSTO: TFloatField;
+    QrNotaItemPERC_BENEFICIADO: TFloatField;
+    QrNota: TOracleDataSet1;
+    QrNotaCOD_NOTA_CAB: TIntegerField;
+    QrNotaCOD_USUARIO: TIntegerField;
+    QrNotaCOD_FILIAL: TIntegerField;
+    QrNotaCOD_MENSAGEM: TIntegerField;
+    QrNotaCOD_TRANSPORTE: TIntegerField;
+    QrNotaCOD_OPERACAO: TIntegerField;
+    QrNotaCOD_ESTADO: TStringField;
+    QrNotaCOD_VENDEDOR: TIntegerField;
+    QrNotaCOD_CADASTRO: TIntegerField;
+    QrNotaNUM_NOTA: TIntegerField;
+    QrNotaCOD_SERIE: TStringField;
+    QrNotaIND_SITUACAO: TStringField;
+    QrNotaIND_CONDICAO_PAGTO: TStringField;
+    QrNotaDT_EMISSAO: TDateTimeField;
+    QrNotaDT_MOVIMENTO: TDateTimeField;
+    QrNotaDT_RECEBIMENTO: TDateTimeField;
+    QrNotaCOD_MOTIVO_CANC: TIntegerField;
+    QrNotaVAL_DESPESAS: TFloatField;
+    QrNotaIND_ENTRADA_SAIDA: TStringField;
+    QrNotaVAL_FRETE: TFloatField;
+    QrNotaVAL_DESCONTO: TFloatField;
+    QrNotaCOD_TRANSPORTADOR: TIntegerField;
+    QrNotaNUM_CONHECIMENTO_FRETE: TIntegerField;
+    QrNotaVAL_AVISTA: TFloatField;
+    QrNotaIND_TIPO_FRETE: TStringField;
+    QrNotaNUM_VOLUMES: TIntegerField;
+    QrNotaOBS: TStringField;
+    QrNotaOBS_COMPLEMENTO: TStringField;
+    QrNotaDT_USUARIO: TDateTimeField;
+    QrNotaCOD_TRIBUTACAO_FRETE: TIntegerField;
+    QrNotaVAL_TOTAL_IPI: TFloatField;
+    QrNotaVAL_ICM_FRETE: TFloatField;
+    QrNotaVAL_ICM_BASE_FRETE: TFloatField;
+    QRomConsFixar: TOracleDataSet1;
+    QRomConsFixarsaldo_fixar: TFloatField;
+    QRomConsFixarsaldo_consumo: TFloatField;
+    QrRomDesconto: TOracleDataSet1;
+    QrRomDescontoNOME: TStringField;
+    QrRomDescontoCOD_PRODUTO: TFloatField;
+    QrRomDescontoCOD_FILIAL: TIntegerField;
+    QrRomDescontoNUM_ROMANEIO: TIntegerField;
+    QrRomDescontoPERC_UMIDADE: TFloatField;
+    QrRomDescontoPERC_ARDIDOS: TFloatField;
+    QrRomDescontoPERC_IMPUREZA: TFloatField;
+    QrRomDescontoPERC_AVARIADO: TFloatField;
+    QrRomDescontoPERC_DIVERSOS: TFloatField;
+    QrRomDescontoPERC_QUEBRADOS: TFloatField;
+    QrRomDescontoPERC_TRIGUILHO: TFloatField;
+    QrRomDescontoPERC_PH: TFloatField;
+    QrRomDescontoPERC_DESCONTO: TFloatField;
+    QrRomDescontoQT_RATEIO: TIntegerField;
+    QrRomDescontoCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QrRomDescontoardidos: TFloatField;
+    QrRomDescontoimpureza: TFloatField;
+    QrRomDescontoumidade: TFloatField;
+    QrRomDescontotriguilho_quebrados: TFloatField;
+    QrRomDescontooutros: TFloatField;
+    QrRomDescontoliquido: TFloatField;
+    QBalancaCons: TOracleDataSet1;
+    QBalancaConsDESC_PLACA: TStringField;
+    QBalancaConsDT_REFERENCIA: TDateTimeField;
+    QBalancaConsIND_SITUACAO: TStringField;
+    QBalancaConsCOD_BALANCA: TIntegerField;
+    QRateio: TOracleDataSet1;
+    QBalanca: TOracleDataSet1;
+    QBalancaDESC_PLACA: TStringField;
+    QBalancaDT_REFERENCIA: TDateTimeField;
+    QBalancaIND_SITUACAO: TStringField;
+    QBalancaCOD_BALANCA: TIntegerField;
+    QRomaneio: TOracleDataSet1;
+    QRomaneioCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRomaneioCOD_PRODUTO: TFloatField;
+    QRomaneioCOD_CADASTRO: TIntegerField;
+    QRomaneioCOD_FILIAL: TIntegerField;
+    QRomaneioNUM_ROMANEIO: TIntegerField;
+    QRomaneioDT_EMISSAO: TDateTimeField;
+    QRomaneioQT_PESO_BRUTO: TIntegerField;
+    QRomaneioQT_TARA: TIntegerField;
+    QRomaneioDESC_PLACA: TStringField;
+    QRomaneioPERC_UMIDADE: TFloatField;
+    QRomaneioPERC_ARDIDOS: TFloatField;
+    QRomaneioPERC_IMPUREZA: TFloatField;
+    QRomaneioDESC_OBSERVACAO: TStringField;
+    QRomaneioDT_MOVIMENTO: TDateTimeField;
+    QRomaneioPERC_AVARIADO: TFloatField;
+    QRomaneioNUM_CLASSIFICACAO: TIntegerField;
+    QRomaneioNUM_TICKET: TIntegerField;
+    QRomaneioPERC_DIVERSOS: TFloatField;
+    QRomaneioNUM_NOTA_PRODUTOR: TIntegerField;
+    QRomaneioIND_EMITIDO: TStringField;
+    QRomaneioPERC_QUEBRADOS: TFloatField;
+    QRomaneioPERC_TRIGUILHO: TFloatField;
+    QRomaneioPERC_PH: TFloatField;
+    QRomaneioPERC_QUEBRADOS_ARROZ: TFloatField;
+    QRomaneioPERC_INTEIROS_ARROZ: TFloatField;
+    QRomaneioPERC_DESCONTO: TFloatField;
+    QRomaneioCOD_USUARIO: TIntegerField;
+    QRomaneioNUM_ARMAZEM: TIntegerField;
+    QRomaneioIND_SITUACAO: TStringField;
+    QRateioCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRateioCOD_CADASTRO: TIntegerField;
+    QRateioPERC_RATEIO: TFloatField;
+    QRateioQT_RATEIO: TIntegerField;
+    QRateioIND_SITUACAO: TStringField;
+    QRateioIND_FIXAR_CONSUMO: TStringField;
+    QRelSaldo2SQUANT_CONSUMO: TFloatField;
+    QRelSaldo2SQUANT_DEV_CONSUMO: TFloatField;
+    QRelSaldo2SQUANTIDADE_FIXADO: TFloatField;
+    QRelSaldo2SQUANTIDADE_FIXAR: TFloatField;
+    QRelSaldo2VAL_DESCONTO: TFloatField;
+    QRelSaldo2VAL_TOTAL: TFloatField;
+    QRelSaldo2COD_PRODUTO: TFloatField;
+    QBalancaQT_PESO_CHEGADA: TIntegerField;
+    QBalancaQT_PESO_SAIDA: TIntegerField;
+    QrRomEmissaoQT_PESO_BRUTO: TIntegerField;
+    QrRomEmissaoQT_TARA: TIntegerField;
+    QrRomEmissaopesobalanca: TFloatField;
+    QRCadastrosqt_peso_liquido: TFloatField;
+    QRRomaneios_no_Periodopesobalanca: TFloatField;
+    QRCadastrosqt_diversos: TFloatField;
+    QBalancaConsQT_PESO_CHEGADA: TIntegerField;
+    QBalancaConsQT_PESO_SAIDA: TIntegerField;
+    QrRomaneioIND_SITUACAO: TStringField;
+    QrRomDescontoIND_SITUACAO: TStringField;
+    QRCadastroPERC_PH: TFloatField;
+    QRRomaneioPesagemPERC_UMIDADE: TFloatField;
+    QRRomaneioPesagemPERC_ARDIDOS: TFloatField;
+    QRRomaneioPesagemPERC_IMPUREZA: TFloatField;
+    QRRomaneioPesagemPERC_AVARIADO: TFloatField;
+    QRRomaneioPesagemPERC_PH: TFloatField;
+    QRRomaneioPesagemPERC_TRIGUILHO: TFloatField;
+    QRRomaneioPesagemNUM_TICKET: TIntegerField;
+    QRRomaneioPesagemIND_TIPO_ROMANEIO: TStringField;
+    QRRomaneioPesagemdesc_tipo: TStringField;
+    QrRomEmissaoNUM_EMBALAGEM: TFloatField;
+    QRomaneioDT_ANO_SAFRA: TStringField;
+    QrRomEmissaoCOD_MENSAGEM: TIntegerField;
+    QrRomEmissaodesc_mensagem: TStringField;
+    QRRomaneioPesagemqt_liquido: TFloatField;
+    QRRomaneioPesagemCOD_PRODUTO: TFloatField;
+    QRRomaneioPesagemPERC_QUEBRADOS: TFloatField;
+    QRRomaneioPesagemPERC_DIVERSOS: TFloatField;
+    QRRomaneioPesagemCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRRomaneioPesagemqt_desconto: TFloatField;
+    QBalancaCOD_CADASTRO: TIntegerField;
+    QBalancaCOD_PRODUTO: TFloatField;
+    QBalancaPERC_UMIDADE: TFloatField;
+    QBalancaPERC_ARDIDOS: TFloatField;
+    QBalancaPERC_IMPUREZA: TFloatField;
+    QBalancaPERC_AVARIADO: TFloatField;
+    QBalancaPERC_QUEBRADOS: TFloatField;
+    QBalancaPERC_TRIGUILHO: TFloatField;
+    QBalancaPERC_TOLERA_ARDIDOS: TFloatField;
+    QBalancaPERC_TOLERA_IMPUREZA: TFloatField;
+    QBalancaPERC_TOLERA_AVARIADO: TFloatField;
+    QRomaneioPERC_TOLERA_ARDIDOS: TFloatField;
+    QRomaneioPERC_TOLERA_AVARIADO: TFloatField;
+    QRomaneioPERC_TOLERA_IMPUREZA: TFloatField;
+    QBalancaPERC_DESCONTO: TFloatField;
+    QrRomaneioPERC_TOLERA_ARDIDOS: TFloatField;
+    QrRomaneioPERC_TOLERA_AVARIADO: TFloatField;
+    QrRomaneioPERC_TOLERA_IMPUREZA: TFloatField;
+    QrRomDescontoPERC_TOLERA_ARDIDOS: TFloatField;
+    QrRomDescontoPERC_TOLERA_AVARIADO: TFloatField;
+    QrRomDescontoPERC_TOLERA_IMPUREZA: TFloatField;
+    QrRomNotaPERC_TOLERA_ARDIDOS: TFloatField;
+    QrRomNotaPERC_TOLERA_IMPUREZA: TFloatField;
+    QrRomNotaPERC_TOLERA_AVARIADO: TFloatField;
+    QRCadastroPERC_TOLERA_ARDIDOS: TFloatField;
+    QRCadastroPERC_TOLERA_AVARIADO: TFloatField;
+    QRCadastroPERC_TOLERA_IMPUREZA: TFloatField;
+    QRRomaneioPesagemPERC_TOLERA_ARDIDOS: TFloatField;
+    QRRomaneioPesagemPERC_TOLERA_AVARIADO: TFloatField;
+    QRRomaneioPesagemPERC_TOLERA_IMPUREZA: TFloatField;
+    QRCadastroIND_SITUACAO: TStringField;
+    QRRomaneios_no_PeriodoIND_SITUACAO: TStringField;
+    QRRomaneioPesagemIND_SITUACAO: TStringField;
+    QrRomNotaIND_TIPO_PRODUTO: TStringField;
+    QrRomEmissaoPERC_TOLERA_ARDIDOS: TFloatField;
+    QrRomEmissaoPERC_TOLERA_IMPUREZA: TFloatField;
+    QrRomEmissaoPERC_TOLERA_AVARIADO: TFloatField;
+    QRomConsFixarsfixado_sacas: TFloatField;
+    QRomConsFixarssaldo_sacas: TFloatField;
+    QRomConsFixarsbloqueado_sacas: TFloatField;
+    QRomConsFixarsfixar_sacas: TFloatField;
+    QTaxaArmazenagem: TOracleDataSet1;
+    QTaxaArmazenagemSALDO: TFloatField;
+    QBalancaCOD_FILIAL: TIntegerField;
+    QContratoGpTotal: TOracleDataSet1;
+    QContratoGpTotalSALDO_GP: TFloatField;
+    DSContratoGpTotal: TDataSource;
+    QrRomEmissaoDESC_TELEFONE: TStringField;
+    QrRomDescontoqt_tara: TFloatField;
+    QrRomDescontoqt_peso_bruto: TFloatField;
+    QrRomDescontoCOD_CADASTRO_ROMANEIO: TIntegerField;
+    QrRomDescontoCOD_CADASTRO: TIntegerField;
+    QrRomEmissaoNUM_INSCRICAO_CLIENTE: TStringField;
+    QrRomEmissaoCOD_CADASTRO_ROMANEIO: TIntegerField;
+    QRomaneioNUM_AMOSTRA: TIntegerField;
+    QrRomEmissaoNUM_AMOSTRA: TIntegerField;
+    QRomaneioCOD_CADASTRO_PARCEIRO: TIntegerField;
+    QrNotaCOD_CADASTRO_PARCEIRO: TIntegerField;
+    QrRomNotaCOD_CADASTRO_PARCEIRO: TIntegerField;
+    QRRomaneioPesagemqt_triguilho: TFloatField;
+    QRFixacao_Cliente: TOracleDataSet1;
+    QRFixacao_ClienteNOME: TStringField;
+    QRFixacao_ClienteNUM_CGC_CPF: TStringField;
+    QRFixacao_ClienteVAL_TOTAL: TFloatField;
+    QRelSaldo2VAL_DESCONTO_SALDO: TFloatField;
+    QRomaneioVAL_PESAGEM: TFloatField;
+    QrRomEmissaoVAL_PESAGEM: TFloatField;
+    QrRomaneioNUM_TICKET: TIntegerField;
+    QBalancaDT_PRIMEIRA_PESAGEM: TDateTimeField;
+    QBalancaDT_SEGUNDA_PESAGEM: TDateTimeField;
+    QBalancaVAL_PESAGEM: TFloatField;
+    QRomaneioCOD_BALANCA: TIntegerField;
+    QrRomEmissaoCOD_BALANCA: TIntegerField;
+    QRomaneioIND_TIPO_ROMANEIO: TStringField;
+    QRomaneioNOME_MOTORISTA: TStringField;
+    QrRomEmissaoNOME_MOTORISTA: TStringField;
+    QRRomaneioAcumulado: TOracleDataSet1;
+    QRRomaneioAcumuladoCOD_CADASTRO: TIntegerField;
+    QRRomaneioAcumuladoNOME: TStringField;
+    QRRomaneioAcumuladoCOD_PRODUTO: TFloatField;
+    QRRomaneioAcumuladoQT_ACUMULADO: TFloatField;
+    QRRomaneioAcumuladoQT_CARGAS: TFloatField;
+    QrNotaItemVAL_PIS: TFloatField;
+    QrNotaItemVAL_CONFINS: TFloatField;
+    QRateionome: TStringField;
+    QRelSaldo2DESC_PRODUTO: TStringField;
+    QRRomaneioAcumuladoDESC_PRODUTO: TStringField;
+    QRSaldoFixarDESC_PRODUTO: TStringField;
+    QRRomaneioPesagemDESC_PRODUTO: TStringField;
+    QRomaneioConsDESC_PRODUTO: TStringField;
+    QRCadastroDESC_PRODUTO: TStringField;
+    QrRomaneioDESC_PRODUTO: TStringField;
+    QRRomaneios_no_PeriodoDESC_PRODUTO: TStringField;
+    QrRomEmissaoDESC_PRODUTO: TStringField;
+    QrRomDescontoDESC_PRODUTO: TStringField;
+    QrNotaCOD_DEPARTAMENTO: TIntegerField;
+    QrRomEmissaoIND_TIPO_ROMANEIO: TStringField;
+    QrRomEmissaoIND_SITUACAO: TStringField;
+    QRomaneioCOD_TRANSPORTADORA: TIntegerField;
+    QRomaneioDT_EMISSAO_NOTA: TDateTimeField;
+    QRomaneioQT_PESO_NOTA: TIntegerField;
+    QBalancaPERC_PH: TFloatField;
+    QBalancaDESC_OBSERVACAO: TStringField;
+    QrRomEmissaoDT_PRIMEIRA_PESAGEM: TDateTimeField;
+    QrRomEmissaoDT_SEGUNDA_PESAGEM: TDateTimeField;
+    QrRomNotaCOD_CADASTRO_ROMANEIO: TIntegerField;
+    QrRomNotaQT_PESO_ROMANEIO: TFloatField;
+    QAcertoFixar: TOracleDataSet1;
+    QAcertoFixarCOD_CADASTRO: TIntegerField;
+    QAcertoFixarCOD_NOTA_ITEM: TIntegerField;
+    QAcertoFixarQT_QUANTIDADE: TFloatField;
+    QAcertoFixarIND_FIXAR_EMPRESA: TStringField;
+    QValorFixar: TOracleDataSet1;
+    QValorFixarCOD_CADASTRO: TIntegerField;
+    QValorFixarNOME: TStringField;
+    QValorFixarCOD_PRODUTO: TFloatField;
+    QValorFixarDESC_PRODUTO: TStringField;
+    QValorFixarSAFIXAR: TFloatField;
+    QValorFixarSCONSUMO: TFloatField;
+    QValorFixarSVALORAFIXAR: TFloatField;
+    QValorFixarVAL_VAREJO: TFloatField;
+    QrRomEmissaoIND_CESTA_BASICA: TStringField;
+    QrNotaItemCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRomaneio_Fitas: TOracleDataSet1;
+    QRomaneio_FitasCOD_ROMANEIO_FITAS: TIntegerField;
+    QRomaneio_FitasCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRomaneio_FitasCOD_PRODUTO: TIntegerField;
+    DSRomaneio_Fitas: TDataSource;
+    QFitas_Cobranca: TOracleDataSet1;
+    QFitas_CobrancaCOD_ROMANEIO_FITAS: TIntegerField;
+    QFitas_CobrancaCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QFitas_CobrancaCOD_PRODUTO: TIntegerField;
+    QFitas_CobrancaIND_RESULTADO: TStringField;
+    QFitas_CobrancaNUM_ROMANEIO: TIntegerField;
+    QFitas_CobrancaVAL_VAREJO: TFloatField;
+    QFitas_CobrancaCOD_NOTA_CAB: TIntegerField;
+    QFitas_CobrancaIND_BAIXADO: TStringField;
+    QRFitas: TOracleDataSet1;
+    QRFitasNOME: TStringField;
+    QRFitasNUM_ROMANEIO: TIntegerField;
+    QRFitasDT_EMISSAO: TDateTimeField;
+    QRFitasIND_RESULTADO_POSITIVO: TFloatField;
+    QRFitasIND_RESULTADO_NEGATIVO: TFloatField;
+    QRFitasIND_RESULTADO_ESTRAGADO: TFloatField;
+    QRFitasIND_RESULTADO: TStringField;
+    QrRomaneioQT_PESO_BRUTO: TFloatField;
+    QrRomaneioQT_TARA: TFloatField;
+    QrRomaneioPESO_BALANCA: TFloatField;
+    QrRomDescontoQT_PESO_BRUTO_SQL: TFloatField;
+    QrRomDescontoQT_TARA_SQL: TFloatField;
+    QRCadastroQT_RATEIO: TIntegerField;
+    QRCadastroQT_PESO_BRUTO: TFloatField;
+    QRSaldoFixarSQT_FIXAR: TFloatField;
+    QRSaldoFixarSQT_FIXADO: TFloatField;
+    QRRomaneioAcumuladoDESC_CIDADE: TStringField;
+    QBalancaIND_TIPO: TStringField;
+    QBalancaCOD_TRANSPORTADOR: TIntegerField;
+    QBalancaqt_peso_balanca: TFloatField;
+    QRomaneioDT_PRIMEIRA_PESAGEM: TDateTimeField;
+    QRomaneioDT_SEGUNDA_PESAGEM: TDateTimeField;
+    QRomaneioCOD_CONTRATO_VEND: TIntegerField;
+    QBalancaCOD_CONTRATO_VEND: TIntegerField;
+    QBalancaCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QRomaneioCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QrRomaneioPERC_DESCONTO: TFloatField;
+    QrRomNotaPERC_DESCONTO: TFloatField;
+    QRRomaneioPesagemPERC_DESCONTO: TFloatField;
+    QRPesagemSaida: TOracleDataSet1;
+    QRPesagemSaidaNUM_ROMANEIO: TIntegerField;
+    QRPesagemSaidaDT_EMISSAO: TDateTimeField;
+    QRPesagemSaidaDESC_PLACA: TStringField;
+    QRPesagemSaidaDESC_PRODUTO: TStringField;
+    QRPesagemSaidaNUM_NOTA_PRODUTOR: TIntegerField;
+    QRPesagemSaidaDESTINATARIO: TStringField;
+    QRPesagemSaidaPERC_PH: TFloatField;
+    QRPesagemSaidaQT_PESO_BRUTO: TIntegerField;
+    QRPesagemSaidaQT_TARA: TIntegerField;
+    QRPesagemSaidaPESO_LIQUIDO: TFloatField;
+    QRPesagemSaidaPERC_UMIDADE: TFloatField;
+    QRPesagemSaidaPERC_IMPUREZA: TFloatField;
+    QRPesagemSaidaPERC_ARDIDOS: TFloatField;
+    QRPesagemSaidaPERC_AVARIADO: TFloatField;
+    QRPesagemSaidaPERC_QUEBRADOS: TFloatField;
+    QRPesagemSaidaPERC_TRIGUILHO: TFloatField;
+    QRPesagemSaidaPERC_DESCONTO: TFloatField;
+    QRPesagemSaidaDESC_PADRAO: TFloatField;
+    QRPesagemSaidaUMIDADE: TFloatField;
+    QRPesagemSaidaIMPUREZA: TFloatField;
+    QRPesagemSaidaARDIDO: TFloatField;
+    QRPesagemSaidaAVARIADO: TFloatField;
+    QRPesagemSaidaQUEBRADO: TFloatField;
+    QRPesagemSaidaTRIGUILHO: TFloatField;
+    QRPesagemSaidaDESCTOT: TFloatField;
+    QRPesagemEntrada: TOracleDataSet1;
+    QRPesagemEntradaNUM_ROMANEIO: TIntegerField;
+    QRPesagemEntradaDT_EMISSAO: TDateTimeField;
+    QRPesagemEntradaDESC_PLACA: TStringField;
+    QRPesagemEntradaDESC_PRODUTO: TStringField;
+    QRPesagemEntradaNUM_NOTA_PRODUTOR: TIntegerField;
+    QRPesagemEntradaDESTINATARIO: TStringField;
+    QRPesagemEntradaPERC_PH: TFloatField;
+    QRPesagemEntradaQT_PESO_BRUTO: TIntegerField;
+    QRPesagemEntradaQT_TARA: TIntegerField;
+    QRPesagemEntradaPESO_LIQUIDO: TFloatField;
+    QRPesagemEntradaPERC_UMIDADE: TFloatField;
+    QRPesagemEntradaPERC_IMPUREZA: TFloatField;
+    QRPesagemEntradaPERC_ARDIDOS: TFloatField;
+    QRPesagemEntradaPERC_AVARIADO: TFloatField;
+    QRPesagemEntradaPERC_QUEBRADOS: TFloatField;
+    QRPesagemEntradaPERC_TRIGUILHO: TFloatField;
+    QRPesagemEntradaPERC_DESCONTO: TFloatField;
+    QRPesagemEntradaDESC_PADRAO: TFloatField;
+    QRPesagemEntradaUMIDADE: TFloatField;
+    QRPesagemEntradaIMPUREZA: TFloatField;
+    QRPesagemEntradaARDIDO: TFloatField;
+    QRPesagemEntradaAVARIADO: TFloatField;
+    QRPesagemEntradaQUEBRADO: TFloatField;
+    QRPesagemEntradaTRIGUILHO: TFloatField;
+    QRPesagemEntradaDESCTOT: TFloatField;
+    QrRomEmissaoESTADO_FILIAL: TStringField;
+    QrRomEmissaoCOD_CONTRATO_VEND: TIntegerField;
+    QrRomEmissaoCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QBalancaNOME_MOTORISTA: TStringField;
+    QBalancaConsIND_TIPO: TStringField;
+    QRateioIND_ORDEM: TIntegerField;
+    QBalancaIND_RETIRADA: TStringField;
+    QRBalanca: TOracleDataSet1;
+    QRBalancaDESC_PLACA: TStringField;
+    QRBalancaQT_PESO_CHEGADA: TIntegerField;
+    QRBalancaQT_PESO_SAIDA: TIntegerField;
+    QRBalancaIND_SITUACAO: TStringField;
+    QRBalancaCOD_CADASTRO: TIntegerField;
+    QRBalancaCOD_PRODUTO: TFloatField;
+    QRBalancaPERC_UMIDADE: TFloatField;
+    QRBalancaPERC_ARDIDOS: TFloatField;
+    QRBalancaPERC_IMPUREZA: TFloatField;
+    QRBalancaPERC_AVARIADO: TFloatField;
+    QRBalancaPERC_QUEBRADOS: TFloatField;
+    QRBalancaPERC_TRIGUILHO: TFloatField;
+    QRBalancaCOD_FILIAL: TIntegerField;
+    QRBalancaDT_PRIMEIRA_PESAGEM: TDateTimeField;
+    QRBalancaDT_SEGUNDA_PESAGEM: TDateTimeField;
+    QRBalancaVAL_PESAGEM: TFloatField;
+    QRBalancaPERC_PH: TFloatField;
+    QRBalancaDESC_OBSERVACAO: TStringField;
+    QRBalancaIND_TIPO: TStringField;
+    QRBalancaCOD_TRANSPORTADOR: TIntegerField;
+    QRBalancaCOD_CONTRATO_VEND: TIntegerField;
+    QRBalancaCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QRBalancaNOME_MOTORISTA: TStringField;
+    QRBalancaIND_RETIRADA: TStringField;
+    QRBalancaDT_REFERENCIA: TDateTimeField;
+    QRBalancaDESC_FILIAL: TStringField;
+    QRBalancaNOME: TStringField;
+    QRBalancaDESC_PRODUTO: TStringField;
+    QBalancaNUM_NOTA_PRODUTOR: TIntegerField;
+    QrRomaneioIND_TIPO_ROMANEIO: TStringField;
+    QrRomaneioCOD_CONTRATO_VEND: TIntegerField;
+    QrRomaneioCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QrRomDescontoIND_TIPO_ROMANEIO: TStringField;
+    QrRomDescontoCOD_CONTRATO_VEND: TIntegerField;
+    QrRomDescontoCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QBalancaDESC_PLACA_CARRETA: TStringField;
+    QrRomEmissaoDESC_PLACA_CARRETA: TStringField;
+    QRRomaneioPesagemCOD_CONTRATO_VEND: TIntegerField;
+    QRRomaneioPesagemCOD_CONTRATO_PJURIDICA: TIntegerField;
+    QRomConsFixarCOD_PRODUTO: TFloatField;
+    QRomConsFixarSQUANT_CONSUMO: TFloatField;
+    QRomConsFixarSQUANT_DEV_CONSUMO: TFloatField;
+    QRomConsFixarSQUANTIDADE_FIXADO: TFloatField;
+    QRomConsFixarSQUANTIDADE_FIXAR: TFloatField;
+    QRomConsFixarSQUANTIDADE_BLOQUEADO_FIXAR: TFloatField;
+    QRomConsFixarSQUANTIDADE_BLOQUEADO_CONSUMO: TFloatField;
+    QRomConsFixarSQUANTIDADE_PENHOR: TFloatField;
+    QRRomaneioDescontos: TOracleDataSet1;
+    QRRomaneioDescontosCOD_FILIAL: TIntegerField;
+    QRRomaneioDescontosDESC_FILIAL: TStringField;
+    QRRomaneioDescontosCOD_PRODUTO: TFloatField;
+    QRRomaneioDescontosDESC_PRODUTO: TStringField;
+    QRRomaneioDescontosCOD_CADASTRO: TIntegerField;
+    QRRomaneioDescontosNOME: TStringField;
+    QRRomaneioDescontosCOD_OPERACAO: TIntegerField;
+    QRRomaneioDescontosNUM_ROMANEIO: TIntegerField;
+    QRRomaneioDescontosNUM_NOTA: TIntegerField;
+    QRRomaneioDescontosCOD_SERIE: TStringField;
+    QRRomaneioDescontosDT_MOVIMENTO: TDateTimeField;
+    QRRomaneioDescontosQT_FISICO: TFloatField;
+    QRRomaneioDescontosPERC_IMPUREZA: TFloatField;
+    QRRomaneioDescontosPERC_UMIDADE: TFloatField;
+    QRRomaneioDescontosPERC_ARDIDOS: TFloatField;
+    QRRomaneioDescontosPERC_AVARIADO: TFloatField;
+    QRRomaneioDescontosPERC_QUEBRADOS: TFloatField;
+    QRRomaneioDescontosPERC_DIVERSOS: TFloatField;
+    QRRomaneioDescontosTOTAL_DESCONTO: TFloatField;
+    QRRomaneioDescontosQT_CHEGADA: TFloatField;
+    QRRomaneioDescontosQT_QUANTIDADE: TFloatField;
+    QRRomaneioDescontosVAL_DIF: TFloatField;
+    QRRomaneioDescontosVAL_TOTAL: TFloatField;
+    QRelSaldoSQUANT_CONSUMO: TFloatField;
+    QRelSaldoSQUANT_DEV_CONSUMO: TFloatField;
+    QRelSaldoSQUANTIDADE_FIXADO: TFloatField;
+    QRelSaldoSQUANTIDADE_FIXAR: TFloatField;
+    QRelSaldoVAL_DESCONTO: TFloatField;
+    QRelSaldoVAL_DESCONTO_SALDO: TFloatField;
+    QRelSaldoVAL_TOTAL: TFloatField;
+    QRelSaldoVAL_UNITARIO: TFloatField;
+    QRelSaldoNOME: TStringField;
+    QRelSaldoCOD_OPERACAO: TIntegerField;
+    QRelSaldoNUM_NOTA: TIntegerField;
+    QRelSaldoDT_EMISSAO: TDateTimeField;
+    QRelSaldoDESC_PRODUTO: TStringField;
+    QRelSaldoCOD_PRODUTO: TFloatField;
+    QRelSaldoCOD_CADASTRO: TIntegerField;
+    QRelSaldoNUM_SACAS: TFloatField;
+    QrRomEmissaoNUM_VOLUMES: TFloatField;
+    QrRomEmissaoDESC_UNIDADE: TStringField;
+    QRomaneioCOD_OPERACAO: TIntegerField;
+    QRomaneioIND_CONDICAO_PAGTO: TStringField;
+    QRomaneioVAL_PRECO_VENDA: TFloatField;
+    QRateioNUM_NOTA_PRODUTOR: TIntegerField;
+    QrRomNotaNUM_NOTA_PRODUTOR: TIntegerField;
+    QrNotaItemNUM_NOTA_PRODUTOR: TIntegerField;
+    QRelSaldoNUM_CGC_CPF: TStringField;
+    QRomaneioDESC_PLACA_CARRETA1: TStringField;
+    QRomaneioDESC_PLACA_CARRETA2: TStringField;
+    QRSaldoFixarNUM_CGC_CPF: TStringField;
+    QBalancaPERC_BENEFICIADO: TFloatField;
+    QRomaneioPERC_BENEFICIADO: TFloatField;
+    QrRomNotaPERC_BENEFICIADO: TFloatField;
+    QrRomaneioPERC_BENEFICIADO: TFloatField;
+    QrRomEmissaoPERC_BENEFICIADO: TFloatField;
+    QrRomDescontoPERC_BENEFICIADO: TFloatField;
+    QRCadastroPERC_BENEFICIADO: TFloatField;
+    QRRomaneioPesagemPERC_BENEFICIADO: TFloatField;
+    QRSaldoFixarSQT_FIXADO_DEV: TFloatField;
+    QBalancaPERC_INTEIRO_ARROZ: TFloatField;
+    QBalancaPERC_QUEBRADO_ARROZ: TFloatField;
+    QRomaneioPERC_INTEIRO_ARROZ: TFloatField;
+    QRomaneioPERC_QUEBRADO_ARROZ: TFloatField;
+    QRRomaneios_no_PeriodoPERC_TOLERA_IMPUREZA: TFloatField;
+    QRRomaneios_no_PeriodoPERC_TOLERA_ARDIDOS: TFloatField;
+    QRRomaneios_no_PeriodoPERC_TOLERA_AVARIADO: TFloatField;
+    QrRomEmissaoPERC_INTEIRO_ARROZ: TFloatField;
+    QrRomEmissaoPERC_QUEBRADO_ARROZ: TFloatField;
+    QRPesagemEntradaPERC_BENEFICIADO: TFloatField;
+    QRPesagemSaidaPERC_BENEFICIADO: TFloatField;
+    QRRomaneios_no_Periododesc_situacao: TStringField;
+    QRMovEstoqueCliente: TOracleDataSet1;
+    QRMovEstoqueClienteCOD_FILIAL: TFloatField;
+    QRMovEstoqueClienteDESCRICAO: TStringField;
+    QRMovEstoqueClienteCOD_CADASTRO: TIntegerField;
+    QRMovEstoqueClienteNOME: TStringField;
+    QRMovEstoqueClienteCOD_PRODUTO: TFloatField;
+    QRMovEstoqueClienteDESC_PRODUTO: TStringField;
+    QRMovEstoqueClienteIND_ENTRADA_SAIDA: TStringField;
+    QRMovEstoqueClienteQT_ENTRADA: TFloatField;
+    QRMovEstoqueClienteQT_SAIDA: TFloatField;
+    QRMovEstoqueClienteQT_ROMANEIO: TFloatField;
+    QRMovEstoqueClienteliquido: TFloatField;
+    QRMovEstoqueClienteestoqueinicial: TFloatField;
+    QRomaneioPERC_RENDA: TFloatField;
+    QRomaneioDT_VENCTO: TDateTimeField;
+    QRomaneioVL_FRETE: TFloatField;
+    QRomaneioDT_VENCTO_FRETE: TDateTimeField;
+    QRomaneioCOD_ARRANQUIO: TIntegerField;
+    QRomaneioVL_ARRANQUIO: TFloatField;
+    QRomaneioDT_VENCTO_ARRANQUIO: TDateTimeField;
+    QrRomEmissaoVAL_PRECO_VENDA: TFloatField;
+    QrRomEmissaoPERC_RENDA: TFloatField;
+    QrRomEmissaoCOD_ARRANQUIO: TIntegerField;
+    QrRomEmissaoVL_ARRANQUIO: TFloatField;
+    QrRomEmissaoCOD_TRANSPORTADORA: TIntegerField;
+    QrRomEmissaoVL_FRETE: TFloatField;
+    QrRomEmissaoDT_VENCTO: TDateTimeField;
+    QrRomNotaDT_VENCTO: TDateTimeField;
+    ClFreteiro: TClientDataSet;
+    QrRomNotaCOD_TRANSPORTADORA: TIntegerField;
+    QrRomNotaVL_FRETE: TFloatField;
+    QrRomNotaDT_VENCTO_FRETE: TDateTimeField;
+    QrRomNotaCOD_ARRANQUIO: TIntegerField;
+    QrRomNotaVL_ARRANQUIO: TFloatField;
+    QrRomNotaDT_VENCTO_ARRANQUIO: TDateTimeField;
+    ClFreteirocod_cadastro: TIntegerField;
+    ClFreteirovl_frete: TFloatField;
+    ClFreteirodesc_obs: TStringField;
+    ClFreteirodt_vencto: TDateField;
+    ClArranquio: TClientDataSet;
+    ClArranquiocod_cadastro: TIntegerField;
+    ClArranquiovl_arranquio: TFloatField;
+    ClArranquiodesc_obs: TStringField;
+    ClArranquiodt_vencto: TDateField;
+    QRFreteiro: TOracleDataSet1;
+    QRFreteiroCOD_CADASTRO_FREITERO: TIntegerField;
+    QRFreteiroNOME_FRETEIRO: TStringField;
+    QRFreteiroCOD_PRODUTO: TFloatField;
+    QRFreteiroCOD_CADASTRO: TIntegerField;
+    QRFreteiroNOME: TStringField;
+    QRFreteiroNUM_ROMANEIO: TIntegerField;
+    QRFreteiroDT_EMISSAO: TDateTimeField;
+    QRFreteiroQT_PESO: TFloatField;
+    QRFreteiroVL_FRETE: TFloatField;
+    QRArranquio: TOracleDataSet1;
+    QRArranquioCOD_CADASTRO_ARRANQUIO: TIntegerField;
+    QRArranquioNOME_ARRANQUIO: TStringField;
+    QRArranquioCOD_PRODUTO: TFloatField;
+    QRArranquioCOD_CADASTRO: TIntegerField;
+    QRArranquioNOME: TStringField;
+    QRArranquioNUM_ROMANEIO: TIntegerField;
+    QRArranquioDT_EMISSAO: TDateTimeField;
+    QRArranquioQT_PESO: TFloatField;
+    QrRomEmissaoDT_VENCTO_FRETE: TDateTimeField;
+    QrRomEmissaoDT_VENCTO_ARRANQUIO: TDateTimeField;
+    QrNotaVAL_FUNRURAL: TFloatField;
+    QrRomaneioPERC_RENDA: TFloatField;
+    QRFreteiroPERC_DESCONTO: TFloatField;
+    QRFreteiroPERC_ARDIDOS: TFloatField;
+    QRFreteiroPERC_UMIDADE: TFloatField;
+    QRFreteiroPERC_IMPUREZA: TFloatField;
+    QRFreteiroPERC_AVARIADO: TFloatField;
+    QRFreteiroPERC_QUEBRADOS: TFloatField;
+    QRFreteiroPERC_DIVERSOS: TFloatField;
+    QRFreteiroCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRFreteiroPERC_TRIGUILHO: TFloatField;
+    QRFreteiroPERC_TOLERA_ARDIDOS: TFloatField;
+    QRFreteiroPERC_TOLERA_IMPUREZA: TFloatField;
+    QRFreteiroPERC_TOLERA_AVARIADO: TFloatField;
+    QRFreteiroPERC_BENEFICIADO: TFloatField;
+    QRFreteiroliquido: TFloatField;
+    QRFreteiroval_total: TFloatField;
+    QRFreteiroNUM_EMBALAGEM: TFloatField;
+    QRArranquioNUM_EMBALAGEM: TFloatField;
+    QRArranquioPERC_DESCONTO: TFloatField;
+    QRArranquioPERC_ARDIDOS: TFloatField;
+    QRArranquioPERC_UMIDADE: TFloatField;
+    QRArranquioPERC_IMPUREZA: TFloatField;
+    QRArranquioPERC_AVARIADO: TFloatField;
+    QRArranquioPERC_QUEBRADOS: TFloatField;
+    QRArranquioPERC_DIVERSOS: TFloatField;
+    QRArranquioCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRArranquioPERC_TRIGUILHO: TFloatField;
+    QRArranquioPERC_TOLERA_ARDIDOS: TFloatField;
+    QRArranquioPERC_TOLERA_IMPUREZA: TFloatField;
+    QRArranquioPERC_TOLERA_AVARIADO: TFloatField;
+    QRArranquioPERC_BENEFICIADO: TFloatField;
+    QRArranquioVL_ARRANQUIO: TFloatField;
+    QRArranquioliquido: TFloatField;
+    QRArranquioval_total: TFloatField;
+    QTaxaArmazenagemCOD_PRODUTO: TFloatField;
+    QTaxaArmazenagemCOD_CADASTRO: TFloatField;
+    QTaxaArmazenagemCOD_FILIAL: TFloatField;
+    QrNotaItemDESC_INF_ADICIONAL: TStringField;
+    QRSaldoFixarCOD_LOTE_TIPO: TIntegerField;
+    QBalancaCOD_OBRA: TIntegerField;
+    QRomaneioCOD_OBRA: TIntegerField;
+    QRomaneioCOD_OBRA_REQ_CAB: TIntegerField;
+    QrRomEmissaoCOD_OBRA: TIntegerField;
+    ClFreteirocod_nota_cab: TIntegerField;
+    ClArranquiocod_nota_cab: TIntegerField;
+    QrRomNotaDESC_UNIDADE: TStringField;
+    QrNotaCOD_SERIE_MODELO: TStringField;
+    QrRomEmissaoNUM_CONVERTE_FARDO: TFloatField;
+    QRomaneioCOD_MENSAGEM: TIntegerField;
+    QRRomaneioPesagemVAL_DESPESAS: TFloatField;
+    QRRomaneioPesagemCOD_TRANSPORTADORA: TIntegerField;
+    QrNotaItemCOD_CST_IPI: TStringField;
+    QrNotaItemCOD_CST_PIS: TStringField;
+    QrNotaItemCOD_CST_COFINS: TStringField;
+    QRomaneioImposto: TOracleDataSet1;
+    QRomaneioImpostoCOD_ROMANEIO_IMPOSTO: TIntegerField;
+    QRomaneioImpostoCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRomaneioImpostoCOD_IMPOSTO: TIntegerField;
+    QRomaneioImpostonome_imposto: TStringField;
+    QRomaneioIND_COMPLEMENTO_PESO: TStringField;
+    QRomaneioCOD_NOTA_CAB: TIntegerField;
+    QRomaneioCOD_TALHAO: TIntegerField;
+    QRomaneioImpostoperc_aliq: TFloatField;
+    QrRomNotaCOD_OBRA: TIntegerField;
+    QPesagemRenda: TOracleDataSet1;
+    QPesagemRendaCOD_PESAGEM_RENDA: TIntegerField;
+    QPesagemRendaCOD_BALANCA: TIntegerField;
+    QPesagemRendaQT_PESO_RENDA: TFloatField;
+    QPesagemRendaDT_PESAGEM: TDateTimeField;
+    DSPesagemRenda: TDataSource;
+    QrRomEmissaoBAIRRO_FILIAL: TStringField;
+    QRomaneioVAL_FRETE_KM: TFloatField;
+    QRSaldoFixarSAFIXAR_SACAS: TFloatField;
+    QrRateioNUM_CGC_CPF: TStringField;
+    QrRomDescontoNUM_CGC_CPF: TStringField;
+    QRomaneio_FitasIND_RESULTADO: TStringField;
+    QRFitasPESO_BALANCA: TFloatField;
+    QRFitasQT_POSITIVO: TFloatField;
+    QRFitasQT_NEGATIVO: TFloatField;
+    QRFitasQT_ESTRAGADO_DECLARADO: TFloatField;
+    QRFitaspeso_liquido: TFloatField;
+    QRFitasPERC_DESCONTO: TFloatField;
+    QRFitasPERC_ARDIDOS: TFloatField;
+    QRFitasPERC_UMIDADE: TFloatField;
+    QRFitasPERC_IMPUREZA: TFloatField;
+    QRFitasPERC_AVARIADO: TFloatField;
+    QRFitasPERC_QUEBRADOS: TFloatField;
+    QRFitasPERC_DIVERSOS: TFloatField;
+    QRFitasCOD_ROMANEIO_AGRICOLA: TIntegerField;
+    QRFitasCOD_PRODUTO: TFloatField;
+    QRFitasPERC_TRIGUILHO: TFloatField;
+    QRFitasPERC_TOLERA_ARDIDOS: TFloatField;
+    QRFitasPERC_TOLERA_IMPUREZA: TFloatField;
+    QRFitasPERC_TOLERA_AVARIADO: TFloatField;
+    QRFitasPERC_BENEFICIADO: TFloatField;
+    QRFitasNUM_CGC_CPF: TStringField;
+    QRFitasDESC_FILIAL: TStringField;
+    QRFitasNUM_CGC: TStringField;
+    QrRomEmissaoDESC_EMPRESA: TStringField;
+    QBalancaIMG_PESAGEM_ENTRADA: TBlobField;
+    QBalancaIMG_PESAGEM_SAIDA: TBlobField;
+    QrRomEmissaoIMG_PESAGEM_ENTRADA: TBlobField;
+    QrRomEmissaoIMG_PESAGEM_SAIDA: TBlobField;
+    QBalancaIMG_PESAGEM_ENTRADA_2: TBlobField;
+    QBalancaIMG_PESAGEM_SAIDA_2: TBlobField;
+    QrRomEmissaoIMG_PESAGEM_ENTRADA_2: TBlobField;
+    QrRomEmissaoIMG_PESAGEM_SAIDA_2: TBlobField;
+    QBalancaDESC_CONTRATO: TStringField;
+    QRomaneioDESC_CONTRATO: TStringField;
+    QrRomEmissaoDESC_CONTRATO: TStringField;
+    QBalancaVAL_KM_DISTANCIA: TFloatField;
+    QBalancaVAL_PRECO_TARIFA: TFloatField;
+    QRomaneioVAL_KM_DISTANCIA: TFloatField;
+    QRomaneioVAL_PRECO_TARIFA: TFloatField;
+    QRomaneioVAL_TOTAL_TARIFA: TFloatField;
+    QRomaneioVAL_DESPESAS: TFloatField;
+    QBalancaCOD_ORDEM_CHEGADA: TIntegerField;
+    QBalancaConsCOD_ORDEM_CHEGADA: TIntegerField;
+    QBalancaCOD_USUARIO: TIntegerField;
+    QRateioCOD_USUARIO: TIntegerField;
+    procedure QRomaneioAfterInsert(DataSet: TDataSet);
+    procedure QBalancaBeforePost(DataSet: TDataSet);
+    procedure QRateioAfterInsert(DataSet: TDataSet);
+    procedure QRateioBeforePost(DataSet: TDataSet);
+    procedure QrRomaneioCalcFields(DataSet: TDataSet);
+    procedure QRomaneioAfterPost(DataSet: TDataSet);
+    procedure QRateioAfterPost(DataSet: TDataSet);
+    procedure QrRateioCalcFields(DataSet: TDataSet);
+    procedure QRomaneioBeforeInsert(DataSet: TDataSet);
+    procedure QRomaneioBeforeEdit(DataSet: TDataSet);
+    procedure QRomaneioAfterCancel(DataSet: TDataSet);
+    procedure QRateioBeforeInsert(DataSet: TDataSet);
+    procedure QRateioBeforeEdit(DataSet: TDataSet);
+    procedure QRateioBeforeDelete(DataSet: TDataSet);
+    procedure QrRomEmissaoCalcFields(DataSet: TDataSet);
+    procedure QrRomDescontoCalcFields(DataSet: TDataSet);
+    procedure QrNotaAfterPost(DataSet: TDataSet);
+    procedure QRomConsFixarCalcFields(DataSet: TDataSet);
+    procedure QRomaneioCOD_PRODUTOValidate(Sender: TField);
+    procedure QRCadastroCalcFields(DataSet: TDataSet);
+    procedure QrRomNotaCalcFields(DataSet: TDataSet);
+    procedure QRRomaneios_no_PeriodoCalcFields(DataSet: TDataSet);
+    procedure QRomaneioCOD_CADASTROValidate(Sender: TField);
+    procedure QBalancaAfterPost(DataSet: TDataSet);
+    procedure QRomaneioBeforePost(DataSet: TDataSet);
+    procedure QRRomaneioPesagemCalcFields(DataSet: TDataSet);
+    procedure QBalancaAfterInsert(DataSet: TDataSet);
+    procedure QRateioCalcFields(DataSet: TDataSet);
+    procedure QRomaneio_FitasAfterInsert(DataSet: TDataSet);
+    procedure QRomaneio_FitasAfterPost(DataSet: TDataSet);
+    procedure QRomaneio_FitasBeforeDelete(DataSet: TDataSet);
+    procedure QRomaneio_FitasAfterEdit(DataSet: TDataSet);
+    procedure QBalancaCalcFields(DataSet: TDataSet);
+    procedure QBalancaCOD_TRANSPORTADORChange(Sender: TField);
+    procedure QRFreteiroCalcFields(DataSet: TDataSet);
+    procedure QRArranquioCalcFields(DataSet: TDataSet);
+    procedure QRomaneioImpostoCalcFields(DataSet: TDataSet);
+    procedure QRomaneioAfterOpen(DataSet: TDataSet);
+    procedure QRomaneioImpostoBeforePost(DataSet: TDataSet);
+    procedure QRomaneioBeforeDelete(DataSet: TDataSet);
+    procedure QPesagemRendaBeforeInsert(DataSet: TDataSet);
+    procedure QPesagemRendaBeforeDelete(DataSet: TDataSet);
+    procedure QBalancaBeforeDelete(DataSet: TDataSet);
+    procedure QrRomEmissaoAfterOpen(DataSet: TDataSet);
+    procedure QRFitasCalcFields(DataSet: TDataSet);
+    procedure QBalancaBeforeInsert(DataSet: TDataSet);
+    procedure QBalancaBeforeEdit(DataSet: TDataSet);
+    procedure QRMovEstoqueClienteCalcFields(DataSet: TDataSet);
+    procedure QBalancaDESC_PLACAChange(Sender: TField);
+
+
+  private
+    { Private declarations }
+    fRateio,fUmidade,fImpureza,fArdidos,fAvariados,fQuebrados,fTriguilho,fTotalDescontos : Real;
+    fCondicaoPagto: String;
+    fCameraPesagem: Boolean;
+    procedure IncluiNotaItem(wQuant, wTotal, wCodProduto, wPh, wUnitario, wBeneficiado:Real);
+    procedure IncluiNotaCab;
+    Procedure ValidaRomaneio;
+    Procedure ValidaQuantidade;
+    Procedure RateiaRomaneio;
+    Procedure Rateio_Triguilho(wQtPeso : Real);
+    procedure excluiPesagensRenda(pCodBalanca: integer);
+
+  public
+    { Public declarations }
+    Property pRateio : Real Read fRateio Write fRateio;
+    Property pUmidade : Real Read fUmidade Write fUmidade;
+    Property pImpureza : Real Read fImpureza Write fImpureza;
+    Property pArdidos : Real Read fArdidos Write fArdidos;
+    Property pAvariados : Real Read fAvariados Write fAvariados;
+    Property pQuebrados : Real Read fQuebrados Write fQuebrados;
+    Property pTriguilho : Real Read fTriguilho Write fTriguilho;
+    Property pTotalDescontos : Real Read fTotalDescontos Write fTotalDescontos;
+    property pCondicaoPagto: String read fCondicaoPagto write fCondicaoPagto;
+    property pCameraPesagem: Boolean read fCameraPesagem write fCameraPesagem;
+
+    Procedure CalculoDesconto(wPeso_Produto,
+                              wPerc_Desconto,
+                              wArdidos,
+                              wUmidade,
+                              wImpureza,
+                              wAvariado,
+                              wQuebrados,
+                              wDiversos,
+                              wCodRomaneio,
+                              wCodProduto,
+                              wTriguilho,
+                              wTolera_Ardido,
+                              wTolera_Impureza,
+                              wTolera_Avariado,
+                              wBeneficiado:real;
+                              var wQtLiquido,
+                              wQtDesconto:real);
+
+    Procedure CalculoDesconto_Saida( wPesoBalanca,
+                                wPerc_ardidos,
+                                wPerc_Umidade,
+                                wPerc_Impureza,
+                                wPerc_Avariado,
+                                wPerc_Quebrados,
+                                wPerc_Triguilho : Real;
+                                wDescontoPadraoProduto : Integer;
+                                Var wLiquido, wDesconto : Real);
+     Procedure NotaAgricola;
+     procedure FinalizaNota;
+
+ end;
+
+var
+  DMRomaneioAgricola: TDMRomaneioAgricola;
+  wArmazem : Integer;
+  wDesc_Romaneio,wLiquido : Real;
+  wObservacao, wInsert : String;  // a variavel é utilizada para saber se foi dado um insert na query QRomaneio_Fitas
+                                  // porque quando for editado a query nao pode baixar o estoque
+implementation
+
+uses UOracle_cl, UParamSistema_cl, UProdutoAgricola_cl, UFilial_cl,
+     USerie_cl, UProduto_cl, UEstoque_cl, UUsuario_cl, UOperacao_cl,
+     UPlanilha_cl, USequencia_cl, UDesconto_Produtor_cl, UPadraoProduto_cl,
+  UNotaEntrada_cl, UNotaSaida_cl, UCadastro_cl, UBiblioteca;{,UNotaEntradaParam;}
+
+{$R *.DFM}
+
+procedure TDMRomaneioAgricola.QRomaneioAfterInsert(DataSet: TDataSet);
+Var wComando,wPreco : String;
+  wValPesagemRenda: double;
+begin
+  QRomaneioCod_Filial.Value := DMUsuario.CodFilialUsuario;
+  QRomaneioPERC_PH.Value:=0;
+  QRomaneioDesc_Observacao.Value := wObservacao;
+  If Not (QBalanca.Eof) Then  // Somente pode fazer um romaneio com pesagem que ainda nao foi utilizada em romaneio
+    If DMOracle.Buscanome('SELECT COD_ROMANEIO_AGRICOLA FROM TB_ROMANEIO_AGRICOLA','COD_BALANCA = '+FloatToStr(QBalancaCOD_Balanca.Value)) = '' Then
+     Begin
+       QRomaneioCod_Filial.Value := QBalancaCod_Filial.Value;
+       If QBalancaQt_Peso_Chegada.Value > QBalancaQt_Peso_Saida.Value Then
+       begin
+         QRomaneioQt_Peso_Bruto.Value := QBalancaQt_Peso_Chegada.Value;
+         QRomaneioQt_Tara.Value := QBalancaQt_Peso_Saida.Value;
+         QRomaneioDT_PRIMEIRA_PESAGEM.Value := QBalancaDT_PRIMEIRA_PESAGEM.Value;
+         QRomaneioDT_SEGUNDA_PESAGEM.Value := QBalancaDT_SEGUNDA_PESAGEM.Value;
+       end
+       else
+       begin
+         QRomaneioQt_Peso_Bruto.Value := QBalancaQt_Peso_Saida.Value;
+         QRomaneioQt_Tara.Value :=  QBalancaQt_Peso_Chegada.Value;
+         QRomaneioDT_SEGUNDA_PESAGEM.Value := QBalancaDT_PRIMEIRA_PESAGEM.Value;
+         QRomaneioDT_PRIMEIRA_PESAGEM.Value := QBalancaDT_SEGUNDA_PESAGEM.Value;
+       end;
+       If QBalancaInd_Tipo.Value = 'Romaneio' Then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'ROMANEIO';
+       If QBalancaInd_Tipo.Value = 'Pesagem Entrada' then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'PESAGEM EN';
+       If QBalancaInd_Tipo.Value = 'Pesagem Saída' then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'PESAGEM SA';
+       If QBalancaInd_Tipo.Value = 'Diversos' Then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'PESAGEM PA';
+       If QBalancaInd_Tipo.Value = 'Transf Entrada' Then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'TRANSF ENT';
+       If QBalancaInd_Tipo.Value = 'Transf Saida' Then
+          QRomaneioIND_TIPO_ROMANEIO.Value := 'TRANSF SAI';
+       QRomaneioDesc_Placa.Value := QBalancaDesc_Placa.Value;
+       QRomaneioDesc_Placa_Carreta1.Value := QBalancaDesc_Placa_Carreta.Value;
+       QRomaneioCod_Cadastro.Value := QBalancaCod_Cadastro.Value;
+       QRomaneioCod_Balanca.Value := QBalancaCod_Balanca.Value;
+       QRomaneioPERC_UMIDADE.Value:=QBalancaPERC_UMIDADE.Value;
+       QRomaneioPERC_DESCONTO.Value:=QBalancaPERC_DESCONTO.Value;
+       QRomaneioCod_Produto.Value := QBalancaCod_Produto.Value;
+       QRomaneioPERC_ARDIDOS.Value:=QBalancaPERC_ARDIDOS.Value;
+       QRomaneioPERC_IMPUREZA.Value:=QBalancaPERC_IMPUREZA.Value;
+       QRomaneioPERC_AVARIADO.Value:=QBalancaPERC_AVARIADO.Value;
+       QRomaneioPERC_TOLERA_ARDIDOS.Value := QBalancaPERC_TOLERA_ARDIDOS.Value;
+       QRomaneioPERC_TOLERA_AVARIADO.Value := QBalancaPERC_TOLERA_AVARIADO.Value;
+       QRomaneioPERC_BENEFICIADO.Value := QBalancaPERC_BENEFICIADO.Value;
+       QRomaneioPERC_INTEIRO_ARROZ.Value := QBalancaPERC_INTEIRO_ARROZ.Value;
+       QRomaneioPERC_QUEBRADO_ARROZ.Value := QBalancaPERC_QUEBRADO_ARROZ.Value;
+       If (QBalancaInd_Tipo.Value = 'Transf Entrada') Or
+          (QBalancaInd_Tipo.Value = 'Transf Saida') Then     // FOI O VILSON QUEM SOLICITOU NAS TRANSFERENCIAS NAO TER IMPUREZA - CESAR ALTEROU
+        Begin
+          QRomaneioPERC_TOLERA_IMPUREZA.Value := 0;
+        End
+       Else
+        Begin
+          QRomaneioPERC_TOLERA_IMPUREZA.Value := QBalancaPERC_TOLERA_IMPUREZA.Value;
+        End;
+       QRomaneioPERC_QUEBRADOS.Value:=QBalancaPERC_QUEBRADOS.Value;
+       QRomaneioPERC_TRIGUILHO.Value:=QBalancaPERC_TRIGUILHO.Value;
+       QRomaneioVAL_PESAGEM.Value:=QBalancaVAL_PESAGEM.Value;
+       QRomaneioPERC_PH.Value := QBalancaPerc_Ph.Value;
+       QRomaneioDESC_OBSERVACAO.Value := QBalancaDESC_OBSERVACAO.Value;
+       QRomaneioDESC_CONTRATO.Value := QBalancaDESC_CONTRATO.Value;
+       QRomaneioCod_Contrato_Vend.Text := QBalancaCod_Contrato_Vend.Text;
+       QRomaneioCod_Contrato_PJuridica.Text := QBalancaCod_Contrato_PJuridica.Text;
+       QRomaneioNome_Motorista.Value := QBalancaNome_Motorista.Value;
+       QRomaneioNum_Nota_Produtor.Text := QBalancaNum_Nota_Produtor.Text;
+       QRomaneioCod_Obra.Text := QBalancaCod_Obra.Text;
+       With DMOracle do
+       Begin
+         QExecSQL.Close;
+         QExecSQL.SQL.Clear;
+         wComando := 'UPDATE TB_BALANCA SET Ind_Situacao = ' + Chr(39) + 'F' + Chr(39);
+         wComando := wComando + ' WHERE COD_BALANCA = '+FloatToStr(QBalancaCod_Balanca.Value);
+         QExecSQL.SQL.Add(wComando);
+         QExecSQL.ExecSQL;
+       End;
+       QPesagemRenda.Close;
+       QPesagemRenda.SetVariable('FK', QBalancaCOD_BALANCA.Value);
+       QPesagemRenda.Open;
+       if QPesagemRenda.RecordCount > 0 then
+       begin
+         wValPesagemRenda := 0;
+         while not QPesagemRenda.Eof do
+         begin
+           wValPesagemRenda :=  wValPesagemRenda +
+             QPesagemRendaQT_PESO_RENDA.Value;
+           QPesagemRenda.Next;
+         end;
+         // Média da renda
+         QRomaneioPERC_RENDA.Text :=  formatFloat('#0.00',
+           wValPesagemRenda / QPesagemRenda.RecordCount);
+       end;
+     End;
+  QRomaneioPERC_DIVERSOS.Value:=0;
+  QRomaneioDt_Emissao.Value := DMOracle.DataServ;
+  QRomaneioDt_Movimento.Value := DMOracle.DataHoraServ;
+  QRomaneioNUM_ROMANEIO.Value:=0;
+  If QBalancaInd_Tipo.Value = 'Romaneio' Then
+    If DMParamSistema.QparamSistemaCod_Mensagem.Text <> '' Then
+       DmRomaneioAgricola.QRomaneioCod_Mensagem.Value := DMParamSistema.QparamSistemaCod_Mensagem.Value;
+  DmRomaneioAgricola.QRomaneioDt_Ano_Safra.Value := DMParamSistema.QParamSistemaDt_Ano_Safra.Value;
+  QRomaneioCod_Usuario.Value := DMUsuario.CodUsuarioCorrente;
+  QRomaneioCod_Cadastro_Parceiro.Text := DmUsuario.pCodParceria;
+  QRomaneioInd_Situacao.Value := 'A';
+//  QRomaneioInd_Tipo_Romaneio.Value := 'ROMANEIO';
+  QRomaneioNum_Armazem.Value := wArmazem;
+  QRomaneioInd_Condicao_Pagto.Value := '1';
+  QRomaneioVAL_KM_DISTANCIA.Value := QBalancaVAL_KM_DISTANCIA.Value;
+  QRomaneioVAL_PRECO_TARIFA.Value := QBalancaVAL_PRECO_TARIFA.Value;
+  QRomaneioVAL_TOTAL_TARIFA.Value := (QBalancaqt_peso_balanca.Value/1000) * QBalancaVAL_KM_DISTANCIA.Value * QBalancaVAL_PRECO_TARIFA.Value;
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ITATIBA')
+    or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO') Then
+  Begin
+    QRomaneioCod_Operacao.Value := 3;
+    wPreco := DMOracle.Buscanome('SELECT VAL_PRECO FROM TB_CADASTRO_PRECO','COD_CADASTRO = '+QBalancaCod_Cadastro.Text + ' And COD_PRODUTO = ' + QBalancaCod_Produto.Text);
+    If wPreco = '' Then
+      wPreco := '0'+DMOracle.Buscanome('SELECT VAL_VAREJO FROM TB_PRODUTO','COD_PRODUTO = ' + QBalancaCod_Produto.Text);
+    QRomaneioVal_Preco_Venda.Value := StrToFloat(wPreco);   
+  End;
+end;
+
+procedure TDMRomaneioAgricola.QBalancaBeforePost(DataSet: TDataSet);
+var wCodigo, wCodOrdemChegada : integer;
+  wAux: String;
+begin
+  DMOracle.ValidaFilial(QBalancaCOD_FILIAL.Text);
+  pCameraPesagem := True;
+
+  DmUsuario.Checar_Filial_Usuario( Trim(QBalancaCOD_FILIAL.Text),'AGRICOLA');
+  If QBalancaDt_Primeira_Pesagem.Text = '' Then
+     QBalancaDt_Primeira_Pesagem.Value := DMOracle.DataHoraServ
+  Else
+     QBalancaDt_Segunda_Pesagem.Value := DMOracle.DataHoraServ;
+  QBalancaPerc_Beneficiado.Value := QBalancaPerc_Inteiro_Arroz.Value + QBalancaPerc_Quebrado_Arroz.Value;
+  QBalancaDt_Referencia.Value := DMOracle.DataServ;
+  If QBalancaIND_TIPO.Value = 'Romaneio' Then
+     ValidaRomaneio;
+  If QBalancaCod_Obra.Text <> '' Then  // César - para SR 23/01/2017
+     ValidaQuantidade;
+  QBalancaCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+{Criado para controlar a ordem da chegada para a pesagem, solicitado pela Inovar. Alex 18/08/2025}
+  if (DMParamSistema.QParamSistemaIND_CONTROLA_ORDEM_CHEGADA.Value = 'S') then
+  begin
+    wCodOrdemChegada := 0;
+    if (QBalancaCOD_ORDEM_CHEGADA.Text = '') and (QBalancaDT_REFERENCIA.Text <> '') then
+    begin
+      wAux := DMOracle.FastSelect('MAX(COD_ORDEM_CHEGADA)','TB_BALANCA','COD_ORDEM_CHEGADA IS NOT NULL AND DT_REFERENCIA = ' + chr(39) + QBalancaDT_REFERENCIA.Text + chr(39) ) ;
+      if (wAux <> '') then
+      begin
+        wCodOrdemChegada := StrToInt(wAux);
+        wCodOrdemChegada := wCodOrdemChegada + 1 ;
+      end
+      else
+       wCodOrdemChegada := 1;
+      QBalancaCOD_ORDEM_CHEGADA.Value := wCodOrdemChegada;
+    end;
+  end;
+end;
+
+Procedure TDMRomaneioAgricola.RateiaRomaneio;
+Var wTotal:Integer;
+Begin
+  // **** Faz o Rateio do Romaneio ***
+  QRateio.First;
+  wTotal := 0;
+  While not QRateio.Eof do
+  begin
+    wTotal := wTotal + QRateioQt_Rateio.Value;
+    QRateio.Next;
+  end;
+  If wTotal > (QRomaneioQt_Peso_Bruto.Value - QRomaneioQt_Tara.Value) then
+    raise exception.Create ('Peso Rateio Maior Quantidade Romaneio');
+  If wtotal < (QRomaneioQt_Peso_Bruto.Value - QRomaneioQt_Tara.Value) then
+  Begin
+    wTotal := (QRomaneioQt_Peso_Bruto.Value - QRomaneioQt_Tara.Value) - wTotal;
+    if QRateio.Locate('Cod_Cadastro', QRomaneioCod_Cadastro.Value, []) then
+    begin
+      QRateio.Edit;
+      wTotal := wTotal + QRateioQt_Rateio.Value;
+    end
+    else
+      QRateio.Insert;
+    QRateioQt_Rateio.Value := wTotal;
+    QRateioCod_Cadastro.Value := QRomaneioCod_Cadastro.Value;
+    QRateioPerc_Rateio.Value := 0;
+    QRateio.Post;
+  End;
+End;
+
+Procedure TDMRomaneioAgricola.ValidaQuantidade;
+Var wSaldo : String;
+Begin
+  If QBalancaCod_Produto.Text = '' Then
+     Raise exception.Create('Preencher código do produto');
+  If (QBalancaQT_PESO_CHEGADA.Value > 0) And (QBalancaQT_PESO_SAIDA.Value > 0) Then
+   Begin
+     wSaldo :=DMOracle.Buscanome('SELECT qt_quantidade - qt_movimento from tb_obra_contrato_produto,tb_obra_contrato',
+          'tb_obra_contrato_produto.cod_obra_contrato=tb_obra_contrato.cod_obra_contrato and Cod_Obra = '+QBalancaCod_Obra.Text +
+          ' and cod_produto='+QBalancaCod_Produto.Text);
+     If wSaldo = ''  Then
+        ShowMessage('Produto não liberado para esta obra')
+     Else   
+        If QBalancaqt_peso_balanca.Value > StrToFloat(wSaldo) Then
+           ShowMessage('Quantidade esta maior que saldo de contrato');
+     //        Raise exception.Create('Produto não liberado para esta obra'); -- retirado a pedido da Lani (Cesar 13/03/2017)
+//        Raise exception.Create('Quantidade esta maior que saldo de contrato'); -- retirado a pedido da Lani (Cesar 13/03/2017)
+   End;
+End;
+
+Procedure TDMRomaneioAgricola.ValidaRomaneio;
+Begin
+  With DMProdutoAgricola do
+  begin
+    QProdutoAgricola.Close;
+    QProdutoAgricola.setVariable('PK',QBalancaCod_Produto.Value);
+    QProdutoAgricola.Open;
+
+    if QBalancaIND_TIPO.Value <> 'Diversos' then
+    begin
+      if (QBalancaPerc_Umidade.Value > 0) and ((QBalancaPerc_Umidade.Value < QProdutoAgricolaPerc_Max_Umidade_Sem_Desc.Value) or (QRomaneioPerc_Umidade.Value > QProdutoAgricolaPerc_Max_Umidade_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Umidade Não Permitido');
+
+      if (QBalancaPerc_Ardidos.Value > 0) and
+         ((QBalancaPerc_Ardidos.Value < QProdutoAgricolaPerc_Max_Ardidos_Sem_Desc.Value) or
+          (QBalancaPerc_Ardidos.Value > QProdutoAgricolaPerc_Max_Ardidos_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Ardidos Não Permitido');
+
+      if (QBalancaPerc_Impureza.Value > 0) and
+         ((QBalancaPerc_Impureza.Value < QProdutoAgricolaPerc_Max_Impureza_Sem_Desc.Value) or
+          (QBalancaPerc_Impureza.Value > QProdutoAgricolaPerc_Max_Impureza_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Impureza Não Permitido');
+
+      if (QBalancaPerc_Impureza.Value > 0) and
+         ((QBalancaPerc_Impureza.Value < QProdutoAgricolaPerc_Max_Impureza_Sem_Desc.Value) or
+          (QBalancaPerc_Impureza.Value > QProdutoAgricolaPerc_Max_Impureza_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Impureza Não Permitido');
+
+      if (QBalancaPerc_Avariado.Value > 0) and
+         ((QBalancaPerc_Avariado.Value < QProdutoAgricolaPerc_Max_Avaria_Sem_Desc.Value) or
+          (QBalancaPerc_Avariado.Value > QProdutoAgricolaPerc_Max_Avaria_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Avariados Não Permitido');
+
+      if (QBalancaPerc_Quebrados.Value > 0) and
+         ((QBalancaPerc_Quebrados.Value < QProdutoAgricolaPerc_Max_Quebra_Sem_Desc.Value) or
+          (QBalancaPerc_Quebrados.Value > QProdutoAgricolaPerc_Max_Quebra_Com_Desc.Value)) then
+        raise Exception.create('Percentual de Quebrados Não Permitido');
+
+      if (QBalancaPerc_Ph.Value > 0) and
+         ((QBalancaPerc_Ph.Value < QProdutoAgricolaPerc_Max_Ph_Sem_Desc.Value) or
+          (QBalancaPerc_Ph.Value > QProdutoAgricolaPerc_Max_Ph_Com_Desc.Value)) then
+        raise Exception.create('Percentual de PH Não Permitido');
+    end;
+  end;
+End;
+
+procedure TDMRomaneioAgricola.QRateioAfterInsert(DataSet: TDataSet);
+begin
+  QRateioCod_Romaneio_Agricola.Value := QRomaneioCod_Romaneio_Agricola.Value;
+  QRateioInd_Situacao.Value := 'A';
+  QRateioInd_Fixar_Consumo.Value := 'F';
+  If QRomaneioNUM_NOTA_PRODUTOR.Text <> '' Then
+     QRateioNUM_NOTA_PRODUTOR.Text := QRomaneioNUM_NOTA_PRODUTOR.Text;
+  if (QRateioNUM_NOTA_PRODUTOR.Value = 0) and
+     (UpperCase(QRomaneioIND_TIPO_ROMANEIO.Value) = 'ROMANEIO') and
+    (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'TOFECO') then
+    MessageDlg('Rateio do romaneio ' + QRomaneioNUM_ROMANEIO.Text +
+      ' não possui nota informada, nota fiscal não será gerada', mtInformation, [mbOk],0);
+end;
+
+procedure TDMRomaneioAgricola.QRateioBeforePost(DataSet: TDataSet);
+begin
+  if (QRateioPerc_Rateio.Value > 0) and
+     (QRateioQt_Rateio.Value > 0) then
+    Raise exception.Create ('Informar Somente Percentual ou Somente Quantidade');
+  if QRateioQt_Rateio.Value = 0 then
+    QRateioQt_Rateio.Value := Trunc((QRomaneioQt_Peso_Bruto.Value - QRomaneioQt_Tara.Value)
+                               * QRateioPerc_Rateio.value / 100);
+  if QRateioPerc_Rateio.Value = 0 then
+    QRateioPerc_Rateio.Value := QRateioQt_Rateio.Value / (QRomaneioQt_Peso_Bruto.Value - QRomaneioQt_Tara.Value) * 100;
+  If QRateioCod_Cadastro.Value = QRomaneioCod_Cadastro.Value Then
+     QRateioInd_Ordem.Value := 1  // isto serve apenas para ordem de impressão dos romaneios que tem rateio
+  Else
+     QRateioInd_Ordem.Value := 2;
+  QRateioCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMRomaneioAgricola.QrRomaneioCalcFields(DataSet: TDataSet);
+begin
+//  QRRomaneioPeso_Balanca.Value := QRRomaneioQT_Peso_Bruto.Value - QRRomaneioQt_tara.Value;
+end;
+
+Procedure TDMRomaneioAgricola.CalculoDesconto(wPeso_Produto,
+                                              wPerc_Desconto,
+                                              wArdidos,
+                                              wUmidade,
+                                              wImpureza,
+                                              wAvariado,
+                                              wQuebrados,
+                                              wDiversos,
+                                              wCodRomaneio,
+                                              wCodProduto,
+                                              wTriguilho,
+                                              wTolera_Ardido,
+                                              wTolera_Impureza,
+                                              wTolera_Avariado,
+                                              wBeneficiado : Real;
+                                              var wQtLiquido,
+                                              wQtDesconto : Real);
+// Var wDesconto:String;
+Var wPercDescLiquido : Real;
+begin
+{  With DMProdutoAgricola do
+  Begin
+    If QProdutoAgricolaCod_Produto.Value <> wCodProduto Then
+    Begin
+      QProdutoAgricola.Close;
+      QProdutoAgricola.setVariable('PK',wCodProduto);
+      QProdutoAgricola.Open;
+    End;
+  End;  }
+
+//  wDesconto := DMOracle.Buscanome('SELECT PERC_DESCONTO FROM TB_ROMANEIO_AGRICOLA','COD_ROMANEIO_AGRICOLA ='+FloatToStr(wCodRomaneio));
+
+  wQtDesconto := 0;
+  if wPerc_Desconto > 0 then
+     wQtDesconto := wQtDesconto + round(wPeso_Produto * wPerc_Desconto / 100);
+
+  If ((wArdidos - wTolera_Ardido) > 0) Then
+  Begin
+    wPercDescLiquido := wArdidos - wTolera_Ardido;
+    if (wPercDescLiquido >  0) then
+       wQtDesconto := wQtDesconto + round(wPeso_Produto * wPercDescLiquido / 100);
+  End;
+
+  If ((wImpureza - wTolera_Impureza) > 0) Then
+   Begin
+     wPercDescLiquido := wImpureza - wTolera_Impureza;
+     if wPercDescLiquido > 0 then
+       wQtDesconto := wQtDesconto + round(wPeso_Produto * wPercDescLiquido / 100);
+   End;
+
+  If ((wAvariado - wTolera_Avariado) > 0) Then
+   Begin
+     wPercDescLiquido := wAvariado - wTolera_Avariado;
+     if wPercDescLiquido > 0 then
+       wQtDesconto := wQtDesconto + round(wPeso_Produto * wPercDescLiquido / 100);
+   End;
+  If wQuebrados > 0 then
+     wQtDesconto := wQtDesconto + round(wPeso_Produto * wQuebrados / 100);
+  If wDiversos > 0 then
+     wQtDesconto := wQtDesconto + wDiversos;
+  If wTriguilho > 0 then
+     wQtDesconto := wQtDesconto + round(wPeso_Produto * wTriguilho / 100);
+//  If wBeneficiado > 0 then
+//     wQtDesconto := wQtDesconto + round(wPeso_Produto * (100 - wBeneficiado) / 100);   // O PERCENTUAL DE BENEFICIADO É QUANTO VAI ENTRAR NO ESTOQUE
+  wQtLiquido := wPeso_Produto - round(wQtDesconto);
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioAfterPost(DataSet: TDataSet);
+var wCodigo:Integer;
+begin
+  wCodigo := QRomaneioCod_Romaneio_Agricola.Value;
+  QRomaneio.Close;
+  QRomaneio.SetVariable('PK',wCodigo);
+  QRomaneio.Open;
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'GONZATTI') And
+     (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'CEREAIS') Then
+   Begin
+     wArmazem := QRomaneioNum_Armazem.Value;
+     wObservacao := QRomaneioDesc_Observacao.Value;
+   End;
+end;
+
+procedure TDMRomaneioAgricola.QRateioAfterPost(DataSet: TDataSet);
+begin
+  QRateio.Close;
+  QRateio.Open;
+end;
+
+procedure TDMRomaneioAgricola.QrRateioCalcFields(DataSet: TDataSet);
+var wPesoProduto,wLiquido,wDesconto : Real;
+    wPadrao : String;
+begin
+  wPesoProduto := QRRateioQT_Rateio.Value;
+  wLiquido := 0;
+  wDesconto := 0;
+  If (QRRomaneioIND_TIPO_ROMANEIO.Value = 'PESAGEM EN') Or
+     (QRRomaneioIND_TIPO_ROMANEIO.Value = 'PESAGEM SA') Then
+    Begin
+      wPadrao := '';
+      If QRRomaneioCOD_CONTRATO_VEND.Text <> '' Then
+         wPadrao := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_VEND','COD_CONTRATO_VEND = '+QRRomaneioCOD_CONTRATO_VEND.Text);
+      If QRRomaneioCOD_CONTRATO_PJURIDICA.Text <> '' Then
+         wPadrao := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_PJURIDICA','COD_CONTRATO_PJURIDICA = '+QRRomaneioCOD_CONTRATO_PJURIDICA.Text);
+      If wPadrao <> '' Then
+         CalculoDesconto_Saida( wPesoProduto,
+                            QRRomaneioPerc_ardidos.Value,
+                            QRRomaneioPerc_Umidade.Value,
+                            QRRomaneioPerc_Impureza.Value,
+                            QRRomaneioPerc_Avariado.Value,
+                            QRRomaneioPerc_Quebrados.Value,
+                            QRRomaneioPerc_Triguilho.Value,
+                            StrToInt(wPadrao),
+                            wLiquido, wDesconto);
+    End
+  Else
+     CalculoDesconto(wPesoProduto,
+                  QRRomaneioPerc_Desconto.Value,
+                  QRRomaneioPerc_Ardidos.Value,
+                  QRRomaneioPerc_Umidade.Value,
+                  QRRomaneioPerc_Impureza.Value,
+                  QRRomaneioPerc_Avariado.Value,
+                  QRRomaneioPerc_Quebrados.Value,
+                  QRRomaneioPerc_Diversos.Value,
+                  QRRomaneioCod_Romaneio_Agricola.Value,
+                  QRRomaneioCod_Produto.Value,
+                  QRRomaneioPerc_Triguilho.Value,
+                  QRRomaneioPerc_Tolera_Ardidos.Value,
+                  QRRomaneioPerc_Tolera_Impureza.Value,
+                  QRRomaneioPerc_Tolera_Avariado.Value,
+                  QRRomaneioPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesconto);
+  QRRateioLiquido.Value := wLiquido;
+  QRRateioDesconto.Value := wDesconto;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioBeforeInsert(DataSet: TDataSet);
+begin
+  DMOracle.dbCemapa.StartTransaction;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioBeforeEdit(DataSet: TDataSet);
+begin
+  If not DMOracle.DBCemapa.InTransaction then
+    DMOracle.DBCemapa.StartTransaction;
+  QRomaneioCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;  
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioAfterCancel(DataSet: TDataSet);
+begin
+  DMOracle.Dbcemapa.Rollback;
+  QRomaneio.Close;
+  QRomaneio.Open;
+end;
+
+procedure TDMRomaneioAgricola.QRateioBeforeInsert(DataSet: TDataSet);
+begin
+  if QRomaneio.State = dsInsert then
+  begin
+    QRomaneio.Post;
+    QRomaneio.Edit;
+  end;
+  if QRomaneio.State <> dsEdit then
+    raise exception.create ('Romaneio não está no modo de Alteração');
+  QRateioCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMRomaneioAgricola.QRateioBeforeEdit(DataSet: TDataSet);
+begin
+  if QRomaneio.State <> DsEdit then
+    raise exception.create ('Romaneio não está no modo de Alteração');
+end;
+
+procedure TDMRomaneioAgricola.QRateioBeforeDelete(DataSet: TDataSet);
+begin
+  If PRateio <> 1 Then
+     if QRomaneio.State <> DsEdit then
+        raise exception.create ('Romaneio não está no modo de Alteração');
+end;
+
+procedure TDMRomaneioAgricola.QrRomEmissaoCalcFields(DataSet: TDataSet);
+var wDesconto:String;
+begin
+  With DMProdutoAgricola do
+  Begin
+    QProdutoAgricola.Close;
+    QProdutoAgricola.setVariable('PK',DmRomaneioAgricola.QrRomEmissaoCod_Produto.Value);
+    QProdutoAgricola.Open;
+  End;
+  QRRomEmissaoPesoBalanca.Value := QRRomemissaoQT_Peso_Bruto.Value - QRRomEmissaoQt_tara.Value;
+  wDesconto := DmOracle.BuscaNome('SELECT PERC_DESCONTO FROM TB_ROMANEIO_AGRICOLA', 'COD_ROMANEIO_AGRICOLA = ' + FloattoStr(QrRomEmissaoCod_Romaneio_Agricola.Value));
+  if wDesconto <> '' then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')    Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')   Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+         QrRomEmissaoUmidade.Value := round(QRRomEmissaoPesoBalanca.Value * strtoFloat(wDesconto) / 100)
+//      Else
+//         QrRomEmissaoUmidade.Value := round(QRRomEmissaoQt_Rateio.Value * strtoFloat(wDesconto) / 100)
+    Else
+      QrRomEmissaoUmidade.Value := round(QRRomEmissaoQt_Rateio.Value * strtoFloat(wDesconto) / 100);
+
+  if ((QrRomEmissaoPerc_Ardidos.Value  - QrRomEmissaoPerc_Tolera_Ardidos.Value) >  0) then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE')or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')  Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+        QrRomEmissaoArdidos.Value := round(QRRomEmissaoPesoBalanca.Value * (QrRomEmissaoPerc_Ardidos.Value - QrRomEmissaoPerc_Tolera_Ardidos.Value) / 100)
+//      else
+//        QrRomEmissaoArdidos.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Ardidos.Value - QrRomEmissaoPerc_Tolera_Ardidos.Value) / 100)
+    else
+       QrRomEmissaoArdidos.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Ardidos.Value - QrRomEmissaoPerc_Tolera_Ardidos.Value) / 100);
+
+  If ((QrRomEmissaoPerc_Impureza.Value - QrRomEmissaoPerc_Tolera_Impureza.Value) > 0) then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE')or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')   Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+         QrRomEmissaoImpureza.Value := round(QRRomEmissaoPesoBalanca.Value * (QrRomEmissaoPerc_Impureza.Value - QrRomEmissaoPerc_Tolera_Impureza.Value) / 100)
+//      Else
+//         QrRomEmissaoImpureza.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Impureza.Value - QrRomEmissaoPerc_Tolera_Impureza.Value) / 100)
+    Else
+      QrRomEmissaoImpureza.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Impureza.Value - QrRomEmissaoPerc_Tolera_Impureza.Value) / 100);
+
+  if ((QrRomEmissaoPerc_Avariado.Value - QrRomEmissaoPerc_Tolera_Avariado.Value) > 0) then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE')or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')   Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+         QrRomEmissaoAvariados.Value := round(QRRomEmissaoPesoBalanca.Value * (QrRomEmissaoPerc_Avariado.Value - QrRomEmissaoPerc_Tolera_Avariado.Value) / 100)
+//      else
+//         QrRomEmissaoAvariados.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Avariado.Value - QrRomEmissaoPerc_Tolera_Avariado.Value) / 100)
+    else
+       QrRomEmissaoAvariados.Value := round(QRRomEmissaoQt_Rateio.Value * (QrRomEmissaoPerc_Avariado.Value - QrRomEmissaoPerc_Tolera_Avariado.Value) / 100);
+
+  If QrRomEmissaoPerc_Quebrados.Value > 0 then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE')or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')   Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+        QrRomEmissaoQuebrados.Value := round(QRRomEmissaoPesoBalanca.Value * QrRomEmissaoPerc_Quebrados.Value / 100)
+//      Else
+//        QrRomEmissaoQuebrados.Value := round(QRRomEmissaoQt_Rateio.Value * QrRomEmissaoPerc_Quebrados.Value / 100)
+    Else
+       QrRomEmissaoQuebrados.Value := round(QRRomEmissaoQt_Rateio.Value * QrRomEmissaoPerc_Quebrados.Value / 100);
+
+  if QrRomEmissaoPerc_Diversos.Value > 0 then
+    QrRomEmissaoDiversos.Value := QrRomEmissaoPerc_Diversos.Value;
+
+  if QrRomEmissaoPerc_Triguilho.Value > 0 then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'GRASEL') Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CEREAIS') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'NUTRI')  Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'RAMBO')   Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CITY')   Or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALEOESTE')or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ESPIGAO') or
+       (DMParamSistema.QParamSistemaCod_Empresa.Value = 'BMG')  Then
+//      If QrRomEmissaoCod_Cadastro.Value = QrRomEmissaoCod_Cadastro_Romaneio.Value Then
+         QrRomEmissaoTriguilho.Value := round(QRRomEmissaoPesoBalanca.Value * QrRomEmissaoPerc_Triguilho.Value / 100)
+//      Else
+//         QrRomEmissaoTriguilho.Value := round(QRRomEmissaoQt_Rateio.Value * QrRomEmissaoPerc_Triguilho.Value / 100)
+    Else
+       QrRomEmissaoTriguilho.Value := round(QRRomEmissaoQt_Rateio.Value * QrRomEmissaoPerc_Triguilho.Value / 100);
+
+  // este calculo serve para impressao da quantidade liquida no romaneio e os calculos acima servem para impressao dos descontos no romaneio
+  CalculoDesconto(QRRomEmissaoQt_Rateio.Value,
+                  QRRomEmissaoPerc_Desconto.Value,
+                  QRRomEmissaoPerc_Ardidos.Value,
+                  QRRomEmissaoPerc_Umidade.Value,
+                  QRRomEmissaoPerc_Impureza.Value,
+                  QRRomEmissaoPerc_Avariado.Value,
+                  QRRomEmissaoPerc_Quebrados.Value,
+                  QRRomEmissaoPerc_Diversos.Value,
+                  QRRomEmissaoCod_Romaneio_Agricola.Value,
+                  QRRomEmissaoCod_Produto.Value,
+                  QRRomEmissaoPerc_Triguilho.Value,
+                  QRRomEmissaoPerc_Tolera_Ardidos.Value,
+                  QRRomEmissaoPerc_Tolera_Impureza.Value,
+                  QRRomEmissaoPerc_Tolera_Avariado.Value,
+                  QRRomEmissaoPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+
+
+  QrRomEmissaoTotalDesconto.Value := QrRomEmissaoUmidade.Value + QrRomEmissaoArdidos.Value +
+                                     QrRomEmissaoImpureza.Value + QrRomEmissaoAvariados.Value +
+                                     QrRomEmissaoQuebrados.Value + QrRomEmissaoDiversos.Value;
+//                                     QrRomEmissaoTriguilho.Value;
+  QrRomEmissaoLiquido.Value := QRRomEmissaoQt_Rateio.Value - wDesc_Romaneio;
+
+  QrRomEmissaoDesc_Usuario.Value := DmOracle.BuscaNome('SELECT NOME FROM TB_USUARIO', 'COD_USUARIO = ' + FloattoStr(QrRomEmissaoCod_Usuario.Value), True);
+
+  If QrRomEmissaoPerc_Impureza.Value > QrRomEmissaoPerc_Tolera_Impureza.Value Then
+     QrRomEmissaoPerc_liq_Impureza.Value := QrRomEmissaoPerc_Impureza.Value - QrRomEmissaoPerc_Tolera_Impureza.Value;
+  If QrRomEmissaoPerc_Ardidos.Value > QrRomEmissaoPerc_Tolera_Ardidos.Value Then
+     QrRomEmissaoPerc_liq_Ardidos.Value := QrRomEmissaoPerc_Ardidos.Value - QrRomEmissaoPerc_Tolera_Ardidos.Value;
+  If QrRomEmissaoPerc_Avariado.Value > QrRomEmissaoPerc_Tolera_Avariado.Value Then
+     QrRomEmissaoPerc_liq_Avariado.Value := QrRomEmissaoPerc_Avariado.Value - QrRomEmissaoPerc_Tolera_Avariado.Value;
+  QrRomEmissaoDesc_mensagem.Value := DMOracle.BuscaNome('SELECT DESC_MENSAGEM FROM TB_MENSAGEM','COD_MENSAGEM = ' +FloatToStr(QrRomEmissaoCod_Mensagem.VALUE),True);
+End;
+
+procedure TDMRomaneioAgricola.QrRomDescontoCalcFields(DataSet: TDataSet);
+var wPeso_Produto, wDesconto :real;
+    wPadrao : String;
+begin
+  With DMProdutoAgricola do
+  Begin
+    QProdutoAgricola.Close;
+    QProdutoAgricola.setVariable('PK',QrRomDescontoCod_Produto.Value);
+    QProdutoAgricola.Open;
+  End;
+  QrRomDescontoQt_Peso_Bruto.Value := 0;
+  QrRomDescontoQt_Tara.Value := 0;
+  If QrRomDescontoCod_Cadastro_Romaneio.Value = QrRomDescontoCod_Cadastro.Value Then
+   Begin
+     QrRomDescontoQt_Peso_Bruto.Value :=QrRomDescontoQt_Peso_Bruto_Sql.value;
+     QrRomDescontoQt_Tara.Value :=QrRomDescontoQt_Tara_Sql.value;
+   End;
+  wPeso_Produto := QRRomDescontoQT_Rateio.Value;
+  If (QrRomDescontoIND_TIPO_ROMANEIO.Value = 'PESAGEM EN') Or
+     (QrRomDescontoIND_TIPO_ROMANEIO.Value = 'PESAGEM SA') Then
+    Begin
+      wPadrao := '';
+      If QrRomDescontoCOD_CONTRATO_VEND.Text <> '' Then
+         wPadrao := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_VEND','COD_CONTRATO_VEND = '+QrRomDescontoCOD_CONTRATO_VEND.Text);
+      If QRRomaneioCOD_CONTRATO_PJURIDICA.Text <> '' Then
+         wPadrao := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_PJURIDICA','COD_CONTRATO_PJURIDICA = '+QrRomDescontoCOD_CONTRATO_PJURIDICA.Text);
+      wLiquido := wPeso_Produto; //serve no caso de nao ter sido informado padrao de desconto - ai peso liquido é o peso de balanca
+      If wPadrao <> '' Then
+         CalculoDesconto_Saida( wPeso_Produto,
+                            QrRomDescontoPerc_ardidos.Value,
+                            QrRomDescontoPerc_Umidade.Value,
+                            QrRomDescontoPerc_Impureza.Value,
+                            QrRomDescontoPerc_Avariado.Value,
+                            QrRomDescontoPerc_Quebrados.Value,
+                            QrRomDescontoPerc_Triguilho.Value,
+                            StrToInt(wPadrao),
+                            wLiquido, wDesconto);
+      QRRomDescontoLiquido.Value := wLiquido;
+
+      // esta acessando a tabela no calculo do desconto saida
+      If QrRomDescontoPerc_Umidade.Value > DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_TOLERANCIA.Value Then
+        QrRomDescontoUmidade.Value := wPeso_Produto * ((QrRomDescontoPerc_Umidade.Value - DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_DESCONTO.Value) / 100;
+
+      If QrRomDescontoPerc_ardidos.Value > DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_TOLERANCIA.Value Then
+        QrRomDescontoArdidos.Value := wPeso_Produto * ((QrRomDescontoPerc_ardidos.Value - DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_DESCONTO.Value) / 100;
+
+      If QrRomDescontoPerc_Impureza.value > DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_TOLERANCIA.Value Then
+        QrRomDescontoImpureza.Value := wPeso_Produto * ((QrRomDescontoPerc_Impureza.value - DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_DESCONTO.Value) / 100;
+
+      If QrRomDescontoPerc_Avariado.Value > DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_TOLERANCIA.Value Then
+        QrRomDescontoOutros.Value := wPeso_Produto * ((QrRomDescontoPerc_Avariado.Value - DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_DESCONTO.Value) / 100;
+
+      If QrRomDescontoPerc_Quebrados.Value > DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_TOLERANCIA.Value Then
+        QrRomDescontoTriguilho_Quebrados.Value := wPeso_Produto * ((QrRomDescontoPerc_Quebrados.Value - DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_DESCONTO.Value) / 100;
+
+      If QrRomDescontoPerc_Triguilho.Value > DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_TOLERANCIA.Value Then
+        QrRomDescontoTriguilho_Quebrados.Value := wPeso_Produto * ((QrRomDescontoPerc_Triguilho.Value - DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_TOLERANCIA.Value) * DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_DESCONTO.Value) / 100;
+    End
+  Else
+    Begin
+      CalculoDesconto(wPeso_Produto,
+                      QRRomDescontoPerc_Desconto.Value,
+                      QRRomDescontoPerc_Ardidos.Value,
+                      QRRomDescontoPerc_Umidade.Value,
+                      QRRomDescontoPerc_Impureza.Value,
+                      QRRomDescontoPerc_Avariado.Value,
+                      QRRomDescontoPerc_Quebrados.Value,
+                      QRRomDescontoPerc_Diversos.Value,
+                      QRRomDescontoCod_Romaneio_Agricola.Value,
+                      QRRomDescontoCod_Produto.Value,
+                      QRRomDescontoPerc_Triguilho.Value,
+                      QRRomDescontoPerc_Tolera_Ardidos.Value,
+                      QRRomDescontoPerc_Tolera_Impureza.Value,
+                      QRRomDescontoPerc_Tolera_Avariado.Value,
+                      QRRomDescontoPerc_Beneficiado.Value,
+                      wLiquido,
+                      wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+      QRRomDescontoLiquido.Value := wLiquido;
+      wDesconto := QRRomDescontoPERC_DESCONTO.value;
+      if wDesconto <> 0 then
+         QrRomDescontoUmidade.Value := round(wPeso_Produto * wDesconto / 100);
+
+      if ((QrRomDescontoPerc_Ardidos.Value - DMProdutoAgricola.QProdutoAgricolaPerc_Tolera_Ardidos.Value) >  0) then
+         QrRomDescontoArdidos.Value := round(wPeso_Produto * (QrRomDescontoPerc_Ardidos.Value - QrRomDescontoPerc_Tolera_Ardidos.Value) / 100);
+
+      if ((QrRomDescontoPerc_Impureza.value - DMProdutoAgricola.QProdutoAgricolaPerc_Tolera_Impureza.Value) > 0) then
+         QrRomDescontoImpureza.Value := round(wPeso_Produto * (QrRomDescontoPerc_Impureza.Value - QrRomDescontoPerc_Tolera_Impureza.Value) / 100);
+
+      if ((QrRomDescontoPerc_Avariado.value - DMProdutoAgricola.QProdutoAgricolaPerc_Tolera_Avariado.Value) > 0) then
+         QrRomDescontoOutros.Value := round(wPeso_Produto * (QrRomDescontoPerc_Avariado.Value - QrRomDescontoPerc_Tolera_Avariado.Value) / 100);
+
+      if QrRomDescontoPerc_Quebrados.Value > 0 then
+         QrRomDescontoTriguilho_Quebrados.Value := round(wPeso_Produto * QrRomDescontoPerc_Quebrados.Value / 100);
+      if QrRomDescontoPerc_Triguilho.Value > 0 then
+         QrRomDescontoTriguilho_Quebrados.Value := round(QrRomDescontoTriguilho_Quebrados.Value +
+                                                   wPeso_Produto * QrRomDescontoPerc_Triguilho.Value / 100);
+      if QrRomDescontoPerc_Diversos.Value > 0 then
+         QrRomDescontoOutros.Value := QrRomDescontoPerc_Diversos.Value;
+    End;
+end;
+
+Procedure TDMRomaneioAgricola.NotaAgricola;
+var
+   wPeso_Produto:real;
+   wTotalItem : Real;
+   wArdidos   : Real;
+   wImpureza  : Real;
+   wQuebrados : Real;
+begin
+  wArdidos := 0;
+  wImpureza := 0;
+  wPeso_Produto := QRRomNotaQT_Rateio.Value;
+  CalculoDesconto(wPeso_Produto,
+                  QRRomNotaPerc_Desconto.Value,
+                  QRRomNotaPerc_Ardidos.Value,
+                  QRRomNotaPerc_Umidade.Value,
+                  QRRomNotaPerc_Impureza.Value,
+                  QRRomNotaPerc_Avariado.Value,
+                  QRRomNotaPerc_Quebrados.Value,
+                  QRRomNotaPerc_Diversos.Value,
+                  QRRomNotaCod_Romaneio_Agricola.Value,
+                  QRRomNotaCod_Produto.Value,
+                  QRRomNotaPerc_Triguilho.Value,
+                  QRRomNotaPerc_Tolera_Ardidos.Value,
+                  QRRomNotaPerc_Tolera_Impureza.Value,
+                  QRRomNotaPerc_Tolera_Avariado.Value,
+                  QRRomNotaPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+
+  if (QRRomNotaInd_Tipo_Produto.Value <> 'COMERCIAL')           And
+     (QRRomNotaDesc_Unidade.Value     =  'T')                   And
+     (DMParamSistema.QParamSistemaCod_Empresa.Value = 'TOFECO') Then
+     wLiquido := wLiquido / 1000;
+
+  wTotalItem := wLiquido * QRRomNotaVal_Varejo.Value;
+
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'TOFECO') Then
+     if (QRRomNotaNum_Embalagem.Value     > 0)           and
+        (QRRomNotaInd_Tipo_Produto.Value <> 'COMERCIAL') then
+         wTotalItem := wTotalItem / QRRomNotaNum_Embalagem.Value;
+
+  // consiste para verificar se quebrou o codigo cliente
+  if QRRomNotaCod_Cadastro.Value <> QRNotaCod_Cadastro.Value then
+     IncluiNotaCab
+  else
+  Begin
+    QRNota.Edit;
+    If Length(Trim(QrNotaOBS.Value)) < 55 Then
+      QrNotaOBS.Value := QrNotaOBS.Value + ', ' + FloatToStr(QRRomNotaNum_Romaneio.Value)
+    else
+      QrNotaOBS_COMPLEMENTO.Value := QrNotaOBS_COMPLEMENTO.Value + ', ' + FloatToStr(QRRomNotaNum_Romaneio.Value);
+    if (DMParamSistema.CodEmpresa = 'TOFECO') and (not QrRomNotaNUM_NOTA_PRODUTOR.IsNull) then
+      QrNotaOBS_COMPLEMENTO.Value := QrNotaOBS_COMPLEMENTO.Value + ', NR NOTA PRODUTOR ' +
+        QrRomNotaNUM_NOTA_PRODUTOR.Text;
+    QRNota.Post;
+  end;
+  // chama procedure para incluir ou atualizaritem
+
+  IncluiNotaItem(wLiquido,wTotalItem,QrRomNotaCod_Produto.Value,QrRomNotaPerc_Ph.Value,QrRomNotaVal_Varejo.Value,QRRomNotaPerc_Beneficiado.Value);
+  with DMNotaEntrada do
+  begin
+    if (not QrRomNotaNUM_NOTA_PRODUTOR.IsNull) and
+       (not QrRomNotaCOD_CADASTRO.IsNull) and
+       (QrNotaCOD_SERIE_MODELO.Value = '55') then
+    begin
+      try
+        QNotaReferenciada.Close;
+        QNotaReferenciada.SetVariable('COD_NOTA_CAB', QrNotaCOD_NOTA_CAB.Value);
+        QNotaReferenciada.Open;
+
+        while not QNotaReferenciada.Eof do
+          QNotaReferenciada.Delete;
+
+        QNotaReferenciadaInsert.Close;
+        QNotaReferenciadaInsert.SetVariable('COD_NOTA_CAB'
+          , QrNotaCOD_NOTA_CAB.Value);
+        QNotaReferenciadaInsert.SetVariable('NUM_NOTA'
+          , QrRomNotaNUM_NOTA_PRODUTOR.AsInteger);
+        QNotaReferenciadaInsert.SetVariable('COD_CADASTRO'
+          , QrNotaCOD_CADASTRO.Value);
+        QNotaReferenciadaInsert.SetVariable('COD_SERIE'
+          , QrNotaCOD_SERIE.Value);
+        QNotaReferenciadaInsert.SetVariable('COD_SERIE_MODELO'
+          , QrNotaCOD_SERIE.Value);
+        QNotaReferenciadaInsert.SetVariable('DT_EMISSAO'
+          , QrNotaDT_EMISSAO.Value);
+        QNotaReferenciadaInsert.Open;
+                 
+//        QNotaReferenciada.Insert;
+//        QNotaReferenciadaCOD_NOTA_CAB.Value :=  QrNotaCOD_NOTA_CAB.Value;
+//        QNotaReferenciadaNUM_NOTA.Value := QrRomNotaNUM_NOTA_PRODUTOR.AsInteger;
+//        QNotaReferenciadaCOD_CADASTRO.Value := QrNotaCOD_CADASTRO.Value;
+//        QNotaReferenciadaCOD_SERIE.Value := QrNotaCOD_SERIE.Value;
+//        QNotaReferenciadaCOD_SERIE_MODELO.Value := QrNotaCOD_SERIE_MODELO.Value;
+//        QNotaReferenciadaDT_EMISSAO.Value := QrNotaDT_EMISSAO.Value;
+//        QNotaReferenciada.Post;
+
+      except
+        QNotaReferenciadaInsert.Cancel;
+        QNotaReferenciada.Cancel;
+      end;
+    end;
+  end;
+  // esta rotina serve para controlar o contas a pagar de freteiro e arranquio
+  If DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TOFECO' Then
+   Begin
+     If QrRomNotaCod_Transportadora.Text <> '' Then   // aqui é para os freteiros - para gerar o contas a pagar
+      Begin
+        If (not ClFreteiro.Locate('Cod_Cadastro;Dt_Vencto;Cod_Nota_Cab', VarArrayOf([QrRomNotaCod_Cadastro.Text,QrRomNotaDt_Vencto_Frete.Text,QrNotaCod_Nota_Cab.Text]),[])) Then
+         Begin
+           ClFreteiro.Append;
+           ClFreteiroCod_Cadastro.Value := QrRomNotaCod_Cadastro.Value;
+           ClFreteiroVl_Frete.Value := wLiquido * QrRomNotaVl_Frete.Value;  // 1000;
+           ClFreteiroDesc_Obs.Value := 'Romaneios Nr. ' + QrRomNotaNum_Romaneio.Text;
+           ClFreteiroDt_Vencto.Value := QrRomNotaDt_Vencto_Frete.Value;
+           ClFreteiroCod_Nota_Cab.Value := QrNotaCod_Nota_Cab.Value;
+           ClFreteiro.Post;
+         End
+        Else
+         Begin
+           ClFreteiro.Edit;
+           ClFreteiroVl_Frete.Value := ClFreteiroVl_Frete.Value + wLiquido * QrRomNotaVl_Frete.Value;  // 1000;
+           ClFreteiroDesc_Obs.Value := ClFreteiroDesc_Obs.Value + ', ' + QrRomNotaNum_Romaneio.Text;
+           ClFreteiro.Post;
+         End;
+      End;
+     If QrRomNotaCod_Arranquio.Text <> '' Then  // aqui é para o arranquio - para gerar o contas a pagar
+      Begin
+        If (not ClArranquio.Locate('Cod_Cadastro;Dt_Vencto;Cod_Nota_Cab', VarArrayOf([QrRomNotaCod_Cadastro.Text,QrRomNotaDt_Vencto_Frete.Text,QrNotaCod_Nota_Cab.Text]),[])) Then
+         Begin
+           ClArranquio.Append;
+           ClArranquioCod_Cadastro.Value := QrRomNotaCod_Cadastro.Value;
+           ClArranquioVl_Arranquio.Value := wLiquido * QrRomNotaVl_Arranquio.Value;   // 1000;
+           ClArranquioDesc_Obs.Value := 'Romaneios Nr. ' + QrRomNotaNum_Romaneio.Text;
+           ClArranquioDt_Vencto.Value := QrRomNotaDt_Vencto_Arranquio.Value;
+           ClArranquioCod_Nota_Cab.Value := QrNotaCod_Nota_Cab.Value;
+           ClArranquio.Post;
+         End
+        Else
+         Begin
+           ClArranquio.Edit;
+           ClArranquioVl_Arranquio.Value := ClArranquioVl_Arranquio.Value + wLiquido * QrRomNotaVl_Arranquio.Value;  // 1000;
+           ClArranquioDesc_Obs.Value := ClArranquioDesc_Obs.Value + ', ' + QrRomNotaNum_Romaneio.Text;
+           ClArranquio.Post;
+         End;
+      End;
+   End;
+
+  // esta rotina serve para atualizar o campo SITUACAO do rateio para informar que ja foi atualizado este rateio
+  QRRateioAtualiza.close;
+  QRRateioAtualiza.SetVariable('ROMANEIO',QrRomNotaCod_Romaneio_Agricola.Value);
+  QRRateioAtualiza.SetVariable('CADASTRO',QrRomNotaCod_Cadastro.Value);
+  QRRateioAtualiza.ExecSql;
+  // esta rotina serve para calcular os descontos dos produtos para atualizar estoque
+  if DMParamSistema.QParamSistemaCod_Produto_Ardidos.Value > 0 then
+     if QrRomNotaPerc_Ardidos.Value >  0 then
+     Begin
+       wArdidos := wArdidos + round(QRRomNotaQT_Rateio.Value * QrRomNotaPerc_Ardidos.Value / 100);
+       DMEstoque.AtualizaEstoque(StrToInt(QrNotaCod_Operacao.Text),
+                                 StrToInt(QrNotaCod_Filial.Text),
+                                 DMParamSistema.QParamSistemaCod_Produto_Ardidos.Value,
+                                 1,
+                                 wArdidos,
+                                 0,
+                                 QrNotaDt_Recebimento.Value,
+                                 0 );
+     end;
+  if DMParamSistema.QParamSistemaCod_Produto_Impureza.Value > 0 then
+     if QrRomNotaPerc_Impureza.value > 0 then
+     Begin
+       wImpureza := wImpureza + round(QRRomNotaQT_Rateio.Value * QrRomNotaPerc_Impureza.Value / 100);
+       DMEstoque.AtualizaEstoque(Trunc(QrNotaCod_Operacao.Value),
+                                 Trunc(QrNotaCod_Filial.Value),
+                                 DMParamSistema.QParamSistemaCod_Produto_Impureza.Value,
+                                 1,
+                                 wImpureza,
+                                 0,
+                                 QrNotaDt_Recebimento.Value,
+                                 0 );
+     end;
+  if DMParamSistema.QParamSistemaCod_Produto_Quebrados.Value > 0 then
+     if QrRomNotaPerc_Quebrados.Value > 0 then
+     begin
+       with DMProduto do
+       begin
+         QProduto.close;
+         QProduto.SetVariable('PK',DMParamSistema.QParamSistemaCod_Produto_Quebrados.Value);
+         QProduto.Open;
+       end;
+       wQuebrados := Round(QRRomNotaQT_Rateio.Value * QrRomNotaPerc_Quebrados.Value / 100);
+       wTotalItem := wQuebrados * DMProduto.QprodutoVal_Varejo.Value;
+       If DMProduto.QProdutoNum_Embalagem.Value > 0 then
+          wTotalItem := wTotalItem / DMProduto.QProdutoNum_Embalagem.Value;
+       IncluiNotaItem(wQuebrados,wTotalItem,DMParamSistema.QParamSistemaCod_Produto_Quebrados.Value,0,DMProduto.QprodutoVal_Varejo.Value,0);
+     end;
+  if DMParamSistema.QParamSistemaCod_Produto_Triguilho.Value > 0 then
+     if QrRomNotaPerc_Triguilho.Value > 0 then
+     begin
+       If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO') Or
+          (DMParamSistema.QParamSistemaCod_Empresa.Value = 'AB') Then
+        Begin
+         If QrRomNotaCod_Cadastro.Value = QrRomNotaCod_Cadastro_Romaneio.Value Then
+            Rateio_Triguilho(QrRomNotaQt_Peso_Romaneio.Value); //Somente gera triguilho quando for o cadastro principal nao faz rateio de triguilho
+        end                        //este 100 representa 100 por cento
+       Else
+        Rateio_Triguilho(QRRomNotaQT_Rateio.Value);
+     End;
+End;
+
+procedure TDMRomaneioAgricola.Rateio_Triguilho(wQtPeso : Real);
+Var wTriguilho,wTotalItem : Real;
+Begin
+  with DMProduto do
+  begin
+    QProduto.close;
+    QProduto.SetVariable('PK',DMParamSistema.QParamSistemaCod_Produto_Triguilho.Value);
+    QProduto.Open;
+  end;
+  wTriguilho := round(wQtPeso * QrRomNotaPerc_Triguilho.Value / 100);
+  wTotalItem := wTriguilho * DMProduto.QprodutoVal_Varejo.Value;
+  If DMProduto.QProdutoNum_Embalagem.Value > 0 then
+     wTotalItem := wTotalItem / DMProduto.QProdutoNum_Embalagem.Value;
+  IncluiNotaItem(wTriguilho,wTotalItem,DMParamSistema.QParamSistemaCod_Produto_Triguilho.Value,0,DMProduto.QprodutoVal_Varejo.Value,0);
+end;
+
+procedure TDMRomaneioAgricola.FinalizaNota;
+var wTotalNota, wQtde, wTotPis,wTotCofins : Real;
+begin
+  wTotalNota := 0;
+  wTotPis := 0;
+  wTotCofins := 0;
+  QrNotaItem.Close;
+  QrNotaItem.Open;
+  QrNotaItem.First;
+  While not QrNotaItem.Eof do
+  begin
+    if QrNotaItemPERC_BENEFICIADO.value<>0 then
+      wQtde:=round(QrNotaItemQt_Quantidade.Value*(QrNotaItemPERC_BENEFICIADO.value)/100)
+    else
+      wQtde:=round(QrNotaItemQt_Quantidade.Value);
+    DMEstoque.AtualizaEstoque(Trunc(QrNotaCod_Operacao.Value),
+                              Trunc(QrNotaCod_Filial.Value),
+                              Trunc(QrNotaItemCod_Produto.Value),
+                              1,
+                              wqtde,
+                              QrNotaItemVal_Custo.Value,
+                              QrNotaDt_Recebimento.Value,
+                              0 );
+    wTotalNota := wTotalNota + QrNotaItemVal_Total.Value;
+    wTotPis := wTotPis + QrNotaItemVal_Pis.Value;
+    wTotCofins := wTotCofins + QrNotaItemVal_Confins.Value;
+    QrNotaItem.next;
+  end;
+  With DMOperacao do
+  begin
+//    QOperacao.Close;  // mudado pelo Cesar esta acessando a tabela de operacao no inicio da rotina de emissao de romaneios
+//    QOperacao.SetVariable('Pk',QrNotaCod_Operacao.Value);
+//    QOperacao.Open;
+    // Valor da Nota
+    DMPlanilha.GravaLanc('NFE',
+                         QrNotaCod_Nota_Cab.Value,
+                         FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                         QrNotaCod_Filial.Value,
+                         QOperacaoCod_Contabil_Val_Nota_Cred.Value,
+                         'CREDITO',
+                         QrNotaCod_Cadastro.Value,
+                         QOperacaoCod_Historico_Contabil.Value,
+                         wTotalNota,
+                         QrNotaDt_Recebimento.Value,
+                         QOperacaoCod_Contabil_Val_Nota_Deb.Value);
+
+    If QOperacaoInd_Conta_Pagar.Value = 'N' Then
+      DMPlanilha.GravaLanc('NFE',
+                           QrNotaCod_Nota_Cab.Value,
+                           FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                           QrNotaCod_Filial.Value,
+                           QOperacaoCod_Contabil_Val_Nota_Deb.Value,
+                           'DEBITO',
+                           QrNotaCod_Cadastro.Value,
+                           QOperacaoCod_Historico_Contabil.Value,
+                           wTotalNota,
+                           QrNotaDt_Recebimento.Value,
+                           QOperacaoCod_Contabil_Val_Nota_Cred.Value)
+    Else
+      DMPlanilha.GravaLanc('NFE',
+                                 QrNotaCod_Nota_Cab.Value,
+                                 FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                                 QrNotaCod_Filial.Value,
+                                 QOperacaoCod_Contabil_Val_Nota_APrazo.Value,
+                                 'DEBITO',
+                                 QrNotaCod_Cadastro.Value,
+                                 QOperacaoCod_Historico_Contabil.Value,
+                                 wTotalNota,
+                                 QrNotaDt_Recebimento.Value,
+                                 QOperacaoCod_Contabil_Val_Nota_Cred.Value);
+    // contabilizacao do pis
+    DMPlanilha.GravaLanc('NFE',
+                         QrNotaCod_Nota_Cab.Value,
+                         FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                         QrNotaCod_Filial.Value,
+                         QOperacaoCod_Contabil_Pis_Deb.Value,
+                         'DEBITO',
+                         QrNotaCod_Cadastro.Value,
+                         DMOperacao.QOperacaoCod_Historico_Contabil_Pis.Value,
+                         wTotPis,
+                         QrNotaDt_Recebimento.Value,
+                         QOperacaoCod_Contabil_Pis_Cred.Value);
+
+    DMPlanilha.GravaLanc('NFE',
+                         QrNotaCod_Nota_Cab.Value,
+                         FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                         QrNotaCod_Filial.Value,
+                         QOperacaoCod_Contabil_Pis_Cred.Value,
+                         'CREDITO',
+                         QrNotaCod_Cadastro.Value,
+                         DMOperacao.QOperacaoCod_Historico_Contabil_Pis.Value,
+                         wTotPis,
+                         QrNotaDt_Recebimento.Value,
+                         QOperacaoCod_Contabil_Pis_Deb.Value);
+    // contabilizacao do COFINS
+    DMPlanilha.GravaLanc('NFE',
+                         QrNotaCod_Nota_Cab.Value,
+                         FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                         QrNotaCod_Filial.Value,
+                         QOperacaoCod_Contabil_Cofins_Deb.Value,
+                         'DEBITO',
+                         QrNotaCod_Cadastro.Value,
+                         DMOperacao.QOperacaoCod_Historico_Contabil_Cofins.Value,
+                         wTotCofins,
+                         QrNotaDt_Recebimento.Value,
+                         QOperacaoCod_Contabil_Cofins_Cred.Value);
+    DMPlanilha.GravaLanc('NFE',
+                         QrNotaCod_Nota_Cab.Value,
+                         FloatToStr(QrNotaNum_Nota.Value)+'-'+QrNotaCod_Serie.Value + '-' + DmCadastro.QCadastroNome.Value,
+                         QrNotaCod_Filial.Value,
+                         QOperacaoCod_Contabil_Cofins_Cred.Value,
+                         'CREDITO',
+                         QrNotaCod_Cadastro.Value,
+                         DMOperacao.QOperacaoCod_Historico_Contabil_Cofins.Value,
+                         wTotCofins,
+                         QrNotaDt_Recebimento.Value,
+                         QOperacaoCod_Contabil_Cofins_Deb.Value);
+  end;
+end;
+
+procedure TDMRomaneioAgricola.IncluiNotaCab;
+var
+  wDescObra : String;
+begin
+  wDescObra := '';
+  QRNota.Insert;
+  QrNotaCOD_NOTA_CAB.Value := DMOracle.Sequencia('NOTA');
+  QrNotaCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+  QrNotaCOD_FILIAL.Value := QrRomNotaCod_Filial.Value;
+  QrNotaCOD_TRANSPORTE.Value := 1;
+{  if QrRomNotaIND_FIXAR_CONSUMO.Value = 'F' THEN  // comentado pelo Cesar estou acessando a tabela de operacao no inicio da rotina de emissao de romaneios
+     QrNotaCOD_OPERACAO.Value := StrToInt(DMOracle.BuscaNome('SELECT COD_OPERACAO_AFIXAR FROM TB_PRODUTO_AGRICOLA','COD_PRODUTO = '+FRRomNotaParam.MeProduto.Text))
+  else
+     QrNotaCOD_OPERACAO.Value := StrToInt(DMOracle.BuscaNome('SELECT COD_OPERACAO_AFIXAR_CONSUMO FROM TB_PRODUTO_AGRICOLA','COD_PRODUTO = '+FRRomNotaParam.MeProduto.Text));
+}
+  QrNotaCOD_OPERACAO.Value := DMOperacao.QOperacaoCod_Operacao.Value;
+  QrNotaCOD_ESTADO.Value := QrRomNotaCod_Estado.Value;
+  QrNotaCOD_CADASTRO.Value :=QrRomNotaCod_Cadastro.Value;
+  If (QrRomNotaCod_Cadastro_Parceiro.Value <> 0) And (QrRomNotaCod_Cadastro_Parceiro.Text <> '') Then
+     QrNotaCOD_CADASTRO_Parceiro.Value :=QrRomNotaCod_Cadastro_Parceiro.Value;
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'TOFECO' Then
+  begin
+    QrNotaCOD_SERIE.Value := DMOperacao.QOperacaoCod_Serie.Value;
+    QrNotaCOD_SERIE_MODELO.Value := DMOperacao.QOperacaoCOD_SERIE_MODELO.Value;
+  end
+  Else
+  begin
+     QrNotaCOD_SERIE.Value := DMOracle.BuscaNome('SELECT COD_SERIE FROM TB_FILIAL',
+      'COD_FILIAL = ' + QrRomNotaCod_Filial.Text);
+     QrNotaCOD_SERIE_MODELO.Value := DMOracle.BuscaNome('SELECT COD_SERIE_MODELO FROM TB_FILIAL',
+      'COD_FILIAL = ' + QrRomNotaCod_Filial.Text);
+  end;
+
+  if QrNotaCOD_SERIE.IsNull then
+    Raise Exception.Create('A série para nota fiscal não foi cadastrada');
+  if QrNotaCOD_SERIE_MODELO.IsNull then
+    Raise Exception.Create('O modelo da série para nota fiscal não foi cadastrada');
+    
+  QrNotaNUM_NOTA.Value := DMSerie.NumeroSerie(QrRomNotaCod_Filial.Value,QrNotaCOD_SERIE.Value,
+    QrNotaCOD_SERIE_MODELO.Value);
+  QrNotaCOD_MENSAGEM.Text := DMOperacao.QOperacaoCod_Mensagem.Text;
+    // DMOracle.BuscaNome('SELECT COD_MENSAGEM FROM TB_OPERACAO','COD_OPERACAO = '+QrNotaCOD_OPERACAO.Text);
+  QrNotaIND_SITUACAO.Value :='2';
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'TOFECO' Then
+     QrNotaIND_CONDICAO_PAGTO.Value :='2'
+  Else
+     QrNotaIND_CONDICAO_PAGTO.Value := fCondicaoPagto;
+  QrNotaDT_EMISSAO.Value :=DMOracle.Dataserv;
+  QrNotaDT_MOVIMENTO.Value :=DMOracle.DataHoraserv;
+  QrNotaDT_RECEBIMENTO.Value :=DMOracle.Dataserv;
+  QrNotaVAL_DESPESAS.Value :=0;
+  QrNotaIND_ENTRADA_SAIDA.Value :='E';
+  QrNotaVAL_FRETE.Value :=0;
+  QrNotaVAL_DESCONTO.Value :=0;
+  QrNotaIND_TIPO_FRETE.Value :='CIF';
+  QrNotaCOD_DEPARTAMENTO.Value := DMUsuario.CodDepartamentoUsuario;
+  if (QrRomNotaCOD_OBRA.Text <> '') then
+    wDescObra := DMOracle.BuscaNome('SELECT DESC_OBRA FROM TB_OBRA', 'COD_OBRA = ' + QrRomNotaCOD_OBRA.Text);
+
+    QrNotaOBS.Value := 'Cfe. Romaneio nr. ' + FloatToStr(QRRomNotaNum_Romaneio.Value) + ' ' + wDescObra;
+
+  QrNotaDT_USUARIO.Value :=DMOracle.DataHoraserv;
+  QRNota.Post;
+end;
+
+procedure TDMRomaneioAgricola.IncluiNotaItem(wQuant, wTotal, wCodProduto, wPh, wUnitario, wBeneficiado : Real);
+Var wLote : Real;
+wCstPis: String;
+wCstCofins: String;
+wCstIPI: String;
+wMsgCompl: String;
+wAliqPis, wAliqCofins: Real;
+wPisImposto, wCofinsImposto: Boolean;
+executador: TExecutador;
+wSql: String;
+begin
+  wLote := 1;
+  wMsgCompl := '';
+  if wPh <> 0 Then
+  begin
+    // Jogar PH nas informações adicionais do item da nota - Djeison A. S. - 19/09/2013
+    wMsgCompl := 'PH: ' + FloatToStr(wPh);
+//     wLote := wPh;
+     If DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' Then
+      Begin
+        If wPh >= 78 Then
+           wLote := 1;
+        If (wPh = 75) or (wPh = 76) or (wPh = 77) Then
+           wLote := 2;
+        If (wPh = 70) or (wPh = 71) or (wPh = 72) or (wPh = 73) or (wPh = 74) Then
+           wLote := 3;
+      End;
+   End;
+
+  QRNotaItem.Close;
+  QRNotaItem.SetVariable('COD_NOTA_CAB',QRNotaCod_Nota_Cab.Value);
+  QRNotaItem.Open;
+  // foi retirado para deixar um item para cada Romaneio - para colocar o numero da nota fiscal do produtor no item - exigencia da receita estadual
+//  if (not QRnotaItem.Locate('Cod_Produto;Cod_Lote_Tipo', VarArrayOf([wCodProduto,wLote]),[])) Or
+//     (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO')  then  // PARA O MOINHO É UM ITEM DA NOTA PARA CADA ROMANEIO //
+//  begin
+    QrNotaItem.Insert;
+      QrNotaItemCOD_NOTA_ITEM.Value := DMOracle.Sequencia('NOTA_ITEM');
+      QrNotaItemCOD_NOTA_CAB.Value := QRNotaCod_Nota_Cab.Value;
+      QrNotaItemCOD_TRIBUTACAO.Value := QrRomNotaCod_Tributacao.Value;
+      QrNotaItemQT_QUANTIDADE.Value := wQuant;
+      QrNotaItemVAL_TOTAL.Value := wTotal;
+      QrNotaItemPERC_IPI.Value :=0;
+      QrNotaItemPERC_COMISSAO.Value :=0;
+      QrNotaItemCOD_PRODUTO.Value := wCodProduto;
+      QrNotaItemCOD_LOTE_TIPO.Value :=Trunc(wLote);
+      QrNotaItemDESC_INF_ADICIONAL.Value := wMsgCompl;
+      QrNotaItemVAL_DESCONTO.Value :=0;
+      QrNotaItemVAL_DESPESAS.Value :=0;
+      QrNotaItemVAL_FRETE.Value :=0;
+      QrNotaItemPERC_DESCONTO.Value :=0;
+      QrNotaItemPerc_BENEFICIADO.Value:=QrRomNotaPERC_QUEBRADOS_ARROZ.value+QrRomNotaPERC_INTEIROS_ARROZ.value;
+      QrNotaItemVAL_IPI.Value :=0;
+      QrNotaItemVAL_UNITARIO.Value :=wUnitario;
+      QrNotaItemVAL_ICM_BASE.Value :=0;
+      QrNotaItemVAL_ICM.Value :=0;
+      QrNotaItemIND_CLASS_IPI.Value :='5';
+      QrNotaItemVAL_CUSTO.Value :=wTotal;
+      QrNotaItemCOD_ROMANEIO_AGRICOLA.Value := QrRomNotaCod_Romaneio_Agricola.Value;
+      QrNotaItemNUM_NOTA_PRODUTOR.Text := QrRomNotaNUM_NOTA_PRODUTOR.Text;
+      QrNotaItemPERC_BENEFICIADO.Value := wBeneficiado;
+{  end
+  else
+  begin
+    QRNotaItem.Edit;
+      QrNotaItemQT_QUANTIDADE.Value := QrNotaItemQT_QUANTIDADE.Value + wQuant;
+      QrNotaItemVAL_TOTAL.Value :=QrNotaItemVAL_TOTAL.Value + wTotal;
+      QrNotaItemVAL_CUSTO.Value :=QrNotaItemVAL_TOTAL.Value;
+  end;  }
+    wCstPis := DMOracle.FastSelect('NVL(COD_CST_PIS,0)','TB_PRODUTO','COD_PRODUTO = '+
+    QrNotaItemCOD_PRODUTO.Text);
+  wCstCofins := DMOracle.FastSelect('NVL(COD_CST_COFINS,0)','TB_PRODUTO','COD_PRODUTO = '+
+    QrNotaItemCOD_PRODUTO.Text);
+  wCstIPI := DMOracle.FastSelect('NVL(COD_CST_IPI,0)','TB_PRODUTO','COD_PRODUTO = '+
+    QrNotaItemCOD_PRODUTO.Text);
+
+    //Não estava indo o cod_cst_pis/cofins/ipi para os itens da nota de entrada. Junior 04/12/2013
+    if wCstPis <> '0' then
+      QrNotaItemCOD_CST_PIS.Value    := wCstPis;
+    if wCstCofins <> '0' then
+      QrNotaItemCOD_CST_COFINS.Value := wCstCofins;
+    if wcstIPI <> '0' then
+      QrNotaItemCOD_CST_IPI.Value    := wCstIPI;
+    //--------------------------------------------------------------------------
+  executador := TExecutador.Create;
+  executador.Limpa;
+  wSql := '';
+  wPisImposto := False;
+  wCofinsImposto := False;
+  if not (StrToInt(wCstPis) in [61,65,70,71,72,73,74,0]) then
+  begin
+    wAliqPis := 0;
+    if QRomaneioImposto.RecordCount > 0 then
+    begin
+      QRomaneioImposto.First;
+      while not QRomaneioImposto.Eof do
+      begin
+        if Pos(QRomaneioImpostonome_imposto.Value,'PIS') > 0 then
+        begin
+          wAliqPis := QRomaneioImpostoperc_aliq.Value;
+          wPisImposto := true;
+          break;
+        end
+        else
+          wPisImposto := false;
+        QRomaneioImposto.Next;
+      end;
+    end;
+    if wAliqPis = 0 then
+      wAliqPis := DMParamSistema.QParamSistemaPerc_Pis.Value;
+    If DMOperacao.QOperacaoPerc_Base_Pis.Value > 0 Then
+       QrNotaItemVal_Pis.Value := RoundTo((QrNotaItemVal_Total.Value  *
+             (DMOperacao.QOperacaoPerc_Base_Pis.Value / 100) * wAliqPis) /100,-2);
+    if wPisImposto then
+    begin
+      with DMNotaEntrada do
+      begin
+        wSql := 'INSERT INTO TB_NOTA_IMPOSTO_SERVICO VALUES(SQNOTA_IMPOSTO_SERVICO.NEXTVAL,'+
+          QrNotaCOD_NOTA_CAB.Text+','+
+          QRomaneioImpostoCOD_IMPOSTO.Text+','+
+          QuotedStr(Copy(QrNotaDT_MOVIMENTO.Text,1,10))+','+
+          Bib.TrocaVirgulaPorPonto(FloatToStr(QrNotaItemVal_Pis.Value))+')'; 
+
+        executador.Adiciona(wSql);
+        executador.Executar(true,false);
+      end;
+    end;
+  end;
+
+  if not (StrToInt(wCstCofins) in [61,65,70,71,72,73,74,0]) then
+  begin
+    wAliqCofins := 0;
+    if QRomaneioImposto.RecordCount > 0 then
+    begin
+      QRomaneioImposto.First;
+      while not QRomaneioImposto.Eof do
+      begin
+        if Pos(QRomaneioImpostonome_imposto.Value,'COFINS') > 0 then
+        begin
+          wAliqCofins := QRomaneioImpostoperc_aliq.Value;
+          wCofinsImposto := true;
+          break;
+        end
+        else
+          wCofinsImposto := false;
+        QRomaneioImposto.Next;
+      end;
+    end;
+    if wAliqCofins = 0 then
+      wAliqCofins := DMParamSistema.QParamSistemaPerc_Cofins.Value;
+    If DMOperacao.QOperacaoPerc_Base_Cofins.Value > 0 Then
+       QrNotaItemVal_Confins.Value := RoundTo((QrNotaItemVal_Total.Value  *
+             (DMOperacao.QOperacaoPerc_Base_Cofins.Value / 100) * wAliqCofins) /100,-2);
+    if wCofinsImposto then
+    begin
+      with DMNotaEntrada do
+      begin
+        wSql := 'INSERT INTO TB_NOTA_IMPOSTO_SERVICO VALUES(SQNOTA_IMPOSTO_SERVICO.NEXTVAL,'+
+          QrNotaCOD_NOTA_CAB.Text+','+
+          QRomaneioImpostoCOD_IMPOSTO.Text+','+
+          QuotedStr(Copy(QrNotaDT_MOVIMENTO.Text,1,10))+','+
+          Bib.TrocaVirgulaPorPonto(FloatToStr(QrNotaItemVal_Confins.Value))+')';
+
+        executador.Adiciona(wSql);
+        executador.Executar(true,false);
+      end;
+    end;
+  end;
+  //QrNotaItemDESC_INF_ADICIONAL.Value := DMNotaSaida.GeraInfAdicionalItem(QrNotaItem);
+  QRNotaItem.Post;
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'TOFECO')  then
+   Begin
+     QrNota.Edit;
+     QrNotaVal_Funrural.Value := DMNotaEntrada.CalculaFunrural(QrNotaItemCod_Produto.Value,
+                                    QrNotaCod_Operacao.Value,
+                                    QrNotaCod_Cadastro.Value,
+                                    QrNotaItemVal_Total.Value);
+     QrNota.Post;
+   End;
+End;
+
+Procedure TDMRomaneioAgricola.QrNotaAfterPost(DataSet: TDataSet);
+Var wCodigo : Integer;
+begin
+  wCodigo := QRNotaCod_Nota_Cab.Value;
+  QrNota.close;
+  QrNota.SetVariable('COD_NOTA_CAB',wCodigo);
+  QRNota.Open;
+end;
+
+Procedure TDMRomaneioAgricola.QRomConsFixarCalcFields(DataSet: TDataSet);
+Var wEmbalagem : String;
+Begin
+  QRomConsFixarsaldo_fixar.value := QRomConsFixarsQuantidade_Fixar.Value - QRomConsFixarsQuantidade_Fixado.Value - QRomConsFixarsQuantidade_bloqueado_Fixar.Value;
+//  If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'AB' then
+  QRomConsFixarsaldo_fixar.value := QRomConsFixarsaldo_fixar.value - QRomConsFixarSQUANTIDADE_PENHOR.Value;
+  QRomConsFixarSaldo_Consumo.value := QRomConsFixarsQuant_Consumo.Value - QRomConsFixarsQuant_Dev_Consumo.Value - QRomConsFixarsQuantidade_bloqueado_Consumo.Value;
+  wEmbalagem := DMOracle.BuscaNome('SELECT NUM_CONVERTE_FARDO FROM TB_PRODUTO',
+                'COD_PRODUTO = '+QRomConsFixarCod_Produto.text);
+  If wEmbalagem <> '' Then
+  Begin
+    QRomConsFixarsFixar_Sacas.Value := QRomConsFixarsQuantidade_Fixar.Value / StrToFloat(wEmbalagem);
+    QRomConsFixarsFixado_Sacas.Value := QRomConsFixarsQuantidade_Fixado.Value / StrToFloat(wEmbalagem);
+    QRomConsFixarsSaldo_Sacas.Value := QRomConsFixarsaldo_fixar.value / StrToFloat(wEmbalagem);
+    QRomConsFixarsBloqueado_Sacas.Value := QRomConsFixarsQuantidade_bloqueado_Fixar.Value / StrToFloat(wEmbalagem);
+  End;
+End;
+
+procedure TDMRomaneioAgricola.QRomaneioCOD_PRODUTOValidate(Sender: TField);
+var
+  wDesc,wUmidade : String;
+  wInd : Integer;
+begin
+  If ((QRomaneioIND_TIPO_ROMANEIO.Value <> 'PESAGEM PA') and (DMParamSistema.CodEmpresa <> 'INOVAR')) or
+              ((DMParamSistema.CodEmpresa = 'INOVAR') and (QRomaneioIND_TIPO_ROMANEIO.Value = 'ROMANEIO'))  Then //Entrar somente se for romaneio para Inovar. Solicitacao Andrio. Suporte(13064). Junior -21/08/2019
+  Begin
+    wUmidade := QRomaneioPERC_UMIDADE.text;
+    for Wind:=1 to Length(trim(QRomaneioPERC_UMIDADE.text)) do
+       if wUmidade[wInd] = ',' then
+          wUmidade[wInd] := '.';
+    wDesc := '';
+    if (QRomaneioCod_Produto.value > 0) And
+       (wUmidade <> '') Then
+     Begin
+       With DMDescontoProdutor Do
+       Begin
+         QDescontoProdutorCons.Close;
+         QDescontoProdutorCons.SetVariable('Cliente',QRomaneioCod_Cadastro.Value);
+         QDescontoProdutorCons.SetVariable('Produto',QRomaneioCod_Produto.Value);
+         QDescontoProdutorCons.SetVariable('Dt_Validade',Trunc(DMOracle.DataServ));  // passei a colocar este campo porque estava pegando cadastro de desconto vencido
+         QDescontoProdutorCons.Open;
+         If Not (QDescontoProdutorCons.Eof) Then
+           If QDescontoProdutorConsDt_Validade.Value >= DMOracle.DataServ Then
+            Begin
+              If (QRomaneioPERC_UMIDADE.Value < QDescontoProdutorConsPerc_Base.Value) Then
+                 wDesc := '0'
+              Else
+                Begin
+                  If (QRomaneioPERC_UMIDADE.Value > QDescontoProdutorConsPerc_Base.Value) Then
+                    If (QRomaneioPERC_UMIDADE.Value > QDescontoProdutorConsPerc_Ate.Value) Then
+                       wDesc := FloatToStr((QDescontoProdutorConsPerc_Ate.Value - QDescontoProdutorConsPerc_Base.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR.Value)
+                    Else
+                       wDesc := FloatToStr((QRomaneioPERC_UMIDADE.Value - QDescontoProdutorConsPerc_Base.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR.Value);
+                  If (QRomaneioPERC_UMIDADE.Value > QDescontoProdutorConsPerc_Base1.Value) Then
+                    If (QRomaneioPERC_UMIDADE.Value > QDescontoProdutorConsPerc_Ate1.Value) Then
+                       wDesc :=  FloatToStr(StrToFloat(wDesc) + (QDescontoProdutorConsPerc_Ate1.Value - QDescontoProdutorConsPerc_Base1.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR1.Value)
+                    else
+                       wDesc :=  FloatToStr(StrToFloat(wDesc) + (QRomaneioPERC_UMIDADE.Value - QDescontoProdutorConsPerc_Base1.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR1.Value);
+                  If (QRomaneioPERC_UMIDADE.Value >= QDescontoProdutorConsPerc_Base2.Value) Then
+                    If (QRomaneioPERC_UMIDADE.Value > QDescontoProdutorConsPerc_Ate2.Value) Then
+                       wDesc :=  FloatToStr(StrToFloat(wDesc) + (QDescontoProdutorConsPerc_Ate2.Value - QDescontoProdutorConsPerc_Base2.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR2.Value)
+                    Else
+                       wDesc :=  FloatToStr(StrToFloat(wDesc) + (QRomaneioPERC_UMIDADE.Value - QDescontoProdutorConsPerc_Base2.Value) * QDescontoProdutorConsPERC_MULTIPLICADOR2.Value);
+                End;
+              If DMDescontoProdutor.QDescontoProdutorConsPERC_TOLERA_IMPUREZA.Text <> '' Then
+                 QBalancaPerc_Tolera_Impureza.Value := DMDescontoProdutor.QDescontoProdutorConsPERC_TOLERA_IMPUREZA.Value;
+            End;
+       End;
+      If (wDesc = '') And (wUmidade <> '') And (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ROGERIOALV') Then
+       Begin
+         wDesc := DMOracle.BuscaNome('SELECT PERC_DESCONTO FROM TB_DESCONTO_AGRICOLA','COD_PRODUTO = '+QRomaneioCod_Produto.text+' AND PERC_UMIDADE ='+wUmidade+' AND COD_FILIAL ='+QRomaneioCod_Filial.text);
+         If wDesc = '' Then
+            Raise Exception.Create ('Percentual de Umidade Não Permitido');
+       End;
+     End;
+    if wDesc <> '' then
+      QRomaneioPerc_desconto.Value:=StrToFloat(wDesc);
+  //  Else
+  //    QRomaneioPerc_desconto.Value:=0;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QRCadastroCalcFields(DataSet: TDataSet);
+var wPeso_Produto:real;
+    wDesconto   :Real;
+begin
+  wPeso_Produto := QRCadastroQT_Rateio.Value;
+  CalculoDesconto(wPeso_Produto,
+                  QRCadastroPerc_Desconto.Value,
+                  QRCadastroPerc_Ardidos.Value,
+                  QRCadastroPerc_Umidade.Value,
+                  QRCadastroPerc_Impureza.Value,
+                  QRCadastroPerc_Avariado.Value,
+                  QRCadastroPerc_Quebrados.Value,
+                  QRCadastroPerc_Diversos.Value,
+                  QRCadastroCod_Romaneio_Agricola.Value,
+                  QRCadastroCod_Produto.Value,
+                  QRCadastroPerc_Triguilho.Value,
+                  QRCadastroPerc_Tolera_Ardidos.Value,
+                  QRCadastroPerc_Tolera_Impureza.Value,
+                  QRCadastroPerc_Tolera_Avariado.Value,
+                  QRCadastroPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+  QRCadastroSqt_Peso_Liquido.Value := wLiquido;
+  wDesconto := QRCadastroPERC_DESCONTO.value;
+  if wDesconto <> 0 then
+     QRCadastroSqt_Umidade.Value := round(wPeso_Produto * wDesconto / 100);
+
+  if ((QRCadastroPerc_Ardidos.Value - QRCadastroPerc_Tolera_Ardidos.Value) >  0) then
+     QRCadastroSqt_ardidos.Value := round(wPeso_Produto * (QRCadastroPerc_Ardidos.Value - QRCadastroPerc_Tolera_Ardidos.Value) / 100);
+
+  if ((QRCadastroPerc_Impureza.value - QRCadastroPerc_Tolera_Impureza.Value) > 0) then
+     QRCadastroSqt_impureza.Value := round(wPeso_Produto * (QRCadastroPerc_Impureza.Value - QRCadastroPerc_Tolera_Impureza.Value) / 100);
+
+  if ((QRCadastroPerc_Avariado.value - QRCadastroPerc_Tolera_Avariado.Value) > 0) then
+     QRCadastroSqt_avariado.Value := round(wPeso_Produto * (QRCadastroPerc_Avariado.Value - QRCadastroPerc_Tolera_Avariado.Value) / 100);
+
+  if QRCadastroPerc_Quebrados.Value > 0 then
+     QRCadastroSqt_Triguilho_Quebrados.Value := round(wPeso_Produto * QRCadastroPerc_Quebrados.Value / 100);
+
+  if QRCadastroPerc_Triguilho.Value > 0 then
+     QRCadastroSqt_Triguilho_Quebrados.Value := round(QRCadastroSqt_Triguilho_Quebrados.Value +
+                                               wPeso_Produto * QRCadastroPerc_Triguilho.Value / 100);
+  if QRCadastroPerc_Diversos.Value > 0 then
+   Begin
+     QRCadastroSqt_Outros.Value := QRCadastroPerc_Diversos.Value;
+     QRCadastroSqt_Diversos.Value := QRCadastroPerc_Diversos.Value;
+   End;
+
+end;
+
+procedure TDMRomaneioAgricola.QrRomNotaCalcFields(DataSet: TDataSet);
+begin
+  QrRomNotaCod_Estado.Value :=DMOracle.BuscaNome('SELECT COD_ESTADO FROM TB_CADASTRO','COD_CADASTRO = '+FloatToStr(QrRomNotaCOD_CADASTRO.VALUE));
+end;
+
+procedure TDMRomaneioAgricola.QRRomaneios_no_PeriodoCalcFields(
+  DataSet: TDataSet);
+var wDesconto :String;
+begin
+{  With DMProdutoAgricola do
+  Begin
+    QProdutoAgricola.Close;
+    QProdutoAgricola.setVariable('PK',DMRomaneioAgricola.QRRomaneios_no_PeriodoCOD_PRODUTO.Value);
+    QProdutoAgricola.Open;
+  End;   }
+  QRRomaneios_no_PeriodoPesoBalanca.Value := QRRomaneios_no_PeriodoQT_PESO_BRUTO.Value - QRRomaneios_no_PeriodoQT_TARA.Value;
+  wDesconto := DmOracle.BuscaNome('SELECT PERC_DESCONTO FROM TB_ROMANEIO_AGRICOLA', 'COD_ROMANEIO_AGRICOLA = ' + FloatToStr(QRRomaneios_no_PeriodoCOD_ROMANEIO_AGRICOLA.Value));
+  if wDesconto <> '' then
+    QRRomaneios_no_PeriodoUmidade.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * strtoFloat(wDesconto) / 100);
+
+  if ((QRRomaneios_no_PeriodoPERC_ARDIDOS.Value  - QRRomaneios_no_PeriodoPerc_Tolera_Ardidos.Value) >  0) then
+    QRRomaneios_no_PeriodoArdidos.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * (QRRomaneios_no_PeriodoPERC_ARDIDOS.Value - QRRomaneios_no_PeriodoPerc_Tolera_Ardidos.Value) / 100);
+
+  if ((QRRomaneios_no_PeriodoPERC_IMPUREZA.Value - QRRomaneios_no_PeriodoPerc_Tolera_Impureza.Value) > 0) then
+    QRRomaneios_no_PeriodoImpureza.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * (QRRomaneios_no_PeriodoPERC_IMPUREZA.Value - QRRomaneios_no_PeriodoPerc_Tolera_Impureza.Value) / 100);
+
+  if ((QRRomaneios_no_PeriodoPERC_AVARIADO.Value - QRRomaneios_no_PeriodoPerc_Tolera_Avariado.Value) > 0) then
+    QRRomaneios_no_PeriodoAvariados.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * (QRRomaneios_no_PeriodoPERC_AVARIADO.Value - QRRomaneios_no_PeriodoPerc_Tolera_Avariado.Value) / 100);
+
+  if QRRomaneios_no_PeriodoPERC_QUEBRADOS.Value > 0 then
+    QRRomaneios_no_PeriodoQuebrados.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * QRRomaneios_no_PeriodoPERC_QUEBRADOS.Value / 100);
+
+  if QRRomaneios_no_PeriodoPERC_DIVERSOS.Value > 0 then
+    QRRomaneios_no_PeriodoDiversos.Value := QRRomaneios_no_PeriodoPERC_DIVERSOS.Value;
+
+  if QRRomaneios_no_PeriodoPERC_TRIGUILHO.Value > 0 then
+    QRRomaneios_no_PeriodoTriguilho.Value := round(QRRomaneios_no_PeriodoQT_RATEIO.Value * QRRomaneios_no_PeriodoPERC_TRIGUILHO.Value / 100);
+
+  QRRomaneios_no_PeriodoTotalDesconto.Value := QRRomaneios_no_PeriodoUmidade.Value + QRRomaneios_no_PeriodoArdidos.Value +
+                      QRRomaneios_no_PeriodoImpureza.Value + QRRomaneios_no_PeriodoAvariados.Value +
+                      QRRomaneios_no_PeriodoQuebrados.Value + QRRomaneios_no_PeriodoDiversos.Value;
+
+  QRRomaneios_no_PeriodoLiquido.Value := QRRomaneios_no_PeriodoQT_RATEIO.Value - QRRomaneios_no_PeriodoTotalDesconto.Value - QRRomaneios_no_PeriodoTriguilho.Value;
+  if QRRomaneios_no_PeriodoIND_SITUACAO.Value = 'A' then
+    QRRomaneios_no_Periododesc_situacao.Value := 'ABERTO';
+  if QRRomaneios_no_PeriodoIND_SITUACAO.Value = 'E' then
+    QRRomaneios_no_Periododesc_situacao.Value := 'EMITIDO ROMANEIO';
+  if QRRomaneios_no_PeriodoIND_SITUACAO.Value = 'N' then
+    QRRomaneios_no_Periododesc_situacao.Value := 'EMITIDO NOTA';
+  if QRRomaneios_no_PeriodoIND_SITUACAO.Value = 'C' then
+    QRRomaneios_no_Periododesc_situacao.Value := 'CANCELADO';
+End;
+
+Procedure TDMRomaneioAgricola.QRomaneioCOD_CADASTROValidate(
+  Sender: TField);
+Begin
+  if Trim(QRomaneioCOD_CADASTRO.Text) <> '' then
+    if Trim(DMOracle.BuscaNome('SELECT DT_CANCELAMENTO FROM TB_CADASTRO',' COD_CADASTRO = '+QRomaneioCOD_CADASTRO.Text)) <> '' then
+       raise exception.Create('ATENÇÃO - Cadastro Cancelado, Verifique!')
+end;
+
+Procedure TDMRomaneioAgricola.QBalancaAfterPost(DataSet: TDataSet);
+var
+  wCodigo: integer;
+begin
+  wCodigo := QBalancaCod_Balanca.Value;
+  QBalanca.Close;
+  QBalanca.SetVariable('PK',wCodigo);
+  QBalanca.Open;
+End;
+
+Procedure TDMRomaneioAgricola.QRomaneioBeforePost(DataSet: TDataSet);
+var wVal : string;
+begin
+  DMOracle.ValidaFilial(QRomaneioCOD_FILIAL.Text);
+  If QRomaneioNum_Romaneio.Value = 0 then
+    If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO') Then
+       QRomaneioNum_Romaneio.Value := DMSequencia.Sequencia(StrToInt(QRomaneioCod_Filial.Text),'ROMANEIO')
+    else
+       If QRomaneioInd_Tipo_Romaneio.Value = 'ROMANEIO' then
+         QRomaneioNum_Romaneio.Value := DMSequencia.Sequencia(StrToInt(QRomaneioCod_Filial.Text),'ROMANEIO')
+       Else
+         QRomaneioNum_Romaneio.Value := DMSequencia.Sequencia(StrToInt(QRomaneioCod_Filial.Text),'PESAGEM');
+  If QRomaneioNum_Ticket.Value = 0 then
+     QRomaneioNum_Ticket.Value := DMSequencia.Sequencia(StrToInt(QRomaneioCod_Filial.Text),'TICKET');
+  If QRomaneio.State <> dsInsert then
+    RateiaRomaneio;
+
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'CEREAIS') And
+     (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'ITATIBA') AND
+     (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'RAMBO')   Then
+   Begin
+     //verifica se o cadastro possui CPF
+     wVal := DMOracle.BuscaNome('SELECT COD_ESTADO FROM TB_CADASTRO ', ' COD_CADASTRO = ' + QRomaneioCOD_CADASTRO.Text);
+     If wVal <> 'EX'Then
+      Begin
+        wVal := DMOracle.BuscaNome('SELECT NUM_CGC_CPF FROM TB_CADASTRO ', ' COD_CADASTRO = ' + QRomaneioCOD_CADASTRO.Text);
+        if (wVal = '') then
+          raise Exception.Create('Cadastro sem CPF');
+      End;
+     //fim cpf
+   End;
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INOVAR' then
+  begin
+    If QRomaneioInd_Tipo_Romaneio.Value = 'ROMANEIO' then
+      if (QRomaneio_Fitas.Eof) and (QRomaneioCOD_PRODUTO.Value = 2) then
+      begin
+        MessageDlg('Resultado Intacta não informado', mtError, [mbOk], 0);
+        abort;
+      end;
+  end;
+  QRomaneioCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+End;
+
+Procedure TDMRomaneioAgricola.QRRomaneioPesagemCalcFields(
+  DataSet: TDataSet);
+Var wPeso_Produto :Real;
+    wCod_Desconto : String;
+Begin
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'ROMANEIO' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'ROMANEIO';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'ROMANEIO S' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'ROMANEIO SEMENTE';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM EN' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'ENTRADA';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM SA' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'SAIDA';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM PA' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'PESAGEM PARTICULAR';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'TRANSF SAI' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'TRANSFERENCIA SAIDA';
+  If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'TRANSF ENT' Then
+     QRRomaneioPesagemDesc_Tipo.Value := 'TRANSFERENCIA ENTRADA';
+{  With DMProdutoAgricola do
+  Begin
+    QProdutoAgricola.Close;
+    QProdutoAgricola.setVariable('PK',QRRomaneioPesagemCod_Produto.Value);
+    QProdutoAgricola.Open;
+  End;   }
+  wPeso_Produto := QRRomaneioPesagemQt_Peso_Bruto.Value - QRRomaneioPesagemQt_Tara.Value;
+  If (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'ROMANEIO') Or
+     (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'ROMANEIO S') Or
+     (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'TRANSF ENT') Or
+     (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'TRANSF SAI') Or
+     (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM PA') Then
+     CalculoDesconto(wPeso_Produto,
+                  QRRomaneioPesagemPerc_Desconto.Value,
+                  QRRomaneioPesagemPerc_Ardidos.Value,
+                  QRRomaneioPesagemPerc_Umidade.Value,
+                  QRRomaneioPesagemPerc_Impureza.Value,
+                  QRRomaneioPesagemPerc_Avariado.Value,
+                  QRRomaneioPesagemPerc_Quebrados.Value,
+                  QRRomaneioPesagemPerc_Diversos.Value,
+                  QRRomaneioPesagemCod_Romaneio_Agricola.Value,
+                  QRRomaneioPesagemCod_Produto.Value,
+                  QRRomaneioPesagemPerc_Triguilho.Value,
+                  QRRomaneioPesagemPerc_Tolera_Ardidos.Value,
+                  QRRomaneioPesagemPerc_Tolera_Impureza.Value,
+                  QRRomaneioPesagemPerc_Tolera_Avariado.Value,
+                  QRRomaneioPesagemPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio) // este campo nao esta sendo utilizado nesta rotina
+  Else
+    Begin
+      If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM SA' Then
+         If QRRomaneioPesagemCOD_CONTRATO_VEND.Text <> '' Then
+            wCod_Desconto := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_VEND','COD_CONTRATO_VEND = '+QRRomaneioPesagemCOD_CONTRATO_VEND.Text);
+      If QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM EN' Then
+         If QRRomaneioPesagemCOD_CONTRATO_PJURIDICA.Text <> '' Then
+            wCod_Desconto := DMOracle.BuscaNome('SELECT COD_PADRAO_DESCONTO_PRODUTO FROM TB_CONTRATO_PJURIDICA','COD_CONTRATO_PJURIDICA = '+QRRomaneioPesagemCOD_CONTRATO_PJURIDICA.Text);
+      If wCod_Desconto = ''  Then  // colocado pelo César porque estavam deixando em branco no moinho
+         wCod_Desconto := '1';
+      With DMRomaneioAgricola do
+      Begin
+        CalculoDesconto_Saida(wPeso_Produto,
+                              QRRomaneioPesagemPerc_ardidos.Value,
+                              QRRomaneioPesagemPerc_Umidade.Value,
+                              QRRomaneioPesagemPerc_Impureza.Value,
+                              QRRomaneioPesagemPerc_Avariado.Value,
+                              QRRomaneioPesagemPerc_Quebrados.Value,
+                              QRRomaneioPesagemPerc_Triguilho.Value,
+                              StrToInt(wCod_Desconto),
+                              wLiquido, wDesc_Romaneio);
+      End;
+    End;
+  QRRomaneioPesagemQt_Triguilho.Value := 0;
+  If QRRomaneioPesagemPerc_Triguilho.Value > 0 Then
+     QRRomaneioPesagemQt_Triguilho.Value := wPeso_Produto * QRRomaneioPesagemPerc_Triguilho.Value / 100;
+  QRRomaneioPesagemQT_Liquido.Value := wLiquido;
+  QRRomaneioPesagemQt_Desconto.Value := wPeso_Produto - QRRomaneioPesagemQt_Liquido.Value - QRRomaneioPesagemQt_Triguilho.Value;
+  If (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'PESAGEM SA') Or
+     (QRRomaneioPesagemInd_Tipo_Romaneio.Value = 'TRANSF SAI') Then
+     QRRomaneioPesagemQT_Liquido.Value := QRRomaneioPesagemQT_Liquido.Value * -1;
+End;
+
+procedure TDMRomaneioAgricola.QBalancaAfterInsert(DataSet: TDataSet);
+begin
+  QBalancaCod_Filial.Value := DMUsuario.CodFilialUsuario;
+  QBalancaInd_Situacao.Value := 'A';
+
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'CEREAIS' then
+  begin
+    QBalancaIND_TIPO.Value := 'Diversos';
+    QBalancaCOD_PRODUTO.Value := 50;
+    QBalancaCOD_CADASTRO.Value := 2101;
+  end;
+  if DMParamSistema.CodEmpresa = 'JATINHO' then
+  begin
+    QBalancaIND_TIPO.Value := 'Diversos';
+    QBalancaCOD_PRODUTO.Value := 1;
+    QBalancaCOD_CADASTRO.Value := 1397;
+  end;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ITATIBA') or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ALIANCA')then
+    QBalancaIND_TIPO.Value := 'Diversos';
+end;
+
+procedure TDMRomaneioAgricola.QRateioCalcFields(DataSet: TDataSet);
+begin
+  If QRateioCOD_CADASTRO.Text <> '' Then
+     QRateioNome.Value := DMOracle.BuscaNome('SELECT NOME FROM TB_CADASTRO',' COD_CADASTRO = '+QRateioCOD_CADASTRO.Text);
+end;
+
+procedure TDMRomaneioAgricola.QRomaneio_FitasAfterInsert(
+  DataSet: TDataSet);
+begin
+  QRomaneio_FitasCod_Produto.Text := DMOracle.Buscanome('SELECT COD_PRODUTO_FITA FROM TB_PRODUTO_AGRICOLA','COD_PRODUTO = '+FloatToStr(QRomaneioCOD_PRODUTO.Value));
+  QRomaneio_FitasCod_Romaneio_Agricola.Value := QRomaneioCod_Romaneio_Agricola.Value;
+  wInsert := 'S';
+end;
+
+procedure TDMRomaneioAgricola.QRomaneio_FitasAfterPost(DataSet: TDataSet);
+Var wComando : String;
+begin
+  If wInsert = 'S' Then
+  Begin
+    With DMOracle do
+    Begin
+      QExecSQL.Close;
+      QExecSQL.SQL.Clear;
+      wComando := 'UPDATE TB_ESTOQUE SET QT_QUANTIDADE = QT_QUANTIDADE - 1 ';
+      wComando := wComando + ' WHERE COD_PRODUTO = '+FloatToStr(QRomaneio_FitasCod_Produto.Value);
+      wComando := wComando + ' AND COD_LOTE_TIPO = 1 AND COD_FILIAL = '+FloatToStr(QRomaneioCod_Filial.Value);
+      QExecSQL.SQL.Add(wComando);
+      QExecSQL.ExecSQL;
+      DMOracle.DBCemapa.Commit;
+    End;
+  End;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneio_FitasBeforeDelete(
+  DataSet: TDataSet);
+Var wComando : String;
+begin
+  With DMOracle do
+  Begin
+    QExecSQL.Close;
+    QExecSQL.SQL.Clear;
+    wComando := 'UPDATE TB_ESTOQUE SET QT_QUANTIDADE = QT_QUANTIDADE + 1 ';
+    wComando := wComando + ' WHERE COD_PRODUTO = '+FloatToStr(QRomaneio_FitasCod_Produto.Value);
+    wComando := wComando + ' AND COD_LOTE_TIPO = 1 AND COD_FILIAL = '+FloatToStr(QRomaneioCod_Filial.Value);
+    QExecSQL.SQL.Add(wComando);
+    QExecSQL.ExecSQL;
+    DMOracle.DBCemapa.Commit;
+  End;
+
+end;
+
+procedure TDMRomaneioAgricola.QRomaneio_FitasAfterEdit(DataSet: TDataSet);
+begin
+  wInsert := 'N';
+end;
+
+Procedure TDMRomaneioAgricola.CalculoDesconto_Saida( wPesoBalanca,
+                                                     wPerc_ardidos,
+                                                     wPerc_Umidade,
+                                                     wPerc_Impureza,
+                                                     wPerc_Avariado,
+                                                     wPerc_Quebrados,
+                                                     wPerc_Triguilho : Real;
+                                                     wDescontoPadraoProduto : Integer;
+                                                     Var wLiquido, wDesconto : Real);
+Var
+    wPercDescLiquido : Real;
+begin
+  DMPadraoProduto.QPadraoDescontoProduto.Close;
+  DMPadraoProduto.QPadraoDescontoProduto.SetVariable('Pk',wDescontoPadraoProduto);
+  DMPadraoProduto.QPadraoDescontoProduto.Open;
+
+  wDesconto := 0;
+
+  If wPerc_Umidade > DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_Umidade - DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_UMIDADE_DESCONTO.Value;
+    wDesconto :=  round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  If wPerc_ardidos > DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_ardidos - DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_ARDIDOS_DESCONTO.Value;
+    wDesconto := wDesconto + round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  If wPerc_Impureza > DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_Impureza - DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_IMPUREZA_DESCONTO.Value;
+    wDesconto := wDesconto + round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  If wPerc_Avariado > DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_Avariado - DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_AVARIADO_DESCONTO.Value;
+    wDesconto := wDesconto + round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  If wPerc_Quebrados > DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_Quebrados - DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_QUEBRADO_DESCONTO.Value;
+    wDesconto := wDesconto + round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  If wPerc_Triguilho > DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_TOLERANCIA.Value Then
+  Begin
+    wPercDescLiquido := wPerc_Triguilho - DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_TOLERANCIA.Value;
+    wPercDescLiquido := wPercDescLiquido * DMPadraoProduto.QPadraoDescontoProdutoNUM_TRIGUILHO_DESCONTO.Value;
+    wDesconto := wDesconto + round(wPesoBalanca * wPercDescLiquido / 100);
+  End;
+
+  wLiquido := wPesoBalanca - round(wDesconto);
+
+End;
+
+
+
+procedure TDMRomaneioAgricola.QBalancaCalcFields(DataSet: TDataSet);
+begin
+  if QBalancaQt_Peso_Chegada.Value > QBalancaQt_Peso_Saida.Value then
+    QBalancaQt_Peso_Balanca.Value := QBalancaQt_Peso_Chegada.Value - QBalancaQt_Peso_Saida.Value
+  Else
+    QBalancaQt_Peso_Balanca.Value := QBalancaQt_Peso_Saida.Value - QBalancaQt_Peso_Chegada.Value;
+end;
+
+procedure TDMRomaneioAgricola.QBalancaCOD_TRANSPORTADORChange(
+  Sender: TField);
+begin
+  If QBalancaCOD_TRANSPORTADOR.Text <> '' Then
+     QBalancaNome_Motorista.Value := DMOracle.BuscaNome('SELECT NOME FROM TB_CADASTRO',' COD_CADASTRO = '+QBalancaCOD_TRANSPORTADOR.Text);
+
+end;
+
+procedure TDMRomaneioAgricola.QRFreteiroCalcFields(DataSet: TDataSet);
+begin
+  CalculoDesconto(QRFreteiroQt_Peso.Value,
+                  QRFreteiroPerc_Desconto.Value,
+                  QRFreteiroPerc_Ardidos.Value,
+                  QRFreteiroPerc_Umidade.Value,
+                  QRFreteiroPerc_Impureza.Value,
+                  QRFreteiroPerc_Avariado.Value,
+                  QRFreteiroPerc_Quebrados.Value,
+                  QRFreteiroPerc_Diversos.Value,
+                  QRFreteiroCod_Romaneio_Agricola.Value,
+                  QRFreteiroCod_Produto.Value,
+                  QRFreteiroPerc_Triguilho.Value,
+                  QRFreteiroPerc_Tolera_Ardidos.Value,
+                  QRFreteiroPerc_Tolera_Impureza.Value,
+                  QRFreteiroPerc_Tolera_Avariado.Value,
+                  QRFreteiroPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+
+  QRFreteiroval_total.Value :=((QRFreteiroQt_Peso.Value - wDesc_Romaneio) * QRFreteiroVL_FRETE.Value / 1000);
+  QRFreteiroLiquido.Value := QRFreteiroQt_Peso.Value - wDesc_Romaneio;
+end;
+
+procedure TDMRomaneioAgricola.QRArranquioCalcFields(DataSet: TDataSet);
+begin
+  CalculoDesconto(QRArranquioQt_Peso.Value,
+                  QRArranquioPerc_Desconto.Value,
+                  QRArranquioPerc_Ardidos.Value,
+                  QRArranquioPerc_Umidade.Value,
+                  QRArranquioPerc_Impureza.Value,
+                  QRArranquioPerc_Avariado.Value,
+                  QRArranquioPerc_Quebrados.Value,
+                  QRArranquioPerc_Diversos.Value,
+                  QRArranquioCod_Romaneio_Agricola.Value,
+                  QRArranquioCod_Produto.Value,
+                  QRArranquioPerc_Triguilho.Value,
+                  QRArranquioPerc_Tolera_Ardidos.Value,
+                  QRArranquioPerc_Tolera_Impureza.Value,
+                  QRArranquioPerc_Tolera_Avariado.Value,
+                  QRArranquioPerc_Beneficiado.Value,
+                  wLiquido,
+                  wDesc_Romaneio); // este campo nao esta sendo utilizado nesta rotina
+
+  QRArranquioval_total.Value :=((QRArranquioQt_Peso.Value - wDesc_Romaneio) * QRArranquioVL_ARRANQUIO.Value / 1000);
+  QRArranquioLiquido.Value := QRArranquioQt_Peso.Value - wDesc_Romaneio;
+
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioImpostoCalcFields(
+  DataSet: TDataSet);
+begin
+  if QRomaneioImpostoCOD_IMPOSTO.Value > 0 then
+  begin
+    QRomaneioImpostonome_imposto.Value :=
+      DMOracle.FastSelect('DESC_IMPOSTO','TB_IMPOSTO','COD_IMPOSTO = ' +
+        QRomaneioImpostoCOD_IMPOSTO.Text);
+    QRomaneioImpostoperc_aliq.Text := DMOracle.FastSelect('NVL(PERC_ALIQUOTA,' +
+      quotedStr('0')+ ')','TB_IMPOSTO',
+      'COD_IMPOSTO = ' + QRomaneioImpostoCOD_IMPOSTO.Text);
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioAfterOpen(DataSet: TDataSet);
+begin
+  if QRomaneio.RecordCount > 0 then
+  begin
+    QRomaneioImposto.Close;
+    QRomaneioImposto.SetVariable('COD_ROMANEIO_AGRICOLA',
+      QRomaneioCOD_ROMANEIO_AGRICOLA.Value);
+    QRomaneioImposto.Open;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioImpostoBeforePost(
+  DataSet: TDataSet);
+begin
+  if QRomaneio.State in [DSInsert] then
+  begin
+    QRomaneio.Post;
+    QRomaneio.Edit;
+  end;
+  if QRomaneioCOD_ROMANEIO_AGRICOLA.Value > 0 then
+    QRomaneioImpostoCOD_ROMANEIO_AGRICOLA.Value :=
+      QRomaneioCOD_ROMANEIO_AGRICOLA.Value;
+end;
+
+procedure TDMRomaneioAgricola.QRomaneioBeforeDelete(DataSet: TDataSet);
+begin
+  QRomaneioImposto.Close;
+  QRomaneioImposto.SetVariable('COD_ROMANEIO_AGRICOLA',
+    QRomaneioCOD_ROMANEIO_AGRICOLA.Value);
+  QRomaneioImposto.Open;
+  QRomaneioImposto.First;
+  while not QRomaneioImposto.Eof do
+  begin
+    QRomaneioImposto.Delete; 
+    QRomaneioImposto.First;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QPesagemRendaBeforeInsert(DataSet: TDataSet);
+begin
+  if DMOracle.FastSelect('COUNT(*)', 'TB_ROMANEIO_AGRICOLA',
+    'COD_BALANCA = ' + QBalancaCOD_BALANCA.Text) <> '0' then
+  begin
+    MessageDlg('Não é possível incluir pesagem renda em pesagem que já possua romaneio',
+      mtError, [mbOk], 0);
+    Abort;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QPesagemRendaBeforeDelete(DataSet: TDataSet);
+begin
+  if DMOracle.FastSelect('COUNT(*)', 'TB_ROMANEIO_AGRICOLA',
+    'COD_BALANCA = ' + QBalancaCOD_BALANCA.Text) <> '0' then
+  begin
+    MessageDlg('Não é possível excluir pesagem renda em pesagem que já possua romaneio',
+      mtError, [mbOk], 0);
+    Abort;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.excluiPesagensRenda(pCodBalanca: integer);
+begin
+  with DMOracle do
+  begin
+    try
+      ExecutaSql('DELETE FROM TB_PESAGEM_RENDA WHERE COD_BALANCA = '
+        + intToStr(pCodBalanca), true);
+    Except on e: Exception do
+    begin
+      MessageDlg('Não foi possível excluir pesagens de renda.'
+        + #13#10
+        + e.message
+        , mtError, [mbOk], 0);
+        abort;
+    end;
+    end;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QBalancaBeforeDelete(DataSet: TDataSet);
+begin
+  excluiPesagensRenda(QBalancaCOD_BALANCA.Value);
+  pCameraPesagem := False;
+end;
+
+procedure TDMRomaneioAgricola.QrRomEmissaoAfterOpen(DataSet: TDataSet);
+begin
+  if QrRomEmissao.Eof then
+    Exit;
+  if (not QRomaneio_Fitas.Eof) and (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INOVAR') then
+  begin
+    QRomaneio_Fitas.First;
+    while not QRomaneio_Fitas.Eof do
+    begin
+      if QrRomEmissaoDESC_OBSERVACAO.Value <> '' then
+      begin
+        QrRomEmissao.Edit;
+        QrRomEmissaoDESC_OBSERVACAO.Value := QrRomEmissaoDESC_OBSERVACAO.Value +
+          chr(13) + chr(10) +
+          'RESULTADO INTACTA: ' + QRomaneio_FitasIND_RESULTADO.Value;
+        QrRomEmissao.Post;
+      end
+      else
+      begin
+        QrRomEmissao.Edit;
+        QrRomEmissaoDESC_OBSERVACAO.Value :=
+          'RESULTADO INTACTA: ' + QRomaneio_FitasIND_RESULTADO.Value;
+        QrRomEmissao.Post;
+      end;
+      QRomaneio_Fitas.Next;
+    end;
+  end;
+end;
+
+procedure TDMRomaneioAgricola.QRFitasCalcFields(DataSet: TDataSet);
+var wLiquido, wDesconto: Real;
+begin
+   wLiquido := 0;
+   wDesconto := 0;
+   CalculoDesconto(QRFitasPESO_BALANCA.Value,
+                QRFitasPerc_Desconto.Value,
+                QRFitasPerc_Ardidos.Value,
+                QRFitasPerc_Umidade.Value,
+                QRFitasPerc_Impureza.Value,
+                QRFitasPerc_Avariado.Value,
+                QRFitasPerc_Quebrados.Value,
+                QRFitasPerc_Diversos.Value,
+                QRFitasCod_Romaneio_Agricola.Value,
+                QRFitasCod_Produto.Value,
+                QRFitasPerc_Triguilho.Value,
+                QRFitasPerc_Tolera_Ardidos.Value,
+                QRFitasPerc_Tolera_Impureza.Value,
+                QRFitasPerc_Tolera_Avariado.Value,
+                QRFitasPerc_Beneficiado.Value,
+                wLiquido,
+                wDesconto);
+  QRFitasPeso_Liquido.Value := wLiquido;
+end;
+
+procedure TDMRomaneioAgricola.QBalancaBeforeInsert(DataSet: TDataSet);
+begin
+  pCameraPesagem := False;
+end;
+
+procedure TDMRomaneioAgricola.QBalancaBeforeEdit(DataSet: TDataSet);
+var
+  wCodigo : integer;
+begin
+  pCameraPesagem := True;
+  wCodigo := QBalancaCod_Balanca.Value;
+  QBalanca.Close;
+  QBalanca.SetVariable('PK', wCodigo);
+  QBalanca.Open;
+  QBalancaCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMRomaneioAgricola.QRMovEstoqueClienteCalcFields(
+  DataSet: TDataSet);
+begin
+//  DMRomaneioAgricola.QRMovEstoqueClienteestoqueinicial.Value := StrToFloat(FNotaEntradaParam.Me10EstoqueInicial.Text);
+end;
+
+procedure TDMRomaneioAgricola.QBalancaDESC_PLACAChange(Sender: TField);
+var wCodVeiculo, wPlacaMascara : String;
+begin
+  if DMParamSistema.CodEmpresa = 'ITATIBA' then //Não permitir pesagem sem veículo cadastrado. Márcio/Daniel 04/09/2024. Avisei 3X que vai dar fila na pesagem!!! Junior 04/09/2024
+  begin
+    wPlacaMascara := Copy(QBalancaDESC_PLACA.AsString, 1, 3) + '-' + Copy(QBalancaDESC_PLACA.AsString, 4, 4);
+    wCodVeiculo := DMOracle.FastSelect('COD_VEICULO','TB_VEICULO','NUM_PLACA = ' + QuotedStr(wPlacaMascara));
+    if wCodVeiculo = '' then
+      Raise Exception.Create('Obrigatório o cadastro do veículo ' + QBalancaDESC_PLACA.AsString);
+  end;
+end;
+
+end.

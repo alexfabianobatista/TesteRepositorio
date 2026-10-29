@@ -1,0 +1,133 @@
+object FAlteraCodigoContrato: TFAlteraCodigoContrato
+  Left = 402
+  Top = 198
+  Width = 325
+  Height = 237
+  Caption = 'Altera C'#243'digo Contrato'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 24
+    Top = 16
+    Width = 79
+    Height = 13
+    Caption = 'Contrato Compra'
+  end
+  object Label2: TLabel
+    Left = 24
+    Top = 64
+    Width = 74
+    Height = 13
+    Caption = 'Contrato Venda'
+  end
+  object MeContratoCompra: TMaskEdit
+    Left = 24
+    Top = 32
+    Width = 65
+    Height = 21
+    TabOrder = 0
+  end
+  object MeContratoVend: TMaskEdit
+    Left = 24
+    Top = 80
+    Width = 65
+    Height = 21
+    TabOrder = 1
+  end
+  object BtConsVendedorPre: TBitBtn
+    Left = 96
+    Top = 29
+    Width = 25
+    Height = 24
+    TabOrder = 2
+    TabStop = False
+    OnClick = BtConsVendedorPreClick
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+      55555575555555775F55509999999901055557F55555557F75F5001111111101
+      105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+      01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+      8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+      0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+      0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+      05555555575FF777755555555500055555555555557775555555}
+    NumGlyphs = 2
+  end
+  object BitBtn1: TBitBtn
+    Left = 96
+    Top = 79
+    Width = 25
+    Height = 24
+    TabOrder = 3
+    TabStop = False
+    OnClick = BitBtn1Click
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      55555555FFFFFFFF5555555000000005555555577777777FF555550999999900
+      55555575555555775F55509999999901055557F55555557F75F5001111111101
+      105577FFFFFFFF7FF75F00000000000011057777777777775F755070FFFFFF0F
+      01105777F555557F75F75500FFFFFF0FF0105577F555FF7F57575550FF700008
+      8F0055575FF7777555775555000888888F005555777FFFFFFF77555550000000
+      0F055555577777777F7F555550FFFFFF0F05555557F5FFF57F7F555550F000FF
+      0005555557F777557775555550FFFFFF0555555557F555FF7F55555550FF7000
+      05555555575FF777755555555500055555555555557775555555}
+    NumGlyphs = 2
+  end
+  object BtConfirmar: TBitBtn
+    Left = 80
+    Top = 145
+    Width = 105
+    Height = 25
+    Hint = 'Confirmar quantidade'
+    Caption = 'Confirma'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+    OnClick = BtConfirmarClick
+    Kind = bkOK
+  end
+  object BitBtn2: TBitBtn
+    Left = 192
+    Top = 145
+    Width = 105
+    Height = 25
+    Caption = 'Cancelar'
+    TabOrder = 5
+    Kind = bkCancel
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 180
+    Width = 309
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end>
+  end
+  object ActionList1: TActionList
+    Left = 8
+    Top = 144
+    object Action1: TAction
+      Caption = 'Action1'
+      ShortCut = 49222
+      OnExecute = Action1Execute
+    end
+  end
+end

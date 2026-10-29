@@ -1,0 +1,502 @@
+object DMBloco1: TDMBloco1
+  OldCreateOrder = False
+  Left = 470
+  Top = 341
+  Height = 216
+  Width = 348
+  object QReg400: TOracleDataSet1
+    SQL.Strings = (
+      '--REG 1400'
+      ''
+      'SELECT'
+      '  COD_ITEM_IPM,'
+      '  MUN,'
+      '  SUM(VALOR) AS VALOR'
+      'FROM '
+      '('
+      '-- PARA TRANSPORTADORAS'
+      '-- TB_NOTA_CAB ( NOTA DE FRETE )'
+      'SELECT'
+      
+        '  DECODE(P.COD_ITEM_IPM, NULL, CAST (P.COD_PRODUTO AS VARCHAR2(2' +
+        '0 BYTE)), P.COD_ITEM_IPM) AS COD_ITEM_IPM,'
+      '  E.COD_UF_IBGE || CI.COD_CIDADE_IBGE AS MUN,'
+      '  DECODE(PS.COD_EMPRESA, '#39'CGS'#39', '
+      
+        '  (SUM(I.VAL_TOTAL) + N.VAL_DESPESAS + (CASE WHEN ((N.NUM_CONHEC' +
+        'IMENTO_FRETE IS NOT NULL) AND (N.IND_ENTRADA_SAIDA = '#39'E'#39') AND (N' +
+        '.IND_TIPO_FRETE = '#39'FOB'#39')) THEN 0.00 ELSE N.VAL_FRETE END) + SUM(' +
+        'I.VAL_ICMS_SUBST) + SUM(CASE WHEN (I.COD_CST_IPI IN ('#39'00'#39', '#39'50'#39')' +
+        ') THEN I.VAL_IPI ELSE 0 END) - N.VAL_DESCONTO),  '
+      
+        '    (SUM(I.VAL_TOTAL) + N.VAL_DESPESAS - PEGA_DESCONTO_NOTA(N.CO' +
+        'D_NOTA_CAB) + SUM(I.VAL_ICMS_SUBST) + SUM(CASE WHEN (I.COD_CST_I' +
+        'PI IN ('#39'00'#39', '#39'50'#39')) THEN I.VAL_IPI ELSE 0 END))) AS VALOR'
+      ''
+      'FROM'
+      '  TB_PARAM_SISTEMA PS,'
+      '  TB_NOTA_ITEM I'
+      '    INNER JOIN TB_NOTA_CAB N'
+      '      ON I.COD_NOTA_CAB = N.COD_NOTA_CAB'
+      '    INNER JOIN TB_OPERACAO O'
+      '      ON N.COD_OPERACAO = O.COD_OPERACAO'
+      '    INNER JOIN TB_SERIE S'
+      '      ON N.COD_SERIE = S.COD_SERIE'
+      '        AND N.COD_SERIE_MODELO = S.COD_SERIE_MODELO'
+      '    INNER JOIN TB_FILIAL F'
+      '      ON N.COD_FILIAL = F.COD_FILIAL'
+      '    INNER JOIN TB_CADASTRO C'
+      '      ON N.COD_CADASTRO = C.COD_CADASTRO'
+      '    INNER JOIN TB_CIDADE CI'
+      '      ON F.COD_CIDADE = CI.COD_CIDADE'
+      '    INNER JOIN TB_ESTADO E'
+      '      ON F.COD_ESTADO = E.COD_ESTADO'
+      '    INNER JOIN TB_PRODUTO P'
+      '      ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  N.IND_ENTRADA_SAIDA = '#39'S'#39
+      '  AND  '
+      '  N.IND_SITUACAO = '#39'2'#39
+      '  AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '  (O.NUM_LIVROS = 10 or O.NUM_LIVROS is null)'
+      '  AND'
+      '  N.COD_FILIAL = :COD_FILIAL  '
+      '  AND'
+      '  N.DT_EMISSAO BETWEEN :DATA_INI AND :DATA_FIN'
+      '  AND'
+      '  S.COD_SERIE_MODELO IN ('#39'08'#39', '#39'57'#39')'
+      '  /*AND'
+      
+        '  REGEXP_REPLACE(F.DESC_CNAE, '#39'[^0-9]+'#39') LIKE '#39'49302%'#39'*/ -- serv' +
+        'i'#231'o de transporte'
+      'GROUP BY'
+      
+        '  DECODE(P.COD_ITEM_IPM, NULL, CAST (P.COD_PRODUTO AS VARCHAR2(2' +
+        '0 BYTE)), P.COD_ITEM_IPM),'
+      '  E.COD_UF_IBGE || CI.COD_CIDADE_IBGE,'
+      '  PS.COD_EMPRESA,'
+      '  N.VAL_DESPESAS,'
+      '  N.NUM_CONHECIMENTO_FRETE,'
+      '  N.IND_ENTRADA_SAIDA,'
+      '  N.IND_TIPO_FRETE,'
+      '  N.VAL_FRETE,'
+      '  I.COD_CST_IPI,'
+      '  I.VAL_IPI,'
+      '  N.VAL_DESCONTO,'
+      '  PEGA_DESCONTO_NOTA(N.COD_NOTA_CAB)'
+      '  '
+      'UNION'
+      ' '
+      '-- TB_CONHECIMENTO '
+      'SELECT'
+      
+        '  DECODE(P.COD_ITEM_IPM, NULL, CAST (P.COD_PRODUTO AS VARCHAR2(2' +
+        '0 BYTE)), P.COD_ITEM_IPM) AS COD_ITEM_IPM,'
+      '  E.COD_UF_IBGE || CI.COD_CIDADE_IBGE AS MUN,'
+      
+        '  NVL(CO.VAL_FRETE,0) + NVL(CO.VAL_PEDAGIO,0) + NVL(CO.VAL_SEGUR' +
+        'O,0) AS VALOR  '
+      'FROM'
+      '  TB_CONHECIMENTO CO    '
+      '    INNER JOIN TB_SERIE S'
+      '      ON CO.COD_SERIE = S.COD_SERIE'
+      '        AND CO.COD_SERIE_MODELO = S.COD_SERIE_MODELO'
+      '    INNER JOIN TB_FILIAL F'
+      '      ON CO.COD_FILIAL = F.COD_FILIAL'
+      '    INNER JOIN TB_OPERACAO O'
+      '      ON CO.COD_OPERACAO = O.COD_OPERACAO'
+      '    INNER JOIN TB_PRODUTO P'
+      '      ON CO.COD_PRODUTO = P.COD_PRODUTO'
+      '    INNER JOIN TB_CIDADE CI'
+      '      ON CO.COD_CIDADE_ORIGEM = CI.COD_CIDADE'
+      '    INNER JOIN TB_ESTADO E'
+      '      ON CO.COD_UF_ORIGEM = E.COD_ESTADO  '
+      'WHERE'
+      '  CO.IND_SITUACAO = '#39'2'#39
+      '  AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '  (O.NUM_LIVROS = 10 or O.NUM_LIVROS is null)'
+      '  AND'
+      '  CO.COD_FILIAL = :COD_FILIAL  '
+      '  AND'
+      '  CO.DT_EMISSAO BETWEEN :DATA_INI AND :DATA_FIN'
+      '  AND'
+      '  S.COD_SERIE_MODELO IN ('#39'08'#39', '#39'57'#39')'
+      '  /*AND'
+      
+        '  REGEXP_REPLACE(F.DESC_CNAE, '#39'[^0-9]+'#39') LIKE '#39'49302%'#39'*/ -- serv' +
+        'i'#231'o de transporte'
+      '  '
+      'UNION'
+      ''
+      '-- TB_CONHECIMENTO '
+      'SELECT'
+      
+        '  DECODE(P.COD_ITEM_IPM, NULL, CAST (P.COD_PRODUTO AS VARCHAR2(2' +
+        '0 BYTE)), P.COD_ITEM_IPM) AS COD_ITEM_IPM,'
+      '  E.COD_UF_IBGE || CI.COD_CIDADE_IBGE AS MUN,'
+      '  NVL(CO.VAL_FRETE,0) + NVL(CO.VAL_PEDAGIO,0) AS VALOR  '
+      'FROM'
+      '  TB_CONHECIMENTO_FRETE CO'
+      '    INNER JOIN TB_CADASTRO C'
+      '      ON CO.COD_CADASTRO = C.COD_CADASTRO'
+      '    INNER JOIN TB_SERIE S'
+      '      ON CO.COD_SERIE = S.COD_SERIE'
+      '        AND CO.COD_SERIE_MODELO = S.COD_SERIE_MODELO'
+      '    INNER JOIN TB_FILIAL F'
+      '      ON CO.COD_FILIAL = F.COD_FILIAL'
+      '    INNER JOIN TB_OPERACAO O'
+      '      ON CO.COD_OPERACAO = O.COD_OPERACAO'
+      '    INNER JOIN TB_NOTA_ITEM I'
+      '      ON CO.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      '    INNER JOIN TB_PRODUTO P'
+      '      ON I.COD_PRODUTO = P.COD_PRODUTO'
+      '    INNER JOIN TB_CIDADE CI'
+      '      ON F.COD_CIDADE = CI.COD_CIDADE'
+      '    INNER JOIN TB_ESTADO E'
+      '      ON F.COD_ESTADO = E.COD_ESTADO  '
+      'WHERE'
+      '  CO.IND_SITUACAO = '#39'2'#39
+      '  AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '  (O.NUM_LIVROS = 10 or O.NUM_LIVROS is null)'
+      '  AND'
+      '  CO.COD_FILIAL = :COD_FILIAL  '
+      '  AND'
+      '  CO.DT_EMISSAO_CONHECIMENTO BETWEEN :DATA_INI AND :DATA_FIN'
+      '  AND'
+      '  S.COD_SERIE_MODELO IN ('#39'08'#39', '#39'57'#39')'
+      '  /*AND'
+      
+        '  REGEXP_REPLACE(F.DESC_CNAE, '#39'[^0-9]+'#39') LIKE '#39'49302%'#39'*/ -- serv' +
+        'i'#231'o de transporte'
+      '  '
+      'UNION'
+      ''
+      '-- TB_NOTA_CAB ( FRETE INCLUSO NA NOTA )'
+      'SELECT'
+      
+        '  DECODE(P.COD_ITEM_IPM, NULL, CAST (P.COD_PRODUTO AS VARCHAR2(2' +
+        '0 BYTE)), P.COD_ITEM_IPM) AS COD_ITEM_IPM,'
+      '  E.COD_UF_IBGE || CI.COD_CIDADE_IBGE AS MUN,'
+      '  NVL(N.VAL_FRETE, 0) + NVL(N.VAL_PEDAGIO, 0) AS VALOR'
+      'FROM'
+      '  TB_PARAM_SISTEMA PS,'
+      '  TB_NOTA_ITEM I'
+      '    INNER JOIN TB_NOTA_CAB N'
+      '      ON I.COD_NOTA_CAB = N.COD_NOTA_CAB'
+      '    INNER JOIN TB_OPERACAO O'
+      '      ON N.COD_OPERACAO = O.COD_OPERACAO'
+      '    INNER JOIN TB_SERIE S'
+      '      ON N.COD_SERIE = S.COD_SERIE'
+      '        AND N.COD_SERIE_MODELO = S.COD_SERIE_MODELO'
+      '    INNER JOIN TB_FILIAL F'
+      '      ON N.COD_FILIAL = F.COD_FILIAL'
+      '    INNER JOIN TB_CADASTRO C'
+      '      ON N.COD_CADASTRO = C.COD_CADASTRO'
+      '    INNER JOIN TB_CIDADE CI'
+      '      ON F.COD_CIDADE = CI.COD_CIDADE'
+      '    INNER JOIN TB_ESTADO E'
+      '      ON F.COD_ESTADO = E.COD_ESTADO'
+      '    INNER JOIN TB_PRODUTO P'
+      '      ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  N.IND_ENTRADA_SAIDA = '#39'S'#39
+      '  AND  '
+      '  N.IND_SITUACAO = '#39'2'#39
+      '  AND'
+      '  O.IND_LIVRO_FISCAL = '#39'S'#39
+      '  AND'
+      '  (O.NUM_LIVROS = 10 or O.NUM_LIVROS is null)'
+      '  AND'
+      '  N.COD_FILIAL = :COD_FILIAL  '
+      '  AND'
+      '  N.DT_EMISSAO BETWEEN :DATA_INI AND :DATA_FIN'
+      '  AND'
+      '  S.COD_SERIE_MODELO IN ('#39'08'#39', '#39'57'#39')'
+      '  /*AND'
+      
+        '  REGEXP_REPLACE(F.DESC_CNAE, '#39'[^0-9]+'#39') LIKE '#39'49302%'#39'*/ -- serv' +
+        'i'#231'o de transporte'
+      '  '
+      '  -- FIM TRANSPORTADORAS'
+      '  '
+      '  -- IN'#205'CIO NORMAL'
+      '  UNION'
+      ' '
+      ' '
+      'SELECT'
+      '  DECODE(TB_PRODUTO.COD_ITEM_IPM, NULL, '
+      
+        '            CAST (TB_PRODUTO.COD_PRODUTO AS VARCHAR2(20 BYTE)), ' +
+        'TB_PRODUTO.COD_ITEM_IPM) AS COD_ITEM_IPM,'
+      '  TB_ESTADO.COD_UF_IBGE || TB_CIDADE.COD_CIDADE_IBGE as MUN,'
+      '  SUM(TB_NOTA_ITEM.VAL_TOTAL) AS Valor'
+      'FROM'
+      '  TB_NOTA_ITEM'
+      
+        'INNER JOIN TB_NOTA_CAB ON Tb_Nota_Cab.COD_NOTA_CAB = Tb_Nota_Ite' +
+        'm.COD_NOTA_CAB'
+      
+        'INNER JOIN TB_OPERACAO ON Tb_Nota_Cab.COD_OPERACAO = Tb_Operacao' +
+        '.COD_OPERACAO'
+      
+        'INNER JOIN TB_CADASTRO ON Tb_Nota_Cab.COD_CADASTRO = Tb_Cadastro' +
+        '.COD_CADASTRO'
+      
+        'INNER JOIN TB_CIDADE ON Tb_Cadastro.COD_CIDADE = Tb_Cidade.COD_C' +
+        'IDADE'
+      
+        'INNER JOIN TB_ESTADO ON Tb_ESTADO.COD_ESTADO = TB_CIDADE.COD_EST' +
+        'ADO'
+      'INNER JOIN TB_FILIAL F ON TB_NOTA_CAB.COD_FILIAL = F.COD_FILIAL'
+      
+        'INNER JOIN TB_PRODUTO ON TB_NOTA_ITEM.COD_PRODUTO = TB_PRODUTO.C' +
+        'OD_PRODUTO'
+      'WHERE'
+      '  Tb_Nota_Cab.IND_SITUACAO = '#39'2'#39
+      'And'
+      '  Tb_Operacao.IND_FIXAR_EMPRESA = '#39'F'#39
+      'AND'
+      '  TB_OPERACAO.IND_COMPRAS = '#39'C'#39
+      'AND'
+      '  TB_CADASTRO.IND_FISICA_JURIDICA = '#39'F'#39
+      'AND'
+      '  TB_CADASTRO.DESC_INSCRICAO_MUNICIPAL is not null'
+      'And'
+      '  Tb_Nota_Cab.COD_FILIAL = :COD_FILIAL'
+      'And'
+      '  Tb_Nota_Cab.DT_RECEBIMENTO >= :DATA_INI'
+      'And'
+      '  Tb_Nota_Cab.DT_RECEBIMENTO <= :DATA_FIN'
+      'AND'
+      '  TB_OPERACAO.IND_LIVRO_FISCAL = '#39'S'#39
+      '/*AND'
+      '  (F.DESC_CNAE IS NULL OR'
+      
+        '    REGEXP_REPLACE(F.DESC_CNAE, '#39'[^0-9]+'#39') LIKE '#39'49302%'#39')*/ -- s' +
+        'ervi'#231'o de transporte'
+      'Group By'
+      '  DECODE(TB_PRODUTO.COD_ITEM_IPM, NULL, '
+      
+        '        CAST (TB_PRODUTO.COD_PRODUTO AS VARCHAR2(20 BYTE)), TB_P' +
+        'RODUTO.COD_ITEM_IPM),'
+      '  TB_ESTADO.COD_UF_IBGE,'
+      '  TB_CIDADE.COD_CIDADE_IBGE  '
+      ')'
+      'GROUP BY'
+      '  COD_ITEM_IPM,'
+      '  MUN'
+      '')
+    Variables.Data = {
+      03000000030000000B0000003A434F445F46494C49414C030000000000000000
+      000000090000003A444154415F494E490C000000000000000000000009000000
+      3A444154415F46494E0C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000C000000434F445F4954454D5F49504D0100000000000300
+      00004D554E0100000000000500000056414C4F52010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 152
+    Top = 32
+    object QReg400COD_ITEM_IPM: TStringField
+      FieldName = 'COD_ITEM_IPM'
+    end
+    object QReg400MUN: TStringField
+      FieldName = 'MUN'
+      Size = 45
+    end
+    object QReg400VALOR: TFloatField
+      FieldName = 'VALOR'
+    end
+  end
+  object QReg100: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_NOTA_CAB.COD_NOTA_CAB,'
+      '  TB_NOTA_CAB_EXPORTACAO_TP_DOC.IND_TIPO_DOCUMENTO,'
+      '  TB_NOTA_CAB_EXPORTACAO_TP_DOC.NUM_DECLARACAO,'
+      '  TB_NOTA_CAB_EXPORTACAO_TP_DOC.DT_DECLARACAO,'
+      '  TB_OPERACAO.IND_NATUREZA_EXPORTACAO,'
+      '  TB_NOTA_CAB_EXPORTACAO_RE.NUMERO_RE,'
+      '  TB_NOTA_CAB_EXPORTACAO_RE.DT_EMISSAO,'
+      '  TB_TIPO_CONHECIMENTO.NUM_TIPO_CONHECIMENTO,'
+      '  TB_PAIS.COD_PAIS_SISCOMEX,'
+      '  TB_NOTA_CAB_EXPORTACAO_CONHEC.NUM_CONHECIMENTO,'
+      '  TB_NOTA_CAB_EXPORTACAO_CONHEC.DT_CONHECIMENTO,'
+      '  TB_NOTA_CAB_EXPORTACAO_TP_DOC.DT_AVERBACAO'
+      'FROM'
+      '  TB_NOTA_CAB_EXPORTACAO_TP_DOC'
+      
+        'INNER JOIN TB_NOTA_CAB ON TB_NOTA_CAB.COD_NOTA_CAB = TB_NOTA_CAB' +
+        '_EXPORTACAO_TP_DOC.COD_NOTA_CAB'
+      
+        'INNER JOIN TB_OPERACAO ON TB_OPERACAO.COD_OPERACAO = TB_NOTA_CAB' +
+        '.COD_OPERACAO'
+      
+        'INNER JOIN TB_NOTA_CAB_EXPORTACAO_RE ON TB_NOTA_CAB.COD_NOTA_CAB' +
+        ' = TB_NOTA_CAB_EXPORTACAO_RE.COD_NOTA_CAB'
+      
+        'INNER JOIN TB_NOTA_CAB_EXPORTACAO_CONHEC ON TB_NOTA_CAB.COD_NOTA' +
+        '_CAB = TB_NOTA_CAB_EXPORTACAO_CONHEC.COD_NOTA_CAB'
+      
+        'LEFT JOIN TB_TIPO_CONHECIMENTO ON TB_TIPO_CONHECIMENTO.COD_TIPO_' +
+        'CONHECIMENTO = TB_NOTA_CAB_EXPORTACAO_CONHEC.COD_TIPO_CONHECIMEN' +
+        'TO'
+      ''
+      
+        'INNER JOIN TB_CADASTRO ON TB_NOTA_CAB.COD_CADASTRO = TB_CADASTRO' +
+        '.COD_CADASTRO'
+      'INNER JOIN TB_PAIS ON TB_CADASTRO.COD_PAIS = TB_PAIS.COD_PAIS'
+      'WHERE'
+      
+        '  TB_NOTA_CAB_EXPORTACAO_TP_DOC.DT_DECLARACAO BETWEEN :DT_INICIA' +
+        'L AND :DT_FINAL'
+      'AND'
+      '  TB_NOTA_CAB.COD_FILIAL = :COD_FILIAL')
+    Variables.Data = {
+      03000000030000000B0000003A44545F494E494349414C0C0000000000000000
+      000000090000003A44545F46494E414C0C00000000000000000000000B000000
+      3A434F445F46494C49414C030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000C00000012000000494E445F5449504F5F444F43554D454E544F0100
+      000000000E0000004E554D5F4445434C41524143414F0100000000000D000000
+      44545F4445434C41524143414F01000000000017000000494E445F4E41545552
+      455A415F4558504F52544143414F010000000000090000004E554D45524F5F52
+      450100000000000A00000044545F454D495353414F0100000000000C00000043
+      4F445F4E4F54415F434142010000000000100000004E554D5F434F4E48454349
+      4D454E544F0100000000000F00000044545F434F4E484543494D454E544F0100
+      000000000C00000044545F41564552424143414F01000000000011000000434F
+      445F504149535F534953434F4D4558010000000000150000004E554D5F544950
+      4F5F434F4E484543494D454E544F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 40
+    Top = 32
+    object QReg100COD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+      Required = True
+    end
+    object QReg100IND_TIPO_DOCUMENTO: TStringField
+      FieldName = 'IND_TIPO_DOCUMENTO'
+      Required = True
+      Size = 1
+    end
+    object QReg100NUM_DECLARACAO: TStringField
+      FieldName = 'NUM_DECLARACAO'
+      Required = True
+      Size = 8
+    end
+    object QReg100DT_DECLARACAO: TDateTimeField
+      FieldName = 'DT_DECLARACAO'
+      Required = True
+    end
+    object QReg100IND_NATUREZA_EXPORTACAO: TStringField
+      FieldName = 'IND_NATUREZA_EXPORTACAO'
+      Size = 1
+    end
+    object QReg100NUMERO_RE: TStringField
+      FieldName = 'NUMERO_RE'
+      Required = True
+      Size = 14
+    end
+    object QReg100DT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QReg100COD_PAIS_SISCOMEX: TIntegerField
+      FieldName = 'COD_PAIS_SISCOMEX'
+    end
+    object QReg100NUM_CONHECIMENTO: TStringField
+      FieldName = 'NUM_CONHECIMENTO'
+      Required = True
+      Size = 8
+    end
+    object QReg100DT_CONHECIMENTO: TDateTimeField
+      FieldName = 'DT_CONHECIMENTO'
+      Required = True
+    end
+    object QReg100DT_AVERBACAO: TDateTimeField
+      FieldName = 'DT_AVERBACAO'
+    end
+    object QReg100NUM_TIPO_CONHECIMENTO: TStringField
+      FieldName = 'NUM_TIPO_CONHECIMENTO'
+      Required = True
+      Size = 2
+    end
+  end
+  object QReg105: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  TB_SERIE.COD_SERIE_MODELO,'
+      '  TB_NOTA_CAB.COD_SERIE,'
+      '  TB_NOTA_CAB.NUM_NOTA + 0.00 AS NUM_NOTA,'
+      '  TB_NOTA_CAB.DESC_CHAVE_ACESSO,'
+      '  TB_NOTA_CAB.DT_EMISSAO,'
+      '  TB_NOTA_ITEM.COD_PRODUTO,'
+      '  TB_SERIE.NUM_SERIE_FISCAL,'
+      '  TB_OPERACAO.IND_NATUREZA_EXPORTACAO'
+      'FROM'
+      '  TB_NOTA_ITEM'
+      
+        'INNER JOIN TB_NOTA_CAB ON TB_NOTA_CAB.COD_NOTA_CAB = TB_NOTA_ITE' +
+        'M.COD_NOTA_CAB'
+      
+        'INNER JOIN TB_SERIE ON (TB_NOTA_CAB.COD_SERIE = TB_SERIE.COD_SER' +
+        'IE AND TB_NOTA_CAB.COD_FILIAL = TB_SERIE.COD_FILIAL'
+      #9'AND TB_NOTA_CAB.COD_SERIE_MODELO = TB_SERIE.COD_SERIE_MODELO)'
+      
+        'INNER JOIN TB_OPERACAO ON TB_NOTA_CAB.COD_OPERACAO = TB_OPERACAO' +
+        '.COD_OPERACAO'
+      'WHERE'
+      '  TB_NOTA_CAB.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000800000009000000434F445F5345524945010000000000080000004E
+      554D5F4E4F544101000000000011000000444553435F43484156455F41434553
+      534F0100000000000A00000044545F454D495353414F0100000000000B000000
+      434F445F50524F4455544F010000000000100000004E554D5F53455249455F46
+      495343414C01000000000017000000494E445F4E41545552455A415F4558504F
+      52544143414F01000000000010000000434F445F53455249455F4D4F44454C4F
+      010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 96
+    Top = 32
+    object QReg105COD_SERIE: TStringField
+      FieldName = 'COD_SERIE'
+      Required = True
+      Size = 3
+    end
+    object QReg105DESC_CHAVE_ACESSO: TStringField
+      FieldName = 'DESC_CHAVE_ACESSO'
+      Size = 47
+    end
+    object QReg105DT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+      Required = True
+    end
+    object QReg105COD_PRODUTO: TFloatField
+      FieldName = 'COD_PRODUTO'
+    end
+    object QReg105NUM_SERIE_FISCAL: TIntegerField
+      FieldName = 'NUM_SERIE_FISCAL'
+    end
+    object QReg105IND_NATUREZA_EXPORTACAO: TStringField
+      FieldName = 'IND_NATUREZA_EXPORTACAO'
+      Size = 1
+    end
+    object QReg105NUM_NOTA: TFloatField
+      FieldName = 'NUM_NOTA'
+      Required = True
+    end
+    object QReg105COD_SERIE_MODELO: TStringField
+      FieldName = 'COD_SERIE_MODELO'
+      Required = True
+      Size = 2
+    end
+  end
+end

@@ -1,0 +1,35 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Contábil.hlp
+
+[FILES]
+P_Contábil.rtf
+
+[MAP]
+Atualiza_Saldo=20
+Botão_Click=18
+Cadastro_de_D.R.E.=16
+Cadastro_de_Histórico_Contábil=2
+Cadastro_de_Plano_de_Contas=3
+Duplicar_Plano_de_Contas=5
+Forma_Operação_Sistema=19
+Implantação_de_Saldo_Contábil=15
+Lançamento_Contábil=6
+Lcto_Contábil_Método_Simples=21
+Menu_Contábil=1
+Relatório do Plano de Contas=4
+Relatório_de_Balancete_Analítico=8
+Relatório_de_Balanço_Patrimonial=10
+Relatório_de_D.R.E.=17
+Relatório_de_Movimento_por_Conferência=11
+Relatório_de_Razão_Analítico=7
+Relatório_do_Diário_Geral=9
+Virada_do_Mês=12
+Volta_Zeramento_de_Exercício=14
+Zeramento_de_Exercício=13
+
+[BAGGAGE]
+P_Contábil.rtf

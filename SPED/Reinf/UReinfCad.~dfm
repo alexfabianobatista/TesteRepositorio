@@ -1,0 +1,31 @@
+inherited FReinfCad: TFReinfCad
+  Left = 408
+  Top = 232
+  Caption = 'Reinf'
+  ClientHeight = 445
+  ClientWidth = 734
+  PixelsPerInch = 96
+  TextHeight = 14
+  inherited Panel1: TPanel
+    Width = 734
+    inherited lbPesquisaCodigo: TLabel
+      Left = 592
+    end
+    inherited SBConsulta: TSpeedButton
+      Left = 699
+    end
+    inherited pnSeparador2: TPanel
+      Left = 583
+    end
+    inherited MELocaliza: TMaskEdit
+      Left = 650
+    end
+  end
+  inherited StBLongHint: TStatusBar
+    Top = 426
+    Width = 734
+  end
+  inherited DSPrimario: TDataSource
+    DataSet = DMReinf.QRegistrosReinf
+  end
+end

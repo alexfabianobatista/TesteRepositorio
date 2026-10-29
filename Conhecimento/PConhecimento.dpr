@@ -1,0 +1,448 @@
+program PConhecimento;
+
+uses
+  Forms,
+  UTMenuPrincipal in '..\TEMPLATE\UTMenuPrincipal.pas' {FTMenuPrincipal},
+  UConhecimento in 'UConhecimento.pas' {FConhecimento},
+  UOracle_cl in '..\Banco\UOracle_cl.pas' {DMOracle: TDataModule},
+  ULogin in '..\Seguranca\ULogin.pas' {FLogin},
+  UFuncao_cl in '..\Seguranca\UFuncao_cl.pas' {DMFuncao: TDataModule},
+  UUsuario_cl in '..\Seguranca\UUsuario_cl.pas' {DMUsuario: TDataModule},
+  UTrocaSenha in '..\Seguranca\UTrocaSenha.pas' {FTrocaSenha},
+  UTela_cl in '..\Seguranca\UTela_cl.pas' {DMTela: TDataModule},
+  UParamCadFuncao in '..\Seguranca\UParamCadFuncao.pas' {FParamCadFuncao},
+  UParamSistema_cl in '..\Cadastro\UParamSistema_cl.pas' {DMParamSistema: TDataModule},
+  UMonitorSistema in '..\Banco\UMonitorSistema.pas' {FMonitorSistema},
+  UVeiculoCad in 'UVeiculoCad.pas' {FVeiculoCad},
+  UVeiculoConhecimento_cl in '..\ControleVeiculo\UVeiculoConhecimento_cl.pas' {DMVeiculoConhecimento: TDataModule},
+  UVeiculoConhecimentoCons in 'UVeiculoConhecimentoCons.pas' {FVeiculoConhecimentoCons},
+  URVeiculo in 'URVeiculo.pas' {FRVeiculo},
+  UProprietarioCad in 'UProprietarioCad.pas' {FProprietarioCad},
+  UProprietario_cl in 'UProprietario_cl.pas' {DMProprietario: TDataModule},
+  UProprietarioCons in 'UProprietarioCons.pas' {FProprietarioCons},
+  UEstadoCons in '..\Cadastro\UEstadoCons.pas' {FEstadoCons},
+  UEstado_cl in '..\Cadastro\UEstado_cl.pas' {DMEstado: TDataModule},
+  URProprietario in 'URProprietario.pas' {FRProprietario},
+  URMotorista in 'URMotorista.pas' {FRMotorista},
+  UConhecimento_cl in 'UConhecimento_cl.pas' {DMConhecimento: TDataModule},
+  UConhecimentoCad in 'UConhecimentoCad.pas' {FConhecimentoCad},
+  UFilial_cl in '..\Cadastro\UFilial_cl.pas' {DMFilial: TDataModule},
+  UFilialCons in '..\Cadastro\UFilialCons.pas' {FFilialCons},
+  UCadastro_cl in '..\Cadastro\UCadastro_cl.pas' {DMCadastro: TDataModule},
+  UCadastroCons in '..\Cadastro\UCadastroCons.pas' {FCadastroCons},
+  UClassCadastro_cl in '..\Cadastro\UClassCadastro_cl.pas' {DMClassCadastro: TDataModule},
+  UTipoCadastro_cl in '..\Cadastro\UTipoCadastro_cl.pas' {DMTipoCadastro: TDataModule},
+  UTipoCadastroCons in '..\Cadastro\UTipoCadastroCons.pas' {FTipoCadastroCons},
+  UOperacaoCons in '..\Compras\UOperacaoCons.pas' {FOperacaoCons},
+  UOperacao_cl in '..\Compras\UOperacao_cl.pas' {DMOperacao: TDataModule},
+  UEstoque_cl in '..\Estoque\UEstoque_cl.pas' {DMEstoque: TDataModule},
+  UMoeda_cl in '..\Cadastro\UMoeda_cl.pas' {DMMoeda: TDataModule},
+  UProduto_cl in '..\Estoque\UProduto_cl.pas' {DMProduto: TDataModule},
+  UControleInterno_cl in '..\Seguranca\UControleInterno_cl.pas' {DMControleInterno: TDataModule},
+  UNotaSaida_cl in '..\Vendas\UNotaSaida_cl.pas' {DMNotaSaida: TDataModule},
+  UNotaSaidaCons in '..\Vendas\UNotaSaidaCons.pas' {FNotaSaidaCons},
+  UFinalidade_cl in '..\ContaPagar\UFinalidade_cl.pas' {DMFinalidade: TDataModule},
+  UPlanilha_cl in '..\Contabil\UPlanilha_cl.pas' {DMPlanilha: TDataModule},
+  UPlanoConta_cl in '..\Contabil\UPlanoConta_cl.pas' {DMPlanoConta: TDataModule},
+  USequencia_cl in '..\Cadastro\USequencia_cl.pas' {DMSequencia: TDataModule},
+  UTributacao_cl in '..\Estoque\UTributacao_cl.pas' {DMTributacao: TDataModule},
+  UNotaEntrada_cl in '..\Compras\UNotaEntrada_cl.pas' {DMNotaEntrada: TDataModule},
+  URomaneioAgricola_cl in '..\Agricola\URomaneioAgricola_cl.pas' {DMRomaneioAgricola: TDataModule},
+  UProdutoAgricola_cl in '..\Agricola\UProdutoAgricola_cl.pas' {DMProdutoAgricola: TDataModule},
+  USerie_cl in '..\Compras\USerie_cl.pas' {DMSerie: TDataModule},
+  URRomaneioNotas in '..\Agricola\URRomaneioNotas.pas',
+  UProdutoCons in '..\Estoque\UProdutoCons.pas' {FProdutoCons},
+  UContasPagar_cl in '..\ContaPagar\UContasPagar_cl.pas' {DMContasPagar: TDataModule},
+  UTributacaoCons in '..\Estoque\UTributacaoCons.pas' {FTributacaoCons},
+  USerieCons in '..\Compras\USerieCons.pas' {FSerieCons},
+  UBiblioteca in '..\MyLib\UBiblioteca.pas',
+  UConhecimentoFrete_cl in 'UConhecimentoFrete_cl.pas' {DMConhecimentoFrete: TDataModule},
+  URPACad in 'URPACad.pas' {FRPACad},
+  URPA_cl in 'URPA_cl.pas' {DMRPA: TDataModule},
+  UCaixaLanc_Cont in '..\Caixa\UCaixaLanc_Cont.pas' {FCaixa_Lanc_Cont},
+  UPlanoContaCons in '..\Contabil\UPlanoContaCons.pas' {FPlanoContaCons},
+  URPACons in 'URPACons.pas' {FRPACons},
+  UIRFCad in 'UIRFCad.pas' {FBaseCalcIRFCad},
+  UBaseCalculoIRF_cl in 'UBaseCalculoIRF_cl.pas' {DMIRF: TDataModule},
+  URRelacaoServicoPrestado in 'URRelacaoServicoPrestado.pas' {FRRelacaoServicoPrestado},
+  UEstoqueACons in '..\Estoque\UEstoqueACons.pas' {FEstoqueACons},
+  UTipoLoteCons in '..\Estoque\UTipoLoteCons.pas' {FTipoLoteCons},
+  UTipoLote_cl in '..\Estoque\UTipoLote_cl.pas' {DMTipoLote: TDataModule},
+  UClasseCons in '..\Estoque\UClasseCons.pas' {FClasseCons},
+  UClasse_cl in '..\Estoque\UClasse_cl.pas' {DMClasse: TDataModule},
+  UConhecimentoParam in 'UConhecimentoParam.pas' {FConhecimentoParam},
+  URReciboRPA in 'URReciboRPA.pas' {FReciboRPAFrete},
+  URReciboRPAServico in 'URReciboRPAServico.pas' {FReciboRPAServico},
+  URelatorioRPA in 'URelatorioRPA.pas' {FRelacaoRPA},
+  URRelatorioFiscalFrete in 'URRelatorioFiscalFrete.pas' {FRelatorioFiscalFrete},
+  URRelatorioFiscalServico in 'URRelatorioFiscalServico.pas' {FRelatorioFiscalServico},
+  UNotaEntradaCons in '..\Compras\UNotaEntradaCons.pas' {FNotaEntradaCons},
+  UConhecimento_CP in 'UConhecimento_CP.pas' {FConhecimento_CP},
+  UFinalidadeCons in '..\ContaPagar\UFinalidadeCons.pas' {FFinalidadeCons},
+  UBancosCons in '..\ContaPagar\UBancosCons.pas' {FBancosCons},
+  UBancoAgencia_cl in '..\ContaPagar\UBancoAgencia_cl.pas' {DMBancoAgencia: TDataModule},
+  UDepartamentoCons in '..\Cadastro\UDepartamentoCons.pas' {FDepartamentoCons},
+  UDepartamento_cl in '..\Cadastro\UDepartamento_cl.pas' {DMDepartamento: TDataModule},
+  USenha in '..\Vendas\USenha.pas' {FSenha},
+  UContasReceber_cl in '..\ContaReceber\UContasReceber_cl.pas' {DMContasReceber: TDataModule},
+  UContratoVenda_Cons in '..\Agricola\UContratoVenda_Cons.pas' {FContrato_VendaCons},
+  Ucontrato_cl in '..\Agricola\Ucontrato_cl.pas' {DMContrato: TDataModule},
+  UContaCorrenteCons in '..\ContaPagar\UContaCorrenteCons.pas' {FContaCorrenteCons},
+  UMensagem_cl in '..\Compras\UMensagem_cl.pas' {DMMensagem: TDataModule},
+  UMensagemCons in '..\Compras\UMensagemCons.pas' {FMensagemCons},
+  URConhecimentoContrato in 'URConhecimentoContrato.pas' {FRConhecimentoContrato},
+  URConhecimentoSContrato in 'URConhecimentoSContrato.pas' {FRConhecimentoSContrato},
+  URConhecimentoIRF in 'URConhecimentoIRF.pas' {FRConhecimentoIRF},
+  URConhecimentoCarga in 'URConhecimentoCarga.pas' {FRConhecimentoCarga},
+  URTransporteAutonomo in 'URTransporteAutonomo.pas' {FRelTransporteAutonomo},
+  UMdfeCons in 'UMdfeCons.pas' {FMdfeCons},
+  URTransporteMunicipal in 'URTransporteMunicipal.pas' {FRTransporteMunicipal},
+  UVeiculoParam in 'UVeiculoParam.pas' {FVeiculoParam},
+  UNotaCorrecao in '..\Vendas\UNotaCorrecao.pas' {FNotaCorrecao},
+  URNotaCorrecao in '..\Vendas\URNotaCorrecao.pas' {FRNotaCorrecao},
+  UNotaCorrecao_cl in 'UNotaCorrecao_cl.pas' {DMNotaCorrecao: TDataModule},
+  URConhecimentoIR in 'URConhecimentoIR.pas' {FRConhecimentoIR},
+  URRelatorioIRF_RPA in 'URRelatorioIRF_RPA.pas' {FRRelatorioIRF_RPA},
+  UOrdemCarregamentoCad in 'UOrdemCarregamentoCad.pas' {FOrdemCarregamentoCad},
+  UOrdemCarregamento_cl in 'UOrdemCarregamento_cl.pas' {DMOrdemCarregamento: TDataModule},
+  UOrdemCompraCons in '..\Compras\UOrdemCompraCons.pas' {FOrdemCompraCons},
+  UOrdemCarregamentoCons in 'UOrdemCarregamentoCons.pas' {FOrdemCarregamentoCons},
+  UROrdemCarregamento in 'UROrdemCarregamento.pas' {FROrdemCarregamento},
+  UROrdemCarregamentoSituacao in 'UROrdemCarregamentoSituacao.pas' {FROrdemCarregamentoSituacao},
+  UPesoChegada in 'UPesoChegada.pas' {FPesoChegada},
+  URGerenciaRPA in 'URGerenciaRPA.pas' {FRGerenciaRPA},
+  UMotivoCons in '..\Cadastro\UMotivoCons.pas' {FMotivoCons},
+  UMotivo_cl in '..\Cadastro\UMotivo_cl.pas' {DMMotivo: TDataModule},
+  URAutonomosINSS in 'URAutonomosINSS.pas' {FRAutonomosINSS},
+  URConhecimentoValorRetido in 'URConhecimentoValorRetido.pas' {FRConhecimentoValorRetido},
+  URomaneioCons in '..\Agricola\URomaneioCons.pas' {FRomaneioCons},
+  UrConhecimentoFrete in 'UrConhecimentoFrete.pas' {FRConhecimentoFrete},
+  URGerenciaConhecimento in 'URGerenciaConhecimento.pas' {FRGerenciaConhecimento},
+  UConhecimentoFretecons in 'UConhecimentoFretecons.pas' {FConhecimentoFreteCons},
+  UConhecimentoFreteCad in 'UConhecimentoFreteCad.pas' {FConhecimentoFreteCad},
+  UContrato_CP in '..\Agricola\UContrato_CP.pas' {FContrato_CP},
+  UEstadiaCad in 'UEstadiaCad.pas' {FEstadiaCad},
+  UEstadiaCons in 'UEstadiaCons.pas' {FEstadiaCons},
+  UEstadiaParam in 'UEstadiaParam.pas' {FEstadiaParam},
+  URelacaoEstadia in 'URelacaoEstadia.pas' {FRelacaoEstadia},
+  UEstadia_CP in 'UEstadia_CP.pas' {FEstadia_CP},
+  UOrdem_Compra_ItensCons in '..\Compras\UOrdem_Compra_ItensCons.pas' {FOrdem_Compra_ItensCons},
+  UControleCargaCad in 'UControleCargaCad.pas' {FControleCargaCad},
+  UControleCarga_cl in 'UControleCarga_cl.pas' {DMControleCarga: TDataModule},
+  UEmbarqueCons in '..\Vendas\UEmbarqueCons.pas' {FEmbarqueCons},
+  UEmbarque_cl in '..\Vendas\UEmbarque_cl.pas' {DMEmbarque: TDataModule},
+  UMotoristaCons in 'UMotoristaCons.pas' {FMotoristaCons},
+  UMotorista_cl in 'UMotorista_cl.pas' {DMMotorista: TDataModule},
+  UControleCargaCons in 'UControleCargaCons.pas' {FControleCargaCons},
+  URControleCarga in 'URControleCarga.pas' {FRControleCarga},
+  UControleCargaParam in 'UControleCargaParam.pas' {FControleCargaParam},
+  UControleCargaRel_cl in 'UControleCargaRel_cl.pas' {DMControleCargaRel: TDataModule},
+  URControleCargaData in 'URControleCargaData.pas' {FRControleCargaData},
+  UValorEfeitoSeguroCad in 'UValorEfeitoSeguroCad.pas' {FValorEfeitoSeguroCad},
+  UValorEfeitoSeguro_cl in 'UValorEfeitoSeguro_cl.pas' {DMValorEfeitoSeguro: TDataModule},
+  UValorEfeitoSeguroCons in 'UValorEfeitoSeguroCons.pas' {FValorEfeitoSeguroCons},
+  URConhecimentoFreteTransportador in 'URConhecimentoFreteTransportador.pas' {FRConhecimentoFreteTransportador},
+  URTitulosAbertosConhecimento in 'URTitulosAbertosConhecimento.pas' {FRTitulosAbertosConhecimento},
+  UDesconto_Produtor_cl in '..\Agricola\UDesconto_Produtor_cl.pas' {DMDescontoProdutor: TDataModule},
+  UVeiculoModeloCons in '..\ControleVeiculo\UVeiculoModeloCons.pas' {FVeiculoModeloCons},
+  UVeiculoModelo_cl in '..\ControleVeiculo\UVeiculoModelo_cl.pas' {DMVeiculoModelo: TDataModule},
+  UCidadeCons in '..\Cadastro\UCidadeCons.pas' {FCidadeCons},
+  UCidade_cl in '..\Cadastro\UCidade_cl.pas' {DMCidade: TDataModule},
+  UCidadeCad in '..\Cadastro\UCidadeCad.pas' {FCidadeCad},
+  URCidade_Cidade in '..\Cadastro\URCidade_Cidade.pas' {FRCidade_Cidade},
+  UCadastroParam in '..\Cadastro\UCadastroParam.pas' {FCadastroParam},
+  URegiao_cl in '..\Cadastro\URegiao_cl.pas' {DMRegiao: TDataModule},
+  URegiaoCons in '..\Cadastro\URegiaoCons.pas' {FRegiaoCons},
+  URamo_cl in '..\Cadastro\URamo_cl.pas' {DMRamo: TDataModule},
+  URamoCons in '..\Cadastro\URamoCons.pas' {FRamoCons},
+  UClassCadastroCons in '..\Cadastro\UClassCadastroCons.pas' {FClassCadastroCons},
+  UVendedor_cl in '..\Cadastro\UVendedor_cl.pas' {DMVendedor: TDataModule},
+  UVendedorCons in '..\Cadastro\UVendedorCons.pas' {FVendedorCons},
+  UPraca_cl in '..\Cadastro\UPraca_cl.pas' {DMPraca: TDataModule},
+  UPracaCons in '..\Cadastro\UPracaCons.pas' {FPracaCons},
+  UContrato_Pjuridica_cl in '..\Agricola\UContrato_Pjuridica_cl.pas' {DMContrato_PJuridica: TDataModule},
+  UOficinaPassword in '..\Oficina\UOficinaPassword.pas' {FOFI0004},
+  UBloqueto in '..\ContaReceber\UBloqueto.pas',
+  UnitBoleta in '..\MyLib\UNITBOLETA.pas' {Boleta},
+  URBoletaBB in '..\ContaReceber\URBoletaBB.pas' {FRBoletaBB},
+  URBloqueto_Bradesco in '..\ContaReceber\URBloqueto_Bradesco.pas' {FRBloqueto_Bradesco},
+  URBloqueto_HSBC in '..\ContaReceber\URBloqueto_HSBC.pas' {FRBloqueto_HSBC},
+  URBloqueto_Rural in '..\ContaReceber\URBloqueto_Rural.pas' {FRBloqueto_Rural},
+  URBloqueto_Sicredi in '..\ContaReceber\URBloqueto_Sicredi.pas' {FRBloqueto_Sicredi},
+  UFRBloqueto_Itau in '..\ContaReceber\UFRBloqueto_Itau.pas' {FRBloqueto_Itau},
+  UNotaClassificacao_cl in 'UNotaClassificacao_cl.pas' {DMNotaClassificacao: TDataModule},
+  UTCadSimples in '..\TEMPLATE\UTCADSIMPLES.pas' {FTCadSimples},
+  UNotaClassificacaoCad in 'UNotaClassificacaoCad.pas' {FNotaClassificacaoCad},
+  UNotaClassificacaoCons in 'UNotaClassificacaoCons.pas' {FNotaClassificacaoCons},
+  UTParametro in '..\TEMPLATE\UTPARAMETRO.pas' {FTParametro},
+  UNotaClassificacaoParam in 'UNotaClassificacaoParam.pas' {FNotaClassificacaoParam},
+  URNotaClassificacaoAberto in 'URNotaClassificacaoAberto.pas' {FRNotaClassificacaoAberto},
+  URNotaClassificacaoPorFatura in 'URNotaClassificacaoPorFatura.pas' {FRNotaClassificacaoPorFatura},
+  UTConsulta in '..\TEMPLATE\UTConsulta.pas' {FTConsulta},
+  UNotaCabClassificacaoCons in 'UNotaCabClassificacaoCons.pas' {FNotaCabClassificacaoCons},
+  URBloqueto_Santander in '..\ContaReceber\URBloqueto_Santander.pas' {FRBloqueto_Santander},
+  URNotaClassificacaoBaixado in 'URNotaClassificacaoBaixado.pas' {FRNotaClassificacaoBaixado},
+  URBloqueto_Unibanco in '..\ContaReceber\URBloqueto_Unibanco.pas' {FRBloqueto_Unibanco},
+  UEmbarqueParam in '..\Vendas\UEmbarqueParam.pas' {FEmbarqueParam},
+  UProprietarioSituacao in 'UProprietarioSituacao.pas' {FProprietarioSituacao},
+  URBloquetoSafra in '..\ContaReceber\URBloquetoSafra.pas' {FRBloqueto_Safra},
+  UrEstadiaEspelho in 'UrEstadiaEspelho.pas' {FrEstadiaEspelho},
+  UTRelSimples in '..\Template\UTRELSIMPLES.pas' {FTRelSimples},
+  URRPAContrato in 'URRPAContrato.pas' {FRRPAContrato},
+  URRPASemContrato in 'URRPASemContrato.pas' {FRRPASemContrato},
+  UVeiculoFabricanteCons in '..\ControleVeiculo\UVeiculoFabricanteCons.pas' {FVeiculoFabricanteCons},
+  UVeiculoFabricante_cl in '..\ControleVeiculo\UVeiculoFabricante_cl.pas' {DMVeiculoFabricante: TDataModule},
+  URBloqueto_Sudameris in '..\ContaReceber\URBloqueto_Sudameris.pas' {FRBloqueto_Sudameris},
+  UControleTremCad in 'UControleTremCad.pas' {FControleTremCad},
+  UControleTrem_cl in 'UControleTrem_cl.pas' {DMControleTrem: TDataModule},
+  UPadraoProduto_cl in '..\Agricola\UPadraoProduto_cl.pas' {DMPadraoProduto: TDataModule},
+  URBloqueto_CEF in '..\ContaReceber\URBloqueto_CEF.pas' {FRBloqueto_CEF},
+  UControleTremCons in 'UControleTremCons.pas' {FControleTremCons},
+  UControleTremParam in 'UControleTremParam.pas' {FControleTremParam},
+  URControleTrem in 'URControleTrem.pas' {FRControleTrem},
+  URConhecimentoFreteData in 'URConhecimentoFreteData.pas' {FRConhecimentoFreteData},
+  UFmHistorico in '..\Frames\UFmHistorico.pas' {FmHistorico: TFrame},
+  UFmContaCorrente in '..\Frames\UFmContaCorrente.pas' {FmContaCorrente: TFrame},
+  UHistorico_cl in '..\ContaPagar\UHistorico_cl.pas' {DMHistorico: TDataModule},
+  UHistoricoCons in '..\ContaPagar\UHistoricoCons.pas' {FHistoricoCons},
+  UVeiculoModeloCad in '..\ControleVeiculo\UVeiculoModeloCad.pas' {FVeiculoModeloCad},
+  URVeiculoModelo in '..\ControleVeiculo\URVeiculoModelo.pas' {FRVeiculoModelo},
+  UFmCidade in '..\Frames\UFmCidade.pas' {FmCidade: TFrame},
+  UFmCadastro in '..\Frames\UFmCadastro.pas' {FmCadastro: TFrame},
+  UFmFilial in '..\Frames\UFmFilial.pas' {FmFilial: TFrame},
+  UFmContrato in '..\Frames\UFmContrato.pas' {FmContrato: TFrame},
+  UFmProduto in '..\Frames\UFmProduto.pas' {FmProduto: TFrame},
+  UFmProprietario in '..\Frames\UFmProprietario.pas' {FmProprietario: TFrame},
+  UFmFinalidade in '..\Frames\UFmFinalidade.pas' {FmFinalidade: TFrame},
+  UFmTipoCadastro in '..\Frames\UFmTipoCadastro.pas' {FmTipoCadastro: TFrame},
+  UFmRegiao in '..\Frames\UFmRegiao.pas' {FmRegiao: TFrame},
+  UFmRamo in '..\Frames\UFmRamo.pas' {FmRamo: TFrame},
+  UFmVendedor in '..\Frames\UFmVendedor.pas' {FmVendedor: TFrame},
+  UFmEstado in '..\Frames\UFmEstado.pas' {FmEstado: TFrame},
+  UFmClassificacao in '..\Frames\UFmClassificacao.pas' {FmClassificacao: TFrame},
+  UFmMotivo in '..\Frames\UFmMotivo.pas' {FmMotivo: TFrame},
+  UCor_cl in '..\ControleVeiculo\UCor_cl.pas' {DMCor: TDataModule},
+  UCorCons in '..\ControleVeiculo\UCorCons.pas' {FCorCons},
+  UCorCad in '..\ControleVeiculo\UCorCad.pas' {FCorCad},
+  URCor in '..\ControleVeiculo\URCor.pas' {FRCor},
+  UControleVeiculoParam in '..\ControleVeiculo\UControleVeiculoParam.pas',
+  UFmDatas in '..\Frames\UFmDatas.pas' {FmDatas: TFrame},
+  URRpaCarga in 'URRpaCarga.pas' {FRRpaCarga},
+  UVeiculo_cl in '..\ControleVeiculo\UVeiculo_cl.pas' {DMVeiculo: TDataModule},
+  UContasReceberParam in '..\ContaReceber\UContasReceberParam.pas',
+  UFmDepartamento in '..\Frames\UFmDepartamento.pas' {FmDepartamento: TFrame},
+  UContasReceberCons in '..\ContaReceber\UContasReceberCons.pas' {FContasReceberCons},
+  UObraContrato_cl in '..\Obra\UObraContrato_cl.pas' {DMObraContrato: TDataModule},
+  UObraContrato_Cons in '..\Obra\UObraContrato_Cons.pas' {FObraContrato_Cons},
+  UObra_cl in '..\Obra\UObra_cl.pas' {DMObra: TDataModule},
+  UObraCons in '..\Obra\UObraCons.pas' {FObraCons},
+  UContratoCPR_cl in '..\Agricola\UContratoCPR_cl.pas' {DMContrato_CPR: TDataModule},
+  UConhecimentoCad2 in 'UConhecimentoCad2.pas' {FConhecimentoCad2},
+  UControleViagemCad in 'UControleViagemCad.pas' {FControleViagemCad},
+  URControleViagem in 'URControleViagem.pas' {FRControleViagem},
+  UScpc_cl in '..\Cadastro\UScpc_cl.pas' {DMScpc: TDataModule},
+  UScpcCons in '..\Cadastro\UScpcCons.pas' {FScpcCons},
+  UConhecimento_CR in 'UConhecimento_CR.pas' {FConhecimento_CR},
+  UFmBanco in '..\Frames\UFmBanco.pas' {FMBanco: TFrame},
+  UPedido_cl in '..\Vendas\UPedido_cl.pas' {DMPedido: TDataModule},
+  UPersonalizaRelatorio in '..\Template\UPersonalizaRelatorio.pas' {FPersonalizaRelatorio},
+  URConsulta in '..\Template\URConsulta.pas' {FRConsulta},
+  URelatorioConsulta_cl in '..\Template\URelatorioConsulta_cl.pas' {DmRelatorioConsulta: TDataModule},
+  UConhecimentoAduaneiro in 'UConhecimentoAduaneiro.pas' {FConhecimentoAduaneiro},
+  UConhecimentoAduaneiroCons in 'UConhecimentoAduaneiroCons.pas' {FConhecimentoAduaneiroCons},
+  UConhecimentoAduaneiroMotoristaCons in 'UConhecimentoAduaneiroMotoristaCons.pas' {FConhecimentoAduaneiroMotoristaCons},
+  UMensagemUsuario_cl in '..\Cadastro\UMensagemUsuario_cl.pas' {DmMensagemUsuario: TDataModule},
+  UFmLote in '..\Frames\UFmLote.pas' {FmLote: TFrame},
+  UFmEmbarque in '..\Frames\UFmEmbarque.pas' {FmEmbarque: TFrame},
+  UImagemAtalho in '..\Template\UImagemAtalho.pas',
+  UEscolheTela in '..\Template\UEscolheTela.pas' {FEscolheTela},
+  UNfe_cl in '..\MonitorNfe\UNfe_cl.pas' {DMNfe: TDataModule},
+  UNFeParam in '..\MonitorNfe\UNFeParam.pas' {FNFeParam},
+  UFmNfeLote in '..\Frames\UFmNfeLote.pas' {FmNfeLote: TFrame},
+  UNfEletronicaLote_cl in '..\Vendas\UNfEletronicaLote_cl.pas' {DMNfEletronicaLote: TDataModule},
+  UNotaItensCons in '..\ContaReceber\UNotaItensCons.pas' {FNotaItensCons},
+  UVendaPerdidaCad in '..\Estoque\UVendaPerdidaCad.pas' {FVendaPerdidaCad},
+  UProdutos_UltimasCompras in '..\Estoque\UProdutos_UltimasCompras.pas' {FProdutos_UltimasCompras},
+  UCaixa_cl in '..\ContaPagar\UCaixa_cl.pas' {DMCaixa: TDataModule},
+  UMensagemSMS in '..\Template\UMensagemSMS.pas' {FMensagemSMS},
+  UEnviaEmail in '..\Agricola\UEnviaEmail.pas' {FEnviaEmail},
+  USpedValidacao in '..\Compras\USpedValidacao.pas',
+  UFmObra in '..\Frames\UFmObra.pas' {FmObra: TFrame},
+  UCteLote_cl in 'UCteLote_cl.pas' {DMCteLote: TDataModule},
+  UMdfeLoteCons in 'UMdfeLoteCons.pas' {FMdfeLoteCons},
+  UFmManifesto in '..\Frames\UFmManifesto.pas' {FmManifesto: TFrame},
+  UFmNota in '..\Frames\UFmNota.pas' {FmNota: TFrame},
+  UFmVeiculo in '..\Frames\UFmVeiculo.pas' {FmVeiculo: TFrame},
+  UMdfe_Cancela in 'UMdfe_Cancela.pas' {FMdfe_Cancela},
+  UExportarMDFeParam in 'UExportarMDFeParam.pas' {FExportarMDFeParam},
+  URelatorioVenda_cl in '..\Vendas\URelatorioVenda_cl.pas' {DMRelatorio_Venda: TDataModule},
+  URBloqueto_Sicoob in '..\ContaReceber\URBloqueto_Sicoob.pas' {FRBloqueto_Sicoob},
+  UImpDadosXML in 'UImpDadosXML.pas' {FImpDadosXML},
+  URCTE in 'URCTE.pas' {FRCTE},
+  UProdutos_UltimasVendas in '..\Estoque\UProdutos_UltimasVendas.pas' {FProdutos_UltimasVendas},
+  UFmTitulo in '..\Frames\UFmTitulo.pas' {FmTitulo: TFrame},
+  UMdfeLote_cl in 'UMdfeLote_cl.pas' {DMMdfeLote: TDataModule},
+  UOrdemCompra_cl in '..\Compras\UOrdemCompra_cl.pas' {DMOrdemCompra: TDataModule},
+  UDocOriginarioCad in 'UDocOriginarioCad.pas' {FDocOriginarioCad},
+  UDocOriginarioParam in 'UDocOriginarioParam.pas' {FDocOriginarioParam},
+  UImpDadosXMLNFe in 'UImpDadosXMLNFe.pas' {FImpDadosXMLNFe},
+  UManifesto_cl in 'UManifesto_cl.pas' {DMManifesto: TDataModule},
+  UDocAnteriorCad in 'UDocAnteriorCad.pas' {FDocAnteriorCad},
+  UCteLoteCons in 'UCteLoteCons.pas' {FCteLoteCons},
+  UImpressoraFiscal in '..\Vendas\UImpressoraFiscal.pas' {FImpressoraFiscal},
+  UImpressoraFiscal_cl in '..\Vendas\UImpressoraFiscal_cl.pas' {DMImpressoraFiscal: TDataModule},
+  UImpressoraFiscalParam in '..\Vendas\UImpressoraFiscalParam.pas' {FImpressoraFiscalParam},
+  UTef in '..\Vendas\UTef.pas' {FTEF},
+  UTef_cl in '..\Vendas\UTef_cl.pas' {DMTEF: TDataModule},
+  UTefInputBox in '..\Vendas\UTefInputBox.pas' {FTefInputBox},
+  TefUtils in '..\MyLib\Tef\TefUtils.pas',
+  URadioDialog in '..\Vendas\URadioDialog.pas' {FRadioDialog},
+  UTefInputBoxCheque in '..\Vendas\UTefInputBoxCheque.pas' {FTefInputBoxCheque},
+  UAguardoNfe in '..\MyLib\UAguardoNfe.pas' {FAguardoNfe},
+  UAguarde in '..\ContaReceber\UAguarde.pas' {FAguarde},
+  UNotaSaida_Cancela in '..\Vendas\UNotaSaida_Cancela.pas' {FNotaSaida_Cancela},
+  UAliquotasImpressora in '..\Vendas\UAliquotasImpressora.pas' {FAliquotasImpressora},
+  UMdfeCad in 'UMdfeCad.pas' {FMdfeCad},
+  UExportarCTeParam in 'UExportarCTeParam.pas' {FExportarCTeParam},
+  UConhecimentoCons in 'UConhecimentoCons.pas' {FConhecimentoCons},
+  UCte_Cancela in 'UCte_Cancela.pas' {FCte_Cancela},
+  UFmConhecimento in '..\Frames\UFmConhecimento.pas' {FmConhecimento: TFrame},
+  UDocAnteriorParam in 'UDocAnteriorParam.pas' {FDocAnteriorParam},
+  UInfDoc in 'UInfDoc.pas' {FInfDoc},
+  UCupomFiscalParam in '..\Vendas\UCupomFiscalParam.pas' {FCupomFiscalParam},
+  UCartaCorrecaoCTe in 'UCartaCorrecaoCTe.pas' {FCartaCorrecaoCTe},
+  UCartaCorrecaoCTe_cl in 'UCartaCorrecaoCTe_cl.pas' {DMCartaCorrecaoCTe: TDataModule},
+  URBloqueto_CEF_SIGCB in '..\ContaReceber\URBloqueto_CEF_SIGCB.pas' {FRBloqueto_CEF_SIGCB},
+  UDevolucaoTroca_cl in '..\Vendas\UDevolucaoTroca_cl.pas' {DMDevolucaoTroca: TDataModule},
+  URConhecimentosCidades in 'URConhecimentosCidades.pas' {FRConhecimentosCidades},
+  UControleEntregaCad in 'UControleEntregaCad.pas' {FControleEntregaCad},
+  UControleEntregaCons in 'UControleEntregaCons.pas' {FControleEntregaCons},
+  UBibContasReceber in '..\ContaReceber\UBibContasReceber.pas',
+  UTabelaPreco_cl in '..\Estoque\UTabelaPreco_cl.pas' {DMTabelaPreco: TDataModule},
+  UVeiculoCons in '..\ControleVeiculo\UVeiculoCons.pas' {FVeiculoCons},
+  URBoletaBB_SIC in '..\ContaReceber\URBoletaBB_SIC.pas' {FRBoletaBB_SIC},
+  UCteCad in 'UCteCad.pas' {FCteCad},
+  UCteOSCad in 'UCteOSCad.pas' {FCteOSCad},
+  UViagem_cl in 'UViagem_cl.pas' {DMViagem: TDataModule},
+  UViagemCad in 'UViagemCad.pas' {FViagemCad},
+  UViagemCons in 'UViagemCons.pas' {FViagemCons},
+  UViagemParam in 'UViagemParam.pas' {FViagemParam},
+  URViagem in 'URViagem.pas' {FRViagem},
+  UControleViagemParam in 'UControleViagemParam.pas' {FControleViagemParam},
+  UControleViagemCons in 'UControleViagemCons.pas' {FControleViagemCons},
+  URControleViagemCustos in 'URControleViagemCustos.pas' {FRControleViagemCustos},
+  UDespesaRecup_cl in '..\ControleVeiculo\UDespesaRecup_cl.pas' {DMDespesaRecup: TDataModule},
+  UPneu_cl in '..\ControleVeiculo\UPneu_cl.pas' {DMPneu: TDataModule},
+  UFPneuCons in '..\ControleVeiculo\UFPneuCons.pas' {FPneuCons},
+  UHistContabil_cl in '..\Contabil\UHistContabil_cl.pas' {DMHistContabil: TDataModule},
+  UHistContabilCons in '..\Contabil\UHistContabilCons.pas' {FHistContabilCons},
+  URBloqueto_Cresol in '..\ContaReceber\URBloqueto_Cresol.pas' {FRBloqueto_Cresol},
+  URBloqueto_Uniprime in '..\ContaReceber\URBloqueto_Uniprime.pas' {FRBloqueto_Uniprime},
+  UCarregando2 in '..\Vendas\UCarregando2.pas' {FCarregando2},
+  UOrdemServico_cl in '..\AssitenciaTecnica\UOrdemServico_cl.pas' {DMOrdemServico: TDataModule},
+  UVisualizaAmplia in '..\Estoque\UVisualizaAmplia.pas' {FVisualizaAmplia},
+  URControleViagemEntrega in 'URControleViagemEntrega.pas' {FRControleViagemEntrega},
+  UObservacao_Cons in '..\Estoque\UObservacao_Cons.pas' {FObservacao_Cons},
+  URSerie in '..\Compras\URSerie.pas' {FRSerie},
+  USerieCad in '..\Compras\USerieCad.pas' {FSerieCad},
+  UMdfeCadSimplificado in '..\CTe\UMdfeCadSimplificado.pas' {FMdfeCadSimplificado},
+  URRelacaoMDFe in '..\CTe\URRelacaoMDFe.pas' {FRRelacaoMDFe},
+  UMarca_cl in '..\Estoque\UMarca_cl.pas' {DMMarca: TDataModule},
+  UMarcaCons in '..\Estoque\UMarcaCons.pas' {FMarca_Cons},
+  URRecibo in '..\ContaPagar\URRecibo.pas' {FRRecibo};
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  Application.HelpFile := 'F:\Executaveis\Manual\P_CONHECIMENTO.HLP';
+  Application.CreateForm(TDMOracle, DMOracle);
+  Application.CreateForm(TDMFuncao, DMFuncao);
+  Application.CreateForm(TDMUsuario, DMUsuario);
+  Application.CreateForm(TDMTela, DMTela);
+  Application.CreateForm(TDMParamSistema, DMParamSistema);
+  Application.CreateForm(TDMVeiculoConhecimento, DMVeiculoConhecimento);
+  Application.CreateForm(TDMProprietario, DMProprietario);
+  Application.CreateForm(TDMEstado, DMEstado);
+  Application.CreateForm(TDMConhecimento, DMConhecimento);
+  Application.CreateForm(TDMFilial, DMFilial);
+  Application.CreateForm(TDMCadastro, DMCadastro);
+  Application.CreateForm(TDMClassCadastro, DMClassCadastro);
+  Application.CreateForm(TDMTipoCadastro, DMTipoCadastro);
+  Application.CreateForm(TDMOperacao, DMOperacao);
+  Application.CreateForm(TDMEstoque, DMEstoque);
+  Application.CreateForm(TDMMoeda, DMMoeda);
+  Application.CreateForm(TDMMoeda, DMMoeda);
+  Application.CreateForm(TDMProduto, DMProduto);
+  Application.CreateForm(TDMControleInterno, DMControleInterno);
+  Application.CreateForm(TDMNotaSaida, DMNotaSaida);
+  Application.CreateForm(TDMFinalidade, DMFinalidade);
+  Application.CreateForm(TDMPlanilha, DMPlanilha);
+  Application.CreateForm(TDMPlanoConta, DMPlanoConta);
+  Application.CreateForm(TDMSequencia, DMSequencia);
+  Application.CreateForm(TDMTributacao, DMTributacao);
+  Application.CreateForm(TDMNotaEntrada, DMNotaEntrada);
+  Application.CreateForm(TDMRomaneioAgricola, DMRomaneioAgricola);
+  Application.CreateForm(TDMProdutoAgricola, DMProdutoAgricola);
+  Application.CreateForm(TDMSerie, DMSerie);
+  Application.CreateForm(TDMContasPagar, DMContasPagar);
+  Application.CreateForm(TDMConhecimentoFrete, DMConhecimentoFrete);
+  Application.CreateForm(TDMRPA, DMRPA);
+  Application.CreateForm(TDMIRF, DMIRF);
+  Application.CreateForm(TDMTipoLote, DMTipoLote);
+  Application.CreateForm(TDMClasse, DMClasse);
+  Application.CreateForm(TDMBancoAgencia, DMBancoAgencia);
+  Application.CreateForm(TDMDepartamento, DMDepartamento);
+  Application.CreateForm(TDMContasReceber, DMContasReceber);
+  Application.CreateForm(TDMContrato, DMContrato);
+  Application.CreateForm(TDMMensagem, DMMensagem);
+  Application.CreateForm(TDMNotaCorrecao, DMNotaCorrecao);
+  Application.CreateForm(TDMOrdemCarregamento, DMOrdemCarregamento);
+  Application.CreateForm(TDMMotivo, DMMotivo);
+  Application.CreateForm(TDMControleCarga, DMControleCarga);
+  Application.CreateForm(TDMEmbarque, DMEmbarque);
+  Application.CreateForm(TDMMotorista, DMMotorista);
+  Application.CreateForm(TDMControleCargaRel, DMControleCargaRel);
+  Application.CreateForm(TDMValorEfeitoSeguro, DMValorEfeitoSeguro);
+  Application.CreateForm(TDMDescontoProdutor, DMDescontoProdutor);
+  Application.CreateForm(TDMVeiculoModelo, DMVeiculoModelo);
+  Application.CreateForm(TDMCidade, DMCidade);
+  Application.CreateForm(TDMRegiao, DMRegiao);
+  Application.CreateForm(TDMRamo, DMRamo);
+  Application.CreateForm(TDMVendedor, DMVendedor);
+  Application.CreateForm(TDMPraca, DMPraca);
+  Application.CreateForm(TDMContrato_PJuridica, DMContrato_PJuridica);
+  Application.CreateForm(TDMNotaClassificacao, DMNotaClassificacao);
+  Application.CreateForm(TDMVeiculoFabricante, DMVeiculoFabricante);
+  Application.CreateForm(TDMControleTrem, DMControleTrem);
+  Application.CreateForm(TDMPadraoProduto, DMPadraoProduto);
+  Application.CreateForm(TDMHistorico, DMHistorico);
+  Application.CreateForm(TDMCor, DMCor);
+  Application.CreateForm(TDMVeiculo, DMVeiculo);
+  Application.CreateForm(TDMObraContrato, DMObraContrato);
+  Application.CreateForm(TDMObra, DMObra);
+  Application.CreateForm(TDMContrato_CPR, DMContrato_CPR);
+  Application.CreateForm(TDMScpc, DMScpc);
+  Application.CreateForm(TDMPedido, DMPedido);
+  Application.CreateForm(TDmMensagemUsuario, DmMensagemUsuario);
+  Application.CreateForm(TDmRelatorioConsulta, DmRelatorioConsulta);
+  Application.CreateForm(TDMNfe, DMNfe);
+  Application.CreateForm(TDMNfEletronicaLote, DMNfEletronicaLote);
+  Application.CreateForm(TDMCaixa, DMCaixa);
+  Application.CreateForm(TDMCteLote, DMCteLote);
+  Application.CreateForm(TDMRelatorio_Venda, DMRelatorio_Venda);
+  Application.CreateForm(TDMMdfeLote, DMMdfeLote);
+  Application.CreateForm(TDMOrdemCompra, DMOrdemCompra);
+  Application.CreateForm(TDMManifesto, DMManifesto);
+  Application.CreateForm(TDMCartaCorrecaoCTe, DMCartaCorrecaoCTe);
+  Application.CreateForm(TDMDevolucaoTroca, DMDevolucaoTroca);
+  Application.CreateForm(TDMTabelaPreco, DMTabelaPreco);
+  Application.CreateForm(TDMViagem, DMViagem);
+  Application.CreateForm(TDMDespesaRecup, DMDespesaRecup);
+  Application.CreateForm(TDMPneu, DMPneu);
+  Application.CreateForm(TDMHistContabil, DMHistContabil);
+  Application.CreateForm(TDMOrdemServico, DMOrdemServico);
+  Application.CreateForm(TFConhecimento, FConhecimento);
+  Application.CreateForm(TDMMarca, DMMarca);
+  Application.Run;
+end.

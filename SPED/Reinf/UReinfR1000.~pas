@@ -1,0 +1,442 @@
+unit UReinfR1000;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, UReinf_cl, UTCADSIMPLES, Grids, DBGrids, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, ActnList, ImgList, DB,
+  Menus, ComCtrls, StdCtrls, Mask, ExtCtrls, Buttons, UFmCadastro,
+  UFmFilial, DBCtrls, UBibliotecaDB, UOracle_cl, UGeraXMLReinf;
+
+type
+  TFReinfR1000 = class(TFTCadSimples)
+    dbgReinfR1000: TDBGrid;
+    Label7: TLabel;
+    Label8: TLabel;
+    FmFilialR1000: TFmFilial;
+    FmCadastroR1000: TFmCadastro;
+    dtpkDataInicio: TDateTimePicker;
+    dtpkDataFim: TDateTimePicker;
+    cbSituacaoEmpresa: TComboBox;
+    cbTipoR1000: TComboBox;
+    Label1: TLabel;
+    Label4: TLabel;
+    dblcbsituacaoTributaria: TDBLookupComboBox;
+    Label5: TLabel;
+    dbcbDesoneraFolhaCPRB: TDBCheckBox;
+    dbcbObrigaEcd: TDBCheckBox;
+    cbFimValidade: TCheckBox;
+    btnGerarEvento: TButton;
+    GroupBox4: TGroupBox;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label16: TLabel;
+    Label15: TLabel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    dbcbAcordoMulta: TDBCheckBox;
+    DBEdit1: TDBEdit;
+    Label2: TLabel;
+    procedure LimparCampos;
+    procedure AtivarDesativarCampos(Botao: TButton);
+    procedure FmFilial1BtFilialClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SBConfirmarClick(Sender: TObject);
+    procedure FmCadastroR1000BtCadastroClick(Sender: TObject);
+    procedure FmFilialR1000MeFilialExit(Sender: TObject);
+    procedure FmCadastroR1000MeCadastroExit(Sender: TObject);
+    procedure SBAlterarClick(Sender: TObject);
+    procedure SBIncluirClick(Sender: TObject);
+    procedure SBExcluirClick(Sender: TObject);
+    procedure SBCancelarClick(Sender: TObject);
+    procedure dbgReinfR1000CellClick(Column: TColumn);
+    procedure cbFimValidadeClick(Sender: TObject);
+    procedure btnGerarEventoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FReinfR1000: TFReinfR1000;
+  BibDB: TBibliotecaDB;
+
+implementation
+
+uses
+  UFilialCons, UCadastroCons, UFilial_cl, UUsuario_cl, UCadastro_cl,
+  DateUtils;
+
+{$R *.dfm}
+
+procedure TFreinfR1000.AtivarDesativarCampos(Botao: TButton);
+var
+  isAtivo: boolean;
+begin
+  isAtivo := (DSPrimario.State in [dsEdit, dsInsert]);
+  //desativa a edição dos campos do formulário caso este não esteja em edição ou inserção
+  FmFilialR1000.Enabled := isAtivo;
+  FmCadastroR1000.Enabled := isAtivo;
+  cbSituacaoEmpresa.Enabled := isAtivo;
+  dtpkDataInicio.Enabled := isAtivo;
+  cbTipoR1000.Enabled := isAtivo;
+  dblcbsituacaoTributaria.Enabled := isAtivo;
+  cbFimValidade.Enabled := isAtivo;
+  dbcbDesoneraFolhaCPRB.Enabled := isAtivo;
+  dbcbObrigaEcd.Enabled := isAtivo;
+  if DSPrimario.State = dsInsert then
+    dbcbObrigaEcd.Checked := false;
+  dbcbAcordoMulta.Enabled := isAtivo;
+
+  dbgReinfR1000.Enabled := (DSPrimario.DataSet.RecordCount > 0);
+
+  if Botao.Name = 'SBConfirmar' then
+     cbFimValidade.Enabled := false
+  else if (DSPrimario.State in [dsEdit]) then
+    cbFimValidade.Checked := DMReinf.QReinfR1000DT_FIM_VALIDADE.Text <> '';
+
+  cbFimValidadeClick(Self);
+end;
+
+procedure TFReinfR1000.LimparCampos;
+begin
+
+  FmFilialR1000.MeFilial.Clear;
+  FmFilialR1000.EdFilial.Clear;
+  FmCadastroR1000.MeCadastro.Clear;
+  FmCadastroR1000.EdCadastro.Clear;
+  cbTipoR1000.ItemIndex := -1;
+  cbSituacaoEmpresa.ItemIndex := -1;
+  dbcbDesoneraFolhaCPRB.Checked := false;
+  dbcbObrigaEcd.Checked := false;
+
+end;
+
+procedure TFReinfR1000.FmFilial1BtFilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+
+  if FFilialCons.ShowModal = mrOk then
+  begin
+    with DMFilial, DMReinf do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', QFilialConsCod_Filial.Value);
+      QFilial.Open;
+      QReinfR1000COD_FILIAL.Value := QFilialCOD_FILIAL.Value;
+      FmFilialR1000.MeFilial.Text := QFilialCOD_FILIAL.Text;
+      FmFilialR1000.EdFilial.Text := QFilialDESC_FILIAL.Text;
+
+      if QFilialCOD_CADASTRO_REINF.Text <> '' then
+        FmCadastroR1000.MeCadastro.Text := QFilialCOD_CADASTRO_REINF.Text;
+
+      QReinfR1000COD_CLASSIFICACAO_TRIBUTARIA.Value := QFilialCOD_CLASSIFICACAO_TRIBUTARIA.Value;
+      if not (QFilialCOD_CLASSIFICACAO_TRIBUTARIA.Value in [2,3,99]) then
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 0; //na tabela da filial é NAO - VALUEUNCHECKED        
+
+      if (QFilialIND_DESONERACAO_CPRB.Text <> '') and (QFilialIND_DESONERACAO_CPRB.Text <> 'NAO') then
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 1
+      else
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 2;
+
+      cbSituacaoEmpresa.ItemIndex := QFilialIND_SITUACAO_REINF.Value;
+      QReinfR1000IND_SIT_PESSOA_JURIDICA.Value := QFilialIND_SITUACAO_REINF.Value;
+      QReinfR1000IND_PRODUCAO_HOMOLOGACAO.Value := QFilialIND_AMBIENTE_REINF.Value;
+
+      if (QFilialCOD_CADASTRO_REINF.Text <> '') and (QFilialCOD_CADASTRO_REINF.Value > 0) then
+      begin
+        with DMCadastro do
+        begin
+          QCadastro.Close;
+          QCadastro.SetVariable('PK', QFilialCOD_CADASTRO_REINF.Value);
+          QCadastro.Open;
+
+          QReinfR1000COD_CADASTRO.Value := QFilialCOD_CADASTRO_REINF.Value;
+          FmCadastroR1000.MeCadastro.Text := QFilialCOD_CADASTRO_REINF.Text;
+          FMCadastroR1000.EdCadastro.Text := QCadastroNOME.Text;
+        end;
+      end;
+    end;
+  end;
+
+end;
+
+procedure TFReinfR1000.FormCreate(Sender: TObject);
+begin
+  inherited;
+  with DMReinf do
+  begin
+    QReinfR1000.Open;
+    QClassificacaoTributaria.Open;
+    QReinfR1000Cons.Open;
+  end;
+  dtpkDataInicio.DateTime := Today;
+  dtpkDataFim.DateTime := Today;
+  dtpkDataFim.Enabled := cbFimValidade.Checked;
+  AtivarDesativarCampos(TButton(SBConfirmar));
+end;
+
+procedure TFReinfR1000.FmCadastroR1000BtCadastroClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+
+  if FCadastroCons.ShowModal = mrOk then
+  begin
+    with DMCadastro, DMReinf do
+    begin
+      QCadastro.Close;
+      QCadastro.SetVariable('PK', QCadastroConsCOD_CADASTRO.Value);
+      QCadastro.Open;
+      QReinfR1000COD_CADASTRO.Value := QCadastroCOD_CADASTRO.Value;
+      FmCadastroR1000.MeCadastro.Text := QCadastroCOD_CADASTRO.Text;
+      FmCadastroR1000.EdCadastro.Text := QCadastroNOME.Text; 
+    end;
+  end;
+
+end;
+
+procedure TFReinfR1000.FmFilialR1000MeFilialExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(FmFilialR1000.MeFilial.Text) <> '' then
+  begin
+    with DMFilial, DMReinf do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', StrToInt(Trim(FmFilialR1000.MeFilial.Text)));
+      QFilial.Open;
+      QReinfR1000COD_FILIAL.Value := QFilialCOD_FILIAL.Value;
+      FmFilialR1000.MeFilial.Text := QFilialCOD_FILIAL.Text;
+      FmFilialR1000.EdFilial.Text := QFilialDESC_FILIAL.Text;
+
+      if QFilialCOD_CADASTRO_REINF.Text <> '' then
+        FmCadastroR1000.MeCadastro.Text := QFilialCOD_CADASTRO_REINF.Text;
+
+      QReinfR1000COD_CLASSIFICACAO_TRIBUTARIA.Value := QFilialCOD_CLASSIFICACAO_TRIBUTARIA.Value;
+      if not (QFilialCOD_CLASSIFICACAO_TRIBUTARIA.Value in [2,3,99]) then
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 0; //na tabela da filial é NAO - VALUEUNCHECKED        
+
+      if (QFilialIND_DESONERACAO_CPRB.Text <> '') and (QFilialIND_DESONERACAO_CPRB.Text <> 'NAO') then
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 1
+      else
+        QReinfR1000IND_DESONERACAO_FOLHA.Value := 2;
+
+      cbSituacaoEmpresa.ItemIndex := QFilialIND_SITUACAO_REINF.Value;
+      QReinfR1000IND_SIT_PESSOA_JURIDICA.Value := QFilialIND_SITUACAO_REINF.Value;
+      QReinfR1000IND_PRODUCAO_HOMOLOGACAO.Value := QFilialIND_AMBIENTE_REINF.Value;
+      QReinfR1000IND_ACORDO_MULTA.Value := 0; // 0 - sem acordo | 1 - com acordo : apenas para orgãos internacionais
+
+      if (QFilialCOD_CADASTRO_REINF.Text <> '') and (QFilialCOD_CADASTRO_REINF.Value > 0) then
+      begin
+        FmCadastroR1000MeCadastroExit(Self);
+      end;
+    end;
+  end;
+
+end;
+
+procedure TFReinfR1000.FmCadastroR1000MeCadastroExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(FmCadastroR1000.MeCadastro.Text) <> '' then
+  begin
+    with DMCadastro, DMReinf do
+    begin
+      QCadastro.Close;
+      QCadastro.SetVariable('PK', StrToInt(Trim(FmCadastroR1000.MeCadastro.Text)));
+      QCadastro.Open;
+      QReinfR1000COD_CADASTRO.Value := QCadastroCOD_CADASTRO.Value;
+      FmCadastroR1000.MeCadastro.Text := QCadastroCOD_CADASTRO.Text;
+      FmCadastroR1000.EdCadastro.Text := QCadastroNOME.Text;
+    end;
+  end;
+end;
+
+procedure TFReinfR1000.SBConfirmarClick(Sender: TObject);
+begin
+  with DMReinf, DMUsuario do
+  begin
+    QReinfR1000COD_USUARIO.Value := QUsuarioCOD_USUARIO.Value;
+    //criado para preencher os campos dos dados que são iguais em todos os datasets.
+    //usar para todos os registros do REINF.
+    //passando após o dataset os booleans sobre o ambiente de envio e tipo de aplicativo.
+    //a chamada padrão tem esses parametros como false para facilitar os testes.
+    //chamado   ReinfParametrosXMLHomologacaoAplicativo(dataset, ambiente, tipoaplicativo)
+    //para ambiente de produção passar true, para aplicativo do governo passar true
+    if DMFilial.QFilialIND_AMBIENTE_REINF.Value = 1 then
+      BibDB.ReinfParametrosXMLHomologacaoAplicativo(TDataSet(QReinfR1000), true, false)
+    else
+      BibDB.ReinfParametrosXMLHomologacaoAplicativo(TDataSet(QReinfR1000), false, false);
+    QReinfR1000DT_INI_VALIDADE.Value := dtpkDataInicio.Date;
+    if cbFimValidade.Checked then
+      QReinfR1000DT_FIM_VALIDADE.Value := dtpkDataFim.Date
+    else
+      QReinfR1000DT_FIM_VALIDADE.Clear;
+
+    QReinfR1000IND_INC_ALT_EXC.Value := cbTipoR1000.ItemIndex; //0 - inclusao; 1 alteracao; 2 - exclusao
+    QReinfR1000COD_USUARIO.Value := QUsuarioConsCOD_USUARIO.Value;
+
+  end;
+  inherited;
+
+  LimparCampos;
+  AtivarDesativarCampos(TButton(Sender));
+  dbgReinfR1000.DataSource.DataSet.Refresh;
+
+end;
+
+
+procedure TFReinfR1000.SBAlterarClick(Sender: TObject);
+begin
+
+  with DMReinf do
+  begin
+    QReinfR1000.Close;
+    QReinfR1000.SetVariable('PK', dbgReinfR1000.DataSource.DataSet.FieldByName('COD_REINF_R1000').Value);
+    QReinfR1000.Open;
+
+    FmFilialR1000.MeFilial.Text := QReinfR1000COD_FILIAL.Text;
+    FmFilialR1000.MeFilialExit(Self);
+    FmCadastroR1000.MeCadastro.Text := QReinfR1000COD_CADASTRO.Text;
+    FmCadastroR1000.MeCadastroExit(Self);
+  end;
+  inherited;
+  AtivarDesativarCampos(TButton(Sender));
+
+end;
+
+
+procedure TFReinfR1000.SBIncluirClick(Sender: TObject);
+begin
+  inherited;
+  LimparCampos;
+  AtivarDesativarCampos(TButton(Sender));
+  DMReinf.QReinfR1000COD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TFReinfR1000.SBExcluirClick(Sender: TObject);
+begin
+
+  with DMOracle, DMReinf do
+  begin
+
+    if (BuscaNome('SELECT COUNT(COD_REINF_PERIODO) FROM TB_REINF_PERIODO', 'DESC_EVENTO_REINF = ' +
+                  QuotedStr('R-1000') +  ' AND COD_EVENTO_REINF = ' + QReinfR1000COD_REINF_R1000.Text) = '0') then
+    begin
+      if Dialogs.MessageDlg('Isso excluirá todas as informações. Deseja continuar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        inherited;
+        dbgReinfR1000.DataSource.DataSet.Refresh;
+        AtivarDesativarCampos(TButton(Sender));
+      end
+      else
+        ShowMessage('Cancelado pelo usuário');
+    end
+    else
+      Raise Exception.Create('Já existe evento gerado para envio. Exclua os eventos não enviados para poder alterá-los.');
+
+  end;
+  
+end;
+
+procedure TFReinfR1000.SBCancelarClick(Sender: TObject);
+begin
+  inherited;
+
+  AtivarDesativarCampos(TButton(Sender));
+
+end;
+
+procedure TFReinfR1000.dbgReinfR1000CellClick(Column: TColumn);
+begin
+  with DMReinf do
+  begin
+    if (QReinfR1000.State in [dsBrowse]) then
+    begin
+      QReinfR1000.Close;
+      QReinfR1000.SetVariable('PK', dbgReinfR1000.DataSource.DataSet.FieldByName('COD_REINF_R1000').Value);
+      QReinfR1000.Open;
+
+      FmFilialR1000.MeFilial.Text := QReinfR1000COD_FILIAL.Text;
+      FmFilialR1000.MeFilialExit(Self);
+      FmCadastroR1000.MeCadastro.Text := QReinfR1000COD_CADASTRO.Text;
+      FmCadastroR1000.MeCadastroExit(Self);
+      dtpkDataInicio.Date := QReinfR1000DT_INI_VALIDADE.AsDateTime;
+      if QReinfR1000DT_FIM_VALIDADE.Text <> '' then
+        dtpkDataFim.Date := QReinfR1000DT_FIM_VALIDADE.AsDateTime;
+
+      cbTipoR1000.ItemIndex := QReinfR1000IND_INC_ALT_EXC.Value;//0 - inclusao; 1 alteracao; 2 - exclusao
+      cbSituacaoEmpresa.ItemIndex := QReinfR1000IND_SIT_PESSOA_JURIDICA.Value;
+    end
+    else
+      Raise Exception.Create('Os dados não puderam ser abertos! Cancele a operação anterior.');
+  end;
+  AtivarDesativarCampos(TButton(SBConfirmar));
+  inherited;
+
+end;
+
+procedure TFReinfR1000.cbFimValidadeClick(Sender: TObject);
+begin
+  inherited;
+  dtpkDataFim.Enabled := (cbFimValidade.Checked) and (DSPrimario.State in [dsEdit, dsInsert]);
+end;
+
+procedure TFReinfR1000.btnGerarEventoClick(Sender: TObject);
+var
+  GeraXML: TGeraXMLReinf;
+begin
+  inherited;
+  if GeraXML = nil then
+    GeraXML := TGeraXMLReinf.Create;
+
+  with DMReinf, DMOracle do
+  begin
+
+    // verifica se a query do evento está aberta
+    if not (QReinfR1000.State in [dsBrowse]) then
+      raise Exception.Create('Não foi possível realizar a geração. O registro deve estar salvo!')
+    else
+    begin
+      if (BuscaNome('SELECT COUNT(COD_REINF_PERIODO) FROM TB_REINF_PERIODO', 'DESC_EVENTO_REINF = ' +
+                  QuotedStr('R-1000') +  ' AND COD_EVENTO_REINF = ' + QReinfR1000COD_REINF_R1000.Text) = '0') then
+      begin
+        // verifica se o evento está selecionado
+        if Trim(QReinfR1000COD_REINF_R1000.Text) = '' then
+          raise Exception.Create('Deve haver um registro selecionado para geração.')
+        else
+          GeraXML.GerarR1000(QReinfR1000COD_REINF_R1000.Value, 'R-1000', '1.05.01');
+      end
+      else
+        raise Exception.Create('Este evento já foi gerado!');
+    end;
+    QReinfPeriodo.Refresh;
+  end;
+
+end;
+
+procedure TFReinfR1000.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  Action := caFree;
+end;
+
+procedure TFReinfR1000.FormActivate(Sender: TObject);
+begin
+  inherited;
+  if not dbgReinfR1000.DataSource.DataSet.IsEmpty then
+    dbgReinfR1000CellClick(dbgReinfR1000.Columns.Items[1]);
+end;
+
+end.

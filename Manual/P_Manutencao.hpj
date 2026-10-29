@@ -1,0 +1,19 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+HLP=P_Manutencao.hlp
+
+[FILES]
+P_Manutencao.rtf
+
+[MAP]
+cadastro_atividade=9
+cadastro_categoria=8
+cadastro_equipamento=4
+cadastro_ficha_tecnica=6
+cadastro_funcionario=7
+cadastro_procedimento=10
+cadastro_tipo_equipamento=5
+menu_manutencao=1

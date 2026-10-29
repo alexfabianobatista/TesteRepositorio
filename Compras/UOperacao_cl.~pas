@@ -1,0 +1,305 @@
+unit UOperacao_cl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, DBTables, OracleData, OraTeste;
+
+type
+  TDMOperacao = class(TDataModule)
+    DSOperacao: TDataSource;
+    QOperacao: TOracleDataSet1;
+    QOperacaoCOD_OPERACAO: TIntegerField;
+    QOperacaoDESC_OPERACAO: TStringField;
+    QOperacaoIND_ESTOQUE: TStringField;
+    QOperacaoIND_CUSTO: TStringField;
+    QOperacaoIND_VENDAS: TStringField;
+    QOperacaoIND_LIBERADO: TStringField;
+    QOperacaoIND_FUTURA_CLIENTE: TStringField;
+    QOperacaoIND_FUTURA_FORNECEDOR: TStringField;
+    QOperacaoIND_CUSTO_NOTA: TStringField;
+    QOperacaoIND_EMITE: TStringField;
+    QOperacaoIND_TRANSFERENCIA: TStringField;
+    QOperacaoIND_COMPRAS: TStringField;
+    QOperacaoIND_PRECO: TStringField;
+    QOperacaoIND_FIXAR_EMPRESA: TStringField;
+    QOperacaoIND_FIXAR_OUTRAS_EMP: TStringField;
+    QOperacaoIND_FUNRURAL: TStringField;
+    QOperacaoDESC_RESUMO: TStringField;
+    QOperacaoNUM_LIVROS: TIntegerField;
+    QOperacaoCOD_HISTORICO_CAIXA: TIntegerField;
+    QOperacaoIND_DUPLICATA: TStringField;
+    QOperacaoIND_BLOQUETO: TStringField;
+    QOperacaoIND_PEDIDO_CLIENTE: TStringField;
+    QOperacaoIND_CONSIGNACAO_FORNECEDOR: TStringField;
+    QOperacaoIND_CONSIGNACAO_CLIENTE: TStringField;
+    QOperacaoIND_EMPRESTIMO_FORNECEDOR: TStringField;
+    QOperacaoIND_EMPRESTIMO_CLIENTE: TStringField;
+    QOperacaoIND_TIPO_OPERACAO: TStringField;
+    QOperacaoIND_CONTA_PAGAR: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_NOTA_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_NOTA_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_ICMS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_ICMS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_FUNRURAL_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_FUNRURAL_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_FRETE_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FRETE_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_FRETE_ICMS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FRETE_ICMS_DEB: TStringField;
+    QOperacaoCOD_HISTORICO_CONTABIL: TIntegerField;
+    QOperacaoIND_DEPOSITO_OUTRAS: TStringField;
+    QOperacaoIND_DEPOSITO_EMPRESA: TStringField;
+    QOperacaoIND_FIXAR_CONSUMO: TStringField;
+    QOperacaoIND_LIVRO_FISCAL: TStringField;
+    QOperacaoIND_CUPOM_FISCAL: TStringField;
+    QOperacaoCOD_SERIE: TStringField;
+    QOperacaoCOD_CONTABIL_VAL_NOTA_APRAZO: TStringField;
+    QOperacaoCOD_CONTABIL_DESC_AFIXAR_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_DESC_AFIXAR_CRED: TStringField;
+    QOperacaoCOD_OPERACAO_ENTRADA: TIntegerField;
+    QOperacaoCOD_CONTABIL_CONTRATO_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_CONTRATO_CRED: TStringField;
+    QOperacaoIND_BONIFICACAO: TStringField;
+    QOperacaoCons: TOracleDataSet1;
+    QOperacaoConsCOD_OPERACAO: TIntegerField;
+    QOperacaoConsDESC_OPERACAO: TStringField;
+    QOperacaoConsDESC_RESUMO: TStringField;
+    QOperacaoConsIND_TIPO_OPERACAO: TStringField;
+    QROperacao_Contabil: TOracleDataSet1;
+    QROperacao_Contabil_Item: TOracleDataSet1;
+    QROperacao: TOracleDataSet1;
+    QROperacao_Contabil_ItemCOD_OPERACAO: TFloatField;
+    QROperacao_Contabil_ItemCOD_CONTA_CREDITO: TStringField;
+    QROperacao_Contabil_ItemCOD_CONTA_DEBITO: TStringField;
+    QROperacao_Contabil_ItemCOD_CONTA_DEBITO_PRAZO: TStringField;
+    QROperacao_Contabil_ItemDESC_OBSERVACAO: TStringField;
+    QROperacao_ContabilCOD_OPERACAO: TIntegerField;
+    QROperacao_ContabilDESC_OPERACAO: TStringField;
+    QROperacao_ContabilDESC_RESUMO: TStringField;
+    QROperacao_ContabilNUM_NATUREZA_EST: TIntegerField;
+    QROperacao_ContabilCOD_HISTORICO_CONTABIL: TIntegerField;
+    QROperacao_ContabilNUM_NATUREZA_INT: TIntegerField;
+    QOperacaoCOD_CONT_VAL_NOTA_CRED_AVISTA: TStringField;
+    QROperacaoCOD_OPERACAO: TIntegerField;
+    QROperacaoDESC_OPERACAO: TStringField;
+    QROperacaoIND_ESTOQUE: TStringField;
+    QROperacaoIND_EMITE: TStringField;
+    QROperacaoDESC_RESUMO: TStringField;
+    QOperacaoCOD_MENSAGEM: TIntegerField;
+    QOperacaoCOD_TRIBUTACAO: TIntegerField;
+    QOperacaoNUM_NATUREZA_EST_NOVO: TIntegerField;
+    QOperacaoNUM_NATUREZA_INT_NOVO: TIntegerField;
+    QROperacaoNUM_NATUREZA_EST_NOVO: TIntegerField;
+    QROperacaoNUM_NATUREZA_INT_NOVO: TIntegerField;
+    QROperacao_ContabilNUM_NATUREZA_EST_NOVO: TIntegerField;
+    QROperacao_ContabilNUM_NATUREZA_INT_NOVO: TIntegerField;
+    QOperacaoIND_OBS_FRETE_SEGURO: TStringField;
+    QOperacaoIND_BRINDE: TStringField;
+    QOperacaoCOD_RAMO: TIntegerField;
+    QOperacaoIND_TIPO_PAGAMENTO: TStringField;
+    QOperacaoCOD_CONTABIL_PIS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_PIS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_COFINS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_COFINS_CRED: TStringField;
+    QOperacaoCOD_HISTORICO_CONTABIL_PIS: TIntegerField;
+    QOperacaoCOD_HISTORICO_CONTABIL_COFINS: TIntegerField;
+    QOperacaoPERC_BASE_PIS: TFloatField;
+    QOperacaoPERC_BASE_COFINS: TFloatField;
+    QOperacaoIND_FISICA_JURIDICA: TStringField;
+    QOperacaoIND_POCKET: TStringField;
+    QOperacaoIND_TROCA: TStringField;
+    QOperacaoCOD_CONTABIL_IRRF_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_IRRF_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_CSLL_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_INSS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_INSS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_ISSQN_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_ISSQN_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_CSLL_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_TRANSGENICO_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_TRANSGENICO_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FITAS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_FITAS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FACS_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_FACS_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FETHAB_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_FETHAB_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_PEDAGIO_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_PEDAGIO_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_SEST_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_SEST_CRED: TStringField;
+    QOperacaoIND_CONTRATO_ARROZ: TStringField;
+    QOperacaoCOD_CONTABIL_NOTA_CRED_DUP: TStringField;
+    QOperacaoCOD_CONTABIL_NOTA_DEB_DUP: TStringField;
+    QOperacaoCOD_CONTABIL_CSSL_DBB: TStringField;
+    QOperacaoCOD_OPERACAO_ENTRADA_AGRICOLA: TIntegerField;
+    QOperacaoIND_CONTROLE_ESTOQUE: TStringField;
+    QOperacaoIND_GERA_MEMORANDO: TStringField;
+    QOperacaoIND_FINALIDADE_NFE: TIntegerField;
+    QOperacaoCOD_CONTABIL_CONTRATO_INC_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_CONTRATO_INC_CRED: TStringField;
+    QOperacaoCOD_CONT_VAR_CAMBIAL_POS_DEB: TStringField;
+    QOperacaoCOD_CONT_VAR_CAMBIAL_POS_CRED: TStringField;
+    QOperacaoCOD_CONT_VAR_CAMBIAL_NEG_DEB: TStringField;
+    QOperacaoCOD_CONT_VAR_CAMBIAL_NEG_CRED: TStringField;
+    QOperacaoIND_TELECOMUNICACAO: TStringField;
+    QOperacaoIND_NATUREZA_EXPORTACAO: TStringField;
+    QOperacaoIND_SERVICO: TStringField;
+    QOperacaoIND_SENAR: TStringField;
+    QOperacaoIND_PROMISSORIA: TStringField;
+    QROperacaoIND_TIPO_OPERACAO: TStringField;
+    QOperacaoIND_REMESSA_ENTRADA: TStringField;
+    QOperacaoCOD_CONTABIL_IPI_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_IPI_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_CUSTO_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_CUSTO_CRED: TStringField;
+    QOperacaoIND_CONDICIONAL: TStringField;
+    QBCCredito: TOracleDataSet1;
+    QBCCreditoORDEM: TFloatField;
+    QBCCreditoCOD_BC_CREDITO_PISCOFINS: TStringField;
+    QBCCreditoDESC_BC_CREDITO_PISCOFINS: TStringField;
+    DSBCCredito: TDataSource;
+    QBCCreditoDESC_COMPLETA: TStringField;
+    QOperacaoCOD_BC_CREDITO_PISCOFINS: TStringField;
+    QOperacaoCOD_SERIE_MODELO: TStringField;
+    QSerieModeloCons: TOracleDataSet1;
+    DSSerieModeloCons: TDataSource;
+    QSerieModeloConsORDEM: TFloatField;
+    QSerieModeloConsCOD_SERIE_MODELO: TStringField;
+    QSerieModeloConsDESC_SERIE_MODELO: TStringField;
+    QSerieModeloConsDESC_COMPLETA: TStringField;
+    QOperacaoIND_EMITE_RECIBO_ENTRADA: TStringField;
+    DSCstCofins: TDataSource;
+    QCstCofins: TOracleDataSet1;
+    QCstCofinsCOD_CST_COFINS: TStringField;
+    QCstCofinsDESC_CST_COFINS: TStringField;
+    QCstCofinsDESC_COMPLETA: TStringField;
+    QCstpis: TOracleDataSet1;
+    QCstpisCOD_CST_PIS: TStringField;
+    QCstpisDESC_CST_PIS: TStringField;
+    QCstpisDESC_COMPLETA: TStringField;
+    DSCstPis: TDataSource;
+    QOperacaoCOD_CST_COFINS: TStringField;
+    QOperacaoCOD_CST_PIS: TStringField;
+    QOperacaoIND_SEGUNDA_VIA_CUPOM: TStringField;
+    QOperacaoCOD_CFOP_ST: TIntegerField;
+    QOperacaoCOD_CFOP_INT_ST: TIntegerField;
+    QOperacaoConsNUM_NATUREZA_EST_NOVO: TIntegerField;
+    QOperacaoConsNUM_NATUREZA_INT_NOVO: TIntegerField;
+    QOperacaoIND_OBRIGA_VALE_PRODUTO: TStringField;
+    QOperacaoCOD_HISTORICO_CAIXA_CREDITO: TIntegerField;
+    QOperacaoCOD_HISTORICO_CAIXA_DEBITO: TIntegerField;
+    QOperacaoConsCOD_CFOP_ST: TIntegerField;
+    QOperacaoConsCOD_CFOP_INT_ST: TIntegerField;
+    QOperacaoCOD_CONTABIL_NOTA_SPED_CONTRIB: TStringField;
+    QOperacaoCOD_CONTABIL_SUBST_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_SUBST_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FCCIA_CRED: TStringField;
+    QOperacaoCOD_CONTABIL_FCCIA_DEB: TStringField;
+    QOperacaoCOD_BENEF_FISCAL: TStringField;
+    QOperacaoCOD_HISTORICO_CAIXA_CHEQUE: TIntegerField;
+    QOperacaoCOD_FINALIDADE: TIntegerField;
+    QOperacaoCOD_HISTORICO_CAIXA_PIX: TIntegerField;
+    QOperacaoCOD_CONTABIL_SENAT_DEB: TStringField;
+    QOperacaoCOD_CONTABIL_SENAT_CRED: TStringField;
+    QOperacaoCOD_USUARIO: TIntegerField;
+    QOperacaoIND_COMBUSTIVEL: TStringField;
+    QOperacaoConsCOD_TRIBUTACAO: TIntegerField;
+    QOperacaoIND_ELETRICIDADE: TStringField;
+    procedure QOperacaoAfterInsert(DataSet: TDataSet);
+    procedure QOperacaoAfterPost(DataSet: TDataSet);
+    procedure QOperacaoAfterOpen(DataSet: TDataSet);
+    procedure QOperacaoBeforePost(DataSet: TDataSet);
+    procedure QOperacaoAfterEdit(DataSet: TDataSet);
+    procedure QOperacaoBeforeEdit(DataSet: TDataSet);
+    procedure QOperacaoBeforeInsert(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DMOperacao: TDMOperacao;
+
+implementation
+
+uses UOracle_cl,UUsuario_cl;
+
+{$R *.DFM}
+
+procedure TDMOperacao.QOperacaoAfterInsert(DataSet: TDataSet);
+begin
+  QOperacaoCod_Operacao.Value := DMOracle.Sequencia('OPERACAO');
+  QOperacaoIND_SERVICO.Value := 'N';
+  QOperacaoIND_PROMISSORIA.Value := 'N';
+end;
+
+procedure TDMOperacao.QOperacaoAfterPost(DataSet: TDataSet);
+begin
+  QOperacao.SetVariable('PK',QOperacaoCod_Operacao.Value);
+end;
+
+procedure TDMOperacao.QOperacaoAfterOpen(DataSet: TDataSet);
+begin
+  QBCCredito.Open;
+  QSerieModeloCons.Open;
+  QCstCofins.Open;
+  QCstpis.Open;
+end;
+
+procedure TDMOperacao.QOperacaoBeforePost(DataSet: TDataSet);
+begin
+  //Bloquear cadastrar operações de saida que atualizam o custo, pois notas de venda não devem atualizar o custo.
+  //Na volta da confirmação o problema piora pois o custo é atualizado denovo.
+  //Verificar como fica na devolução. por Alessandro 11/04/13.
+  if (QOperacaoIND_TIPO_OPERACAO.Value = 'S') and (QOperacaoIND_CUSTO.Value = 'S') then
+    raise Exception.Create('Não é possível atualizar o custo nas notas de saida.');
+
+  // Verificar se CST de PIS e COFINS são do Mesmo tipo que a Operação
+  if Trim(QOperacaoCOD_CST_PIS.Value) <> '' then
+  begin
+    if ((StrToInt(QOperacaoCOD_CST_PIS.Value) < 50) and (QOperacaoIND_TIPO_OPERACAO.Value <> 'S')) then
+      raise Exception.Create('Informar PIS de Entrada para Operação de Entrada');
+    if ((StrToInt(QOperacaoCOD_CST_PIS.Value) > 50) and (QOperacaoIND_TIPO_OPERACAO.Value <> 'E')) then
+      raise Exception.Create('Informar PIS de Saída para Operação de Saída');
+  end;
+
+  if Trim(QOperacaoCOD_CST_COFINS.Value) <> '' then
+  begin
+    if ((StrToInt(QOperacaoCOD_CST_COFINS.Value) < 50) and (QOperacaoIND_TIPO_OPERACAO.Value <> 'S')) then
+      raise Exception.Create('Informar COFINS de Entrada para Operação de Entrada');
+    if ((StrToInt(QOperacaoCOD_CST_COFINS.Value) > 50) and (QOperacaoIND_TIPO_OPERACAO.Value <> 'E')) then
+      raise Exception.Create('Informar COFINS de Saída para Operação de Saída');
+  end;
+
+  if dmoperacao.QOperacaoIND_TIPO_OPERACAO.Text = 'S' then
+    DMOperacao.QOperacaoIND_CUSTO_NOTA.Text := 'E';
+
+// Feito para contornar o problema de tributação estar com o número 0. Alex 06/10/2023
+  if QOperacaoCOD_TRIBUTACAO.Text = '0' then
+    QOperacaoCOD_TRIBUTACAO.Clear;
+
+  QOperacaoCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMOperacao.QOperacaoAfterEdit(DataSet: TDataSet);
+begin
+  // Feito para contornar o problema de tributação estar com o número 0
+  if QOperacaoCOD_TRIBUTACAO.Text = '0' then
+    QOperacaoCOD_TRIBUTACAO.Clear;
+end;
+
+procedure TDMOperacao.QOperacaoBeforeEdit(DataSet: TDataSet);
+begin
+  QOperacaoCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMOperacao.QOperacaoBeforeInsert(DataSet: TDataSet);
+begin
+  QOperacaoCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+end.

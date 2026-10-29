@@ -1,0 +1,430 @@
+object DMFCI: TDMFCI
+  OldCreateOrder = False
+  Left = 596
+  Top = 278
+  Height = 241
+  Width = 370
+  object QReg0000: TOracleDataSet1
+    Tag = 1
+    SQL.Strings = (
+      'SELECT DISTINCT'
+      '  '#39'0000'#39' AS TIPO_REGISTRO,'
+      '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') AS CNPJ_CONTRIBUINTE,'
+      '  F.DESC_FILIAL AS NOME_CONTRIBUINTE,'
+      '  '#39'1.0'#39' AS VERSAO_LEIAUTE'
+      'FROM'
+      '  TB_FILIAL F'
+      '    INNER JOIN TB_NOTA_CAB N'
+      '      ON F.COD_FILIAL = N.COD_FILIAL'
+      
+        '    --FAZ JOIN COM NOTA_ITEM E NOTA_ITEM_FCI PARA TRAZER APENAS ' +
+        'NOTAS QUE TENHAM FCI'
+      '    INNER JOIN TB_NOTA_ITEM I'
+      '      ON N.COD_NOTA_CAB = I.COD_NOTA_CAB'
+      '    INNER JOIN TB_NOTA_ITEM_FCI FCI'
+      '      ON I.COD_NOTA_ITEM = FCI.COD_NOTA_ITEM'
+      'WHERE'
+      '  N.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000040000000D0000005449504F5F524547495354524F01000000000011
+      000000434E504A5F434F4E5452494255494E5445010000000000110000004E4F
+      4D455F434F4E5452494255494E54450100000000000E00000056455253414F5F
+      4C454941555445010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 16
+    Top = 16
+    object QReg0000TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg0000CNPJ_CONTRIBUINTE: TStringField
+      FieldName = 'CNPJ_CONTRIBUINTE'
+      Size = 18
+    end
+    object QReg0000NOME_CONTRIBUINTE: TStringField
+      FieldName = 'NOME_CONTRIBUINTE'
+      Size = 50
+    end
+    object QReg0000VERSAO_LEIAUTE: TStringField
+      FieldName = 'VERSAO_LEIAUTE'
+      Size = 3
+    end
+  end
+  object QReg0010: TOracleDataSet1
+    Tag = 3
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'0010'#39' AS TIPO_REGISTRO,'
+      
+        '  REGEXP_REPLACE(F.NUM_CGC, '#39'[^0-9]'#39', '#39#39') AS CNPJ_CONTRIBUINTE, ' +
+        ' '
+      '  F.DESC_FILIAL AS NOME_RAZAO_SOCIAL,'
+      
+        '  REGEXP_REPLACE(F.DESC_INSCRICAO,'#39'[^0-9]'#39', '#39#39') AS INSCRICAO_EST' +
+        'ADUAL,'
+      
+        '  F.DESC_ENDERECO ||'#39' '#39'|| NVL(F.NUM_ENDERECO,'#39#39') AS ENDERECO_EST' +
+        'ABELECIMENTO,'
+      '  REGEXP_REPLACE(F.DESC_CEP,'#39'[^0-9]'#39', '#39#39') AS CEP,'
+      '  F.DESC_CIDADE AS MUNICIPIO,'
+      '  F.COD_ESTADO AS UF'
+      'FROM'
+      '  TB_FILIAL F'
+      '    INNER JOIN TB_NOTA_CAB N'
+      '      ON F.COD_FILIAL = N.COD_FILIAL'
+      'WHERE'
+      '  N.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000080000000D0000005449504F5F524547495354524F01000000000011
+      000000434E504A5F434F4E5452494255494E5445010000000000110000004E4F
+      4D455F52415A414F5F534F4349414C01000000000012000000494E5343524943
+      414F5F455354414455414C01000000000018000000454E44455245434F5F4553
+      544142454C4543494D454E544F01000000000003000000434550010000000000
+      090000004D554E49434950494F010000000000020000005546010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 128
+    Top = 16
+    object QReg0010TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg0010CNPJ_CONTRIBUINTE: TStringField
+      FieldName = 'CNPJ_CONTRIBUINTE'
+      Size = 4000
+    end
+    object QReg0010NOME_RAZAO_SOCIAL: TStringField
+      FieldName = 'NOME_RAZAO_SOCIAL'
+      Size = 50
+    end
+    object QReg0010INSCRICAO_ESTADUAL: TStringField
+      FieldName = 'INSCRICAO_ESTADUAL'
+      Size = 4000
+    end
+    object QReg0010ENDERECO_ESTABELECIMENTO: TStringField
+      FieldName = 'ENDERECO_ESTABELECIMENTO'
+      Size = 71
+    end
+    object QReg0010CEP: TStringField
+      FieldName = 'CEP'
+      Size = 4000
+    end
+    object QReg0010MUNICIPIO: TStringField
+      FieldName = 'MUNICIPIO'
+      Size = 30
+    end
+    object QReg0010UF: TStringField
+      FieldName = 'UF'
+      Size = 2
+    end
+  end
+  object QReg0001: TOracleDataSet1
+    Tag = 2
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'0001'#39' AS TIPO_REGISTRO,'
+      
+        '  '#39'Texto em caracteres UTF-8: (d'#237'grafo BR)'#39#39#231#227'o'#39#39',(d'#237'grafo espan' +
+        'hol-enhe)'#39#39#241#39#39',(trema)'#39#39#220#39#39',(ordinais)'#39#39#170#186#39#39',(ligamento s+z alem' +
+        #227'o)'#39#39#223#39#39'.'#39' AS TEXTO_PADRAO_UTF8'
+      'FROM'
+      '  DUAL')
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D0000005449504F5F524547495354524F01000000000011
+      000000544558544F5F50414452414F5F55544638010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 16
+    object QReg0001TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg0001TEXTO_PADRAO_UTF8: TStringField
+      DisplayWidth = 150
+      FieldName = 'TEXTO_PADRAO_UTF8'
+      Size = 150
+    end
+  end
+  object QReg0990: TOracleDataSet1
+    Tag = 4
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'0990'#39' AS TIPO_REGISTRO,'
+      '  4 AS QUANTIDADE_LINHAS'
+      'FROM'
+      '  DUAL')
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D0000005449504F5F524547495354524F01000000000011
+      0000005155414E5449444144455F4C494E484153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 16
+    object QReg0990TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg0990QUANTIDADE_LINHAS: TFloatField
+      FieldName = 'QUANTIDADE_LINHAS'
+    end
+  end
+  object QReg5001: TOracleDataSet1
+    Tag = 5
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'5001'#39' AS TIPO_REGISTRO  '
+      'FROM'
+      '  DUAL')
+    QBEDefinition.QBEFieldDefs = {04000000010000000D0000005449504F5F524547495354524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 16
+    Top = 72
+    object QReg5001TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+  end
+  object QReg5020: TOracleDataSet1
+    Tag = 6
+    SQL.Strings = (
+      'SELECT '
+      '  '#39'5020'#39' AS TIPO_REGISTRO,'
+      '  P.DESC_PRODUTO AS NOME_MERCADORIA,'
+      '  REGEXP_REPLACE(P.NUM_GENERO_NCM, '#39'[^0-9]'#39', '#39#39') AS CODIGO_NCM,'
+      '  P.COD_PRODUTO AS CODIGO_MERCADORIA,'
+      '  P.DESC_COD_BARRA AS CODIGO_GTIN,'
+      '  CASE'
+      '    WHEN P.DESC_UNIDADE = '#39'GR'#39' THEN '#39'g'#39
+      '    WHEN P.DESC_UNIDADE = '#39'KG'#39' THEN '#39'kg'#39
+      '    WHEN P.DESC_UNIDADE = '#39'LT'#39' THEN '#39'lt'#39
+      '    WHEN P.DESC_UNIDADE = '#39'M'#39'  THEN '#39'm'#39
+      '    WHEN P.DESC_UNIDADE = '#39'M2'#39' THEN '#39'm2'#39
+      '    WHEN P.DESC_UNIDADE = '#39'M3'#39' THEN '#39'm3'#39
+      '    WHEN P.DESC_UNIDADE = '#39'T'#39'  THEN '#39't'#39
+      '    WHEN P.DESC_UNIDADE = '#39'PC'#39' THEN '#39'p'#231#39
+      '    WHEN P.DESC_UNIDADE = '#39'UN'#39' THEN '#39'unid'#39
+      '    ELSE'
+      '      '#39'99'#39' END AS UNIDADE_MERCADORIA,'
+      
+        '  TRIM(REPLACE(TO_CHAR(FCI.VAL_TOTAL_ITEM_SAIDA, '#39'9999999999999.' +
+        '99'#39'),'#39'.'#39','#39','#39'))  AS VALOR_SAIDA_MERCADORIA,'
+      
+        '  TRIM(REPLACE(TO_CHAR(FCI.VAL_TOTAL_PARCELA_IMPORTADA,'#39'99999999' +
+        '99999.99'#39'),'#39'.'#39','#39','#39')) AS VALOR_PARCELA_IMPORTADA,'
+      '  FCI.PERC_QUOCIENTE AS CONTEUDO_IMPORTACAO_CI'
+      'FROM'
+      '  TB_NOTA_ITEM_FCI FCI'
+      
+        '    INNER JOIN TB_NOTA_ITEM I ON FCI.COD_NOTA_ITEM = I.COD_NOTA_' +
+        'ITEM'
+      '    INNER JOIN TB_PRODUTO P ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  I.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000090000000D0000005449504F5F524547495354524F0100000000000F
+      0000004E4F4D455F4D45524341444F5249410100000000000A000000434F4449
+      474F5F4E434D01000000000011000000434F4449474F5F4D45524341444F5249
+      410100000000000B000000434F4449474F5F4754494E01000000000012000000
+      554E49444144455F4D45524341444F5249410100000000001600000056414C4F
+      525F53414944415F4D45524341444F5249410100000000001700000056414C4F
+      525F50415243454C415F494D504F525441444101000000000016000000434F4E
+      544555444F5F494D504F52544143414F5F4349010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 72
+    object QReg5020TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg5020NOME_MERCADORIA: TStringField
+      FieldName = 'NOME_MERCADORIA'
+      Size = 200
+    end
+    object QReg5020CODIGO_NCM: TStringField
+      FieldName = 'CODIGO_NCM'
+      Size = 4000
+    end
+    object QReg5020CODIGO_MERCADORIA: TFloatField
+      FieldName = 'CODIGO_MERCADORIA'
+      Required = True
+    end
+    object QReg5020CODIGO_GTIN: TStringField
+      FieldName = 'CODIGO_GTIN'
+    end
+    object QReg5020UNIDADE_MERCADORIA: TStringField
+      FieldName = 'UNIDADE_MERCADORIA'
+      Size = 4
+    end
+    object QReg5020VALOR_SAIDA_MERCADORIA: TStringField
+      FieldName = 'VALOR_SAIDA_MERCADORIA'
+      Size = 17
+    end
+    object QReg5020VALOR_PARCELA_IMPORTADA: TStringField
+      FieldName = 'VALOR_PARCELA_IMPORTADA'
+      Size = 17
+    end
+    object QReg5020CONTEUDO_IMPORTACAO_CI: TFloatField
+      FieldName = 'CONTEUDO_IMPORTACAO_CI'
+    end
+  end
+  object QReg5990: TOracleDataSet1
+    Tag = 7
+    SQL.Strings = (
+      'SELECT '
+      '  '#39'5990'#39' AS TIPO_REGISTRO,'
+      '  COUNT(*)+2 AS QUANTIDADE_LINHAS'
+      'FROM'
+      '  TB_NOTA_ITEM_FCI FCI'
+      
+        '    INNER JOIN TB_NOTA_ITEM I ON FCI.COD_NOTA_ITEM = I.COD_NOTA_' +
+        'ITEM'
+      '    INNER JOIN TB_PRODUTO P ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  I.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D0000005449504F5F524547495354524F01000000000011
+      0000005155414E5449444144455F4C494E484153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 128
+    Top = 72
+    object QReg5990TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg5990QUANTIDADE_LINHAS: TFloatField
+      FieldName = 'QUANTIDADE_LINHAS'
+    end
+  end
+  object QReg9001: TOracleDataSet1
+    Tag = 8
+    SQL.Strings = (
+      'SELECT'
+      #9#39'9001'#39' AS TIPO_REGISTRO'
+      'FROM'
+      #9'DUAL')
+    QBEDefinition.QBEFieldDefs = {04000000010000000D0000005449504F5F524547495354524F010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 16
+    Top = 128
+    object QReg9001TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+  end
+  object QReg9900: TOracleDataSet1
+    Tag = 9
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'9900'#39' AS TIPO_REGISTRO,'
+      '  '#39'0000'#39' AS TIPO_REGISTRO_SER_TOTALIZADO,'
+      '  1 AS QTD_LINHAS'
+      'FROM DUAL'
+      ''
+      'UNION'
+      ''
+      'SELECT'
+      '  '#39'9900'#39' AS TIPO_REGISTRO,'
+      '  '#39'0010'#39' AS TIPO_REGISTRO_SER_TOTALIZADO,'
+      '  1 AS QTD_LINHAS'
+      'FROM DUAL'
+      ''
+      'UNION'
+      ''
+      'SELECT'
+      '  '#39'9900'#39' AS TIPO_REGISTRO,'
+      '  '#39'5020'#39' AS TIPO_REGISTRO_SER_TOTALIZADO,'
+      '  COUNT(*) AS QTD_LINHAS'
+      'FROM'
+      '  TB_NOTA_ITEM_FCI FCI'
+      
+        '    INNER JOIN TB_NOTA_ITEM I ON FCI.COD_NOTA_ITEM = I.COD_NOTA_' +
+        'ITEM'
+      '    INNER JOIN TB_PRODUTO P ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  I.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000030000000D0000005449504F5F524547495354524F0100000000001C
+      0000005449504F5F524547495354524F5F5345525F544F54414C495A41444F01
+      00000000000A0000005154445F4C494E484153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 72
+    Top = 128
+    object QReg9900TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg9900TIPO_REGISTRO_SER_TOTALIZADO: TStringField
+      FieldName = 'TIPO_REGISTRO_SER_TOTALIZADO'
+      Size = 4
+    end
+    object QReg9900QTD_LINHAS: TFloatField
+      FieldName = 'QTD_LINHAS'
+    end
+  end
+  object QReg9990: TOracleDataSet1
+    Tag = 10
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'9990'#39' AS TIPO_REGISTRO,'
+      '  5 AS QTD_LINHAS'
+      'FROM'
+      '  DUAL')
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D0000005449504F5F524547495354524F0100000000000A
+      0000005154445F4C494E484153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 128
+    Top = 128
+    object QReg9990TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg9990QTD_LINHAS: TFloatField
+      FieldName = 'QTD_LINHAS'
+    end
+  end
+  object QReg9999: TOracleDataSet1
+    Tag = 11
+    SQL.Strings = (
+      'SELECT'
+      '  '#39'9999'#39' AS TIPO_REGISTRO,'
+      '  COUNT(*)+12 AS QUANTIDADE_LINHAS'
+      'FROM'
+      '  TB_NOTA_ITEM_FCI FCI'
+      
+        '    INNER JOIN TB_NOTA_ITEM I ON FCI.COD_NOTA_ITEM = I.COD_NOTA_' +
+        'ITEM'
+      '    INNER JOIN TB_PRODUTO P ON I.COD_PRODUTO = P.COD_PRODUTO'
+      'WHERE'
+      '  I.COD_NOTA_CAB = :COD_NOTA_CAB')
+    Variables.Data = {
+      03000000010000000D0000003A434F445F4E4F54415F43414203000000000000
+      0000000000}
+    QBEDefinition.QBEFieldDefs = {
+      04000000020000000D0000005449504F5F524547495354524F01000000000011
+      0000005155414E5449444144455F4C494E484153010000000000}
+    Session = DMOracle.DBCemapa
+    Left = 184
+    Top = 128
+    object QReg9999TIPO_REGISTRO: TStringField
+      FieldName = 'TIPO_REGISTRO'
+      Size = 4
+    end
+    object QReg9999QUANTIDADE_LINHAS: TFloatField
+      FieldName = 'QUANTIDADE_LINHAS'
+    end
+  end
+end

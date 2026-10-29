@@ -1,0 +1,1018 @@
+inherited FVendaCons: TFVendaCons
+  Left = 281
+  Top = 128
+  Width = 563
+  Height = 520
+  Caption = 'Consulta Vendas'
+  OldCreateOrder = True
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited PnTopo: TPanel
+    Width = 555
+    Height = 142
+    object Label6: TLabel [0]
+      Left = 16
+      Top = 56
+      Width = 44
+      Height = 13
+      Caption = 'Operador'
+    end
+    object SpeedButton2: TSpeedButton [1]
+      Left = 97
+      Top = 70
+      Width = 23
+      Height = 24
+      Glyph.Data = {
+        36060000424D3606000000000000360000002800000020000000100000000100
+        1800000000000006000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF3434344B4B4B333333FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF85
+        8585929292858585FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF636363C9C9C9F6F6F6A1A1A1454545FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9F9FD6
+        D6D6DFDFDFC1C1C18E8E8EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF676767BDBDBDF6F6F69D9D9D4D4D4DFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA1A1A1D0
+        D0D0DFDFDFBFBFBF939393FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF6E6E6EB8B8B8F3F3F39A9A9A525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA5A5A5CD
+        CDCDDFDFDFBDBDBD959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF4343434A4A4A4C4C4C666666ADADADE8E8E89191915050504D4D4D4A4A
+        4A434343FF00FFFF00FFFF00FFFF00FFFF00FF8D8D8D919191929292A1A1A1C8
+        C8C8DFDFDFB8B8B89494949393939191918D8D8DFF00FFFF00FFFF00FFFF00FF
+        323232E6E6E6DFDFDFE0E0E0DADADAD7D7D7D3D3D3D9D9D9E1E1E1E5E5E5E8E8
+        E8F2F2F2333333FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF858585FF00FFFF00FFFF00FF
+        666666E6E6E6D4D4D4D5D5D5D4D4D4D3D3D3D0D0D0D3D3D3D7D7D7DADADADCDC
+        DCF2F2F2606060FF00FFFF00FFFF00FFA1A1A1DFDFDFDDDDDDDEDEDEDDDDDDDC
+        DCDCDADADADCDCDCDFDFDFDFDFDFDFDFDFDFDFDF9D9D9DFF00FFFF00FFFF00FF
+        323232E7E7E7E0E0E0E1E1E1DDDDDDD7D7D7D3D3D3DADADAE1E1E1E6E6E6EAEA
+        EAF6F6F6444444FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF8E8E8EFF00FFFF00FFFF00FF
+        FF00FF3B3B3B434343474747434343A3A3A3D3D3D38787874A4A4A4949494343
+        433F3F3FFF00FFFF00FFFF00FFFF00FFFF00FF8989898D8D8D9090908D8D8DC2
+        C2C2DCDCDCB3B3B39191919090908D8D8D8B8B8BFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF4C4C4CA9A9A9D1D1D1929292525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF929292C6
+        C6C6DBDBDBB9B9B9959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF454545A7A7A7CCCCCC919191505050FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8E8E8EC4
+        C4C4D8D8D8B8B8B8949494FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF3E3E3EA8A8A8D3D3D3919191474747FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8A8A8AC5
+        C5C5DCDCDCB8B8B8909090FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF4B4B4B646464464646FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF92
+        9292A0A0A08F8F8FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      NumGlyphs = 2
+      OnClick = SpeedButton2Click
+    end
+    object Label1: TLabel [2]
+      Left = 16
+      Top = 16
+      Width = 32
+      Height = 13
+      Caption = 'Cliente'
+    end
+    object SpeedButton1: TSpeedButton [3]
+      Left = 97
+      Top = 29
+      Width = 23
+      Height = 24
+      Glyph.Data = {
+        36060000424D3606000000000000360000002800000020000000100000000100
+        1800000000000006000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF3434344B4B4B333333FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF85
+        8585929292858585FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF636363C9C9C9F6F6F6A1A1A1454545FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9F9FD6
+        D6D6DFDFDFC1C1C18E8E8EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF676767BDBDBDF6F6F69D9D9D4D4D4DFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA1A1A1D0
+        D0D0DFDFDFBFBFBF939393FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF6E6E6EB8B8B8F3F3F39A9A9A525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA5A5A5CD
+        CDCDDFDFDFBDBDBD959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF4343434A4A4A4C4C4C666666ADADADE8E8E89191915050504D4D4D4A4A
+        4A434343FF00FFFF00FFFF00FFFF00FFFF00FF8D8D8D919191929292A1A1A1C8
+        C8C8DFDFDFB8B8B89494949393939191918D8D8DFF00FFFF00FFFF00FFFF00FF
+        323232E6E6E6DFDFDFE0E0E0DADADAD7D7D7D3D3D3D9D9D9E1E1E1E5E5E5E8E8
+        E8F2F2F2333333FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF858585FF00FFFF00FFFF00FF
+        666666E6E6E6D4D4D4D5D5D5D4D4D4D3D3D3D0D0D0D3D3D3D7D7D7DADADADCDC
+        DCF2F2F2606060FF00FFFF00FFFF00FFA1A1A1DFDFDFDDDDDDDEDEDEDDDDDDDC
+        DCDCDADADADCDCDCDFDFDFDFDFDFDFDFDFDFDFDF9D9D9DFF00FFFF00FFFF00FF
+        323232E7E7E7E0E0E0E1E1E1DDDDDDD7D7D7D3D3D3DADADAE1E1E1E6E6E6EAEA
+        EAF6F6F6444444FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF8E8E8EFF00FFFF00FFFF00FF
+        FF00FF3B3B3B434343474747434343A3A3A3D3D3D38787874A4A4A4949494343
+        433F3F3FFF00FFFF00FFFF00FFFF00FFFF00FF8989898D8D8D9090908D8D8DC2
+        C2C2DCDCDCB3B3B39191919090908D8D8D8B8B8BFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF4C4C4CA9A9A9D1D1D1929292525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF929292C6
+        C6C6DBDBDBB9B9B9959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF454545A7A7A7CCCCCC919191505050FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8E8E8EC4
+        C4C4D8D8D8B8B8B8949494FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF3E3E3EA8A8A8D3D3D3919191474747FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8A8A8AC5
+        C5C5DCDCDCB8B8B8909090FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF4B4B4B646464464646FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF92
+        9292A0A0A08F8F8FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      NumGlyphs = 2
+      OnClick = SpeedButton1Click
+    end
+    object Label2: TLabel [4]
+      Left = 322
+      Top = 16
+      Width = 72
+      Height = 13
+      Caption = 'Data da Venda'
+    end
+    object Label3: TLabel [5]
+      Left = 394
+      Top = 36
+      Width = 6
+      Height = 13
+      Caption = 'a'
+    end
+    object Label4: TLabel [6]
+      Left = 16
+      Top = 96
+      Width = 76
+      Height = 13
+      Caption = 'Tipo do Produto'
+    end
+    object SpeedButton3: TSpeedButton [7]
+      Left = 97
+      Top = 110
+      Width = 22
+      Height = 24
+      Hint = 
+        'obs: parametrizando por Tipo do Produto, o valor total da venda ' +
+        'apresentado pode n'#227'o ser o real.'
+      Glyph.Data = {
+        36060000424D3606000000000000360000002800000020000000100000000100
+        1800000000000006000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF3434344B4B4B333333FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF85
+        8585929292858585FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF636363C9C9C9F6F6F6A1A1A1454545FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9F9FD6
+        D6D6DFDFDFC1C1C18E8E8EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF676767BDBDBDF6F6F69D9D9D4D4D4DFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA1A1A1D0
+        D0D0DFDFDFBFBFBF939393FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF6E6E6EB8B8B8F3F3F39A9A9A525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA5A5A5CD
+        CDCDDFDFDFBDBDBD959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF4343434A4A4A4C4C4C666666ADADADE8E8E89191915050504D4D4D4A4A
+        4A434343FF00FFFF00FFFF00FFFF00FFFF00FF8D8D8D919191929292A1A1A1C8
+        C8C8DFDFDFB8B8B89494949393939191918D8D8DFF00FFFF00FFFF00FFFF00FF
+        323232E6E6E6DFDFDFE0E0E0DADADAD7D7D7D3D3D3D9D9D9E1E1E1E5E5E5E8E8
+        E8F2F2F2333333FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF858585FF00FFFF00FFFF00FF
+        666666E6E6E6D4D4D4D5D5D5D4D4D4D3D3D3D0D0D0D3D3D3D7D7D7DADADADCDC
+        DCF2F2F2606060FF00FFFF00FFFF00FFA1A1A1DFDFDFDDDDDDDEDEDEDDDDDDDC
+        DCDCDADADADCDCDCDFDFDFDFDFDFDFDFDFDFDFDF9D9D9DFF00FFFF00FFFF00FF
+        323232E7E7E7E0E0E0E1E1E1DDDDDDD7D7D7D3D3D3DADADAE1E1E1E6E6E6EAEA
+        EAF6F6F6444444FF00FFFF00FFFF00FF848484DFDFDFDFDFDFDFDFDFDFDFDFDF
+        DFDFDCDCDCDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF8E8E8EFF00FFFF00FFFF00FF
+        FF00FF3B3B3B434343474747434343A3A3A3D3D3D38787874A4A4A4949494343
+        433F3F3FFF00FFFF00FFFF00FFFF00FFFF00FF8989898D8D8D9090908D8D8DC2
+        C2C2DCDCDCB3B3B39191919090908D8D8D8B8B8BFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF4C4C4CA9A9A9D1D1D1929292525252FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF929292C6
+        C6C6DBDBDBB9B9B9959595FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF454545A7A7A7CCCCCC919191505050FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8E8E8EC4
+        C4C4D8D8D8B8B8B8949494FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FF3E3E3EA8A8A8D3D3D3919191474747FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8A8A8AC5
+        C5C5DCDCDCB8B8B8909090FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FF4B4B4B646464464646FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF92
+        9292A0A0A08F8F8FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpeedButton3Click
+    end
+    inherited BtnPesquisar: TBitBtn
+      Left = 419
+      Top = 101
+      TabOrder = 10
+    end
+    object MeCodOperador: TMaskEdit
+      Left = 16
+      Top = 72
+      Width = 79
+      Height = 21
+      EditMask = '999999999;0;_'
+      MaxLength = 9
+      TabOrder = 3
+      OnChange = MeCodOperadorChange
+      OnExit = MeCodOperadorExit
+    end
+    object EOperador: TEdit
+      Left = 122
+      Top = 72
+      Width = 193
+      Height = 21
+      TabStop = False
+      Color = clBtnFace
+      ReadOnly = True
+      TabOrder = 4
+      Text = 'TODOS'
+    end
+    object MeCodCliente: TMaskEdit
+      Left = 16
+      Top = 32
+      Width = 60
+      Height = 21
+      EditMask = '999999999;0;_'
+      MaxLength = 9
+      TabOrder = 1
+      Visible = False
+    end
+    object ECliente: TEdit
+      Left = 122
+      Top = 32
+      Width = 193
+      Height = 21
+      TabStop = False
+      Color = clBtnFace
+      ReadOnly = True
+      TabOrder = 2
+      Text = 'TODOS'
+    end
+    object MeDataIni: TMaskEdit
+      Left = 322
+      Top = 32
+      Width = 64
+      Height = 21
+      EditMask = '!99/99/9999;1;_'
+      MaxLength = 10
+      TabOrder = 7
+      Text = '  /  /    '
+    end
+    object MeDataFin: TMaskEdit
+      Left = 409
+      Top = 32
+      Width = 64
+      Height = 21
+      EditMask = '!99/99/9999;1;_'
+      MaxLength = 10
+      TabOrder = 8
+      Text = '  /  /    '
+    end
+    object MeTelefone: TMaskEdit
+      Left = 16
+      Top = 32
+      Width = 79
+      Height = 21
+      EditMask = '!\(99\) 9999-9999;1;_'
+      MaxLength = 14
+      TabOrder = 0
+      Text = '(  )     -    '
+      OnChange = MeTelefoneChange
+      OnEnter = MeTelefoneEnter
+      OnExit = MeTelefoneExit
+    end
+    object MeCodTipo: TMaskEdit
+      Left = 16
+      Top = 112
+      Width = 79
+      Height = 21
+      Hint = 
+        'obs: parametrizando por Tipo do Produto, o valor total da venda ' +
+        'apresentado pode n'#227'o ser o real.'
+      EditMask = '999999999;0;_'
+      MaxLength = 9
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 5
+      OnChange = MeCodTipoChange
+      OnExit = MeCodTipoExit
+    end
+    object ETipo: TEdit
+      Left = 122
+      Top = 112
+      Width = 193
+      Height = 21
+      Hint = 
+        'obs: parametrizando por Tipo do Produto, o valor total da venda ' +
+        'apresentado pode n'#227'o ser o real.'
+      TabStop = False
+      Color = clBtnFace
+      ParentShowHint = False
+      ReadOnly = True
+      ShowHint = True
+      TabOrder = 6
+      Text = 'TODOS'
+    end
+    object RgTaxa: TRadioGroup
+      Left = 322
+      Top = 56
+      Width = 207
+      Height = 41
+      Caption = 'Taxa de Entraga'
+      Columns = 3
+      ItemIndex = 2
+      Items.Strings = (
+        'Com'
+        'Sem'
+        'Ambos')
+      TabOrder = 9
+    end
+  end
+  inherited PnBotoes: TPanel
+    Top = 439
+    Width = 555
+    inherited BtnImprimir: TBitBtn
+      Left = 314
+      TabOrder = 1
+      OnClick = BtnImprimirClick
+    end
+    inherited BtnCancelar: TBitBtn
+      Left = 431
+      TabOrder = 0
+    end
+    object BtnReemitirTickets: TBitBtn
+      Left = 176
+      Top = 8
+      Width = 131
+      Height = 34
+      Anchors = [akRight, akBottom]
+      Caption = '&Reemitir Tickets'
+      TabOrder = 2
+      OnClick = BtnReemitirTicketsClick
+      Glyph.Data = {
+        B60D0000424DB60D000000000000360000002800000030000000180000000100
+        180000000000800D000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB98D6BFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        AEAEAEFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFBA713BAA4703B15824A14100B89376FF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FF9F9F9F8181819090907B7B7BB3B3B3FF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFB86729B44F04F0A16EFFD1B2DE8E67FFCEB4D06B
+        2AA2531FFF00FFFF00FF6367678B8B8B636767FF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF989898858585BDBDBDDFDFDF
+        B5B5B5DEDEDE9D9D9D8B8B8BFF00FFFF00FF9A9A9AAFAFAF9A9A9AFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB8641FC15E11F7B182FF
+        D7BEFFD6B9FFD6B9E0956AFFDDC3FFD9BEE5A5815A351A818283C3C3C3DEDEDE
+        E5E5E5666767919CA0FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9494
+        94909090C6C6C6DFDFDFDFDFDFDFDFDFB7B7B7DFDFDFDFDFDFC0C0C0787878AA
+        AAAACFCFCFDEDEDEDFDFDF9B9B9BB7B7B7FF00FFFF00FFFF00FFFF00FFC6AE8E
+        BE6011DF6E11FEC299FFDFC8FFDDC3FFD9BEFFD5BAFFD6B9E99F76FFDCC2A97D
+        625C5D5DCDD0D09C9D9DDEDEDE6363639B9B9BF9F9F9A0A0A06C6F71FF00FFFF
+        00FFFF00FFBFBFBF8F8F8F9A9A9AD1D1D1DFDFDFDFDFDFDFDFDFDFDFDFDFDFDF
+        BEBEBEDFDFDFA8A8A8959595D6D6D6B9B9B9DEDEDE999999B8B8B8DFDFDFBBBB
+        BB9F9F9FFF00FFFF00FFFF00FFC35A00FFCFABFFE5D3FFE1CEFFDFC8FFDDC3FF
+        DAC2FFD9BEFFCEB4F4B893FFDDC3F8C8AAE0C5B3F3F3F3B6B6B65B5B5BD1D1D1
+        AAAAAA666767F6F6F6D1D1D1545555FF00FFFF00FF898989D8D8D8DFDFDFDFDF
+        DFDFDFDFDFDFDFDFDFDFDFDFDFDEDEDECBCBCBDFDFDFD5D5D5D1D1D1DFDFDFC7
+        C7C7939393D7D7D7C1C1C19B9B9BDFDFDFD7D7D7909090FF00FFFF00FFC96003
+        FFE7D9FFE5D3FFE2CFFFE1CBFFDFC8FFDDC3FFDCC2FEC1A1FFD0B7FFCFB1FFDA
+        C2FFD7BEEEBEA2E6DAD2E8EAED747575AEAEAFEAEDEDA1A2A3636767FF00FFFF
+        00FFFF00FF8D8D8DDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD3D3D3
+        DDDDDDDBDBDBDFDFDFDFDFDFCFCFCFDDDDDDDFDFDFA2A2A2C3C3C3DFDFDFBBBB
+        BB9A9A9AFF00FFFF00FFFF00FFCD6402FFEADEFFE8D6FFE5D2FFE2CFFFE1CBFF
+        DFC8FFDFC6F4B184FFE1CBD87C40A84604F5B997FFDDC3FFCAACE4C1A9E9E7E7
+        A2A4A466636082390BFF00FFFF00FFFF00FFFF00FF8F8F8FDFDFDFDFDFDFDFDF
+        DFDFDFDFDFDFDFDFDFDFDFDFDFC6C6C6DFDFDFA7A7A77F7F7FCDCDCDDFDFDFD8
+        D8D8CFCFCFDFDFDFBDBDBD989898797979FF00FFFF00FFFF00FFFF00FFD06704
+        FFF0E4FFE7D9FFE8D6FFE5D3FFE2CFFFE1CBFFD9BEFEC5A2FFE5D0B04C04992D
+        00982C00D27439FFD6BCFFD7BEDEA788A56A44FFD9BEA54306FF00FFFF00FFFF
+        00FFFF00FF929292DFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD4D4D4
+        DFDFDF8383836D6D6D6C6C6CA3A3A3DFDFDFDFDFDFC1C1C19B9B9BDFDFDF7E7E
+        7EFF00FFFF00FFFF00FFFF00FFD26701FFF0E6FFEADEFFE7D9FFE8D6FFE5D3FF
+        E5D0FBC095FFE1CEF9C19CA53600A235009D3000982C00A03B00EEAE88FFDFC6
+        FFCFB1FFDAC2A14100FF00FFFF00FFFF00FFFF00FF919191DFDFDFDFDFDFDFDF
+        DFDFDFDFDFDFDFDFDFDFCFCFCFDFDFDFD0D0D07171717070706E6E6E6C6C6C76
+        7676C5C5C5DFDFDFDBDBDBDFDFDF7B7B7BFF00FFFF00FFFF00FFFF00FFD66B01
+        FFF0E6FFEADEFFEADEFFECDAFFE8D6FFCFABFFDFC6FFE5D0BF5D0FAC3C00A739
+        00A336009D3100982C00932900C15F26FFD0B7FFCEB4A2490DFF00FFFF00FFFF
+        00FFFF00FF929292DFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD8D8D8DFDFDFDFDFDF
+        8D8D8D7373737272727070706F6F6F6C6C6C6A6A6A969696DDDDDDDEDEDE8383
+        83FF00FFFF00FFFF00FFFF00FFDF7206FFEFD8FFF0E6FFF0E4FFECDAFFD7B1FF
+        E2C8FFE7D9EA8C40B44100B13F00AC3C00A73900A336009D3100992D00912600
+        F0B08CF7B691B76C37FF00FFFF00FFFF00FFFF00FF979797DFDFDFDFDFDFDFDF
+        DFDFDFDFDBDBDBDFDFDFDFDFDFADADAD7777777676767474747272727070706F
+        6F6F6D6D6D696969C8C8C8CACACA9C9C9CFF00FFFF00FFFF00FFFF00FFD89D5E
+        FDA044FFEAD0FFE7CEFFE1C1FFECDAFFEAD6EE8B36BF4800BA4600B74400B140
+        00AC3C00A73900A336009F3100A03800FFDAC2DC7B39BEA790FF00FFFF00FFFF
+        00FFFF00FFB4B4B4B5B5B5DFDFDFDFDFDFDFDFDFDFDFDFDFDFDFAAAAAA7B7B7B
+        7979797878787676767474747272727070706E6E6E737373DFDFDFA6A6A6BDBD
+        BDFF00FFFF00FFFF00FFFF00FFFF00FFD6A165E16C00EEAF76FFD9B4FEA95CD2
+        6300C85000C54E00C04C00BB4700B74500B14000AF3D00A83800A33400E4935E
+        FFDDC3B04B00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB6B6B6949494C2C2
+        C2DDDDDDBCBCBC8D8D8D8080807E7E7E7C7C7C7A7A7A79797976767674747472
+        7272707070B4B4B4DFDFDF818181FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF605548DEC8B7F38920D35700CE5500CA5200C54E00C14C00BB47
+        00B74500B14000AC3C00C26018FFE2CFE89153C18957FF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FF8F8F8FD2D2D2A6A6A6848484838383818181
+        7E7E7E7D7D7D7A7A7A797979767676737373939393DFDFDFB2B2B2ABABABFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF97A3A78E9091E9ECEEE4E7EEED
+        D0B4EF7C0ECF5400CA5200C64F00C14C00BB4700B74100C86312FFDEC7F8B98B
+        B45B0FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBABABAB2B2
+        B2DFDFDFDFDFDFD5D5D59E9E9E8383838181817F7F7F7D7D7D7A7A7A77777793
+        9393DFDFDFCACACA8C8C8CFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF4F5252E9E9E9EEEEEEE8EAEDE7E9ECE4E6ECEDC8A4ED7406CD5300C64F
+        00C75800F1A262FFE5D2F3A367B95D0EFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FF8E8E8EDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD0D0D0
+        9B9B9B8181817F7F7F898989BABABADFDFDFBCBCBC8D8D8DFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FF808B8CA8A8A8F6F6F6F1F1F1EEEEEEEA
+        EDEDE8EAEDE8EAEDD2D6D9936235FFBE83FFDABBF9B073C96209CE823EFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFAEAEAEC0C0C0DFDF
+        DFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDADADA929292CACACADFDFDFC2C2C291
+        9191A6A6A6FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        404141F9F9F9F9F9F9F6F6F6F3F3F3F1F1F1EEEEEEEEEEEE838484A9A497DF74
+        13D67316CE9962FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FF858585DFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDF
+        ABABABBABABA9C9C9C9A9A9AB2B2B2FF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FF747D80494B4BB6B6B6F9F9F9F9F9F9F6
+        F6F6F3F3F3DEDEDE666B6BFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA6A6A68A8A8AC7C7
+        C7DFDFDFDFDFDFDFDFDFDFDFDFDEDEDE9D9D9DFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF7983844C4D4DB8B8B8F9F9F9FCFCFC7E7E7EFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFA9A9A98C8C8CC9C9C9DFDFDFDFDFDFA8A8A8
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF7A84854F
+        4F50ABABAB5B5F5FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFAAAAAA8E8E8EC2C2C2969696FF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF7C8688FF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFABABABFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      NumGlyphs = 2
+    end
+    object BitBtn1: TBitBtn
+      Left = 64
+      Top = 8
+      Width = 105
+      Height = 34
+      Anchors = [akRight, akBottom]
+      Caption = '&Cancelar Venda'
+      TabOrder = 3
+      OnClick = BitBtn1Click
+      NumGlyphs = 2
+    end
+  end
+  inherited PnCorpo: TPanel
+    Top = 142
+    Width = 555
+    Height = 297
+    inherited PageControl1: TPageControl
+      Width = 539
+      Height = 290
+      inherited TabSheet1: TTabSheet
+        inherited DbGDados: TDBGrid
+          Width = 531
+          Height = 157
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'DT_VENDA'
+              Title.Caption = 'Data'
+              Width = 62
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'DESC_NOME_CLIENTE'
+              Title.Caption = 'Cliente'
+              Width = 224
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'QT_QUANTIDADE'
+              Title.Alignment = taRightJustify
+              Title.Caption = 'Qtde Prod.'
+              Width = 75
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VAL_VENDA'
+              Title.Alignment = taRightJustify
+              Title.Caption = 'Valor Prod.'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VAL_TAXA_TOTAL'
+              Title.Alignment = taRightJustify
+              Title.Caption = 'Valor Taxa'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'DESC_NOME_OPERADOR'
+              Title.Caption = 'Operador'
+              Visible = False
+            end
+            item
+              Expanded = False
+              FieldName = 'COD_CLIENTE'
+              Title.Alignment = taRightJustify
+              Title.Caption = 'C'#243'd. Cliente'
+              Visible = False
+            end
+            item
+              Expanded = False
+              FieldName = 'DESC_OBSERVACAO'
+              Visible = False
+            end
+            item
+              Expanded = False
+              FieldName = 'COD_OPERADOR'
+              Title.Alignment = taRightJustify
+              Visible = False
+            end>
+        end
+        object GroupBox1: TGroupBox
+          Left = 0
+          Top = 157
+          Width = 531
+          Height = 105
+          Align = alBottom
+          Caption = 'Itens'
+          TabOrder = 1
+          object DBGrid1: TDBGrid
+            Left = 2
+            Top = 15
+            Width = 527
+            Height = 88
+            TabStop = False
+            Align = alClient
+            Ctl3D = True
+            DataSource = DsConsultaItens
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgCancelOnExit]
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWindowText
+            TitleFont.Height = -11
+            TitleFont.Name = 'MS Sans Serif'
+            TitleFont.Style = []
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'DESC_PRODUTO'
+                Title.Caption = 'Produto'
+                Width = 250
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'QT_QUANTIDADE'
+                Title.Alignment = taRightJustify
+                Title.Caption = 'Qtde'
+                Width = 80
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'VAL_PRECO'
+                Title.Alignment = taRightJustify
+                Title.Caption = 'Pre'#231'o'
+                Width = 80
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'val_total'
+                Title.Alignment = taRightJustify
+                Title.Caption = 'Total'
+                Width = 80
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'COD_VENDA'
+                Visible = False
+              end
+              item
+                Expanded = False
+                FieldName = 'COD_VENDA_ITEM'
+                Visible = False
+              end
+              item
+                Expanded = False
+                FieldName = 'COD_PRODUTO'
+                Visible = False
+              end>
+          end
+        end
+        object CbMostrar: TCheckBox
+          Left = 0
+          Top = 144
+          Width = 140
+          Height = 16
+          Caption = 'Mostrar Venda Completa'
+          TabOrder = 2
+          OnClick = CbMostrarClick
+        end
+      end
+    end
+  end
+  inherited DsConsulta: TDataSource
+    Left = 72
+    Top = 216
+  end
+  inherited QConsulta: TIBQuery
+    OnCalcFields = QConsultaCalcFields
+    SQL.Strings = (
+      'select'
+      '  v.cod_cliente,'
+      '  v.cod_operador,'
+      '  v.cod_venda,'
+      '  v.desc_observacao,'
+      '  v.dt_venda,'
+      '  v.val_taxa_total,'
+      '  c.desc_nome as desc_nome_cliente,'
+      '  o.desc_nome as desc_nome_operador,'
+      '  sum(i.qt_quantidade) as qt_quantidade,'
+      '  sum(i.val_preco * i.qt_quantidade) as val_venda'
+      'from'
+      '  tb_venda_item i'
+      'inner join tb_venda v on i.cod_venda = v.cod_venda'
+      'inner join tb_cliente c on v.cod_cliente = c.cod_cliente'
+      'inner join tb_operador o on v.cod_operador = o.cod_operador'
+      'inner join tb_produto p on i.cod_produto = p.cod_produto'
+      
+        'left join tb_tipo_produto t on p.cod_tipo_produto = t.cod_tipo_p' +
+        'roduto'
+      'where'
+      '  (v.cod_cliente = :Pcod_cliente or :Pcod_cliente = 0)'
+      'and'
+      '  (v.cod_operador = :Pcod_operador or :Pcod_operador = 0)'
+      'and'
+      '  (v.dt_venda between :Pdt_venda_ini and :Pdt_venda_fin)'
+      'and'
+      
+        '  (p.cod_tipo_produto = :Pcod_tipo_produto or :Pcod_tipo_produto' +
+        ' = 0)'
+      'and'
+      
+        '  ((:Ptaxa = 0 and v.val_taxa_total > 0) or (:Ptaxa = 1 and v.va' +
+        'l_taxa_total <= 0) or (:Ptaxa = 2))'
+      'group by'
+      '  v.cod_cliente,'
+      '  v.cod_operador,'
+      '  v.cod_venda,'
+      '  v.desc_observacao,'
+      '  v.dt_venda,'
+      '  v.val_taxa_total,'
+      '  c.desc_nome,'
+      '  o.desc_nome'
+      'order by'
+      '  v.dt_venda, v.cod_venda, c.desc_nome')
+    Left = 40
+    Top = 216
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_cliente'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_cliente'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_operador'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_operador'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pdt_venda_ini'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pdt_venda_fin'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_tipo_produto'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_tipo_produto'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end>
+    object QConsultaCOD_VENDA: TIntegerField
+      FieldName = 'COD_VENDA'
+      Origin = '"TB_VENDA"."COD_VENDA"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QConsultaDT_VENDA: TDateField
+      FieldName = 'DT_VENDA'
+      Origin = '"TB_VENDA"."DT_VENDA"'
+      Required = True
+      DisplayFormat = 'dd/MM/yyyy'
+    end
+    object QConsultaCOD_CLIENTE: TIntegerField
+      FieldName = 'COD_CLIENTE'
+      Origin = '"TB_VENDA"."COD_CLIENTE"'
+      Required = True
+    end
+    object QConsultaCOD_OPERADOR: TIntegerField
+      FieldName = 'COD_OPERADOR'
+      Origin = '"TB_VENDA"."COD_OPERADOR"'
+      Required = True
+    end
+    object QConsultaDESC_OBSERVACAO: TIBStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Origin = '"TB_VENDA"."DESC_OBSERVACAO"'
+      Size = 500
+    end
+    object QConsultaDESC_NOME_CLIENTE: TIBStringField
+      FieldName = 'DESC_NOME_CLIENTE'
+      Origin = '"TB_CLIENTE"."DESC_NOME"'
+      Required = True
+      Size = 100
+    end
+    object QConsultaDESC_NOME_OPERADOR: TIBStringField
+      FieldName = 'DESC_NOME_OPERADOR'
+      Origin = '"TB_OPERADOR"."DESC_NOME"'
+      Required = True
+      Size = 100
+    end
+    object QConsultaVAL_VENDA: TFloatField
+      FieldName = 'VAL_VENDA'
+      ProviderFlags = []
+      DisplayFormat = '#0.00'
+    end
+    object QConsultaVAL_TAXA_TOTAL: TFloatField
+      FieldName = 'VAL_TAXA_TOTAL'
+      Origin = '"TB_VENDA"."VAL_TAXA_TOTAL"'
+      Required = True
+      DisplayFormat = '#0.00'
+    end
+    object QConsultaval_total: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'val_total'
+      DisplayFormat = '#0.00'
+      Calculated = True
+    end
+    object QConsultaQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      ProviderFlags = []
+      DisplayFormat = '#0.0'
+    end
+  end
+  object UConsulta: TIBUpdateSQL
+    RefreshSQL.Strings = (
+      'Select '
+      'from tb_venda'
+      'where'
+      '  COD_VENDA = :COD_VENDA')
+    DeleteSQL.Strings = (
+      'delete from tb_venda'
+      'where'
+      '  COD_VENDA = :OLD_COD_VENDA')
+    Left = 40
+    Top = 248
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 264
+    Top = 240
+    object RelatriodeVendas1: TMenuItem
+      Caption = 'Relat'#243'rio de Vendas'
+      OnClick = RelatriodeVendas1Click
+    end
+    object RelatriodeVendasporTipodeProduto1: TMenuItem
+      Caption = 'Relat'#243'rio de Vendas por Tipo de Produto'
+      OnClick = RelatriodeVendasporTipodeProduto1Click
+    end
+  end
+  object QConsultaItens: TIBQuery
+    Database = DmSistema.DbSistema
+    Transaction = DmSistema.TSistema
+    OnCalcFields = QConsultaItensCalcFields
+    DataSource = DsConsulta
+    SQL.Strings = (
+      'select'
+      '  i.*,'
+      '  p.desc_produto'
+      'from'
+      '  tb_venda_item i'
+      'inner join tb_venda v on i.cod_venda = v.cod_venda'
+      'inner join tb_cliente c on v.cod_cliente = c.cod_cliente'
+      'inner join tb_operador o on v.cod_operador = o.cod_operador'
+      'inner join tb_produto p on i.cod_produto = p.cod_produto'
+      
+        'left join tb_tipo_produto t on p.cod_tipo_produto = t.cod_tipo_p' +
+        'roduto'
+      'where'
+      '(  :venda_completa = 1'
+      'or'
+      '('
+      '    (v.cod_cliente = :Pcod_cliente or :Pcod_cliente = 0)'
+      '  and'
+      '    (v.cod_operador = :Pcod_operador or :Pcod_operador = 0)'
+      '  and'
+      '    (v.dt_venda between :Pdt_venda_ini and :Pdt_venda_fin)'
+      '  and'
+      
+        '    (p.cod_tipo_produto = :Pcod_tipo_produto or :Pcod_tipo_produ' +
+        'to = 0)'
+      '  and'
+      
+        '    ((:Ptaxa = 0 and v.val_taxa_total > 0) or (:Ptaxa = 1 and v.' +
+        'val_taxa_total <= 0) or (:Ptaxa = 2))'
+      '))'
+      'and'
+      '  i.COD_VENDA = :COD_VENDA'
+      'order by'
+      '  p.desc_produto')
+    UpdateObject = UConsulta
+    Left = 40
+    Top = 280
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'venda_completa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_cliente'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_cliente'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_operador'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_operador'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pdt_venda_ini'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pdt_venda_fin'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_tipo_produto'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Pcod_tipo_produto'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Ptaxa'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'COD_VENDA'
+        ParamType = ptUnknown
+      end>
+    object QConsultaItensCOD_VENDA: TIntegerField
+      FieldName = 'COD_VENDA'
+      Origin = '"TB_VENDA_ITEM"."COD_VENDA"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QConsultaItensCOD_VENDA_ITEM: TIntegerField
+      FieldName = 'COD_VENDA_ITEM'
+      Origin = '"TB_VENDA_ITEM"."COD_VENDA_ITEM"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QConsultaItensCOD_PRODUTO: TIntegerField
+      FieldName = 'COD_PRODUTO'
+      Origin = '"TB_VENDA_ITEM"."COD_PRODUTO"'
+      Required = True
+    end
+    object QConsultaItensVAL_PRECO: TFloatField
+      FieldName = 'VAL_PRECO'
+      Origin = '"TB_VENDA_ITEM"."VAL_PRECO"'
+      Required = True
+      DisplayFormat = '#0.00'
+    end
+    object QConsultaItensQT_QUANTIDADE: TFloatField
+      FieldName = 'QT_QUANTIDADE'
+      Origin = '"TB_VENDA_ITEM"."QT_QUANTIDADE"'
+      Required = True
+      DisplayFormat = '#0.0'
+    end
+    object QConsultaItensDESC_PRODUTO: TIBStringField
+      FieldName = 'DESC_PRODUTO'
+      Origin = '"TB_PRODUTO"."DESC_PRODUTO"'
+      Required = True
+      Size = 100
+    end
+    object QConsultaItensval_total: TCurrencyField
+      FieldKind = fkCalculated
+      FieldName = 'val_total'
+      DisplayFormat = '#0.00'
+      Calculated = True
+    end
+  end
+  object DsConsultaItens: TDataSource
+    DataSet = QConsultaItens
+    Left = 72
+    Top = 280
+  end
+end

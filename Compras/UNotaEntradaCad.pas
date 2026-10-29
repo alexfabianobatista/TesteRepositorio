@@ -1,0 +1,11686 @@
+unit UNotaEntradaCad;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCADSIMPLES, Menus, Db, ComCtrls, StdCtrls, Mask, Buttons, ExtCtrls,
+  DBCtrls, Grids, DBGrids, ImgList, DBDirceu, OracleData, OraTeste,
+  OracleNavigator, variants, ComOBJ, ActnList, CustomDialog, DBPanel,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, XMLDoc,
+  xmldom, XMLIntf, msxmldom,shellApi;
+
+type
+  TFNotaEntradaCad = class(TFTCadSimples)
+    PCNota: TPageControl;
+    TSCabecalho: TTabSheet;
+    TsItemNota: TTabSheet;
+    PageControl2: TPageControl;
+    TabSheet6: TTabSheet;
+    Label26: TLabel;
+    Label29: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label19: TLabel;
+    Label24: TLabel;
+    Label21: TLabel;
+    Label30: TLabel;
+    Label10: TLabel;
+    Label13: TLabel;
+    Label23: TLabel;
+    DBEdit26: TDBEdit;
+    BtConsFilial: TBitBtn;
+    DBEdit29: TDBEdit;
+    BtConsOperacao: TBitBtn;
+    DBEdit31: TDBEdit;
+    DBEdit32: TDBEdit;
+    BtConsCadastro: TBitBtn;
+    BtConsVendedor: TBitBtn;
+    DBEdit15: TDBEdit;
+    DBEdit16: TDBEdit;
+    DBEdit19: TDBEdit;
+    DBEdit24: TDBEdit;
+    DBEdit21: TDBEdit;
+    DBEdit30: TDBEdit;
+    DBEdit10: TDBEdit;
+    DBEdit13: TDBEdit;
+    DBEdit23: TDBEdit;
+    TabSheet4: TTabSheet;
+    Label9: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label28: TLabel;
+    DBEdit9: TDBEdit;
+    DBEdit11: TDBEdit;
+    DBEdit12: TDBEdit;
+    DBEdit28: TDBEdit;
+    BtConsTransportador: TBitBtn;
+    DBGrid1: TDBGrid;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Label1: TLabel;
+    DBEdit34: TDBEdit;
+    Label8: TLabel;
+    DBEdit39: TDBEdit;
+    Label33: TLabel;
+    DBEdit40: TDBEdit;
+    Label35: TLabel;
+    DBEdit42: TDBEdit;
+    Label38: TLabel;
+    DBEdit45: TDBEdit;
+    Label39: TLabel;
+    Label40: TLabel;
+    DBEdit47: TDBEdit;
+    BtConsTributacao: TBitBtn;
+    BtImpItemOC: TBitBtn;
+    DSItemNF: TDataSource;
+    BtImpOC: TBitBtn;
+    BtConsLote: TBitBtn;
+    Label34: TLabel;
+    DBEdit48: TDBEdit;
+    DBEdit51: TDBEdit;
+    TSOrdemCompra: TTabSheet;
+    GBBaixaOC: TGroupBox;
+    DBGrid3: TDBGrid;
+    DBRadioGroup1: TDBRadioGroup;
+    Outros1: TMenuItem;
+    Confirmar2: TMenuItem;
+    BtCancelaBaixaOC: TBitBtn;
+    GroupBox2: TGroupBox;
+    Label14: TLabel;
+    BtBaixaOC: TBitBtn;
+    MEQtBaixarOC: TMaskEdit;
+    MENumOCBaixar: TMaskEdit;
+    BtConsOCAberto: TBitBtn;
+    Label41: TLabel;
+    GroupBox3: TGroupBox;
+    Label42: TLabel;
+    DBEdit52: TDBEdit;
+    DBNavigator2: TDBNavigator;
+    Label43: TLabel;
+    DBEdit14: TDBEdit;
+    Label3: TLabel;
+    DBEComissao: TDBEdit;
+    Label7: TLabel;
+    DBEDesconto: TDBEdit;
+    Label18: TLabel;
+    DBEdit18: TDBEdit;
+    Label20: TLabel;
+    DBEdit20: TDBEdit;
+    Label36: TLabel;
+    DBEdit43: TDBEdit;
+    Label17: TLabel;
+    DBEdit17: TDBEdit;
+    Label44: TLabel;
+    DBEdit46: TDBEdit;
+    CancelarNota1: TMenuItem;
+    VoltaConfirma: TMenuItem;
+    VoltaCancelamento1: TMenuItem;
+    BtConsProduto: TBitBtn;
+    Emisso1: TMenuItem;
+    Relacao: TMenuItem;
+    Conferncia1: TMenuItem;
+    Futura1: TMenuItem;
+    MovEstoque1: TMenuItem;
+    GroupBox5: TGroupBox;
+    Label4: TLabel;
+    Label22: TLabel;
+    DBEdit4: TDBEdit;
+    DBEdit7: TDBEdit;
+    Label25: TLabel;
+    DBEdit22: TDBEdit;
+    Label45: TLabel;
+    DBEdit25: TDBEdit;
+    Label46: TLabel;
+    DBEdit38: TDBEdit;
+    Label47: TLabel;
+    DBEdit54: TDBEdit;
+    Label48: TLabel;
+    DBEdit55: TDBEdit;
+    GroupBox6: TGroupBox;
+    Label49: TLabel;
+    DBEdit56: TDBEdit;
+    Label50: TLabel;
+    DBEdit57: TDBEdit;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    BtConsTributacaoFrete: TBitBtn;
+    Label51: TLabel;
+    DBEdit35: TDBEdit;
+    DBEdit58: TDBEdit;
+    DBE_AuxMenu: TDBEdit;
+    Label52: TLabel;
+    DBEdit59: TDBEdit;
+    Label53: TLabel;
+    DBEdit60: TDBEdit;
+    Label54: TLabel;
+    DBEdit61: TDBEdit;
+    BtConsOperFrete: TBitBtn;
+    CustoCompra1: TMenuItem;
+    LblNotaProdutor: TLabel;
+    DBENotaProdutor: TDBEdit;
+    Label57: TLabel;
+    DBEComissao_Nota: TDBEdit;
+    BtImpItemNF: TBitBtn;
+    DBDirceu1: TDBDirceu;
+    DBDirceu2: TDBDirceu;
+    DBDirceu3: TDBDirceu;
+    DBDirceu4: TDBDirceu;
+    DBDirceu6: TDBDirceu;
+    DBDirceu7: TDBDirceu;
+    DBDirceu8: TDBDirceu;
+    DBDirceu9: TDBDirceu;
+    DBDirceu11: TDBDirceu;
+    Label58: TLabel;
+    DBEdit1: TDBEdit;
+    BitBtn2: TBitBtn;
+    DBDirceu12: TDBDirceu;
+    EdNumFabricante: TEdit;
+    Label59: TLabel;
+    Label60: TLabel;
+    DBEdit3: TDBEdit;
+    DBRadioGroup2: TDBRadioGroup;
+    Label61: TLabel;
+    DBEdit8: TDBEdit;
+    Label62: TLabel;
+    DBEdit33: TDBEdit;
+    Label63: TLabel;
+    DBEdit36: TDBEdit;
+    Label64: TLabel;
+    DBEdit37: TDBEdit;
+    LblPesoChegada: TLabel;
+    DBEPesoChegada: TDBEdit;
+    DBEdit49: TDBEdit;
+    Label67: TLabel;
+    Label68: TLabel;
+    DBEdit50: TDBEdit;
+    Label76: TLabel;
+    BtOrdemCarregamento: TBitBtn;
+    DBEdit53: TDBEdit;
+    N2: TMenuItem;
+    AtualizaPreoPeloCustodanota1: TMenuItem;
+    RelaoTtulosporNota1: TMenuItem;
+    GbConversao: TGroupBox;
+    RgMoeda: TRadioGroup;
+    MeValor: TMaskEdit;
+    Label66: TLabel;
+    LanarQtChegada1: TMenuItem;
+    MovEstoqueCustoCompra1: TMenuItem;
+    DBDirceu13: TDBDirceu;
+    DBDirceu14: TDBDirceu;
+    Label71: TLabel;
+    Label72: TLabel;
+    Label73: TLabel;
+    DBEdit62: TDBEdit;
+    Label74: TLabel;
+    DBEdit65: TDBEdit;
+    RelaoNotasDevoluo1: TMenuItem;
+    Label77: TLabel;
+    DBEdit67: TDBEdit;
+    BtCadastroParceiro: TBitBtn;
+    Label78: TLabel;
+    DBDirceu15: TDBDirceu;
+    Label79: TLabel;
+    DBEdit68: TDBEdit;
+    Label80: TLabel;
+    DBEdit69: TDBEdit;
+    BtConsMotorista: TBitBtn;
+    DBDirceu16: TDBDirceu;
+    DBEdit70: TDBEdit;
+    BTMotivoCanc: TBitBtn;
+    DBDirceu17: TDBDirceu;
+    Label81: TLabel;
+    Label82: TLabel;
+    DBEdit71: TDBEdit;
+    btConsClassificadora: TBitBtn;
+    DBDirceu18: TDBDirceu;
+    DBRadioGroup3: TDBRadioGroup;
+    Terceirizao1: TMenuItem;
+    LblCultura: TLabel;
+    DBECultura: TDBEdit;
+    TabSheet1: TTabSheet;
+    DBGrid2: TDBGrid;
+    Label84: TLabel;
+    DBEdit73: TDBEdit;
+    DSNotaImpostoServico: TDataSource;
+    Label85: TLabel;
+    DBEdit74: TDBEdit;
+    Label86: TLabel;
+    DBEdit75: TDBEdit;
+    BitBtn3: TBitBtn;
+    DBDirceu10: TDBDirceu;
+    DBNavigator1: TOracleNavigator;
+    OracleNavigator1: TOracleNavigator;
+    RelatrioMovimentaoProdutoGMO1: TMenuItem;
+    Label87: TLabel;
+    DBEdit76: TDBEdit;
+    DBEdit77: TDBEdit;
+    Label88: TLabel;
+    NotasdeServios1: TMenuItem;
+    OrdemdePagamento1: TMenuItem;
+    Label92: TLabel;
+    DBEdit81: TDBEdit;
+    MeFinalidadeOC: TMaskEdit;
+    DBEdit80: TDBEdit;
+    Label91: TLabel;
+    MEPercSubst: TMaskEdit;
+    DBEdit82: TDBEdit;
+    Label93: TLabel;
+    EmissodeEtiquetasporNotadeCompra1: TMenuItem;
+    BtContratoVend: TBitBtn;
+    BtContratoJuridica: TBitBtn;
+    BtImpItemCompra: TBitBtn;
+    AutorizaodeDevoluo1: TMenuItem;
+    Label94: TLabel;
+    DBEdit83: TDBEdit;
+    BtArmazemAlfandegario: TBitBtn;
+    DBDirceu20: TDBDirceu;
+    Label95: TLabel;
+    DBCfop: TDBEdit;
+    Label89: TLabel;
+    DBEdit78: TDBEdit;
+    LblComplemento: TLabel;
+    DBEComplemento: TDBEdit;
+    BTLoteRastreado: TBitBtn;
+    InutilizaodenumeraoNFe1: TMenuItem;
+    EnviarviaemailNFe1: TMenuItem;
+    ReemitirDanfeNFe1: TMenuItem;
+    ReconsultarNFe1: TMenuItem;
+    Label56: TLabel;
+    DBEdit41: TDBEdit;
+    ImportarXMLNFe1: TMenuItem;
+    ObterXMLimportadoNFe1: TMenuItem;
+    Label83: TLabel;
+    DBEdit72: TDBEdit;
+    Label90: TLabel;
+    DBEdit79: TDBEdit;
+    Label96: TLabel;
+    DBEdit85: TDBEdit;
+    Label97: TLabel;
+    DBEdit86: TDBEdit;
+    NotasFiscaisEletrnicas1: TMenuItem;
+    N3: TMenuItem;
+    AlteraCdigoContrato1: TMenuItem;
+    DBMemo2: TDBMemo;
+    Label98: TLabel;
+    DBTSituacao: TDBText;
+    DBTSitSefaz: TDBText;
+    FichadeApuraodosCrditos1: TMenuItem;
+    Label99: TLabel;
+    DBEdit87: TDBEdit;
+    BtObraCons: TBitBtn;
+    SBChaveAcesso: TSpeedButton;
+    NFe1: TMenuItem;
+    AlterarInserirestanotaemLoteNFe1: TMenuItem;
+    EnviarReenviarloteparaSEFAZ1: TMenuItem;
+    ConsultarlotedeNFe1: TMenuItem;
+    N4: TMenuItem;
+    DenegarNota1: TMenuItem;
+    VoltarNotaDenegada1: TMenuItem;
+    ExportarNFe1: TMenuItem;
+    Label100: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    DsCstIpiCons: TDataSource;
+    N5: TMenuItem;
+    VerretornodeenvioNFe1: TMenuItem;
+    Label101: TLabel;
+    DBEdit84: TDBEdit;
+    btnDi: TBitBtn;
+    SaveDialog: TSaveDialog;
+    Label116: TLabel;
+    DBLCCSTPis: TDBLookupComboBox;
+    Label117: TLabel;
+    DBLCCSTCofins: TDBLookupComboBox;
+    SaveDialogCLI: TSaveDialog;
+    DBEdit88: TDBEdit;
+    Label102: TLabel;
+    BTSerieCons: TBitBtn;
+    Label103: TLabel;
+    lblModelo: TLabel;
+    DBPModeloCF: TDBPanel;
+    BitBtn1: TBitBtn;
+    EmitirCartaCorreoEletrnica1: TMenuItem;
+    DBEdit89: TDBEdit;
+    Label104: TLabel;
+    DBTSubst: TDBText;
+    DBPanel1: TDBPanel;
+    DBPanel2: TDBPanel;
+    ManifestacaoDestinatario: TMenuItem;
+    ExportarNotasPeriodo: TMenuItem;
+    SaveDialogExportaNFes: TSaveDialog;
+    Label105: TLabel;
+    DBDirceu21: TDBDirceu;
+    DBPanel10: TDBPanel;
+    DBPanel9: TDBPanel;
+    DBDirceu22: TDBDirceu;
+    A1: TMenuItem;
+    DBPanel3: TDBPanel;
+    ComissoFrete1: TMenuItem;
+    ClienteFornecedorSemCompra1: TMenuItem;
+    SBAlteraChaveAcessoCTe: TSpeedButton;
+    PosiodeCompraPEstoqMin1: TMenuItem;
+    DBRadioGroup4: TDBRadioGroup;
+    TabSheet2: TTabSheet;
+    Label55: TLabel;
+    Label106: TLabel;
+    BitBtn4: TBitBtn;
+    GroupBox4: TGroupBox;
+    SBDocInserir: TSpeedButton;
+    SBDocRemover: TSpeedButton;
+    DBGDocOriginario: TDBGrid;
+    DBEdit63: TDBEdit;
+    DBDNotaCabRef: TDBDirceu;
+    DBRFinalidadeNFe: TDBRadioGroup;
+    DsNotaReferenciada: TDataSource;
+    DBRDescSTPisCofins: TDBRadioGroup;
+    DBPanel4: TDBPanel;
+    TSContasPagar: TTabSheet;
+    DBGrid4: TDBGrid;
+    TabSheet3: TTabSheet;
+    Label27: TLabel;
+    DBEdit27: TDBEdit;
+    BtConsMensagem: TBitBtn;
+    DBDirceu5: TDBDirceu;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label65: TLabel;
+    Label69: TLabel;
+    DBMemo1: TDBMemo;
+    BtConsMensagem2: TBitBtn;
+    dbmObs: TDBMemo;
+    dbmObsComplemento: TDBMemo;
+    dbmObsDevolucao: TDBMemo;
+    Panel2: TPanel;
+    DBCheckBox1: TDBCheckBox;
+    Label70: TLabel;
+    dbmObsAjuste: TDBMemo;
+    PopupMenu1: TPopupMenu;
+    ConsultaFrete: TMenuItem;
+    btnImportarNfe: TMenuItem;
+    EmitirCartaCorrecao: TMenuItem;
+    SpeedButton1: TSpeedButton;
+    btCulturaCons: TBitBtn;
+    TabSheet5: TTabSheet;
+    Label75: TLabel;
+    Label107: TLabel;
+    DBPanel5: TDBPanel;
+    DSFCCIA: TDataSource;
+    DBPanel6: TDBPanel;
+    DBPanel7: TDBPanel;
+    DBPanel8: TDBPanel;
+    DBPanel11: TDBPanel;
+    OracleNavigator2: TOracleNavigator;
+    DBGrid5: TDBGrid;
+    DBPanel12: TDBPanel;
+    DBPanel13: TDBPanel;
+    DBPanel14: TDBPanel;
+    FichadeControledeCrditosdeInsumosAgropecurios1: TMenuItem;
+    DetalhamentodeFunrural1: TMenuItem;
+    DBGrid6: TDBGrid;
+    DSFCCIAParc: TDataSource;
+    Label108: TLabel;
+    Label109: TLabel;
+    DBEdit5: TDBEdit;
+    BtContratoCpr: TBitBtn;
+    Button1: TButton;
+    Label37: TLabel;
+    DBEdit44: TDBEdit;
+    Label110: TLabel;
+    DBEdit6: TDBEdit;
+    Label111: TLabel;
+    DBEdit64: TDBEdit;
+    Label112: TLabel;
+    DBEdit66: TDBEdit;
+    Label113: TLabel;
+    DBEdit90: TDBEdit;
+    Label114: TLabel;
+    DBEdit91: TDBEdit;
+    Label115: TLabel;
+    DBEdit92: TDBEdit;
+    Label118: TLabel;
+    DBEdit93: TDBEdit;
+    Label119: TLabel;
+    Label120: TLabel;
+    DBEdit94: TDBEdit;
+    DBEdit95: TDBEdit;
+    ConsultaEstoquePorNota1: TMenuItem;
+    btnRemoveVinculo: TMenuItem;
+    Label121: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure BtConsFilialClick(Sender: TObject);
+    procedure BtConsTransportadorClick(Sender: TObject);
+    procedure BtConsOperacaoClick(Sender: TObject);
+    procedure BtConsMensagemClick(Sender: TObject);
+    procedure BtConsVendedorClick(Sender: TObject);
+    procedure BtConsCadastroClick(Sender: TObject);
+    procedure SBConfirmarClick(Sender: TObject);
+    procedure SBConsultaClick(Sender: TObject);
+    procedure BtConsTributacaoClick(Sender: TObject);
+    procedure BtImpItemOCClick(Sender: TObject);
+    procedure DSItemNFStateChange(Sender: TObject);
+    procedure DSPrimarioStateChange(Sender: TObject);
+    procedure BtImpOCClick(Sender: TObject);
+    procedure BtConsLoteClick(Sender: TObject);
+    procedure Confirmar2Click(Sender: TObject);
+    procedure BtBaixaOCClick(Sender: TObject);
+    procedure BtCancelaBaixaOCClick(Sender: TObject);
+    procedure BtConsOCAbertoClick(Sender: TObject);
+    procedure CancelarNota1Click(Sender: TObject);
+    procedure VoltaCancelamento1Click(Sender: TObject);
+    procedure VoltaConfirmaClick(Sender: TObject);
+    procedure DBE_AuxMenuChange(Sender: TObject);
+    procedure BtConsProdutoClick(Sender: TObject);
+    procedure BtConsTributacaoFreteClick(Sender: TObject);
+    procedure Emisso1Click(Sender: TObject);
+    procedure DBEDescontoExit(Sender: TObject);
+    procedure RelacaoClick(Sender: TObject);
+    procedure Conferncia1Click(Sender: TObject);
+    procedure Futura1Click(Sender: TObject);
+    procedure MovEstoque1Click(Sender: TObject);
+    procedure SBExcluirClick(Sender: TObject);
+    procedure BtConsOperFreteClick(Sender: TObject);
+    procedure ConsultaFreteClick(Sender: TObject);
+    procedure CustoCompra1Click(Sender: TObject);
+    procedure SBCancelarClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure PCNotaChange(Sender: TObject);
+    procedure SBHelpClick(Sender: TObject);
+    procedure SBIncluirClick(Sender: TObject);
+    procedure DBEdit17Exit(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure EdNumFabricanteExit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtConsMensagem2Click(Sender: TObject);
+    procedure EmitirCartaCorrecaoClick(Sender: TObject);
+    procedure DBEdit29Exit(Sender: TObject);
+    procedure DBEdit2Exit(Sender: TObject);
+    procedure BtOrdemCarregamentoClick(Sender: TObject);
+    procedure AtualizaPreoPeloCustodanota1Click(Sender: TObject);
+    procedure RelaoTtulosporNota1Click(Sender: TObject);
+    procedure DBEdit40Exit(Sender: TObject);
+    procedure LanarQtChegada1Click(Sender: TObject);
+    procedure MovEstoqueCustoCompra1Click(Sender: TObject);
+    procedure DBEdit32Change(Sender: TObject);
+    procedure RelaoNotasDevoluo1Click(Sender: TObject);
+    procedure BtCadastroParceiroClick(Sender: TObject);
+    procedure DBEdit11Exit(Sender: TObject);
+    procedure BtConsMotoristaClick(Sender: TObject);
+    procedure BTMotivoCancClick(Sender: TObject);
+    procedure DBEdit39Exit(Sender: TObject);
+    procedure btConsClassificadoraClick(Sender: TObject);
+    procedure Terceirizao1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure RelatrioMovimentaoProdutoGMO1Click(Sender: TObject);
+    procedure NotasdeServios1Click(Sender: TObject);
+    procedure OrdemdePagamento1Click(Sender: TObject);
+    procedure SBAlterarClick(Sender: TObject);
+    procedure sbAtalhosClick(Sender: TObject);
+    procedure MEPercSubstExit(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompra1Click(Sender: TObject);
+    procedure BtContratoVendClick(Sender: TObject);
+    procedure BtContratoJuridicaClick(Sender: TObject);
+    procedure BtImpItemCompraClick(Sender: TObject);
+    procedure BtImpItemNFClick(Sender: TObject);
+    procedure AutorizaodeDevoluo1Click(Sender: TObject);
+    procedure BtArmazemAlfandegarioClick(Sender: TObject);
+    procedure BTLoteRastreadoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure InutilizaodenumeraoNFe1Click(Sender: TObject);
+    procedure EnviarviaemailNFe1Click(Sender: TObject);
+    procedure ReemitirDanfeNFe1Click(Sender: TObject);
+    procedure ReconsultarNFe1Click(Sender: TObject);
+    procedure ImportarXMLNFe1Click(Sender: TObject);
+    procedure ObterXMLimportadoNFe1Click(Sender: TObject);
+    procedure DBEdit32Exit(Sender: TObject);
+    procedure NotasFiscaisEletrnicas1Click(Sender: TObject);
+    procedure AlteraCdigoContrato1Click(Sender: TObject);
+    procedure DSPrimarioDataChange(Sender: TObject; Field: TField);
+    procedure FichadeApuraodosCrditos1Click(Sender: TObject);
+    procedure BtObraConsClick(Sender: TObject);
+    procedure SBChaveAcessoClick(Sender: TObject);
+    procedure AlterarInserirestanotaemLoteNFe1Click(Sender: TObject);
+    procedure EnviarReenviarloteparaSEFAZ1Click(Sender: TObject);
+    procedure ConsultarlotedeNFe1Click(Sender: TObject);
+    procedure DenegarNota1Click(Sender: TObject);
+    procedure VoltarNotaDenegada1Click(Sender: TObject);
+    procedure ExportarNFe1Click(Sender: TObject);
+    procedure btnImportarNfeClick(Sender: TObject);
+    procedure VerretornodeenvioNFe1Click(Sender: TObject);
+    procedure DBCfopExit(Sender: TObject);
+    procedure btnDiClick(Sender: TObject);
+    procedure ExportaNotasdeEntrada1Click(Sender: TObject);
+    procedure DBEdit48Exit(Sender: TObject);
+    procedure BTSerieConsClick(Sender: TObject);
+    procedure DBEdit88Exit(Sender: TObject);
+    procedure MELocalizaExit(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure EmitirCartaCorreoEletrnica1Click(Sender: TObject);
+    procedure DBNavigator1BeforeAction(Sender: TObject;
+      Button: TOracleNavigateBtn);
+
+    procedure ExportarNotasPeriodoClick(Sender: TObject);
+    procedure ManifestacaoDestinatarioClick(Sender: TObject);
+    procedure DBEComplementoExit(Sender: TObject);
+    procedure A1Click(Sender: TObject);
+    procedure ComissoFrete1Click(Sender: TObject);
+    procedure ClienteFornecedorSemCompra1Click(Sender: TObject);
+    procedure SBAlteraChaveAcessoCTeClick(Sender: TObject);
+    procedure PosiodeCompraPEstoqMin1Click(Sender: TObject);
+    procedure SBDocInserirClick(Sender: TObject);
+    procedure SBDocRemoverClick(Sender: TObject);
+    procedure PageControl2Change(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraDeionClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraSOLDARClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraFERRAGEMClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraOTICAClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraBorgesClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraBorges2Click(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraCemapaELGINL42Click(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraNutrivetELGINL42Click(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraPaulinhoClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraJasolClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraDinizClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraAGROCAMPOClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraNUTRIRClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraMavenidaClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraSemefertilClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraDONNAClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraElShadayClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraGGIRARDIClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraDUSTClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraAGROCAOClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraFINESTRAClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraPILILICOSClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraSCALAClick(Sender: TObject);
+    procedure EmissodeEtiquetasporNotadeCompraJBATACADOClick(Sender: TObject);
+    procedure direcionaProcedureEtiquetasNotadeCompra(Sender: TObject);
+    procedure EdNumFabricanteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBEdit48KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btCulturaConsClick(Sender: TObject);
+    procedure FichadeControledeCrditosdeInsumosAgropecurios1Click(
+      Sender: TObject);
+    procedure DetalhamentodeFunrural1Click(Sender: TObject);
+    procedure DBGrid6DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtContratoCprClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Button1Click(Sender: TObject);
+    procedure DBEdit26Exit(Sender: TObject);
+    procedure DBGrid1ColEnter(Sender: TObject);
+    procedure ConsultaEstoquePorNota1Click(Sender: TObject);
+    procedure DBEdit1Exit(Sender: TObject);
+    procedure btnRemoveVinculoClick(Sender: TObject);
+    //    procedure MovEstoqueCustoCompra1Click(Sender: TObject);
+  private
+    wImportacaoXML: boolean;
+    wOrdemCompraImportacaoXML: integer;
+    procedure Proc_TrazItens(wCod_Nota_Cab: Integer);
+    procedure doPrior(wTamColuna: Integer);
+    function getTextoLinha(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+    function getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+    function NotaJaCadastrada(pNumero: Integer; pFilial: Integer; pSerie: string;
+      pCadastro: Integer): Boolean;
+    procedure exportaNotasEntrada;
+    procedure ExportacaoClienteFornecedor;
+    procedure GeraFCCIA(Sender: TObject);
+    procedure ImprimeFCCIA(Sender: TObject);
+
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FNotaEntradaCad: TFNotaEntradaCad;
+  wBuffer: Real = 0.00; // usado no onExit da quantidade para nao calcular mais que 1 vez o mesmo valor
+  const EMPRESA_FCCIA = 'GRASEL';
+
+implementation
+
+uses UNotaEntrada_cl, UFilialCons, UTransporteCons, UFilial_cl,
+  UTransporte_cl, UCadastroCons, UOperacaoCons, UCadastro_cl, UOperacao_cl,
+  UMensagemCons, UMensagem_cl, UVendedorCons, UVendedor_cl, UOracle_cl,
+  UNotaEntradaCons, UTributacaoCons, UTributacao_cl, UOrdemCompraCons,
+  UOrdemCompra_cl, UTipoLoteCons, UTipoLote_cl, UOrdemCompra_ConsAberto,
+  UNotaEntrada_Confirma, UNotaEntrada_Cancela, UProdutoCons, UProduto_cl,
+  UNotaEntradaParam, URNotasES_Relacao,
+  URNotasES_Conferencia, URNotasES_Futura, URNotasES_MovEstoque,
+  UNotaSaida_cl, UNotaImpressao, UConhecimentoCons, URNotaCustoCompra,
+  UParamSistema_cl, UNotaSaidaCons, URelatorioVenda_cl, UDepartamentoCons,
+  UDepartamento_cl, UUsuario_cl, UNotaCorrecao, UNotaCorrecao_cl,
+  UOrdemCarregamentoCons, UOrdemCarregamento_cl, UAtualizaPreco,
+  UContasPagar_cl, UBiblioteca, UQtChegada, UMovEstoqueCompra,
+  URelatorio_Compra_cl, URNotasDevolucao, UCustoVeiculo_NE,
+  UCustoVeiculoMov_cl, UPrecos_cl, UMotivoCons, UMotivo_cl, URTerceirizacao,
+  UImpostoCons, UImposto_cl, URMovMercadoria_GMO, URNotasServico,
+  UROrdemPagamento, UOrdemCompraDadosAdicionais, UHistoricoCons,
+  UContratoVenda_Cons, Ucontrato_cl, UContrato_PJuridicaCons,
+  UContrato_Pjuridica_cl, UFmCadastro, UNfe_cl, UNFeParam, UImportaNfe,
+  URNotaFiscalEletronica, UFmOperacao, UAlteraCodigoContrato, UObraCons,
+  UObra_cl, UNfEletronicaLote_cl, UFmNota, UFmFilial,
+  UNfEletronicaLoteCons, StrUtils, UImportacaoNfe, DelRun, UREtiquetaNota,
+  UDI, UDevolucaoCarregaItens, UNotaEntradaRateioObra, USerie_cl,
+  USerieCons, UCartaCorrecaoEletronica, UManifestacaoDestinatario,UExportarNotasParam,
+  UAtualizaPrecoPorNota, URComissaoFreteEntrada, URTitulosPorNota, URNota_FornecedorSemCompra,
+  URPosicaoCompraEstMin, UImpDadosXMLNFe, UNotaReferenciadaCad, MaskUtils, UCulturaCons, UCultura_cl,
+  UBibCompra, URFCCIA, URDetalhamentoFunrural, Math, UContratoCPRCons, UContratoCPR_cl, UConsultaEstoquePorNota,
+  URemoveVinculorProdFornecedor;
+
+{$R *.DFM}
+
+function A_Set_Darkness(darkness: integer): integer; stdcall; external 'WINPPLA.DLL';
+function A_CreatePrn(selection: integer; FileName: pchar): integer; stdcall; external 'WINPPLA.DLL';
+function A_Print_Out(width, height, copies, amount: integer): integer; stdcall; external 'WINPPLA.DLL';
+function A_Prn_Text(x, y, ori, font, typee, hor_factor, ver_factor: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+function A_Prn_Barcode(x, y, ori: integer; typee: char; narrow, width, height: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+function A_Prn_Text_TrueType(x, y, FSize: integer; FType: pchar; Fspin, FWeight, FItalic, FUnline, FStrikeOut: integer; id_name, data: pchar; mem_mode: integer): integer; stdcall; external 'WINPPLA.DLL';
+function A_Get_Graphic(x, y, mem_mode: integer; format: char; filename: pchar): integer; stdcall; external 'WINPPLA.DLL';
+function A_Draw_Box(mode, x, y, width, height, top, side: integer): integer; stdcall; external 'WINPPLA.DLL';
+function A_Draw_Line(mode, x, y, width, height: integer): integer; stdcall; external 'WINPPLA.DLL';
+procedure A_ClosePrn(); stdcall; external 'WINPPLA.DLL';
+function A_Load_Graphic(x, y: integer; data: pchar): integer; stdcall; external 'WINPPLA.DLL';
+function A_Clear_Memory(): integer; stdcall; external 'WINPPLA.DLL';
+function A_Feed_Label():integer;stdcall;external 'WINPPLA.DLL';
+function A_GetUSBDeviceInfo(nPort:integer; pDeviceName:PAnsiChar; pDeviceNameLen:PInteger;
+              pDevicePath:PAnsiChar; pDevicePathLen:PInteger):integer;stdcall;external 'WINPPLA.DLL';
+function A_EnumUSB(buf:PAnsiChar):integer;stdcall;external 'WINPPLA.DLL';
+function A_GetUSBBufferLen():integer;stdcall;external 'WINPPLA.DLL';
+function A_Set_Backfeed(back:integer):integer;stdcall;external 'WINPPLA.DLL';
+function A_Set_Unit(unit_Renamed:char):integer;stdcall;external 'WINPPLA.DLL';
+function A_Set_Gap(gap:integer):integer;stdcall;external 'WINPPLA.DLL';
+function A_Set_Syssetting(transfer:integer; cut_peel:integer; length:integer; zero:integer; pause:integer):integer;stdcall;external 'WINPPLA.DLL';
+function A_Set_Sensor_Mode(type_Renamed:char; continuous:integer):integer;stdcall; external 'WINPPLA.DLL';
+
+//PPLB
+function B_Set_Darkness(darkness: integer): integer; stdcall; external 'WINPPLB.DLL';
+function B_CreatePrn(selection: integer; FileName: pchar): integer; stdcall; external 'WINPPLB.DLL';
+function B_Print_Out(labset: integer): integer; stdcall; external 'WINPPLB.DLL';
+
+function B_Prn_Text(x, y, ori, font, hor_factor, ver_factor: integer; mode: char; data:pchar): integer; stdcall; external 'WINPPLB.DLL';
+//function B_Prn_Barcode(x, y, ori: integer; typee: char; narrow, width, height: integer; mode: char; numeric: integer; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+function B_Prn_Barcode(x, y, ori: integer; typee: String; n,      w,     height: integer; human: char; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+function B_Prn_Text_TrueType(x, y, FSize: integer; FType: pchar; Fspin, FWeight, FItalic, FUnline, FStrikeOut: integer; id_name, data: pchar; mem_mode: integer): integer; stdcall; external 'WINPPLB.DLL';
+function B_Get_Graphic(x, y, mem_mode: integer; format: char; filename: pchar): integer; stdcall; external 'WINPPLB.DLL';
+function B_Draw_Box(mode, x, y, width, height, top, side: integer): integer; stdcall; external 'WINPPLB.DLL';
+function B_Draw_Line(mode, x, y, width, height: integer): integer; stdcall; external 'WINPPLB.DLL';
+procedure B_ClosePrn(); stdcall; external 'WINPPLB.DLL';
+function B_Load_Graphic(x, y: integer; data: pchar): integer; stdcall; external 'WINPPLB.DLL';
+function B_Clear_Memory(): integer; stdcall; external 'WINPPLB.DLL';
+function B_GetUSBDeviceInfo(nPort:integer; pDeviceName:PAnsiChar; pDeviceNameLen:PInteger;
+            pDevicePath:PAnsiChar; pDevicePathLen:PInteger):integer;stdcall;external 'WINPPLB.DLL';
+function  B_EnumUSB(buf:PAnsiChar):integer;stdcall;external 'WINPPLB.DLL';
+function  B_GetUSBBufferLen():integer;stdcall;external 'WINPPLB.DLL';
+//function  B_Set_Backfeed(back:integer):integer;stdcall;external 'WINPPLB.DLL';
+function  B_Set_Backfeed(option:char):integer;stdcall;external 'WINPPLB.DLL';
+ //int B_Set_Backfeed(char option);
+
+function RMaskCGC_CPF(wCgc1: string; Zeros: Integer): string;
+var
+  S: string;
+  x: integer;
+begin
+
+  for x := 1 to length(wCgc1) do
+    if wCgc1[x] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] then
+      S := S + wCgc1[x];
+
+  while Length(S) < Zeros do
+    S := '0' + S;
+
+  Result := S;
+
+end;
+
+function TFNotaEntradaCad.NotaJaCadastrada(pNumero: Integer; pFilial: Integer;
+  pSerie: string; pCadastro: Integer): Boolean;
+var
+  wSql: string;
+  buscador: TBuscador;
+begin
+  wSql := 'SELECT COUNT(*) FROM TB_NOTA_CAB WHERE NUM_NOTA = ' + IntToStr(pNumero) + ' AND ' +
+    'COD_FILIAL = ' + IntToStr(pFilial) + ' AND COD_SERIE = ' + QuotedStr(pSerie) + ' AND COD_CADASTRO = ' +
+    IntToStr(pCadastro) + ' AND IND_ENTRADA_SAIDA = ' + quotedStr('E');
+
+  buscador := TBuscador.Create;
+  buscador.Limpa;
+  buscador.Adiciona(wSql);
+  buscador.Buscar(true);
+  Result := not (buscador.Proximo = '0');
+end;
+
+procedure TFNotaEntradaCad.FormActivate(Sender: TObject);
+begin
+  inherited;
+  
+  with DMNotaEntrada do
+  begin                                                           
+    DMNotaEntrada.pTipoNota := 'NORMAL';
+    pContabiliza_Extra := 'N';
+    QNotaEntrada.Open;
+    QItemNF.Open;
+    QBaixasOC.Open;
+    QSomaItemNota.Open;
+    DMNotaEntrada.QNotaImpostoServico.open;
+    QNotaReferenciada.Open;
+    QPagamento.Open;
+    QSomaPagamentos.Open;
+    QFCCIA.Open;
+  end;
+  DMTransporte.QTransporteAll.Open;
+  PCNota.ActivePage := TSCabecalho;
+
+  if (DMParamSistema.QparamSistemaInd_Tipo_Comissao.Value = '7') or
+    (DMParamSistema.QparamSistemaInd_Tipo_Comissao.Value = 'A') then // Informada
+  begin
+    DBEComissao.ReadOnly := False;
+    DBEComissao.TabStop := True;
+    DBEComissao.ParentColor := False;
+    DBEComissao.Color := clWindow;
+  end;
+  if (DMParamSistema.QparamSistemaInd_Tipo_Comissao.Value = '9') or
+    (DMParamSistema.QparamSistemaInd_Tipo_Comissao.Value = 'A') then // Informada
+  begin
+    DBEComissao_Nota.ReadOnly := False;
+    DBEComissao_Nota.TabStop := True;
+    DBEComissao_Nota.ParentColor := False;
+    DBEComissao_Nota.Color := clWindow;
+  end;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NIR') or
+    (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') then
+    GbConversao.Visible := True;
+
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DINIZ' then
+  begin
+    EdNumFabricante.TabOrder := 0;
+    DbEdit39.TabOrder := 1;
+    DbEdit40.TabOrder := 2;
+    DbEdit47.TabOrder := 3;
+  end;
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE')      or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'MALAGGI')     or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'SRTERRA')     or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'POSTUBOS')    or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DINIZ')       or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DESAFIO')     or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'BORGES')      or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'KREUZ')       or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ITATIBA')     or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'GERALPECAS')  or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'NIR')         or
+     (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'BEDIN') Then
+  begin
+    label60.Visible := False;
+    dbEdit3.Visible := False;
+    BtContratoVend.Visible := False;
+    label79.Visible := False;
+    dbEdit68.Visible := False;
+    BtContratoJuridica.Visible := False;
+    label88.Visible := False;
+    dbEdit77.Visible := False;
+    BtCadastroParceiro.Visible := False;
+    label77.Visible := False;
+    dbEdit67.Visible := False;
+    LblCultura.Visible := False;
+    DBECultura.Visible := False;
+    LblPesoChegada.Visible := False;
+    DBEPesoChegada.Visible := False;
+    LblNotaProdutor.Visible := False;
+    DBENotaProdutor.Visible := False;
+    label89.Visible := False;
+    dbEdit78.Visible := False;
+//    label55.Visible := False;
+//    dbEdit63.Visible := False;
+    label87.Visible := False;
+    dbEdit76.Visible := False;
+    label92.Visible := False;
+    dbEdit81.Visible := False;
+    DBEdit83.Visible := False;
+    DBDirceu20.Visible := False;
+    BtArmazemAlfandegario.Visible := False;
+    Label94.Visible := False;
+    Label99.Visible := False;
+    DBEdit87.Visible := False;
+    BtObraCons.Visible := False;
+    Label109.Visible := False;
+    DBEdit5.Visible := False;
+    BtContratoCpr.Visible := False;
+  end;
+
+  if (DMParamSistema.CodEmpresa = 'SRTERRA') or
+     (DMParamSistema.CodEmpresa = 'BEDIN') Then
+  begin
+    Label99.Visible := True;
+    DBEdit87.Visible := True;
+    BtObraCons.Visible := True;
+  end;
+
+  if (DMParamSistema.CodEmpresa = 'NUTRIVET') or (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+  begin
+    LblComplemento.Visible := True;
+    LblComplemento.Left := 463;
+    LblComplemento.Top :=105;
+    DbeComplemento.Top := 120;
+    DBEComplemento.Visible := True;
+    DBEComplemento.Left := 462;
+    DBEComplemento.Width := 100;
+  end;
+
+  if(DMParamSistema.CodEmpresa  = 'KREUZ') or
+    (DMParamSistema.CodEmpresa  = 'CONKRETA') then //aparecer ncm na consulta da nota de entrada só para a Kreuz - 26/11/2018
+  begin
+    DBGrid1.Columns.Items[2] := DBGrid1.Columns.Items[6]; //ncm no lugar do lote
+    DBGrid1.Columns.Items[6].Visible := false;
+  end
+  else
+    DBGrid1.Columns.Items[6].Visible := false;
+
+  // Deixa visível aba FCCIA somente para empresas que utilizam
+  // Constante declarada na diretiva VAR 
+  PCNota.Pages[6].TabVisible
+    := (Pos(DMParamSistema.QParamSistemaCOD_EMPRESA.Value, EMPRESA_FCCIA) > 0)
+end;
+
+procedure TFNotaEntradaCad.BtConsFilialClick(Sender: TObject);
+begin
+  inherited;
+  if FFilialCons = nil then
+    FFilialCons := TFFilialCons.Create(Application);
+  if FFilialCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Filial.Value := DMFilial.QFilialConsCod_Filial.Value;
+end;
+
+procedure TFNotaEntradaCad.BtConsTransportadorClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+  begin
+    DMNotaEntrada.QNotaEntradaCod_Transportador.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+    DBEdit11Exit(Sender);
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsOperacaoClick(Sender: TObject);
+begin
+  inherited;
+  if FOperacaoCons = nil then
+    FOperacaoCons := TFOperacaoCons.Create(Application);
+  FOperacaoCons.RGTipoOperacao.ItemIndex := 0;
+  FOperacaoCons.RGTipoOperacao.Enabled := False;
+  if FOperacaoCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Operacao.Value := DMOperacao.QOperacaoConsCod_Operacao.Value;
+end;
+
+procedure TFNotaEntradaCad.BtConsMensagemClick(Sender: TObject);
+begin
+  inherited;
+  if FMensagemCons = nil then
+    FMensagemCons := TFMensagemCons.Create(Application);
+  if FMensagemCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Mensagem.Value := DMMensagem.QMensagemConsCod_Mensagem.Value;
+end;
+
+procedure TFNotaEntradaCad.BtConsVendedorClick(Sender: TObject);
+begin
+  inherited;
+  if FVendedorCons = nil then
+    FVendedorCons := TFVendedorCons.Create(Application);
+  if FVendedorCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Vendedor.Value := DMVendedor.QVendedorConsCod_Vendedor.Value;
+end;
+
+procedure TFNotaEntradaCad.BtConsCadastroClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Cadastro.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+end;
+
+procedure TFNotaEntradaCad.SBConfirmarClick(Sender: TObject);
+begin
+  DMNotaEntrada.QNotaEntrada.UpdateRecord;
+  DmUsuario.Checar_Filial_Usuario(Trim(DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text), 'COMPRA');
+  if DMParamSistema.QParamSistemaDt_Fechamento_Sistema.Value >= DMNotaEntrada.QNotaEntradaDt_Recebimento.Value then
+    raise Exception.Create('Não é Permitido Lançar Esta Nota - Fechamento Contabil');
+  if (DMNotaEntrada.QNotaEntradaCOD_TRANSPORTADOR.Text <> '') and
+    (DMNotaEntrada.QNotaEntradaNUM_CONHECIMENTO_FRETE.Text <> '') then
+    if DBRadioGroup1.ItemIndex = 0 then // frete cif
+    begin
+      if DMNotaEntrada.QNotaEntradaCOD_TRIBUTACAO_FRETE.Text = '' then
+        raise Exception.Create('Obrigatorio Informar Tributação Frete');
+      if DMNotaEntrada.QNotaEntradaCOD_OPERACAO_CF.Text = '' then
+        raise Exception.Create('Obrigatorio Informar Operação Frete');
+    end;
+  if (DMNotaEntrada.QNotaEntradaInd_Condicao_Pagto.Value = '1') and
+    (DMNotaEntrada.QNotaEntradaVal_AVista.Value <> 0) then
+    raise Exception.Create('Quando a Condição de Pagamento For a Vista Não Informar o Valor A Vista');
+  if Trim(DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text) <> '' then
+    if Trim(DMOracle.BuscaNome('SELECT COD_MOTIVO FROM TB_CADASTRO',
+      ' COD_CADASTRO = ' + DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text, True)) <> '' then
+      raise exception.Create('ATENÇÃO - Cadastro Cancelado, Verifique!');
+  with DMOperacao do
+  begin
+    QOperacao.Close;
+    QOperacao.SetVariable('PK', Trim(DBEdit29.Text));
+    QOperacao.Open;
+    if QOperacaoIND_FISICA_JURIDICA.Value <> 'T' then
+      if DMOracle.BuscaNome('SELECT IND_FISICA_JURIDICA FROM TB_CADASTRO', 'COD_CADASTRO = ' + DBEdit32.Text, True) <> QOperacaoIND_FISICA_JURIDICA.Value then
+        raise Exception.Create('Operação Inválida - Quanto a Opção Física/Jurídica');
+    if DMOperacao.QOperacaoCOD_SERIE.Value <> '' then
+      if DMOperacao.QOperacaoCOD_SERIE.Value <> DMNotaEntrada.QNotaEntradaCOD_SERIE.Value then
+        raise Exception.Create('Série Informada Não é Permitida Para Esta Operação');
+    if QOperacaoInd_Emite.Value = 'N' then
+      if (DMNotaEntrada.QNotaEntradaNum_Nota.Value = 0) or
+        (DMNotaEntrada.QNotaEntradaNum_Nota.Text = '') then
+        raise Exception.Create('Para nota de entrada que não será emitida - preecher número da nota fiscal');
+  end;
+  with DMNotaEntrada do
+    if (QNotaEntradaCOD_NOTA_CAB_REF.Value > 0) and (QNotaEntradaIND_TIPO_FRETE.Value <> 'CIF') then
+      if (MessageDlg('Atenção!' + #13 + #10 + 'Notas de complemento, segundo o manual, devem possuir tipo de frete CIF,' +
+        #13 + #10 + 'o que não está sendo respeitado nesta nota.' + #13 + #10 +
+        'Prosseguir mesmo assim?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes) then
+        Exit;
+  if ((not (DMNotaEntrada.QNotaEntradaNUM_CONHECIMENTO_FRETE.IsNull)) and (DMNotaEntrada.QNotaEntradaCOD_SERIE_CF.IsNull)) then
+    if (MessageDlg('A série de conhecimento de frete não foi informada.' + #13 + #10 + 'Deseja realmente continuar?', mtWarning, [mbYes, mbNo], 0) = mrNo) then
+      Exit;
+
+  try
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := False;
+    DMNotaEntrada.QItemNF.AutoCalcFields := False;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := False;
+    inherited;
+    DMOracle.DBCemapa.Commit;
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := True;
+    DMNotaEntrada.QItemNF.AutoCalcFields := True;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := True;
+
+    // Baixa de ordem de compra para notas importadas por XML
+    if wImportacaoXML then
+    begin
+      DMOrdemCompra.OPCompra.CallProcedure('BAIXA_ORDEM_COMPRA',
+        [DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.AsInteger, wOrdemCompraImportacaoXML]);
+      DMOracle.DBCemapa.Commit;
+    end;
+    wImportacaoXML := false;
+    wOrdemCompraImportacaoXML := 0;
+  except
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := True;
+    DMNotaEntrada.QItemNF.AutoCalcFields := True;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := True;
+    wImportacaoXML := false;
+    wOrdemCompraImportacaoXML := 0;
+    raise;
+  end;
+  Confirmar2Click(Self); // somente para chamar a confirmacao da nota fiscal
+  bib.setModelo(DMNotaEntrada.QNotaEntrada, lblModelo);
+  with DMNfe do
+  begin
+    if QInfXmlSefaCons.State = dsBrowse then
+      if QInfXmlSefaConsDESC_CHAVE_ACESSO.Value =
+        Bib.LimpaNumero(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value) then
+      begin
+        QInfXmlSefa.Close;
+        QInfXmlSefa.SetVariable('PK', QInfXmlSefaConsCOD_INF_XML_SEFA.Value);
+        QInfXmlSefa.Open;
+        
+        QInfXmlSefa.Edit;
+        QInfXmlSefaIND_SITUACAO.Value := 'Importada';
+        QInfXmlSefa.Post;
+      end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.SBConsultaClick(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaCons = nil then
+    FNotaEntradaCons := TFNotaEntradaCons.Create(Application);
+  if FNotaEntradaCons.ShowModal = mrOk then
+    with DMNotaEntrada do
+    begin
+      QNotaEntrada.Close;
+      QNotaEntrada.SetVariable('PK', QNotaEntradaConsCod_Nota_Cab.Value);
+      QNotaEntrada.Open;
+      QSomaItemNota.Close;
+      QSomaItemNota.Open;
+      bib.setModelo(DMNotaEntrada.QNotaEntrada, lblModelo);
+    end;
+end;
+
+procedure TFNotaEntradaCad.BtConsTributacaoClick(Sender: TObject);
+begin
+  inherited;
+  if FTributacaoCons = nil then
+    FTributacaoCons := TFTributacaoCons.Create(Application);
+  if FTributacaoCons.ShowModal = mrOk then
+  begin
+    DMNotaEntrada.QItemNF.Edit;
+    DMNotaEntrada.QItemNFCod_Tributacao.Value := DMTributacao.QTributacaoConsCod_Tributacao.Value;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtImpItemOCClick(Sender: TObject);
+//Var wCodItemNF : Integer;
+//    wQt_Item_nota : Real;
+begin
+  inherited;
+
+  DMNotaEntrada.QNotaEntrada.Post;
+  DMNotaEntrada.QNotaEntrada.Edit;
+
+  if FOrdemCompraCons = nil then
+    FOrdemCompraCons := TFOrdemCompraCons.Create(Application);
+  FOrdemCompraCons.MeTexto.Text := DMNotaEntrada.QNotaEntradaCod_Cadastro.Text;
+  FOrdemCompraCons.MeFilial.Text := DMNotaEntrada.QNotaEntradaCod_Filial.Text;
+  if FOrdemCompraCons.ShowModal = mrOk then
+  begin
+    with DMOrdemCompra do
+    begin
+      //      QOrdemCompra.AutoCalcFields := False;
+      //      QItemOC.AutoCalcFields := False;
+      QOrdemCompra.Close;
+      QOrdemCompra.SetVariable('PK', QOrdemCompraConsCod_Ordem_Compra_Cab.Value);
+      QOrdemCompra.Open;
+      //      QItemOC.Open;
+      //      QItemOC.First;
+      //      DMNotaEntrada.QAtuBaixaOC.Open;
+      //      While not QItemOC.Eof do
+
+      try
+        DMOracle.DBCemapa.StartTransaction;
+        DMOrdemCompra.OPCompra.CallProcedure('TRAZER_ITENS_OC_PARA_NOTA', [DMNotaEntrada.QNotaEntradaCod_Nota_Cab.AsInteger, QOrdemCompraCOD_ORDEM_COMPRA_CAB.AsInteger]);
+        DmNotaEntrada.SetaPendenciaInterna(2);
+        DMOracle.DBCemapa.Commit;
+        SBConfirmarClick(Self);
+        SBAlterarClick(Self);
+      except
+        DMOracle.DBCemapa.Rollback;
+      end;
+
+      {With DMNotaEntrada do
+      Begin
+        If (QItemOCQt_Pedido.Value*QItemOCQt_Embalagem.Value) > ((QItemOCQt_Atendido.Value+QItemOCQt_Cancelado.Value)*QItemOCQt_Embalagem.Value) then
+        Begin
+          If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'AB') Or (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO') Then
+            wQt_Item_nota := QItemOCQt_Pedido.Value - QItemOCQt_Cancelado.Value - QItemOCQt_Atendido.Value
+          Else
+            wQt_Item_nota := (QItemOCQt_Pedido.Value-QItemOCQt_Cancelado.Value)*QItemOCQt_Embalagem.Value-QItemOCQt_Atendido.Value;
+          QItemNF.Insert;
+          QItemNFQt_Quantidade.Value := wQt_Item_Nota;
+
+          If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'AB') Then
+             QItemNFVal_Total.Value := ((QItemOCVal_Unitario.Value -(QItemOCVal_Unitario.Value*QItemOCPerc_Desconto.Value/100)))*wQt_Item_Nota
+          Else
+             QItemNFVal_Total.Value := ((QItemOCVal_Unitario.Value -(QItemOCVal_Unitario.Value*QItemOCPerc_Desconto.Value/100)))/QItemOCQt_Embalagem.Value*QItemNFQt_Quantidade.Value;
+          QItemNFCod_Produto.Value := QItemOCCod_Produto.Value;
+          QItemNFCod_Tributacao.Value := QItemOCCod_Tributacao.Value;
+//            QItemNFPerc_IPI.Value := QItemOCPerc_IPI.Value;
+          wCodItemNF := QItemNFCod_Nota_Item.Value;
+          QItemNF.Post;
+          QAtuBaixaOC.Insert;
+          QAtuBaixaOCCod_Nota_Item.Value := wCodItemNF;
+          QAtuBaixaOCCod_Ordem_Compra_Item.Value := QItemOCCOD_ORDEM_COMPRA_ITEM.Value;
+          QAtuBaixaOCQt_Baixa.Value := wQt_Item_nota;
+          QAtuBaixaOC.Post;
+          // Itens de Ordem de Compra atualizados nos eventos da query
+        End;
+        QItemOC.Next;
+      End;}
+
+      //QItemOC.Close;
+      //QItemOC.Open;
+//        DMNotaEntrada.QItemNF.Refresh;
+      //QOrdemCompra.AutoCalcFields := True;
+      //QItemOC.AutoCalcFields := True;
+    end;
+  end;
+  //DMNotaEntrada.ImportaOC;
+end;
+
+procedure TFNotaEntradaCad.DSItemNFStateChange(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    BtImpItemOC.Enabled := (QNotaEntrada.State = dsEdit) and (QItemNF.State = dsBrowse);
+    BtConsLote.Enabled := QNotaEntrada.State = dsEdit;
+    BtConsTributacao.Enabled := QNotaEntrada.State = dsEdit;
+    BtConsProduto.Enabled := QNotaEntrada.State = dsEdit;
+    btCulturaCons.Enabled := QNotaEntrada.State = dsEdit;
+    If QItemNF.State = DsInsert Then
+      begin
+        if DMParamSistema.CodEmpresa = 'FURGOESMED' then
+          EdNumFabricante.SetFocus
+        else
+        begin
+          if(DBEdit48.CanFocus) then
+            DBEdit48.SetFocus
+          else
+            EdNumFabricante.SetFocus;
+        end;
+      end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.DSPrimarioStateChange(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    // ** Pedidos ***
+    GBBaixaOC.Enabled := (QNotaEntrada.State = dsBrowse) and (QNotaEntradaInd_Situacao.Value <> '2');
+    BtConsOCAberto.Enabled := GBBaixaOC.Enabled;
+    BtBaixaOC.Enabled := GBBaixaOC.Enabled;
+    BtCancelaBaixaOC.Enabled := GBBaixaOC.Enabled;
+    // ***
+    BtImpOC.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtOrdemCarregamento.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    btConsClassificadora.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtConsMotorista.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtContratoVend.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtContratoJuridica.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    ConsultaFrete.Enabled := not BtImpOC.Enabled;
+    EmitirCartaCorrecao.Enabled := ConsultaFrete.Enabled;
+    BtImpItemOC.Enabled := (BtImpOC.Enabled) and (QItemNF.State = dsBrowse);
+    BtImpItemNF.Enabled := (BtImpOC.Enabled) and (QItemNF.State = dsBrowse);
+    BtImpItemCompra.Enabled := (BtImpOC.Enabled) and (QItemNF.State = dsBrowse);
+    BtConsLote.Enabled := BtImpOC.Enabled;
+    BtConsTributacao.Enabled := BtImpOC.Enabled;
+    BtConsProduto.Enabled := BtImpOC.Enabled;
+    btCulturaCons.Enabled := BtImpOC.Enabled;
+    BtConsCadastro.Enabled := BtImpOC.Enabled;
+    BTMotivoCanc.Enabled := BtImpOC.Enabled;
+    BtConsOperacao.Enabled := BtImpOC.Enabled;
+    BtConsMensagem.Enabled := BtImpOC.Enabled;
+    BtConsVendedor.Enabled := BtImpOC.Enabled;
+    BtObraCons.Enabled := BtImpOC.Enabled;
+    BtConsFilial.Enabled := BtImpOC.Enabled;
+    BtConsVendedor.Enabled := BtImpOC.Enabled;
+    BtConsOperFrete.Enabled := BtImpOC.Enabled;
+    BtConsTributacaoFrete.Enabled := BtImpOC.Enabled;
+    BtConsTransportador.Enabled := BtImpOC.Enabled;
+    BitBtn2.Enabled := BtImpOC.Enabled;
+    //SBChaveAcesso.Enabled := BtImpOC.Enabled;
+    BtConsMensagem2.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtArmazemAlfandegario.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    BtCadastroParceiro.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+    MMCadSimples.Items[2].Enabled := DSPrimario.DataSet.State = dsBrowse;
+    MMCadSimples.Items[3].Enabled := DSPrimario.DataSet.State = dsBrowse;
+    btnImportarNfe.Enabled := DSPrimario.DataSet.State = dsBrowse;
+    //btnDi.Enabled := not (DSPrimario.DataSet.State = dsBrowse);
+    BTSerieCons.Enabled := not (DSPrimario.DataSet.State = dsBrowse);
+    BitBtn1.Enabled := not (DSPrimario.DataSet.State = dsBrowse);
+    btnDi.Enabled := not (DSPrimario.DataSet.State = dsBrowse);
+    OracleNavigator2.Enabled := not (DSPrimario.DataSet.State = dsBrowse);
+    BtContratoCpr.Enabled := QNotaEntrada.State in [dsEdit, dsInsert];
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtImpOCClick(Sender: TObject);
+var wSerie, wModelo: string;
+begin
+  inherited;
+  if FOrdemCompraCons = nil then
+    FOrdemCompraCons := TFOrdemCompraCons.Create(Application);
+  if FOrdemCompraCons.ShowModal = mrOk then
+  begin
+    with DMOrdemCompra do
+    begin
+      QOrdemCompra.AutoCalcFields := False;
+      QOrdemCompra.Close;
+      QOrdemCompra.SetVariable('PK', QOrdemCompraConsCOD_ORDEM_COMPRA_CAB.Value);
+      QOrdemCompra.Open;
+      with DMNotaEntrada do
+      begin
+        QNotaEntradaCOD_FILIAL.Value := QOrdemCompraCOD_FILIAL.Value;
+        QNotaEntradaCOD_OPERACAO.Value := QOrdemCompraCOD_OPERACAO.Value;
+        wSerie := DMOracle.FastSelect('COD_SERIE', 'TB_OPERACAO', 'COD_OPERACAO = ' + QOrdemCompraCOD_OPERACAO.Text);
+        wModelo := DMOracle.FastSelect('COD_SERIE_MODELO', 'TB_OPERACAO', 'COD_OPERACAO = ' + QOrdemCompraCOD_OPERACAO.Text);
+        if wSerie <> '' then
+        begin
+          QNotaEntradaCOD_SERIE.Value := wSerie;
+          QNotaEntradaCOD_SERIE_MODELO.Value := wModelo;
+        end;
+        QNotaEntradaCOD_CADASTRO.Value := QOrdemCompraCOD_CADASTRO.Value;
+        QNotaEntradaCOD_TRANSPORTADOR.Text := QOrdemCompraCOD_CAD_FRETE.Text;
+        QNotaEntradaVAL_FRETE.Value := QOrdemCompraVAL_FRETE.Value;
+        QNotaEntradaIND_TIPO_FRETE.Value := QOrdemCompraIND_FRETE.Value;
+        QNotaEntradaCOD_ORDEM_COMPRA_CAB.Value := QOrdemCompraCOD_ORDEM_COMPRA_CAB.Value;
+        QNotaEntradaCOD_DEPARTAMENTO.Value := QOrdemCompraCOD_DEPARTAMENTO.Value;
+        if QOrdemCompraIND_CONDICAO_PAGTO.Value = 'A Vista' then
+          QNotaEntradaIND_CONDICAO_PAGTO.Value := '1'
+        else if QOrdemCompraIND_CONDICAO_PAGTO.Value = 'A Prazo' then
+          QNotaEntradaIND_CONDICAO_PAGTO.Value := '2'
+        else
+          QNotaEntradaIND_CONDICAO_PAGTO.Value := '3';
+        QNotaEntradaNUM_NOTA.Value := 0;
+        QNotaEntradaNUM_OS.Value := QOrdemCompraNUM_OS.Value;
+        QNotaEntradaOBS.Value := QOrdemCompraDESC_OBSERVACAO.Value;
+        QNotaEntradaOBS_COMPLEMENTO.Value := QOrdemCompraDESC_COMPLEMENTO_OBS.Value;
+        QNotaEntradaDESC_OBS_DEVOLUCAO.Value := Trim(QOrdemCompraIND_CONDICAO_PAGTO.Value) + ' - ' + Trim(QOrdemCompraDESC_COMPLEMENTO_OBS1.Value);
+        MeFinalidadeOC.Text := QOrdemCompraCOD_FINALIDADE.Text;
+        QNotaEntrada.Post;
+        QNotaEntrada.Edit;
+        DMOrdemCompra.OPCompra.CallProcedure('TRAZER_ITENS_OC_PARA_NOTA', [DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.AsInteger, QOrdemCompraCOD_ORDEM_COMPRA_CAB.AsInteger]);
+        DmNotaEntrada.SetaPendenciaInterna(2);
+        QNotaEntrada.Post;
+        DMOracle.DBCemapa.Commit;
+        QNotaEntrada.Edit;
+      end;
+      QOrdemCompra.AutoCalcFields := True;
+    end;
+  end;
+  //DMNotaEntrada.ImportaOC;
+end;
+
+procedure TFNotaEntradaCad.BtConsLoteClick(Sender: TObject);
+begin
+  inherited;
+  if FTipoLoteCons = nil then
+    FTipoLoteCons := TFTipoLoteCons.Create(Application);
+  if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'FGLASS') then
+    FTipoLoteCons.MeCodProduto.Text := FloatToStr(DmNotaEntrada.QItemNfCod_Produto.Value)
+  else
+  begin
+    FTipoLoteCons.RgEstoque.ItemIndex := 1;
+    if DMTipoLote.QTipoLote.IsEmpty then
+      FTipoLoteCons.BtProcurar.Click;
+  end;
+  if FTipoLoteCons.ShowModal = mrOk then
+  begin
+    DMNotaEntrada.QItemNF.Edit;
+    DMNotaEntrada.QItemNFCod_Lote_Tipo.Value := DMTipoLote.QTipoLoteConsCod_Lote_Tipo.Value;
+  end;
+end;
+
+procedure TFNotaEntradaCad.Confirmar2Click(Sender: TObject);
+var
+  wAux: string;
+begin
+  inherited;
+  try
+    DMNotaEntrada.QNotaEntrada.Close; //para testar se nao tem outro terminal confirmando a mesma nota
+    DMNotaEntrada.QNotaEntrada.Open;
+    if DMNotaEntrada.QNotaEntradaVal_AVista.Value > DmNotaEntrada.QSomaItemNotaSVal_Total_Nota.Value then
+      raise Exception.Create('Valor a Vista Não Pode Ser Maior que Valor Total da Nota!');
+    if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+      if (not DMUsuario.Privilegiado) then
+        DmUsuario.Checar_Filial_Usuario(Trim(DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text), 'COMPRA');
+    // foi colocado aqui porque usuario deixava a nota digitada e depois fora do periodo consulta e confirmava a nota fiscal
+    if DMParamSistema.QParamSistemaDt_Fechamento_Sistema.Value >= DMNotaEntrada.QNotaEntradaDt_Recebimento.Value then
+      raise Exception.Create('Não é Permitido Lançar Esta Nota - Fechamento Contabil');
+
+    //Não obrigar mais digitar numero de nota quando comprando de pessoa juridica.
+//    if DMNotaEntrada.QNotaEntradaCOD_SERIE.Value <> 'IMP' then
+//      if (DMOracle.BuscaNome('SELECT IND_FISICA_JURIDICA FROM TB_CADASTRO', 'COD_CADASTRO = ' + DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text, True) = 'J') then
+//        if (DMNotaEntrada.QNotaEntradaNum_Nota.Value = 0) or (DMNotaEntrada.QNotaEntradaNum_Nota.Text = '') then
+//          if DMOracle.BuscaNome('SELECT COD_CADASTRO FROM TB_FILIAL', 'COD_FILIAL = ' + DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text, True) <> DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text then
+//            if DMOperacao.QOperacaoIND_VENDAS.Value <> 'D' then  //Quando nota nao for uma devoluçao
+//              raise exception.Create('Para pessoa juridica informar o número do nota fiscal');
+
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := False;
+    DMNotaEntrada.QItemNF.AutoCalcFields := False;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := False;
+    DMNotaEntrada.QItemNF.DisableControls;
+    if DMNotaEntrada.QNotaEntradaInd_Situacao.Value = '2' then
+       raise Exception.Create('Nota Fiscal já confirmada!');
+    if DMNotaEntrada.QNotaEntradaInd_Situacao.Value = '3' then
+       raise Exception.Create('Não é possível confirmar uma Nota Fiscal Cancelada!');
+    If (DMOperacao.QOperacao.Eof) Or
+       (DMNotaEntrada.QNotaEntradaCod_Operacao.Value <> DMOperacao.QOperacaoCod_Operacao.Value) Then
+     Begin
+       DMOperacao.QOperacao.Close;
+       DMOperacao.QOperacao.SetVariable('PK', DMNotaEntrada.QNotaEntradaCod_Operacao.Value);
+       DMOperacao.QOperacao.Open;
+     End;
+    if DMOperacao.QOperacaoInd_Tipo_Operacao.Value <> 'E' then
+       raise Exception.Create('Operação Não é de Entrada!');
+    if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+      if DMOperacao.QOperacaoInd_Vendas.Value = 'D' then
+      begin
+        if (DMNotaEntrada.QNotaEntradaCod_Vendedor.Text = '') or (DMNotaEntrada.QNotaEntradaCod_Vendedor.Value = 0) then
+          raise Exception.Create('Informar Código do Vendedor');
+        if (DMNotaEntrada.QNotaEntradaPerc_Comissao.Text = '') or (DMNotaEntrada.QNotaEntradaPerc_Comissao.Value = 0) then
+          raise Exception.Create('Informar Percentual de Comissão do Vendedor');
+      end;
+    if (DMParamSistema.QParamSistemaIND_CADPRO_OBRIGATORIO_NOTA.Value = 'SIM') then
+      if (DMNotaEntrada.QNotaEntradaCOD_SERIE_MODELO.Value = '55') and
+         (DMOracle.BuscaNome('SELECT IND_FISICA_JURIDICA FROM TB_CADASTRO','COD_CADASTRO = ' +
+          DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text) = 'F') and
+         (DMOracle.BuscaNome('SELECT DESC_INSCRICAO_MUNICIPAL FROM TB_CADASTRO','COD_CADASTRO = ' +
+         DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text) = '') Then
+         raise Exception.Create('Informe a inscrição estadual do produtor.');
+    if DMNotaEntrada.QNotaEntradaIND_CONDICAO_PAGTO.Value = '2' then
+    begin // esta rotina verifica se o fornecedor tem algum adiantamento no c.r. para poder descontar
+      wAux := DMOracle.BuscaNome('SELECT SUM(T1.VAL_TITULO) FROM TB_CONTA_RECEBER_CAB T1,TB_FINALIDADE T2', 'T1.COD_FINALIDADE=T2.COD_FINALIDADE AND ' +
+        'T2.IND_TIPO=' + Chr(39) + 'ADIANTAMENTOS' + Chr(39) + ' AND T1.IND_SITUACAO<>' + Chr(39) + 'BAIXA TOTAL' + Chr(39) +
+        ' AND COD_CADASTRO = ' + DMNotaEntrada.QNotaEntradaCod_Cadastro.Text);
+      if wAux <> '' then
+        ShowMessage('Fornecedor Possui Adiantamentos no Contas Receber R$ ' + wAux);
+    end;
+
+    {if(DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'RAELETRO') then //A pedido Marlise. Vanessa - 30/10/2014
+    begin
+      if DmOperacao.QOperacaoIND_TIPO_PAGAMENTO.Value <> 'T' then
+      begin
+        if (DBRadioGroup2.ItemIndex = 0) and (DmOperacao.QOperacaoIND_TIPO_PAGAMENTO.Value <> 'V') then
+          raise Exception.Create('Condição de Pagamento Diferente da Condição Permitida No Cadastro de Operação');
+        if (DBRadioGroup2.ItemIndex = 1) and (DmOperacao.QOperacaoIND_TIPO_PAGAMENTO.Value <> 'P') then
+          raise Exception.Create('Condição de Pagamento Diferente da Condição Permitida No Cadastro de Operação');
+        if (DBRadioGroup2.ItemIndex = 2) and (DmOperacao.QOperacaoIND_TIPO_PAGAMENTO.Value <> 'O') then
+          raise Exception.Create('Condição de Pagamento Diferente da Condição Permitida No Cadastro de Operação');
+      end;
+    end; }
+
+    if DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO' then
+      if (DMNotaEntrada.QNotaEntradaIND_CONDICAO_PAGTO.Value = '1') and
+        (DMOperacao.QOperacaoCod_Historico_Caixa.Value = 999999) then //contabiliza pelas contas do historico de caixa
+      begin
+        if FHistoricoCons = nil then
+          FHistoricoCons := TFHistoricoCons.Create(Application);
+        if FHistoricoCons.ShowModal <> MrOk then
+          raise Exception.Create('Selecionar Historico de Caixa');
+      end;
+    DMNotaEntrada.pOperacaoInterna := 3; // Confirmando a Nota
+
+    //GeraFCCIA(Sender); SOLICITADO POR DANIELE EM 05/12/2019  - CLEBER
+
+    if FNotaEntrada_Confirma = nil then
+      FNotaEntrada_Confirma := TFNotaEntrada_Confirma.Create(Application);
+    FNotaEntrada_Confirma.LblObs.Caption := DMNotaEntrada.QNotaEntradaDesc_Obs_Devolucao.Value;
+    if DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text <> '' then
+      FNotaEntrada_Confirma.lblDeposito.Caption :=
+        DMOracle.BuscaNome('SELECT DESC_COMPLEMENTO_SINTEGRA FROM TB_CADASTRO', 'COD_CADASTRO = ' +
+        DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Text);
+
+    FNotaEntrada_Confirma.MEFinalidade.Text := MeFinalidadeOC.Text; // finalidade importada da ordem de compra
+    FNotaEntrada_Confirma.ShowModal;
+    DMNotaEntrada.pOperacaoInterna := 0;
+    SBRefreshClick(Self);
+    DMNotaEntrada.QItemNF.EnableControls;
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := True;
+    DMNotaEntrada.QItemNF.AutoCalcFields := True;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := True;
+  except
+    SBRefreshClick(Self);
+    DMNotaEntrada.QNotaEntrada.AutoCalcFields := True;
+    DMNotaEntrada.QItemNF.AutoCalcFields := True;
+    DMNotaEntrada.QSomaItemNota.AutoCalcFields := True;
+    DMNotaEntrada.QItemNF.EnableControls;
+    raise;
+  end;
+  FNotaEntrada_Confirma.Free;
+  FNotaEntrada_Confirma := nil;
+  //Cadastra movimento de custo veículo - PMC 01/04/2003
+  if DMNotaEntrada.QNotaEntradaIND_SITUACAO.Value = '2' then //nota foi confirmada
+  begin
+    if (DMParamSistema.QParamSistemaIND_CONTROLE_VEICULO.Value = 'S') then
+    begin
+      if FCustoVeiculo_NE = nil then
+         FCustoVeiculo_NE := TFCustoVeiculo_NE.Create(Application);
+      DMNotaEntrada.QItemNF.First;
+      if FCustoVeiculo_NE.Item then
+         FCustoVeiculo_NE.ShowModal;
+    end;
+    If ((DMParamSistema.QParamSistemaCod_Empresa.Value = 'SRTERRA') or
+        (DMParamSistema.QParamSistemaCod_Empresa.Value = 'COBRA')   or
+        (DMParamSistema.QParamSistemaCod_Empresa.Value =  'JMS' )   or
+        (DMParamSistema.QParamSistemaCod_Empresa.Value =  'BEDIN')  or
+        (DMParamSistema.QParamSistemaCod_Empresa.Value =  'ALIANCA') ) And
+        (DMNotaEntrada.QNotaEntradaCOD_OBRA.Text = '') Then
+     Begin
+      DMNotaEntrada.QItemNF.First;
+       if FNotaEntradaRateioObra = nil then
+          FNotaEntradaRateioObra := TFNotaEntradaRateioObra.Create(Application);
+       FNotaEntradaRateioObra.ShowModal;
+     End;
+    if DMOracle.DBCemapa.InTransaction then
+      DMOracle.DBCemapa.Commit;
+  end;
+  //fim cadastro movimento custo veículo
+
+  ImprimeFCCIA(Sender);
+end;
+
+procedure TFNotaEntradaCad.BtBaixaOCClick(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    if QNotaEntradaInd_Situacao.Value > '1' then //Digitada
+      raise Exception.Create('Nota já Confirmada ou Cancelada!');
+    try
+      QAtuBaixaOC.Insert;
+      QAtuBaixaOCCod_Nota_Item.Value := QItemNFCod_Nota_Item.Value;
+      QAtuBaixaOCCod_Ordem_Compra_Item.Value := StrToInt(Trim(MENumOCBaixar.Text));
+      QAtuBaixaOCQt_Baixa.Value := StrToFloat(MEQtBaixarOC.Text);
+      QAtuBaixaOC.Post;
+      QBaixasOC.Close;
+      QBaixasOC.Open;
+    except
+      if QAtuBaixaOC.State = dsInsert then
+        QAtuBaixaOC.Cancel;
+      raise;
+    end;
+    MENumOCBaixar.Text := '';
+    MEQtBaixarOC.Text := '';
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtCancelaBaixaOCClick(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    if QNotaEntradaInd_Situacao.Value > '1' then //Digitada
+      raise Exception.Create('Nota já Confirmada ou Cancelada!');
+
+    QAtuBaixaOC.Close;
+    QAtuBaixaOC.SetVariable('COD_NOTA_ITEM', QItemNFCod_Nota_Item.Value);
+    QAtuBaixaOC.Open;
+    QAtuBaixaOC.First;
+    while not QAtuBaixaOC.Eof do
+    begin
+      if QAtuBaixaOCCod_Ordem_Compra_Item.Value = QBaixasOCCod_Ordem_Compra_Item.Value then
+        QAtuBaixaOC.Delete;
+      QAtuBaixaOC.Next;
+    end;
+    QBaixasOC.Close;
+    QBaixasOC.Open;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsOCAbertoClick(Sender: TObject);
+begin
+  inherited;
+  if FOrdemCompra_ConsAberto = nil then
+    FOrdemCompra_ConsAberto := TFOrdemCompra_ConsAberto.Create(Application);
+  with FOrdemCompra_ConsAberto do
+  begin
+    METexto.Text := DMNotaEntrada.QNotaEntradaCod_Cadastro.Text;
+    MEFilial.Text := DMNotaEntrada.QNotaEntradaCod_Filial.Text;
+    MEProduto.Text := DMNotaEntrada.QItemNFCod_Produto.Text;
+    METexto.Enabled := False;
+    MEFilial.Enabled := False;
+    MEProduto.Enabled := False;
+    BtConsCadastro.Enabled := False;
+    BtConsFilial.Enabled := False;
+    BtConsProduto.Enabled := False;
+    btCulturaCons.Enabled := False;
+  end;
+  if FOrdemCompra_ConsAberto.ShowModal = mrOk then
+    MENumOCBaixar.Text := DMOrdemCompra.QOCAbertoCod_Ordem_Compra_Item.Text;
+  FOrdemCompra_ConsAberto := nil;
+end;
+
+procedure TFNotaEntradaCad.CancelarNota1Click(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QNotaEntradaInd_Situacao.Value = '2' then
+    raise Exception.Create('Não é possivel cancelar uma Nota confirmada!');
+  if DMNotaEntrada.QNotaEntradaInd_Situacao.Value = '3' then
+    raise Exception.Create('Esta Nota Fiscal já está cancelada!');
+  if DMOracle.BuscaNome('SELECT COD_RPA FROM TB_RPA', 'COD_NOTA_CAB = ' + FloatToStr(DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Value), True) <> '' then
+    raise Exception.Create('Está Nota Possui um RPA - Favor Verificar!');
+  if DMNotaEntrada.QNotaEntradaNUM_NOTA.Value = 0 then
+    raise Exception.Create('Não é possível cancelar uma nota que não foi confirmada.' +
+      #13 + #10 + 'Para se desfazer dessa nota basta excluir.');
+  if FNotaEntrada_Cancela = nil then
+    FNotaEntrada_Cancela := TFNotaEntrada_Cancela.Create(Application);
+  FNotaEntrada_Cancela.ShowModal;
+  if (DMNotaEntrada.QNotaEntradaIND_SITUACAO.Value = '3') and
+    (DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value <> '') then
+    with DMFilial do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', DMNotaEntrada.QNotaEntradaCOD_FILIAL.Value);
+      QFilial.Open;
+    end;
+end;
+
+procedure TFNotaEntradaCad.VoltaCancelamento1Click(Sender: TObject);
+begin
+  inherited;
+  if (not DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.isNull) then
+    with DMFilial do
+    begin
+      QFilial.Close;
+      QFilial.SetVariable('PK', DMNotaEntrada.QNotaEntradaCOD_FILIAL.Value);
+      QFilial.Open;
+
+      if (QFilialIND_SISTEMA_NFE.Value = 2) then
+        with DMNfe do
+        begin
+          SetaNfe(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value);
+          if StrToInt('0' + QNfeSIT_CANC.Value) in SIT_NFE_CANCELA then
+          begin
+            MessageDlg('Nota já está cancelada na SEFAZ, não é possível voltar.', mtError, [mbOK], 0);
+            Exit;
+          end;
+        end;
+    end;
+  DMNotaEntrada.VoltaCancelamento(DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Value);
+end;
+
+procedure TFNotaEntradaCad.VoltaConfirmaClick(Sender: TObject);
+var
+  wAux: string;
+begin
+  inherited;
+
+  DMNotaEntrada.QItemNF.DisableControls;
+
+  if not DMUsuario.ContabilPrivilegiado then
+    if DMParamSistema.QParamSistemaDt_Fechamento_Sistema.Text <> '' then
+      if DMParamSistema.QParamSistemaDt_Fechamento_Sistema.Value >= DMNotaEntrada.QNotaEntradaDt_Recebimento.Value then
+        raise Exception.Create('Não é Permitido Voltar Confirmação - Fechamento Contabil');
+  wAux := DMOracle.BuscaNome('SELECT COD_PRODUCAO_AGRICOLA FROM TB_PRODUCAO_AGRICOLA',
+    'COD_NOTA_CAB_ENTRADA = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text);
+  if (wAux <> '') then
+    raise Exception.Create('Essa nota foi gerada pelo Sistema PjIndustria.' + chr(13) + chr(10) +
+      'Para voltar a confirmação dela você deve voltar a confirmação da Produção Agrícola de código ' + wAux);
+  wAux := DMOracle.FastSelect('COD_SERVICO_TERCEIRO', 'TB_SERVICO_TERCEIRO',
+    'COD_NOTA_CAB = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text);
+  if wAux <> '' then
+    raise Exception.Create('Não é permitido voltar uma nota que esteja sendo usada como' + #13 + #10 +
+      'serviço de terceiro em uma OS.');
+
+  // Trava a volta de confirmação para notas emitidas por transferência entre filiais
+  // que geram a nota de entrada confirmada
+  if (StrToInt(DMOracle.FastSelect('COUNT(*)', 'TB_NOTA_CAB', 'COD_NOTA_CAB_TRANS_ENT = '
+    + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text)) > 0)
+    and (Pos(DMParamSistema.QParamSistemaCOD_EMPRESA.Value, EMPRESA_GERA_TRANSF_CONFIRMADA) > 0) then
+    raise Exception.Create('Esta nota faz parte de uma operação de transferência entre filiais.'
+      + chr(13) + chr(10)
+      + 'Por favor, volte a operação pela tela de nota de transferência entre filiais.');
+
+  if (DMNotaEntrada.QNotaEntradaCod_Contrato_Mov.Value <> 0) or not (DMNotaEntrada.QNotaEntradaCod_Contrato_Mov.IsNull) or
+    (DMNotaEntrada.QNotaEntradaCod_Contrato_gp_Mov.Value <> 0) or not (DMNotaEntrada.QNotaEntradaCod_Contrato_gp_Mov.IsNull) then
+    raise Exception.Create('Não é possível voltar a confirmação de um registro gerado pelo contrato')
+  else
+  begin
+
+    // Exclui as parcelas do FCCIA
+    with DMNotaEntrada do
+    begin
+      QFCCIA.DisableControls;
+      QFCCIA.First;
+      QFCCIAParcelaCredito.DisableControls;
+      QFCCIAParcelaCredito.First;
+      while not QFCCIA.Eof do
+      begin
+        QFCCIAParcelaCredito.Close;
+        QFCCIAParcelaCredito.Open;
+        while not QFCCIAParcelaCredito.Eof do
+          QFCCIAParcelaCredito.Delete;
+        QFCCIA.Next;
+      end;
+      QFCCIA.EnableControls;
+      QFCCIAParcelaCredito.EnableControls;
+    end;
+    
+    DMOracle.Audit(TOracleDataset1(DSPrimario.Dataset), 'Volta Confirmação');
+    DMNotaEntrada.VoltaConfirmacao(DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Value, 'S', '1');
+
+    // Emitir Recibo - De Devolução - Djeison A. Selzlein - 21/08/2013
+    if (DMOperacao.QOperacaoIND_VENDAS.Value = 'D')               and
+       (DMOperacao.QOperacaoIND_EMITE_RECIBO_ENTRADA.Value = 'S') then
+    begin
+      if MessageDlg('Deseja emitir recibo de cancelamento de Devolução?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        if FNotaEntrada_Confirma = nil then
+          FNotaEntrada_Confirma := TFNotaEntrada_Confirma.Create(nil);
+        FNotaEntrada_Confirma.EmiteReciboVoltaEntrada40Col;
+      end;
+    end;
+  end;
+  //Exclui movimento de custo de veículo - PMC 01/04/2003
+  if DMNotaEntrada.QNotaEntradaIND_SITUACAO.Value = '1' then //voltou confirmação
+  begin
+    if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'AB' then
+    begin
+      DMNotaEntrada.QItemNF.First;
+      if not DMOracle.DBCemapa.InTransaction then
+        DMOracle.DBCemapa.StartTransaction;
+      try
+        while not DMNotaEntrada.QItemNF.Eof do
+        begin
+          if Trim(DMNotaEntrada.QItemNFCOD_PRODUTO.Text) <> '' then
+          begin
+            if Trim(DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + DMNotaEntrada.QItemNFCOD_PRODUTO.Text, True)) = 'VEICULO' then
+              DMCustoVeiculoMov.ExcluiCustoVei('NOTA SAIDA', DMNotaEntrada.QItemNFCOD_NOTA_ITEM.Value);
+          end;
+          DMNotaEntrada.QItemNF.Next;
+        end;
+        DMOracle.DBCemapa.Commit;
+      except
+        DMOracle.DBCemapa.Rollback;
+        raise Exception.Create('Não foi possível excluir Mov. Custo Veículo');
+      end;
+    end;
+  end;
+  //fim exclusão movimento de custo de veículo
+  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'RETIFOZ' Then
+  Begin
+    DMOracle.ExecutaSql('DELETE FROM TB_SUBST_ESPECIAL WHERE COD_NOTA_CAB ='+ DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text);
+    DMOracle.DBCemapa.Commit;
+  end;
+  DMNotaEntrada.QItemNF.EnableControls;
+
+end;
+
+procedure TFNotaEntradaCad.DBE_AuxMenuChange(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    MMCadSimples.Items[2].Items[0].Enabled := QNotaEntradaInd_Situacao.Value = '1';
+    MMCadSimples.Items[2].Items[1].Enabled := QNotaEntradaInd_Situacao.Value = '1';
+    MMCadSimples.Items[2].Items[2].Enabled := QNotaEntradaInd_Situacao.Value = '2';
+    MMCadSimples.Items[2].Items[3].Enabled := QNotaEntradaInd_Situacao.Value = '3';
+    MMCadSimples.Items[2].Items[23].Enabled := QNotaEntradaInd_Situacao.Value = '1';
+    MMCadSimples.Items[2].Items[24].Enabled := QNotaEntradaInd_Situacao.Value = '4';
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsProdutoClick(Sender: TObject);
+begin
+  inherited;
+  if FProdutoCons = nil then
+    FProdutoCons := TFProdutoCons.Create(Application);
+  if FProdutoCons.ShowModal = mrOk then
+  begin
+    DMNotaEntrada.QItemNF.Edit;
+    DMNotaEntrada.QItemNFCod_Produto.Value := DMProduto.QProdutoConsCod_Produto.Value;
+    DBEdit48Exit(Sender);
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsTributacaoFreteClick(Sender: TObject);
+begin
+  inherited;
+  if FTributacaoCons = nil then
+    FTributacaoCons := TFTributacaoCons.Create(Application);
+  if FTributacaoCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Tributacao_Frete.Value := DMTributacao.QTributacaoConsCod_Tributacao.Value;
+end;
+
+procedure TFNotaEntradaCad.Emisso1Click(Sender: TObject);
+var
+  wLote: Integer;
+  Modelo,wResult: string;
+begin
+  inherited;
+  Modelo := DMNotaEntrada.QNotaEntradaCOD_SERIE_MODELO.Value;;
+  if Modelo <> '55' then
+    FNotaImpressao.EmiteNF(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value)
+  else
+  begin
+    wResult := DMOracle.BuscaNome('SELECT ID_LOTE FROM TB_NF_ELETRONICA','COD_NOTA_CAB = '+DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text);
+    if wResult = '' then
+      wLote := 0
+    else
+      wLote := StrToInt(wResult);
+    if (not DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+      with DMNfe do
+      begin
+        SetaNfe(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value, True);
+        if QNfeind_aprovado.Value then
+        begin
+          if FNfEletronicaLoteCons = nil then
+            FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+          FNfEletronicaLoteCons.CarregaNota(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+          FNfEletronicaLoteCons.Foco := nfDanfe;
+          FNfEletronicaLoteCons.ShowModal;
+
+          Exit;
+        end;
+
+        EmissaoNfe(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value,wLote,true);
+        DMOracle.DBCemapa.Commit;
+
+      end
+    else
+      FNotaImpressao.EmiteNF(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value,'',wLote,true);
+  end;
+end;
+
+procedure TFNotaEntradaCad.DBEDescontoExit(Sender: TObject);
+begin
+  inherited;
+  //  With DMNotaEntrada do
+  //    QItemNFPerc_desconto.Value := QItemNFVal_Desconto.Value/QItemNFVal_Total.Value*100;
+end;
+
+procedure TFNotaEntradaCad.RelacaoClick(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[0].TabVisible := True; 
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Venda do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.FMFilial1.MeFilial.Text), 'COMPRA');
+      QRelacao.Close;
+      QRelacaoItens.Close;
+      if Trim(FNotaEntradaParam.FMFilial1.MeFilial.Text) = '' then
+        QRelacao.SetVariable('FILIAL', Null)
+      else
+        QRelacao.SetVariable('FILIAL', FNotaEntradaParam.FMFilial1.MeFilial.Text);
+
+      QRelacao.SetVariable('ENTRADA_SAIDA', 'E');
+
+      if Trim(FNotaEntradaParam.ME0DataI.Text) <> ''  then
+         QRelacao.SetVariable('DATA_I', StrToDate(FNotaEntradaParam.ME0DataI.Text))
+      Else
+         QRelacao.SetVariable('DATA_I', Null);
+
+      if Trim(FNotaEntradaParam.ME0DataF.Text) <> ''  then
+         QRelacao.SetVariable('DATA_F', StrToDate(FNotaEntradaParam.ME0DataF.Text))
+      Else
+         QRelacao.SetVariable('DATA_F', Null);
+
+      if Trim(FNotaEntradaParam.Me0DtEmissao_I.Text) <> '' Then
+         QRelacao.SetVariable('DT_EMISSAO_I', StrToDate(FNotaEntradaParam.Me0DtEmissao_I.Text))
+      Else
+         QRelacao.SetVariable('DT_EMISSAO_I', Null);
+
+      if Trim(FNotaEntradaParam.Me0DtEmissao_F.Text) <> '' Then
+         QRelacao.SetVariable('DT_EMISSAO_F', StrToDateTime(FNotaEntradaParam.Me0DtEmissao_F.Text))
+      Else
+         QRelacao.SetVariable('DT_EMISSAO_F', Null);
+
+      case FNotaEntradaParam.RG0TipoNota.ItemIndex of
+        0: QRelacao.SetVariable('SITUACAO', Null);
+        1: QRelacao.SetVariable('SITUACAO', '1');
+        2: QRelacao.SetVariable('SITUACAO', '2');
+        3: QRelacao.SetVariable('SITUACAO', '3');
+      end;
+
+      case FNotaEntradaParam.Rg1TipoPagto.ItemIndex of //Mudei a Variavel TIPO_PAGTO para variável de Substituição para utlizar no vendas - Junior 16/05/2019
+        0: QRelacao.SetVariable('TIPO_PAGTO', 'TB_NOTA_CAB.IND_CONDICAO_PAGTO = 1');//vista
+        1: QRelacao.SetVariable('TIPO_PAGTO', 'TB_NOTA_CAB.IND_CONDICAO_PAGTO = 2');//prazo
+        2: QRelacao.SetVariable('TIPO_PAGTO', 'TB_NOTA_CAB.IND_CONDICAO_PAGTO = 3');//outros
+        3: QRelacao.SetVariable('TIPO_PAGTO', 'TB_NOTA_CAB.IND_CONDICAO_PAGTO = 4');//cartao
+        4: QRelacao.SetVariable('TIPO_PAGTO', '1=1');//geral
+      end;
+      //Permitir várias Operaçãoes. Solicitado:Ruben(kreuz). Junior - 08/05/2015.
+      if Trim(FNotaEntradaParam.ME1Operacao.Text) <> '' then
+      begin
+        QRelacao.SetVariable('OPERACAO', 'TB_NOTA_CAB.COD_OPERACAO IN ('+Bib.colocaaspanastring(Trim(FNotaEntradaParam.ME1Operacao.Text))+')');
+      end
+      else
+        QRelacao.SetVariable('OPERACAO', '1=1');
+
+      if Trim(FNotaEntradaParam.FMCadastro1.MeCadastro.Text) = '' then
+        QRelacao.SetVariable('CADASTRO', Null)
+      else
+        QRelacao.SetVariable('CADASTRO', FNotaEntradaParam.FMCadastro1.MeCadastro.Text);
+      if Trim(FNotaEntradaParam.FMSerie1.MeSerie.Text) = '' then
+        QRelacao.SetVariable('COD_SERIE', Null)
+      else
+        QRelacao.SetVariable('COD_SERIE', Trim(FNotaEntradaParam.FMSerie1.MeSerie.Text));
+      if Trim(FNotaEntradaParam.ME1Departamento.Text) = '' then
+        QRelacao.SetVariable('DEPARTAMENTO', '1=1')
+      else
+        QRelacao.SetVariable('DEPARTAMENTO', 'TB_NOTA_CAB.COD_DEPARTAMENTO IN ('+Bib.colocaaspanastring(Trim(FNotaEntradaParam.ME1Departamento.Text))+')');
+      if Trim(FNotaEntradaParam.FMMotivo1.MeMotivo.Text) = '' then
+        QRelacao.SetVariable('MOTIVO', Null)
+      else
+        QRelacao.SetVariable('MOTIVO', FNotaEntradaParam.FMMotivo1.MeMotivo.Text);
+      if Trim(FNotaEntradaParam.FMCidade1.MeCidade.Text) = '' then
+        QRelacao.SetVariable('COD_CIDADE', Null)
+      else
+        QRelacao.SetVariable('COD_CIDADE', Trim(FNotaEntradaParam.FMCidade1.MeCidade.Text));
+
+      if Trim(FNotaEntradaParam.MeCodVendedor.Text) = '' then
+        QRelacao.SetVariable('VENDEDOR', '1=1')
+      else
+        QRelacao.SetVariable('VENDEDOR', 'TB_NOTA_CAB.COD_VENDEDOR IN (' + Trim(FNotaEntradaParam.MeCodVendedor.Text) + ')');
+
+      if Trim(FNotaEntradaParam.FmTributacao1.MeTributacao.Text) = '' then
+       Begin
+        QRelacao.SetVariable('COD_TRIBUTACAO', Null);
+        QRelacaoItens.SetVariable('COD_TRIBUTACAO', Null);
+       End
+      else
+       Begin
+        QRelacao.SetVariable('COD_TRIBUTACAO', Trim(FNotaEntradaParam.FmTributacao1.MeTributacao.Text));
+        QRelacaoItens.SetVariable('COD_TRIBUTACAO', Trim(FNotaEntradaParam.FmTributacao1.MeTributacao.Text));
+       End;
+      if Trim(FNotaEntradaParam.FmLote1.MeLote.Text) = '' then
+       Begin
+        QRelacao.SetVariable('COD_LOTE_TIPO', Null);
+        QRelacaoItens.SetVariable('COD_LOTE_TIPO', Null);
+       End
+      else
+       Begin
+        QRelacao.SetVariable('COD_LOTE_TIPO', Trim(FNotaEntradaParam.FmLote1.MeLote.Text));
+        QRelacaoItens.SetVariable('COD_LOTE_TIPO', Trim(FNotaEntradaParam.FmLote1.MeLote.Text));
+       End;
+      if Trim(FNotaEntradaParam.FMEstado1.MeEstado.Text) = '' then
+        QRelacao.SetVariable('ESTADO', Null)
+      else
+        QRelacao.SetVariable('ESTADO', FNotaEntradaParam.FMEstado1.MeEstado.Text);
+      if Trim(FNotaEntradaParam.ME1Cultura.Text) = '' then
+        QRelacao.SetVariable('CULTURA', Null)
+      else
+        QRelacao.SetVariable('CULTURA', FNotaEntradaParam.ME1Cultura.Text);
+      if Trim(FNotaEntradaParam.FMProduto1.MeProduto.Text) = '' then
+       Begin
+        QRelacao.SetVariable('COD_PRODUTO', Null);
+        QRelacaoItens.SetVariable('COD_PRODUTO', Null);
+       End
+      else
+       Begin
+        QRelacao.SetVariable('COD_PRODUTO', FNotaEntradaParam.FMProduto1.MeProduto.Text);
+        QRelacaoItens.SetVariable('COD_PRODUTO', FNotaEntradaParam.FMProduto1.MeProduto.Text);
+       End; 
+
+      if Trim(FNotaEntradaParam.ME0Classe.Text) = '' then
+        QRelacao.SetVariable('CLASSE', Null)
+      else
+        QRelacao.SetVariable('CLASSE', FNotaEntradaParam.ME0Classe.Text);
+
+      if (Trim(FNotaEntradaParam.ME0Subclasse.Text) = '') or (Trim(FNotaEntradaParam.ME0Subclasse.Text) = '0') then
+        QRelacao.SetVariable('SUBCLASSE', Null)
+      else
+        QRelacao.SetVariable('SUBCLASSE', FNotaEntradaParam.ME0Subclasse.Text);
+
+      if Trim(FNotaEntradaParam.FmObra1.MeObra.Text) = '' then
+        QRelacao.SetVariable('COD_OBRA', Null)
+      else
+        QRelacao.SetVariable('COD_OBRA', FNotaEntradaParam.FmObra1.MeObra.Text);
+
+      if Trim(FNotaEntradaParam.FmRamo1.MeRamo.Text) = '' then
+      	QRelacao.SetVariable('COD_RAMO', Null)
+      else
+        QRelacao.SetVariable('COD_RAMO',Trim(FNotaEntradaParam.FmRamo1.MeRamo.Text));
+
+      case FNotaEntradaParam.RG0TipoPessoa.ItemIndex of
+        0: QRelacao.SetVariable('IND_FISICA_JURIDICA', 'F');
+        1: QRelacao.SetVariable('IND_FISICA_JURIDICA', 'J');
+        2: QRelacao.SetVariable('IND_FISICA_JURIDICA', null);
+      end;
+
+      QRelacao.SQL[QRelacao.SQL.Count - 1] := ''; //Ja tem 1 order by no relatorio
+      case FNotaEntradaParam.CB0Ordem.ItemIndex of
+        0: if FNotaEntradaParam.CB0Filial.Checked then
+             QRelacao.SQL.Add('ORDER BY COD_FILIAL, NOME')
+           else
+             QRelacao.SQL.Add('ORDER BY COD_FILIAL, NOME');
+        1: if FNotaEntradaParam.CB0Filial.Checked then
+             QRelacao.SQL.Add('ORDER BY COD_FILIAL, DT_RECEBIMENTO, NUM_NOTA')
+           else
+             QRelacao.SQL.Add('ORDER BY DT_RECEBIMENTO, NUM_NOTA');
+        2: if FNotaEntradaParam.CB0Filial.Checked then
+              QRelacao.SQL.Add('ORDER BY COD_FILIAL, NUM_NOTA')
+            else
+              QRelacao.SQL.Add('ORDER BY NUM_NOTA');
+        3: if FNotaEntradaParam.CB0Filial.Checked then
+              QRelacao.SQL.Add('ORDER BY COD_FILIAL, DT_EMISSAO, NUM_NOTA')
+            else
+              QRelacao.SQL.Add('ORDER BY DT_EMISSAO, NUM_NOTA');
+      else
+        raise Exception.Create('Nenhuma Ordem Selecionada!');
+      end; // Case
+      if FNotaEntradaParam.Cb0Frete.Checked then
+        QRelacao.SetVariable('MOSTRA_FRETE', 'S')
+      else
+        QRelacao.SetVariable('MOSTRA_FRETE', 'N');
+
+      if Trim(FNotaEntradaParam.Me10Nota.Text) <> '' then
+      begin
+        QRelacao.SetVariable('NUM_NOTA', 'TB_NOTA_CAB.NUM_NOTA IN ('+Bib.colocaaspanastring(Trim(FNotaEntradaParam.Me10Nota.Text))+')');
+      end
+      else
+        QRelacao.SetVariable('NUM_NOTA', '1=1');
+
+      if Trim(FNotaEntradaParam.Me1Observacao.Text) <> '' then  //Adicionado por ANDRE campo de consulta por observacao 24/10/2024
+        QRelacao.SetVariable('DESC_OBSERVACAO', '%'+Trim(FNotaEntradaParam.ME1Observacao.Text)+'%')
+      else
+        QRelacao.SetVariable('DESC_OBSERVACAO', Null);
+
+      QRelacao.Open;
+      QRelacaoItens.Open;
+      if FRNotasES_Relacao = nil then
+        FRNotasES_Relacao := TFRNotasES_Relacao.Create(Application);
+      FRNotasES_Relacao.QRLTitulo.Caption := 'Relação de Notas de Entrada';
+      FRNotasES_Relacao.QRLFilial.Caption := 'Filial: ' + FNotaEntradaParam.FMFilial1.EdFilial.Text;
+      FRNotasES_Relacao.QRLParceria.Caption := 'Cidade: ' + FNotaEntradaParam.FMCidade1.MeCidade.Text + '  ' + FNotaEntradaParam.FMCidade1.EdCidade.Text;
+      FRNotasES_Relacao.QRLOperacao.Caption := 'Operação: ' + Trim(FNotaEntradaParam.ME1Operacao.Text);
+
+      if Trim(FNotaEntradaParam.FmProduto1.MeProduto.Text) <> ''  then
+        FRNotasES_Relacao.QRLOperacao.Caption := FRNotasES_Relacao.QRLOperacao.Caption
+                                                  + '                              Produto: ' + Trim(FNotaEntradaParam.FmProduto1.MeProduto.Text)
+                                                  + ' - ' + Trim(copy(FNotaEntradaParam.FmProduto1.EdProduto.Text,1,25));
+
+      FRNotasES_Relacao.ChildBand1.Enabled := FNotaEntradaParam.CBCpfCidade.Checked;
+      FRNotasES_Relacao.QRSubDetail1.Enabled := FNotaEntradaParam.Cb0ItensNota.Checked;
+
+      if FNotaEntradaParam.CBMostraCustoLucro0.Checked = true then //Mostrar valor custo e lucro ou não. Vanessa 20-03-2015
+      begin
+        FRNotasES_Relacao.QRLabel12.Enabled := True;
+        FRNotasES_Relacao.QRDBText10.Enabled := True;
+        FRNotasES_Relacao.QRlCusto.Enabled := True;
+        FRNotasES_Relacao.QRLabel16.Enabled := True;
+        FRNotasES_Relacao.QRDBText13.Enabled := True;
+      end;
+      if FNotaEntradaParam.CBMostraCustoLucro0.Checked = false then
+      begin
+        FRNotasES_Relacao.QRLabel12.Enabled := false;
+        FRNotasES_Relacao.QRDBText10.Enabled := false;
+        FRNotasES_Relacao.QRlCusto.Enabled := false;
+        FRNotasES_Relacao.QRLabel16.Enabled := false;
+        FRNotasES_Relacao.QRDBText13.Enabled := false;
+      end;
+      If DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARZ' Then
+       Begin
+         FRNotasES_Relacao.QRlCusto.Enabled := True;  // cesar coloquei para resolver uma pendencia para Alice
+         FRNotasES_Relacao.QRLCusto.Left := 938;
+         FRNotasES_Relacao.QRLabel16.Enabled := True;
+         FRNotasES_Relacao.QRLabel16.Caption := 'Total Prod.';
+       End;
+
+      if FNotaEntradaParam.CB0Filial.Checked then
+      begin
+        FRNotasES_Relacao.QRGFilial.Enabled := True;
+        FRNotasES_Relacao.QRTotalFilial.Enabled := True;
+      end
+      else
+      begin
+        FRNotasES_Relacao.QRGFilial.Enabled := False;
+        FRNotasES_Relacao.QRTotalFilial.Enabled := False;
+      end;
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasES_Relacao.QRPrimario.Preview
+      else
+        FRNotasES_Relacao.QRPrimario.Print;
+
+      QRelacao.Close;
+      QRelacaoItens.Close;
+
+      //    QRelacao.SQL[QRelacao.SQL.Count-1] := '';
+    end;
+end;
+
+procedure TFNotaEntradaCad.Conferncia1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[1].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Venda do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.FMFilial2.MeFilial.Text), 'COMPRA');
+      QConferencia.Close;
+      QConferencia.SetVariable('ENTRADA_SAIDA', 'E');
+      QConferencia.SetVariable('DATA_I', StrToDate(FNotaEntradaParam.ME1DataI.Text));
+      QConferencia.SetVariable('DATA_F', StrToDateTime(FNotaEntradaParam.ME1DataF.Text));
+
+      if Trim(FNotaEntradaParam.FMFilial2.MeFilial.Text) = '' then
+        QConferencia.SetVariable('FILIAL', Null)
+      else
+        QConferencia.SetVariable('FILIAL', FNotaEntradaParam.FMFilial2.MeFilial.Text);
+
+      if Trim(FNotaEntradaParam.FMCadastro2.MeCadastro.Text) = '' then
+        QConferencia.SetVariable('CADASTRO', Null)
+      else
+        QConferencia.SetVariable('CADASTRO', FNotaEntradaParam.FMCadastro2.MeCadastro.Text);
+
+      if Trim(FNotaEntradaParam.FmVendedor2.MeVendedor.Text) = '' then
+        QConferencia.SetVariable('COD_VENDEDOR', Null)
+      else
+        QConferencia.SetVariable('COD_VENDEDOR', Trim(FNotaEntradaParam.FmVendedor2.MeVendedor.Text));
+
+      if Trim(FNotaEntradaParam.FMOperacao2.MeOperacao.Text) = '' then
+        QConferencia.SetVariable('OPERACAO', Null)
+      else
+        QConferencia.SetVariable('OPERACAO', FNotaEntradaParam.FMOperacao2.MeOperacao.Text);
+
+      if Trim(FNotaEntradaParam.FmObra2.MeObra.Text) = '' then
+        QConferencia.SetVariable('COD_OBRA', Null)
+      else
+        QConferencia.SetVariable('COD_OBRA', Trim(FNotaEntradaParam.FmObra2.MeObra.Text));
+        
+      if Trim(FNotaEntradaParam.ME2Cultura.Text) = '' then
+        QConferencia.SetVariable('COD_CULTURA', Null)
+      else
+        QConferencia.SetVariable('COD_CULTURA', Trim(FNotaEntradaParam.ME2Cultura.Text));
+
+      if Trim(FNotaEntradaParam.FmMarca2.MeMarca.Text) = '' then
+        QConferencia.SetVariable('COD_MARCA', Null)
+      else
+        QConferencia.SetVariable('COD_MARCA', Trim(FNotaEntradaParam.FmMarca2.MeMarca.Text));
+
+      if Trim(FNotaEntradaParam.FmProduto2.MeProduto.Text) = '' then
+        QConferencia.SetVariable('COD_PRODUTO', Null)
+      else
+        QConferencia.SetVariable('COD_PRODUTO', Trim(FNotaEntradaParam.FmProduto2.MeProduto.Text));
+
+      // -- Código inserido para filtrar notas por finalidade
+      if trim(FNotaEntradaParam.FmFinalidade2.MeFinalidade.Text) = '' then
+      begin
+        QConferencia.SetVariable(':TABELAS', Null);
+        QConferencia.SetVariable(':FINALIDADE', 'AND 1 = 1')
+      end
+      else
+      begin
+        QConferencia.SetVariable(':TABELAS', ',TB_CONTA_PAGAR_CAB CP');
+        QConferencia.SetVariable(':FINALIDADE', 'AND TB_NOTA_CAB.COD_NOTA_CAB '
+          + '= CP.COD_NOTA_CAB AND CP.COD_FINALIDADE = '
+          + trim(FNotaEntradaParam.FmFinalidade2.MeFinalidade.Text));
+      end;
+      // -- Fim do filtro de finalidade
+
+      case FNotaEntradaParam.RG1TipoNota.ItemIndex of
+        0: QConferencia.SetVariable('SITUACAO', Null);
+        1: QConferencia.SetVariable('SITUACAO', '1');
+        2: QConferencia.SetVariable('SITUACAO', '2');
+        3: QConferencia.SetVariable('SITUACAO', '3');
+      end;
+      case FNotaEntradaParam.Cb1Ordem.ItemIndex of
+        0: QConferencia.SQL.Add('');
+        1: QConferencia.SQL.Add('ORDER BY NOME_FORNECEDOR');
+        2: QConferencia.SQL.Add('ORDER BY TB_NOTA_CAB.DT_RECEBIMENTO');
+        3: QConferencia.SQL.Add('ORDER BY TB_NOTA_CAB.NUM_NOTA');
+      //else
+        //raise Exception.Create('Nenhuma Ordem Selecionada!'); // Caso nada selecionado, não ordenar. Raquel Medibens - Vanessa 16/07/2015
+      end; // Case
+
+      QConferencia.Open;
+      QConfItem.Close;
+      QConfItem.Open;
+      QConfContaPagar.Close;
+      if Trim(FNotaEntradaParam.FmFinalidade2.MeFinalidade.Text) <> '' then
+        QConfContaPagar.SetVariable('COD_FINALIDADE',FNotaEntradaParam.FmFinalidade2.MeFinalidade.Text)
+      else
+        QConfContaPagar.SetVariable('COD_FINALIDADE',null);
+      QConfContaPagar.Open;
+      DMNotaEntrada.QImposto.Close;
+      DMNotaEntrada.QImposto.Master := QConferencia;
+      DMNotaEntrada.QImposto.MasterFields := 'COD_NOTA_CAB';
+      DMNotaEntrada.QImposto.Open;
+
+      if FRNotasES_Conferencia = nil then
+        FRNotasES_Conferencia := TFRNotasES_Conferencia.Create(Application);
+      FRNotasES_Conferencia.QRLTitulo.Caption := 'Rel. de Conferência de Notas de Entrada';
+      FRNotasES_Conferencia.pValTotal := 0;
+      FRNotasES_Conferencia.pValIPITotal := 0;
+
+      FRNotasES_Conferencia.QRLObra.Caption := 'Obra: ' + Trim(FNotaEntradaParam.FmObra2.EdObra.Text);
+
+      if FnotaEntradaParam.RG1TipoNota.ItemIndex = 0 then
+        FRNotasES_Conferencia.QRLNota.Caption := 'Tipo de Notas: Todas'
+      else if FnotaEntradaParam.RG1TipoNota.ItemIndex = 1 then
+        FRNotasES_Conferencia.QRLNota.Caption := 'Tipo de Notas: Digitada'
+      else if FnotaEntradaParam.RG1TipoNota.ItemIndex = 2 then
+        FRNotasES_Conferencia.QRLNota.Caption := 'Tipo de Notas: Confirmada'
+      else if FnotaEntradaParam.RG1TipoNota.ItemIndex = 3 then
+        FRNotasES_Conferencia.QRLNota.Caption := 'Tipo de Notas: Cancelada';
+      if FNotaEntradaParam.rg1codigo.itemindex = 0 then
+        FRNotasES_Conferencia.QRDBText6.DataField := 'COD_PRODUTO'
+      else
+        FRNotasES_Conferencia.QRDBText6.DataField := 'FABRICANTE';
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasES_Conferencia.QRPrimario.Preview
+      else
+        FRNotasES_Conferencia.QRPrimario.Print;
+      QConferencia.Close;
+      QConfItem.Close;
+      QConfContaPagar.Close;
+      DMNotaEntrada.QImposto.Close;
+      DMNotaEntrada.QImposto.MasterFields := '';
+      QConferencia.SQL[QConferencia.SQL.Count - 1] := ''; // elimina a última Linha da SQL
+    end;
+
+end;
+
+procedure TFNotaEntradaCad.Futura1Click(Sender: TObject);
+var
+  wNomeRelatorio: string;
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[2].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Venda do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.FMFilial3.MeFilial.Text), 'COMPRA');
+      QRFutura.Close;
+      QRFutura.Sql.Clear;
+      QRFutura.Sql.Add('SELECT Tb_nota_aux.QT_ATENDIDO,Tb_nota_aux.QT_CANCELADO,Tb_nota_aux.QT_DEVOLVIDO,');
+      QRFutura.Sql.Add('Tb_nota_aux.QT_NOTA_ITEM,Tb_nota_aux.IND_TIPO,Tb_produto.DESC_PRODUTO,Tb_produto.IND_TIPO_PRODUTO,');
+      QRFutura.Sql.Add('Tb_produto.NUM_EMBALAGEM,Tb_nota_cab.VAL_FUNRURAL,');
+      QRFutura.Sql.Add('DECODE(TB_NOTA_CAB.COD_ARMAZEM_ALFANDEGADO,NULL,TB_NOTA_CAB.COD_CADASTRO,TB_NOTA_CAB.COD_ARMAZEM_ALFANDEGADO) AS COD_CADASTRO,');
+      QRFutura.Sql.Add('Tb_nota_cab.NUM_NOTA,Tb_nota_cab.COD_SERIE,Tb_lote_Tipo.Cod_Lote_Tipo,');
+      QRFutura.Sql.Add('Tb_nota_item.VAL_TOTAL-Tb_nota_item.VAL_DESCONTO_RATEIO+Tb_nota_item.VAL_DESPESAS AS SVAL_TOTAL,Tb_nota_item.VAL_UNITARIO ');
+      QRFutura.Sql.Add('FROM TB_NOTA_CAB,TB_NOTA_ITEM,TB_NOTA_AUX,TB_PRODUTO,TB_LOTE_TIPO,TB_CLASSE ');
+      QRFutura.Sql.Add(' WHERE TB_LOTE_TIPO.COD_LOTE_TIPO = TB_NOTA_ITEM.COD_LOTE_TIPO AND ');
+      QRFutura.Sql.Add(' Tb_nota_item.COD_NOTA_ITEM = Tb_nota_aux.COD_NOTA_ITEM AND ');
+      QRFutura.Sql.Add(' Tb_nota_item.COD_NOTA_CAB = Tb_nota_cab.COD_NOTA_CAB AND ');
+      QRFutura.Sql.Add(' Tb_nota_item.COD_PRODUTO = Tb_produto.COD_PRODUTO  AND ');
+      QRFutura.Sql.Add(' QT_NOTA_ITEM > (QT_ATENDIDO+QT_CANCELADO+QT_DEVOLVIDO) AND ');
+      QRFutura.Sql.Add(' TB_CLASSE.COD_CLASSE = TB_PRODUTO.COD_CLASSE  AND ');
+      case FNotaEntradaParam.CB2TipoFutura.ItemIndex of
+        0:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'COM_FUT' + Chr(39));
+            wNomeRelatorio := 'Rel. Notas de Compra Futura';
+          end;
+        1:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'VEN_FUT' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Venda Futura';
+          end;
+        2:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'EMP_FOR' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Empréstimo a Fornecedor';
+          end;
+        3:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'EMP_CLI' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Empréstimo a Cliente';
+          end;
+        4:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'CON_FOR' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Consignação a Fornecedor';
+          end;
+        5:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'CON_CLI' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Consignação a Cliente';
+          end;
+        6:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'DEP_EMP' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Deposito na Empresa';
+          end;
+        7:
+          begin
+            QRFutura.Sql.Add('Tb_nota_aux.IND_TIPO = ' + Chr(39) + 'DEP_OUT' + chr(39));
+            wNomeRelatorio := 'Rel. Notas de Deposito Outras Empresas';
+          end;
+      else
+        raise Exception.Create('Nenhum tipo de Futura selecionado!');
+      end;
+      if Trim(FNotaEntradaParam.FMCadastro3.MeCadastro.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_NOTA_CAB.COD_CADASTRO = ' + Trim(FNotaEntradaParam.FMCadastro3.MeCadastro.Text));
+      if Trim(FNotaEntradaParam.FMFilial3.MeFilial.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_NOTA_CAB.COD_FILIAL = ' + Trim(FNotaEntradaParam.FMFilial3.MeFilial.Text));
+      if Trim(FNotaEntradaParam.FMProduto3.MeProduto.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_NOTA_ITEM.COD_PRODUTO = ' + Trim(FNotaEntradaParam.FMProduto3.MeProduto.Text));
+      if Trim(FNotaEntradaParam.FMLote3.MeLote.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_NOTA_ITEM.COD_LOTE_TIPO = ' + Trim(FNotaEntradaParam.FMLote3.MeLote.Text));
+      if Trim(FNotaEntradaParam.ME2DataI.Text) <> '' then
+        QRFutura.Sql.Add(' And Tb_nota_cab.DT_RECEBIMENTO >= ' + Chr(39) + Trim(FNotaEntradaParam.ME2DataI.Text) + chr(39));
+      if Trim(FNotaEntradaParam.ME2DataF.Text) <> '' then
+        QRFutura.Sql.Add(' And Tb_nota_cab.DT_RECEBIMENTO <= ' + Chr(39) + Trim(FNotaEntradaParam.ME2DataF.Text) + chr(39));
+      if Trim(FNotaEntradaParam.FMClasse3.MeClasse.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_CLASSE.NUM_CLASSE = ' + Trim(FNotaEntradaParam.FMClasse3.MeClasse.Text));
+      if Trim(FNotaEntradaParam.ME2SubClasse.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_CLASSE.NUM_SUBCLASSE = ' + Trim(FNotaEntradaParam.ME2SubClasse.Text));
+      if Trim(FNotaEntradaParam.FMFornecedor3.MeCadastro.Text) <> '' then
+        QRFutura.Sql.Add(' And TB_PRODUTO.COD_CADASTRO = ' + Trim(FNotaEntradaParam.FMFornecedor3.MeCadastro.Text));
+      if (Trim(FNotaEntradaParam.FmCadastro_Alfandegado3.MeCadastro.Text) <> '') then
+        QRFutura.SQL.Add(' and (TB_NOTA_CAB.COD_ARMAZEM_ALFANDEGADO = ' + Trim(FNotaEntradaParam.FmCadastro_Alfandegado3.MeCadastro.Text) +
+          ' OR TB_NOTA_CAB.COD_CADASTRO = ' + Trim(FNotaEntradaParam.FmCadastro_Alfandegado3.MeCadastro.Text) + ')');
+      QRFutura.Sql.Add(' ORDER BY DECODE(TB_NOTA_CAB.COD_ARMAZEM_ALFANDEGADO,NULL,TB_NOTA_CAB.COD_CADASTRO,TB_NOTA_CAB.COD_ARMAZEM_ALFANDEGADO),Tb_produto.DESC_PRODUTO');
+      QRFutura.Open;
+
+      if FRNotasES_Futura = nil then
+        FRNotasES_Futura := TFRNotasES_Futura.Create(Application);
+      FRNotasES_Futura.QRLTitulo.Caption := wNomeRelatorio;
+      FRNotasES_Futura.QRLFilial.Caption := FNotaEntradaParam.FMFilial3.EdFilial.Text;
+      FRNotasES_Futura.QRLClasse.Caption := 'Classe:' + FNotaEntradaParam.FMClasse3.EdClasse.Text + ' SubClasse:' + FNotaEntradaParam.Ed2SubClasse.Text;
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasES_Futura.QRPrimario.Preview
+      else
+        FRNotasES_Futura.QRPrimario.Print;
+      QRFutura.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.MovEstoque1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.ME3DataI.Text := DateToStr(Date);
+  FNotaEntradaParam.ME3DataF.Text := DateToStr(Date);
+  FNotaEntradaParam.PGRelatorio.Pages[3].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Venda do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.FMFilial4.MeFilial.Text), 'COMPRA');
+      QRMovEstoque.Close;
+      QRMovEstoque.SetVariable('DATA_I', StrToDate(FNotaEntradaParam.ME3DataI.Text));
+      QRMovEstoque.SetVariable('DATA_F', StrToDateTime(FNotaEntradaParam.ME3DataF.Text + ' 23:59:59'));
+      if Trim(FNotaEntradaParam.FMFilial4.MeFilial.Text) = '' then
+        QRMovEstoque.SetVariable('FILIAL', Null)
+      else
+        QRMovEstoque.SetVariable('FILIAL', FNotaEntradaParam.FMFilial4.MeFilial.Text);
+      if Trim(FNotaEntradaParam.ME3Serie.Text) = 'Todas' then
+        QRMovEstoque.SetVariable('SERIE', Null)
+      else
+        QRMovEstoque.SetVariable('SERIE', FNotaEntradaParam.ME3Serie.Text);
+      if Trim(FNotaEntradaParam.FMCadastro4.MeCadastro.Text) = '' then
+        QRMovEstoque.SetVariable('CADASTRO', Null)
+      else
+        QRMovEstoque.SetVariable('CADASTRO', FNotaEntradaParam.FMCadastro4.MeCadastro.Text);
+      if Trim(FNotaEntradaParam.FmFornecedor4.MeCadastro.Text) = '' then
+        QRMovEstoque.SetVariable('FORNECEDOR', Null)
+      else
+        QRMovEstoque.SetVariable('FORNECEDOR', FNotaEntradaParam.FmFornecedor4.MeCadastro.Text);
+
+      if Trim(FNotaEntradaParam.FmCadastroArmazem4.MeCadastro.Text) = '' then
+        QRMovEstoque.SetVariable('COD_ARMAZEM_ALFANDEGADO', Null)
+      else
+        QRMovEstoque.SetVariable('COD_ARMAZEM_ALFANDEGADO', FNotaEntradaParam.FmCadastroArmazem4.MeCadastro.Text);
+      if Trim(FNotaEntradaParam.FmDepartamento4.MeDepartamento.Text) = '' then
+        QRMovEstoque.SetVariable('COD_DEPARTAMENTO', Null)
+      else
+        QRMovEstoque.SetVariable('COD_DEPARTAMENTO', FNotaEntradaParam.FmDepartamento4.MeDepartamento.Text);
+{      if Trim(FNotaEntradaParam.ME3CadastroParceiro.Text) = '' then
+        QRMovEstoque.SetVariable('CADASTRO_PARCEIRO', '1 = 1')
+      else
+        QRMovEstoque.SetVariable('CADASTRO_PARCEIRO', 'TB_NOTA_CAB.COD_CADASTRO_PARCEIRO =' + FNotaEntradaParam.ME3CadastroParceiro.Text);
+}
+      if Trim(FNotaEntradaParam.FM3Classe.MeClasse.Text) = '' then
+        QRMovEstoque.SetVariable('CLASSE', Null)
+      else
+        QRMovEstoque.SetVariable('CLASSE', FNotaEntradaParam.FM3Classe.MeClasse.Text);
+      if Trim(FNotaEntradaParam.FMProduto4.MeProduto.Text) = '' then
+        QRMovEstoque.SetVariable('PRODUTO', Null)
+      else
+        QRMovEstoque.SetVariable('PRODUTO', FNotaEntradaParam.FMProduto4.MeProduto.Text);
+      if Trim(FNotaEntradaParam.FMOperacao4.MeOperacao.Text) = '' then
+      begin
+        QRMovEstoque.SetVariable('COD_OPERACAO', Null);
+        QRMovEstoque.SetVariable('IND_ESTOQUE', 'S');
+      end
+      else
+      begin
+        QRMovEstoque.SetVariable('COD_OPERACAO', Trim(FNotaEntradaParam.FMOperacao4.MeOperacao.Text));
+        QRMovEstoque.SetVariable('IND_ESTOQUE', Null);
+      end;
+      if Trim(FNotaEntradaParam.FMLote4.MeLote.Text) = '' then
+        QRMovEstoque.SetVariable('LOTE', Null)
+      else
+        QRMovEstoque.SetVariable('LOTE', FNotaEntradaParam.FMLote4.MeLote.Text);
+      if Trim(FNotaEntradaParam.FMestado3.MeEstado.Text) = '' then
+        QRMovEstoque.SetVariable('COD_ESTADO', Null)
+      else
+        QRMovEstoque.SetVariable('COD_ESTADO', FNotaEntradaParam.FMestado3.MeEstado.Text);
+      case FNotaEntradaParam.RG3Tipo.ItemIndex of
+        0: QRMovEstoque.SetVariable('TIPO_NOTA', 'E');
+        1: QRMovEstoque.SetVariable('TIPO_NOTA', 'S');
+        2: QRMovEstoque.SetVariable('TIPO_NOTA', Null);
+      end; // Case
+      case FNotaEntradaParam.RG3TipoProduto.ItemIndex of
+        0: QRMovEstoque.SetVariable('TIPO_PRODUTO', 'INDUSTRIAL');
+        1: QRMovEstoque.SetVariable('TIPO_PRODUTO', 'COMERCIAL');
+        2: QRMovEstoque.SetVariable('TIPO_PRODUTO', Null);
+      end; // Case
+      if FNotaEntradaParam.RG3ValorDeCusto.ItemIndex = 0 then
+        QRMovEstoque.SetVariable('IND_MOSTRA_VAL_CUSTO', 'SIM')
+      else
+        QRMovEstoque.SetVariable('IND_MOSTRA_VAL_CUSTO', 'NAO');
+      case FNotaEntradaParam.CB3Ordem.ItemIndex of
+        -1: QRMovEstoque.SQL.Add('ORDER BY DT_RECEBIMENTO');
+        0: QRMovEstoque.SQL.Add('ORDER BY COD_PRODUTO');
+        1: QRMovEstoque.SQL.Add('ORDER BY DT_RECEBIMENTO');
+        2: QRMovEstoque.SQL.Add('ORDER BY DESC_PRODUTO');
+        3: QRMovEstoque.SQL.Add('ORDER BY COD_OPERACAO');
+      end; // Case
+      QRMovEstoque.Open;
+      if FRNotasES_MovEstoque = nil then
+        FRNotasES_MovEstoque := TFRNotasES_MovEstoque.Create(Application);
+      if FNotaEntradaParam.Rg3Forma.ItemIndex = 0 then
+        FRNotasES_MovEstoque.QRDetalhe.Enabled := True
+      else
+        FRNotasES_MovEstoque.QRDetalhe.Enabled := False;
+
+      FRNotasES_MovEstoque.QrlCadastro.Caption := '';
+      FRNotasES_MovEstoque.QrlEndereco.Caption := '';
+      FRNotasES_MovEstoque.QrlDCO.Caption := '';
+      FRNotasES_MovEstoque.QrlCnpj.Caption := '';
+      if Trim(FNotaEntradaParam.FMCadastro4.MeCadastro.Text) <> '' then
+        FRNotasES_MovEstoque.QrlCadastro.Caption := Trim(FNotaEntradaParam.FMCadastro4.MeCadastro.Text) + ' - ' + FNotaEntradaParam.FMCadastro4.EdCadastro.Text;
+      FRNotasES_MovEstoque.QrlCadastro.Caption := FRNotasES_MovEstoque.QrlCadastro.Caption + ' de ' + FNotaEntradaParam.ME3DataI.Text + ' até ' + FNotaEntradaParam.ME3DataF.Text;
+      FRNotasES_MovEstoque.QrlFilial.Caption := 'Filial:' + Trim(FNotaEntradaParam.FMFilial4.MeFilial.Text) + ' - ' + FNotaEntradaParam.FMFilial4.EdFilial.Text;
+      FRNotasES_MovEstoque.QRLParceiro.Caption := 'Estado:' + Trim(FNotaEntradaParam.FMEstado3.EdEstado.Text) +
+          ' Vendedor:' + Trim(FNotaEntradaParam.FMVendedor4.MeVendedor.Text) + ' - ' + FNotaEntradaParam.FMVendedor4.EdVendedor.Text;
+      FRNotasES_MovEstoque.QrlSerie.Caption := 'Série: ' + Trim(FNotaEntradaParam.ME3Serie.Text);
+
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasES_MovEstoque.QRPrimario.Preview
+      else
+        FRNotasES_MovEstoque.QRPrimario.Print;
+      QRMovEstoque.SQL[QRMovEstoque.SQL.Count - 1] := '';
+      QRMovEstoque.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.SBExcluirClick(Sender: TObject);
+begin
+  //inherited;
+  if (DMNotaEntrada.QNotaEntradaCod_Contrato_Mov.Value <> 0) or not (DMNotaEntrada.QNotaEntradaCod_Contrato_Mov.IsNull) or
+    (DMNotaEntrada.QNotaEntradaCod_Contrato_gp_Mov.Value <> 0) or not (DMNotaEntrada.QNotaEntradaCod_Contrato_gp_Mov.IsNull) then
+    raise Exception.Create('Não é permitido excluir uma nota gerada por um contrato.');
+  if MessageDlg('Apagar esta Nota?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    if (not DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+      DMFilial.QFilial.Close;
+      DMFilial.QFilial.SetVariable('PK', DMNotaEntrada.QNotaEntradaCOD_FILIAL.Value);
+      DMFilial.QFilial.Open;
+      DMNfe.SetaNfe(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value);
+
+      if ((StrToInt('0' + DMNfe.QNfeSIT_NFE.Value) in SIT_DFE_NAO_PODE_SER_EXCLUIDO) or
+          (StrToInt('0' + DMNfe.QNfeSIT_NFE.Value) = 635)) and
+         (DMNfe.QNfeIND_AMBIENTE_NFE.Value = 1) then
+      begin
+        MessageDlg('Essa nota está registrada na SEFAZ.' + #13 + #10 +
+          'Não é permitida a sua exclusão.', mtInformation, [mbOk], 0);
+        Exit;
+      end;
+    end;
+    DMNotaEntrada.ExcluiNota;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsOperFreteClick(Sender: TObject);
+begin
+  inherited;
+  if FOperacaoCons = nil then
+    FOperacaoCons := TFOperacaoCons.Create(Application);
+  FOperacaoCons.RGTipoOperacao.ItemIndex := 0;
+  FOperacaoCons.RGTipoOperacao.Enabled := False;
+  if FOperacaoCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Operacao_cf.Value := DMOperacao.QOperacaoConsCod_Operacao.Value;
+end;
+
+procedure TFNotaEntradaCad.ConsultaFreteClick(Sender: TObject);
+begin
+  inherited;
+  if FConhecimentoCons = nil then
+    FConhecimentoCons := TFConhecimentoCons.Create(Application);
+  if FConhecimentoCons.ShowModal = mrOk then
+    with DMNotaEntrada do
+    begin
+      QNotaEntrada.Close;
+      QNotaEntrada.SetVariable('PK', QConhecimentoConsCod_Nota_Cab.Value);
+      QNotaEntrada.Open;
+    end;
+end;
+
+procedure TFNotaEntradaCad.CustoCompra1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[4].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Venda do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.ME4Filial.Text), 'COMPRA');
+      QRCustoCompra.Close;
+      QRCustoCompra.SetVariable('DT_INICIAL', StrToDate(FNotaEntradaParam.ME4DtInicial.Text));
+      QRCustoCompra.SetVariable('DT_FINAL', StrToDateTime(FNotaEntradaParam.ME4DtFinal.Text + ' 23:59:59'));
+
+      if Trim(FNotaEntradaParam.ME4Filial.Text) = '' then
+        QRCustoCompra.SetVariable('FILIAL', Null)
+      else
+        QRCustoCompra.SetVariable('FILIAL', FNotaEntradaParam.ME4Filial.Text);
+
+      if Trim(FNotaEntradaParam.ME4Cadastro.Text) = '' then
+        QRCustoCompra.SetVariable('CADASTRO', Null)
+      else
+        QRCustoCompra.SetVariable('CADASTRO', FNotaEntradaParam.ME4Cadastro.Text);
+
+      if Trim(FNotaEntradaParam.ME4Produto.Text) = '' then
+        QRCustoCompra.SetVariable('PRODUTO', Null)
+      else
+        QRCustoCompra.SetVariable('PRODUTO', FNotaEntradaParam.ME4Produto.Text);
+
+      if Trim(FNotaEntradaParam.ME4Lote.Text) = '' then
+        QRCustoCompra.SetVariable('LOTE', Null)
+      else
+        QRCustoCompra.SetVariable('LOTE', FNotaEntradaParam.ME4Lote.Text);
+
+      QRCustoCompra.Sql[QRCustoCompra.Sql.Count - 1] := '';
+      if DMParamSistema.QParamSistemaCod_Empresa.Value = 'ENCOPEL' then
+        QRCustoCompra.Sql.Add('TB_NOTA_CAB.DT_RECEBIMENTO,TB_NOTA_CAB.NUM_NOTA,TB_NOTA_CAB.COD_CADASTRO,TB_NOTA_CAB.COD_SERIE,TB_NOTA_ITEM.COD_NOTA_ITEM')
+      else if FNotaEntradaParam.Cb4Ordem.ItemIndex = 0 then
+        QRCustoCompra.Sql.Add('TB_NOTA_CAB.DT_RECEBIMENTO,TB_NOTA_CAB.NUM_NOTA,TB_NOTA_CAB.COD_CADASTRO,TB_NOTA_CAB.COD_SERIE,TB_PRODUTO.DESC_PRODUTO')
+      else
+        QRCustoCompra.Sql.Add('TB_NOTA_CAB.DT_RECEBIMENTO,TB_NOTA_CAB.NUM_NOTA,TB_NOTA_CAB.COD_CADASTRO,TB_NOTA_CAB.COD_SERIE,TB_PRODUTO.COD_PRODUTO');
+
+      QRCustoCompra.Open;
+
+      if FRNotaCustoCompra = nil then
+        FRNotaCustoCompra := TFRNotaCustoCompra.Create(Application);
+      FRNotaCustoCompra.QRLTitulo.Caption := 'Notas de Compra de ' + FNotaEntradaParam.ME4DtInicial.Text
+        + ' até ' + FNotaEntradaParam.ME4DtFinal.Text;
+      if FNotaEntradaParam.RG4Tipo.ItemIndex = 1 then
+      begin
+        FRNotaCustoCompra.QRBand4.Enabled := False;
+        FRNotaCustoCompra.QRBRod.Enabled := False;
+      end
+      else
+      begin
+        FRNotaCustoCompra.QRBand4.Enabled := True;
+        FRNotaCustoCompra.QRBRod.Enabled := True;
+      end;
+      if (DMParamSistema.CodEmpresa = 'DONABENTA') or (DMParamSistema.CodEmpresa = 'FERRAGMED') then
+      begin
+        FRNotaCustoCompra.QRLabel7.Enabled   := False;
+        FRNotaCustoCompra.QRDBText18.Enabled := False;
+        FRNotaCustoCompra.QRExpr5.Enabled    := False;
+        FRNotaCustoCompra.QRExpr2.Enabled    := False;
+        FRNotaCustoCompra.QRLabel9.Enabled   := False;
+        FRNotaCustoCompra.QRDBText20.Enabled := False;
+      end
+      else
+      begin
+        FRNotaCustoCompra.QRLabel7.Enabled   := True;
+        FRNotaCustoCompra.QRDBText18.Enabled := True;
+        FRNotaCustoCompra.QRExpr5.Enabled    := True;
+        FRNotaCustoCompra.QRExpr2.Enabled    := True;
+        FRNotaCustoCompra.QRLabel9.Enabled   := True;
+        FRNotaCustoCompra.QRDBText20.Enabled := True;
+      end;
+
+     if FNotaEntradaParam.CB4Margem.Checked = True then
+      begin
+        FRNotaCustoCompra.QRLabel9.Enabled := True;
+        FRNotaCustoCompra.QRDBText20.Enabled := True;
+      end
+      else
+      begin
+        FRNotaCustoCompra.QRLabel9.Enabled := False;
+        FRNotaCustoCompra.QRDBText20.Enabled := False;
+      end;
+
+      if FNotaEntradaParam.CB4Custo.Checked = True then
+      begin
+        FRNotaCustoCompra.QRLabel7.Enabled := True;
+        FRNotaCustoCompra.QRDBText18.Enabled := True;
+        FRNotaCustoCompra.QRExpr5.Enabled := True;
+      end
+      else
+      begin
+        FRNotaCustoCompra.QRLabel7.Enabled := False;
+        FRNotaCustoCompra.QRDBText18.Enabled := False;
+        FRNotaCustoCompra.QRExpr5.Enabled := False;
+      end;
+      
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotaCustoCompra.QRPrimario.Preview
+      else
+        FRNotaCustoCompra.QRPrimario.Print;
+      QRCustoCompra.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.SBCancelarClick(Sender: TObject);
+begin
+  if DMNotaEntrada.QItemNF.State in [dsinsert, dsedit] then
+    DMNotaEntrada.QItemNF.Cancel;
+  inherited;
+  DMNotaEntrada.QItemNF.Close;
+  DMNotaEntrada.QItemNF.Open;
+  DMNotaEntrada.QSomaItemNota.Close;
+  DMNotaEntrada.QSomaItemNota.Open;
+end;
+
+procedure TFNotaEntradaCad.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if Key = Chr(43) then
+  begin
+    DbNavigator1.BtnClick(nbInsert);
+    Key := #0;
+    if (DmParamSistema.QParamSistemaCod_Empresa.Value <> 'DINIZ') and (DmParamSistema.QParamSistemaCod_Empresa.Value <> 'MEDIBENS') then
+      DbEdit48.SetFocus
+    else
+      EdNumFabricante.SetFocus;
+  end;
+{  if (DmParamSistema.QParamSistemaCod_Empresa.Value <> 'DINIZ') And
+     (DmParamSistema.QParamSistemaCod_Empresa.Value <> 'CEIFAGRIL') then
+    if Key = Chr(45) then
+    begin
+      DbNavigator1.BtnClick(NbDelete);
+      Key := #0;
+      DbEdit48.SetFocus;
+    end;
+   }
+end;
+
+procedure TFNotaEntradaCad.PCNotaChange(Sender: TObject);
+begin
+  inherited;
+   if (PCNota.ActivePage <> TSCabecalho) and (DSPrimario.State in [dsEdit,dsInsert]) then
+  begin
+    try
+      with DMNotaEntrada do
+      begin
+        DMNotaEntrada.ValidaFornecedor(QNotaEntrada.FieldByName('COD_CADASTRO').AsString);
+        DMNotaEntrada.ValidaOperacao(QNotaEntrada.FieldByName('COD_OPERACAO').AsString);
+      end;
+    except
+      on E: Exception do
+      begin
+        ShowMessage(E.Message);
+        PCNota.ActivePage := TSCabecalho;
+        if DBEdit32.CanFocus then
+          DBEdit32.SetFocus;
+        Exit;
+      end;
+    end;
+  end;
+  
+  with DMNotaEntrada do
+  begin
+    if PCNota.ActivePage = TSOrdemCompra then
+      QBaixasOC.Open
+    else
+      QBaixasOC.Close;
+    DBEComissao.Enabled := True;
+    DBEdit40.Enabled := True;
+    if PCNota.ActivePage = TsItemNota then
+     Begin
+       if (QNotaEntradaCOD_OPERACAO.Text <> '') and (QNotaEntradaIND_SITUACAO.Value = '1') then
+          if DMOracle.BuscaNome('SELECT Ind_Vendas FROM TB_OPERACAO',
+             'COD_OPERACAO = ' + FloatToStr(QNotaEntradaCod_Operacao.Value), True) = 'D' then
+          begin
+            if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'MOINHO') then
+             begin
+               DBEComissao.Enabled := False;
+               if (DMNotaEntrada.QNotaEntradaCod_Departamento.Value <> 09) and
+                  (DMNotaEntrada.QNotaEntradaCod_Departamento.Value <> 12) and
+                  (DMNotaEntrada.QNotaEntradaCod_Departamento.Value <> 43) then
+                  DBEdit40.Enabled := False;
+             end;
+            // Deixar campo Valor Total do Item habilitado para edição
+            // mesmo quando for Devolução - Djeison A. Selzlein - 17/08/2013
+//            else
+//             if (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'RADIO') then
+//                 DBEdit40.Enabled := False;
+            BtImpItemNFClick(Self);
+            DBEdit39Exit(Self);
+          end
+          else
+           if DMOracle.BuscaNome('SELECT Ind_Futura_Fornecedor FROM TB_OPERACAO',
+             'COD_OPERACAO = ' + FloatToStr(QNotaEntradaCod_Operacao.Value), True) = 'S' then
+             BtImpItemCompraClick(Self);
+       if DMParamSistema.CodEmpresa = 'FURGOESMED' then
+         EdNumFabricante.SetFocus
+       else
+       begin
+       if(DBEdit48.CanFocus) then
+        DBEdit48.SetFocus
+       else
+        EdNumFabricante.SetFocus;
+       end;
+     end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.SBHelpClick(Sender: TObject);
+begin
+  inherited;
+  Application.HelpContext(6);
+end;
+
+procedure TFNotaEntradaCad.SBIncluirClick(Sender: TObject);
+begin
+  inherited;
+
+  if PCNota.ActivePage.Name <> 'PageControl2' then
+  begin
+    PCNota.ActivePage := TSCabecalho;
+    PageControl2.ActivePage := TabSheet6;
+  end;
+  MeFinalidadeOC.Clear; // para limpar a finalidade importada de uma ordem de compra anterior - Joga na tela de contas a pagar(parametro)
+  DbEdit32.SetFocus;
+  if DBRDescSTPisCofins.ItemIndex = -1 then
+    DBRDescSTPisCofins.ItemIndex := 1;
+end;
+
+procedure TFNotaEntradaCad.DBEdit17Exit(Sender: TObject);
+var
+  wPercICM: Real;
+begin
+  inherited;
+  if DMNotaEntrada.QItemNFCod_Tributacao.Text <> '' then
+  begin
+    wPercICM := StrToFloat(DMOracle.BuscaNome('SELECT PERC_ALIQUOTA FROM TB_TRIBUTACAO', 'COD_TRIBUTACAO = ' + FloatToStr(DMNotaEntrada.QItemNFCod_Tributacao.Value), True));
+    DMNotaEntrada.QItemNFVAL_ICM.Value := (DMNotaEntrada.QItemNFVal_ICM_Base.Value) * wPercICM / 100;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BitBtn2Click(Sender: TObject);
+var
+  wSituacaoDpto: string;
+begin
+  inherited;
+  if FDepartamentoCons = nil then
+    FDepartamentoCons := TFDepartamentoCons.Create(Application);
+  if FDepartamentoCons.ShowModal = mrOk then
+  begin
+    wSituacaoDpto := DMOracle.FastSelect('IND_SITUACAO','TB_DEPARTAMENTO','COD_DEPARTAMENTO = ' + DBEdit1.Text);
+    if wSituacaoDpto = 'A' then
+      DMNotaEntrada.QNotaEntradaCod_Departamento.Value := DMDepartamento.QDepartamentoConsCod_Departamento.Value
+    else
+    begin
+      DBEdit1.SetFocus;
+      raise exception.Create('ATENÇÃO - Este departamento não esta ativo. Favor Verificar!');
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EdNumFabricanteExit(Sender: TObject);
+var
+  mNumeroFabricante: string;
+begin
+  inherited;
+  mNumeroFabricante := ''; // Inicializa valor do numero fabricante.
+  if Trim(EdNumFabricante.Text) <> '' then
+  begin
+    mNumeroFabricante := DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_PRODUTO', 'NUM_FABRICANTE = ' + chr(39) + Trim(EdNumFabricante.Text) + chr(39), True);
+    if Trim(mNumeroFabricante) = '' then
+      EdNumFabricante.Text := mNumeroFabricante
+    else
+    begin
+      if (DSItemNF.State = dsBrowse) and (DMNotaEntrada.QItemNFCOD_PRODUTO.Value = 0) then
+        DMNotaEntrada.QItemNF.Insert;
+      if (DSItemNF.State = dsBrowse) and (DMNotaEntrada.QItemNFCOD_PRODUTO.Value > 0) then
+        DMNotaEntrada.QItemNF.Edit;
+      DMNotaEntrada.QItemNFCOD_PRODUTO.Value := StrToFloat(mNumeroFabricante);
+      DBEdit48Exit(Sender);
+    end;
+
+    EdNumFabricante.Text := '';
+    If (DMParamSistema.CodEmpresa = 'INJEPAR') or (DMParamSistema.CodEmpresa = 'FURGOESMED') then
+       If DBEdit39.Showing then
+          DBEdit39.SetFocus;
+  end;
+end;
+
+procedure TFNotaEntradaCad.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    QNotaEntrada.Close;
+    QItemNF.Close;
+    QBaixasOC.Close;
+    // QAtuBaixaOC.Open;
+    QSomaItemNota.Close;
+    QNotaReferenciada.Close;
+    QPagamento.Close;
+    QSomaPagamentos.Close;
+  end;
+  DMTransporte.QTransporteAll.Close;
+  Action := CaFree;
+  FNotaEntradaCad := nil;
+end;
+
+procedure TFNotaEntradaCad.BtConsMensagem2Click(Sender: TObject);
+begin
+  inherited;
+  if FMensagemCons = nil then
+    FMensagemCons := TFMensagemCons.Create(Application);
+  if FMensagemCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaDESC_OBS_CORPO_NOTA.Value := DMMensagem.QMensagemConsDesc_Mensagem.Value + ' ' +
+      DMMensagem.QMensagemConsDesc_Complemento.Value + ' ' +
+      DMMensagem.QMensagemConsDesc_Complemento1.Value + ' ' +
+      DMMensagem.QMensagemConsDesc_Complemento2.Value + ' ' +
+      DMMensagem.QMensagemConsDesc_Complemento3.Value;
+
+end;
+
+procedure TFNotaEntradaCad.EmitirCartaCorrecaoClick(Sender: TObject);
+var
+  RetProcessamento: String;
+  IdLote: String;
+  ChaveAcesso: String;
+begin
+  inherited;
+  if (DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value = 0) then
+    raise Exception.Create('É necessário escolher uma nota para emitir uma Carta de Correção Eletrônica.');
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull then
+  begin
+    MessageDlg('A nota precisa ter uma chave de acesso. Se for uma NF-e, confirme-a.', mtError, [mbOK], 0);
+    Exit;
+  end;
+  RetProcessamento := '';
+  IdLote := '';
+  ChaveAcesso := Copy( DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value,4, 44);
+  Buscador.Limpa;
+  Buscador.Adiciona('DESC_RETORNO_PROCESSAMENTO', 'TB_NF_ELETRONICA', 'DESC_CHAVE_ACESSO = ' + QuotedStr(ChaveAcesso));
+  Buscador.Adiciona('ID_LOTE', 'TB_CCE', 'DESC_CHAVE_ACESSO = ' + QuotedStr( ChaveAcesso));
+  Buscador.Buscar();
+  RetProcessamento := Buscador.Proximo;
+  IdLote := Buscador.Proximo;
+  Buscador.Fecha;
+
+  if RetProcessamento <> '100' then
+  begin
+    MessageDlg('A NF-e deve estar confirmada e autorizada pela Sefaz.', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  if FCartaCorrecaoEletronica = nil then
+    FCartaCorrecaoEletronica := TFCartaCorrecaoEletronica.Create(application);
+  FCartaCorrecaoEletronica.pCodNota := DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value;
+  if IdLote <> '' then
+    FCartaCorrecaoEletronica.pIdLote := StrToFloat(IdLote)
+  else
+    FCartaCorrecaoEletronica.pIdLote := 0;
+
+  FCartaCorrecaoEletronica.pChaveAcesso := ChaveAcesso;
+  FCartaCorrecaoEletronica.ShowModal;
+end;
+
+procedure TFNotaEntradaCad.DBEdit29Exit(Sender: TObject);
+begin
+  inherited;
+  DMNotaEntrada.QNotaEntradaCod_Mensagem.Text := DMOracle.BuscaNome('SELECT COD_MENSAGEM FROM TB_OPERACAO',
+    'COD_OPERACAO = ' + FloatToStr(DMNotaEntrada.QNotaEntradaCod_Operacao.Value), True);
+end;
+
+procedure TFNotaEntradaCad.DBEdit2Exit(Sender: TObject);
+begin
+  inherited;
+  if DbEdit2.Text <> '' then
+  begin
+    with DMTributacao do
+    begin
+      QTributacao.Close;
+      QTributacao.SetVariable('Pk', StrToInt(DbEdit2.Text));
+      QTributacao.Open;
+      if QTributacaoPerc_Tributado.Value > 0 then
+      begin
+        DMNotaEntrada.QNotaEntradaVAL_ICM_BASE_FRETE.Value := DMNotaEntrada.QNotaEntradaVal_Frete.Value * QTributacaoPerc_Tributado.Value / 100;
+        DMNotaEntrada.QNotaEntradaVAL_ICM_FRETE.Value := DMNotaEntrada.QNotaEntradaVAL_ICM_BASE_FRETE.Value * QTributacaoPerc_Aliquota.Value / 100;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtOrdemCarregamentoClick(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QItemNfCod_Produto.Text = '' then
+    raise Exception.Create('Primeiro Informar os Itens da Nota Fiscal');
+  if FOrdemCarregamentoCons = nil then
+    FOrdemCarregamentoCons := TFOrdemCarregamentoCons.Create(Application);
+  if FOrdemCarregamentoCons.ShowModal = mrOk then
+    if DMOrdemCarregamento.QOrdemCarregamentoConsInd_Situacao.Value = 'B' then
+      raise Exception.Create('Ordem de Carregamento Já foi Utilizada em Outra Nota Fiscal')
+    else
+    begin
+      with DMOrdemCarregamento do
+      begin
+        DMNotaEntrada.QNotaEntradaCod_Ordem_Carregamento_cab.Value := QOrdemCarregamentoConsCod_Ordem_Carregamento_Cab.Value;
+        QOrdemCarregamentoCab.Close;
+        QOrdemCarregamentoCab.SetVariable('Pk', QOrdemCarregamentoConsCod_Ordem_Carregamento_Cab.Value);
+        QOrdemCarregamentoCab.Open;
+        QOrdemCarregamentoItem.Close;
+        QOrdemCarregamentoItem.Open;
+        DMNotaEntrada.QNotaEntradaCod_Transportador.Value := QOrdemCarregamentoItemCod_Motorista.Value;
+        DMNotaEntrada.QNotaEntradaDesc_Placa.Value := QOrdemCarregamentoItemDesc_Placa_Veiculo.Value;
+        DMNotaEntrada.QNotaEntradaInd_Tipo_Frete.Value := QOrdemCarregamentoItemInd_Tipo_Frete.Value;
+        if QOrdemCarregamentoItemInd_Tipo_Frete.Value = 'CIF' then
+        begin
+          if QOrdemCarregamentoCabCod_Motorista.Text <> '' then
+            DMNotaEntrada.QNotaEntradaCod_Motorista.Value := QOrdemCarregamentoCabCod_Motorista.Value;
+          DMNotaEntrada.QNotaEntradaVal_Pedagio.Value := QOrdemCarregamentoItemVal_Pedagio.Value;
+          DMNotaEntrada.QNotaEntradaVAL_FRETE_TON.Value := QOrdemCarregamentoItemVal_Frete_Ton.Value;
+          if QOrdemCarregamentoItemInd_Tipo_Pgto.Value = 'C' then
+          begin
+            DMNotaEntrada.QNotaEntradaDT_EMISSAO_CF.Value := DMNotaEntrada.QNotaEntradaDT_EMISSAO.Value;
+            DMNotaEntrada.QNotaEntradaNUM_CONHECIMENTO_FRETE.Value := 0;
+          end;
+        end;
+      end;
+    end;
+end;
+
+procedure TFNotaEntradaCad.AtualizaPreoPeloCustodanota1Click(
+  Sender: TObject);
+var
+  wCusto, wPreco, wPreco1: Real;
+begin
+  inherited;
+  if FAtualizaPreco = nil then
+    FAtualizaPreco := TFAtualizaPreco.Create(Application);
+  if FAtualizaPreco.ShowModal = MrOk then
+  begin
+    try
+      DMOracle.DBCemapa.StartTransaction;
+      DMNotaEntrada.QItemNF.First;
+      while not (DMNotaEntrada.QItemNF.Eof) do
+      begin
+        if DMNotaEntrada.QItemNFQt_Quantidade.Value > 0 then
+          wCusto := DMNotaEntrada.QItemNFVal_Custo.Value / DMNotaEntrada.QItemNFQt_Quantidade.Value
+        else
+          wCusto := DMNotaEntrada.QItemNFVal_Custo.Value;
+        wPreco := wCusto + wCusto * StrToFloat(FAtualizaPreco.MePerc_Varejo.Text) / 100;
+        wPreco1 := wCusto + wCusto * StrToFloat(FAtualizaPreco.MePerc_Atacado.Text) / 100;
+        if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'INSIDE') or (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'DISPART') then
+        begin
+          if DMOracle.BuscaNome('SELECT COD_PRODUTO FROM TB_PRECO_LOTE', 'COD_PRODUTO = ' + DMNotaEntrada.QItemNFCod_Produto.text +
+            ' And COD_LOTE_TIPO = ' + DMNotaEntrada.QItemNFCod_Lote_Tipo.text) = '' then
+            with DMOracle do
+            begin
+              QExecSQL.Close;
+              QExecSQL.SQL.Clear;
+              QExecSQL.SQL.Add('INSERT INTO TB_PRECO_LOTE(COD_PRODUTO,COD_LOTE_TIPO,VAL_VAREJO,VAL_ATACADO) ');
+              QExecSQL.SQL.Add('VALUES (' + Trim(DMNotaEntrada.QItemNFCod_Produto.text) + ',' + Trim(DMNotaEntrada.QItemNFCod_Lote_Tipo.text) + ',' + Bib.TrocaVirgulaPorPonto(FloatToStr(wPreco)) + ',' + Bib.TrocaVirgulaPorPonto(FloatToStr(wPreco1)) + ')');
+              QExecSQL.ExecSQL;
+            end
+          else
+            with DMOracle do
+            begin
+              QExecSQL.Close;
+              QExecSQL.SQL.Clear;
+              QExecSQL.SQL.Add('UPDATE TB_PRECO_LOTE SET VAL_VAREJO = ' + Bib.TrocaVirgulaPorPonto(FloatToStr(wPreco)) + ',VAL_ATACADO = ' + Bib.TrocaVirgulaPorPonto(FloatToStr(wPreco1)));
+              QExecSQL.SQL.Add('WHERE COD_PRODUTO = ' + chr(39) + Trim(DMNotaEntrada.QItemNFCod_Produto.text) + chr(39) + ' AND COD_LOTE_TIPO=' + chr(39) + Trim(DMNotaEntrada.QItemNFCod_Lote_Tipo.text) + chr(39));
+              QExecSQL.ExecSQL;
+            end;
+        end
+        else
+        begin
+          DMPrecos.QAtualizaPrecoVarejo.SetVariable('COD_PRODUTO', DMNotaEntrada.QItemNFCod_Produto.Value);
+          DMPrecos.QAtualizaPrecoVarejo.SetVariable('PRECO_VAREJO', wPreco);
+
+          DMPrecos.QAtualizaPrecoAtacado.SetVariable('COD_PRODUTO', DMNotaEntrada.QItemNFCod_Produto.Value);
+          DMPrecos.QAtualizaPrecoAtacado.SetVariable('PRECO_ATACADO', wPreco1);
+          DMPrecos.QAtualizaPrecoVarejo.ExecSQL;
+          DMPrecos.QAtualizaPrecoAtacado.ExecSQL;
+        end;
+        DMNotaEntrada.QItemNF.Next;
+      end;
+      DMOracle.DBCemapa.Commit;
+    except
+      DMOracle.DbCemapa.Rollback;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.RelaoTtulosporNota1Click(Sender: TObject);
+var
+  wCont, wNum_Nota: Integer;
+begin
+  inherited;
+  with DMContasPagar do
+  begin      // QRtITULOSnOTAe.SetVariable('IND_SITUACAO', 'ABERTO');
+    if FNotaEntradaParam = nil then
+      FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+    FNotaEntradaParam.ME11DtInicio.Text := DateToStr(Date);
+    FNotaEntradaParam.ME11DtFim.Text := DateToStr(Date);
+    FNotaEntradaParam.PGRelatorio.Pages[11].TabVisible := true;
+    if FNotaEntradaParam.ShowModal = mrOk then
+    begin
+      QRTitulosNotaE.Close;
+        if (Trim(FNotaEntradaParam.ME11DtInicio.Text) = '') or (Trim(FNotaEntradaParam.ME11DtFim.Text) = '') then
+          raise Exception.Create('Período deve ser Informado');
+
+        QRTitulosNotaE.SetVariable('DT_INICIO', FNotaEntradaParam.ME11DtInicio.Text);
+        QRTitulosNotaE.SetVariable('DT_FIM', FNotaEntradaParam.ME11DtFim.Text);
+
+        if Trim(FNotaEntradaParam.ME11Nota.Text) = '' then
+          QRTitulosNotaE.SetVariable('NOTA', NULL)
+        else
+          QRTitulosNotaE.SetVariable('NOTA', Trim(FNotaEntradaParam.ME11Nota.Text));
+        if Trim(FNotaEntradaParam.ME11Fornecedor.Text) = '' then
+          QRTitulosNotaE.SetVariable('CADASTRO', NULL)
+        else
+          QRTitulosNotaE.SetVariable('CADASTRO', Trim(FNotaEntradaParam.ME11Fornecedor.Text));
+        if Trim(FNotaEntradaParam.ME11Filial.Text) = '' then
+          QRTitulosNotaE.SetVariable('FILIAL', NULL)
+        else
+          QRTitulosNotaE.SetVariable('FILIAL', Trim(FNotaEntradaParam.ME11Filial.Text));
+
+         if Trim(FNotaEntradaParam.ME11Filial.Text) = '' then
+          QRTitulosNotaE.SetVariable('FILIAL', NULL)
+        else
+          QRTitulosNotaE.SetVariable('FILIAL', Trim(FNotaEntradaParam.ME11Filial.Text));
+
+      QRTitulosNotaE.Open;
+      if FRTitulosPorNota = nil then
+        FRTitulosPorNota := TFRTitulosPorNota.Create(Application);
+        FRTitulosPorNota.QRLEmpresa.Caption := DMParamSistema.QParamSistemaCOD_EMPRESA.Value;
+        FRTitulosPorNota.QRLbPeriodo.Caption := 'Período de ' + FNotaEntradaParam.ME11DtInicio.Text + ' até ' + FNotaEntradaParam.ME11DtFim.Text;
+        FRTitulosPorNota.QRLNomeRel.Caption := 'FRTitulosPorNota';
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRTitulosPorNota.QRPrimario.Preview
+      else
+        FRTitulosPorNota.QRPrimario.Print;
+        QRTitulosNotaE.Close;
+
+
+//--Esse trecho foi comentado para gerar relatório apenas pelo QuickReport. Vanessa 08/11/2013
+//    QRTitulosNotaE.Open;
+//    ---impressao relatório
+//     if Imp = nil then
+//        Imp := TImp.Create;
+//      Imp.AbreImpressora;
+//      Imp.ConfiguraImpressora('CONDENSADO_ON', 'OITAVOS', 68);
+//      wCont := 0;
+//      Imp.WriteXY(4, wCont, 'RELACAO DE TITULOS CONTA A PAGAR POR NOTA DE ENTRADA                                       ' + DateToStr(Date) + ' ' + TimeToStr(Time));
+//      inc(wCont);
+//      Imp.WriteXY(4, wCont, 'EMPRESA: ' + DMParamSistema.QParamSistemaCOD_EMPRESA.Text);
+//      inc(wCont);
+//      Imp.WriteXY(4, wCont, 'FILIAL : ' + FNotaEntradaParam.Ed11Filial.Text);
+//      inc(wCont);
+//      Imp.WriteXY(4, wCont, 'PERIODO DE ' + FNotaEntradaParam.ME11DtInicio.Text + ' A ' + FNotaEntradaParam.ME11DtFim.Text);
+//      inc(wCont);
+//      inc(wCont);
+//      inc(wCont);
+//      QRTitulosNotaE.First;
+//      //---inicio da impressao dos campos
+//      while not QRTitulosNotaE.EOF do
+//      begin
+//        wNum_Nota := QRTitulosNotaENUM_NOTA.Value;
+//        Imp.WriteXY(2, wCont, 'Nota Entrada Numero: ' + Bib.FormataTexto(QRTitulosNotaENUM_NOTA.Text, 6) + '   Serie: ' + Bib.FormataTexto(QRTitulosNotaECOD_SERIE.Text, 6));
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Fornecedor: ' + Bib.FormataTextoEsq(QRTitulosNotaECOD_FORNECEDOR.Text, 6) + ' ' + QRTitulosNotaEDESC_FORNECEDOR.Text);
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Filial    : ' + Bib.FormataTextoEsq(QRTitulosNotaECOD_FILIAL.Text, 6) + ' ' + QRTitulosNotaEDESC_FILIAL.Text);
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Vendedor  : ' + Bib.FormataTextoEsq(QRTitulosNotaECOD_VENDEDOR.Text, 6) + ' ' + QRTitulosNotaEDESC_VENDEDOR.Text);
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Data Emissao: ' + QRTitulosNotaEDT_EMISSAO.Text);
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Data Movimento: ' + QRTitulosNotaEDT_MOVIMENTO.Text);
+//        inc(wCont);
+//        inc(wCont);
+//        Imp.WriteXY(2, wCont, 'Nr. Titulo     Parcela     Vencimento          Valor     Situacao');
+//        while (wNum_Nota = QRTitulosNotaENUM_NOTA.Value) and (not QRTitulosNotaE.EOF) do
+//        begin
+//          inc(wCont);
+//          Imp.WriteXY(2, wCont, Bib.FormataTextoEsq(QRTitulosNotaENUM_TITULO.Text, 10) + '     ' + Bib.FormataTextoEsq(QRTitulosNotaENUM_PARCELA.Text, 7) + '     ' + QRTitulosNotaEDT_VENCIMENTO.Text + '     ' + Bib.NumToTexto(QRTitulosNotaEVAL_TITULO.Value, 2, 10) + '     ' + QRTitulosNotaEIND_SITUACAO.Text);
+//          QRTitulosNotaE.Next;
+//        end;
+//        inc(wCont);
+//        inc(wCont);
+//        inc(wCont);
+//      end;
+//      Imp.FechaImpressora; // Finaliza os serviços de Impressao
+//      QRTitulosNotaE.Close;
+//--
+      
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.DBEdit40Exit(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+    if not QNotaEntradaind_complemento.Value then
+      if (Trim(MeValor.Text) <> '') and (QItemNFVAL_TOTAL.Value <> 0) then
+        if RgMoeda.ItemIndex = 0 then
+          QItemNFVAL_TOTAL.Value := QItemNFVAL_TOTAL.Value * StrToFloat(Trim(MeValor.Text))
+        else
+//Adicionado RoundTo pois na Inside estava apresentando erro ao finalizar a nota de entrada. Alex 03/05/2022        
+          QItemNFVAL_TOTAL.Value := RoundTo((QItemNFVAL_TOTAL.Value / StrToFloat(Trim(MeValor.Text))),-2);
+end;
+
+procedure TFNotaEntradaCad.LanarQtChegada1Click(Sender: TObject);
+begin
+  inherited;
+  if Trim(DMNotaEntrada.QItemNFCOD_NOTA_ITEM.Text) <> '' then
+  begin
+    if FQtChegada = nil then
+      FQtChegada := TFQtChegada.Create(Application);
+    FQtChegada.wNota := 'E';
+    FQtChegada.showModal;
+  end
+  else
+    raise Exception.Create('Informe a nota para lançar a Qt. Chegada');
+end;
+
+procedure TFNotaEntradaCad.MovEstoqueCustoCompra1Click(Sender: TObject);
+var
+  wNum: Integer;
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.ME12DtInicial.Text := DateToStr(Date);
+  FNotaEntradaParam.ME12DtFinal.Text := DateToStr(Date);
+  FNotaEntradaParam.PGRelatorio.Pages[12].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRMovEstoqueCompra.Close;
+      QRMovEstoqueCompra.SetVariable('DATA_INICIAL', StrToDate(FNotaEntradaParam.ME12DtInicial.Text));
+      QRMovEstoqueCompra.SetVariable('DATA_FINAL', StrToDate(FNotaEntradaParam.ME12DtFinal.Text));
+      if Trim(FNotaEntradaParam.ME12Filial.Text) = '' then
+        QRMovEstoqueCompra.SetVariable('FILIAL', Null)
+      else
+        QRMovEstoqueCompra.SetVariable('FILIAL', FNotaEntradaParam.ME12Filial.Text);
+      if Trim(FNotaEntradaParam.ME12Cadastro.Text) = '' then
+        QRMovEstoqueCompra.SetVariable('CADASTRO', Null)
+      else
+        QRMovEstoqueCompra.SetVariable('CADASTRO', FNotaEntradaParam.ME12Cadastro.Text);
+      if Trim(FNotaEntradaParam.ME12Classe.Text) = '' then
+        QRMovEstoqueCompra.SetVariable('CLASSE', Null)
+      else
+        QRMovEstoqueCompra.SetVariable('CLASSE', FNotaEntradaParam.ME12Classe.Text);
+      if Trim(FNotaEntradaParam.ME12Produto.Text) = '' then
+        QRMovEstoqueCompra.SetVariable('PRODUTO', Null)
+      else
+        QRMovEstoqueCompra.SetVariable('PRODUTO', FNotaEntradaParam.ME12Produto.Text);
+      if Trim(FNotaEntradaParam.Me12Operacao.Text) = '' then
+      begin
+        QRMovEstoqueCompra.SetVariable('COD_OPERACAO', Null);
+        QRMovEstoqueCompra.SetVariable('IND_ESTOQUE', 'S');
+      end
+      else
+      begin
+        QRMovEstoqueCompra.SetVariable('COD_OPERACAO', Trim(FNotaEntradaParam.Me12Operacao.Text));
+        QRMovEstoqueCompra.SetVariable('IND_ESTOQUE', Null);
+      end;
+      if Trim(FNotaEntradaParam.ME12Lote.Text) = '' then
+        QRMovEstoqueCompra.SetVariable('LOTE', Null)
+      else
+        QRMovEstoqueCompra.SetVariable('LOTE', FNotaEntradaParam.ME12Lote.Text);
+
+      case FNotaEntradaParam.RG12TipoProduto.ItemIndex of
+        0: QRMovEstoqueCompra.SetVariable('TIPO_PRODUTO', 'INDUSTRIAL');
+        1: QRMovEstoqueCompra.SetVariable('TIPO_PRODUTO', 'COMERCIAL');
+        2: QRMovEstoqueCompra.SetVariable('TIPO_PRODUTO', Null);
+      end; //CASE
+      case FNotaEntradaParam.CB12Ordem.ItemIndex of
+        -1: QRMovEstoqueCompra.SQL.Add('ORDER BY DT_RECEBIMENTO');
+        0: QRMovEstoqueCompra.SQL.Add('ORDER BY COD_PRODUTO');
+        1: QRMovEstoqueCompra.SQL.Add('ORDER BY DT_RECEBIMENTO');
+        2: QRMovEstoqueCompra.SQL.Add('ORDER BY DESC_PRODUTO');
+        3: QRMovEstoqueCompra.SQL.Add('ORDER BY COD_OPERACAO');
+      end; // Case
+      QRMovEstoqueCompra.Open;
+      if FRMovEstoqueCompra = nil then
+        FRMovEstoqueCompra := TFRMovEstoqueCompra.Create(Application);
+      FRMovEstoqueCompra.QrlCadastro.Caption := '';
+      if Trim(FNotaEntradaParam.ME12Cadastro.Text) <> '' then
+        FRMovEstoqueCompra.QrlCadastro.Caption := Trim(FNotaEntradaParam.ME12Cadastro.Text) + ' - ' + FNotaEntradaParam.ED12Cadastro.Text;
+      FRMovEstoqueCompra.QrlCadastro.Caption := FRMovEstoqueCompra.QrlCadastro.Caption + ' de ' + FNotaEntradaParam.ME12DtInicial.Text + ' até ' + FNotaEntradaParam.ME12DtFinal.Text;
+      FRMovEstoqueCompra.QrlFilial.Caption := 'Filial:' + Trim(FNotaEntradaParam.ME12Filial.Text) + ' - ' + FNotaEntradaParam.Ed12Filial.Text;
+
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRMovEstoqueCompra.QRPrimario.Preview
+      else
+        FRMovEstoqueCompra.QRPrimario.Print;
+      wNum := QRMovEstoqueCompra.SQL.Count - 1;
+      QRMovEstoqueCompra.SQL[wNum] := '';
+
+      QRMovEstoqueCompra.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.DBEdit32Change(Sender: TObject);
+begin
+  inherited;
+  if (DMParamSistema.QParamSistemaCod_Empresa.Value = 'AB') and
+    (Trim(DBEdit32.Text) <> '') then
+    DMNotaSaida.MostraMsg(StrToInt(Trim(DBEdit32.Text)));
+end;
+
+procedure TFNotaEntradaCad.RelaoNotasDevoluo1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  //  FNotaEntradaParam.ME13Data_I.Text := DateToStr(Date);
+  //  FNotaEntradaParam.ME13Data_F.Text := DateToStr(Date);
+  FNotaEntradaParam.PGRelatorio.Pages[13].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRNotasDevolucao.Close;
+
+      QRNotasDevolucao.SetVariable('DATA_I', StrToDate(FNotaEntradaParam.ME13Data_I.Text));
+      QRNotasDevolucao.SetVariable('DATA_F', StrToDateTime(FNotaEntradaParam.ME13Data_F.Text));
+
+      if Trim(FNotaEntradaParam.ME13Filial.Text) = '' then
+        QRNotasDevolucao.SetVariable('COD_FILIAL', Null)
+      else
+        QRNotasDevolucao.SetVariable('COD_FILIAL', Trim(FNotaEntradaParam.ME13Filial.Text));
+
+      if Trim(FNotaEntradaParam.ME13Vendedor.Text) = '' then
+        QRNotasDevolucao.SetVariable('COD_VENDEDOR', Null)
+      else
+        QRNotasDevolucao.SetVariable('COD_VENDEDOR', Trim(FNotaEntradaParam.ME13Vendedor.Text));
+
+      if Trim(FNotaEntradaParam.Me13Supervisor.Text) = '' then
+        QRNotasDevolucao.SetVariable('COD_SUPERVISOR', Null)
+      else
+        QRNotasDevolucao.SetVariable('COD_SUPERVISOR', Trim(FNotaEntradaParam.Me13Supervisor.Text));
+
+      if Trim(FNotaEntradaParam.Me13Operacao.Text) = '' then
+        QRNotasDevolucao.SetVariable('COD_OPERACAO', Null)
+      else
+        QRNotasDevolucao.SetVariable('COD_OPERACAO', Trim(FNotaEntradaParam.Me13Operacao.Text));
+
+      QRNotasDevolucao.Open;
+      if FRNotasDevolucao = nil then
+        FRNotasDevolucao := TFRNotasDevolucao.Create(Application);
+
+      FRNotasDevolucao.QRLPeriodo.Caption := 'Período de ' + FNotaEntradaParam.ME13Data_I.Text + ' até ' + FNotaEntradaParam.ME13Data_F.Text;
+      FRNotasDevolucao.QRLFilial.Caption := 'Filial:' + Trim(FNotaEntradaParam.ME13Filial.Text) + ' - ' + FNotaEntradaParam.Ed13Filial.Text;
+      FRNotasDevolucao.QRLOperacao.Caption := 'Operação:' + QRNotasDevolucaoCod_Operacao.Text + ' - ' + QRNotasDevolucaoDesc_Operacao.Text;
+      FRNotasDevolucao.QRLSupervisor.Caption := 'Supervisor:' + FNotaEntradaParam.Ed13Supervisor.Text;
+
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasDevolucao.QRPrimario.Preview
+      else
+        FRNotasDevolucao.QRPrimario.Print;
+
+      QRNotasDevolucao.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.BtCadastroParceiroClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Cadastro_Parceiro.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+
+end;
+
+procedure TFNotaEntradaCad.DBEdit11Exit(Sender: TObject);
+begin
+  inherited;
+  if Trim(DBEdit11.Text) <> '' then
+  begin
+    if DMNotaEntrada.QNotaEntradaDESC_PLACA.Value = '' then
+    begin
+      DMNotaEntrada.QNotaEntradaDESC_PLACA.Value := DMOracle.BuscaNome('SELECT DESC_PLACA FROM TB_CADASTRO', 'COD_CADASTRO = '         + Trim(DBEdit11.Text), True);
+      DMNotaEntrada.QNotaEntradaCOD_UF_VEICULO.Value := DMOracle.BuscaNome('SELECT COD_UF_VEICULO FROM TB_CADASTRO', 'COD_CADASTRO = ' + Trim(DBEdit11.Text), True);
+      DMNotaEntrada.QNotaEntradaDESC_ESPECIE.Value := 'VOLUME';
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtConsMotoristaClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Motorista.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+
+end;
+
+procedure TFNotaEntradaCad.BTMotivoCancClick(Sender: TObject);
+begin
+  inherited;
+  if FMotivoCons = nil then
+    FMotivoCons := TFMotivoCons.Create(Application);
+  if FMotivoCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Motivo_Canc.Value := DMMotivo.QMotivoConsCod_Motivo.Value;
+end;
+
+procedure TFNotaEntradaCad.DBEdit39Exit(Sender: TObject);
+var
+  wEmbalagem: Real;
+begin
+  inherited;
+  with DMNotaEntrada do
+    if (QItemNFval_unitario.Value > 0) and (not QNotaEntradaind_complemento.Value) then
+    begin
+      QItemNFVal_Total.Value := QItemNFVal_Unitario.Value * QItemNFQt_Quantidade.Value;
+      if QItemNFCOD_PRODUTO.Text <> '' then
+        if DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + QItemNFCOD_PRODUTO.Text) = 'AGRICOLA' then
+        begin
+          wEmbalagem := 0.00;
+          wEmbalagem := StrToFloat(DMOracle.BuscaNome('SELECT NUM_EMBALAGEM FROM TB_PRODUTO', 'COD_PRODUTO =' + QItemNFCOD_PRODUTO.Text));
+          QItemNFVal_Total.Value := QItemNFVal_Total.Value / wEmbalagem;
+        end;
+    end;
+end;
+
+procedure TFNotaEntradaCad.btConsClassificadoraClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCOD_CADASTRO_CLASSIFICACAO.Value := DMCadastro.QCadastroConsCOD_CADASTRO.Value;
+end;
+
+procedure TFNotaEntradaCad.Terceirizao1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[14].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRTerceirizacao.Close;
+      if Trim(FNotaEntradaParam.ME14Filial.Text) = '' then
+        QRTerceirizacao.SetVariable('COD_FILIAL', Null)
+      else
+        QRTerceirizacao.SetVariable('COD_FILIAL', FNotaEntradaParam.ME14Filial.Text);
+
+      if Trim(FNotaEntradaParam.ME14Cadastro.Text) = '' then
+        QRTerceirizacao.SetVariable('COD_CADASTRO', Null)
+      else
+        QRTerceirizacao.SetVariable('COD_CADASTRO', FNotaEntradaParam.ME14Cadastro.Text);
+
+      if (Trim(FNotaEntradaParam.ME14OPERACAO.Text) <> '') or (Trim(FNotaEntradaParam.ME14OperacaoEntrada.Text) <> '')  then
+      begin
+        QRTerceirizacao.SetVariable('COD_OPERACAO', FNotaEntradaParam.ME14OPERACAO.Text);
+        QRTerceirizacao.SetVariable('COD_OPERACAO_ENTRADA', FNotaEntradaParam.ME14OperacaoEntrada.Text);
+      end
+      else
+        raise Exception.Create('É necessário informar a Operação de Saída e Entrada.');
+
+      if (FNotaEntradaParam.ME14SaldoEnt.Text <> '') or (FNotaEntradaParam.ME14SaldoSaida.Text <> '') then
+      begin
+        QRTerceirizacao.SetVariable('SALDO_ENTRADA', FNotaEntradaParam.ME14SaldoEnt.Text);
+        QRTerceirizacao.SetVariable('SALDO_SAIDA', FNotaEntradaParam.ME14SaldoSaida.Text);
+      end
+      else
+        raise Exception.Create('É ncessário informar o saldo de Entrada e Saída.');
+        
+      if Trim(FNotaEntradaParam.ME14Serie.Text) = '' then
+        QRTerceirizacao.SetVariable('COD_SERIE', Null)
+      else
+        QRTerceirizacao.SetVariable('COD_SERIE', FNotaEntradaParam.ME14Serie.Text);
+
+      if Trim(FNotaEntradaParam.ME14Ano.Text) <> '' then
+      begin
+        QRTerceirizacao.SetVariable('DATA_I', StrToDate('01/01/' + FNotaEntradaParam.ME14Ano.Text));
+        QRTerceirizacao.SetVariable('DATA_F', StrToDateTime('31/12/' + FNotaEntradaParam.ME14Ano.Text));
+      end
+      else
+        raise Exception.Create('É necessário informar o Ano.');
+      QRTerceirizacao.Open;
+      if FRTerceirizacao = nil then
+        FRTerceirizacao := TFRTerceirizacao.Create(Application);
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRTerceirizacao.QRPrimario.Preview
+      else
+        FRTerceirizacao.QRPrimario.Print;
+      QRTerceirizacao.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.BitBtn3Click(Sender: TObject);
+begin
+  inherited;
+  if FImpostoCons = nil then
+    FImpostoCons := TFImpostoCons.create(application);
+
+  if FImpostoCons.showmodal = mrok then
+    DMNotaEntrada.QNotaImpostoServicoCOD_IMPOSTO.Value := DMImposto.QImpostoConsCOD_IMPOSTO.Value;
+end;
+
+procedure TFNotaEntradaCad.RelatrioMovimentaoProdutoGMO1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[15].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRMovMercadoria_GMO.Close;
+      if Trim(FNotaEntradaParam.Me15Filial.Text) = '' then
+        QRMovMercadoria_GMO.SetVariable('FILIAL', Null)
+      else
+        QRMovMercadoria_GMO.SetVariable('FILIAL', FNotaEntradaParam.Me15Filial.Text);
+      if Trim(FNotaEntradaParam.Me15Cadastro.Text) = '' then
+        QRMovMercadoria_GMO.SetVariable('CADASTRO', Null)
+      else
+        QRMovMercadoria_GMO.SetVariable('CADASTRO', FNotaEntradaParam.Me15Cadastro.Text);
+      if Trim(FNotaEntradaParam.Me15Produto.Text) = '' then
+        QRMovMercadoria_GMO.SetVariable('COD_PRODUTO', Null)
+      else
+        QRMovMercadoria_GMO.SetVariable('COD_PRODUTO', FNotaEntradaParam.Me15Produto.Text);
+      if Trim(FNotaEntradaParam.Me15Classe.Text) = '' then
+        QRMovMercadoria_GMO.SetVariable('NUM_CLASSE', Null)
+      else
+        QRMovMercadoria_GMO.SetVariable('NUM_CLASSE', FNotaEntradaParam.Me15Classe.Text);
+      if Trim(FNotaEntradaParam.Me15SubClasse.Text) = '' then
+        QRMovMercadoria_GMO.SetVariable('NUM_SUBCLASSE', Null)
+      else
+        QRMovMercadoria_GMO.SetVariable('NUM_SUBCLASSE', FNotaEntradaParam.Me15SubClasse.Text);
+      case FNotaEntradaParam.Rg15TipoPessoa.ItemIndex of
+        0: QRMovMercadoria_GMO.SetVariable('IND_FISICA_JURIDICA', 'F');
+        1: QRMovMercadoria_GMO.SetVariable('IND_FISICA_JURIDICA', 'J');
+        2: QRMovMercadoria_GMO.SetVariable('IND_FISICA_JURIDICA', Null);
+      end;
+      QRMovMercadoria_GMO.SetVariable('DATA_I', FNotaEntradaParam.Me15DtInicial.Text);
+      QRMovMercadoria_GMO.SetVariable('DATA_F', FNotaEntradaParam.Me15DtFinal.Text);
+      QRMovMercadoria_GMO.Open;
+      QrMovMercadoria_GMO_CR.Open;
+      if FrMovMercadoria_GMO = nil then
+        FrMovMercadoria_GMO := TFrMovMercadoria_GMO.Create(Application);
+      FrMovMercadoria_GMO.QRLTitulo.Caption := 'Relatório Movimento Mercadoria GMO De ' + FNotaEntradaParam.Me15DtInicial.Text + ' Até ' + FNotaEntradaParam.Me15DtFinal.Text;
+      FrMovMercadoria_GMO.QRLFilial.Caption := 'Filial:' + FNotaEntradaParam.Ed15Filial.Text;
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FrMovMercadoria_GMO.QRPrimario.Preview
+      else
+        FrMovMercadoria_GMO.QRPrimario.Print;
+      QRMovMercadoria_GMO.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.NotasdeServios1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[16].TabVisible := true;
+  if FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    with DMNotaEntrada do
+    begin
+      QRNotaServico.Close;
+
+      //Frames------------------------------------------------------------------
+      if Trim(FNotaEntradaParam.FmFilial17.MeFilial.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('FILIAL', Trim(FNotaEntradaParam.FmFilial17.MeFilial.Text));
+        QRNotaServicoImposto.SetVariable('FILIAL', Trim(FNotaEntradaParam.FmFilial17.MeFilial.Text));
+      end
+      else
+      begin
+        QRNotaServico.SetVariable('FILIAL', null);
+        QRNotaServicoImposto.SetVariable('FILIAL', null);
+      end;
+
+      if Trim(FNotaEntradaParam.FmCadastro17.MeCadastro.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('FORNECEDOR', Trim(FNotaEntradaParam.FmCadastro17.MeCadastro.Text));
+        QRNotaServicoImposto.SetVariable('FORNECEDOR', Trim(FNotaEntradaParam.FmCadastro17.MeCadastro.Text))
+      end
+      else
+      begin
+        QRNotaServico.SetVariable('FORNECEDOR', null);
+        QRNotaServicoImposto.SetVariable('FORNECEDOR', null);
+      end;
+
+      if Trim(FNotaEntradaParam.FmOperacao17.MeOperacao.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('OPERACAO', Trim(FNotaEntradaParam.FmOperacao17.MeOperacao.Text));
+        QRNotaServicoImposto.SetVariable('OPERACAO', Trim(FNotaEntradaParam.FmOperacao17.MeOperacao.Text));
+      end
+      else
+      begin
+        QRNotaServico.SetVariable('OPERACAO', null);
+        QRNotaServicoImposto.SetVariable('OPERACAO', null);
+      end;
+      //------------------------------------------------------------------------
+      if Trim(FNotaEntradaParam.Me16Recebimento_I.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('DT_RECEBIMENTO_I', Trim(FNotaEntradaParam.Me16Recebimento_I.Text));
+        QRNotaServicoImposto.SetVariable('DT_RECEBIMENTO_I', Trim(FNotaEntradaParam.Me16Recebimento_I.Text));
+      end
+      else
+        raise Exception.Create('Informar data de recebimento inicial');
+      if Trim(FNotaEntradaParam.Me16Recebimento_F.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('DT_RECEBIMENTO_F', Trim(FNotaEntradaParam.Me16Recebimento_F.Text));
+        QRNotaServicoImposto.SetVariable('DT_RECEBIMENTO_F', Trim(FNotaEntradaParam.Me16Recebimento_F.Text));
+      end
+      else
+        raise Exception.Create('Informar data de recebimento final');
+      if Trim(FNotaEntradaParam.Me16Emissao_I.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('DT_EMISSAO_I', Trim(FNotaEntradaParam.Me16Emissao_I.Text));
+        QRNotaServicoImposto.SetVariable('DT_EMISSAO_I', Trim(FNotaEntradaParam.Me16Emissao_I.Text));
+      end
+      else
+      begin
+        QRNotaServico.SetVariable('DT_EMISSAO_I', null);
+        QRNotaServicoImposto.SetVariable('DT_EMISSAO_I', null);
+      end;
+      if Trim(FNotaEntradaParam.Me16Emissao_F.Text) <> '' then
+      begin
+        QRNotaServico.SetVariable('DT_EMISSAO_F', Trim(FNotaEntradaParam.Me16Emissao_F.Text));
+        QRNotaServicoImposto.SetVariable('DT_EMISSAO_F', Trim(FNotaEntradaParam.Me16Emissao_F.Text));
+      end
+      else
+      begin
+        QRNotaServico.SetVariable('DT_EMISSAO_F', null);
+        QRNotaServicoImposto.SetVariable('DT_EMISSAO_F', null);
+      end;
+
+      QRNotaServico.Open;
+      QRNotaServicoImposto.open;
+
+      if FRNotasServico = nil then
+        FRNotasServico := TFRNotasServico.Create(Application);
+      if Trim(FNotaEntradaParam.FmFilial17.MeFilial.Text) <> '' then
+        FRNotasServico.QRLFilial.Caption := Trim(FNotaEntradaParam.FmFilial17.MeFilial.Text)
+      else
+        FRNotasServico.QRLFilial.Caption := 'Todas';
+      if (Trim(FNotaEntradaParam.Me16Emissao_I.Text) <> '') and (Trim(FNotaEntradaParam.Me16Emissao_F.Text) <> '') then
+        FRNotasServico.QRLPeriodo.Caption := FNotaEntradaParam.Me16Emissao_I.Text +
+          ' à ' + FNotaEntradaParam.Me16Emissao_F.Text
+      else
+        FRNotasServico.QRLPeriodo.Caption := 'Todos';
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotasServico.QRCompositeReport1.Preview
+      else
+        FRNotasServico.QRCompositeReport1.Print;
+
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.OrdemdePagamento1Click(Sender: TObject);
+var
+  wCidadeFilial, wCaractereMaiusculo: string;
+begin
+  inherited;
+  if FOrdemCompraDadosAdicionais = nil then
+    FOrdemCompraDadosAdicionais := TFOrdemCompraDadosAdicionais.Create(Application);
+  FOrdemCompraDadosAdicionais.ShowModal();
+  with DMNotaEntrada do
+  begin
+    QROrdemPagamento.Close;
+    QROrdemPagamento.SetVariable('COD_NOTA', QNotaEntradaCOD_NOTA_CAB.Value);
+    QROrdemPagamento.Open;
+    QROrdemPagamentoItem.Close;
+    QROrdemPagamentoItem.Open;
+    QROrdemPagamentoItem.First;
+
+    if QNotaEntrada.RecordCount = 0 then
+      raise Exception.Create('Não existe nota selecionada');
+
+    if QNotaEntradaIND_SITUACAO.Value = '2' then
+    begin
+      if FROrdemPagamento = nil then
+        FROrdemPagamento := TFROrdemPagamento.Create(Application);
+      FROrdemPagamento.QRLFilial.Caption := QROrdemPagamentoDESC_FILIAL.Text + ' - ' +
+        QROrdemPagamentoCIDADE_FILIAL.Text + ' - ' +
+        QROrdemPagamentoESTADO_FILIAL.Text;
+
+      FROrdemPagamento.QRLData.Caption := DateToStr(Date());
+      wCidadeFilial := QROrdemPagamentoCIDADE_FILIAL.Value;
+      wCaractereMaiusculo := copy(wCidadeFilial, 1, 1);
+      wCidadeFilial := wCaractereMaiusculo + LowerCase(copy(wCidadeFilial, 2, length(wcidadeFilial)));
+
+      FROrdemPagamento.QRLCidade.Caption := 'Cidade' + ' - ' +
+        wCidadeFilial + ' - ' +
+        QROrdemPagamentoESTADO_FILIAL.Text;
+
+      if QROrdemPagamentoNUM_ORDEM_COMPRA.Text <> '' then
+        FROrdemPagamento.QRLPedido.Caption := QROrdemPagamentoNUM_ORDEM_COMPRA.Text;
+
+      if FOrdemCompraDadosAdicionais.ModalResult = MrOk then
+      begin
+        if QROrdemPagamentoNUM_ORDEM_COMPRA.Text = '' then
+          FROrdemPagamento.QRLPedido.Caption := FOrdemCompraDadosAdicionais.MePedido.Text;
+
+        FROrdemPagamento.QRLCondicao.Caption := FOrdemCompraDadosAdicionais.MeCondicao.Text;
+        FROrdemPagamento.QRLContato.Caption := FOrdemCompraDadosAdicionais.MeContato.Text;
+      end;
+
+      FROrdemPagamento.QuickRep1.Preview;
+    end
+    else
+      raise Exception.Create('Esta nota não foi confirmada');
+
+    //QROrdemPagamento.Close;
+    //QROrdemPagamentoItem.Close;
+  end;
+end;
+
+procedure TFNotaEntradaCad.SBAlterarClick(Sender: TObject);
+begin
+  if DMParamSistema.QParamSistemaCod_Empresa.Value <> 'MOINHO' then
+    if DMOracle.BuscaNome('SELECT COD_NOTA_CAB FROM TB_NOTA_CAB', 'COD_NOTA_CAB_TRANS_ENT = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text, True) <> '' then
+      raise Exception.Create('Não Permite Alterar Notas Geradas P/Transferencia');
+  if DBRDescSTPisCofins.ItemIndex = -1 then
+    DBRDescSTPisCofins.ItemIndex := 1;
+  inherited;
+end;
+
+procedure TFNotaEntradaCad.sbAtalhosClick(Sender: TObject);
+begin
+  inherited;
+  if FOperacaoCons = nil then
+    FOperacaoCons := TFOperacaoCons.Create(Application);
+  FOperacaoCons.RGTipoOperacao.ItemIndex := 0;
+  FOperacaoCons.RGTipoOperacao.Enabled := False;
+  if FOperacaoCons.ShowModal = mrOk then
+    if DMNotaEntrada.QNotaEntradaCOD_ESTADO.Value = 'PR' then
+      DMNotaEntrada.QItemNFCOD_CFOP.Value := StrToInt(DMOracle.BuscaNome('SELECT NUM_NATUREZA_EST_NOVO FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMOperacao.QOperacaoConsCod_Operacao.Text))
+    else
+      DMNotaEntrada.QItemNFCOD_CFOP.Value := StrToInt(DMOracle.BuscaNome('SELECT NUM_NATUREZA_INT_NOVO FROM TB_OPERACAO', 'COD_OPERACAO = ' + DMOperacao.QOperacaoConsCod_Operacao.Text));
+end;
+
+procedure TFNotaEntradaCad.MEPercSubstExit(Sender: TObject);
+begin
+  inherited;
+  if ((Trim(MEPercSubst.Text) <> '0') and (Trim(MEPercSubst.Text) <> '')) then
+    DMNotaEntrada.QItemNFVAL_ICMS_SUBST.Value := ((DMNotaEntrada.QItemNFVAL_TOTAL.Value * StrToFloat(MEPercSubst.Text)) / 100);
+end;
+
+procedure TFNotaEntradaCad.doPrior(wTamColuna: Integer);
+var
+  i: Integer;
+begin
+  for i := 1 to wTamColuna - 1 do
+    DMRelatorio_Compra.CdEtiqNota.Prior;
+end;
+
+function TFNotaEntradaCad.getTextoLinha(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+var
+  wBarra: string;
+begin
+  if wEtiquetaLinha = 0 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 130) + ',50,0,1,1,2,N,"' + DMOracle.FastSelect('DESC_FILIAL', 'TB_FILIAL', 'COD_FILIAL = ' + IntToStr(DMUsuario.CodFilialUsuario)) + '"';
+  if wEtiquetaLinha = 1 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 130) + ',100,0,1,1,2,N,"' + DMRelatorio_Compra.CdEtiqNotaDESC_PRODUTO.Text + '"';
+  if wEtiquetaLinha = 2 then
+  begin
+    wBarra := Bib.StrZero(DMRelatorio_Compra.CdEtiqNotaCOD_PRODUTO.Text, 6) + Bib.StrZero(DMRelatorio_Compra.CdEtiqNotaCOD_LOTE_TIPO.Text, 6);
+    Result := 'B' + inttostr(wLarguraEtiqueta + 150) + ',130,0,1,2,3,60,B,"' + wBarra + '"'
+  end;
+  if wEtiquetaLinha = 3 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 140) + ',300,0,1,1,3,N,"' + 'Preco R$ ' + FormatFloat('#,##0.00', DMRelatorio_Compra.CdEtiqNotaVAL_VAREJO.Value) + '"';
+end;
+
+function TFNotaEntradaCad.getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta: Integer): string;
+var
+  wBarra: string;
+begin
+  if wEtiquetaLinha = 0 then
+    Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',10,0,1,1,2,N,"' + Copy(DMRelatorio_Compra.CdEtiqNotaDESC_PRODUTO.Text, 1, 25) + '"';
+  if wEtiquetaLinha = 1 then
+    if DMRelatorio_Compra.CdEtiqNotaVAL_VAREJO.Value > 0 then
+      Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',40,0,1,1,2,N," Tam: ' +
+        DMOracle.FastSelect('DESC_LOTE', 'TB_LOTE_TIPO', 'COD_LOTE_TIPO = ' +
+        DMRelatorio_Compra.CdEtiqNotaCOD_LOTE_TIPO.Text) + ' Preço: ' +
+        FormatFloat('0.00', DMRelatorio_Compra.CdEtiqNotaVAL_VAREJO.Value) + '"'
+    else
+      Result := 'A' + inttostr(wLarguraEtiqueta + 20) + ',40,0,1,1,2,N," Tam: ' +
+        DMOracle.FastSelect('DESC_LOTE', 'TB_LOTE_TIPO', 'COD_LOTE_TIPO = ' +
+        DMRelatorio_Compra.CdEtiqNotaCOD_LOTE_TIPO.Text) + '"';
+  if wEtiquetaLinha = 2 then
+  begin
+    wBarra := Bib.StrZero(DMRelatorio_Compra.CdEtiqNotaCOD_PRODUTO.Text, 8);
+    Result := 'B' + inttostr(wLarguraEtiqueta + 40) + ',80,0,1,2,1,50,B,"' + wBarra + '"'
+  end;                                                  
+end;
+
+procedure TFNotaEntradaCad.direcionaProcedureEtiquetasNotadeCompra(Sender: TObject);
+begin
+  if DMParamSistema.CodEmpresa = 'DEION' then
+    EmissodeEtiquetasporNotadeCompraDeionClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'SOLDAR' Then
+    EmissodeEtiquetasporNotadeCompraSOLDARClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'FERRAGMED' Then
+    EmissodeEtiquetasporNotadeCompraFERRAGEMClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'OTICA' Then
+    EmissodeEtiquetasporNotadeCompraOTICAClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'BORGES' Then
+    EmissodeEtiquetasporNotadeCompraBorgesClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'BORGES2' Then
+    EmissodeEtiquetasporNotadeCompraBorges2Click(Sender)
+  else if DMParamSistema.CodEmpresa = 'PAULINHO' Then
+    EmissodeEtiquetasporNotadeCompraPaulinhoClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'JASOL' then
+    EmissodeEtiquetasporNotadeCompraJasolClick(Sender)
+  {else if DMParamSistema.CodEmpresa = 'NIR' then  //quando voltar a impressora ARGOX - comentar essa linha. Junior 25/11/2019
+    EmissodeEtiquetasporNotadeCompraCemapaELGINL42Click(Sender)}
+  else if (DMParamSistema.CodEmpresa = 'AGROCAMPO') then
+    EmissodeEtiquetasporNotadeCompraAGROCAMPOClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'NUTRIR') then
+    EmissodeEtiquetasporNotadeCompraNUTRIRClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'DINIZ' then
+    EmissodeEtiquetasporNotadeCompraDinizClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'NUTRIVET') then
+    EmissodeEtiquetasporNotadeCompraNutrivetELGINL42Click(Sender)
+//  else if (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+//    EmissodeEtiquetasporNotadeCompraNutripetELGINL42Click(Sender)
+  else if DMParamSistema.CodEmpresa = 'MAVENIDA' then
+    EmissodeEtiquetasporNotadeCompraMavenidaClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'SEMEFERTIL' then
+    EmissodeEtiquetasporNotadeCompraSemefertilClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'DONNA' then
+    EmissodeEtiquetasporNotadeCompraDONNAClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'NFCE-SHADA' then
+    EmissodeEtiquetasporNotadeCompraElShadayClick(Sender)  
+  else if DMParamSistema.CodEmpresa = 'GGIRARDI' then
+    EmissodeEtiquetasporNotadeCompraGGIRARDIClick(Sender)
+  else if DMParamSistema.CodEmpresa = 'DUST' then
+    EmissodeEtiquetasporNotadeCompraDUSTClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'AGROCAO') then
+    EmissodeEtiquetasporNotadeCompraAGROCAOClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'FINESTRA') then
+    EmissodeEtiquetasporNotadeCompraFINESTRAClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'PILILICOS') then
+    EmissodeEtiquetasporNotadeCompraPILILICOSClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'SCALA') then
+    EmissodeEtiquetasporNotadeCompraSCALAClick(Sender)
+  else if (DMParamSistema.CodEmpresa = 'JBATACADO') then
+    EmissodeEtiquetasporNotadeCompraJBATACADOClick(Sender)
+  else
+    EmissodeEtiquetasporNotadeCompra1Click(Sender);
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraMavenidaClick(
+  Sender: TObject);
+var
+  ret,nLen : integer;
+  pbuf : array[0..127] of AnsiChar;
+  ver : PAnsiChar;
+  strmsg : string;
+  len1,len2, wNumEtiquetas : integer;
+  buf1,buf2 : AnsiString;
+  buff1 : array[0..127] of WideChar;
+  wEmpresa, wValor: string;
+  wColuna: Integer;
+  wImprimir, wControla_Ultima_Linha, wDuasColunas: Boolean;
+  ArqTeste: TextFile;
+  wDesc_Etiqueta: String;
+begin
+  inherited;
+  wImprimir := True;  // serve para mandar para arquivo texto para testar o programa quando false ou true manda para impressora
+//  wDesc_Etiqueta := DMOracle.FastSelect('DESC_LPT_ETIQUETA','TB_FILIAL','COD_FILIAL = ' + DMParamSistema.QParamSistemaCOD_FILIAL.Text);
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  If (DMParamSistema.CodEmpresa = 'NUTRIVET') or (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+     FNotaEntradaParam.RGTipoEtiqueta.ItemIndex := 1;
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+
+  wControla_Ultima_Linha := False;
+  nLen := A_GetUSBBufferLen() + 1;
+  len1 := 128;
+  len2 := 128;
+  SetLength(buf1,len1);
+  SetLength(buf2,len2);
+
+  A_EnumUSB(pbuf);
+  A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+  ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+
+  A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsInteger);
+//  A_Set_Darkness(14);
+
+
+  wColuna := 1;
+  with DMRelatorio_Compra do
+  begin
+    QEtiqNota.Close;
+    QEtiqNota.SetVariable('NUM_NOTA', Null);
+    QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+    QEtiqNota.Open;
+    QEtiqNota.First;
+
+   while ( not QEtiqNota.Eof) do
+   begin
+     if wImprimir then
+     begin
+       A_Prn_Text  (001, 050, 1, 1, 0, 2, 4, 'n', 2,pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,1,35)));
+       A_Prn_Text(155, 010, 1, 2, 0, 2, 4, 'n', 2,pchar('R$ '+ FormatFloat('##,##0.00',QEtiqNotaVAL_VAREJO.AsFloat)));
+       A_Set_Backfeed(320);
+       A_Print_Out(1, 1, 1, 1);
+     end;
+     QEtiqNota.Next;
+   end;
+   A_ClosePrn;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraFINESTRAClick(
+  Sender: TObject);
+var
+  ret,nLen : integer;
+  pbuf : array[0..127] of AnsiChar;
+  ver : PAnsiChar;
+  strmsg : string;
+  len1,len2, wNumEtiquetas : integer;
+  buf1,buf2 : AnsiString;
+  buff1 : array[0..127] of WideChar;
+  wEmpresa, wValor: string;
+  wColuna: Integer;
+  wImprimir, wControla_Ultima_Linha, wDuasColunas: Boolean;
+  ArqTeste: TextFile;
+  wDesc_Etiqueta: String;
+begin
+  inherited;
+  wImprimir := True;  // serve para mandar para arquivo texto para testar o programa quando false ou true manda para impressora
+//  wDesc_Etiqueta := DMOracle.FastSelect('DESC_LPT_ETIQUETA','TB_FILIAL','COD_FILIAL = ' + DMParamSistema.QParamSistemaCOD_FILIAL.Text);
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  If FNotaEntradaParam.ShowModal = MrOk then
+
+  wControla_Ultima_Linha := False;
+  nLen := A_GetUSBBufferLen() + 1;
+  len1 := 128;
+  len2 := 128;
+  SetLength(buf1,len1);
+  SetLength(buf2,len2);
+
+  A_EnumUSB(pbuf);
+  A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+  ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+
+  A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsInteger);
+
+  wColuna := 1;
+  with DMRelatorio_Compra do
+  begin
+    QEtiqNota.Close;
+    QEtiqNota.SetVariable('NUM_NOTA', Null);
+    QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+    QEtiqNota.Open;
+    QEtiqNota.First;
+
+    while ( not QEtiqNota.Eof) do
+    begin
+     if wImprimir then
+     begin
+
+       A_Prn_Text  (001, 090, 1, 2, 0, 2, 1, 'n', 2,pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,1,26)));
+       if QEtiqNotaNUM_CONVERTE_FARDO.Value < 1 then
+       begin
+         A_Prn_Text(160, 045, 1, 2, 0, 2, 4, 'n', 1, pchar('R$ '+ FormatFloat('##,##0.00',(QEtiqNotaVAL_VAREJO.AsFloat/1000)*100) ));
+         A_Prn_Text(001, 045, 1, 2, 0, 2, 1, 'n', 1, pchar(QEtiqNotaDESC_COD_BARRA.AsString));
+         A_Prn_Text(001, 030, 1, 2, 0, 2, 1, 'n', 2, pchar('REF PRECO POR 100G'));
+         A_Prn_Text(030, 010, 1, 2, 0, 2, 1, 'n', 1, pchar('PRECO POR KG R$ '+ FormatFloat('##,##0.00',QEtiqNotaVAL_VAREJO.AsFloat)));
+       end
+       else
+       begin
+         A_Prn_Text(160, 045, 1, 2, 0, 2, 4, 'n', 1, pchar('R$ '+ FormatFloat('##,##0.00',QEtiqNotaVAL_VAREJO.AsFloat)));
+         A_Prn_Text(001, 010, 1, 2, 0, 2, 1, 'n', 1, pchar(QEtiqNotaDESC_COD_BARRA.AsString));
+       end;
+       A_Set_Backfeed(320);
+       A_Print_Out(1, 1, 1, 1);
+       QEtiqNota.Next;
+     end;
+    end;
+    A_ClosePrn;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompra1Click(
+  Sender: TObject);
+var
+  coluna, linha, posicao, RecNoAnterior, i, qtd, wCont, esquerda, wNumColunas: Integer;
+  F: TextFile;
+  wProduto,wProduto1,wProduto2,wValor,wValor1,wValor2,wQtEtiqueta : string;
+  wQtde: Real;
+  wEtiquetaLinha, wEtiquetaColuna, wEtiquetaAtual, wLinhaAtual, wTotalEtiquetas, wNumLinhasEtiqueta: Integer;
+  wLarguraEtiqueta, wEsquerda, wDiv, wMod, wQtdeUsada : Integer;
+  wFlag : Boolean;
+
+     ret,nLen : integer;
+     pbuf : array[0..127] of AnsiChar;
+     ver : PAnsiChar;
+     strmsg : string;
+     len1,len2 : integer;
+     buf1,buf2 : AnsiString;
+     buff1 : array[0..127] of WideChar;
+begin
+  inherited;
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  If (DMParamSistema.CodEmpresa = 'NUTRIVET') or (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+     FNotaEntradaParam.RGTipoEtiqueta.ItemIndex := 1;
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wEmpresa := DMParamSistema.QParamSistemaCOD_EMPRESA.Text;
+
+    If (Trim(FNotaEntradaParam.MeNumNota.Text) = '0') and (Trim(FNotaEntradaParam.Fm18Produto.MeProduto.Text) <> '') then
+    Begin
+      wProduto := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto.MeProduto.Text);
+      wProduto1 := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto2.MeProduto.Text);
+      wProduto2 := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto3.MeProduto.Text);
+      wValor := DMOracle.BuscaNome('SELECT VAL_VAREJO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto.MeProduto.Text);
+      wValor1 := DMOracle.BuscaNome('SELECT VAL_VAREJO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto2.MeProduto.Text);
+      wValor2 := DMOracle.BuscaNome('SELECT VAL_VAREJO FROM TB_PRODUTO','COD_PRODUTO='+FNotaEntradaParam.Fm18Produto3.MeProduto.Text);
+
+      nLen := A_GetUSBBufferLen() + 1;
+      len1 := 128;
+      len2 := 128;
+      SetLength(buf1,len1);
+      SetLength(buf2,len2);
+      A_EnumUSB(pbuf);
+      A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+      if (DMParamSistema.CodEmpresa = 'DINIZ') then
+      begin
+        A_Set_Unit('m');             // Unidade métrica
+        A_Set_Sensor_Mode('e', 0);   // Sensor transmissivo / GAP
+        A_Set_Gap(2);                // GAP = 2 mm
+        A_Set_Syssetting(
+                1,    // Direct Thermal
+                0,    // Sem cutter / peel
+                79,   // Comprimento da etiqueta = 20 mm
+                1,    // Zero normal
+                2);     // Cancela pause
+      end;
+      A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+      A_Prn_Text(008, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(wProduto,1,28)));
+      if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+        A_Prn_Text(008, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ wValor));
+      A_Prn_Text(008, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ FNotaEntradaParam.Fm18Produto.MeProduto.Text));
+
+      A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wempresa));
+      A_Prn_Text(148, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(wProduto1,1,28)));
+      if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+        A_Prn_Text(148, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ wValor1));
+      A_Prn_Text(148, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ FNotaEntradaParam.Fm18Produto2.MeProduto.Text));
+
+      A_Prn_Text(320, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+      A_Prn_Text(290, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(wProduto2,1,28)));
+      if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+        A_Prn_Text(290, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ wValor2));
+      A_Prn_Text(290, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ FNotaEntradaParam.Fm18Produto3.MeProduto.Text));
+
+      A_Print_Out(1, 1, 1, 1);
+      A_ClosePrn;
+    end;
+    //Retirado o Else para imprimir etiquetas mesmo com notas somente digitadas -MEDIBENS. Junior 06/11/2013
+    if (wEmpresa = 'OSARE')     or (wEmpresa = 'NIR')     or (wEmpresa = 'PIXIXE')    or (wEmpresa = 'DINIZ') or
+       (wEmpresa = 'NUTRIVET')  or (wEmpresa = 'ITATIBA') or (wEmpresa = 'CONSTRUIR') or (wEmpresa = 'COZER')    or
+       (wEmpresa = 'PAPELARIA') or (wEmpresa = 'TRENTO') or  (wEmpresa = 'KREUZ') or (wEmpresa = 'QUERENCIA') or
+       (wEmpresa = 'MODASUL') or (wEmpresa = 'CEIFAGRIL') or (wEmpresa = 'FRACTA') or (wEmpresa = 'NUTRIPET') or
+       (wEmpresa = 'PROPE') or (wEmpresa = 'FERRAGENS') then
+    begin
+      wTotalEtiquetas := 0;
+      wQtdeUsada := 0;
+      wFlag := False;
+      wProduto := '';
+      wQtEtiqueta := '';
+
+      with DMRelatorio_Compra do
+      begin
+        QEtiqNota.Close;
+        QEtiqNota.SetVariable('NUM_NOTA', Null);
+        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+        QEtiqNota.Open;
+        QEtiqNota.First;
+
+        if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+          wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+        else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+          wTotalEtiquetas := 1
+        else
+          wTotalEtiquetas := 0;
+
+        while not QEtiqNota.Eof do
+        Begin
+          while wTotalEtiquetas = 0 do
+          begin
+            QEtiqNota.Next;
+            if QEtiqNota.Eof then
+            begin
+              wFlag := True;
+              Exit;
+            end;
+
+            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+              wTotalEtiquetas := 1
+            else
+              wTotalEtiquetas := 0;
+          end;
+
+          nLen := A_GetUSBBufferLen() + 1;
+          len1 := 128;
+          len2 := 128;
+          SetLength(buf1,len1);
+          SetLength(buf2,len2);
+          A_EnumUSB(pbuf);
+          A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+          ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+          {if DMParamSistema.CodEmpresa <> 'NIR' then
+            A_Set_Darkness(12);}
+          A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsInteger);
+
+          if not wFlag then
+          begin
+            if (wEmpresa = 'PIXIXE') then
+            begin
+              A_Prn_Text(043, 100, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+              A_Prn_Text(014, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(014, 040, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text + ' -Cod.' + QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Barcode(025, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value))); //de 20 mudei para 22 -  estava 1,22
+            end else
+            {if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(030, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+              A_Prn_Text(013, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(013, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+ QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Text(88, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(020, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+            end else}
+            if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(035, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+              A_Prn_Text(015, 057, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(015, 042, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(050, 040, 1, 1, 0, 2, 3, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(020, 014, 1, 'a', 0, 20, 23, 'N', 10, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(050, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+            end else
+            if (wEmpresa = 'QUERENCIA') then
+            begin
+              A_Prn_Text(030, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('QUERENCIA'));
+              A_Prn_Text(010, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(010,  038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(044, 038, 1, 1, 0, 2, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(020, 004, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.value)));
+              A_Prn_Text(080, 004, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+            end else
+            if (wEmpresa = 'OSARE') then
+            begin
+              A_Prn_Text(040, 100, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(010, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(010, 075, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(025, 055, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(030, 015, 1, 'D', 0, 4, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              A_Prn_Text(025, 002, 1, 2, 0, 0, 0, 'n', 2, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+
+            end else
+            if (wEmpresa = 'MODASUL') then
+            begin
+              A_Prn_Text(040, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(010, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(010, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(040, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(040, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+            end else
+            if (wEmpresa = 'ITATIBA') or (wEmpresa = 'CONSTRUIR') or (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'LOJAS COZER LTDA') then //(wEmpresa = 'COZER') then
+            begin
+              A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(008, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(008, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(008, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(020, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PROPE CALCADOS') or  //MIRACI PRECISA DESSA FORMA A IMPRESSAO DA ETIQUETA, MAS UTILIZA O COD_EMPRESA COZER
+              (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PLANETA MANIA') then //UNICA FORMA FOI UTILIZAR DESC_EMPRESA. JUNIOR 15/07/2020. Obs: Não xingar...kkkk
+            begin
+              A_Prn_Text(012, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(008, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(008, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(008, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(020, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'PROPE') then
+            begin
+              A_Prn_Text(012, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(008, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(008, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(008, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(020, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'DINIZ') then
+            begin
+              {A_Prn_Text(20, 050, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaNUM_FABRICANTE.Text,1,28)));
+              A_Prn_Text(20, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_LOCALIZACAO.Text,1,28)));
+              A_Prn_Text(20, 025, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,25)));
+              A_Prn_Text(20, 014, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,25,25)));}
+
+              A_Prn_Text_TrueType(20, 50, 30, 'Arial', 1, 700, 0, 0, 0, 'AA' , pchar(QEtiqNotaNUM_FABRICANTE.Text), 1);
+              A_Prn_Text_TrueType(20, 38, 30, 'Arial', 1, 700, 0, 0, 0, 'AB' , pchar(Copy(QEtiqNotaDESC_LOCALIZACAO.Text,1,39)), 1);
+              A_Prn_Text_TrueType(20, 25, 30, 'Arial', 1, 700, 0, 0, 0, 'AC' , pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,25)), 1);
+              A_Prn_Text_TrueType(20, 14, 30, 'Arial', 1, 700, 0, 0, 0, 'AD' , pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,26,25)), 1);
+              {A_Prn_Text(015, 040, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(015, 020, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+              B_Prn_Text(015, 040, 1, 2, 1, 1, 'n', pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              B_Prn_Text(015, 020, 1, 2, 1, 1, 'n', pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));}
+            end else        
+            if (wEmpresa = 'TRENTO') then               //1 coluna
+            begin
+              A_Prn_Text(   028, 085, 1, 2, 0, 2, 2, 'n', 2, pchar(QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(   028, 065, 1, 1, 0, 1, 2, 'n', 2, pchar(QEtiqNotaDESC_MARCA.Text + ' - ' + QEtiqNotaDESC_LOCALIZACAO.Text));
+              A_Prn_Text(   028, 050, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+              A_Prn_Barcode(026, 006, 1, 'E', 0, 0, 30, 'N', 0, pchar(QEtiqNotaDESC_COD_BARRA.Value));
+            end else
+
+            if (wEmpresa = 'NUTRIPET') then
+            begin
+                A_Prn_Text(028, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIPET'));
+                A_Prn_Text(010, 048, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+                if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+                begin
+                  A_Prn_Text(010, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+                end;
+                A_Prn_Text(010, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+
+                if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                  If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(068, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+             //A_Prn_Barcode(033, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'PAPELARIA') Then
+            begin
+              A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(010, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(010, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(030, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'KREUZ') Then
+            begin
+              A_Prn_Text(020, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('KREUZ & CIA'));
+              A_Prn_Text(010, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(010, 037, 1, 1, 0, 2, 2, 'n', 2, pchar('Cod.'+ QEtiqNotaCOD_PRODUTO.Text));
+          //  A_Prn_Text(88, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(88, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(030, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'CEIFAGRIL') then
+            begin
+              A_Prn_Text(005, 070, 1, 1, 0, 2, 2, 'n', 2,pchar('JR MULTIPECAS'));
+              A_Prn_Text(003, 056, 1, 1, 0, 1, 2, 'n', 2,pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              A_Prn_Text(003, 044, 1, 1, 0, 1, 2, 'n', 2, pchar('Fab. ' + QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(003, 032, 1, 1, 0, 1, 2, 'n', 2, pchar('Loc. ' + QEtiqNotaDESC_LOCALIZACAO.Text));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(88, 002, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(010, 002, 1, 'D', 0, 1, 20, 'N', 0,pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else
+            if (wEmpresa = 'FRACTA') then
+            begin
+              A_Prn_Text(010, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('FRACTA'));
+              A_Prn_Text(010, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//              A_Prn_Text(010,  038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+//                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                A_Prn_Text(044, 038, 1, 1, 0, 1, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(020, 004, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.value)));
+              A_Prn_Text(080, 004, 1, 1, 0, 1, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+            end else
+            if (wEmpresa = 'FERRAGENS') then
+            begin
+              A_Prn_Text(005, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('AGROFERRAGENS'));
+              A_Prn_Text(005, 056, 1, 1, 0, 2, 2, 'n', 2, pchar('COSTA OESTE'));
+              A_Prn_Text(005, 040, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              //if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 //if QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                //A_Prn_Text(044, 038, 1, 1, 0, 1, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(012, 014, 1, 'a', 0, 20, 23, 'N', 10, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.value)));
+              A_Prn_Text(050, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+            end;
+            wTotalEtiquetas := wTotalEtiquetas - 1;
+          end;
+
+          while wTotalEtiquetas <= 0 do
+          begin
+            QEtiqNota.Next;
+            if QEtiqNota.Eof then
+            begin
+              wFlag := True;
+              Break;
+            end;
+            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+              wTotalEtiquetas := 1
+            else
+              wTotalEtiquetas := 0;
+          end;
+          if not wFlag then
+          begin
+            {if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(174, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+              A_Prn_Text(155, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(155, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Text(225, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(160, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+                wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else}
+            if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(180, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+              A_Prn_Text(155, 057, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(155, 042, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(190, 040, 1, 1, 0, 2, 3, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(165, 014, 1, 'a', 0, 20, 23, 'N', 10, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(195, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'QUERENCIA') then
+            begin
+              A_Prn_Text(174, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('QUERENCIA'));
+              A_Prn_Text(155, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(155, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+              {155}      A_Prn_Text(189, 038, 1, 1, 0, 2, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(220, 006, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'OSARE') then
+            begin
+              A_Prn_Text(180, 100, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(150, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(150, 075, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(165, 055, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(180, 010, 1, 'D', 0, 4, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              A_Prn_Text(165, 002, 1, 2, 0, 0, 0, 'n', 2, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+             if (wEmpresa = 'MODASUL') then
+            begin
+              A_Prn_Text(180, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(150, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(150, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(180, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ ' + FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(180, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'ITATIBA') or (wEmpresa = 'CONSTRUIR') or (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'LOJAS COZER LTDA') then//(wEmpresa = 'COZER') then
+            begin
+              A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(150, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(150, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(150, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PROPE CALCADOS') or  //MIRACI PRECISA DESSA FORMA A IMPRESSAO DA ETIQUETA, MAS UTILIZA O COD_EMPRESA COZER
+               (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PLANETA MANIA') then //UNICA FORMA FOI UTILIZAR DESC_EMPRESA. JUNIOR 15/07/2020. Obs: Não xingar...kkkk
+            begin
+              A_Prn_Text(154, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(150, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(150, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(150, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'PROPE') then
+            begin
+              A_Prn_Text(154, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(150, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(150, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(150, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'PIXIXE') then
+            begin
+              A_Prn_Text(185, 100, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+              A_Prn_Text(154, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(154, 040, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text + ' -Cod.' + QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Barcode(165, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+
+            {if (wEmpresa = 'MEDIBENS') then
+            begin
+              A_Prn_Text(090, 095, 1, 1, 0, 2, 2, 'n', 2, pchar('MEDIBENS'));
+              A_Prn_Text(010, 075, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+              A_Prn_Text(010, 060, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(010, 045, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              A_Prn_Barcode(045, 006, 1, 'D', 0, 1, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+            end else     }
+            if (wEmpresa = 'TRENTO') then  //2 produto
+            begin
+              A_Prn_Text( 235, 085, 1, 2,   0, 2, 2,  'n', 2, pchar(QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text( 235, 065, 1, 1,   0, 1, 2,  'n', 2, pchar(QEtiqNotaDESC_MARCA.Text + ' - ' + QEtiqNotaDESC_LOCALIZACAO.Text));
+              A_Prn_Text( 235, 050, 1, 1,   0, 1, 2,  'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+            A_Prn_Barcode(234, 006, 1, 'E', 0, 0, 30, 'N', 0, pchar(QEtiqNotaDESC_COD_BARRA.Value));
+            wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'NUTRIPET') then
+            begin
+              A_Prn_Text(175, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIPET'));
+              A_Prn_Text(155, 048, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(155, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              A_Prn_Text(155, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(208, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//              A_Prn_Barcode(176, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'PAPELARIA') Then
+            begin
+              A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(152, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(152, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(185, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'KREUZ') Then
+            begin
+              A_Prn_Text(160, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('KREUZ & CIA'));
+              A_Prn_Text(152, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(152, 037, 1, 1, 0, 2, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+         //   A_Prn_Text(225, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(225, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(185, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end
+            else if (wEmpresa = 'CEIFAGRIL') then
+            begin
+              A_Prn_Text(149, 070, 1, 1, 0, 2, 2, 'n', 2,pchar('JR MULTIPECAS'));
+              A_Prn_Text(147, 056, 1, 1, 0, 1, 2, 'n', 2,pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              A_Prn_Text(147, 044, 1, 1, 0, 1, 2, 'n', 2, pchar('Fab. ' + QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(147, 032, 1, 1, 0, 1, 2, 'n', 2, pchar('Loc. ' + QEtiqNotaDESC_LOCALIZACAO.Text));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(225, 002, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(155, 002, 1, 'D', 0, 1, 20, 'N', 0,pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'FRACTA') then
+            begin
+              A_Prn_Text(150, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('FRACTA'));
+              A_Prn_Text(150, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+           //   A_Prn_Text(155, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+//                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                A_Prn_Text(189, 038, 1, 1, 0, 1, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(220, 006, 1, 1, 0, 1, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end else
+            if (wEmpresa = 'FERRAGENS') then
+            begin
+              A_Prn_Text(150, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('AGROFERRAGENS'));
+              A_Prn_Text(150, 056, 1, 1, 0, 2, 2, 'n', 2, pchar('COSTA OESTE'));
+              A_Prn_Text(150, 040, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              //if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 //if QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                //A_Prn_Text(189, 038, 1, 1, 0, 1, 2, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(150, 014, 1, 'a', 0, 20, 23, 'N', 10,pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(187, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas - 1;
+            end;
+          end;
+
+          while wTotalEtiquetas <= 0 do
+          begin
+            QEtiqNota.Next;
+            if QEtiqNota.Eof then
+            begin
+              wFlag := True;
+              Break;
+            end;
+            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+              wTotalEtiquetas := 1
+            else
+              wTotalEtiquetas := 0;
+          end;
+          if not wFlag then
+          begin
+            if (wEmpresa = 'PIXIXE') then
+            begin
+              A_Prn_Text(320, 100, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+              A_Prn_Text(296, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));//estava 285
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(296, 040, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text + ' -Cod.' + QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Barcode(310, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'DINIZ') then
+            begin
+              {A_Prn_Text(225, 50, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaNUM_FABRICANTE.Text,1,28)));//estava 285
+              A_Prn_Text(225, 38, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_LOCALIZACAO.Text,1,28)));//estava 285
+              A_Prn_Text(225, 25, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));//estava 285
+              A_Prn_Text(225, 14, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,26,25)));//estava 285}
+
+              A_Prn_Text_TrueType(225, 50, 30, 'Arial', 1, 700, 0, 0, 0, 'AA' , pchar(QEtiqNotaNUM_FABRICANTE.Text), 1);
+              A_Prn_Text_TrueType(225, 38, 30, 'Arial', 1, 700, 0, 0, 0, 'AB' , pchar(Copy(QEtiqNotaDESC_LOCALIZACAO.Text,1,39)), 1);
+              A_Prn_Text_TrueType(225, 25, 30, 'Arial', 1, 700, 0, 0, 0, 'AC' , pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,25)), 1);
+              A_Prn_Text_TrueType(225, 14, 30, 'Arial', 1, 700, 0, 0, 0, 'AD' , pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,26,25)), 1);
+
+              {A_Prn_Text(220, 040, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(220, 020, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+              B_Prn_Text(220, 040, 1, 2, 1, 1, 'n', pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              B_Prn_Text(220, 020, 1, 2, 1, 1, 'n', pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));}
+
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            {if (wEmpresa = 'MEDIBENS') then //COMENTADO MARCOS 13/01/2021
+            begin
+              A_Prn_Text(290, 095, 1, 1, 0, 2, 2, 'n', 2, pchar('MEDIBENS'));
+              A_Prn_Text(240, 075, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+              A_Prn_Text(240, 060, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(240, 045, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              A_Prn_Barcode(300, 006, 1, 'D', 0, 1, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else    }
+            {if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(317, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+              A_Prn_Text(298, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(298, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+              A_Prn_Text(372, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(300, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else}
+            if (wEmpresa = 'NIR') then
+            begin
+              A_Prn_Text(325, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+         {285}A_Prn_Text(295, 057, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(295, 042, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(330, 040, 1, 1, 0, 2, 3, 'n', 2, pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(305, 014, 1, 'a', 0, 20, 23, 'N', 10, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(335, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'QUERENCIA') then
+            begin
+              A_Prn_Text(317, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('QUERENCIA'));
+              A_Prn_Text(298, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(298, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+               {298}     A_Prn_Text(332, 038, 1, 1, 0, 2, 2, 'n', 2, pchar(pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value))));
+              A_Prn_Barcode(310, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(365, 006, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'NUTRIPET') then
+            begin
+              A_Prn_Text(320, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIPET'));
+              A_Prn_Text(303, 048, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(303, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              A_Prn_Text(303, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(350, 010, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//              A_Prn_Barcode(317, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'OSARE') then
+            begin
+              A_Prn_Text(332, 100, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(295, 086, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(295, 075, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(290, 055, 1, 2, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(325, 010, 1, 'D', 0, 4, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              A_Prn_Text(310, 002, 1, 2, 0, 0, 0, 'n', 2, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'MODASUL') then
+            begin
+              A_Prn_Text(332, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(295, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,26)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 26 then
+              begin
+                A_Prn_Text(295, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,27,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(325, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(325, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'ITATIBA') or (wEmpresa = 'CONSTRUIR') or (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'LOJAS COZER LTDA') then//(wEmpresa = 'COZER') then
+            begin
+              A_Prn_Text(330, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(295, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(295, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(295, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(330, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+           if (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PROPE CALCADOS') or  //MIRACI PRECISA DESSA FORMA A IMPRESSAO DA ETIQUETA, MAS UTILIZA O COD_EMPRESA COZER
+              (DMParamSistema.QParamSistemaDESC_EMPRESA.Value = 'PLANETA MANIA') then //UNICA FORMA FOI UTILIZAR DESC_EMPRESA. JUNIOR 15/07/2020. Obs: Não xingar...kkkk
+            begin
+              A_Prn_Text(299, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(295, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(295, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(295, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(330, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'PROPE') then
+            begin
+              A_Prn_Text(299, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PROPE/PLANETA'));
+              A_Prn_Text(295, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if Length(QEtiqNotaDESC_PRODUTO.Text) > 28 then
+              begin
+                A_Prn_Text(295, 045, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,29,56)));
+              end;
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(295, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(330, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'PAPELARIA') Then
+            begin
+              A_Prn_Text(330, 070, 1, 1, 0, 2, 2, 'n', 2, pchar(wEmpresa));
+              A_Prn_Text(295, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                    A_Prn_Text(295, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+              A_Prn_Barcode(330, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'KREUZ') Then
+            begin
+              A_Prn_Text(305, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('KREUZ & CIA'));
+              A_Prn_Text(295, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+              A_Prn_Text(295, 037, 1, 1, 0, 2, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+           // A_Prn_Text(372, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                if QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                  A_Prn_Text(372, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(330, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'CEIFAGRIL') then
+            begin
+              A_Prn_Text(288, 070, 1, 1, 0, 2, 2, 'n', 2,pchar('JR MULTIPECAS'));
+              A_Prn_Text(285, 056, 1, 1, 0, 1, 2, 'n', 2,pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              A_Prn_Text(285, 044, 1, 1, 0, 1, 2, 'n', 2, pchar('Fab. ' + QEtiqNotaNUM_FABRICANTE.Text));
+              A_Prn_Text(285, 032, 1, 1, 0, 1, 2, 'n', 2, pchar('Loc. ' + QEtiqNotaDESC_LOCALIZACAO.Text));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                if QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                  A_Prn_Text(372, 002, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+              A_Prn_Barcode(300, 002, 1, 'D', 0, 1, 20, 'N', 0,pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'FRACTA') then
+            begin
+              A_Prn_Text(295, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('FRACTA'));
+              A_Prn_Text(295, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//              A_Prn_Text(298, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+              if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+//                 If QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                A_Prn_Text(332, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value))));
+              A_Prn_Barcode(310, 006, 1, 'D', 0, 1, 22, 'N', 0, pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(365, 006, 1, 1, 0, 1, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end else
+            if (wEmpresa = 'FERRAGENS') then
+            begin
+              A_Prn_Text(290, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('AGROFERRAGENS'));
+              A_Prn_Text(290, 056, 1, 1, 0, 2, 2, 'n', 2, pchar('COSTA OESTE'));
+              A_Prn_Text(290, 040, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 28)));
+              //if (FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1) then
+                  //if QEtiqNotaInd_Preco_Venda_Etiqueta.Value = 'S' Then  // este campo esta no cadastro de produtos e indica se é para emitir preco de venda na etiqueta
+                //A_Prn_Text(332, 038, 1, 1, 0, 1, 2, 'n', 2, pchar(pchar('R$'+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value))));
+              A_Prn_Barcode(295, 014, 1, 'a', 0, 20, 23, 'N', 10,pchar(FormatFloat('0000',QEtiqNotaCOD_PRODUTO.Value)));
+              A_Prn_Text(330, 001, 1, 1, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+              wTotalEtiquetas := wTotalEtiquetas -1;
+            end;
+          end;
+          A_Set_Backfeed(320);
+          A_Print_Out(1, 1, 1, 1);
+          A_ClosePrn;
+        end;
+      end;
+    end
+
+//    if wEmpresa = 'OSARE' then
+//    Begin
+//      wTotalEtiquetas := 0;
+//      wQtdeUsada := 0;
+//      with DMRelatorio_Compra do
+//      begin
+//        QEtiqNota.Close;
+//        QEtiqNota.SetVariable('NUM_NOTA', null);
+//        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+//        QEtiqNota.open;
+//        QEtiqNota.First;
+//        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//
+//        while not QEtiqNota.Eof do
+//        Begin
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            nLen := A_GetUSBBufferLen() + 1;
+//            len1 := 128;
+//            len2 := 128;
+//            SetLength(buf1,len1);
+//            SetLength(buf2,len2);
+//            A_EnumUSB(pbuf);
+//            A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+//            ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+//
+//            A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+//            A_Prn_Text(008, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(008, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(020, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+//            A_Prn_Text(148, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(148, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(320, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('OSARE'));
+//            A_Prn_Text(285, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(285, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(300, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          A_Print_Out(1, 1, 1, 1);
+//          A_ClosePrn;
+//        end;
+//      end;
+//    end
+//    else if DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'PIXIXE' then
+//    Begin
+//      wTotalEtiquetas := 0;
+//      wQtdeUsada := 0;
+//      with DMRelatorio_Compra do
+//      begin
+//        QEtiqNota.Close;
+//        QEtiqNota.SetVariable('NUM_NOTA', null);
+//        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+//        QEtiqNota.open;
+//        QEtiqNota.First;
+//        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//
+//        while not QEtiqNota.Eof do
+//        Begin
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            nLen := A_GetUSBBufferLen() + 1;
+//            len1 := 128;
+//            len2 := 128;
+//            SetLength(buf1,len1);
+//            SetLength(buf2,len2);
+//            A_EnumUSB(pbuf);
+//            A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+//            ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+//
+//            A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PIXIXE'));
+//            A_Prn_Text(008, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(008, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(020, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PIXIXE'));
+//            A_Prn_Text(148, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(148, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(160, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(320, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('PIXIXE'));
+//            A_Prn_Text(285, 056, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(285, 040, 1, 1, 0, 1, 2, 'n', 2, pchar('R$ '+ QEtiqNotaVAL_VAREJO.Text));
+//            A_Prn_Barcode(300, 006, 1, 'D', 0, 1, 20, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          A_Print_Out(1, 1, 1, 1);
+//          A_ClosePrn;
+//        end;
+//      end;
+//    end
+//    else if DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'MEDIBENS' then
+//    Begin
+//      wTotalEtiquetas := 0;
+//      wQtdeUsada := 0;
+//      with DMRelatorio_Compra do
+//      begin
+//        QEtiqNota.Close;
+//        QEtiqNota.SetVariable('NUM_NOTA', null);
+//        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+//        QEtiqNota.open;
+//        QEtiqNota.First;
+//        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//
+//        while not QEtiqNota.Eof do
+//        Begin
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            nLen := A_GetUSBBufferLen() + 1;
+//            len1 := 128;
+//            len2 := 128;
+//            SetLength(buf1,len1);
+//            SetLength(buf2,len2);
+//            A_EnumUSB(pbuf);
+//            A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+//            ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+//
+//            A_Prn_Text(090, 095, 1, 1, 0, 2, 2, 'n', 2, pchar('MEDIBENS'));
+//            A_Prn_Text(010, 075, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+//            A_Prn_Text(010, 057, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+//            A_Prn_Text(010, 045, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+//            A_Prn_Barcode(045, 006, 1, 'D', 0, 1, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(300, 095, 1, 1, 0, 2, 2, 'n', 2, pchar('MEDIBENS'));
+//            A_Prn_Text(218, 075, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,39)));
+//            A_Prn_Text(218, 057, 1, 1, 0, 1, 3, 'n', 2, pchar('Num.Fabric.: '+ QEtiqNotaNUM_FABRICANTE.Text));
+//            A_Prn_Text(218, 045, 1, 1, 0, 1, 3, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+//            A_Prn_Barcode(260, 006, 1, 'D', 0, 1, 30, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//          A_Set_Backfeed(320);
+//          A_Print_Out(1, 1, 1, 1);
+//          A_ClosePrn;
+//        end;
+//      end;
+//    end
+//    else if DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'NIR' then
+//    Begin
+//
+//      wTotalEtiquetas := 0;
+//      wQtdeUsada := 0;
+//      with DMRelatorio_Compra do
+//      begin
+//        QEtiqNota.Close;
+//        QEtiqNota.SetVariable('NUM_NOTA', null);
+//        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+//        QEtiqNota.open;
+//        QEtiqNota.First;
+//        if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+//          wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+//        else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+//          wTotalEtiquetas := 1
+//        else
+//          wTotalEtiquetas := 0;
+//
+//
+//        while not QEtiqNota.Eof do
+//        Begin
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+//              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+//            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+//              wTotalEtiquetas := 1
+//            else
+//              wTotalEtiquetas := 0;
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            nLen := A_GetUSBBufferLen() + 1;
+//            len1 := 128;
+//            len2 := 128;
+//            SetLength(buf1,len1);
+//            SetLength(buf2,len2);
+//            A_EnumUSB(pbuf);
+//            A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+//            ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+//            A_Prn_Text(030, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+//            A_Prn_Text(005, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(005, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+ QEtiqNotaCOD_PRODUTO.Text));
+//            A_Prn_Text(88, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+//            A_Prn_Text(020, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+//              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+//            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+//              wTotalEtiquetas := 1
+//            else
+//              wTotalEtiquetas := 0;
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(174, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+//            A_Prn_Text(147, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(147, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+//            A_Prn_Text(225, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+//            A_Prn_Text(160, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+//              wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+//            else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+//              wTotalEtiquetas := 1
+//            else
+//              wTotalEtiquetas := 0;
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(317, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('CEMAPA'));
+//            A_Prn_Text(288, 052, 1, 1, 0, 1, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(288, 035, 1, 1, 0, 1, 2, 'n', 2, pchar('Cod.'+QEtiqNotaCOD_PRODUTO.Text));
+//            A_Prn_Text(372, 035, 1, 1, 0, 1, 2, 'n', 2, pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7)));
+//            A_Prn_Text(300, 006, 1, 1, 0, 2, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            inc(wQtdeUsada);
+//          end;
+//          A_Print_Out(1, 1, 1, 1);
+//          A_ClosePrn;
+//        end;
+//      end;
+//    end
+//    else if DMParamSistema.QParamSistemaCOD_EMPRESA.Text = 'NUTRIVET' then
+//    Begin
+//      wTotalEtiquetas := 0;
+//      wQtdeUsada := 0;
+//      with DMRelatorio_Compra do
+//      begin
+//        QEtiqNota.Close;
+//        QEtiqNota.SetVariable('NUM_NOTA', null);
+//        QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+//        QEtiqNota.open;
+//        QEtiqNota.First;
+//        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//
+//        while not QEtiqNota.Eof do
+//        Begin
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            nLen := A_GetUSBBufferLen() + 1;
+//            len1 := 128;
+//            len2 := 128;
+//            SetLength(buf1,len1);
+//            SetLength(buf2,len2);
+//            A_EnumUSB(pbuf);
+//            A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+//            ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+//
+//            A_Prn_Text(043, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIVET'));
+//            A_Prn_Text(008, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(008, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            A_Prn_Text(008, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+//            //A_Prn_Text(068, 020, 1, 1, 0, 1, 2, 'n', 2, pchar('Num.Fabricante '+ QEtiqNotaNUM_FABRICANTE.Text));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(185, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIVET'));
+//            A_Prn_Text(148, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(148, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            A_Prn_Text(148, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+//           // A_Prn_Text(208, 030, 1, 1, 0, 1, 2, 'n', 2, pchar('Num.Fabricante '+ QEtiqNotaVAL_VAREJO.Text));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          if (wQtdeUsada = wTotalEtiquetas) then
+//          Begin
+//            QEtiqNota.Next;
+//            if (not QEtiqNota.Eof) then
+//              wQtdeUsada := 0;
+//            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text);
+//          end;
+//          if wQtdeUsada < wTotalEtiquetas then
+//          Begin
+//            A_Prn_Text(320, 070, 1, 1, 0, 2, 2, 'n', 2, pchar('NUTRIVET'));
+//            A_Prn_Text(290, 048, 1, 1, 0, 1, 3, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.Text,1,28)));
+//            A_Prn_Text(290, 028, 1, 1, 0, 1, 3, 'n', 2, pchar('R$ '+ FormatFloat('#,##0.00',QEtiqNotaVAL_VAREJO.Value)));
+//            A_Prn_Text(290, 011, 1, 1, 0, 1, 3, 'n', 2, pchar('Cod. '+ QEtiqNotaCOD_PRODUTO.Text));
+//            //A_Prn_Text(290, 015, 1, 1, 0, 1, 2, 'n', 2, pchar('Num.Fabricante '+ QEtiqNotaVAL_VAREJO.Text));
+//            inc(wQtdeUsada);
+//          end;
+//
+//          A_Print_Out(1, 1, 1, 1);
+//          A_ClosePrn;
+//        end;
+//      end;
+//    end
+    else if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TEMPERMED' then // IMPRESSAO NA TELA
+    begin
+      if Trim(FNotaEntradaParam.MeNumNota.Text) = '' then
+        raise exception.Create('Informe a Nota!');
+      with DMNotaentrada do
+      begin
+        QREtiquetaNota.Close;
+        QREtiquetaNota.SetVariable('COD_NOTA', Trim(FNotaEntradaParam.MeNumNota.Text));
+        QREtiquetaNota.Open;
+        if FREtiquetaNota = nil then
+          FREtiquetaNota := TFREtiquetaNota.Create(Application);
+        FREtiquetaNota.QRPrimario.Preview;
+      end;
+    end
+    else if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PIVA') then// IMPRESSORA TÉRMICA ZEBRA
+      begin
+        wNumColunas := 2;
+
+        with DMRelatorio_Compra do
+        begin
+          QEtiqNota.Close;
+          QEtiqNota.SetVariable('NUM_NOTA', FNotaEntradaParam.MeNumNota.Text);
+          QEtiqNota.SetVariable('COD_NOTA_CAB', null);
+          QEtiqNota.open;
+          QEtiqNota.First;
+
+          CdEtiqNota.Close;
+          CdEtiqNota.Open;
+
+          wTotalEtiquetas := 0;
+          wQtdeUsada := 0;
+          while not QEtiqNota.Eof do
+          begin
+            qtd := QEtiqNotaQT_QUANTIDADE.AsInteger;
+
+            for i := 1 to qtd do
+            begin
+              if (Trim(FNotaEntradaParam.Fm18Produto.MeProduto.Text) <> '') then
+                if (strtoint(Trim(FNotaEntradaParam.Fm18Produto.MeProduto.Text)) = QEtiqNotaCOD_PRODUTO.AsInteger) then
+                begin
+                  if (wQtdeUsada >= StrToInt(Trim(FNotaEntradaParam.Me18Quantidade.Text))) then
+                    Continue;
+                end
+                else
+                  Continue;
+
+              Inc(wQtdeUsada);
+
+              CdEtiqNota.Append;
+              CdEtiqNotaNUM_FABRICANTE.Value := QEtiqNotaNUM_FABRICANTE.Value;
+              CdEtiqNotaDESC_PRODUTO.Value := QEtiqNotaDESC_PRODUTO.Value;
+              CdEtiqNotaDESC_LOCALIZACAO.Value := QEtiqNotaDESC_LOCALIZACAO.Value;
+              CdEtiqNotaVAL_VAREJO.Value := QEtiqNotaVAL_VAREJO.Value;
+              CdEtiqNotaCOD_LOTE_TIPO.Value := QEtiqNotaCOD_LOTE_TIPO.Value;
+              CdEtiqNotaCOD_PRODUTO.Value := QEtiqNotaCOD_PRODUTO.Value;
+              CdEtiqNota.Post;
+
+              Inc(wTotalEtiquetas);
+            end;
+
+            QEtiqNota.Next;
+          end;
+
+          CdEtiqNota.First;
+
+          wEtiquetaLinha := 0;
+          wEtiquetaColuna := 0;
+          wEtiquetaAtual := 0;
+          wLinhaAtual := 0;
+          wLarguraEtiqueta := 320;
+          wNumColunas := 2;
+          wNumLinhasEtiqueta := 4;
+
+        //        while not CdEtiqNota.Eof do
+          if CdEtiqNota.IsEmpty then
+            Exit;
+
+          AssignFile(F, 'LPT1');
+          Rewrite(F);
+
+          while (1 = 1) do
+          begin
+            if ((wEtiquetaLinha = 0) and (wEtiquetaColuna = 0)) then
+            begin
+              writeLN(F, 'N');
+              writeLN(F, 'Q4,0,0');
+            end;
+
+            writeLN(F, getTextoLinha(wEtiquetaLinha, wLarguraEtiqueta * wEtiquetaColuna));
+
+            if (wEtiquetaAtual = wTotalEtiquetas - 1) then
+            begin
+            //            wDiv = wTotalEtiquetas DIV wNumColunas;
+              wMod := wTotalEtiquetas mod wNumColunas;
+
+              wEtiquetaColuna := 0;
+              if (wMod > 0) then
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wMod - 1);
+                  doPrior(wMod);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end
+              else
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end;
+            end
+            else
+            begin
+              if (wEtiquetaColuna < wNumColunas - 1) then
+              begin
+                Inc(wEtiquetaAtual);
+                Inc(wEtiquetaColuna);
+                CdEtiqNota.Next;
+              end
+              else
+              begin
+                wEtiquetaColuna := 0;
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  wEtiquetaColuna := 0;
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  wEtiquetaLinha := 0;
+                  inc(wEtiquetaAtual);
+                  CdEtiqNota.Next;
+                  writeLN(F, 'P1');
+                end;
+              end;
+            end;
+          end;
+        end;
+      end
+      else if(DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'UNIFORME') then // IMPRESSORA TÉRMICA ZEBRA
+      begin
+        wNumColunas := 3;
+
+        with DMRelatorio_Compra do
+        begin
+          QEtiqNota.Close;
+          QEtiqNota.SetVariable('NUM_NOTA', null);
+          QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+          QEtiqNota.open;
+          QEtiqNota.First;
+
+          CdEtiqNota.Close;
+          CdEtiqNota.Open;
+
+          wTotalEtiquetas := 0;
+          wQtdeUsada := 0;
+          while not QEtiqNota.Eof do
+          begin
+            qtd := QEtiqNotaQT_QUANTIDADE.AsInteger;
+
+            for i := 1 to qtd do
+            begin
+              if (Trim(FNotaEntradaParam.Fm18Produto.MeProduto.Text) <> '') then
+                if ((strtoint(Trim(FNotaEntradaParam.Fm18Produto.MeProduto.Text)) = QEtiqNotaCOD_PRODUTO.AsInteger)
+                  and (strtoint(Trim(FNotaEntradaParam.Fm18Lote.MeLote.Text)) = QEtiqNotaCOD_LOTE_TIPO.AsInteger)) then
+                begin
+                  if (wQtdeUsada >= StrToInt(Trim(FNotaEntradaParam.Me18Quantidade.Text))) then
+                    Continue;
+                end
+                else
+                  Continue;
+
+              Inc(wQtdeUsada);
+
+              CdEtiqNota.Append;
+              CdEtiqNotaNUM_FABRICANTE.Value := QEtiqNotaNUM_FABRICANTE.Value;
+              CdEtiqNotaDESC_PRODUTO.Value := QEtiqNotaDESC_PRODUTO.Value;
+              CdEtiqNotaDESC_LOCALIZACAO.Value := QEtiqNotaDESC_LOCALIZACAO.Value;
+              if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 then
+                CdEtiqNotaVAL_VAREJO.Value := QEtiqNotaVAL_VAREJO.Value;
+              CdEtiqNotaCOD_LOTE_TIPO.Value := QEtiqNotaCOD_LOTE_TIPO.Value;
+              CdEtiqNotaCOD_PRODUTO.Value := QEtiqNotaCOD_PRODUTO.Value;
+              CdEtiqNota.Post;
+
+              Inc(wTotalEtiquetas);
+            end;
+
+            QEtiqNota.Next;
+          end;
+
+          CdEtiqNota.First;
+
+          wEtiquetaLinha := 0;
+          wEtiquetaColuna := 0;
+          wEtiquetaAtual := 0;
+          wLinhaAtual := 0;
+          wLarguraEtiqueta := 280;
+          wNumColunas := 3;
+          wNumLinhasEtiqueta := 3;
+
+        //        while not CdEtiqNota.Eof do
+          if CdEtiqNota.IsEmpty then
+            Exit;
+
+          AssignFile(F, 'LPT1');
+          Rewrite(F);
+
+          while (1 = 1) do
+          begin
+            if ((wEtiquetaLinha = 0) and (wEtiquetaColuna = 0)) then
+            begin
+              writeLN(F, 'N');
+              writeLN(F, 'Q4,0,0');
+            end;
+
+            writeLN(F, getTextoLinhaUniforme(wEtiquetaLinha, wLarguraEtiqueta * wEtiquetaColuna));
+
+            if (wEtiquetaAtual = wTotalEtiquetas - 1) then
+            begin
+            //            wDiv = wTotalEtiquetas DIV wNumColunas;
+              wMod := wTotalEtiquetas mod wNumColunas;
+
+              wEtiquetaColuna := 0;
+              if (wMod > 0) then
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wMod - 1);
+                  doPrior(wMod);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end
+              else
+              begin
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  writeLN(F, 'P1');
+                  CloseFile(F);
+                  Exit;
+                end;
+              end;
+            end
+            else
+            begin
+              if (wEtiquetaColuna < wNumColunas - 1) then
+              begin
+                Inc(wEtiquetaAtual);
+                Inc(wEtiquetaColuna);
+                CdEtiqNota.Next;
+              end
+              else
+              begin
+                wEtiquetaColuna := 0;
+                if (wEtiquetaLinha < (wNumLinhasEtiqueta - 1)) then
+                begin
+                  inc(wEtiquetaLinha);
+                  dec(wEtiquetaAtual, wNumColunas - 1);
+                  wEtiquetaColuna := 0;
+                  doPrior(wNumColunas);
+                end
+                else
+                begin
+                  wEtiquetaLinha := 0;
+                  inc(wEtiquetaAtual);
+                  CdEtiqNota.Next;
+                  writeLN(F, 'P1');
+                end;
+              end;
+            end;
+          end;
+        end;
+      end
+
+      else
+      begin
+        wNumColunas := 5;
+        wTotalEtiquetas := 0;
+        with DMRelatorio_Compra do
+        begin
+          QEtiqNota.Close;
+          QEtiqNota.SetVariable('NUM_NOTA', null);
+          QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+          QEtiqNota.open;
+          QEtiqNota.First;
+
+          CdEtiqNota.Close;
+          CdEtiqNota.Open;
+
+          while not QEtiqNota.Eof do
+          begin
+          //Imprimir qtd etiquetas conforme configuracao no produto. Junior-13/05/2019 - Solicitado pelo César
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+
+            //qtd := QEtiqNotaQT_QUANTIDADE.AsInteger; //Imprimir qtd etiquetas conforme configuracao no produto. Junior-13/05/2019 - Solicitado pelo César
+            for i := 1 to wTotalEtiquetas do
+            begin
+              CdEtiqNota.Append;
+              CdEtiqNotaNUM_FABRICANTE.Value := QEtiqNotaNUM_FABRICANTE.Value;
+              CdEtiqNotaDESC_PRODUTO.Value := QEtiqNotaDESC_PRODUTO.Value;
+              CdEtiqNotaDESC_LOCALIZACAO.Value := QEtiqNotaDESC_LOCALIZACAO.Value;
+              CdEtiqNotaVAL_VAREJO.Value := QEtiqNotaVAL_VAREJO.Value;
+              CdEtiqNotaCOD_LOTE_TIPO.Value := QEtiqNotaCOD_LOTE_TIPO.Value;
+              CdEtiqNotaCOD_PRODUTO.Value := QEtiqNotaCOD_PRODUTO.Value;
+              CdEtiqNota.Post;
+            end;
+
+            QEtiqNota.Next;
+          end;
+
+          if imp = nil then
+            imp := TImp.Create;
+          Imp.AbreImpressora;
+          Imp.ConfiguraImpressora('CONDENSADO_ON', 'SEXTOS', 72);
+
+          coluna := 0;
+          linha := 2;
+          posicao := 1;
+
+          CdEtiqNota.First;
+
+          while not CdEtiqNota.Eof do
+          begin
+            if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 0 then
+            begin
+              if posicao = 1 then
+                Imp.WriteXY(3 * coluna, linha, Copy(CdEtiqNotaDESC_PRODUTO.Value, 1, 15));
+              if posicao = 2 then
+                Imp.WriteXY(3 * coluna, linha, Copy(CdEtiqNotaNUM_FABRICANTE.Text, 1, 15));
+              if posicao = 3 then
+                Imp.WriteXY(3 * coluna, linha, Copy(CdEtiqNotaDESC_LOCALIZACAO.Text, 1, 15));
+            end
+            else
+            begin
+              if posicao = 1 then
+                Imp.WriteXY(3 * coluna, linha, 'Cod.' + Copy(CdEtiqNotaCOD_PRODUTO.Text, 1, 15));
+              if posicao = 2 then
+                Imp.WriteXY(3 * coluna, linha, Copy(CdEtiqNotaDESC_PRODUTO.Text, 1, 15));
+              if posicao = 3 then
+                Imp.WriteXY(3 * coluna, linha, 'R$ ' + Copy(FormatFloat('#,##0.00', CdEtiqNotaVAL_VAREJO.Value), 1, 15));
+            end;
+
+            CdEtiqNota.Next;
+            if coluna = wNumColunas - 1 then
+            begin
+              if posicao = 1 then
+              begin
+                inc(linha);
+                posicao := 2;
+                CdEtiqNota.RecNo := RecNoAnterior - 1;
+              end
+              else if posicao = 2 then
+              begin
+                inc(linha);
+                posicao := 3;
+                CdEtiqNota.RecNo := RecNoAnterior - 1;
+              end
+              else if posicao = 3 then
+              begin
+                posicao := 1;
+                inc(linha, 2);
+              end;
+              coluna := 0;
+            end
+            else
+            begin
+              if (coluna = 0) then
+                RecNoAnterior := CdEtiqNota.RecNo;
+
+              if CdEtiqNota.Eof then
+              begin
+                if posicao = 1 then
+                begin
+                  inc(linha);
+                  posicao := 2;
+                  CdEtiqNota.RecNo := RecNoAnterior - 1;
+                end
+                else if posicao = 2 then
+                begin
+                  inc(linha);
+                  posicao := 3;
+                  CdEtiqNota.RecNo := RecNoAnterior - 1;
+                end
+                else if posicao = 3 then
+                begin
+
+                end;
+                coluna := 0;
+              end
+              else
+              begin
+
+                Inc(coluna);
+              end;
+            end;
+          end;
+          Imp.FechaImpressora;
+        end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraJBATACADOClick(
+  Sender: TObject);
+var
+  ret, nLen, len1, len2: Integer;
+  pbuf: array[0..127] of AnsiChar;
+  buf1, buf2: AnsiString;
+
+  wTotalEtiquetas: Integer;
+  wColuna: Integer;
+  wX: Integer;
+  wImprimiu: Boolean;
+
+  {procedure ImprimeObservacao(X, Y: Integer; Texto: string);
+  var
+    Lista: TStringList;
+    I: Integer;
+    Linha: AnsiString;
+    Identificador: AnsiString;
+  begin
+    Lista := TStringList.Create;
+    try
+      // Normaliza as quebras de linha
+      Texto := StringReplace(Texto, #13#10, #10, [rfReplaceAll]);
+      Texto := StringReplace(Texto, #10, #13#10, [rfReplaceAll]);
+
+      Lista.Text := Texto;
+
+      for I := 0 to Lista.Count - 1 do
+      begin
+        Linha := AnsiString(Trim(Lista[I]));
+
+        if Linha <> '' then
+        begin
+          // Identificador exclusivo para cada linha e coluna
+          Identificador := AnsiString(Chr(Ord('D') + I) + IntToStr(wColuna));
+          A_Prn_Text_TrueType(X,Y - (I * 12),25,'Arial',1,400,0, 0, 0,PAnsiChar(Identificador),PAnsiChar(Linha),1);
+        end;
+      end;
+    finally
+      Lista.Free;
+    end;
+  end;}
+  procedure ImprimeObservacao(X, Y: Integer; Texto: string);
+  var
+    Lista: TStringList;
+    I, J: Integer;
+    Linha, Parte: AnsiString;
+    Identificador: AnsiString;
+  begin
+    Lista := TStringList.Create;
+    try
+      Texto := StringReplace(Texto, #13#10, #10, [rfReplaceAll]);
+      Texto := StringReplace(Texto, #13, #10, [rfReplaceAll]);
+      Texto := StringReplace(Texto, #10, #13#10, [rfReplaceAll]);
+
+      Lista.Text := Texto;
+      J := 0;
+
+      for I := 0 to Lista.Count - 1 do
+      begin
+        Linha := Trim(AnsiString(Lista[I]));
+
+        while Linha <> '' do
+        begin
+          Parte := Copy(Linha, 1, 23);
+          Delete(Linha, 1, 23);
+          Identificador := AnsiString(Chr(Ord('D') + (J mod 20)) + IntToStr(wColuna));
+          A_Prn_Text_TrueType(X, Y - (J * 12), 25, 'Arial', 1, 400,0, 0, 0, PAnsiChar(Identificador),PAnsiChar(Parte), 1);
+          Inc(J);
+        end;
+      end;
+    finally
+      Lista.Free;
+    end;
+  end;
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam :=
+      TFNotaEntradaParam.Create(Application);
+
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+
+  FNotaEntradaParam.MeNumNota.Text :=
+    IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  FNotaEntradaParam.RGTipoEtiqueta.ItemIndex := 1;
+  if FNotaEntradaParam.ShowModal <> MrOk then
+    Exit;
+
+  with DMRelatorio_Compra do
+  begin
+    QEtiqNota.Close;
+    QEtiqNota.SetVariable('NUM_NOTA', Null);
+    QEtiqNota.SetVariable('COD_NOTA_CAB',
+      FNotaEntradaParam.MeNumNota.Text);
+    QEtiqNota.Open;
+
+    if QEtiqNota.IsEmpty then
+      Exit;
+
+    QEtiqNota.First;
+
+    wTotalEtiquetas := 0;
+     { Localiza a impressora USB }
+    nLen := A_GetUSBBufferLen() + 1;
+    len1 := 128;
+    len2 := 128;
+    SetLength(buf1, len1);
+    SetLength(buf2, len2);
+    A_EnumUSB(pbuf);
+    A_GetUSBDeviceInfo(1,PAnsiChar(buf1),@len1,PAnsiChar(buf2),@len2);
+    ret := A_CreatePrn(12, PAnsiChar(buf2));
+    {if ret = 0 then
+    begin
+    ShowMessage('Erro ao abrir impressora Argox.');
+      Exit;
+    end;}
+    A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsInteger);
+    while not QEtiqNota.Eof do
+    begin
+      { Inicia uma linha com duas etiquetas }
+      wColuna := 0;
+      wImprimiu := False;
+
+      while (wColuna < 2) and (not QEtiqNota.Eof) do
+      begin
+        { Carrega quantidade do produto atual }
+        if wTotalEtiquetas <= 0 then
+        begin
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := Trunc(QEtiqNotaQT_QUANTIDADE.AsFloat)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+
+          { Ignora produtos sem etiquetas }
+          if wTotalEtiquetas <= 0 then
+          begin
+            QEtiqNota.Next;
+            Continue;
+          end;
+        end;
+
+        { Coordenada horizontal da coluna }
+        if wColuna = 0 then
+          wX := 005
+        else
+          wX := 200;
+
+        A_Prn_Text_TrueType(wX, 230, 40, 'Arial',1, 700, 0, 0, 0,PAnsiChar('A' + IntToStr(wColuna)) ,PChar('REF.' + QEtiqNotaNUM_FABRICANTE.Text),1);
+        A_Prn_Text_TrueType(wX, 200, 30, 'Arial',1, 400, 0, 0, 0,PAnsiChar('B' + IntToStr(wColuna)),PChar(Copy(QEtiqNotaDESC_PRODUTO.Text, 1, 25)),1);
+        A_Prn_Text_TrueType(wX, 185, 30, 'Arial',1, 400, 0, 0, 0,PAnsiChar('C' + IntToStr(wColuna)),PChar(Copy(QEtiqNotaDESC_PRODUTO.Text, 26, 25)),1);
+        ImprimeObservacao(  wX, 150,QEtiqNota.FieldByName('DESC_OBSERVACAO').AsString);
+        if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 then //Imprime valor na etiqueta
+          A_Prn_Text_TrueType(wX+50, 55, 50, 'Arial',1, 700, 0, 0, 0,PAnsiChar('X' + IntToStr(wColuna)),PChar('R$ ' + FormatFloat('0.00',QEtiqNotaVAL_VAREJO.AsFloat)),1);
+
+        A_Prn_Barcode(wX+30, 20, 1,'a',
+        2,// Barra estreita
+        4,// Barra larga
+        25,// Altura
+        'N',0,PChar(FormatFloat('0000', QEtiqNotaCOD_PRODUTO.Value)));
+
+        A_Prn_Text_TrueType(wX+60, 5, 30, 'Arial', 1, 400, 0, 0, 0,PAnsiChar('Y' + IntToStr(wColuna)),PChar(QEtiqNotaCOD_PRODUTO.Text),1);
+
+        wImprimiu := True;
+
+        Dec(wTotalEtiquetas);
+        Inc(wColuna);
+
+        { Passa ao proximo produto somente  quando terminarem suas etiquetas }
+        if wTotalEtiquetas <= 0 then
+          QEtiqNota.Next;
+      end;
+
+      { Imprime a linha com ate duas etiquetas }
+      if wImprimiu then
+      begin
+        A_Set_Backfeed(320);
+        A_Print_Out(1, 1, 1, 1);
+      end;
+    end;
+    A_ClosePrn;
+  end;
+
+end;
+
+
+//procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompra1Click(
+//  Sender: TObject);
+//var coluna, linha, posicao, RecNoAnterior: Integer;
+//begin
+//  inherited;
+//  If FNotaEntradaParam = Nil then
+//    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+//  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+//  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaNUM_NOTA.Value);
+//
+//  if FNotaEntradaParam.ShowModal = mrOk then
+//  with DMRelatorio_Compra do
+//  begin
+//    QEtiqNota.Close;
+//    QEtiqNota.SetVariable('NUM_NOTA', FNotaEntradaParam.MeNumNota.Text);
+//    QEtiqNota.open;
+//    QEtiqNota.First;
+//
+//    if imp = Nil then
+//      imp:=TImp.Create;
+//    Imp.AbreImpressora;
+//    Imp.ConfiguraImpressora('CONDENSADO_ON','SEXTOS',72);
+//
+//    coluna := 0;
+//    linha := 2;
+//    posicao := 1;
+//
+//    while not QEtiqNota.Eof do
+//    Begin
+//      if posicao = 1 then
+//        Imp.WriteXY(3 * coluna, linha, Copy(QEtiqNotaCOD_PRODUTO.Text, 1, 15))
+//      else
+//        Imp.WriteXY(3 * coluna, linha, Copy(QEtiqNotaDESC_COMPLEMENTO.Text, 1, 15));
+//
+//      QEtiqNota.Next;
+//
+//      if ((coluna = 4) or (QEtiqNota.Eof)) then
+//      Begin
+//        if posicao = 1 then
+//        Begin
+//          inc(linha);
+//          posicao := 2;
+//          QEtiqNota.RecNo := RecNoAnterior -1;
+//        End
+//        else
+//        Begin
+//          posicao := 1;
+//          inc(linha, 3);
+//        End;
+//        coluna := 0;
+//      end
+//      else
+//      Begin
+//        if coluna = 0 then
+//          RecNoAnterior := QEtiqNota.RecNo;
+//
+//        Inc(coluna);
+//      End;
+//    End;
+//
+//    Imp.FechaImpressora;
+//  end;
+//end;
+
+procedure TFNotaEntradaCad.BtContratoVendClick(Sender: TObject);
+begin
+  inherited;
+  if FContrato_VendaCons = nil then
+    FContrato_VendaCons := TFContrato_VendaCons.Create(Application);
+  if FContrato_VendaCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Contrato_Vend.Value := DMContrato.QContrato_VendConsCod_Contrato_Vend.Value;
+
+end;
+
+procedure TFNotaEntradaCad.BtContratoJuridicaClick(Sender: TObject);
+begin
+  inherited;
+  if FContrato_PJuridicaCons = nil then
+    FContrato_PJuridicaCons := TFContrato_PJuridicaCons.Create(Application);
+  if FContrato_PJuridicaCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCOD_CONTRATO_PJURIDICA.Value := DMContrato_PJuridica.QContratoPJuridicaConsCOD_CONTRATO_PJURIDICA.Value;
+
+end;
+
+procedure TFNotaEntradaCad.Proc_TrazItens(wCod_Nota_Cab: Integer);
+begin
+  if Trim(DBEdit29.Text) = '' then
+    raise Exception.Create('Deve-se informar a operação na aba cabeçalho.');
+  if Trim(DBEdit32.Text) = '' then
+    raise Exception.Create('Deve-se informar o fornecedor na aba cabeçalho.');
+
+  if DMOracle.BuscaNome('SELECT Ind_Vendas FROM TB_OPERACAO',
+    'COD_OPERACAO = ' + FloatToStr(DMNotaEntrada.QNotaEntradaCOD_OPERACAO.Value), True) = 'D' then
+  begin // Atualmente, este bloco deve ser o único, mas veja o comentário mais abaixo para entender o porque deste IF aqui. Diego Stiehl (08/12/2011)
+    Application.CreateForm(TFDevolucaoCarregaItens, FDevolucaoCarregaItens);
+    if FDevolucaoCarregaItens.carrega(DMNotaSaida.QNotaSaidaConsCOD_NOTA_CAB.Value) = MrOK then
+      with DMNotaSaida do
+        with DMNotaEntrada do
+        begin
+          if (Trim(QNotaSaidaConsDESC_CHAVE_ACESSO.Value) = '') and (QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') then
+          begin
+            raise Exception.Create('A nota referenciada precisa ter chave de acesso.');
+            Exit;
+          end;
+          if not((QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '65') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '01') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '04') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2B') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2C') or
+             (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2D')) and
+             (QNotaEntradaCOD_SERIE_MODELO.Value = '55') then
+          begin
+            MessageDlg('A nota referenciada precisa ser de algum desses modelos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+            Exit;
+          end;
+          try
+            if QNotaEntrada.State = dsInsert then
+            begin
+              QNotaEntrada.Post;
+              QNotaEntrada.Edit;
+            end;
+            try
+              DMNotaEntrada.QNotaReferenciada.Insert;
+              DMNotaEntrada.QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+              DMNotaEntrada.QNotaReferenciadaCOD_NOTA_CAB_REF.Value := QNotaSaidaConsCOD_NOTA_CAB.Value;
+              DMNotaEntrada.QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Bib.LimpaNumero(QNotaSaidaConsDESC_CHAVE_ACESSO.Value);
+              DMNotaEntrada.QNotaReferenciadaNUM_NOTA.Value := QNotaSaidaConsNUM_NOTA.AsInteger;
+              DMNotaEntrada.QNotaReferenciadaCOD_SERIE.Value := QNotaSaidaConsCOD_SERIE.Value;
+              DMNotaEntrada.QNotaReferenciadaCOD_SERIE_MODELO.Value := QNotaSaidaConsCOD_SERIE_MODELO.Value;
+              DMNotaEntrada.QNotaReferenciadaDT_EMISSAO.Value := QNotaSaidaConsDT_EMISSAO.Value;
+              QNotaReferenciada.Post;
+            except
+              QNotaReferenciada.Cancel;
+            end;
+
+            with FDevolucaoCarregaItens do
+            begin
+              CdItensDevolucao.First;
+              while not CdItensDevolucao.Eof do
+              begin
+                if CdItensDevolucaoIND_MARCADO.Value = 'S' then
+                begin
+                  QItemNF.Append;
+                  QItemNFQT_QUANTIDADE.Value := CdItensDevolucaoQT_QUANTIDADE.Value;
+                  QItemNFCod_Lote_Tipo.Value := CdItensDevolucaoCod_Lote_Tipo.Value;
+                  QItemNFCod_Produto.Value := CdItensDevolucaoCod_Produto.Value;
+                  QItemNFCod_Tributacao.Value := CdItensDevolucaoCod_Tributacao.Value;
+                  QItemNFPerc_Comissao.Value := CdItensDevolucaoPerc_Comissao.Value;
+                  QItemNFVal_Custo.Value := CdItensDevolucaoVal_Custo.Value;
+                  QItemNFCod_Cultura.Value := CdItensDevolucaoCod_Cultura.Value;
+                  if (CdItensDevolucaoVal_Desconto.Value > 0) and (CdItensDevolucaoQt_Quantidade.Value > 0) then
+                  Begin
+                     QItemNFVal_Total.Value := CdItensDevolucaoVal_Total.Value - CdItensDevolucaoVal_Desconto_Rateio.Value - (CdItensDevolucaoVal_Desconto.Value * CdItensDevolucaoQt_Quantidade.Value);
+                     QItemNFVal_Unitario.Value := CdItensDevolucaoVal_Unitario.Value - CdItensDevolucaoVal_Desconto.Value;
+                  End
+                  else
+                  Begin
+                     QItemNFVal_Unitario.Value := CdItensDevolucaoVal_Unitario.Value;
+                     QItemNFVal_Total.Value := CdItensDevolucaoVal_Total.Value  - CdItensDevolucaoVal_Desconto_Rateio.Value;
+                  End;
+                  QItemNFVAL_ICMS_SUBST.Value := CdItensDevolucaoVAL_ICMS_SUBST.Value;
+                  QItemNFVAL_BASE_SUBST.Value := CdItensDevolucaoVAL_BASE_SUBST.Value;
+                  QItemNFVAL_ICM_BASE.Value := CdItensDevolucaoVAL_ICM_BASE.Value;
+                  QItemNFVAL_ICM.Value := CdItensDevolucaoVAL_ICM.Value;
+                  QItemNFCod_Nota_Item_Origem.Value := CdItensDevolucaoCod_Nota_Item.Value;
+                  QItemNF.Post;
+
+                end;
+                CdItensDevolucao.Next;
+              end;
+            end;
+            if DMOracle.BuscaNome('SELECT Ind_Vendas FROM TB_OPERACAO',
+              'COD_OPERACAO = ' + FloatToStr(QNotaEntradaCod_Operacao.Value), True) = 'D' then
+              QNotaEntradaObs.Value := 'DEV. REF. NF. NF. ' + QNotaSaidaConsNUM_NOTA.Text + ' De ' + QNotaSaidaConsDT_EMISSAO.Text;
+          except
+            if QNotaReferenciada.State in [DsEdit, DsInsert] then
+              QNotaReferenciada.Cancel;
+          end;
+        end;
+  end
+  else
+  begin // O bloco abaixo contém o código antigo da procedure. Foi necessário por motivo da reutilização desta função em casos NÃO-devolução. Diego Stiehl (08/12/2011)
+
+    with DMNotaSaida do
+    begin
+      QItemNfCons.Close;
+      QItemNfCons.SetVariable('COD_NOTA_CAB', wCod_Nota_Cab);
+      QItemNfCons.Open;
+      QItemNfCons.First;
+      while not QItemNfCons.Eof do
+        with DMNotaEntrada do
+        begin
+          QItemNF.Insert;
+          QItemNFQt_Quantidade.Value := DMNotaSaida.QItemNfConsQt_Quantidade.Value;
+          QItemNFCod_Lote_Tipo.Value := DMNotaSaida.QItemNfConsCod_Lote_Tipo.Value;
+          if DMNotaSaida.QNotaSaidaConsVal_Desconto.Value > 0 then
+            QItemNFVal_Total.Value := DMNotaSaida.QItemNfConsVal_Total.Value - DMNotaSaida.QItemNfConsVAL_DESCONTO_RATEIO.Value
+              - (DMNotaSaida.QItemNfConsVAL_DESCONTO.Value * DMNotaSaida.QItemNfConsQT_QUANTIDADE.Value)
+          else
+            QItemNFVal_Total.Value := DMNotaSaida.QItemNfConsVal_Total.Value
+              - (DMNotaSaida.QItemNfConsVAL_DESCONTO.Value * DMNotaSaida.QItemNfConsQT_QUANTIDADE.Value);
+          QItemNFCod_Produto.Value := DMNotaSaida.QItemNfConsCod_Produto.Value;
+          QItemNFCod_Tributacao.Value := DMNotaSaida.QItemNfConsCod_Tributacao.Value;
+          QItemNFPerc_Comissao.Value := DMNotaSaida.QItemNfConsPerc_Comissao.Value;
+          QItemNFVal_Custo.Value := DMNotaSaida.QItemNfConsVal_Custo.Value;
+          QItemNFCod_Cultura.Value := DMNotaSaida.QItemNfConsCod_Cultura.Value;
+          QItemNFVal_Unitario.Value := DMNotaSaida.QItemNfConsVal_Unitario.Value - DMNotaSaida.QItemNfConsVAL_DESCONTO.Value
+            - (DMNotaSaida.QItemNfConsVAL_DESCONTO_RATEIO.Value / DMNotaSaida.QItemNfConsQt_Quantidade.Value);
+          QItemNFCod_Nota_Item_Origem.Value := DMNotaSaida.QItemNfConsCod_Nota_Item.Value;
+        // Itens de Ordem de Compra atualizados nos eventos da query
+          DMNotaSaida.QItemNfCons.Next;
+        end;
+    //        DMNotaSaida.QItemNfCons.Close;
+      if DMOracle.BuscaNome('SELECT Ind_Vendas FROM TB_OPERACAO',
+        'COD_OPERACAO = ' + FloatToStr(DMNotaEntrada.QNotaEntradaCod_Operacao.Value), True) = 'D' then // serve para colocar a msg de nota fiscal de devolucao no cabecalho
+        DMNotaEntrada.QNotaEntradaObs.Value := 'DEV. REF. NF. NF. ' + QNotaSaidaConsNUM_NOTA.Text + ' De ' + QNotaSaidaConsDT_EMISSAO.Text;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtImpItemCompraClick(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaCons = nil then
+    FNotaEntradaCons := TFNotaEntradaCons.Create(Application);
+  FNotaEntradaCons.MeTexto.Text := DMNotaEntrada.QNotaEntradaCod_Cadastro.Text;
+  if FNotaEntradaCons.ShowModal = mrOk then
+    Proc_TrazItens(DMNotaEntrada.QNotaEntradaConsCOD_NOTA_CAB.Value);
+
+end;
+
+procedure TFNotaEntradaCad.BtImpItemNFClick(Sender: TObject);
+begin
+  inherited;
+  if FNotaSaidaCons = nil then
+    FNotaSaidaCons := TFNotaSaidaCons.Create(Application);
+  FNotaSaidaCons.MeTexto.Text := DMNotaEntrada.QNotaEntradaCod_Cadastro.Text;
+  FNotaSaidaCons.MeFilial.Text := DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text;
+  FNotaSaidaCons.BtProcurarClick(Self);
+  if FNotaSaidaCons.ShowModal = mrOk then
+    Proc_TrazItens(DMNotaSaida.QNotaSaidaConsCOD_NOTA_CAB.Value);
+end;
+
+procedure TFNotaEntradaCad.AutorizaodeDevoluo1Click(Sender: TObject);
+var
+  Path, wInscricao, wDescFilial, Campo: string;
+  WinWord, Docs, Doc: Variant;
+  wAuxLinhas: Integer;
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[18].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+  begin
+    if Trim(FNotaEntradaParam.Me19NotaEntrada.Text) = '' then
+      raise Exception.Create('Por favor, informe a nota para a emissao da Autorização.');
+
+    // Pega a pasta Contratos no diretório do executavel
+    Path := ExtractFilePath(ParamStr(0)) + 'Contratos\';
+    // Cria objeto principal de controle
+    WinWord := CreateOleObject('Word.Application');
+    // Esconde o Word
+    WinWord.Visible := false;
+    // Pega uma interface para o objeto que manipula documentos
+    Docs := WinWord.Documents;
+    try
+      Doc := Docs.Open(Path + 'autorizacao_devolucao.Doc');
+
+      //Substituindo variaveis
+      with DMRelatorio_Compra do
+      begin
+        QRAutorizacaoDevolucao.Close;
+        QRAutorizacaoDevolucao.SetVariable('COD_NOTA_CAB', StrToInt(Trim(FNotaEntradaParam.Me19NotaEntrada.Text)));
+        QRAutorizacaoDevolucao.open;
+
+        if QRAutorizacaoDevolucaoIND_SITUACAO.Value <> '1' then
+          raise Exception.Create('Essa nota já foi confirmada ou cancelada.');
+
+        QRAutorizacaoDevolucaoIT.Close;
+        QRAutorizacaoDevolucaoIT.SetVariable('COD_NOTA_CAB', QRAutorizacaoDevolucaoCOD_NOTA_CAB.Value);
+        QRAutorizacaoDevolucaoIT.open;
+
+        Campo := QRAutorizacaoDevolucaoNOME.Value;
+        Doc.Content.Find.Execute(FindText := '%descEmpresa%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoNUM_CGC_CPF.Value;
+        Doc.Content.Find.Execute(FindText := '%cgcEmpresa%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_E_MAIL.Value;
+        Doc.Content.Find.Execute(FindText := '%emailEmpresa%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoNOME_CONTATO.Value;
+        Doc.Content.Find.Execute(FindText := '%contatoEmpresa%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_FONE_EMPRESA.Value;
+        Doc.Content.Find.Execute(FindText := '%foneEmpresa%', ReplaceWith := Campo, Replace := 2);
+
+        Campo := QRAutorizacaoDevolucaoDESC_OPERACAO.Value;
+        Doc.Content.Find.Execute(FindText := '%descOperacao%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoCFOP.Text;
+        Doc.Content.Find.Execute(FindText := '%cfop%', ReplaceWith := Campo, Replace := 2);
+
+        Campo := QRAutorizacaoDevolucaoDESC_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descRazao%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoNUM_CGC_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descCgc%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDT_EMISSAO.Text;
+        Doc.Content.Find.Execute(FindText := '%dtEmissao%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_ENDERECO_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descEndereco%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_BAIRRO_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descBairro%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_CEP_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descCep%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_CIDADE_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descMunicipio%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoCOD_ESTADO_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%uf%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_TELEFONE_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descFone%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_FAX_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descFax%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoDESC_INSCRICAO_FILIAL.Value;
+        Doc.Content.Find.Execute(FindText := '%descInscricao%', ReplaceWith := Campo, Replace := 2);
+
+        wAuxLinhas := 2;
+        QRAutorizacaoDevolucaoIT.First;
+        while not QRAutorizacaoDevolucaoIT.Eof do
+        begin
+          Campo := QRAutorizacaoDevolucaoITCOD_PRODUTO.Text;
+          Doc.Content.Find.Execute(FindText := '%codProduto%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITDESC_PRODUTO.Text;
+          Doc.Content.Find.Execute(FindText := '%descProduto%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITDESC_UNIDADE.Text;
+          Doc.Content.Find.Execute(FindText := '%descUnid%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITQT_QUANTIDADE.Text;
+          Doc.Content.Find.Execute(FindText := '%qtQtde%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITVAL_UNITARIO.Text;
+          Doc.Content.Find.Execute(FindText := '%valUnitario%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITVAL_TOTAL.Text;
+          Doc.Content.Find.Execute(FindText := '%valTotal%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITPERC_ALIQUOTA.Text;
+          Doc.Content.Find.Execute(FindText := '%percAliquota%', ReplaceWith := Campo, Replace := 2);
+          Campo := QRAutorizacaoDevolucaoITVAL_IPI.Text;
+          Doc.Content.Find.Execute(FindText := '%Ipi%', ReplaceWith := Campo, Replace := 2);
+
+          Inc(wAuxLinhas);
+          QRAutorizacaoDevolucaoIT.Next;
+
+          if not QRAutorizacaoDevolucaoIT.Eof then
+          begin
+            Doc.Tables.Item(3).Rows.Add;
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 1).Range.InsertAfter('%codProduto%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 2).Range.InsertAfter('%descProduto%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 3).Range.InsertAfter('%descUnid%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 4).Range.InsertAfter('%qtQtde%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 5).Range.InsertAfter('%valUnitario%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 6).Range.InsertAfter('%valTotal%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 7).Range.InsertAfter('%percAliquota%');
+            Doc.Tables.Item(3).Cell(wAuxLinhas, 8).Range.InsertAfter('%Ipi%');
+          end;
+        end;
+
+        Campo := 'NF.' + QRAutorizacaoDevolucaoNUM_NOTA.Text + ' de ' + QRAutorizacaoDevolucaoDT_EMISSAO.Text;
+        Doc.Content.Find.Execute(FindText := '%nfRef%', ReplaceWith := Campo, Replace := 2);
+
+        with DMNotaEntrada do
+        begin
+          QSomaItemNota.Close;
+          QSomaItemNota.Master := nil;
+          QSomaItemNota.MasterFields := '';
+          QSomaItemNota.DetailFields := '';
+          QSomaItemNota.SetVariable('COD_NOTA_CAB', QRAutorizacaoDevolucaoCOD_NOTA_CAB.Value);
+          QSomaItemNota.Open;
+
+          Campo := QSomaItemNotaSVAL_ICM_BASE.Text;
+          Doc.Content.Find.Execute(FindText := '%BCIcms%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_ICM.Text;
+          Doc.Content.Find.Execute(FindText := '%valIcms%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_BASE_SUBST.Text;
+          Doc.Content.Find.Execute(FindText := '%BCIcmsST%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_ICMS_SUBST.Text;
+          Doc.Content.Find.Execute(FindText := '%valIcmsST%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_TOTAL.Text;
+          Doc.Content.Find.Execute(FindText := '%valProdutos%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_FRETE.Text;
+          Doc.Content.Find.Execute(FindText := '%valFrete%', ReplaceWith := Campo, Replace := 2);
+          Campo := ''; //nao tem valor de Seguro
+          Doc.Content.Find.Execute(FindText := '%valSeguro%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_DESPESAS.Text;
+          Doc.Content.Find.Execute(FindText := '%valOutros%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotaSVAL_IPI.Text;
+          Doc.Content.Find.Execute(FindText := '%valIpi%', ReplaceWith := Campo, Replace := 2);
+          Campo := QSomaItemNotasval_total_nota.Text;
+          Doc.Content.Find.Execute(FindText := '%valNota%', ReplaceWith := Campo, Replace := 2);
+
+          QSomaItemNota.Close;
+          QSomaItemNota.Master := QNotaEntrada;
+          QSomaItemNota.MasterFields := 'COD_NOTA_CAB';
+          QSomaItemNota.DetailFields := 'COD_NOTA_CAB';
+        end;
+
+        Campo := QRAutorizacaoDevolucaoIND_FRETE.Text;
+        Doc.Content.Find.Execute(FindText := '%nFrete%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoNOME_TRANSP.Value;
+        Doc.Content.Find.Execute(FindText := '%nomeTransp%', ReplaceWith := Campo, Replace := 2);
+        Campo := QRAutorizacaoDevolucaoNUM_CGC_CPF_TRANSP.Value;
+        Doc.Content.Find.Execute(FindText := '%cnpjTransp%', ReplaceWith := Campo, Replace := 2);
+
+        Campo := DateToStr(QRAutorizacaoDevolucaoDT_EMISSAO.Value + 30);
+        Doc.Content.Find.Execute(FindText := '%dtVencimento%', ReplaceWith := Campo, Replace := 2);
+
+        Path := Path + 'AutorizacaoDevolucao_Nota' + QRAutorizacaoDevolucaoNUM_NOTA.Text + '.doc';
+      end;
+
+      Doc.SaveAs(Path);
+      WinWord.Quit;
+      MessageDlg('Autorização de Devolução gerada com sucesso.', mtInformation, [mbOK], 0);
+    except
+      WinWord.Quit;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtArmazemAlfandegarioClick(Sender: TObject);
+begin
+  inherited;
+  if FCadastroCons = nil then
+    FCadastroCons := TFCadastroCons.Create(Application);
+  if FCadastroCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCOD_ARMAZEM_ALFANDEGADO.Value := DMCadastro.QCadastroConsCod_Cadastro.Value;
+
+end;
+
+procedure TFNotaEntradaCad.BTLoteRastreadoClick(Sender: TObject);
+begin
+  inherited;
+  if Trim(DBEComplemento.Text) <> '' then
+  begin
+    DMTipoLote.QTipoLote.Close;
+    DMTipoLote.QTipoLote.Open;
+    DMTipoLote.QTipoLote.Insert;
+    DMTipoLote.QTipoLoteDESC_LOTE.Value := Trim(DBEdit15.Text) + '-' + Trim(DBEComplemento.Text);
+    DMTipoLote.QTipoLoteDESC_OBSERVACAO.Value := 'Emissão' + Trim(DBEdit19.Text);
+    DMTipoLote.QTipoLoteCOD_PRODUTO.Text := Trim(DBEdit48.Text);
+    DMTipoLote.QTipoLote.Post;
+    DBEdit51.Text := DMTipoLote.QTipoLoteCOD_LOTE_TIPO.Text;
+  end
+  else
+    raise Exception.Create('Informe o Número do Colar para cadastrar o lote!');
+
+end;
+
+procedure TFNotaEntradaCad.FormCreate(Sender: TObject);
+begin
+  inherited;
+  DMNotaEntrada.QClassTribIbsCbs.Open;
+  if (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+  begin
+    Bib.inverteControles(LblCultura, LblComplemento, true, false, false, true);
+    Bib.inverteControles(DBECultura, DBEComplemento, true, false, false, true);
+    DBEComplemento.Width := BTLoteRastreado.Left - DBEComplemento.Left;
+    LblPesoChegada.Visible := False;
+    DBEPesoChegada.Visible := False;
+    LblNotaProdutor.Visible := False;
+    DBENotaProdutor.Visible := False;
+  end;
+  bib.addControleCharCase(dbedit89, Self.Name);
+  if (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+    LblComplemento.Caption := 'Novo Valor de Venda';
+
+  TEdit(dbmObs).CharCase := ecUpperCase;
+  TEdit(dbmObsComplemento).CharCase := ecUpperCase;
+  TEdit(dbmObsDevolucao).CharCase := ecUpperCase;
+  TEdit(DBMemo1).CharCase := ecUpperCase;
+  TEdit(dbmObsAjuste).CharCase := ecUpperCase;
+  wImportacaoXML := false;
+  wOrdemCompraImportacaoXML := 0;
+
+  PageControl2.ActivePageIndex := 0;
+  PCNota.ActivePageIndex := 0;
+end;
+
+procedure TFNotaEntradaCad.InutilizaodenumeraoNFe1Click(Sender: TObject);
+begin
+  inherited;
+  if DMFilial.EmiteNfe(DMUsuario.CodFilialUsuario) then
+    DMNfe.InutilizaNumeracaoNfe
+  else
+    MessageDlg('Sua filial não emite NF-e.', mtInformation, [mbOK], 0);
+end;
+
+procedure TFNotaEntradaCad.EnviarviaemailNFe1Click(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull then
+  begin
+    MessageDlg('Por favor, selecione uma NF-e antes de enviar e-mail.', mtError, [mbOK], 0);
+    Exit;
+  end;
+  with DMNotaEntrada do
+    if (not QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+      if FNfEletronicaLoteCons = nil then
+        FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+      FNfEletronicaLoteCons.CarregaNota(QNotaEntradaCOD_NOTA_CAB.Value);
+      FNfEletronicaLoteCons.Foco := nfEmail;
+      FNfEletronicaLoteCons.ShowModal;
+    end;
+end;
+
+procedure TFNotaEntradaCad.ReemitirDanfeNFe1Click(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+    if (not QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+      if FNfEletronicaLoteCons = nil then
+        FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+      FNfEletronicaLoteCons.CarregaNota(QNotaEntradaCOD_NOTA_CAB.Value);
+      FNfEletronicaLoteCons.Foco := nfDanfe;
+      FNfEletronicaLoteCons.ShowModal;
+    end;
+end;
+
+procedure TFNotaEntradaCad.ReconsultarNFe1Click(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+    if (not QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+
+      if FNfEletronicaLoteCons = nil then
+        FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+      FNfEletronicaLoteCons.CarregaNota(QNotaEntradaCOD_NOTA_CAB.Value);
+      FNfEletronicaLoteCons.Foco := nfConsulta;
+      FNfEletronicaLoteCons.ShowModal;
+
+    end;
+end;
+
+procedure TFNotaEntradaCad.ImportarXMLNFe1Click(Sender: TObject);
+begin
+  inherited;
+  if FImportaNfe = nil then
+    FImportaNfe := TFImportaNfe.Create(Application);
+  FImportaNfe.FmNota.MeNota.Text := DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text;
+  FImportaNfe.FmNota1MeNotaExit(FImportaNfe.FmNota.MeNota);
+  FImportaNfe.ShowModal;
+end;
+
+procedure TFNotaEntradaCad.ObterXMLimportadoNFe1Click(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull then
+    MessageDlg('Por favor, informe uma NF-e para obter o XML.', mtInformation, [mbOK], 0)
+  else
+    with DMNotaEntrada do
+    begin
+      QNotaEntrada.RefreshRecord;
+      if QNotaEntradaBIN_XML_NFE.IsNull then
+        MessageDlg('Esta NF-e não possui XML importada', mtError, [mbOK], 0)
+      else
+      begin
+        FImportaNfe.SDXmlEntrada.FileName := 'NfeEntrada_' + QNotaEntradaNUM_NOTA.Text + '_Serie_' +
+          QNotaEntradaCOD_SERIE.Text + '_Filial_' + QNotaEntradaCOD_FILIAL.Text;
+        if FImportaNfe.SDXmlEntrada.Execute then
+          QNotaEntradaBIN_XML_NFE.SaveToFile(FImportaNfe.SDXmlEntrada.FileName);
+      end;
+    end;
+end;
+
+procedure TFNotaEntradaCad.DBEdit32Exit(Sender: TObject);
+begin
+  inherited;
+  DMNotaSaida.VerificaNotaDigitada('E');
+end;
+
+procedure TFNotaEntradaCad.NotasFiscaisEletrnicas1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.AtivaPagina(19);
+  if FNotaEntradaParam.ShowModal = MrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRNfe.Close;
+      QRNfe.ClearVariables;
+      if Trim(FNotaEntradaParam.Fm19Filial.MeFilial.Text) = '' then
+        raise Exception.Create('Obrigatório informar filial.');
+      QRNfe.SetVariable('FILIAL', Trim(FNotaEntradaParam.Fm19Filial.MeFilial.Text));
+      if Trim(FNotaEntradaParam.Fm19Cadastro.MeCadastro.Text) <> '' then
+        QRNfe.SetVariable('CADASTRO', Trim(FNotaEntradaParam.Fm19Cadastro.MeCadastro.Text));
+      if Trim(FNotaEntradaParam.Fm19DataEmissao.MeDtInicial.Text) <> '' then
+        QRNfe.SetVariable('DT_EMI_INI', Trim(FNotaEntradaParam.Fm19DataEmissao.MeDtInicial.Text));
+      if Trim(FNotaEntradaParam.Fm19DataEmissao.MeDtFinal.Text) <> '' then
+        QRNfe.SetVariable('DT_EMI_FIM', Trim(FNotaEntradaParam.Fm19DataEmissao.MeDtFinal.Text));
+      if Trim(FNotaEntradaParam.Fm19DataRecebimento.MeDtInicial.Text) <> '' then
+        QRNfe.SetVariable('DT_REC_INI', Trim(FNotaEntradaParam.Fm19DataRecebimento.MeDtInicial.Text));
+      if Trim(FNotaEntradaParam.Fm19DataRecebimento.MeDtFinal.Text) <> '' then
+        QRNfe.SetVariable('DT_REC_FIM', Trim(FNotaEntradaParam.Fm19DataRecebimento.MeDtFinal.Text));
+      if Trim(FNotaEntradaParam.Fm19Operacao.MeOperacao.Text) <> '' then
+        QRNfe.SetVariable('OPERACAO', Trim(FNotaEntradaParam.Fm19Operacao.MeOperacao.Text));
+      case FNotaEntradaParam.RG19TipoNota.ItemIndex of
+        0: QRNfe.SetVariable('TIPO', 'E');
+        1: QRNfe.SetVariable('TIPO', 'S');
+      end;
+      QRNfe.Open;
+
+      if QRNfeIND_SISTEMA_NFE.Value <> 2 then
+        raise Exception.Create('Filial não utiliza sistema NF-e novo.');
+      if FRNotaFiscalEletronica = nil then
+        FRNotaFiscalEletronica := TFRNotaFiscalEletronica.Create(Application);
+      FRNotaFiscalEletronica.QRLFilial.Caption := FNotaEntradaParam.Fm19Filial.EdFilial.Text;
+      FRNotaFiscalEletronica.QRLOperacao.Caption := FNotaEntradaParam.Fm19Operacao.EdOperacao.Text;
+      FRNotaFiscalEletronica.QRLCadastro.Caption := FNotaEntradaParam.Fm19Cadastro.EdCadastro.Text;
+      FRNotaFiscalEletronica.QRLEmissao.Caption := Bib.DatasParaLabel(
+        FNotaEntradaParam.Fm19DataEmissao.MeDtInicial.Text, FNotaEntradaParam.Fm19DataEmissao.MeDtFinal.Text);
+      FRNotaFiscalEletronica.QRLRecebimento.Caption := Bib.DatasParaLabel(
+        FNotaEntradaParam.Fm19DataRecebimento.MeDtInicial.Text, FNotaEntradaParam.Fm19DataRecebimento.MeDtFinal.Text);
+      case FNotaEntradaParam.RG19TipoNota.ItemIndex of
+        0: FRNotaFiscalEletronica.QRLTipo.Caption := 'ENTRADAS';
+        1: FRNotaFiscalEletronica.QRLTipo.Caption := 'SAÍDAS';
+        2: FRNotaFiscalEletronica.QRLTipo.Caption := 'ENTRADAS E SAÍDAS';
+      end;
+
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNotaFiscalEletronica.QRPrimario.Preview
+      else
+        FRNotaFiscalEletronica.QRPrimario.Print;
+
+      QRNfe.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.AlteraCdigoContrato1Click(Sender: TObject);
+begin
+  inherited;
+  if Trim(DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Text) <> '' then
+  begin
+    if FAlteraCodigoContrato = nil then
+      FAlteraCodigoContrato := TFAlteraCodigoContrato.Create(Application);
+    FAlteraCodigoContrato.wTela := 'COMPRA';
+    FAlteraCodigoContrato.ShowModal;
+  end
+  else
+    raise Exception.Create('Informe a nota para lançar o Contrato');
+
+end;
+
+procedure TFNotaEntradaCad.DSPrimarioDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  with DMNotaEntrada.QNotaEntradaIND_SITUACAO do
+    if Value = SIT_NOTA_DIGITADA then
+      DBTSituacao.Font.Color := clRed
+    else if (Value = SIT_NOTA_CONFIRMADA) or (Value = SIT_NOTA_DENEGADA) then
+      DBTSituacao.Font.Color := clGreen
+    else if Value = SIT_NOTA_CANCELADA then
+      DBTSituacao.Font.Color := clBlue
+    else
+      DBTSituacao.Font.Color := clWindowText;
+end;
+
+procedure TFNotaEntradaCad.FichadeApuraodosCrditos1Click(Sender: TObject);
+var
+  Excel, Sheet: Variant;
+  Linha, seq, wNotaAnterior: Integer;
+  cTitulo: string;
+begin                                                             
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[20].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMNotaEntrada do
+    begin
+      QFichaCredito.Close;
+      if Trim(FNotaEntradaParam.Fm20Filial.MeFilial.Text) = '' then
+        QFichaCredito.SetVariable('COD_FILIAL', Null)
+      else
+        QFichaCredito.SetVariable('COD_FILIAL', Trim(FNotaEntradaParam.Fm20Filial.MeFilial.Text));
+      if Trim(FNotaEntradaParam.Fm20Operacao.MeOperacao.Text) = '' then
+        QFichaCredito.SetVariable('COD_OPERACAO', Null)
+      else
+        QFichaCredito.SetVariable('COD_OPERACAO', Trim(FNotaEntradaParam.Fm20Operacao.MeOperacao.Text));
+      QFichaCredito.SetVariable('DT_RECEBIMENTO_INI', FNotaEntradaParam.Fm20Datas.MeDtInicial.Text);
+      QFichaCredito.SetVariable('DT_RECEBIMENTO_FIN', FNotaEntradaParam.Fm20Datas.MeDtFinal.Text);
+      QFichaCredito.Open;
+
+      QFichaCredito.First;
+
+      cTitulo := 'Ficha de Apuração dos Créditos';
+      Excel := CreateOleObject('Excel.Application');
+      Excel.Visible := True;
+      Excel.Workbooks.Add;
+      Excel.Workbooks[1].Sheets.Add;
+      Excel.Workbooks[1].WorkSheets[1].Name := cTitulo;
+      Sheet := Excel.Workbooks[1].WorkSheets[cTitulo];
+      Linha := 1;
+
+      Sheet.Cells[Linha, 1] := 'CNPJ Filial';
+      Sheet.Cells[Linha, 2] := 'Tipo Documento';
+      Sheet.Cells[Linha, 3] := 'Número';
+      Sheet.Cells[Linha, 4] := 'Série';
+      Sheet.Cells[Linha, 5] := 'Emissão';
+      Sheet.Cells[Linha, 6] := 'Recebimento';
+      Sheet.Cells[Linha, 7] := 'Ano ref.';
+      Sheet.Cells[Linha, 8] := 'CNPJ Fornecedor';
+      Sheet.Cells[Linha, 9] := 'Tipo Pessoa Fornecedor';
+      Sheet.Cells[Linha, 10] := 'Fornecedor';
+      Sheet.Cells[Linha, 11] := 'País Fornecedor';
+      Sheet.Cells[Linha, 12] := 'CFOP';
+      Sheet.Cells[Linha, 13] := 'NCM';
+      Sheet.Cells[Linha, 14] := 'Seq. Item';
+      Sheet.Cells[Linha, 15] := 'Produto';
+      Sheet.Cells[Linha, 16] := 'Valor Contábil';
+      Sheet.Cells[Linha, 17] := 'Valor IPI';
+
+      Inc(Linha);
+
+      wNotaAnterior := 0;
+
+      while not QFichaCredito.Eof do
+      begin
+        if wNotaAnterior <> QFichaCreditoCOD_NOTA_CAB.Value then
+        begin
+          seq := 1;
+          wNotaAnterior := QFichaCreditoCOD_NOTA_CAB.Value;
+        end
+        else
+          Inc(seq);
+
+        Sheet.Cells[Linha, 1] := QFichaCreditoNUM_CGC_FILIAL.Value;
+        Sheet.Cells[Linha, 2] := QFichaCreditoDESC_TIPO.Value;
+        Sheet.Cells[Linha, 3] := QFichaCreditoNUM_NOTA.Value;
+        Sheet.Cells[Linha, 4] := QFichaCreditoCOD_SERIE.Value;
+        Sheet.Cells[Linha, 5] := QFichaCreditoDT_EMISSAO.Value;
+        Sheet.Cells[Linha, 6] := QFichaCreditoDT_RECEBIMENTO.Value;
+        Sheet.Cells[Linha, 7] := QFichaCreditoNUM_ANO_EMISSAO.Value;
+        Sheet.Cells[Linha, 8] := QFichaCreditoNUM_CGC_CPF_CADASTRO.Value;
+        Sheet.Cells[Linha, 9] := QFichaCreditoIND_FISICA_JURIDICA_CADASTRO.Value;
+        Sheet.Cells[Linha, 10] := QFichaCreditoNOME_CADASTRO.Value;
+        Sheet.Cells[Linha, 11] := QFichaCreditoDESC_PAIS_CADASTRO.Value;
+        Sheet.Cells[Linha, 12] := QFichaCreditoNUM_CFOP.Value;
+        Sheet.Cells[Linha, 13] := QFichaCreditoNUM_GENERO_NCM.Value;
+        Sheet.Cells[Linha, 14] := seq;
+        Sheet.Cells[Linha, 15] := QFichaCreditoDESC_PRODUTO.Value;
+        Sheet.Cells[Linha, 16] := QFichaCreditoVAL_CONTABIL.Value;
+        Sheet.Cells[Linha, 17] := QFichaCreditoVAL_IPI.Value;
+
+        Inc(Linha);
+        QFichaCredito.Next;
+      end;
+
+//      Excel.WorkBooks[1].SaveAs(ExtractFilePath(Application.ExeName) + 'FichaCredito.xls');
+    end;
+end;
+
+procedure TFNotaEntradaCad.BtObraConsClick(Sender: TObject);
+begin
+  inherited;
+  if FObraCons = nil then
+    FObraCons := TFObraCons.Create(Application);
+  if FObraCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCod_Obra.Value := DMObra.QObra_ConsCod_Obra.Value;
+
+end;
+
+procedure TFNotaEntradaCad.SBChaveAcessoClick(Sender: TObject);
+  procedure ChaveManual(Chave: string);
+  var wSql: String;
+  begin
+    if InputQuery('Nova Chave de Acesso', 'Digite a chave:', Chave) then
+    begin
+      Chave := Bib.LimpaNumero(Chave);
+      if Length(Chave) <> 44 then
+      begin
+        MessageDlg('Chave errada, precisa possuir 44 números.', mtError, [mbOK], 0);
+        ChaveManual(Chave);
+      end
+      else
+      begin
+        if DMNotaEntrada.QNotaEntrada.State in [DSInsert, DSEdit] then
+          DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value := 'NFe' + Chave
+        else
+        begin
+          with DMOracle do
+          begin
+            wSql := 'UPDATE TB_NOTA_CAB SET DESC_CHAVE_ACESSO = ';
+            wSql := wSql + quotedStr('NFe' + Chave);
+            wSql := wSql + ' WHERE COD_NOTA_CAB = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text;
+            try
+              ExecutaSql(wSql);
+              SBRefreshClick(Self);
+            Except
+              DBCemapa.Rollback;
+            End;
+          end;
+        end;
+      end;
+    end;
+  end;
+begin
+  inherited;
+  if (DMNotaEntrada.QNotaEntrada.RecordCount = 0) and
+    not (DSPrimario.DataSet.State in [DSInsert, DSEdit]) then
+  begin
+    MessageDlg('Nenhuma nota selecionada', mtError, [mbOk],0);
+    Abort;  
+  end;
+  with DMNfe do
+  begin
+    SetaNfe(Bib.LimpaNumero(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value), True);
+    if (QNfeind_aprovado.Value) or (QNfeind_cancelado.Value) or (QNfeind_denegado.Value) then
+    begin
+      MessageDlg('Esta chave já está autorizada, cancelada ou denegada na SEFAZ.' + #13 + #10 +
+        'Não é permitido alterar a chave de uma nota nesta situação.', mtInformation, [mbOK], 0);
+      Exit;
+    end;
+  end;
+  case MessageDlgCustom('Alterar chave de acesso', mtConfirmation,
+    [mbYes, mbNo, mbCancel], ['Informar manualmente',
+    'Gerar outra chave automaticamente', 'Cancelar'], nil) of
+    mrYes:
+      ChaveManual(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value);
+    mrNo:
+      if (MessageDlg('Tem certeza?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+      begin
+        MessageDlg('A Chave de Acesso será apagada, pois, assim, ela será gerada automaticamente na confirmação da nota.', mtInformation, [mbOK], 0);
+        DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value := '';
+      end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.AlterarInserirestanotaemLoteNFe1Click(
+  Sender: TObject);
+begin
+  inherited;
+  //DMNfe.EmissaoNfe(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  DMNfEletronicaLote.AdicionaNotaEmLote(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value,
+    DMNotaEntrada.QNotaEntradaCOD_FILIAL.Value,
+    DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  DMOracle.DBCemapa.Commit;
+end;
+
+procedure TFNotaEntradaCad.EnviarReenviarloteparaSEFAZ1Click(
+  Sender: TObject);
+var
+  Acs: TAcoesLote;
+begin
+  inherited;
+  DMNFe.ValidaNfe(DMNotaSaida.QNotaSaidaCOD_NOTA_CAB.Value);
+  if FNfEletronicaLoteCons = nil then
+    FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+  if not DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.IsNull then
+    FNfEletronicaLoteCons.CarregaNota(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  if FNFeParam = nil then
+    FNFeParam := TFNFeParam.Create(Application);
+  FNFeParam.AtivaPagina(4);
+  if FNFeParam.ShowModal = MrOk then
+  begin
+    with DMNfEletronicaLote do
+    begin
+      CDSNfeLoteItemCons.First;
+      while not CDSNfeLoteItemCons.Eof do
+      begin
+        SetSelecaoItem;
+        CDSNfeLoteItemCons.Edit;
+        CDSNfeLoteItemConsEMAIL_XML.Value := IfThen(FNFeParam.CB4EmailXML.Checked, 'S', 'N');
+        CDSNfeLoteItemConsEMAIL_PDF.Value := IfThen(FNFeParam.CB4EmailPDF.Checked, 'S', 'N');
+        CDSNfeLoteItemCons.Post;
+
+        CDSNfeLoteItemCons.Next;
+      end;
+    end;
+    Acs := TAcoesLote.Create.Add(alEnvio).Add(alGeraXML).Add(alConsulta);
+    if FNFeParam.CB4Danfe.Checked then
+      Acs.Add(alDanfe);
+    if FNFeParam.CB4Email.Checked then
+      Acs.Add(alEmail);
+    DMNfEletronicaLote.AcaoEmLote(Acs);
+    DMOracle.DBCemapa.Commit;
+  end;
+end;
+
+procedure TFNotaEntradaCad.ConsultarlotedeNFe1Click(Sender: TObject);
+begin
+  inherited;
+  if FNfEletronicaLoteCons = nil then
+    FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+  with FNfEletronicaLoteCons do
+  begin
+    if not DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.IsNull then
+    begin
+      FMNota.MeNota.Text := DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text;
+      FMNota.MeNotaExit(Sender);
+    end;
+    FmFilial.MeFilial.Text := IntToStr(DMUsuario.CodFilialUsuario);
+    FmFilial.MeFilialExit(Sender);
+
+    Buscar;
+    ShowModal;
+  end;
+end;
+
+procedure TFNotaEntradaCad.DenegarNota1Click(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value <> '' then
+    DMNfe.DenegaNfe(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value);
+  SBRefreshClick(Sender);
+end;
+
+procedure TFNotaEntradaCad.VoltarNotaDenegada1Click(Sender: TObject);
+begin
+  inherited;
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value <> '' then
+    DMNfe.DenegaNfe(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value, true);
+  SBRefreshClick(Sender);
+end;
+
+procedure TFNotaEntradaCad.ExportarNFe1Click(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+    if (not QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+
+      if FNfEletronicaLoteCons = nil then
+        FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+      FNfEletronicaLoteCons.CarregaNota(QNotaEntradaCOD_NOTA_CAB.Value);
+      FNfEletronicaLoteCons.Foco := nfExportar;
+      FNfEletronicaLoteCons.ShowModal;
+
+    end;
+end;
+
+procedure TFNotaEntradaCad.btnImportarNfeClick(Sender: TObject);
+var
+  i: Integer;
+  dtEmi, dtSaiEnt: TDateTime;
+  d, M, a: Word;
+  wTemSubst: String;
+  wTemCST020: String;
+  pcf: boolean;
+  wSomaSobraIpi, wSomaSobraTotal, wSomaSobraBaseSub, wSomaSobraIcmsSub, wQtTotalPorLote : Double;
+begin
+  inherited;
+  wSomaSobraIpi := 0;
+  wSomaSobraTotal := 0;
+  wSomaSobraBaseSub := 0;
+  wSomaSobraIcmsSub := 0;
+
+  FImportacaoNfe := TFImportacaoNfe.Create(Application);
+  if FImportacaoNfe.ShowModal = MrOk then
+  begin
+    if NotaJaCadastrada(FImportacaoNfe.pNnf, FImportacaoNfe.pCodFilial,
+      FImportacaoNfe.pSerieNota, FImportacaoNfe.pCodFor) then
+    begin
+      MessageDlg('Esta nota ja está cadastrada no sistema', mtInformation,
+        [mbOk], 0);
+      Abort;
+    end;
+    if not (DMNotaEntrada.QNotaEntrada.State in [dsInsert, dsEdit]) then
+      SBIncluirClick(Sender);
+    with DMNotaEntrada, DMOracle do
+    begin
+      //Cabecalho
+      QNotaEntradaCOD_CADASTRO.Value := FImportacaoNfe.pCodFor;
+      QNotaEntradaNUM_NOTA.Value := FImportacaoNfe.pNnf;
+      QNotaEntradaCOD_SERIE_MODELO.Value := '55';
+      QNotaEntradaCOD_SERIE.Value := FImportacaoNfe.pSerieNota;
+      QNotaEntradaCOD_FILIAL.Value := FImportacaoNfe.pCodFilial;
+      QNotaEntradaCOD_OPERACAO.Value := FImportacaoNfe.pCodOperacao;
+      QNotaEntradaDESC_OBS_CORPO_NOTA.Value := FImportacaoNfe.pInfCpl;
+      QNotaEntradaDESC_CHAVE_ACESSO.Value := FImportacaoNfe.pChaveAcesso;
+      QNotaEntradaIND_CONDICAO_PAGTO.Value := IntToStr(StrToInt(FImportacaoNfe.pIndPag) + 1);
+      QNotaEntradaVAL_DESCONTO.Value := FImportacaoNfe.pValDesconto;
+      QNotaEntradaVAL_DESPESAS.Value := FImportacaoNfe.pValDespesa;
+      a := StrToInt(copy(FImportacaoNfe.pDtEmi, 0, 4));
+      M := StrToInt(copy(FImportacaoNfe.pDtEmi, 6, 2));
+      d := StrToInt(copy(FImportacaoNfe.pDtEmi, 9, 2));
+      dtEmi := EncodeDate(a, m, d);
+      QNotaEntradaDT_EMISSAO.Value := dtEmi;
+
+      {if FImportacaoNfe.pDtSaiEnt <> '' then
+      begin
+        a := StrToInt(copy(FImportacaoNfe.pDtSaiEnt, 0, 4));
+        M := StrToInt(copy(FImportacaoNfe.pDtSaiEnt, 6, 2));
+        d := StrToInt(copy(FImportacaoNfe.pDtSaiEnt, 9, 2));
+        dtSaiEnt := EncodeDate(a, m, d);
+      end
+      else} //clientes querem que a data de recebimento seja a data da importação do xml
+        dtSaiEnt := DMOracle.DataServ;
+      QNotaEntradaDT_RECEBIMENTO.Value := dtSaiEnt;
+      QNotaEntradaBIN_XML_NFE.Value := FImportacaoNfe.pXml;
+
+      //Itens
+      PCNota.ActivePage := TsItemNota;
+      for i := 0 to Length(FImportacaoNfe.pItensNota) - 1 do
+      begin
+        //----------------------------------------------------------------------
+        // Por Gian, 03/10/2019. Á pedido do Cesar, somente para arisitdes
+        // Código anterior permanece o que estava antes, sem alterações.
+        // Aristides verifica TB_PRODUTO_LOTE_ITEM para adicionar os itens
+        //----------------------------------------------------------------------
+        with DMNfe do
+        begin
+          QProdutoLoteItem.Close;
+          QProdutoLoteItem.SetVariable('PK', Null);
+          QProdutoLoteItem.SetVariable('FORNECEDOR', FImportacaoNfe.pCodFor);
+          QProdutoLoteItem.SetVariable('PRODUTO', FImportacaoNfe.pItensNota[i].pCodigo);
+          QProdutoLoteItem.SetVariable('CPROD', FImportacaoNfe.pItensNota[i].pCProd);
+          QProdutoLoteItem.SetVariable('NUM_ITEM', i+1);
+          QProdutoLoteItem.Open;
+        end;
+
+        if (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'ARISTIDES') and
+           (DMNfe.QProdutoLoteItem.RecordCount > 0) then
+        begin
+          DMNfe.QProdutoLoteItem.First;
+          wQtTotalPorLote := 0;
+          while not DMNfe.QProdutoLoteItem.Eof do
+          begin
+            wQtTotalPorLote := wQtTotalPorLote + DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value;
+            DMNfe.QProdutoLoteItem.Next;
+          end;
+
+          DMNfe.QProdutoLoteItem.First;
+          while not DMNfe.QProdutoLoteItem.Eof do
+          begin
+            QItemNF.Insert;
+            QItemNFCOD_NOTA_CAB.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+            QItemNFCOD_PRODUTO.Value := FImportacaoNfe.pItensNota[i].pCodigo;
+            QItemNFCOD_LOTE_TIPO.Value := DMNfe.QProdutoLoteItemCOD_LOTE_TIPO.Value;
+
+            if trim(DBEdit48.Text) <> trim(QItemNFCOD_PRODUTO.Text) then
+              DBEdit48.Text := trim(QItemNFCOD_PRODUTO.Text);
+            DBEdit48Exit(self);
+
+            wSomaSobraIpi :=      wSomaSobraIpi + (FImportacaoNfe.pItensNota[i].pValorIpi/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value) - Trunc((FImportacaoNfe.pItensNota[i].pValorIpi/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            wSomaSobraBaseSub :=  wSomaSobraBaseSub + (FImportacaoNfe.pItensNota[i].pBaseSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value) - Trunc((FImportacaoNfe.pItensNota[i].pBaseSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            wSomaSobraIcmsSub :=  wSomaSobraIcmsSub + (FImportacaoNfe.pItensNota[i].pValorSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value) - Trunc((FImportacaoNfe.pItensNota[i].pValorSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            wSomaSobraTotal :=    wSomaSobraTotal + (FImportacaoNfe.pItensNota[i].pValorTotal/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value) - Trunc((FImportacaoNfe.pItensNota[i].pValorTotal/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+
+            QItemNFQT_QUANTIDADE.Value :=    DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value;
+            QItemNFVAL_IPI.Value :=          Trunc((FImportacaoNfe.pItensNota[i].pValorIpi/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            QItemNFVAL_BASE_SUBST.Value :=   Trunc((FImportacaoNfe.pItensNota[i].pBaseSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            QItemNFVAL_ICMS_SUBST.Value :=   Trunc((FImportacaoNfe.pItensNota[i].pValorSubst/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            QItemNFVAL_TOTAL.Value :=        Trunc((FImportacaoNfe.pItensNota[i].pValorTotal/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+
+            QItemNFVAL_BASE_ST_ANTERIOR_RETIDO.Value :=   Trunc((FImportacaoNfe.pItensNota[i].pBaseSTAnteriorRetido/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            QItemNFVAL_ST_ANTERIOR_RETIDO.Value :=   Trunc((FImportacaoNfe.pItensNota[i].pValorSTAnteriorRetido/wQtTotalPorLote*DMNfe.QProdutoLoteItemQT_QUANTIDADE.Value)*100)/100;
+            QItemNFPERC_ST_ANTERIOR_RETIDO.Value :=  FImportacaoNfe.pItensNota[i].pPercSTAnteriorRetido;
+
+            if (QItemNFVAL_ST_ANTERIOR_RETIDO.Value = 0) and
+               (QItemNFVAL_ICMS_SUBST.Value > 0) then
+            begin
+              QItemNFVAL_BASE_ST_ANTERIOR_RETIDO.Value := QItemNFVAL_BASE_SUBST.Value;
+              QItemNFVAL_ST_ANTERIOR_RETIDO.Value := QItemNFVAL_ICMS_SUBST.Value;
+              QItemNFPERC_ST_ANTERIOR_RETIDO.Value := FImportacaoNfe.pItensNota[i].pPercSubst;
+            end;
+
+            if FImportacaoNfe.pItensNota[i].pTemSubst then
+              QItemNFCOD_CFOP.Value := StrToInt(trim(FImportacaoNfe.pItensNota[i].pCfop));
+
+            pcf := DMNotaEntrada.pCF;
+            DMNotaEntrada.pCF := true;
+            QItemNf.Post;
+            DMNotaEntrada.pCF := pcf;
+            //QItemNF := BibCompra.itemImportacaoXML(QItemNF, 'CFOP',FImportacaoNfe.pItensNota[i].pCfop, QNotaEntrada,FImportacaoNfe.pItensNota[i].pTemCST020);
+            QItemNF := BibCompra.itemImportacaoXML(QItemNF, 'CFOP',FImportacaoNfe.pItensNota[i].pCfop, QNotaEntrada,FImportacaoNfe.pItensNota[i].pTemCST020,
+                                                   FImportacaoNfe.pItensNota[i].pTemCSOSN103);
+            if FImportacaoNfe.pItensNota[i].pTemSubst then
+              wTemSubst := 'SIM'
+            else
+              wTemSubst := 'NAO';
+            with DMOracle do
+            begin
+              try
+                //DBCemapa.StartTransaction;
+                QExecSQL.Close;
+                QExecSQL.SQL.Clear;
+                QExecSQL.SQL.Add('UPDATE TB_PRODUTO SET IND_SUBST_TRIB = ' + quotedStr(wTemSubst));
+                QExecSQL.SQL.Add('WHERE COD_PRODUTO = ' + QItemNFCOD_PRODUTO.Text);
+                QExecSQL.ExecSQL;
+                //DBCemapa.Commit;
+              except
+                //DMOracle.DBCemapa.Rollback;
+              end;
+            end;
+
+            DMNfe.QProdutoLoteItem.Next;
+          end;
+        end
+        else
+        begin
+          QItemNF.Insert;
+          QItemNFCOD_NOTA_CAB.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+          QItemNFCOD_PRODUTO.Value := FImportacaoNfe.pItensNota[i].pCodigo;
+          if FImportacaoNfe.pItensNota[i].pLote > 0 then
+            QItemNFCOD_LOTE_TIPO.Value := FImportacaoNfe.pItensNota[i].pLote;
+
+          // Carrega informações de CST dos itens
+          if trim(DBEdit48.Text) <> trim(QItemNFCOD_PRODUTO.Text) then
+            DBEdit48.Text := trim(QItemNFCOD_PRODUTO.Text);
+          DBEdit48Exit(self);
+
+          QItemNFQT_QUANTIDADE.Value := StrToFloat(
+            StringReplace(FImportacaoNfe.pItensNota[i].pQuantidade, '.', ',',
+            [rfReplaceAll, rfIgnoreCase]));
+          QItemNFVAL_IPI.Value := FImportacaoNfe.pItensNota[i].pValorIpi;
+          QItemNFVAL_BASE_SUBST.Value := FImportacaoNfe.pItensNota[i].pBaseSubst;
+          QItemNFVAL_ICMS_SUBST.Value := FImportacaoNfe.pItensNota[i].pValorSubst;
+          QItemNFVAL_TOTAL.Value := FImportacaoNfe.pItensNota[i].pValorTotal;
+          QItemNFVAL_DESCONTO_RATEIO.Value := FImportacaoNfe.pItensNota[i].pValorDesconto;
+
+                      // Valores de Pis e Cofins dos itens.
+          QItemNFVAL_PIS.Value := FImportacaoNfe.pItensNota[i].pValPis;
+          QItemNFVAL_CONFINS.Value := FImportacaoNfe.pItensNota[i].pValCofins;
+
+          QItemNFVAL_BASE_ST_ANTERIOR_RETIDO.Value := FImportacaoNfe.pItensNota[i].pBaseSTAnteriorRetido;
+          QItemNFVAL_ST_ANTERIOR_RETIDO.Value := FImportacaoNfe.pItensNota[i].pValorSTAnteriorRetido;
+          QItemNFPERC_ST_ANTERIOR_RETIDO.Value :=  FImportacaoNfe.pItensNota[i].pPercSTAnteriorRetido;
+
+          //INICIO  importar base e valor de icms do xml. contabilidade solicitou para não informar icms/base para produtos com ST, independente se tiver na nota. Suporte.5062
+       {   if ((DMParamSistema.CodEmpresa = 'KREUZ') or (DMParamSistema.CodEmpresa = 'CONKRETA')) and ((FImportacaoNfe.pItensNota[i].pTemSubst) or (FImportacaoNfe.pItensNota[i].pCfop = '5910')
+              or (FImportacaoNfe.pItensNota[i].pCfop = '6910') or (FImportacaoNfe.pItensNota[i].pCfop = '5949') or(FImportacaoNfe.pItensNota[i].pCfop = '6949'))  then}
+{          if (DMParamSistema.CodEmpresa = 'KREUZ') and (FImportacaoNfe.pItensNota[i].pTemSubst) then // Produtos com ST não podem creditar ICMS.(Rubens/Contabilidade). Junior 25/04/2023
+          begin
+            QItemNFCOD_TRIBUTACAO.Value := 9;
+            QItemNFVAL_ICM_BASE.Value := 0;
+            QItemNFVAL_ICM.Value := 0;
+          end
+          else } //KREUZ VOLTOU PARA REGIME DO SIMPLES (JUNIOR 10/01/2024
+
+          QItemNFVAL_ICM_BASE.Value := FImportacaoNfe.pItensNota[i].pBaseICMS;
+          QItemNFVAL_ICM.Value      := FImportacaoNfe.pItensNota[i].pValorICMS;
+
+          if (QItemNFVAL_ST_ANTERIOR_RETIDO.Value = 0) and
+             (QItemNFVAL_ICMS_SUBST.Value > 0) then
+          begin
+            QItemNFVAL_BASE_ST_ANTERIOR_RETIDO.Value := QItemNFVAL_BASE_SUBST.Value;
+            QItemNFVAL_ST_ANTERIOR_RETIDO.Value := QItemNFVAL_ICMS_SUBST.Value;
+            QItemNFPERC_ST_ANTERIOR_RETIDO.Value := FImportacaoNfe.pItensNota[i].pPercSubst;
+          end;
+          //KREUZ - Rubens. SOLICITIOU PARA APARECER AS CFOP QUE ESTÁ NA OPERAÇÃO, MESMO QUE NÃO SEJA CFOP DE ST. JUNIOR 20/08/2021. Enviado por email. Junior/Vitor
+          if (DMParamSistema.CodEmpresa = 'KREUZ') or (DMParamSistema.CodEmpresa = 'CONKRETA') then
+          begin
+            if FImportacaoNfe.pItensNota[i].pValorIpi > 0 then
+            begin
+              QItemNFCOD_CST_IPI.Value := '49';
+            end;
+            if FImportacaoNfe.pItensNota[i].pTemSubst then
+              QItemNFCOD_CFOP.Value := StrToInt(trim(FImportacaoNfe.pItensNota[i].pCfop))
+            else
+            begin
+              if QNotaEntradaCOD_ESTADO.Value = 'PR' then
+                QItemNFCOD_CFOP.Value := StrToInt(DMOracle.BuscaNome('SELECT NUM_NATUREZA_EST_NOVO FROM TB_OPERACAO', 'COD_OPERACAO = ' + QNotaEntradaCOD_OPERACAO.Text))
+              else
+                QItemNFCOD_CFOP.Value := StrToInt(DMOracle.BuscaNome('SELECT NUM_NATUREZA_INT_NOVO FROM TB_OPERACAO', 'COD_OPERACAO = ' + QNotaEntradaCOD_OPERACAO.Text));
+            end;
+          end
+          else
+          begin
+            if FImportacaoNfe.pItensNota[i].pTemSubst then
+              QItemNFCOD_CFOP.Value := StrToInt(trim(FImportacaoNfe.pItensNota[i].pCfop));
+          end;
+          if ((DMParamSistema.CodEmpresa = 'DINIZ') or (DMParamSistema.CodEmpresa = 'FERRAGMED') ) and (FImportacaoNfe.pItensNota[i].pValorIpi > 0) then //Junior 08/02/2023
+            QItemNFCOD_CST_IPI.Value := '49';
+
+{          pcf := DMNotaEntrada.pCF;
+          DMNotaEntrada.pCF := true;
+          QItemNf.Post;
+          DMNotaEntrada.pCF := pcf;
+          QItemNF := BibCompra.itemImportacaoXML(QItemNF, 'CFOP'
+            , FImportacaoNfe.pItensNota[i].pCfop, QNotaEntrada, FImportacaoNfe.pItensNota[i].pTemCST020, FImportacaoNfe.pItensNota[i].pTemCSOSN103);
+          //atualiza o produto que tem substituição tributária}
+          if (DMParamSistema.CodEmpresa = 'KREUZ') or (DMParamSistema.CodEmpresa = 'DINIZ') or
+             (DMParamSistema.CodEmpresa = 'RETIFOZ2') then //KREUZ E DINIZ tem importação específica (Tributação,CFOP), Comentei a linha de cima. suporte: {7941} Junior 26/09/2023
+            QItemNF := BibCompra.itemImportacaoXML(QItemNF, 'CFOP',FImportacaoNfe.pItensNota[i].pCfop, QNotaEntrada,
+                          FImportacaoNfe.pItensNota[i].pTemCST020, FImportacaoNfe.pItensNota[i].pTemCSOSN103)           //atualiza o produto que tem substituição tributária
+          else
+          begin
+            pcf := DMNotaEntrada.pCF;
+            DMNotaEntrada.pCF := true;
+            QItemNf.Post;
+            DMNotaEntrada.pCF := pcf;
+          end;
+          if FImportacaoNfe.pItensNota[i].pTemSubst then
+            wTemSubst := 'SIM'
+          else
+            wTemSubst := 'NAO';
+          with DMOracle do
+          begin
+            try
+              //DBCemapa.StartTransaction;
+              QExecSQL.Close;
+              QExecSQL.SQL.Clear;
+              QExecSQL.SQL.Add('UPDATE TB_PRODUTO SET IND_SUBST_TRIB = ' + quotedStr(wTemSubst));
+              QExecSQL.SQL.Add('WHERE COD_PRODUTO = ' + QItemNFCOD_PRODUTO.Text);
+              QExecSQL.ExecSQL;
+              //DBCemapa.Commit;
+            except
+              //DMOracle.DBCemapa.Rollback;
+            end;
+          end;
+        end;
+      end;
+      //----------------------------------------------------------------------
+      // Por Gian, 03/10/2019. Á pedido do Cesar, somente para arisitdes
+      // Se foi retirado algum valor nas racionalizações, então acrescenta
+      // este valor para um item da nota.
+      //----------------------------------------------------------------------
+      with DMNotaEntrada do
+      begin
+        QItemNF.Edit;
+        if wSomaSobraIpi > 0 then
+          QItemNFVAL_IPI.Value := QItemNFVAL_IPI.Value + wSomaSobraIpi;
+        if wSomaSobraBaseSub > 0 then
+        QItemNFVAL_BASE_SUBST.Value := QItemNFVAL_BASE_SUBST.Value + wSomaSobraBaseSub;
+        if wSomaSobraIcmsSub > 0 then
+          QItemNFVAL_ICMS_SUBST.Value := QItemNFVAL_ICMS_SUBST.Value + wSomaSobraIcmsSub;
+        if wSomaSobraTotal > 0 then
+          QItemNFVAL_TOTAL.Value := QItemNFVAL_TOTAL.Value + wSomaSobraTotal;
+        QItemNF.Post;
+      end;
+      wImportacaoXML := true;
+      PCNota.ActivePage := TsCabecalho;
+    end;
+  end;
+  wOrdemCompraImportacaoXML := FImportacaoNfe.pCodOrdemCompra;
+  if DMParamSistema.CodEmpresa = 'ARISTIDES' then
+    DMNotaEntrada.QNotaEntradaIND_CONDICAO_PAGTO.Value := '3'
+  else
+    if (DMNotaEntrada.QNotaEntrada.State in [dsInsert, dsEdit]) and (FImportacaoNfe.pIndpag = '2') then
+      MessageDlg('Tipo de pagamento não informado no XML desta nota. Por favor informe a condição de pagamento manualmente.',mtInformation,[mbOK],0); 
+  
+  FImportacaoNfe.Free;
+  FImportacaoNfe := Nil;
+end;
+
+procedure TFNotaEntradaCad.VerretornodeenvioNFe1Click(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+    if (not QNotaEntradaDESC_CHAVE_ACESSO.IsNull) then
+    begin
+
+      if FNfEletronicaLoteCons = nil then
+        FNfEletronicaLoteCons := TFNfEletronicaLoteCons.Create(Application);
+      FNfEletronicaLoteCons.CarregaNota(QNotaEntradaCOD_NOTA_CAB.Value);
+      FNfEletronicaLoteCons.Foco := nfRetornoEnvio;
+      FNfEletronicaLoteCons.ShowModal;
+
+    end;
+end;
+
+procedure TFNotaEntradaCad.DBCfopExit(Sender: TObject);
+begin
+  inherited;
+  if DBCfop.Text <> '' then
+    if StrToInt(Trim(DBCfop.Text)) > 4999 then
+    begin
+      DBCfop.SetFocus;
+      raise Exception.Create('Cfop deve ser de entrada');
+    end;
+end;
+
+procedure TFNotaEntradaCad.btnDiClick(Sender: TObject);
+begin
+  inherited;
+  FDI := TFDI.Create(Application);
+  FDI.ShowModal;
+end;
+
+procedure TFNotaEntradaCad.ExportaNotasdeEntrada1Click(Sender: TObject);
+begin
+  inherited;
+  {if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[22].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = MrOk then
+    if Application.MessageBox('O processo poderá demorar em caso de haver muitos registros.'
+                 +#13+#10+'Deseja continuar?', 'Atenção', MB_ICONINFORMATION or MB_YESNO) = IDYES then
+      exportaNotasEntrada;}
+
+end;
+
+procedure TFNotaEntradaCad.exportaNotasEntrada;
+var
+  S : String;
+  F : TextFile;
+  wSequencia : integer;
+  wTotalContabil, wTotalBaseICMS, wTotalICMS, wTotalIsentoICMS : double;
+  wTotalBase_ST,  wTotalIcms_ST,  wTotalMercadoria_ST : Double;
+begin
+  wSequencia          := 1;
+  wTotalContabil      := 0;
+  wTotalBaseICMS      := 0;
+  wTotalICMS          := 0;
+  wTotalIsentoICMS    := 0;
+  wTotalBase_ST       := 0;
+  wTotalIcms_ST       := 0;
+  wTotalMercadoria_ST := 0;
+  with DMNotaEntrada do
+  begin
+     QNotaEntrada_Exp.Close;
+     if Trim(FNotaEntradaParam.FmDatas22.MeDtInicial.Text) = '' then
+       QNotaEntrada_Exp.SetVariable(':DT_EMISSAO_I', Null)
+     else
+       QNotaEntrada_Exp.SetVariable(':DT_EMISSAO_I', FNotaEntradaParam.FmDatas22.MeDtInicial.Text);
+     if Trim(FNotaEntradaParam.FmDatas22.MeDtFinal.Text) = '' then
+       QNotaEntrada_Exp.SetVariable(':DT_EMISSAO_F', Null)
+     else
+       QNotaEntrada_Exp.SetVariable(':DT_EMISSAO_F', FNotaEntradaParam.FmDatas22.MeDtFinal.Text);
+
+     //ExportacaoClienteFornecedor;
+     QNotaEntrada_Exp.Open;
+     QNotaEntrada_Exp.First;
+     // LAYOUT DO REGISTRO HEADER
+     S := S + '0'                                      +
+     bib.TiraMascara(DateToStr(DMOracle.DataServ))     +
+     bib.FormataTexto(Bib.FormataCNPJ_CPF(bib.TiraMascara(QNotaEntrada_ExpNUM_CGC.Value)),18) + //CNPJ DA FILIAL
+     '0'                                               +
+     //ORGIEM/BRANCOS/USO DA EBS
+     Bib.FormataTexto(' ',466,' ')                     +
+     Bib.StrZero2(wSequencia,6,0);
+     S := S+Chr(13)+Chr(10);
+     while not QNotaEntrada_Exp.Eof do
+     begin
+       //LAYOUT DO REGISTRO DO EMITENTE/DESTINATARIO
+       S := S + '4';
+       if Trim(QNotaEntrada_ExpDESC_CIDADE.Text) = 'EXTERIOR' then
+         S := S + '99.999.999/9999-99'
+       else
+         S := S + bib.FormataTexto(bib.FormataCNPJ_CPF(bib.TiraMascara(QNotaEntrada_ExpNUM_CGC_CPF.Value)),18,' ');
+       S := S + bib.FormataTexto(QNotaEntrada_ExpNOME.Text,40,' ') +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_FANTASIA.Text,20,' ') +
+       bib.FormataTexto(QNotaEntrada_ExpCOD_ESTADO.Text,2,' ');
+       if QNotaEntrada_ExpNUM_INSCRICAO.Text = 'ISENTO' then
+         S := S + bib.FormataTexto(QNotaEntrada_ExpNUM_INSCRICAO.Value,20,' ')
+       else
+         S := S + RMaskCGC_CPF(QNotaEntrada_ExpNUM_INSCRICAO.Text,20);
+       S := S + bib.FormataTexto(QNotaEntrada_ExpDESC_ENDERECO.Text,40,' ') +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_BAIRRO.Text,20,' ') +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_CIDADE.Text,20,' ') +
+       RMaskCGC_CPF(QNotaEntrada_ExpDESC_CEP.Text,8) +
+       RMaskCGC_CPF(QNotaEntrada_ExpCOD_CIDADE.Text,4,) +
+       RMaskCGC_CPF(QNotaEntrada_ExpDESC_TELEFONE.Text,13) +
+       Bib.FormataTexto('0',18,'0');
+       if (QNotaEntrada_ExpPERC_FUNRURAL.Text > '0') and (QNotaEntrada_ExpPERC_FUNRURAL.Text <> null)then
+         S := S + 'S'
+       else
+        S := S + 'N';
+       S := S + Bib.FormataTexto(' ',18,' ') +
+       bib.StrZero2(0,5,0)+
+       Bib.FormataTexto(' ',20,' ') +
+       Bib.FormataTexto(QNotaEntrada_ExpDESC_SUFRAMA.Text,9,'0') +
+       RMaskCGC_CPF(QNotaEntrada_ExpCOD_PAIS_IBGE.Text,5) +
+       {Para Nat. Juridica  - ADICIONADO 'O' PARA DEIXAR EM BRANCO
+                   1-Pessoa Juridica de Direito Privado  2-Órgão, Autarquia ou Fundação Federal;
+                   3-Demais Entidades;                   4-Órgão, Autarquia ou Fundação Estadual ou Municipal;
+                   5-Sociedade; }
+       '0' +
+       Bib.FormataTexto(QNotaEntrada_ExpCOD_UF_IBGE.Text,2)+Bib.FormataTexto(QNotaEntrada_ExpCOD_CIDADE_IBGE.Text,5,'0')+
+       Bib.FormataTexto(' ',204,' ');
+       wSequencia := wSequencia + 1;
+       S := S + Bib.StrZero2(wSequencia,6,0);
+       S := S+Chr(13)+Chr(10);
+
+       //LAYOUT DO REGISTRO DE NOTAS FISCAIS
+       S := S + '1' +
+       bib.TiraMascara(DateToStr(QNotaEntrada_ExpDT_RECEBIMENTO.Value)) +
+       bib.StrZero(QNotaEntrada_ExpCOD_NOTA_CAB.Text,6)             +
+       bib.TiraMascara(DateToStr(QNotaEntrada_ExpDT_EMISSAO.Value)) +
+       bib.FormataTexto(QNotaEntrada_ExpCOD_SERIE_MODELO.Value,2,' ') +
+       bib.FormataTexto(QNotaEntrada_ExpCOD_SERIE.Value,3,' ')      +
+       //SUBSÉRIE
+       Bib.FormataTexto(' ',3,' ')                                  +
+       Bib.FormataTexto(QNotaEntrada_ExpCFOP.Text,4,' ')            +
+       //Variacao/Classificacao1/classificacao2
+       '01' + '01'+ '00' +
+       bib.FormataTexto(bib.FormataCNPJ_CPF(bib.TiraMascara(QNotaEntrada_ExpNUM_CGC_CPF.Text)),18,' ') +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_TOTAL.Value,12,2)     +
+       bib.StrZeroDecimal(100,12,2) +  //BASE PIS - FIXO 100%
+       bib.StrZeroDecimal(100,12,2) +  //BASE COFINS - FIXO 100%
+       bib.StrZeroDecimal(0,12,2)   +  //BASE CSLL
+       bib.StrZeroDecimal(0,12,2)   +  //BASE IRPJ
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICM_BASE.Value,12,2)  + //BASE ICMS A
+       bib.FormataTexto(QNotaEntrada_ExpPERC_ALIQUOTA.Text,4,'0')+
+       //bib.StrZeroDecimal(QNotaEntrada_ExpPERC_ALIQUOTA.Value,4,2)  + //ALIQUOTA ICMS A
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICM.Value,12,2)       + //VALOR ICMS A
+       bib.StrZeroDecimal(0,12,2)  +  //BASE ICMS B
+       bib.StrZeroDecimal(0,4,2)   +  //ALIQUOTA ICMS B
+       bib.StrZeroDecimal(0,12,2)  +  //VALOR ICMS B
+       bib.StrZeroDecimal(0,12,2)  +  //BASE ICMS C
+       bib.StrZeroDecimal(0,4,2)   +  //ALIQUOTA ICMS C
+       bib.StrZeroDecimal(0,12,2)  +  //VALOR ICMS C
+       bib.StrZeroDecimal(0,12,2)  +  //BASE ICMS D
+       bib.StrZeroDecimal(0,4,2)   +  //ALIQUOTA ICMS D
+       bib.StrZeroDecimal(0,12,2)  +  //VALOR ICMS D
+       bib.StrZeroDecimal(QNotaEntrada_ExpSVAL_ICM_BASE_ISENTO.Value,12,2)+ //ISENTA ICMS
+       bib.StrZeroDecimal(0,12,2)  + //OUTRAS ICMS
+       bib.StrZeroDecimal(0,12,2)  + //BASE IPI
+       bib.StrZeroDecimal(0,12,2)  + //VALOR IPI
+       bib.StrZeroDecimal(0,12,2)  + //ISENTAS IPI
+       bib.StrZeroDecimal(0,12,2)  ; //OUTRAS IPI
+       if DBCheckBox1.Checked = True then
+       begin
+       //MERCADORIAS ST / BASE ST / ICMS ST
+         S := S + bib.StrZeroDecimal(QNotaEntrada_ExpVAL_Total.Value,12,2)  +
+         bib.StrZeroDecimal(QnotaEntrada_ExpVAL_BASE_SUBST.Value,12,2)  +
+         bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICMS_SUBST.Value,12,2)  ;
+         wTotalBase_ST       := wTotalBase_ST       + QNotaEntrada_ExpVAL_Total.Value     ;
+         wTotalIcms_ST       := wTotalIcms_ST       + QnotaEntrada_ExpVAL_BASE_SUBST.Value;
+         wTotalMercadoria_ST := wTotalMercadoria_ST + QNotaEntrada_ExpVAL_ICMS_SUBST.Value;
+       end
+       else
+       begin
+         S := S + bib.StrZeroDecimal(0,12,0) +
+         bib.StrZeroDecimal(0,12,0) +
+         bib.StrZeroDecimal(0,12,0);
+       end;
+       S := S + bib.StrZeroDecimal(0,12,2)  +  //DIFERIDAS
+       Bib.FormataTexto(' ',50,' ') +           //OBSERVACOES
+       bib.FormataTexto(QNotaEntrada_ExpDESC_RESUMO.Text,5,' ');  //ESPECIE DO DOCUMENTO
+       //TIPO DE VENDA
+       case  StrToInt(QNotaEntrada_ExpIND_CONDICAO_PAGTO.Text) of
+         1 : S := S + 'S';
+         2 : S := S + 'N';
+        else   S := S + 'X';
+       end;
+       S := S + bib.StrZero2(0,4,0) +  // NAT. OPERACAO ST
+       bib.StrZeroDecimal(0,8,2)    +  //BASE PIS/COFINS ST
+       bib.StrZeroDecimal(0,12,2)   +  //BASE ISS
+       bib.StrZeroDecimal(0,4,2)    +  //ALIQUOTA ISS
+       bib.StrZeroDecimal(0,12,2)   +  //VALOR ISS
+       bib.StrZeroDecimal(0,12,2)   +  //ISENTA ISS
+       bib.StrZeroDecimal(0,12,2)   +  //IRRF RETIDO
+       bib.StrZeroDecimal(0,12,2)   +  //PIS RETIDO
+       bib.StrZeroDecimal(0,12,2)   +  //COFINS RETIDO
+       bib.StrZeroDecimal(0,12,2)   +  //CSLL RETIDO
+       Bib.StrZero2(0,8,0)          +  //DATA PAGAMENTO
+       Bib.FormataTexto(' ',4,' ')  +  //OPERACAO CONTABIL
+       Bib.FormataTexto(' ',6,' ')  +  //CLIFOR - BRANCOS
+       Bib.FormataTexto(' ',18,' ') +  //IDENTIFICACAO EXTERIOR
+       Bib.FormataTexto(' ',12,' ') +  //INSS RETIDO
+       Bib.FormataTexto(' ',12,' ') +  //FUNRURAL RETIDO
+       Bib.FormataTexto(' ',4,' ')  +  //CODIGO SERVICO
+       'N' +    //ISS RETIDO S/N
+       'N' +    //ISS DEVIDO PRESTACAO S/N
+       Bib.FormataTexto(' ',2,' ') +  //UF PRESTACAO
+       Bib.StrZero2(0,7,0) +          //MUNICIPIO PRESTACAO
+       ' ' +  //TIPO EMISSAO
+       Bib.FormataTexto(' ',11,' ')  ; //BRANCOS E USO DA EBS
+
+       wSequencia := wSequencia + 1;
+       S := S + Bib.StrZero2(wSequencia,6,0);
+       S := S+Chr(13)+Chr(10);
+
+       //LAYOUT DO REGISTROS DOS PRODUTOS
+       S := S + '2' +
+       bib.StrZero2(QNotaEntrada_ExpCOD_PRODUTO.Value,10,0)         +
+       bib.StrZeroDecimal(QNotaEntrada_ExpQT_QUANTIDADE.Value,9,3)  +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_TOTAL.Value,12,2)     +
+       //DEIXAR EM BRANCO - QUANTIDADE -2
+       bib.FormataTexto(' ',13,' ')+
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_DESCONTO.Value,12,2)  +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICM_BASE.Value,12,2)  +
+       bib.StrZeroDecimal(QNotaEntrada_ExpPERC_ALIQUOTA.Value,5,2) +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_IPI.Value,12,2)       +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_BASE_SUBST.Value,12,2)+
+       bib.strZeroDecimal(QNotaEntrada_ExpPERC_IPI.Value,5,2)+
+       bib.StrZeroDecimal(0,5,2)+
+       //Situacao Tributaria
+       bib.StrZero2(StrToInt(QNotaEntrada_ExpDESC_SITUACAO_TRIB.Value),3,0) +
+       bib.FormataTexto(QNotaEntrada_ExpNUM_FABRICANTE.Value,15, ' ') +
+       bib.FormataTexto(QNotaEntrada_ExpCOD_CST_IPI.Value,3,'0') +
+       Bib.StrZeroDecimal(0,12,2) +  //Base IPI
+       Bib.FormataTexto(QNotaEntrada_ExpCOD_CST_PIS.Value,2,'0') +
+       Bib.StrZeroDecimal(0,12,2)+  //Base Pis
+       Bib.StrZeroDecimal(0,7,4)+   //ALIQUOTA PIS
+       Bib.StrZeroDecimal(0,13,3)+  //QTDE DE BASE DE PIS
+       Bib.StrZeroDecimal(0,14,4)+  //ALIQUOTA DE PIS (R$)
+       Bib.StrZeroDecimal(QNotaEntrada_ExpVAL_PIS.Value,12,2) +   //VALOR PIS
+       Bib.FormataTexto(QNotaEntrada_ExpCOD_CST_COFINS.Value,2,'0') +
+       bib.strzerodecimal(0,12,2)+   //BASE COFINS
+       Bib.StrZeroDecimal(0,7,4) +  //ALIQUOTA COFINS
+       Bib.StrZeroDecimal(0,13,3)+  //QUANTIDADE DE BASE COFINS
+       bib.StrZeroDecimal(0,14,4)+  //ALIQUOTA DE COFINS
+       Bib.StrZeroDecimal(QNotaEntrada_ExpVAL_CONFINS.Value,12,2) +
+       bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICMS_SUBST.Value,12,2)+
+       Bib.StrZeroDecimal(0,5,2) + //ALIQUOTA ICMS ST
+       Bib.StrZeroDecimal(QNotaEntrada_ExpVAL_ICM.Value,12,2) +
+       Bib.FormataTexto(QNotaEntrada_ExpCFOP.Text,4,'0') +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_UNIDADE.Value,6, ' ') +
+
+       Bib.FormataTexto(' ',194,' ') ; //BRANCOS/USO DA EBS
+
+       wSequencia := wSequencia + 1;
+       S := S + Bib.StrZero2(wSequencia,6,0);
+
+       S := S+Chr(13)+Chr(10);
+
+       //LAYOUT DE DADOS COMPLEMENTARES DA NOTA FISCAL DE ENTRADA
+       S := S + '5' +
+       bib.StrZeroDecimal(QNotaEntrada_ExpSVAL_TOTAL.Value,12,2)     +
+       bib.StrZeroDecimal(QNotaEntrada_ExpSVAL_DESCONTO.Value, 12,2) +
+       bib.StrZeroDecimal(QNotaEntrada_ExpSVAL_FRETE.Value,12,2)     +
+       bib.StrZeroDecimal(QNotaEntrada_ExpSVAL_DESPESAS.Value, 12,2) +
+       bib.StrZeroDecimal(0,12,2) +
+       bib.StrZeroDecimal(Qnotaentrada_expNUM_PESO_BRUTO.Value,8,2)  +
+       bib.StrZeroDecimal(QNotaEntrada_ExpNUM_PESO_LIQUIDO.Value,8,2)+
+       RMaskCGC_CPF(QNotaEntrada_ExpNUM_CGC_CPF.Text,18) +
+       Bib.StrZero2(QNotaEntrada_ExpCOD_TRANSPORTE.Value,1,0) +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_PLACA.Value,15, ' ')+
+       bib.StrZero2(QNotaEntrada_ExpNUM_VOLUMES.Value,6,0)+
+       bib.FormataTexto(QNotaEntrada_ExpDESC_ESPECIE.Text,10, ' ') +
+       bib.FormataTexto(QNotaEntrada_ExpDESC_CHAVE_ACESSO.Value, 44) +
+       'N' +
+       RMaskCGC_CPF(QNotaEntrada_ExpNUM_INSCRICAO.Value,20) +
+       //BRANCOS/USO DA EBS
+       bib.FormataTexto(' ',302,' ') ;
+       
+       wSequencia := wSequencia + 1;
+       S := S + Bib.StrZero2(wSequencia,6,0);
+       S := S+Chr(13)+Chr(10);
+       
+       //LAYOUT DE PARCELAS PAR ANOTA FISCAL A PRAZO
+       S := S + '9' +
+       'N' +
+       RMaskCGC_CPF(IntToStr(QNotaEntrada_ExpCOD_NOTA_CAB.Value),9) +
+       //TIPO TITULO/DT_VENCIMENTO
+       '00' + '00000000' +
+       bib.StrZeroDecimal(0,12,2)+
+       bib.FormataTexto(' ',456,' ') +
+       bib.strZero2(0,5,0);
+
+       wSequencia := wSequencia + 1;
+       S := S + Bib.StrZero2(wSequencia,6,0);
+       wTotalContabil := wTotalContabil + QNotaEntrada_ExpVAL_TOTAL.Value;
+       wTotalBaseICMS := wTotalBaseICMS + QNotaEntrada_ExpVAL_ICM_BASE.Value;
+       wTotalICMS     := wTotalICMS     + QNotaEntrada_ExpVAL_ICM.Value;
+       wTotalIsentoICMS := wTotalIsentoICMS + QNotaEntrada_ExpSVAL_ICM_BASE_ISENTO.Value;
+       S := S+Chr(13)+Chr(10);
+       wSequencia := wSequencia + 1;
+
+       QNotaEntrada_Exp.Next;
+     end;
+     // LAYOUT DO REGISTRO TRAILLER
+     wSequencia := wSequencia - 1;
+     S := S + '3' +
+     bib.StrZeroDecimal(wTotalContabil,12,2) +
+     Bib.StrZeroDecimal(0,12,2) +  //base de calculo PIS
+     Bib.StrZeroDecimal(0,12,2) +  //base de calculo COFINS
+     Bib.StrZeroDecimal(0,12,2) +  //base CSLL
+     Bib.StrZeroDecimal(0,12,2) +  //base IRPJ
+     Bib.StrZeroDecimal(wTotalBaseICMS,12,2) + //base ICMS A
+     Bib.StrZeroDecimal(wTotalICMS,12,2) +     //valor ICMS A
+     Bib.StrZeroDecimal(0,12,2) +  //base ICMS B
+     Bib.StrZeroDecimal(0,12,2) +  //valor ICMS B
+     Bib.StrZeroDecimal(0,12,2) +  //base ICMS C
+     Bib.StrZeroDecimal(0,12,2) +  //valor ICMS C
+     Bib.StrZeroDecimal(0,12,2) +  //base ICMS D
+     Bib.StrZeroDecimal(0,12,2) +  //valor ICSM D
+     Bib.StrZeroDecimal(wTotalIsentoICMS,12,2)+  //ISENTAS ICMS
+     bib.StrZeroDecimal(0,12,2) +  //outras ICMS
+     bib.StrZeroDecimal(0,12,2) +  //BASE IPI
+     bib.StrZeroDecimal(0,12,2) +  //VALOR IPI
+     bib.StrZeroDecimal(0,12,2) +  //ISENTAS IPI
+     bib.StrZeroDecimal(0,12,2) ;  //outras IPI
+     if DBCheckBox1.Checked = True then
+       S := S + Bib.StrZeroDecimal(wTotalBase_ST,12,2) +
+       Bib.StrZeroDecimal(wTotalIcms_ST,12,2)+
+       bib.StrZeroDecimal(wTotalMercadoria_ST,12,2)
+     else
+        S := S + Bib.StrZeroDecimal(0,12,2)+
+        bib.StrZeroDecimal(0,12,2)+
+        bib.StrZeroDecimal(0,12,2);
+     S := S + bib.StrZeroDecimal(0,12,2) + //diferidas
+     bib.FormataTexto(' ',217,' ') +
+     Bib.StrZero2(wSequencia,6,0);
+
+     if FNotaEntradaCad.SaveDialog.Execute then
+     begin
+       AssignFile(F, FNotaEntradaCad.SaveDialog.FileName);
+       Rewrite(F);
+       Writeln(F,S);
+       CloseFile(F);
+       Application.MessageBox('Arquivo Gerado com Sucesso.', 'Atenção', MB_ICONINFORMATION or MB_OK);
+     end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.DBEdit48Exit(Sender: TObject);
+var
+  cstPis: String;
+  cstCofins: String;
+  cstIpi: String;
+begin
+  inherited;
+  cstPis := '';
+  cstCofins := '';
+  cstIpi := '';
+  if (DsPrimario.State <> DSBrowse) and
+    (DMNotaEntrada.QItemNFCod_Produto.text <> '') then
+  begin
+    with DMNotaEntrada, DMOracle do
+    begin
+      // Bloco alterado por Djeison A. Selzlein - 17/05/2013
+      // Configuração de CST de PIS e COFINS na operação tem prioridade sobre
+      // a configuração feito no cadastro do Produto
+
+      cstPis := DMOracle.BuscaNome('SELECT COD_CST_PIS FROM TB_OPERACAO', 'COD_OPERACAO = '+
+        DMNotaEntrada.QNotaEntradaCOD_OPERACAO.Text);
+      if cstPis = '' then
+        cstPis := DMOracle.BuscaNome('SELECT COD_CST_PIS FROM TB_PRODUTO', 'COD_PRODUTO = '+
+          DMNotaEntrada.QItemNFCOD_PRODUTO.Text);
+      if cstPis <> '' then
+      begin
+        if FastSelect('IND_TIPO','TB_CST_PIS','COD_CST_PIS = ' +
+          cstPis) = 'E' then
+        begin
+          FNotaEntradaCad.DBLCCSTPis.KeyValue := cstPis;
+          QItemNFCOD_CST_PIS.Text := cstPis;
+        end;
+      end;
+
+      cstCofins := DMOracle.BuscaNome('SELECT COD_CST_COFINS FROM TB_OPERACAO', 'COD_OPERACAO = '+
+        DMNotaEntrada.QNotaEntradaCOD_OPERACAO.Text);
+      if cstCofins = '' then
+        cstCofins := DMOracle.BuscaNome('SELECT COD_CST_COFINS FROM TB_PRODUTO', 'COD_PRODUTO = '+
+          DMNotaEntrada.QItemNFCOD_PRODUTO.Text);
+      if cstCofins <> '' then
+      begin
+        if FastSelect('IND_TIPO','TB_CST_COFINS','COD_CST_COFINS = ' +
+          cstCofins) = 'E' then
+        begin
+          FNotaEntradaCad.DBLCCSTCofins.KeyValue := cstCofins;
+          QItemNFCOD_CST_COFINS.Text := cstCofins;
+        end;
+      end;
+      // Até Aqui - 17/05/2013 - Djeison A. Selzlein
+
+      cstIpi := DMOracle.BuscaNome('SELECT C.COD_CST_IPI FROM TB_PRODUTO P INNER JOIN TB_CST_IPI C '+
+        'ON P.COD_CST_IPI = C.COD_CST_IPI AND C.IND_TIPO = '+quotedStr('E'), 'P.COD_PRODUTO = '+
+        DMNotaEntrada.QItemNFCOD_PRODUTO.Text);
+      if cstIpi <> '' then
+      begin
+        FNotaEntradaCad.DBLookupComboBox2.KeyValue := cstIpi;
+        QItemNFCOD_CST_IPI.Text := cstIpi;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.ExportacaoClienteFornecedor;
+  var
+  S : String;
+  F : TextFile;
+  wSequencia : Integer;
+begin
+  wSequencia := 1;
+  try
+    with DMCadastro do  begin
+      QCadastroExp.Close;
+      QCadastroExp.SetVariable('DT_EMISSAO_I',FNotaEntradaParam.FmDatas22.MeDtInicial.Text);
+      QCadastroExp.SetVariable('DT_EMISSAO_F',FNotaEntradaParam.FmDatas22.MeDtFinal.Text + ' 23:59:59');
+      QCadastroExp.SetVariable('IND_ENTRADA_SAIDA','E');
+      QCadastroExp.Open;
+      QCadastroExp.First;
+      begin
+        while not (QCadastroExp.Eof) do
+        begin
+          //CNPJ/CPF
+          if Trim(QCadastroExpDESC_CIDADE.Text) = 'EXTERIOR'  then
+            S := S + '99.999.999/9999-99'
+          else
+            S := S +   bib.FormataTexto(bib.FormataCNPJ_CPF(Bib.TiraMascara(QCadastroExpNUM_CGC_CPF.Value)),18,' ');
+          //RAZAO SOCIAL
+          S := S +Bib.FormataTexto(QCadastroExpNOME.Value,40)                +
+          //FANTASIA
+          Bib.FormataTexto(QCadastroExpDESC_FANTASIA.Value,20)       +
+          //ESTADO
+          bib.FormataTexto(QCadastroExpCOD_ESTADO.Value,2) ;
+          //INSCRICAO ESTADUAL
+          if QCadastroExpNUM_INSCRICAO.Text = 'ISENTO' then
+             S := S + bib.FormataTexto(QCadastroExpNUM_INSCRICAO.Value,20,' ')
+          else
+            S := S + RMaskCGC_CPF(QCadastroExpNUM_INSCRICAO.Value,20);
+          //ENDERECO
+          S := S + Bib.FormataTexto(QCadastroExpDESC_ENDERECO.Value,40) +
+          //BAIRRO
+          Bib.FormataTexto(QCadastroExpDESC_BAIRRO.Value,20)         +
+          //CIDADE
+          Bib.FormataTexto(QCadastroExpDESC_CIDADE.value,20)         +
+          //CEP
+          RMaskCGC_CPF(QCadastroExpDESC_CEP.Value,8)                 +
+          //CODIGO CIDADE
+          RMaskCGC_CPF(QCadastroExpCOD_CIDADE_IBGE.Value,4)                +
+          //TELEFONE
+          RMaskCGC_CPF(QCadastroExpDESC_TELEFONE.Value,13)           +
+          //CONTAS CONTÁBEIS - CTA CLIENTE/HIST. CLIENTE/ CONT/FORN
+          Bib.StrZero2(0,6,0) + bib.StrZero2(0,3,0) + bib.StrZero2(0,6,0) +
+          //HISTÓRICO FORNECEDOR
+          bib.StrZero2(0,3,0);
+          //Utilizado para preencher com S/N para Produtor Rural no Layout.
+          if (QCadastroExpPERC_FUNRURAL.Text > '0') and (QCadastroExpPERC_FUNRURAL.Text <> null)then
+            S := S + 'S'
+          else
+            S := S + 'N';
+          //identificacao exterior
+          s := S + bib.StrZero2(0,18,0);
+          //preencher com o numero do endereço
+          if bib.NumEndereco(QCadastroExpDESC_ENDERECO.Value) = 'sn' then
+             S := s + '00000'
+          else
+             S := S + bib.StrZero(bib.NumEndereco(QCadastroExpDESC_ENDERECO.Value),5);
+          //preenhcer com zeros o complemento do endereco
+          S := S + bib.FormataTexto(' ',20,' ') +
+          //SUFRAMA
+          RMaskCGC_CPF(QCadastroExpDESC_SUFRAMA.Value,9) +
+          //COD PAIS IBGE
+          RMaskCGC_CPF(QCadastroExpCOD_PAIS_IBGE.Text,5) +
+          {Para Nat. Juridica  - ADICIONADO 'O' PARA DEIXAR EM BRANCO
+                       1-Pessoa Juridica de Direito Privado  2-Órgão, Autarquia ou Fundação Federal;
+                       3-Demais Entidades;                   4-Órgão, Autarquia ou Fundação Estadual ou Municipal;
+                       5-Sociedade; }
+          '0'                                                        +
+           RMaskCGC_CPF(QCadastroExpCOD_UF_IBGE.Text,2) +  RMaskCGC_CPF(QCadastroExpCOD_CIDADE_IBGE.Value,5) +
+           bib.FormataTexto(' ',5,' ') +
+          //Sequencia
+          RMaskCGC_CPF(IntToStr(wSequencia),6);
+
+          wSequencia := wSequencia + 1;
+          S := S+Chr(13)+Chr(10);
+          QCadastroExp.Next;
+        end;
+      end;
+    end;
+
+    if FNotaEntradaCad.SaveDialogCLI.Execute then
+    begin
+     AssignFile(F,FNotaEntradaCad.SaveDialogCLI.FileName);
+     Rewrite(F);
+     Writeln(F,S);
+     CloseFile(F);
+     Application.MessageBox('Arquivo de Clientes/Fornecedores exportado com Sucesso.', 'Atenção', MB_ICONINFORMATION or MB_OK);
+    end;
+  except on e:Exception do
+   begin
+     Application.MessageBox('Não foi possível gerar o arquivo de exportaçao.', 'Atenção', MB_ICONINFORMATION or MB_OK);
+     //FCadastroParam.RGPreview.Visible := True;
+   end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.BTSerieConsClick(Sender: TObject);
+begin
+  inherited;
+  if FSerieCons = Nil then
+    FSerieCons := TFSerieCons.Create(Application);
+  FSerieCons.METexto.Text := DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text;
+  FSerieCons.METexto.Enabled := false;
+  FSerieCons.BtConsFilial.Enabled := false;
+  FSerieCons.BtProcurarClick(Sender);
+  if FSerieCons.ShowModal = mrOk then
+  begin
+    with DMNotaEntrada, DMSerie do
+    begin
+      QNotaEntradaCOD_SERIE.Value :=
+        QSerieConsCOD_SERIE.Value;
+      QNotaEntradaCOD_SERIE_MODELO.Value :=
+        QSerieConsCOD_SERIE_MODELO.Value;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.DBEdit88Exit(Sender: TObject);
+begin
+  inherited;
+  bib.setModelo(DMNotaEntrada.QNotaEntrada, lblModelo);
+end;
+
+procedure TFNotaEntradaCad.MELocalizaExit(Sender: TObject);
+begin
+  inherited;
+  bib.setModelo(DMNotaEntrada.QNotaEntrada, lblModelo);
+end;
+
+procedure TFNotaEntradaCad.BitBtn1Click(Sender: TObject);
+begin
+  inherited;
+  if FSerieCons = Nil then
+    FSerieCons := TFSerieCons.Create(Application);
+  FSerieCons.METexto.Text := DMNotaEntrada.QNotaEntradaCOD_FILIAL.Text;
+  FSerieCons.METexto.Enabled := false;
+  FSerieCons.BtConsFilial.Enabled := false;
+  FSerieCons.BtProcurarClick(Sender);
+  if FSerieCons.ShowModal = mrOk then
+  begin
+    with DMNotaEntrada, DMSerie do
+    begin
+      QNotaEntradaCOD_SERIE_CF.Value :=
+        QSerieConsCOD_SERIE.Value;
+      QNotaEntradaCOD_SERIE_MODELO_CF.Value :=
+        QSerieConsCOD_SERIE_MODELO.Value;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmitirCartaCorreoEletrnica1Click(
+  Sender: TObject);
+begin
+  inherited;
+  EmitirCartaCorrecaoClick(self);
+end;
+
+procedure TFNotaEntradaCad.DBNavigator1BeforeAction(Sender: TObject;
+  Button: TOracleNavigateBtn);
+begin
+  inherited;
+    if DBEdit48.CanFocus then
+      DBEdit48.SetFocus
+    else
+      if EdNumFabricante.CanFocus then
+        EdNumFabricante.SetFocus;
+end;
+
+procedure TFNotaEntradaCad.ExportarNotasPeriodoClick(Sender: TObject);
+var
+  filial: Integer;
+  cadastro: Integer;
+  dtInicial, dtFinal: TDateTime;
+begin
+  inherited;
+  if FExportarNotasParam = nil then
+    FExportarNotasParam := TFExportarNotasParam.Create(Application);
+  
+  if FExportarNotasParam.ShowModal = mrOk then
+  begin
+    filial := StrToInt(Trim(FExportarNotasParam.FmFilial1.MeFilial.Text));
+    if Trim(FExportarNotasParam.FmCadastro1.MeCadastro.Text) = '' then
+      cadastro := 0
+    else
+      cadastro := StrToInt(Trim(FExportarNotasParam.FmCadastro1.MeCadastro.Text));
+    FExportarNotasParam.FmDatas1.ChecaDatasInformadas;
+    dtInicial := StrToDateTime(FExportarNotasParam.FmDatas1.MeDtInicial.Text);
+    dtFinal := StrToDateTime(FExportarNotasParam.FmDatas1.MeDtFinal.Text + ' 23:59:00');
+    SaveDialogExportaNFes.FileName := 'Notas_' + IfThen(filial=0,'','Filial_'+ IntToStr(filial)+ '_') + FormatDateTime('dd-MM-yyyy',dtInicial) + '_'+FormatDateTime('dd-MM-yyyy',dtFinal);
+    if(SaveDialogExportaNFes.Execute) then
+      DMNfe.ExportaNFes(filial, cadastro, dtInicial, dtFinal,FExportarNotasParam.ChkSaida.Checked, FExportarNotasParam.ChkEntrada.Checked, FExportarNotasParam.CBEmailXML.Checked,FExportarNotasParam.RDGTipoDoc.ItemIndex = 0 , FExportarNotasParam.CBEmailPDF.Checked, Trim(SaveDialogExportaNFes.FileName + '.zip'));
+  end;
+end;
+
+procedure TFNotaEntradaCad.ManifestacaoDestinatarioClick(Sender: TObject);
+begin
+  inherited;
+  if (DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value = 0) then
+    raise Exception.Create('É necessário escolher uma nota para realizar a manifestação.');
+  if DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.IsNull then
+  begin
+    MessageDlg('A nota precisa ter uma chave de acesso.', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  
+  if FManifestacaoDestinatario = nil then
+    FManifestacaoDestinatario := TFManifestacaoDestinatario.Create(application);
+  FManifestacaoDestinatario.pCodNota := DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value;
+  FManifestacaoDestinatario.pChaveAcesso := Copy( DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO.Value,4, 44);
+  FManifestacaoDestinatario.ShowModal;
+end;
+
+procedure TFNotaEntradaCad.DBEComplementoExit(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  Begin
+    if (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+    Begin
+      LblComplemento.Caption := 'Novo Valor de Venda'+ '/Perc.Novo '+ FloatToStr((((StrToFloat(QItemNFDESC_COMPLEMENTO.Text))
+                                                                 - (QItemNFVAL_TOTAL.Value/QItemNFQT_QUANTIDADE.Value))*100)/
+                                                                 (QItemNFVAL_TOTAL.Value/QItemNFQT_QUANTIDADE.Value))+'%';
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.A1Click(Sender: TObject);
+begin
+  inherited;
+  If DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Text = '' Then
+     Raise Exception.create('Selecionar uma nota');
+  If FAtualizaPrecoPorNota = Nil Then
+     FAtualizaPrecoPorNota := TFAtualizaPrecoPorNota.Create(Application);
+  FAtualizaPrecoPorNota.ShowModal;
+
+end;
+
+procedure TFNotaEntradaCad.ComissoFrete1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[23].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+  begin
+    with DMRelatorio_Compra do
+    begin
+      QRComissaoFreteEntrada.Close;
+      if FNotaEntradaParam.Fm23Datas.MeDtFinal.Text = '' then
+        raise Exception.Create('A data final deve ser informada');
+      if FNotaEntradaParam.Fm23Datas.MeDtInicial.Text = '' then
+        raise Exception.Create('A data inicial deve ser informada');
+      if FNotaEntradaParam.ed23VlFrete.Text = '' then
+        raise Exception.Create('O valor do frete deve ser informado');
+      if FNotaEntradaParam.ed23PorcentComissao.Text = '' then
+        raise Exception.Create('A porcentagem de comissão deve ser informada');
+        
+      QRComissaoFreteEntrada.SetVariable('DT_FINAL', FNotaEntradaParam.Fm23Datas.MeDtFinal.Text + ' 23:59:59');
+      QRComissaoFreteEntrada.SetVariable('DT_INICIAL', FNotaEntradaParam.Fm23Datas.MeDtInicial.Text);
+      QRComissaoFreteEntrada.SetVariable('VALOR_FRETE_SC', StrToFloat(FNotaEntradaParam.ed23VlFrete.Text));
+      QRComissaoFreteEntrada.SetVariable('PORCENTAGEM_COMISSAO', StrToFloat(FNotaEntradaParam.ed23PorcentComissao.Text));
+      if trim(FNotaEntradaParam.Fm23transportador.MeCadastro.Text) = '' then
+        QRComissaoFreteEntrada.SetVariable('COD_TRANSPORTADOR', null)
+      else
+        QRComissaoFreteEntrada.SetVariable('COD_TRANSPORTADOR', StrToInt(trim(FNotaEntradaParam.Fm23transportador.MeCadastro.Text)));
+      QRComissaoFreteEntrada.Open;
+
+    end;
+    if FRComissaoFreteEntrada = nil then
+      FRComissaoFreteEntrada := TFRComissaoFreteEntrada.Create(Application);
+    FRComissaoFreteEntrada.QRLTitulo.Caption := 'COMISSÃO DE FRETE POR NOTA DE ENTRADA';
+    FRComissaoFreteEntrada.QRLEmpresa.Caption := DMParamSistema.QParamSistemaDESC_EMPRESA.Text;
+    FRComissaoFreteEntrada.QRPrimario.Preview;
+  end;
+end;
+procedure TFNotaEntradaCad.ClienteFornecedorSemCompra1Click(
+  Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then
+    FNotaEntradaParam := tFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[24].TabVisible := True;
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      DmUsuario.Checar_Filial_Usuario(Trim(FNotaEntradaParam.FmFilial24.MeFilial.Text), 'COMPRA');
+      QRClienteForn_Sem_Compra.Close;
+      QRClienteForn_Sem_Compra.SetVariable('DATA_I', Date - StrToFloat(FNotaEntradaParam.MEDias24.Text));
+      QRClienteForn_Sem_Compra.SetVariable('DATA_F', StrToDateTime(FormatDateTime('dd/mm/yyyy',Date) + ' 23:59:59'));
+      if Trim(FNotaEntradaParam.FmFilial24.MeFilial.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('FILIAL', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('FILIAL', Trim(FNotaEntradaParam.FmFilial24.MeFilial.Text));
+      if Trim(FNotaEntradaParam.FmTipoCadastro24.MeTipoCadastro.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('TIPO_CADASTRO', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('TIPO_CADASTRO', Trim(FNotaEntradaParam.FmTipoCadastro24.MeTipoCadastro.Text));
+      if Trim(FNotaEntradaParam.FmClassificacao24.MeClassificacao.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('CLASS_CADASTRO', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('CLASS_CADASTRO', Trim(FNotaEntradaParam.FmClassificacao24.MeClassificacao.Text));
+      if Trim(FNotaEntradaParam.FmClasse24.MeClasse.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('COD_CLASSE', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('COD_CLASSE', Trim(FNotaEntradaParam.FmClasse24.MeClasse.Text));
+      if Trim(FNotaEntradaParam.FmCidade24.MeCidade.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('CIDADE', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('CIDADE', Trim(FNotaEntradaParam.FmCidade24.MeCidade.Text));
+      if Trim(FNotaEntradaParam.FmEstado24.MeEstado.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('COD_ESTADO', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('COD_ESTADO', Trim(FNotaEntradaParam.FmEstado24.MeEstado.Text));
+      if Trim(FNotaEntradaParam.FmProduto24.MeProduto.Text) = '' then
+        QRClienteForn_Sem_Compra.SetVariable('COD_PRODUTO', Null)
+      else
+        QRClienteForn_Sem_Compra.SetVariable('COD_PRODUTO', Trim(FNotaEntradaParam.FmProduto24.MeProduto.Text));
+
+      QRClienteForn_Sem_Compra.SQL[QRClienteForn_Sem_Compra.SQL.COUNT - 1] := '';
+      case (FNotaEntradaParam.RGCadastro24.ItemIndex) of
+        //--CLIENTES SEM COMPRA ATIVOS
+        0: QRClienteForn_Sem_Compra.SQL.add('AND ((TB_CADASTRO.DT_CANCELAMENTO IS NULL) AND (TB_CADASTRO.COD_MOTIVO IS NULL)) ');
+        //--CLIENTES SEM COMPRA CANCELADOS
+        1: QRClienteForn_Sem_Compra.SQL.add('AND (NOT(TB_CADASTRO.DT_CANCELAMENTO IS NULL) OR NOT(TB_CADASTRO.COD_MOTIVO IS NULL)) ');
+        //--TODOS CLIENTES SEM COMPRA
+        //--CLIENTES SEM COMPRA ATIVOS
+  //      2:QRClienteSemCompra.SQL.add(' ORDER BY DESC_CIDADE,NOME');
+      end;
+      if FRNota_FornecedorSemCompra = nil then
+        FRNota_FornecedorSemCompra := TFRNota_FornecedorSemCompra.Create(Application);
+      FRNota_FornecedorSemCompra.QRGroup1.Enabled := False;
+      FRNota_FornecedorSemCompra.QRBand4.Enabled := False;
+      case (FNotaEntradaParam.CBOrdem24.ItemIndex) of
+        0:
+          begin
+            QRClienteForn_Sem_Compra.SQL.add(' ORDER BY DESC_CIDADE,NOME');
+            FRNota_FornecedorSemCompra.QRGroup1.Enabled := True;
+            FRNota_FornecedorSemCompra.QRBand4.Enabled := True;
+          end;
+        1: QRClienteForn_Sem_Compra.SQL.add(' ORDER BY COD_CADASTRO,NOME');
+        2: QRClienteForn_Sem_Compra.SQL.add(' ORDER BY NOME');
+      end;
+      QRClienteForn_Sem_Compra.Open;
+
+      FRNota_FornecedorSemCompra.QRLTitulo.Caption := 'Cli/Forn sem compras a ' + FNotaEntradaParam.MEDias24.Text + ' dias ' + DateToStr(Date);
+      FRNota_FornecedorSemCompra.QRLTipoCadastro.Caption := 'Tipo de Cadastro :' + FNotaEntradaParam.FmTipoCadastro24.EdTipoCadastro.Text;
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRNota_FornecedorSemCompra.QRPrimario.Preview
+      else
+        FRNota_FornecedorSemCompra.QRPrimario.Print;
+      QRClienteForn_Sem_Compra.Close;
+
+     end;
+end;
+
+procedure TFNotaEntradaCad.SBAlteraChaveAcessoCTeClick(Sender: TObject);
+  procedure ChaveManual(Chave: string);
+  var wSql: String;
+  begin
+    if InputQuery('Nova Chave de Acesso', 'Digite a chave:', Chave) then
+    begin
+      Chave := Bib.LimpaNumero(Chave);
+      if Length(Chave) <> 44 then
+      begin
+        MessageDlg('Chave errada, precisa possuir 44 números.', mtError, [mbOK], 0);
+        ChaveManual(Chave);
+      end
+      else
+      begin
+        if DMNotaEntrada.QNotaEntrada.State in [DSInsert, DSEdit] then
+          DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO_CTE.Value := 'CTe' + Chave
+        else
+        begin
+          with DMOracle do
+          begin
+            wSql := 'UPDATE TB_NOTA_CAB SET DESC_CHAVE_ACESSO_CTE = ';
+            wSql := wSql + quotedStr('CTe' + Chave);
+            wSql := wSql + ' WHERE COD_NOTA_CAB = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text;
+            try
+              ExecutaSql(wSql);
+              SBRefreshClick(Self);
+            Except
+              DBCemapa.Rollback;
+            End;
+          end;
+        end;
+      end;
+    end;
+  end;
+  procedure ImportaChaveAcesso();
+  var
+    od: TOpenDialog;
+    xml: TXmlDocument;
+    nodeCte: IXMLNode;
+    nodeInfCte: IXMLNode;
+    nodeIde: IXMLNode;
+    chaveAcesso, numero, serie, modelo, dataEmissao, valor, cnpjTransp, codTransp, data: String;
+    wSql: String;
+  begin
+    chaveAcesso := '';
+    xml := TXmlDocument.Create(Application);
+    od := TOpenDialog.Create(Application);
+    od.Filter := 'XML files|*.xml';
+    if od.Execute then
+    begin
+      xml.LoadFromFile(od.FileName);
+      if xml.DocumentElement.NodeName <> 'cteProc' then
+      begin
+        MessageDlg('Erro: Tag cteProc inexistente neste documento.' +
+        ' Este documento não está em conformidade com o Layout da Distribuição CT-e.' +
+        ' Entre em contato com o seu fornecedor.',
+        mtError, [mbOk],0);
+      end;
+      nodeCte := xml.DocumentElement.ChildNodes['CTe'];
+      if NodeCte <> Nil then
+        nodeInfCte := NodeCte.ChildNodes['infCte'];
+      chaveAcesso := nodeInfCte.GetAttributeNS('Id', '');
+      if nodeInfCte <> Nil then
+        nodeIde := nodeInfCte.ChildNodes.FindNode('ide');
+      modelo := nodeIde.ChildNodes['mod'].Text;
+      numero := nodeIde.ChildNodes['nCT'].Text;
+      serie := nodeIde.ChildNodes['serie'].Text;
+      dataEmissao := nodeIde.ChildNodes['dhEmi'].Text;
+      valor := nodeInfCte.ChildNodes.FindNode('vPrest').ChildNodes['vTPrest'].Text;
+      cnpjTransp := nodeInfCte.ChildNodes.FindNode('emit').ChildNodes['CNPJ'].Text;
+      codTransp := DMOracle.FastSelect('COD_CADASTRO','TB_CADASTRO','REPLACE(REPLACE(REPLACE(NUM_CGC_CPF, ''.'',''''),''-'',''''),''/'','''')  = ' + QuotedStr( cnpjTransp));
+    end;
+    if DMNotaEntrada.QNotaEntrada.State in [DSInsert, DSEdit] then
+    begin
+      with DMNotaEntrada do
+      begin
+        QNotaEntradaDESC_CHAVE_ACESSO_CTE.Value := chaveAcesso;
+        QNotaEntradaNUM_CONHECIMENTO_FRETE.AsString := numero;
+        QNotaEntradaCOD_SERIE_CF.Value := serie;
+        QNotaEntradaCOD_SERIE_MODELO_CF.Value := modelo;
+        data := LeftStr(dataEmissao,10);
+        QNotaEntradaDT_EMISSAO_CF.AsString := Copy(data,9,2)+'/'+Copy(data,6,2)+'/'+Copy(data,1,4);
+        QNotaEntradaVAL_FRETE.AsString := StringReplace(valor,'.',',', [rfReplaceAll]);
+        QNotaEntradaCOD_TRANSPORTADOR.AsString := codTransp;
+      end;
+    end
+    else
+    begin
+      with DMOracle do
+      begin
+        wSql := 'UPDATE TB_NOTA_CAB SET DESC_CHAVE_ACESSO_CTE = ';
+        wSql := wSql + quotedStr(chaveAcesso);
+        wSql := wSql + ', NUM_CONHECIMENTO_FRETE = ';
+        wSql := wSql + numero;
+        wSql := wSql + ', COD_SERIE_CF = ';
+        wSql := wSql + quotedStr(serie);
+        wSql := wSql + ', COD_SERIE_MODELO_CF = ';
+        wSql := wSql + quotedStr(modelo);
+        wSql := wSql + ', DT_EMISSAO_CF = ';
+        wSql := wSql + 'TO_DATE('+quotedStr(LeftStr(dataEmissao, 10))+ ', ''YYYY/MM/DD'')';
+        wSql := wSql + ', VAL_FRETE = ';
+        wSql := wSql + valor;
+        if codTransp <> '' then
+        begin
+          wSql := wSql + ', COD_TRANSPORTADOR = ';
+          wSql := wSql + codTransp;
+        end;
+        wSql := wSql + ' WHERE COD_NOTA_CAB = ' + DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Text;
+        try
+          ExecutaSql(wSql);
+          SBRefreshClick(Self);
+        Except
+          DBCemapa.Rollback;
+        End;
+      end;
+    end;
+  end;
+
+begin
+  inherited;
+  case MessageDlgCustom('Alterar chave de acesso', mtConfirmation,
+    [mbYes, mbNo, mbCancel], ['Informar manualmente',
+    'Extrair Chave de Acesso (CT-e) de um arquivo XML', 'Cancelar'], nil) of
+    mrYes:
+      ChaveManual(DMNotaEntrada.QNotaEntradaDESC_CHAVE_ACESSO_CTE.Value);
+    mrNo:
+      ImportaChaveAcesso;
+  end;
+end;
+
+procedure TFNotaEntradaCad.PosiodeCompraPEstoqMin1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = nil then  
+    FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[25].TabVisible := True;
+  FNotaEntradaParam.FmFilial26.MeFilial.Text := '1';
+  if FNotaEntradaParam.ShowModal = mrOk then
+    with DMRelatorio_Compra do
+    begin
+      QRPosicaoCompraEstMin.Close;
+      if Trim(FNotaEntradaParam.FmFilial26.MeFilial.Text) = '' then
+        QRPosicaoCompraEstMin.SetVariable('COD_FILIAL', Null)
+      else
+        QRPosicaoCompraEstMin.SetVariable('COD_FILIAL', FNotaEntradaParam.FmFilial26.MeFilial.Text);
+
+      QRPosicaoCompraEstMin.Open;
+
+      if FRPosicaoCompraEstMin = nil then
+        FRPosicaoCompraEstMin := TFRPosicaoCompraEstMin.Create(Application);
+
+      FRPosicaoCompraEstMin.QRDBText1.DataField := 'COD_PRODUTO';
+      FRPosicaoCompraEstMin.QRLabel3.Caption := 'Cod.';
+
+      if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'MEDIBENS' then
+      Begin
+        FRPosicaoCompraEstMin.QRDBText1.DataField := 'NUM_FABRICANTE';
+        FRPosicaoCompraEstMin.QRLabel3.Caption := 'Num. Fab.';
+      end;
+
+      if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+        FRPosicaoCompraEstMin.QRPrimario.Preview
+      else
+        FRPosicaoCompraEstMin.QRPrimario.Print;
+      QRPosicaoCompraEstMin.Close;
+    end;
+end;
+
+procedure TFNotaEntradaCad.SBDocInserirClick(Sender: TObject);
+var i:Integer;
+    Chave: String;
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    if QNotaEntradaIND_FINALIDADE_NFE.Value = 4 then
+    begin
+      if FNotaEntradaParam = nil then
+        FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+      FNotaEntradaParam.PGRelatorio.Pages[26].TabVisible := True;
+      if FNotaEntradaParam.ShowModal = mrOk then
+      begin
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 0 then
+        begin
+          if FNotaSaidaCons = nil then
+            FNotaSaidaCons := TFNotaSaidaCons.Create(Application);
+          try
+            FNotaSaidaCons.DBGrid1.Options := [dgTitles,dgIndicator,dgColumnResize,dgColLines,dgRowLines,dgTabs,dgRowSelect,dgAlwaysShowSelection,dgConfirmDelete,dgCancelOnExit,dgMultiSelect];
+            FNotaSaidaCons.LBVariosRegistros.Visible := False;
+            if FNotaSaidaCons.ShowModal = mrOk then
+            begin
+              with FNotaSaidaCons.DBGrid1 do
+              begin
+                for i := 0 to SelectedRows.Count - 1 do
+                begin
+                  DataSource.DataSet.Bookmark := SelectedRows[i];
+                  with DMNotaSaida do
+                  begin
+                    if (QNotaSaidaConsDESC_CHAVE_ACESSO.Value = '') and
+                       ((QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '65')) then
+                    begin
+                      MessageDlg('A nota nº ' + QNotaSaidaConsNUM_NOTA.Text + ' não será referenciada pois não possui chave de acesso.', mtError, [mbOK],0);
+                      Continue;
+                    end;
+                    if not((QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '65') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '01') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '04') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2B') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2C') or
+                       (QNotaSaidaConsCOD_SERIE_MODELO.Value = '2D')) then
+                    begin
+                      MessageDlg('A nota nº ' + QNotaEntradaConsNUM_NOTA.Text + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+                      Continue;
+                    end;
+                    try
+                      DMNotaEntrada.QNotaReferenciada.Insert;
+                      DMNotaEntrada.QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+                      DMNotaEntrada.QNotaReferenciadaCOD_NOTA_CAB_REF.Value := QNotaSaidaConsCOD_NOTA_CAB.Value;
+                      DMNotaEntrada.QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Bib.LimpaNumero(QNotaSaidaConsDESC_CHAVE_ACESSO.Value);
+                      DMNotaEntrada.QNotaReferenciadaNUM_NOTA.Value := QNotaSaidaConsNUM_NOTA.AsInteger;
+                      DMNotaEntrada.QNotaReferenciadaCOD_SERIE.Value := QNotaSaidaConsCOD_SERIE.Value;
+                      DMNotaEntrada.QNotaReferenciadaCOD_SERIE_MODELO.Value := QNotaSaidaConsCOD_SERIE_MODELO.Value;
+                      DMNotaEntrada.QNotaReferenciadaDT_EMISSAO.Value := QNotaSaidaConsDT_EMISSAO.Value;
+                      DMNotaEntrada.QNotaReferenciada.Post;
+                    except
+                      DMNotaEntrada.QNotaReferenciada.Cancel;
+                    end;
+                  end;
+                end;
+              end;
+            end;
+          except
+            if QNotaReferenciada.State in [DsEdit, DsInsert] then
+              QNotaReferenciada.Cancel;
+          end;
+          FNotaSaidaCons.DBGrid1.Options := [dgTitles,dgIndicator,dgColumnResize,dgColLines,dgRowLines,dgTabs,dgRowSelect,dgAlwaysShowSelection,dgConfirmDelete,dgCancelOnExit];
+          FNotaSaidaCons.LBVariosRegistros.Visible := False;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 1 then
+        begin
+          Chave := '';
+          if InputQuery('Nova Chave de Acesso', 'Digite a chave:', Chave) then
+          begin
+            Chave := Bib.LimpaNumero(Chave);
+            if Length(Chave) <> 44 then
+              raise Exception.Create('A Chave de Acesso precisa ter 44 dígitos.');
+            if not((Copy(Chave,21,2) = '55') or
+               (Copy(Chave,21,2) = '65')) then
+            begin
+              MessageDlg('O documento nº '+ FImpDadosXMLNFe.NFes[i].pNumero +' chave ' + FImpDadosXMLNFe.NFes[i].pChaveAcesso + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+              Abort;
+            end;
+            try
+              QNotaReferenciada.Insert;
+              QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+              QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Chave;
+              QNotaReferenciadaNUM_NOTA.Value := StrToInt('0'+Copy(Chave,26,9));
+              QNotaReferenciadaCOD_SERIE.Value := IntToStr(StrToInt(Copy(Chave,23,3)));
+              QNotaReferenciadaCOD_SERIE_MODELO.Value := Copy(Chave,21,2);
+              QNotaReferenciada.Post;
+            except
+              DMNotaSaida.QNotaReferenciada.Cancel;
+            end;
+          end;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 2 then
+        begin
+          if FImpDadosXMLNFe = nil then
+            FImpDadosXMLNFe := TFImpDadosXMLNFe.Create(Application);
+          if FImpDadosXMLNFe.ShowModal = MrOk then
+          begin
+            with DMNotaSaida do
+            begin
+              for i := 0 to Length(FImpDadosXMLNFe.NFes)-1 do
+              begin
+                if not((FImpDadosXMLNFe.NFes[i].pModelo = '55') or
+                   (FImpDadosXMLNFe.NFes[i].pModelo = '65')) then
+                begin
+                  MessageDlg('O documento nº '+ FImpDadosXMLNFe.NFes[i].pNumero +' chave ' + FImpDadosXMLNFe.NFes[i].pChaveAcesso + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+                  Continue;
+                end;
+                try
+                  QNotaReferenciada.Insert;
+                  QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+                  QNotaReferenciadaDESC_CHAVE_ACESSO.Value := FImpDadosXMLNFe.NFes[i].pChaveAcesso;
+                  QNotaReferenciadaNUM_NOTA.Text := FImpDadosXMLNFe.NFes[i].pNumero;
+                  QNotaReferenciadaCOD_SERIE.Value := FImpDadosXMLNFe.NFes[i].pSerie;;
+                  QNotaReferenciadaCOD_SERIE_MODELO.Value := FImpDadosXMLNFe.NFes[i].pModelo;
+                  QNotaReferenciadaDT_EMISSAO.Text := FImpDadosXMLNFe.NFes[i].pDataEmissao;
+                  QNotaReferenciada.Post;
+                except
+                  DMNotaSaida.QNotaReferenciada.Cancel;
+                end;
+              end;
+            end;
+          end;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 3 then
+        begin
+          if (QNotaReferenciada.State in [dsBrowse]) then
+            QNotaReferenciada.Insert;
+          QNotaReferenciadaDT_EMISSAO.Value := Date;
+          if FNotaRefenciadaCad = nil then
+            FNotaRefenciadaCad := TFNotaRefenciadaCad.Create(Application);
+          FNotaRefenciadaCad.ShowModal;
+        end;
+      end;
+    end
+    else
+    begin
+    if FNotaEntradaParam = nil then
+        FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+      FNotaEntradaParam.PGRelatorio.Pages[26].TabVisible := True;
+      if FNotaEntradaParam.ShowModal = mrOk then
+      begin
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 3 then
+        begin
+          if (QNotaReferenciada.State in [dsBrowse]) then
+            QNotaReferenciada.Insert;
+          QNotaReferenciadaDT_EMISSAO.Value := Date;
+          if FNotaRefenciadaCad = nil then
+            FNotaRefenciadaCad := TFNotaRefenciadaCad.Create(Application);
+          FNotaRefenciadaCad.ShowModal;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 0 then
+        begin
+          if FNotaEntradaCons = nil then
+            FNotaEntradaCons := TFNotaEntradaCons.Create(Application);
+          try
+            FNotaEntradaCons.DBGrid1.Options := [dgTitles,dgIndicator,dgColumnResize,dgColLines,dgRowLines,dgTabs,dgRowSelect,dgAlwaysShowSelection,dgConfirmDelete,dgCancelOnExit,dgMultiSelect];
+            FNotaEntradaCons.LBVariosRegistros.Visible := False;
+            if FNotaEntradaCons.ShowModal = mrOk then
+            begin
+              with FNotaEntradaCons.DBGrid1 do
+              begin
+                for i := 0 to SelectedRows.Count - 1 do
+                begin
+                  DataSource.DataSet.Bookmark := SelectedRows[i];
+                  if (QNotaEntradaConsDESC_CHAVE_ACESSO.Value = '') and
+                     ((QNotaEntradaConsCOD_SERIE_MODELO.Value = '55') or
+                     (QNotaEntradaConsCOD_SERIE_MODELO.Value = '65')) then
+                  begin
+                    MessageDlg('A nota nº ' + QNotaEntradaConsNUM_NOTA.Text + ' não será referenciada pois não possui chave de acesso.', mtError, [mbOK],0);
+                    Continue;
+                  end;
+                  try
+                    QNotaReferenciada.Insert;
+                    QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+                    QNotaReferenciadaCOD_NOTA_CAB_REF.Value := QNotaEntradaConsCOD_NOTA_CAB.Value;
+                    QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Bib.LimpaNumero(QNotaEntradaConsDESC_CHAVE_ACESSO.Value);
+                    DMNotaEntrada.QNotaReferenciadaNUM_NOTA.Value := QNotaEntradaConsNUM_NOTA.AsInteger;
+                    DMNotaEntrada.QNotaReferenciadaCOD_SERIE.Value := QNotaEntradaConsCOD_SERIE.Value;
+                    DMNotaEntrada.QNotaReferenciadaCOD_SERIE_MODELO.Value := QNotaEntradaConsCOD_SERIE_MODELO.Value;
+                    DMNotaEntrada.QNotaReferenciadaDT_EMISSAO.Value := QNotaEntradaConsDT_EMISSAO.Value;
+                    QNotaReferenciada.Post;
+                  except
+                    QNotaReferenciada.Cancel;
+                  end;
+                end;
+              end;
+            end;
+          except
+            if QNotaReferenciada.State in [DsEdit, DsInsert] then
+              QNotaReferenciada.Cancel;
+          end;
+          FNotaEntradaCons.DBGrid1.Options := [dgTitles,dgIndicator,dgColumnResize,dgColLines,dgRowLines,dgTabs,dgRowSelect,dgAlwaysShowSelection,dgConfirmDelete,dgCancelOnExit];
+          FNotaEntradaCons.LBVariosRegistros.Visible := False;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 1 then
+        begin
+          Chave := '';
+          if InputQuery('Nova Chave de Acesso', 'Digite a chave:', Chave) then
+          begin
+            Chave := Bib.LimpaNumero(Chave);
+            if Length(Chave) <> 44 then
+              raise Exception.Create('A Chave de Acesso precisa ter 44 dígitos.');
+            if not((Copy(Chave,21,2) = '55') or
+               (Copy(Chave,21,2) = '65')) then
+            begin
+              MessageDlg('O documento nº '+ FImpDadosXMLNFe.NFes[i].pNumero +' chave ' + FImpDadosXMLNFe.NFes[i].pChaveAcesso + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+              Abort;
+            end;
+            try
+              QNotaReferenciada.Insert;
+              QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+              QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Chave;
+              QNotaReferenciadaNUM_NOTA.Value := StrToInt('0'+Copy(Chave,26,9));
+              QNotaReferenciadaCOD_SERIE.Value := IntToStr(StrToInt(Copy(Chave,23,3)));
+              QNotaReferenciadaCOD_SERIE_MODELO.Value := Copy(Chave,21,2);
+              QNotaReferenciada.Post;
+            except
+              DMNotaSaida.QNotaReferenciada.Cancel;
+            end;
+          end;
+        end;
+        if FNotaEntradaParam.RGNotaFiscal.ItemIndex = 2 then
+        begin
+          if FImpDadosXMLNFe = nil then
+            FImpDadosXMLNFe := TFImpDadosXMLNFe.Create(Application);
+          if FImpDadosXMLNFe.ShowModal = MrOk then
+          begin
+            with DMNotaSaida do
+            begin
+              for i := 0 to Length(FImpDadosXMLNFe.NFes)-1 do
+              begin
+                if not((FImpDadosXMLNFe.NFes[i].pModelo = '55') or
+                   (FImpDadosXMLNFe.NFes[i].pModelo = '65')) then
+                begin
+                  MessageDlg('O documento nº '+ FImpDadosXMLNFe.NFes[i].pNumero +' chave ' + FImpDadosXMLNFe.NFes[i].pChaveAcesso + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+                  Continue;
+                end;
+                try
+                  QNotaReferenciada.Insert;
+                  QNotaReferenciadaCOD_NOTA_CAB.Value :=  QNotaEntradaCOD_NOTA_CAB.Value;
+                  QNotaReferenciadaDESC_CHAVE_ACESSO.Value := FImpDadosXMLNFe.NFes[i].pChaveAcesso;
+                  QNotaReferenciadaNUM_NOTA.Text := FImpDadosXMLNFe.NFes[i].pNumero;
+                  QNotaReferenciadaCOD_SERIE.Value := FImpDadosXMLNFe.NFes[i].pSerie;;
+                  QNotaReferenciadaCOD_SERIE_MODELO.Value := FImpDadosXMLNFe.NFes[i].pModelo;
+                  QNotaReferenciadaDT_EMISSAO.Text := FImpDadosXMLNFe.NFes[i].pDataEmissao;
+                  QNotaReferenciada.Post;
+                except
+                  DMNotaSaida.QNotaReferenciada.Cancel;
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.SBDocRemoverClick(Sender: TObject);
+begin
+  inherited;
+  if  not DMNotaEntrada.QNotaReferenciada.IsEmpty then
+    DMNotaEntrada.QNotaReferenciada.Delete;
+end;
+
+procedure TFNotaEntradaCad.PageControl2Change(Sender: TObject);
+begin
+  inherited;
+  DMNotaEntrada.QContaPagar.Close;
+  DMNotaEntrada.QContaPagar.Open;
+end;
+
+procedure TFNotaEntradaCad.SpeedButton1Click(Sender: TObject);
+var
+  pnt: TPoint;
+begin
+  if GetCursorPos(pnt) then
+    PopupMenu1.Popup(pnt.X, pnt.Y);
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraDeionClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+
+     ret,nLen : integer;
+     pbuf : array[0..127] of AnsiChar;
+     ver : PAnsiChar;
+     strmsg : string;
+     len1,len2 : integer;
+     buf1,buf2 : AnsiString;
+     buff1 : array[0..127] of WideChar;
+begin
+  inherited;
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      while not QEtiqNota.Eof do
+      Begin
+        try
+          wProduto := QEtiqNotaCOD_PRODUTO.Text;
+          if InputQuery('Imprimir etiquetas','Quantas etiquetas para o produto ' + QEtiqNotaDESC_PRODUTO.Text + '?',wQtEtiqueta) then
+            wTotalEtiquetas := StrToInt(wQtEtiqueta);
+        except
+          ShowMessage('Valor inválido foi informado!');
+          wQtEtiqueta := '0';
+          wTotalEtiquetas := 0;
+        end;
+
+        while wTotalEtiquetas > 0 do
+        begin
+          nLen := A_GetUSBBufferLen() + 1;
+          len1 := 128;
+          len2 := 128;
+          SetLength(buf1,len1);
+          SetLength(buf2,len2);
+          A_EnumUSB(pbuf);
+          A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+          ret := A_CreatePrn(12, PAnsiChar(buf2));   // open usb.
+          A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsInteger);
+//          A_Set_Darkness(13);
+
+          //A_Prn_Text(x, y, ori, font, typee, hor_factor, ver_factor: integer; mode: char; numeric: integer; data: pchar):
+          A_Prn_Text(024, 212, 1, 3, 0, 1, 3, 'n', 2, pchar(QEtiqNotaDESC_PRODUTO.Text));
+          A_Prn_Text(024, 180, 1, 2, 0, 1, 2, 'n', 2, pchar('CONTR.QUALIDADE:'+ FNotaEntradaParam.Fm18Cadastro.EdCadastro.Text));
+          A_Prn_Text(024, 150, 1, 2, 0, 1, 2, 'n', 2, pchar('FORN.:'+pchar(QEtiqNotaNOME.Text)));
+          A_Prn_Text(024, 130, 1, 1, 0, 2, 2, 'n', 2, pchar('COD.PRODUTO     LOTE INTERNO'));
+          A_Prn_Text(024, 100, 1, 3, 0, 2, 2, 'n', 2, pchar(QEtiqNotaCOD_PRODUTO.Text));
+          A_Prn_Text(155, 100, 1, 3, 0, 2, 2, 'n', 2, pchar(QEtiqNotaDESC_LOTE.Text));
+          A_Prn_Text(024, 080, 1, 1, 0, 2, 2, 'n', 2, pchar('VENCIMENTO        RECEBIMENTO'));
+          A_Prn_Text(024, 065, 1, 3, 0, 1, 1, 'n', 2, pchar(QEtiqNotaDT_VENCIMENTO.Text));
+          A_Prn_Text(170, 065, 1, 3, 0, 1, 1, 'n', 2, pchar(QEtiqNotaDT_RECEBIMENTO.Text));
+          A_Prn_Barcode(155, 010, 1, 'D', 0, 1, 40, 'N', 0, pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+FormatFloat('000000',QEtiqNotaCOD_LOTE_TIPO.Value)));
+          wTotalEtiquetas := wTotalEtiquetas-1;
+
+          A_Set_Backfeed(320);
+          A_Print_Out(1, 1, 1, 1);
+          A_ClosePrn;
+        end;
+        
+        QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EdNumFabricanteKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if Key = 123 Then // 123 = F12 - Junior 30/04/2018. Solicitado por Fábio (Furgões Medianeir).
+    BtConsProduto.Click;
+end;
+
+procedure TFNotaEntradaCad.DBEdit48KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = 123 Then // 123 = F12 - Junior 30/04/2018. Solicitado por Fábio (Furgões Medianeir).
+    BtConsProduto.Click;
+end;
+
+procedure TFNotaEntradaCad.btCulturaConsClick(Sender: TObject);
+begin
+  inherited;
+  if FCulturaCons = nil then
+    FCulturaCons := TFCulturaCons.Create(Application);
+  if FCulturaCons.ShowModal = mrOk then
+  begin
+    DMNotaEntrada.QItemNF.Edit;
+    DMNotaEntrada.QItemNFCOD_CULTURA.Value := DMCultura.QCulturaConsCOD_CULTURA.Value;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraSOLDARClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+        //wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+//        wString.Add('Q200,24');//184 - (configura a altura da etiqueta 480/8=60mm e altura do espaço entre etiquetas 24/8=3mm)
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,154,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A245,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A245,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A134,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B235,69,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,153,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A534,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A534,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A424,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B522,67,2,1,2,6,34,B,"'+FormatFloat('000000', QEtiqNotaCOD_PRODUTO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A759,152,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A824,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A824,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A735,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B809,66,2,1,2,6,34,B,"'+Formatfloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+       //  QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraBorgesClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      while not QEtiqNota.Eof do
+      Begin
+       // try
+          wProduto := QEtiqNotaCOD_PRODUTO.Text;
+          //Tirado... para imprimir sempre a quantidade da nota. - Junior 18/01/2019
+          //if InputQuery('Imprimir etiquetas','Quantas etiquetas para o produto ' + QEtiqNotaDESC_PRODUTO.Text + '?',wQtEtiqueta) then
+          //wTotalEtiquetas := StrToInt(wQtEtiqueta);
+          wTotalEtiquetas := QEtiqNotaQT_QUANTIDADE.AsInteger;
+        {except
+          ShowMessage('Valor inválido foi informado!');
+          wQtEtiqueta := '0';
+          wTotalEtiquetas := 0;
+        end;}
+
+        while wTotalEtiquetas > 0 do
+        begin
+                wString.Add('I8,A,001');
+                wString.Add('');
+                wString.Add('');
+                wString.Add('Q176,024');
+
+                wString.Add('q831');
+                wString.Add('rN');
+                wString.Add('S3');
+                wString.Add('D' + DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//                wString.Add('D7');
+                wString.Add('ZT');
+                wString.Add('Q200,24');//184 - (configura a altura da etiqueta 480/8=60mm e altura do espaço entre etiquetas 24/8=3mm)
+                wString.Add('JF');
+                wString.Add('O');
+                wString.Add('R0,0');
+                wString.Add('f100');
+                wString.Add('N');
+
+                wString.Add('A759,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                wString.Add('A790,112,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//504
+                wString.Add('A790,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                wString.Add('A730,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"'); //730
+                //wString.Add('B809,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                wString.Add('B790,66,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//depois B809
+                //wString.Add('P1');
+                wTotalEtiquetas := wTotalEtiquetas-1;
+                if wTotalEtiquetas > 0 then
+                begin
+                  wString.Add('A474,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                wString.Add('A495,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+                wString.Add('A495,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                wString.Add('A424,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+                //wString.Add('B522,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                wString.Add('B502,67,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//B522
+                  //wString.Add('P1');
+                  wTotalEtiquetas := wTotalEtiquetas-1;
+                end;
+                if wTotalEtiquetas > 0 then
+                begin
+                  wString.Add('A184,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                  wString.Add('A205,111,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"'); //795
+                  wString.Add('A205,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A134,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+                  //wString.Add('B235,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B205,69,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//B235
+                  //wString.Add('P1');
+                  wTotalEtiquetas := wTotalEtiquetas-1;
+                end;
+                wString.Add('P1');
+                try
+                  wString.SaveToFile(arquivo);
+                  ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+                finally
+                  Sleep(1000); //estava 500
+                  wString.Clear;
+                if FileExists(arquivo) then
+                  DeleteFile(arquivo);
+                end;
+        end;
+        QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraBorges2Click(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      while not QEtiqNota.Eof do
+      Begin
+       // try
+          wProduto := QEtiqNotaCOD_PRODUTO.Text;
+          //Tirado... para imprimir sempre a quantidade da nota. - Junior 18/01/2019
+          //if InputQuery('Imprimir etiquetas','Quantas etiquetas para o produto ' + QEtiqNotaDESC_PRODUTO.Text + '?',wQtEtiqueta) then
+          //wTotalEtiquetas := StrToInt(wQtEtiqueta);
+          wTotalEtiquetas := QEtiqNotaQT_QUANTIDADE.AsInteger;
+        {except
+          ShowMessage('Valor inválido foi informado!');
+          wQtEtiqueta := '0';
+          wTotalEtiquetas := 0;
+        end;}
+
+        while wTotalEtiquetas > 0 do
+        begin
+                wString.Add('I8,A,001');
+                wString.Add('');
+                wString.Add('');
+                wString.Add('Q176,024');
+
+                wString.Add('q831');
+                wString.Add('rN');
+                wString.Add('S3');
+                wString.Add('D' + DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//                wString.Add('D7');
+                wString.Add('ZT');
+                wString.Add('Q200,24');//184 - (configura a altura da etiqueta 480/8=60mm e altura do espaço entre etiquetas 24/8=3mm)
+                wString.Add('JF');
+                wString.Add('O');
+                wString.Add('R0,0');
+                wString.Add('f100');
+                wString.Add('N');
+
+                wString.Add('A759,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                wString.Add('A790,112,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//504
+                wString.Add('A790,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                wString.Add('A730,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"'); //730
+                //wString.Add('B809,66,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                wString.Add('B790,66,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//depois B809
+                //wString.Add('P1');
+                wTotalEtiquetas := wTotalEtiquetas-1;
+                if wTotalEtiquetas > 0 then
+                begin
+                  wString.Add('A474,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                wString.Add('A495,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+                wString.Add('A495,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                wString.Add('A424,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+                //wString.Add('B522,67,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                wString.Add('B502,67,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//B522
+                  //wString.Add('P1');
+                  wTotalEtiquetas := wTotalEtiquetas-1;
+                end;
+                if wTotalEtiquetas > 0 then
+                begin
+                  wString.Add('A184,152,2,4,1,1,N,"'+'ELET.BORGES'+{DMParamSistema.QParamSistemaDESC_EMPRESA.Text+}'"');
+                  wString.Add('A205,111,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"'); //795
+                  wString.Add('A205,95,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,5)+'"');
+                  wString.Add('A134,95,2,2,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+                  //wString.Add('B235,69,2,1,1,6,34,B,"'+Trim(QREtiquetaZebraDESC_COD_BARRA.Text)+'"');
+                  wString.Add('B205,69,2,1,2,6,34,B,"'+FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)+'"');//B235
+                  //wString.Add('P1');
+                  wTotalEtiquetas := wTotalEtiquetas-1;
+                end;
+                wString.Add('P1');
+                try
+                  wString.SaveToFile(arquivo);
+                  ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+                finally
+                  Sleep(1000); //estava 500
+                  wString.Clear;
+                if FileExists(arquivo) then
+                  DeleteFile(arquivo);
+                end;
+        end;
+        QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+//Incluído por Cleber em 28/11/2019 - Solicitado por Junior
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraPaulinhoClick(Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          //wString.Add('A184,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A253,160,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A253,135,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,42)+'"');
+          //wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A253,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B240,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+           //wString.Add('A184,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A545,160,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A545,135,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,42)+'"');
+          //wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A545,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B530,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          //wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A833,160,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A833,135,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,42)+'"');
+          //wString.Add('A824,135,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A833,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B820,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraJasolClick(Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D' + DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.add('D8);
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,165,2,4,1,1,N,"KALCE"');
+          wString.Add('A250,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A250,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,20)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A250,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B245,70,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A474,165,2,4,1,1,N,"KALCE"');
+          wString.Add('A540,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A540,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,20)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A540,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B535,70,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,165,2,4,1,1,N,"KALCE"');
+          wString.Add('A824,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A824,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,22,20)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A824,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B824,69,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraCemapaELGINL42Click(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A235,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"'); //255
+          wString.Add('A235,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A145,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');//165
+          wString.Add('B220,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"'); //240
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A474,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A520,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//540
+          wString.Add('A520,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A430,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');//440
+          wString.Add('B515,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A814,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');   //824
+          wString.Add('A814,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A725,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');//735
+          wString.Add('B810,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraNutrivetELGINL42Click(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D' + DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//      wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,165,2,4,1,1,N,"NUTRIPET"');
+          wString.Add('A255,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          //wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDESC_PRODUTO.Text,21,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A165,100,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B240,68,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A474,165,2,4,1,1,N,"NUTRIPET"');
+          wString.Add('A540,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          //wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDESC_PRODUTO.Text,21,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A450,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B525,68,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,165,2,4,1,1,N,"NUTRIPET"');
+          wString.Add('A824,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          //wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,21,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A735,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B810,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraAGROCAMPOClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,170,2,4,1,1,N,"AGROCAMPO"');
+          wString.Add('A232,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A232,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,170,2,4,1,1,N,"AGROCAMPO"');
+          wString.Add('A520,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          wString.Add('A520,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+//          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,170,2,4,1,1,N,"AGROCAMPO"');
+          wString.Add('A810,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A810,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraNUTRIRClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,170,2,4,1,1,N,"NUTRIR"');
+          wString.Add('A232,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A232,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,170,2,4,1,1,N,"NUTRIR"');
+          wString.Add('A520,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          wString.Add('A520,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+//          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,170,2,4,1,1,N,"NUTRIR"');
+          wString.Add('A810,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A810,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraPILILICOSClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,170,2,4,1,1,N,"PILILICOS"');
+          wString.Add('A232,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A232,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,170,2,4,1,1,N,"PILILICOS"');
+          wString.Add('A520,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          wString.Add('A520,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,170,2,4,1,1,N,"PILILICOS"');
+          wString.Add('A810,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A810,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraSCALAClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q240,024');
+        wString.Add('q831');//wString.Add('q400');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A420,140,2,4,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,22)+'"'); //380
+          wString.Add('A420,110,2,4,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,23,22)+'"'); //380
+          wString.Add('A420,060,2,4,2,2,N,"'+QEtiqNotaNUM_FABRICANTE.Text+'"');//380
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A840,140,2,4,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,22)+'"');//800
+          wString.Add('A840,110,2,4,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,23,22)+'"');//800
+          wString.Add('A840,060,2,4,2,2,N,"'+QEtiqNotaNUM_FABRICANTE.Text+'"');//800
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        {while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A824,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A735,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B810,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;}
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraDONNAClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          //wString.Add('A190,170,2,4,1,1,N,"DONNA"');//184
+          wString.Add('A222,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//232
+          wString.Add('A232,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');//225
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          //wString.Add('A480,170,2,4,1,1,N,"DONNA"'); //474
+          wString.Add('A510,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220 //520
+          wString.Add('A520,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+//          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"'); //510
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          //wString.Add('A749,170,2,4,1,1,N,"DONNA"');//759
+          wString.Add('A790,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"'); //810
+          wString.Add('A810,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');//800
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraElShadayClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A190,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A252,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,21)+'"');
+          wString.Add('A252,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+
+{
+          //wString.Add('A190,170,2,4,1,1,N,"DONNA"');//184
+          wString.Add('A222,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//232
+          wString.Add('A232,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');//225
+          wTotalEtiquetas := wTotalEtiquetas-1;}
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A480,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A540,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A540,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+
+       {
+
+          //wString.Add('A480,170,2,4,1,1,N,"DONNA"'); //474
+          wString.Add('A510,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220 //520
+          wString.Add('A520,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+//          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"'); //510
+          wTotalEtiquetas := wTotalEtiquetas-1;}
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A749,170,2,4,1,1,N,"'+DMParamSistema.QParamSistemaDESC_EMPRESA.Text+'"');
+          wString.Add('A820,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A820,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+{
+
+
+          //wString.Add('A749,170,2,4,1,1,N,"DONNA"');//759
+          wString.Add('A790,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"'); //810
+          wString.Add('A810,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');//800
+          wTotalEtiquetas := wTotalEtiquetas-1;}
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraGGIRARDIClick(
+  Sender: TObject);
+var
+  ret, nLen: integer;
+  pbuf: array[0..127] of AnsiChar;
+  ver: PAnsiChar;
+  strmsg: string;
+  len1, len2, wNumEtiquetas: integer;
+  buf1, buf2: AnsiString;
+  buff1: array[0..127] of WideChar;
+  wEmpresa, wValor: string;
+  wColuna, wTotalEtiquetas: Integer;
+  wImprimir, wControla_Ultima_Linha, wDuasColunas: Boolean;
+  ArqTeste: TextFile;
+  wDesc_Etiqueta: string;
+  wFlag : Boolean;
+begin
+  inherited;
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  If (DMParamSistema.CodEmpresa = 'NUTRIVET') or (DMParamSistema.CodEmpresa = 'NUTRIPET') then
+     FNotaEntradaParam.RGTipoEtiqueta.ItemIndex := 1;
+
+  wColuna := 1;
+    // serve para mandar para arquivo texto para testar o programa quando false ou true manda para impressora
+  //  wDesc_Etiqueta := DMOracle.FastSelect('DESC_LPT_ETIQUETA','TB_FILIAL','COD_FILIAL = ' + DMParamSistema.QParamSistemaCOD_FILIAL.Text);
+  wDesc_Etiqueta := DMOracle.FastSelect('DESC_LPT_ETIQUETA', 'TB_FILIAL',
+    'COD_FILIAL = ' + DMParamSistema.QParamSistemaCOD_FILIAL.Text);
+  If FNotaEntradaParam.ShowModal = MrOk then
+    wControla_Ultima_Linha := False;
+    nLen := A_GetUSBBufferLen() + 1;
+    len1 := 128;
+    len2 := 128;
+    SetLength(buf1, len1);
+    SetLength(buf2, len2);
+   {Função A_Create_Prn()
+     0 -> print to file.
+     1 -> lpt1, 2 -> lpt2, 3 -> lpt3
+     4 -> com1, 5 -> com2, 6 -> com3
+     10 -> pipe, 11 -> USBXXX, 12 -> USB
+     13 -> LAN Client(TCP/IP)}
+     if wDesc_Etiqueta = 'LPT1' then
+      ret := A_CreatePrn(1, PAnsiChar(buf2)); // open lpt1.
+    if wDesc_Etiqueta = 'LPT2' then
+      ret := A_CreatePrn(2, PAnsiChar(buf2)); // open lpt2.
+    if wDesc_Etiqueta = 'LPT3' then
+      ret := A_CreatePrn(1, PAnsiChar(buf2)); // open lpt3.
+    //Alterado para em caso da impressora ARGOX estar ligada nas LPTS
+    if wDesc_Etiqueta = 'USB' then
+    begin
+      A_EnumUSB(pbuf);
+      A_GetUSBDeviceInfo(1, PAnsiChar(buf1), @len1, PAnsiChar(buf2), @len2);
+      ret := A_CreatePrn(12, PAnsiChar(buf2)); // open usb.
+    end;
+
+    A_Set_Darkness(DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.Value);
+
+    wTotalEtiquetas := 0;
+    wColuna := 1;
+    with DMRelatorio_Compra do
+    begin
+
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      while (not QEtiqNota.Eof) do
+      begin
+        if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+          wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+        else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+          wTotalEtiquetas := 1
+        else
+          wTotalEtiquetas := 0;
+        //if wImprimir then
+        while wTotalEtiquetas > 0 do
+        begin
+          if DMParamSistema.CodEmpresa = 'GGIRARDI' then
+          begin
+            A_Prn_Text(005, 100, 1, 1, 0, 3, 2, 'n', 2, pchar('DIST.GGIRARDI'));
+            A_Prn_Text(005, 080, 1, 1, 0, 2, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,1,20)));
+            A_Prn_Text(005, 065, 1, 1, 0, 2, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,21,20)));
+    //        A_Prn_Barcode(050, 010, 1, 'D', 0, 25, 35, 'N', 0, pchar(FormatFloat('000000',DataSet.FieldByName('COD_PRODUTO').AsInteger)));
+            A_Prn_Barcode(035, 025, 1,   'a', 0, 25, 35, 'N', 0, pchar(QEtiqNotaDESC_COD_BARRA.AsString));
+            A_Prn_Text(080, 005, 1, 1, 0, 2, 2, 'n', 2,pchar(QEtiqNotaDESC_COD_BARRA.AsString));
+            A_Set_Backfeed(320);
+            A_Print_Out(1, 1, 1, 1);
+            wTotalEtiquetas := wTotalEtiquetas - 1;
+          end
+          else
+          begin
+            A_Prn_Text(005, 100, 1, 1, 0, 3, 2, 'n', 2, pchar(DMParamSistema.CodEmpresa));
+            A_Prn_Text(005, 080, 1, 1, 0, 2, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,1,20)));
+            A_Prn_Text(005, 065, 1, 1, 0, 2, 2, 'n', 2, pchar(Copy(QEtiqNotaDESC_PRODUTO.AsString,21,20)));
+//            A_Prn_Barcode(050, 010, 1, 'D', 0, 25, 35, 'N', 0, pchar(FormatFloat('000000',DataSet.FieldByName('COD_PRODUTO').AsInteger)));
+            A_Prn_Barcode(035, 025, 1,   'a', 0, 25, 35, 'N', 0, pchar(QEtiqNotaCOD_PRODUTO.AsString));
+            A_Prn_Text(080, 005, 1, 1, 0, 2, 2, 'n', 2,pchar(QEtiqNotaCOD_PRODUTO.AsString));
+            A_Set_Backfeed(320);
+            A_Print_Out(1, 1, 1, 1);
+            wTotalEtiquetas := wTotalEtiquetas - 1;
+          end;
+        end;
+        QEtiqNota.Next;
+        end;
+        A_ClosePrn;
+    end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraDinizClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q240,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A370,140,2,4,1,1,N,"' +QEtiqNotaNUM_FABRICANTE.Text +'"');
+          wString.Add('A370,115,2,3,1,1,N,"'+QEtiqNotaDESC_LOCALIZACAO.Text +'"'); //LOCALIZACAO
+          wString.Add('A370,090,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,26)+'"');
+          wString.Add('A370,065,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,27,26)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A370,030,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          if Trim(QEtiqNotaDESC_COD_BARRA.Text) = '' then
+            wString.Add('B240,045,2,1,2,6,20,N,"'+QEtiqNotaCOD_PRODUTO.Text+'"')//B235
+          else
+            wString.Add('B240,045,2,1,2,6,20,N,"'+QEtiqNotaDESC_COD_BARRA.Text+'"');//B235
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A790,140,2,4,1,1,N,"'+ QEtiqNotaNUM_FABRICANTE.Text +'"');
+          wString.Add('A790,115,2,3,1,1,N,"'+QEtiqNotaDESC_LOCALIZACAO.Text +'"'); //LOCALIZACAO
+          wString.Add('A790,090,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,26)+'"');
+          wString.Add('A790,065,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,27,26)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A790,030,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          if Trim(QEtiqNotaDESC_COD_BARRA.Text) = '' then
+            wString.Add('B660,045,2,1,2,6,20,N,"'+QEtiqNotaCOD_PRODUTO.Text+'"')
+          else
+            wString.Add('B660,045,2,1,2,6,20,N,"'+QEtiqNotaDESC_COD_BARRA.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        {while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,165,2,4,1,1,N,"CEMAPA"');
+          wString.Add('A824,130,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A735,95,2,3,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B810,66,2,1,2,6,34,B,"'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;}
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraFERRAGEMClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+      while not QEtiqNota.Eof do
+      Begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D' + DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D10');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A184,154,2,4,1,1,N,"FERRAGEM"');
+          wString.Add('A245,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A245,90,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          wString.Add('B245,69,2,1,1,6,34,B,"'+Trim(QEtiqNotaDESC_COD_BARRA.Text)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+             wString.Add('A112,69,2,2,1,1,N,"R$'+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A474,154,2,4,1,1,N,"FERRAGEM"');
+          wString.Add('A534,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A534,90,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          wString.Add('B534,67,2,1,1,6,34,B,"'+Trim(QEtiqNotaDESC_COD_BARRA.Text)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A400,67,2,2,1,1,N,"R$'+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,154,2,4,1,1,N,"FERRAGEM"');
+          wString.Add('A820,114,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A820,90,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          wString.Add('B820,66,2,1,1,6,34,B,"'+Trim(QEtiqNotaDESC_COD_BARRA.Text)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A688,66,2,2,1,1,N,"R$'+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        // QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraOTICAClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas, wQtdeUsada : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i: integer;
+  wString : TStringList;
+
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      while not QEtiqNota.Eof do
+      Begin
+        wTotalEtiquetas := QEtiqNotaQT_QUANTIDADE.AsInteger;
+
+        while wTotalEtiquetas > 0 do
+        begin
+          wString.Add('I8,A,001');
+          wString.Add('');
+          wString.Add('');
+          wString.Add('Q176,024');
+          wString.Add('q831');
+          wString.Add('rN');
+          wString.Add('S3');
+          wString.Add('D12');
+          wString.Add('ZT');
+          wString.Add('JF');
+          wString.Add('O');
+          wString.Add('R0,0');
+          wString.Add('f100');
+          wString.Add('N');
+          wString.Add('A790,84,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,18)+'"');
+          wString.Add('A550,66,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B780,66,2,1,2,6,34,B,"'+'00'+Trim(QEtiqNotaCOD_PRODUTO.Text)+'"');
+          wString.Add('P1');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+          try
+            wString.SaveToFile(arquivo);
+            ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+          finally
+            Sleep(1000); //estava 500
+            wString.Clear;
+            if FileExists(arquivo) then
+              DeleteFile(arquivo);
+          end;
+        end;
+        QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraSemefertilClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+   DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A220,160,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,16)+'"');
+          wString.Add('A220,130,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,17,16)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B210,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A510,160,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,16)+'"');
+          wString.Add('A520,130,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,17,16)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B490,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"'); //510
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A790,160,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,16)+'"');
+          wString.Add('A790,130,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,17,16)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B770,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+{  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+  FNotaEntradaParam.RGTipoEtiqueta.ItemIndex := 1;
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q240,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A360,230,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,26)+'"'); //(1,26)
+          wString.Add('A360,200,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,27,26)+'"'); //(1,26)
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A360,150,2,4,2,2,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B250,075,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin
+          wString.Add('A780,230,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,26)+'"'); //(1,26)
+          wString.Add('A780,200,2,3,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,27,26)+'"'); //(1,26)
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A780,150,2,4,2,2,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B670,075,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text+'"');//B235
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;}
+end;
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraDUSTClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+//        wString.Add('D8');
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A215,170,2,4,1,1,N,"DUST COUNTRY"');
+          wString.Add('A215,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A215,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A255,100,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B200,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value) + '"');
+          //wString.Add('B225,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text + QEtiqNotaCOD_LOTE_TIPO.Text + '"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,170,2,4,1,1,N,"DUST COUNTRY"');
+          wString.Add('A502,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          wString.Add('A502,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+//          wString.Add('A540,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B475,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value) + '"');
+          //wString.Add('B510,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text + QEtiqNotaCOD_LOTE_TIPO.Text + '"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,170,2,4,1,1,N,"DUST COUNTRY"');
+          wString.Add('A790,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A790,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+//          wString.Add('A824,95,2,2,1,1,N,"'+pchar(copy(QEtiqNotaDT_EMISSAO.Text,4,7))+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B765,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) +
+                                     FormatFloat('00',QEtiqNotaCOD_LOTE_TIPO.Value) + '"');
+          //wString.Add('B800,75,2,1,2,6,34,B,"'+'000'+QEtiqNotaCOD_PRODUTO.Text + QEtiqNotaCOD_LOTE_TIPO.Text +'"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+        //QEtiqNota.Next;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.EmissodeEtiquetasporNotadeCompraAGROCAOClick(
+  Sender: TObject);
+var
+  wTotalEtiquetas : Integer;
+  wQtEtiqueta, wProduto : string;
+  wContEtiquetas, i, wQtdEtiquetas: integer;
+  wString : TStringList;
+  wQtdeUsada : integer;//
+  wFlag : Boolean;//
+const
+  arquivo = 'C:\Temp\etiqueta.prn';
+begin
+  inherited;
+  DMParamSistema.QParamSistema.open;
+  DMUsuario.QUsuario.Open;
+  wString := TStringList.create;
+  wString.clear;
+  i := 0;
+  if (Trim(DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text) = '') then
+    raise exception.Create('Configure a sua impressora Zebra no Cadastro de Usúario. Ex.:\\localhost\nomeimpressora');
+
+  If FNotaEntradaParam = nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[17].TabVisible := True;
+  FNotaEntradaParam.MeNumNota.Text := IntToStr(DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+
+  If FNotaEntradaParam.ShowModal = MrOk then
+  begin
+    wTotalEtiquetas := 0;
+    wQtdeUsada := 0;//
+    wFlag := False;//
+    wProduto := '';//
+    wQtEtiqueta := '';//
+    with DMRelatorio_Compra do
+    begin
+      QEtiqNota.Close;
+      QEtiqNota.SetVariable('NUM_NOTA', Null);
+      QEtiqNota.SetVariable('COD_NOTA_CAB', FNotaEntradaParam.MeNumNota.Text);
+      QEtiqNota.Open;
+      QEtiqNota.First;
+
+      if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+        wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+      else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+        wTotalEtiquetas := 1
+      else
+        wTotalEtiquetas := 0;
+
+      while not QEtiqNota.Eof do
+      begin
+        while wTotalEtiquetas = 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Exit;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        wString.Add('I8,A,001');
+        wString.Add('');
+        wString.Add('');
+        wString.Add('Q176,024');
+        wString.Add('q831');
+        wString.Add('rN');
+        wString.Add('S3');
+        wString.Add('D'+DMParamSistema.QParamSistemaNUM_DENSIDADE_ETIQUETA.AsString);
+        wString.Add('ZT');
+        wString.Add('JF');
+        wString.Add('O');
+        wString.Add('R0,0');
+        wString.Add('f100');
+        wString.Add('N');
+        //1 coluna
+        if not wFlag then
+        begin
+          wString.Add('A215,170,2,4,1,1,N,"AGROCAO"');
+          wString.Add('A215,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A215,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          if FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A184,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B200,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) + '"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //2 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then  //2 coluna
+        begin
+          wString.Add('A474,170,2,4,1,1,N,"AGROCAO"');
+          wString.Add('A502,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');//220
+          wString.Add('A502,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');//220
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A474,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B475,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) + '"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        //3 coluna
+        while wTotalEtiquetas <= 0 do
+        begin
+          QEtiqNota.Next;
+          if QEtiqNota.Eof then
+          begin
+            wFlag := True;
+            Break;
+          end;
+          if QEtiqNotaIND_QTD_ETIQUETAS.Value = 0 then
+            wTotalEtiquetas := StrToInt(QEtiqNotaQT_QUANTIDADE.Text)
+          else if QEtiqNotaIND_QTD_ETIQUETAS.Value = 1 then
+            wTotalEtiquetas := 1
+          else
+            wTotalEtiquetas := 0;
+        end;
+        if not wFlag then
+        begin  //3 coluna
+          wString.Add('A759,170,2,4,1,1,N,"AGROCAO"');
+          wString.Add('A790,140,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,1,20)+'"');
+          wString.Add('A790,120,2,2,1,1,N,"'+copy(QEtiqNotaDESC_PRODUTO.Text,21,20)+'"');
+          If FNotaEntradaParam.RGTipoEtiqueta.ItemIndex = 1 Then
+            wString.Add('A759,100,2,4,1,1,N,"R$ '+FormatFloat('0.00',QEtiqNotaVAL_VAREJO.Value)+'"');
+          wString.Add('B765,75,2,1,2,6,34,B,"' + pchar(FormatFloat('000000',QEtiqNotaCOD_PRODUTO.Value)) + '"');
+          wTotalEtiquetas := wTotalEtiquetas-1;
+        end;
+        wString.Add('P1');
+        try
+          wString.SaveToFile(arquivo);
+          ShellExecute(Handle, 'open', PChar('cmd.exe'), PChar('/c type '+ arquivo +' > '+ DMUsuario.QUsuarioDESC_IMPRESSORA_ZEBRA_EPL.Text), nil, SW_HIDE);
+        finally
+          Sleep(1000); //estava 500
+          wString.Clear;
+          if FileExists(arquivo) then
+            DeleteFile(arquivo);
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TFNotaEntradaCad.GeraFCCIA(Sender: TObject);
+var valParcIcms, valSomaParcDif: Double;
+  i: integer;
+  ano, mes, dia: word;
+  anoMes: string;
+begin
+  if not DMNotaEntrada.QFCCIA.Eof then
+  begin
+    // Gera parcelas
+    with DMNotaEntrada do
+    begin
+      QFCCIAParcelaCredito.Open;
+      QFCCIA.DisableControls;
+      QFCCIA.First;
+      while not QFCCIA.Eof do
+      begin
+        DecodeDate(QNotaEntradaDT_EMISSAO.Value, ano, mes, dia);
+        if (ano = 2019) and (mes <= 7) then
+          mes := 8;
+        valSomaParcDif := 0;
+        valParcIcms := 0;
+        valParcIcms := StrToFloat(FormatFloat('#0.00', QFCCIAVAL_ICMS_ORIGEM_CRED.Value / 48));
+        for i := 0 to 47 do
+        begin
+          // Soma as parcelas para comparar com o valor total de icms no final.
+          // Se houver diferença, soma ou diminui a diferença na última parcela.
+          valSomaParcDif := valSomaParcDif + valParcIcms;
+          if i = 47 then // Última parcela
+          begin
+            valParcIcms := valParcIcms + (QFCCIAVAL_ICMS_ORIGEM_CRED.Value - valSomaParcDif);
+          end;
+          anoMes := IntToStr(ano) + bib.StrZero(IntToStr(mes), 2);
+          QFCCIAParcelaCredito.Insert;
+          QFCCIAParcelaCreditoCOD_FCCIA.Value := QFCCIACOD_FCCIA.Value;
+          QFCCIAParcelaCreditoANO_MES_SEQUENCIA.Text := anoMes;
+          QFCCIAParcelaCreditoVAL_PARCELA.Value := valParcIcms;
+          QFCCIAParcelaCredito.Post;
+          if mes = 12 then // Se for Dezembro, deve voltar para janeiro e aumentar o ano
+          begin
+            mes := 1;
+            Inc(ano);
+          end
+          else
+            Inc(mes);
+        end;
+        QFCCIA.Next;
+      end;
+      // Fecha e abre para arrumar ordenação
+      QFCCIAParcelaCredito.Close;
+      QFCCIAParcelaCredito.Open;
+      QFCCIA.EnableControls;
+    end;
+  end
+  else
+  begin
+    if TComponent(Sender).Name
+      = 'FichadeControledeCrditosdeInsumosAgropecurios1' then
+      MessageDlg('Não existem dados de FCCIA para esta nota', mtError, [mbOk], 0);
+  end;
+end;
+
+procedure TFNotaEntradaCad.FichadeControledeCrditosdeInsumosAgropecurios1Click(
+  Sender: TObject);
+begin
+  inherited;
+  GeraFCCIA(Sender);
+end;
+
+procedure TFNotaEntradaCad.DetalhamentodeFunrural1Click(Sender: TObject);
+begin
+  inherited;
+  if FNotaEntradaParam = Nil then
+     FNotaEntradaParam := TFNotaEntradaParam.Create(Application);
+  FNotaEntradaParam.PGRelatorio.Pages[27].TabVisible := True;
+  
+  if FNotaEntradaParam.ShowModal = mrOk then
+  with DMRelatorio_Compra do
+  begin
+    DmUsuario.Checar_Filial_Usuario( Trim(FNotaEntradaParam.FmFilial27.MeFilial.Text),'VENDA');
+
+    if (FNotaEntradaParam.MeInicial27.Text = '') and (FNotaEntradaParam.MeFinal27.Text = '') then
+      raise Exception.Create('Informe a Data de Emissão');
+
+    QRDetalhamentoFunrural.Close;
+    QRDetalhamentoFunrural.SetVariable('DT_INICIAL',FNotaEntradaParam.MeInicial27.Text);
+    QRDetalhamentoFunrural.SetVariable('DT_FINAL',  FNotaEntradaParam.MeFinal27.Text);
+
+    if Trim(FNotaEntradaParam.FmFilial27.MeFilial.Text) = ''   then
+      QRDetalhamentoFunrural.SetVariable('COD_FILIAL',Null)
+    else
+      QRDetalhamentoFunrural.SetVariable('COD_FILIAL',Trim(FNotaEntradaParam.FmFilial27.MeFilial.Text));
+
+
+    if Trim(FNotaEntradaParam.FmCadastro27.MeCadastro.Text) = ''   then
+      QRDetalhamentoFunrural.SetVariable('COD_CADASTRO',Null)
+    else
+      QRDetalhamentoFunrural.SetVariable('COD_CADASTRO',Trim(FNotaEntradaParam.FmCadastro27.MeCadastro.Text));
+
+    if Trim(FNotaEntradaParam.MEOperacao27.Text) <> '' then
+      QRDetalhamentoFunrural.SetVariable('OPERACAO', 'N.COD_OPERACAO IN ('+Bib.colocaaspanastring(Trim(FNotaEntradaParam.MEOperacao27.Text))+')')
+    else
+      QRDetalhamentoFunrural.SetVariable('OPERACAO', '1=1');
+
+    if FNotaEntradaParam.rgOrdenacao.ItemIndex <> 0 then
+      QRDetalhamentoFunrural.SetVariable('ORDENACAO', 'NUM_CGC_CPF, TB_NOTA_CAB.COD_NOTA_CAB')
+    else
+      QRDetalhamentoFunrural.SetVariable('ORDENACAO', 'NOME');
+
+    QRDetalhamentoFunrural.Open;
+
+    if FRDetalhamentoFunrural = Nil then
+      FRDetalhamentoFunrural := TFRDetalhamentoFunrural.Create(Application);
+
+    FRDetalhamentoFunrural.QRlTitulo.Caption := 'Relatório Detalhamento de Funrural - ' + FNotaEntradaParam.MeInicial27.Text + ' Até ' + FNotaEntradaParam.MeFinal27.Text;
+
+    if FNotaEntradaParam.RGPreview.ItemIndex = 0 then
+       FRDetalhamentoFunrural.QRPrimario.Preview
+    else
+       FRDetalhamentoFunrural.QRPrimario.Print;
+
+    QRDetalhamentoFunrural.Close;
+  end;
+end;
+
+procedure TFNotaEntradaCad.DBGrid6DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+  var ano, mes, dia: Word;
+  anoMes: string;
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    DecodeDate(QNotaEntradaDT_EMISSAO.Value, ano, mes, dia);
+    if (ano = 2019) and (mes <= 7) then
+      mes := 8;
+    anoMes := IntToStr(ano) + bib.StrZero(IntToStr(mes), 2);
+    if QFCCIAParcelaCreditoANO_MES_SEQUENCIA.Value <= StrToInt(anoMes) then
+    begin
+      dbgrid6.Canvas.Brush.Color := clMoneyGreen;
+      dbgrid6.Canvas.FillRect(Rect);
+      dbgrid6.DefaultDrawColumnCell(Rect,DataCol,Column,State);
+    end
+    else
+    begin
+      if DBGrid6.Canvas.Brush.Color = clMoneyGreen then
+          dbgrid6.Canvas.Brush.Color := clWindow;
+    end;
+
+  end;
+end;
+
+procedure TFNotaEntradaCad.ImprimeFCCIA(Sender: TObject);
+begin
+  if not DMNotaEntrada.QFCCIA.Eof then
+  begin
+    with DMRelatorio_Compra do
+    begin
+      QRFCCIA.Close;
+      QRFCCIA.SetVariable('COD_NOTA_CAB', DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+      QRFCCIA.Open;
+      if not QRFCCIA.Eof then
+      begin
+        if FRFCCIA = Nil then
+          FRFCCIA := TFRFCCIA.Create(Application);
+        FRFCCIA.QRPrimario.Preview;
+      end
+    end;
+  end
+  else
+  begin
+    if TComponent(Sender).Name
+      = 'FichadeControledeCrditosdeInsumosAgropecurios1' then
+      MessageDlg('Não existem dados de FCCIA para esta nota', mtError, [mbOk], 0);
+  end;
+end;
+
+procedure TFNotaEntradaCad.BtContratoCprClick(Sender: TObject);
+begin
+  inherited;
+  if FContratoCPRCons = nil then
+    FContratoCPRCons := TFContratoCPRCons.Create(Application);
+  if FContratoCPRCons.ShowModal = mrOk then
+    DMNotaEntrada.QNotaEntradaCOD_CONTRATO_CPR.Value := DMContrato_CPR.QContrato_CPRConsCOD_CONTRATO_CPR.Value;
+
+end;
+
+procedure TFNotaEntradaCad.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+{  If (Key = 123) and (DMParamSistema.QParamSistemaCod_Empresa.Value <> 'RETIFOZ') Then
+    btnImportarNfeClick(Sender);}
+end;
+
+procedure TFNotaEntradaCad.Button1Click(Sender: TObject);
+begin
+  inherited;
+  with DMNotaEntrada do
+  begin
+    QInsertContabiliza.Close;
+    QInsertContabiliza.Open;
+    ShowMessage(IntToStr(QInsertContabiliza.RecordCount));
+    QInsertContabiliza.First;
+    while not QInsertContabiliza.Eof do
+    begin
+      QNotaEntrada.Close;
+      QNotaEntrada.SetVariable('PK',QInsertContabilizaCOD_NOTA_CAB.Value);
+      QNotaEntrada.Open;
+      Contabiliza(QInsertContabilizaCOD_NOTA_CAB.Value);
+      DMOracle.DBCemapa.Commit;
+      QInsertContabiliza.Next;
+    end;
+  end;
+
+end;
+
+procedure TFNotaEntradaCad.DBEdit26Exit(Sender: TObject);
+begin
+  inherited;
+  DMOracle.ValidaFilial(DBEdit26.Text);
+end;
+
+procedure TFNotaEntradaCad.DBGrid1ColEnter(Sender: TObject);
+begin
+  inherited;
+  if (DMParamSistema.CodEmpresa = 'FINESTRA') then
+  begin
+    DBDirceu9.Color := clHighlight;
+    DBDirceu9.Font.Color := clWhite;    
+  end;
+end;
+
+procedure TFNotaEntradaCad.ConsultaEstoquePorNota1Click(Sender: TObject);
+begin
+  inherited;
+  If DMNotaEntrada.QNotaEntradaCod_Nota_Cab.Text = '' Then
+     Raise Exception.create('Selecionar uma nota');
+  with DMNotaEntrada do
+  begin
+    QConsNotaEstoque.Close;
+    QConsNotaEstoque.SetVariable('COD_NOTA_CAB', DMNotaEntrada.QNotaEntradaCOD_NOTA_CAB.Value);
+    QConsNotaEstoque.Open;
+    If FConsultaEstoquePorNota = Nil Then
+      FConsultaEstoquePorNota := TFConsultaEstoquePorNota.Create(Application);
+    FConsultaEstoquePorNota.ShowModal;
+  end;
+  DMNotaEntrada.QConsNotaEstoque.Close;
+end;
+
+procedure TFNotaEntradaCad.DBEdit1Exit(Sender: TObject);
+var
+  wSituacaoDpto: string;
+begin
+  inherited;
+  wSituacaoDpto := DMOracle.FastSelect('IND_SITUACAO','TB_DEPARTAMENTO','COD_DEPARTAMENTO = ' + DBEdit1.Text);
+  if wSituacaoDpto <> 'A' then
+  begin
+    DBEdit1.SetFocus;
+    raise exception.Create('ATENÇÃO - Este departamento não esta ativo. Favor Verificar!');
+  end;
+end;
+
+procedure TFNotaEntradaCad.btnRemoveVinculoClick(Sender: TObject);
+begin
+  inherited;
+  if FRemoveVinculoCodProdFornecedor = nil then
+    FRemoveVinculoCodProdFornecedor := TFRemoveVinculoCodProdFornecedor.Create(Application);
+  FRemoveVinculoCodProdFornecedor.ShowModal;
+end;
+
+end.
+

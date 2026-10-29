@@ -1,0 +1,239 @@
+unit UCustoVeiculo_NE;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, StdCtrls, Buttons, ComCtrls, Mask, DBCtrls;
+
+type
+  TFCustoVeiculo_NE = class(TForm)
+    Label1: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label9: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label11: TLabel;
+    SBVeiculo: TSpeedButton;
+    DBEdit1: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdKm: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit9: TDBEdit;
+    DBEdit13: TDBEdit;
+    DBEdit14: TDBEdit;
+    DBEdit16: TDBEdit;
+    DBEdit11: TDBEdit;
+    StatusBar1: TStatusBar;
+    BtAvancar: TBitBtn;
+    DSPrimario: TDataSource;
+    Label15: TLabel;
+    MEKm: TMaskEdit;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    BitBtn1: TBitBtn;
+    Label8: TLabel;
+    DBEdit4: TDBEdit;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SBVeiculoClick(Sender: TObject);
+    procedure DBEdit3Exit(Sender: TObject);
+    procedure BtAvancarClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+    function ProxItem: Boolean;
+  public
+    { Public declarations }
+    function Item: Boolean;
+  end;
+
+var
+  FCustoVeiculo_NE: TFCustoVeiculo_NE;
+
+implementation
+
+uses UNotaEntrada_cl, UOracle_cl, UCustoVeiculoMov_cl, UVeiculoCons,
+  UVeiculo_cl, UNotaSaida_cl, UDespesaRecup_cl, UParamSistema_cl, UEstoque_cl;
+
+{$R *.DFM}
+
+{*------------------------------------------------------------------------------
+Função para Verificar se existe Produtos que necessitam do lançamento de Custo Veículo
+------------------------------------------------------------------------------*}
+function TFCustoVeiculo_NE.Item : Boolean;
+var
+  wItem: Boolean;
+begin
+  DMNotaEntrada.QItemNF.First;
+  wItem := False;
+  while not DMNotaEntrada.QItemNF.Eof do
+  begin
+    if Trim(DMNotaEntrada.QItemNFCOD_PRODUTO.Text) <> '' then
+    begin
+      if (Trim(DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO','COD_PRODUTO = '+
+                                  DMNotaEntrada.QItemNFCOD_PRODUTO.Text)) = 'VEICULO') or (DMParamSistema.CodEmpresa = 'ESPINDOLA')
+                                  or (DMParamSistema.CodEmpresa = 'ITATIBA') or (DMParamSistema.CodEmpresa = 'LRMARMORE') then
+      begin
+        wItem := True;
+        Break;
+      end;
+    end;
+    DMNotaEntrada.QItemNF.Next;
+  end;
+  Result:=wItem;
+end;
+
+{*------------------------------------------------------------------------------
+Função para as Informações dos Produtos que referentes a Custo Veículo
+------------------------------------------------------------------------------*}
+function TFCustoVeiculo_NE.ProxItem : Boolean;
+  var wProduto:Boolean;
+begin
+  wProduto := False;
+  while not DMNotaEntrada.QItemNF.Eof do
+  begin
+    if Trim(DMNotaEntrada.QItemNFCOD_PRODUTO.Text) <> '' then
+    begin
+      if (Trim(DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO','COD_PRODUTO = '+
+         DMNotaEntrada.QItemNFCOD_PRODUTO.Text)) = 'VEICULO') or (DMParamSistema.CodEmpresa = 'ESPINDOLA')
+         or (DMParamSistema.CodEmpresa = 'ITATIBA') or (DMParamSistema.CodEmpresa = 'LRMARMORE') then
+      begin
+        with DMCustoVeiculoMov do
+        begin
+          QCustoVeiculoMovCad.Insert;
+          QCustoVeiculoMovCadCOD_NOTA_ITEM.Value := DMNotaEntrada.QItemNFCOD_NOTA_ITEM.Value;    //Andre 11/07/2024 adicionado itatiba para lançar do compras
+          if (DMParamSistema.CodEmpresa = 'ESPINDOLA') or (DMParamSistema.CodEmpresa = 'MATRANSP') or (DMParamSistema.CodEmpresa = 'ITATIBA') then //Junior 19/03/2022. Começou a utilizar controle de Veículo pelo Compras. Espindola tem campo de VLUnitário e Desconto no CV.
+          begin
+            QCustoVeiculoMovCadVL_UNITARIO.Value := (DMNotaEntrada.QItemNFVAL_TOTAL.Value / DMNotaEntrada.QItemNFQT_QUANTIDADE.Value);// - DMNotaEntrada.QItemNFVAL_DESCONTO.Value - DMNotaEntrada.QItemNFVAL_DESCONTO_RATEIO.Value;
+            QCustoVeiculoMovCadVL_DESCONTO.Value := (DMNotaEntrada.QItemNFVAL_DESCONTO.Value + DMNotaEntrada.QItemNFVAL_DESCONTO_RATEIO.Value);// / DMNotaEntrada.QItemNFQT_QUANTIDADE.Value;
+            QCustoVeiculoMovCadVL_CUSTO.Value := DMNotaEntrada.QItemNFVAL_TOTAL.Value;
+          end
+          else
+            QCustoVeiculoMovCadVL_CUSTO.Value := DMNotaEntrada.QItemNFVAL_TOTAL.Value - DMNotaEntrada.QItemNFVAL_DESCONTO.Value - DMNotaEntrada.QItemNFVAL_DESCONTO_RATEIO.Value;
+          QCustoVeiculoMovCadQT_QUANTIDADE.Value := DMNotaEntrada.QItemNFQT_QUANTIDADE.Value;
+          QCustoVeiculoMovCadCOD_PRODUTO.Value := DMNotaEntrada.QItemNFCOD_PRODUTO.Value;
+          if DMParamSistema.CodEmpresa = 'ITATIBA' then
+            QCustoVeiculoMovCadDT_MOVIMENTO.Value := DMNotaEntrada.QNotaEntradaDT_RECEBIMENTO.Value
+          else
+            QCustoVeiculoMovCadDT_MOVIMENTO.Value := DMNotaEntrada.QNotaEntradaDT_EMISSAO.Value;
+          QCustoVeiculoMovCadDT_LCTO.Value := DMNotaEntrada.QNotaEntradaDT_RECEBIMENTO.Value;
+          QCustoVeiculoMovCadCOD_CADASTRO.Value := DMNotaEntrada.QNotaEntradaCOD_CADASTRO.Value;
+          QCustoVeiculoMovCadNUM_NOTA_REQUISICAO.Value := DMNotaEntrada.QNotaEntradaNUM_NOTA.Value;
+          QCustoVeiculoMovCadCOD_LOTE_TIPO.Value := DMNotaEntrada.QItemNFCOD_LOTE_TIPO.Value;
+          if (DMParamSistema.CodEmpresa = 'ESPINDOLA') or (DMParamSistema.CodEmpresa = 'MATRANSP') or (DMParamSistema.CodEmpresa = 'ITATIBA') then
+            QCustoVeiculoMovCadIND_ESTOQUE_ATUALIZADO.Value := 'S';
+          if DMOracle.BuscaNome('SELECT IND_KM FROM TB_PRODUTO','COD_PRODUTO = '+
+                                DMCustoVeiculoMov.QCustoVeiculoMovCadCOD_PRODUTO.Text) = 'N' then
+          begin
+            DBEdKm.Color := clBtnFace;
+            DBEdKm.ReadOnly := True;
+            DBEdKm.TabStop := False;
+          end
+          else
+          begin
+            DBEdKm.Color := clWindow;
+            DBEdKm.ReadOnly := False;
+            DBEdKm.TabStop := True;
+          end;
+        end;
+        wProduto := True;
+        DMNotaEntrada.QItemNF.Next;
+        break;
+      end;
+    end;
+    DMNotaEntrada.QItemNF.Next;
+  end;
+  Result:=wProduto;
+end;
+
+procedure TFCustoVeiculo_NE.FormActivate(Sender: TObject);
+begin
+  DMNotaEntrada.QItemNF.First;
+  DMCustoVeiculoMov.QCustoVeiculoMovCad.Open;
+  DMDespesaRecup.QDespesarecupCad.Open;
+  ProxItem;
+  DBEdit3.SetFocus; 
+end;
+
+procedure TFCustoVeiculo_NE.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if DSPrimario.DataSet.State in [DSInsert,DSEdit] then
+    Raise Exception.Create('Dados não Confirmado - Confirme antes de Sair desta tela');
+  DMCustoVeiculoMov.QCustoVeiculoMovCad.Close;
+end;
+
+procedure TFCustoVeiculo_NE.SBVeiculoClick(Sender: TObject);
+begin
+  if FVeiculoCons = nil then
+    FVeiculoCons := TFVeiculoCons.Create(Application);
+  if FVeiculoCons.ShowModal = mrOk then
+  begin
+    DMCustoVeiculoMov.QCustoVeiculoMovCadCOD_VEICULO.Value := DMVeiculo.QVeiculoConsCOD_VEICULO.Value;
+    DBEdit3Exit(Self)
+  end;
+end;
+
+procedure TFCustoVeiculo_NE.DBEdit3Exit(Sender: TObject);
+begin
+  with DMCustoVeiculoMov do
+  begin
+    if Trim(QCustoVeiculoMovCadCOD_VEICULO.Text) <> '' then
+    begin
+      if QCustoVeiculoMovCad.State in [DSInsert,DSEdit] then
+      begin
+        QCustoVeiculoMovCadNUM_VEICULO.Text := DMOracle.BuscaNome('SELECT NUM_VEICULO FROM TB_VEICULO',
+                                                                  'COD_VEICULO = '+QCustoVeiculoMovCadCOD_VEICULO.Text);
+        MEKm.Text := DMOracle.BuscaNome('SELECT KM_ATUAL FROM TB_VEICULO','COD_VEICULO = '+QCustoVeiculoMovCadCOD_VEICULO.Text);
+        if Trim(MEKm.Text) <> '' then
+          MEKm.Text := FormatFloat('#,##0.00',StrToFloat(MEKm.Text));
+      end;
+    end
+    else
+    begin
+      if QCustoVeiculoMovCad.State in [DSInsert,DSEdit] then
+      begin
+        QCustoVeiculoMovCadNUM_VEICULO.Text := '';
+        MEKm.Text := '';
+      end;
+    end;
+  end;
+end;
+
+procedure TFCustoVeiculo_NE.BtAvancarClick(Sender: TObject);
+begin
+  with DMCustoVeiculoMov do
+  begin
+    if Trim(DMCustoVeiculoMov.QCustoVeiculoMovCadCOD_VEICULO.Text) <> '' then
+    begin
+      DMCustoVeiculoMov.QCustoVeiculoMovCad.Post;
+      if (DMParamSistema.CodEmpresa = 'ESPINDOLA') or (DMParamSistema.CodEmpresa = 'MATRANSP') or (DMParamSistema.CodEmpresa = 'ITATIBA') then
+        DMEstoque.AtualizaEstoque(-2,1,QCustoVeiculoMovCadCOD_PRODUTO.Value,QCustoVeiculoMovCadCOD_LOTE_TIPO.Value,(QCustoVeiculoMovCadQT_QUANTIDADE.Value * -1),
+                   0,0,0,QCustoVeiculoMovCadCOD_CADASTRO.Text);
+    end
+    else if MessageDlg('Deseja avançar para o próximo item sem informar o veículo ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes Then
+    begin
+      DMCustoVeiculoMov.QCustoVeiculoMovCad.Cancel;
+    end
+    else
+      Raise Exception.Create('Veículo deve ser Informado para este Ítem da Nota');
+    if ProxItem = False then
+      FCustoVeiculo_NE.Close
+    else
+      DBEdit3.SetFocus;
+  end;
+end;
+
+procedure TFCustoVeiculo_NE.BitBtn1Click(Sender: TObject);
+begin
+  DMCustoVeiculoMov.QCustoVeiculoMovCad.Close;
+  FCustoVeiculo_NE.Close;
+end;
+
+end.

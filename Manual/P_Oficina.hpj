@@ -1,0 +1,29 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Oficina.hlp
+
+[FILES]
+P_Oficina.rtf
+
+[MAP]
+cad_mecanicos=2
+cad_modelos=4
+cad_tp_serviço=8
+cad_veiculos=3
+forma_operacao_sistema=12
+lanc_serv_terceiros=9
+mapa_venda=13
+menu_oficina=1
+O.SNF_fechamento=7
+Orcamento_oficina=10
+ordem_serviço=6
+relacao_O.S_pendente=16
+relacao_serv_terceiros=15
+requisição_produtos=5
+venda_liquida=14
+
+[BAGGAGE]
+P_Oficina.rtf

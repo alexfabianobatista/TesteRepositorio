@@ -1,0 +1,104 @@
+unit UDepartamentoCons;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTCONSULTA, Grids, DBGrids, StdCtrls, Mask, Buttons, Db, Menus, ActnList,
+  ComCtrls, ExtCtrls, variants;
+
+type
+  TFDepartamentoCons = class(TFTConsulta)
+    ActionList1: TActionList;
+    StatusBar1: TStatusBar;
+    Action1: TAction;
+    RgSituacao: TRadioGroup;
+    procedure BtProcurarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Action1Execute(Sender: TObject);
+    procedure METextoChange(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    function GetMultiSelect: Boolean;
+    procedure SetMultiSelect(const Value: Boolean);
+    procedure proc_consulta_departamento;
+    { Private declarations }
+  public
+    property MultiSelect: Boolean read GetMultiSelect write SetMultiSelect default False;
+  end;
+
+var
+  FDepartamentoCons: TFDepartamentoCons;
+
+implementation
+
+uses UDepartamento_cl, UParamSistema_cl, UImpressoraFiscal;
+
+{$R *.DFM}
+
+procedure TFDepartamentoCons.BtProcurarClick(Sender: TObject);
+begin
+  inherited;
+  proc_consulta_departamento;
+end;
+
+function TFDepartamentoCons.GetMultiSelect: Boolean;
+begin
+  Result := (dgMultiSelect in DBGrid1.Options);
+end;
+
+procedure TFDepartamentoCons.SetMultiSelect(const Value: Boolean);
+begin
+  DBGrid1.Options := DBGrid1.Options + [dgMultiSelect];
+end;
+
+procedure TFDepartamentoCons.FormCreate(Sender: TObject);
+begin
+  inherited;
+  MultiSelect := False;
+  if DMParamSistema.QParamSistemaIND_PAF_ECF.Value = 'S' then
+    StatusBar1.Panels[0].Text := 'MENU FISCAL -> CTRL + ALT + F';
+end;
+
+procedure TFDepartamentoCons.Action1Execute(Sender: TObject);
+begin
+  inherited;
+  if FImpressoraFiscal = Nil then
+    FImpressoraFiscal := TFImpressoraFiscal.Create(Application);
+  FImpressoraFiscal.ShowModal;
+end;
+
+procedure TFDepartamentoCons.proc_consulta_departamento;
+var
+  wsql : string;
+begin
+  with DMDepartamento do
+  begin
+    QDepartamentoCons.Close;
+    if Trim(METexto.Text) <> '' then
+      QDepartamentoCons.SetVariable('DESC_DEPARTAMENTO',UPPERCASE(Trim(FDepartamentoCons.METexto.Text)) );
+
+    case RgSituacao.ItemIndex of
+      0: QDepartamentoCons.SetVariable('IND_SITUACAO','A');
+      1: QDepartamentoCons.SetVariable('IND_SITUACAO','D');
+      2: QDepartamentoCons.SetVariable('IND_SITUACAO',Null);
+    end;
+
+
+    QDepartamentoCons.Open;
+  end;
+end;
+
+procedure TFDepartamentoCons.METextoChange(Sender: TObject);
+begin
+  inherited;
+  proc_consulta_departamento;
+end;
+
+procedure TFDepartamentoCons.FormActivate(Sender: TObject);
+begin
+  inherited;
+  FDepartamentoCons.METexto.Text := 'A';
+end;
+
+end.

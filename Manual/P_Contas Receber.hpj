@@ -1,0 +1,47 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Contas Receber.hlp
+
+[FILES]
+ContasReceber.rtf
+
+[MAP]
+Arquivo_de_Remessa=13
+Arquivo_de_Remessa641   =33
+Arquivo_de_Retorno=12
+Arquivos_SCI=14
+Baixa_De_Titulos=30
+Bancos_Agencias=5
+Botao_Click=31
+Cadastro_Contas_Receber=4
+Capitalizacao=29
+Comissão=18
+Contabiliza_Contas_a_Receber=34
+Emissao_Bloqueto_Bancario=25
+Emissão_de_Recibos=20
+Emissao_Duplicatas=27
+Emissao_Nota_Promissoria=26
+Finalidade=7
+Forma_Operacao_Sistema=32
+Historicos=8
+Menu_Contas_a_Receber=1
+Relacao_Movimentos=10
+Relacao_Por_Clientes=11
+Relacao_Por_Vencimentos=9
+Relacao_Saldos=28
+Relação_Títulos_Abertos=21
+Relacao_Titulos_Abertos=23
+Relação_Títulos_Baixados=22
+Relacao_Titulos_Vencidos_Sintetico=24
+Relatório_de_Histórico=3
+Relatório_Títulos_Banco=16
+Relatório_Títulos_Recebidos_Caixa=17
+Títulos_em_Aberto_(Saldos)=2
+Títulos_em_Aberto=19
+Volta_Baixa_de_Títulos=15
+
+[BAGGAGE]
+ContasReceber.rtf

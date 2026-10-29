@@ -1,0 +1,1507 @@
+unit UDevolucaoTroca;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, UFmCadastro, Mask, Grids,
+  DBGrids, DB, ImgList, UBiblioteca, UFmProduto, UFmLote, UFmTributacao,
+  DateUtils, Printers, DBPanel;
+
+type
+  TFDevolucaoTroca = class(TForm)
+    PageControl1: TPageControl;
+    TSPrincipal: TTabSheet;
+    BtVoltar: TBitBtn;
+    BtAvancar: TBitBtn;
+    lbFuncao: TLabel;
+    rgTipo: TRadioGroup;
+    TSItensDevolver: TTabSheet;
+    Panel1: TPanel;
+    FmCadastro1: TFmCadastro;
+    MEItensDataIni: TMaskEdit;
+    MEItensDataFin: TMaskEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    btNotasListar: TBitBtn;
+    DBGItensNotas: TDBGrid;
+    Label3: TLabel;
+    Label4: TLabel;
+    DBGrid1: TDBGrid;
+    DSNotaSaidaCons: TDataSource;
+    DSItensDevolucao: TDataSource;
+    ILChecks: TImageList;
+    LBLValTotalDevolucao: TLabel;
+    TSItensTroca: TTabSheet;
+    TSResumoDevolucao: TTabSheet;
+    Panel2: TPanel;
+    FmProduto1: TFmProduto;
+    Label5: TLabel;
+    Label6: TLabel;
+    meQuantidade: TMaskEdit;
+    meUnitario: TMaskEdit;
+    btAdicionaItem: TBitBtn;
+    btExcluiItem: TBitBtn;
+    DBGrid2: TDBGrid;
+    DSItensTroca: TDataSource;
+    LBLValTotalDevolucaoTroca: TLabel;
+    FmTributacao1: TFmTributacao;
+    FmLote1: TFmLote;
+    meDesconto: TMaskEdit;
+    Label7: TLabel;
+    LBLValTotalTroca: TLabel;
+    PResumoDevCR: TPanel;
+    Label8: TLabel;
+    PResumoDevNF: TPanel;
+    Label9: TLabel;
+    cbResumoDevCR: TCheckBox;
+    PResumoDevCRIndicador: TPanel;
+    PResumoDevNFIndicador: TPanel;
+    cbResumoDevNF: TCheckBox;
+    Panel3: TPanel;
+    Label10: TLabel;
+    PResumoDevVPIndicador: TPanel;
+    cbResumoDevComprovante: TCheckBox;
+    MENumNota: TMaskEdit;
+    Label11: TLabel;
+    TSCopiaValeProduto: TTabSheet;
+    Panel4: TPanel;
+    Label12: TLabel;
+    Label13: TLabel;
+    FmCadastro2: TFmCadastro;
+    MEDataEmissaoValeInicial: TMaskEdit;
+    MEDataEmissaoValeFinal: TMaskEdit;
+    BTValeListar: TBitBtn;
+    Label15: TLabel;
+    DSValeProdutoCons: TDataSource;
+    DBGrid3: TDBGrid;
+    Label14: TLabel;
+    MeNumNotaVale: TMaskEdit;
+    Label16: TLabel;
+    btSerieCons: TBitBtn;
+    MeSerie: TMaskEdit;
+    MeModelo: TMaskEdit;
+    Label17: TLabel;
+    Label18: TLabel;
+    FmProduto2: TFmProduto;
+    procedure btNotasListarClick(Sender: TObject);
+    procedure TSItensDevolverShow(Sender: TObject);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure rgTipoClick(Sender: TObject);
+    procedure BtAvancarClick(Sender: TObject);
+    procedure meQuantidadeExit(Sender: TObject);
+    procedure meUnitarioExit(Sender: TObject);
+    procedure meTributacaoExit(Sender: TObject);
+    procedure meLoteExit(Sender: TObject);
+    procedure FmProduto1BtProdutoClick(Sender: TObject);
+    procedure FmProduto1MeProdutoExit(Sender: TObject);
+    procedure btAdicionaItemClick(Sender: TObject);
+    procedure btExcluiItemClick(Sender: TObject);
+    procedure FmLote1MeLoteChange(Sender: TObject);
+    procedure FmTributacao1MeTributacaoChange(Sender: TObject);
+    procedure BtVoltarClick(Sender: TObject);
+    procedure meDescontoExit(Sender: TObject);
+    procedure FmCadastro1BtCadastroClick(Sender: TObject);
+    procedure FmCadastro1MeCadastroExit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FmCadastro2BtCadastroClick(Sender: TObject);
+    procedure BTValeListarClick(Sender: TObject);
+    procedure FmCadastro2MeCadastroExit(Sender: TObject);
+    procedure DBGrid3DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btSerieConsClick(Sender: TObject);
+  private
+    { Private declarations }
+    wValorJaRecebido, wValorFaltaReceber, wValorTotalReceber: double;
+    procedure atualizaValorTotalDevolucao;
+    procedure atualizaValorTotalTroca;
+    procedure configuraSequenciaAbas;
+    procedure gerenciaAbas(pDirecao: string = '+');
+    procedure executaAcaoAba(pDirecao: string);
+    procedure itensDevolver;
+    procedure resumoDevolucao;
+    procedure acoesDevolucao;
+    procedure acoesCopiaValeProduto;
+    procedure baixaCR;
+    procedure emitirNFDevolucao;
+    function cadastraValeProduto: Boolean;
+    procedure excluirNFDevolucaoPendente;
+  public
+    { Public declarations }
+    procedure baixaCP(pValorBaixa: double;wCodNota, wCodCadastro: integer);
+  end;
+
+var
+  FDevolucaoTroca: TFDevolucaoTroca;
+  wSequenciaAbas: TVariantMap;
+  wTipoDevolucao: string;
+  wValorBaixa, wValorValeProduto: Double;
+
+implementation
+
+uses UDevolucaoTroca_cl, MaskUtils, UProduto_cl, UOracle_cl, StrUtils,
+  UEstoque_cl, {UContasReceberBaixa, }UContasReceber_cl, UNotaEntrada_cl,
+  UOperacao_cl, USerie_cl, UUsuario_cl, UParamSistema_cl, UNotaImpressao,
+  UFilial_cl, UNfe_cl, UNFeParam, URValeProduto48Colunas, UContasPagar_cl,
+  URValeProdutoNormal, UCadastro_cl, UCadastroCons, OracleData, UTRELSIMPLES,
+  Math, UCaixa_cl, USerieCons, UPagamentosNFe4, UContasPagarBaixa;
+
+{$R *.dfm}
+
+procedure TFDevolucaoTroca.btNotasListarClick(Sender: TObject);
+begin
+  if (Trim(FmCadastro1.MeCadastro.Text) = '') and (Trim(MENumNota.Text) = '') and ((Trim(MEItensDataIni.Text) = '')
+    or (Trim(MEItensDataFin.Text) = '')) then
+  begin
+    MessageDlg('Informe pelo menos um dos parâmetros antes de buscar, Cliente, Número da Nota ou período.', mtError,
+      [mbOk], 0);
+    Abort;
+  end;
+  with DMDevolucaoTroca do
+  begin
+    QNotaSaidaCons.Close;
+    QNotaSaidaCons.ClearVariables;
+    if (Trim(MEItensDataIni.Text) <> '') and
+       (Trim(MEItensDataFin.Text) <> '') then
+    begin
+      QNotaSaidaCons.SetVariable('DT_INICIAL', MEItensDataIni.Text);
+      QNotaSaidaCons.SetVariable('DT_FINAL', MEItensDataFin.Text);
+    end;
+    if trim(MeSerie.Text) <> '' then
+      QNotaSaidaCons.SetVariable('COD_SERIE', trim(MeSerie.Text))
+    else
+      QNotaSaidaCons.SetVariable('COD_SERIE', NULL);
+
+    if trim(MeModelo.Text) <> '' then
+      QNotaSaidaCons.SetVariable('COD_SERIE_MODELO', trim(MeModelo.Text))
+    else
+      QNotaSaidaCons.SetVariable('COD_SERIE_MODELO', NULL);
+
+    if Trim(FmCadastro1.MeCadastro.Text) <> '' then
+      QNotaSaidaCons.SetVariable('CADASTRO', trim(FmCadastro1.MeCadastro.Text))
+    else
+      QNotaSaidaCons.SetVariable('CADASTRO', NULL);
+
+    if Trim(MENumNota.Text) <> '' then
+      QNotaSaidaCons.SetVariable('NUM_NOTA', Trim(MENumNota.Text))
+    else
+      QNotaSaidaCons.SetVariable('NUM_NOTA', NULL);
+
+    if Trim(FmProduto2.MeProduto.Text) <> '' then
+      QNotaSaidaCons.SetVariable('PRODUTO', trim(FmProduto2.MeProduto.Text))
+    else
+      QNotaSaidaCons.SetVariable('PRODUTO', NULL);
+      
+    QNotaSaidaCons.SetVariable('SITUACAO', 2); // confirmada
+    QNotaSaidaCons.Open;
+  end;
+end;
+
+procedure TFDevolucaoTroca.TSItensDevolverShow(Sender: TObject);
+var i: integer;
+begin
+  for i := 0 to DBGrid1.Columns.Count - 2 do
+  begin
+      DBGrid1.Columns[i].ReadOnly := true;
+  end;
+end;
+
+procedure TFDevolucaoTroca.DBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (KEY in [VK_DOWN, VK_TAB])
+    and ( DBGrid1.DataSource.DataSet.RecNo
+      = DBGrid1.DataSource.DataSet.RecordCount )  then
+  begin
+    BtAvancar.SetFocus;
+    atualizaValorTotalDevolucao;
+    abort;
+  end;
+
+  if (Key in [13, 37, 38, 39, 40, VK_TAB])then
+  begin
+    atualizaValorTotalDevolucao;
+  end;
+  if (Key in [13, VK_TAB])then
+  begin
+    atualizaValorTotalDevolucao;
+  end;
+end;
+
+procedure TFDevolucaoTroca.atualizaValorTotalDevolucao;
+begin
+  DMDevolucaoTroca.atualizaValorTotalDevolucao;
+  LBLValTotalDevolucao.Caption := 'Total da devolução: R$ ' +
+  FormatFloat('#,##0.00',
+    DMDevolucaoTroca.pValorTotalDevolucao);
+  LBLValTotalDevolucaoTroca.Caption := 'Total da devolução: R$ ' +
+  FormatFloat('#,##0.00',
+    DMDevolucaoTroca.pValorTotalDevolucao);
+end;
+
+procedure TFDevolucaoTroca.atualizaValorTotalTroca;
+begin
+  DMDevolucaoTroca.atualizaValorTotalTroca;
+  LBLValTotalTroca.Caption := 'Total da troca: R$ ' +
+  FormatFloat('#,##0.00',
+    DMDevolucaoTroca.pValorTotalTroca);
+end;
+
+procedure TFDevolucaoTroca.DBGrid1CellClick(Column: TColumn);
+begin
+  //if Column.FieldName = 'QT_DEVOLUCAO' then
+    atualizaValorTotalDevolucao;
+end;
+
+procedure TFDevolucaoTroca.FormCreate(Sender: TObject);
+begin
+  wSequenciaAbas := TVariantMap.Create;
+  DMEstoque.QEstoqueCons.Open;
+  DMDevolucaoTroca.CDSItensTroca.Open;
+  if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'S') then
+  begin
+    cbResumoDevComprovante.Enabled := False;
+    cbResumoDevComprovante.Checked := False;
+  end;
+end;
+
+procedure TFDevolucaoTroca.configuraSequenciaAbas;
+begin
+  wSequenciaAbas.Clear;
+
+  // Adicionar as abas na sequencia correta
+  if wTipoDevolucao = 'DEVOLUCAO' then
+  begin
+    wSequenciaAbas.addValue(0, 'TSPrincipal');
+    wSequenciaAbas.addValue(1, 'TSItensDevolver');
+    wSequenciaAbas.addValue(2, 'TSResumoDevolucao')
+  end
+  else if wTipoDevolucao = 'TROCA' then // Troca
+  begin
+    wSequenciaAbas.addValue(0, 'TSPrincipal');
+    //wSequenciaAbas.addValue(1, 'TSItensDevolver');
+    //wSequenciaAbas.addValue(2, 'TSItensTroca');
+  end
+  else
+  begin
+    wSequenciaAbas.addValue(0, 'TSPrincipal');
+    wSequenciaAbas.addValue(1,'TSCopiaValeProduto');
+  end;
+end;
+
+procedure TFDevolucaoTroca.FormActivate(Sender: TObject);
+var i: integer;
+begin
+  PageControl1.Pages[0].TabVisible := true;
+  for i := 1 to PageControl1.PageCount - 1 do
+  begin
+    PageControl1.Pages[i].TabVisible := false;
+  end;
+  rgTipoClick(Self);
+  DMDevolucaoTroca.limpaInstrucoes;
+  BtVoltar.Visible := True;
+  BtAvancar.Visible := True;
+  BtAvancar.SetFocus;
+  DMDevolucaoTroca.QValeProduto.Open;
+  DMDevolucaoTroca.QValeProdutoItem.Open;
+
+  if (DMParamSistema.CodEmpresa = 'OSARE') or (DMParamSistema.CodEmpresa = 'PIXIXE') then
+  begin
+    MeSerie.Text := DMUsuario.CodSeriePadrao;
+    MeModelo.Text := DMUsuario.CodSerieModeloPadrao;
+  end;
+  if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'S') then
+  begin
+    cbResumoDevComprovante.Enabled := False;
+    cbResumoDevComprovante.Checked := False;
+  end;
+end;
+
+procedure TFDevolucaoTroca.rgTipoClick(Sender: TObject);
+begin
+  if rgTipo.ItemIndex = 0 then
+    wTipoDevolucao := 'DEVOLUCAO'
+  else if rgTipo.ItemIndex = 1 then
+    wTipoDevolucao := 'TROCA'
+  else
+    wTipoDevolucao := 'VALEPRODUTO';
+
+  configuraSequenciaAbas;
+  
+  DMDevolucaoTroca.limpaInstrucoes;
+end;
+
+procedure TFDevolucaoTroca.gerenciaAbas(pDirecao: string = '+');
+var wAbaAtual: string;
+  i, j, k: integer;
+begin
+  executaAcaoAba(pDirecao);
+
+  k := 0;
+  while k < wSequenciaAbas.count do
+  begin
+    if wSequenciaAbas.getValue(k)
+      = PageControl1.Pages[PageControl1.ActivePageIndex].Name then
+    begin
+      i := k;
+      break;
+    end;
+    inc(k);
+  end;
+
+  i :=  strToInt(ifthen(pDirecao = '+', intToStr(i + 1), intToStr(i - 1)));   
+
+  for j := 0 to PageControl1.PageCount - 1 do
+  begin
+    wAbaAtual := PageControl1.Pages[j].Name;
+    if wAbaAtual = wSequenciaAbas.getValue(i) then
+    begin
+      PageControl1.Pages[j].TabVisible := true;
+      PageControl1.ActivePageIndex := j;
+
+      // Aqui são colocadas ações que deverão ser executadas ao entrar
+      // em cada aba do PageControl
+      case (PageControl1.ActivePageIndex) of
+        0:
+        begin
+          lbFuncao.Caption := 'Escolha o tipo de devolução.';
+          BtAvancar.SetFocus;
+        end;
+        1:
+        begin
+          lbFuncao.Caption := 'Informe a nota e a quantidade de itens que serão devolvidos.';
+          MEItensDataIni.Text := DateToStr(IncDay(DMOracle.DataServ, -14));
+          MEItensDataFin.Text := DateToStr(DMOracle.DataServ);
+          if Trim(FmCadastro1.MeCadastro.Text) = '' then 
+            FmCadastro1.MeCadastro.SetFocus
+          else
+            BtAvancar.SetFocus;
+        end;
+        2: lbFuncao.Caption := 'Informe os itens que serão trocados pelos itens devolvidos.';
+        3:
+        begin
+          lbFuncao.Caption := 'Resumo da devolução.';
+          PResumoDevCRIndicador.Color := clGray;
+          PResumoDevNFIndicador.Color := clGray;
+          PResumoDevVPIndicador.Color := clGray;
+          BtAvancar.SetFocus;
+        end;
+        4:
+        begin
+          lbFuncao.Caption := 'Informe o cliente e depois selecione qual vale deseja emitir.';
+          MEDataEmissaoValeInicial.Text := DateToStr(IncDay(DMOracle.DataServ, -30));
+          MEDataEmissaoValeFinal.Text := DateToStr(DMOracle.DataServ);
+          if Trim(FmCadastro2.MeCadastro.Text) = '' then
+            FmCadastro2.MeCadastro.SetFocus
+          else
+            BtAvancar.SetFocus;
+        end;
+      end;
+      break;
+    end;
+  end; 
+  for j := 0 to PageControl1.PageCount - 1 do
+  begin
+    if PageControl1.Pages[j].imageindex <> pagecontrol1.activepageindex then
+      PageControl1.Pages[j].TabVisible := false;
+  end;
+end;
+
+procedure TFDevolucaoTroca.BtAvancarClick(Sender: TObject);
+begin
+  gerenciaAbas('+');
+end;
+
+procedure TFDevolucaoTroca.executaAcaoAba(pDirecao: string);
+begin
+  case(PageControl1.ActivePageIndex) of
+    1: if pDirecao = '+' then
+        begin
+          if rgTipo.ItemIndex < 2 then itensDevolver;
+        end
+        else excluirNFDevolucaoPendente;
+    3: if pDirecao = '+' then acoesDevolucao;
+    4: if pDirecao = '+' then acoesCopiaValeProduto;
+  end
+end;
+
+procedure TFDevolucaoTroca.itensDevolver;
+var wQtDev: double;
+begin
+  wQtDev := 0;
+  if DMDevolucaoTroca.CDSItensDevolucao.RecordCount = 0 then
+  begin
+    MessageDlg('Antes de avançar, selecione o Cliente, a Nota Fiscal de venda e os Itens a devolver.',
+    mtInformation, [mbOk], 0);
+    abort;
+  end;
+  atualizaValorTotalDevolucao;
+  with DMDevolucaoTroca do
+  begin
+    // checa se foi informado quantidade para devolução
+    CDSItensDevolucao.First;
+    while not CDSItensDevolucao.Eof do
+    begin
+      if CDSItensDevolucaoQT_DEVOLUCAO.Value > CDSItensDevolucaoQT_QUANTIDADE.Value then
+      begin
+        MessageDlg('Informe uma quantidade a ser devolvida que seja menor ou igual à quantidade vendida.'
+          ,mtInformation, [mbOk], 0);
+        abort;
+      end;
+      wQtDev := wQtDev + CDSItensDevolucaoQT_DEVOLUCAO.Value;
+      CDSItensDevolucao.Next;
+    end;
+    CDSItensDevolucao.First;
+    if wQtDev = 0 then
+    begin
+      MessageDlg('Informe a quantidade a ser devolvida.'
+        ,mtInformation, [mbOk], 0);
+      abort;
+    end;  
+
+    // checa se operação de saída possui uma operação de entrada vinculada
+    if DMOracle.FastSelect('NVL(COD_OPERACAO_ENTRADA, 0)', 'TB_OPERACAO'
+      , 'COD_OPERACAO = ' + QNotaSaidaConsCOD_OPERACAO.Text) = '0' then
+    begin
+      MessageDlg('Operação: '
+        + DMOracle.FastSelect('COD_OPERACAO ||' + quotedStr(' - ')
+        +'|| DESC_OPERACAO'
+        , 'TB_OPERACAO', 'COD_OPERACAO = '
+        + QNotaSaidaConsCOD_OPERACAO.Text)
+        + #13#10 + 'Não possui operação de entrada referenciada.'
+        + #13#10 + 'Por favor informe a operação de entrada na aba Venda '
+        + 'do cadastro de operações.', mtError, [mbOk], 0);
+      MessageDlg('Após configurar a operação clique em Avançar para prosseguir.'
+        , mtInformation, [mbOk], 0);
+        abort;
+    end;
+
+    resumoDevolucao;
+  end;
+end;
+
+procedure TFDevolucaoTroca.meQuantidadeExit(Sender: TObject);
+begin
+  if trim(meQuantidade.Text) <> '' then
+  begin
+    try
+      meQuantidade.Text :=
+        FormatFloat('#0.000',StrToFloat(mequantidade.Text));
+    Except
+      meQuantidade.SetFocus;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.meUnitarioExit(Sender: TObject);
+begin
+  if trim(meUnitario.Text) <> '' then
+  begin
+    try
+      meUnitario.Text :=
+        FormatFloat('#0.000',StrToFloat(meUnitario.Text));
+    Except
+      meUnitario.SetFocus;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.meTributacaoExit(Sender: TObject);
+begin
+  if trim(fmTributacao1.meTributacao.Text) <> '' then
+  begin
+    try
+      fmTributacao1.meTributacao.Text :=
+        intToStr(strToInt(trim(fmTributacao1.meTributacao.Text)));
+    Except
+      fmTributacao1.meTributacao.SetFocus;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.meLoteExit(Sender: TObject);
+begin
+  if trim(fmLote1.meLote.Text) <> '' then
+  begin
+    try
+      fmLote1.meLote.Text := IntToStr(StrToInt(trim(fmLote1.meLote.Text)));
+    Except
+      fmLote1.meLote.SetFocus;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.FmProduto1BtProdutoClick(Sender: TObject);
+begin
+  FmProduto1.BtProdutoClick(Sender);
+  FmProduto1.MeProduto.SetFocus;
+  FmProduto1.MeProdutoExit(Sender);
+
+end;
+
+procedure TFDevolucaoTroca.FmProduto1MeProdutoExit(Sender: TObject);
+begin
+  FmProduto1.MeProdutoExit(Sender);
+  with DMProduto, DMEstoque do
+  begin
+
+    if trim(FmProduto1.MeProduto.Text) = '' then abort;
+
+    QProduto.Close;
+    QProduto.SetVariable('PK', FmProduto1.MeProduto.Text);
+    QProduto.Open;
+
+    if QProduto.IsEmpty then abort;
+
+    if QEstoqueCons.RecordCount = 0 then
+    begin
+      QEstoqueCons.Close;
+      QEstoqueCons.SetVariable('COD_PRODUTO', QProdutoCOD_PRODUTO.Value);
+      QEstoqueCons.SetVariable('FILIAL'
+        ,DMDevolucaoTroca.QNotaSaidaConsCOD_FILIAL.Value);
+      QEstoqueCons.Open;
+    end;
+
+    meQuantidade.Text := '1';
+    meUnitario.Text := FormatFloat('#,###0.000',QProdutoVAL_VAREJO.Value);
+    fmTributacao1.meTributacao.Text := QProdutoCOD_TRIBUTACAO.Text;
+    fmLote1.meLote.Text := IfThen(
+      (QEstoqueCons.RecordCount > 0)
+      ,QEstoqueConsCOD_LOTE_TIPO.Text
+      ,'1'
+      );
+    meDesconto.Text := '0,000';
+  end;
+end;
+
+procedure TFDevolucaoTroca.btAdicionaItemClick(Sender: TObject);
+var wPercIPI: real;
+begin
+
+  // Validações
+
+  if (trim(FmProduto1.MeProduto.Text) = '')
+    or (strToFloat((trim(FmProduto1.MeProduto.Text))) = 0) then
+  begin
+    MessageDlg('Produto não informado.', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (trim(FmTributacao1.MeTributacao.Text) = '')
+    or (strToFloat((trim(FmTributacao1.MeTributacao.Text))) = 0) then
+  begin
+    MessageDlg('Tributação não informada.', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (trim(FmLote1.meLote.Text) = '')
+    or (strToFloat((trim(FmLote1.meLote.Text))) = 0) then
+  begin
+    MessageDlg('Lote não informado.', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (trim(meQuantidade.Text) = '')
+    or (strToFloat((trim(meQuantidade.Text))) = 0) then
+  begin
+    MessageDlg('Quantidade não informada.', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  if (trim(meUnitario.Text) = '')
+    or (strToFloat((trim(meUnitario.Text))) = 0) then
+  begin
+    MessageDlg('Valor unitário não informado.', mtError, [mbOk], 0);
+    Abort;
+  end;
+
+  // Adiciona itens
+
+  with DMDevolucaoTroca do
+  begin
+    CDSItensTroca.Append;
+    CDSItensTrocaCOD_PRODUTO.Text :=  trim(FmProduto1.MeProduto.Text);
+    CDSItensTrocaDESC_PRODUTO.Text := trim(FmProduto1.EdProduto.Text);
+    CDSItensTrocaCOD_LOTE_TIPO.Text := trim(FmLote1.meLote.Text);
+    CDSItensTrocaQT_QUANTIDADE.Text := trim(meQuantidade.Text);
+    CDSItensTrocaVAL_UNITARIO.Text := trim(meUnitario.Text);
+    CDSItensTrocaCOD_TRIBUTACAO.Text := trim(FmTributacao1.meTributacao.Text);
+    calculaICM;
+    CDSItensTrocaVAL_DESCONTO.Text := '0,00';
+    if trim(meDesconto.Text) <> '' then
+      CDSItensTrocaVAL_DESCONTO.Text := trim(meDesconto.Text);
+
+    // Ipi
+    wPercIPI
+      := strToFloat(
+        DMOracle.FastSelect('NVL(PERC_IPI, 0)', 'TB_PRODUTO', 'COD_PRODUTO = '
+          + CDSItensTrocaCOD_PRODUTO.Text)
+        );
+    CDSItensTrocaVAL_IPI.Text
+      := FormatFloat('0.0000'
+        ,((CDSItensTrocaVAL_UNITARIO.Value * CDSItensTrocaQT_QUANTIDADE.Value
+        - CDSItensTrocaVAL_DESCONTO.Value * CDSItensTrocaQT_QUANTIDADE.Value)
+        * wPercIPI / 100));
+
+    // Valor total
+    CDSItensTrocaVAL_TOTAL.Text
+      := FormatFloat('0.0000'
+        ,(CDSItensTrocaVAL_UNITARIO.Value * CDSItensTrocaQT_QUANTIDADE.Value
+        - CDSItensTrocaVAL_DESCONTO.Value * CDSItensTrocaQT_QUANTIDADE.Value
+        + CDSItensTrocaVAL_IPI.Value
+        + CDSItensTrocaVAL_ICMS_SUBST.Value)
+        );
+    if trim(CDSItensTrocaVAL_ICMS_SUBST.Text) = '' then
+      CDSItensTrocaVAL_ICMS_SUBST.Value := 0;
+    CDSItensTroca.Post;
+
+    // Atualiza label
+    self.atualizaValorTotalTroca;
+  end;
+
+  FmProduto1.MeProduto.Clear;
+  FmProduto1.EdProduto.Text := 'Todos';
+  FmLote1.meLote.Clear;
+  FmLote1.EdLote.Text := 'Todos';
+  meQuantidade.Clear;
+  meUnitario.Clear;
+  meDesconto.Clear;
+  FmTributacao1.meTributacao.Clear;
+  fmtributacao1.EdTributacao.Text := 'Todas';
+
+  FmProduto1.MeProduto.SetFocus;
+
+end;
+
+procedure TFDevolucaoTroca.btExcluiItemClick(Sender: TObject);
+begin
+  if not DMDevolucaoTroca.CDSItensTroca.IsEmpty then
+    if MessageDlg('Deseja realmente exlcuir este item?', mtConfirmation
+      ,[mbYes, mbNo], 0) = mrYes then
+      DMDevolucaoTroca.CDSItensTroca.Delete;
+  self.atualizaValorTotalTroca;
+end;
+
+procedure TFDevolucaoTroca.FmLote1MeLoteChange(Sender: TObject);
+begin
+  if trim(FmLote1.MeLote.Text) <> '' then
+  fmlote1.EdLote.Text :=
+    dmoracle.FastSelect('DESC_LOTE', 'TB_LOTE_TIPO', 'COD_LOTE_TIPO = '
+      + trim(fmlote1.MeLote.Text));
+end;
+
+procedure TFDevolucaoTroca.FmTributacao1MeTributacaoChange(
+  Sender: TObject);
+begin
+  if trim(FmTributacao1.MeTributacao.Text) <> '' then
+  fmTributacao1.EdTributacao.Text :=
+    dmoracle.FastSelect('DESC_TRIBUTACAO', 'TB_TRIBUTACAO', 'COD_TRIBUTACAO = '
+      + trim(fmTributacao1.Metributacao.Text));
+end;
+
+procedure TFDevolucaoTroca.BtVoltarClick(Sender: TObject);
+begin
+  gerenciaAbas('-');
+end;
+
+procedure TFDevolucaoTroca.meDescontoExit(Sender: TObject);
+begin
+  if trim(meDesconto.Text) <> '' then
+  begin
+    try
+      meDesconto.Text :=
+        FormatFloat('#0.000',StrToFloat(meDesconto.Text));
+    Except
+      meDesconto.SetFocus;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.resumoDevolucao;
+begin
+  wValorJaRecebido := 0; // Armazena valor que já foi pago no contas a receber
+  wValorFaltaReceber := 0; // Armazena valor que falta receber no contas a receber
+  wValorTotalReceber := 0;// Armazena o valor total de todas as parcelas a receber
+  wValorValeProduto := 0; // Armazena o valor do Vale Compras se existir
+  wValorBaixa := 0; // Armazena o valor a baixar
+  cbResumoDevCR.Checked := true;
+  cbResumoDevCR.Enabled := true;
+  if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'N') then
+  begin
+    cbResumoDevComprovante.Checked := true;
+    cbResumoDevComprovante.Enabled := true;
+  end
+  else
+  begin
+    cbResumoDevComprovante.Checked := false;
+    cbResumoDevComprovante.Enabled := false;
+  end;
+
+
+  with DMDevolucaoTroca do
+  begin
+    QContasReceberCons.Close;
+    QContasReceberCons.SetVariable('COD_NOTA_CAB',QNotaSaidaConsCOD_NOTA_CAB.Value);
+    QContasReceberCons.Open;
+
+    if (DMParamSistema.CodEmpresa = 'QUERENCIA') or (DMParamSistema.CodEmpresa = 'AGROCAMPO') then
+    begin
+      // Busca os valores já recebidos, falta receber e total a receber
+      while not QContasReceberCons.Eof do
+      begin
+        wValorTotalReceber:= wValorTotalReceber + QContasReceberConsVAL_ORIGINAL.Value;
+        QContasReceberMovCons.Close;
+        QContasReceberMovCons.SetVariable('COD_CONTA_RECEBER_CAB',QContasReceberConsCOD_CONTA_RECEBER_CAB.Value);
+        QContasReceberMovCons.Open;
+
+        while not QContasReceberMovCons.Eof do
+        begin
+          wValorJaRecebido := wValorJaRecebido
+            + QContasReceberMovConsVAL_MOVIMENTO.Value;
+          QContasReceberMovCons.Next;
+        end;
+        QContasReceberCons.Next;
+      end;
+
+      wValorFaltaReceber := wValorTotalReceber - wValorJaRecebido;
+    end;
+
+    if pValorTotalDevolucao > wValorFaltaReceber then  // Emitir cortesia pois o título a receber já foi recebido
+      wValorValeProduto := pValorTotalDevolucao - wValorFaltaReceber;
+
+
+    if wValorFaltaReceber > 0  then // Fazer baixa do valor total da devolução
+      wValorBaixa := pValorTotalDevolucao - wValorValeProduto;
+
+    wValorJaRecebido := wValorJaRecebido - pValorTotalDevolucao;
+    cbResumoDevComprovante.Caption := 'Emitir Vale-compras no valor de R$ ' + formatFloat('#0.00', wValorValeProduto) + '.';
+    cbResumoDevCR.Caption:= 'Baixar títulos do contas a receber no valor de R$ ' + formatfloat('#0.00', wValorBaixa) + '.';
+
+    cbResumoDevComprovante.Checked := (wValorValeProduto > 0);
+    Application.ProcessMessages;
+    cbResumoDevComprovante.Enabled := (wValorValeProduto > 0);
+
+    cbResumoDevCR.Checked := (wValorBaixa > 0);
+    Application.ProcessMessages;
+    cbResumoDevCR.Enabled := (wValorBaixa > 0);
+
+    cbResumoDevNF.Caption := 'Emitir nota fiscal de devolução de venda.';
+  end;
+end;
+
+procedure TFDevolucaoTroca.acoesDevolucao;
+begin
+  emitirNFDevolucao;
+  if (StrToInt('0' + DMNfe.QNfeSIT_NFE.Value) in SIT_NFE_ACEITO) or
+     ((DMNotaEntrada.QNotaEntradaIND_SITUACAO.Value = '2') and
+      (DMNotaEntrada.QNotaEntradaCOD_SERIE_MODELO.Value <> '55')) then
+  begin
+    PResumoDevNFIndicador.Color := clGreen;
+    if (DMParamSistema.CodEmpresa = 'QUERENCIA') or (DMParamSistema.CodEmpresa = 'AGROCAMPO') then
+      baixaCR;
+    BtVoltar.Visible := false;
+    BtAvancar.Visible := false;
+    if (((cbResumoDevComprovante.Enabled) and (cbResumoDevComprovante.Checked)) or ((wValorBaixa > 0) and (wValorValeProduto = 0))) and
+       (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'N') then
+    begin
+      if cadastraValeProduto then
+      begin
+        PResumoDevVPIndicador.Color := clGreen;
+        if MessageDlg('Deseja imprimir o Vale Compras nº ' +
+            DMDevolucaoTroca.QValeProdutoCOD_VALE_PRODUTO.Text + '?',mtConfirmation,[mbYes,mbNo],0) = mrYes then
+          FNotaImpressao.emitirValeProduto(DMDevolucaoTroca.QValeProdutoCOD_VALE_PRODUTO.Value);
+      end
+      else
+        PResumoDevVPIndicador.Color := clRed;
+    end
+    else
+      PResumoDevVPIndicador.Color := clGreen;
+  end
+  else
+    PResumoDevNFIndicador.Color := clRed;
+end;
+
+procedure TFDevolucaoTroca.baixaCR;
+var wValBaixado, wPercentualBaixa: double;
+begin
+  if (cbResumoDevCR.Enabled) and (cbResumoDevCR.Checked) then
+  begin
+    if FContasReceberBaixa = Nil then
+      FContasReceberBaixa := TFContasReceberBaixa.Create(Application);
+    with DMDevolucaoTroca do
+    begin
+      wValBaixado := 0;
+      FContasReceberBaixa.pCodNotaCab
+        := DMDevolucaoTroca.QNotaSaidaConsCOD_NOTA_CAB.Value;
+      FContasReceberBaixa.Tag := 1;
+      FContasReceberBaixa.MEDtBaixa.Text
+        := DateToStr(DMOracle.DataServ);
+      FContasReceberBaixa.CbCalculoJuros.Checked := false;
+      FContasReceberBaixa.SBProcuraClick(self);
+
+      while not DMContasReceber.QContasReceberBaixa.Eof do
+      begin
+        // Inicializa as variáveis de controle
+        FContasReceberBaixa.PCBaixa.ActivePageIndex := 1;
+        FContasReceberBaixa.Refresh;
+        Application.ProcessMessages;
+        //FContasReceberBaixa.RGFormaPagto.ItemIndex := 3; //Cartão de Crédito Alterado para Baixa Contábil para não aparecer no caixa
+        FContasReceberBaixa.RGFormaPagto.ItemIndex := 2;//Junior 05/07/2021. AGROCAMPO 
+        DMContasReceber.QContasReceberBaixaMov.Close;
+        DMContasReceber.QContasReceberBaixaMov.Open;
+        DMContasReceber.QContasReceber_Mov.Close;
+        DMContasReceber.QContasReceber_Mov.Open;
+
+        FContasReceberBaixa.PCBaixaChange(self);
+
+        wPercentualBaixa := StrToFloat(Trim(FContasReceberBaixa.MEValorBaixa.Text)) * 100 /wValorFaltaReceber;
+        FContasReceberBaixa.MEValorBaixa.Text
+            := floatToStr(RoundTo( wValorBaixa * wPercentualBaixa / 100,-2));
+
+        wValBaixado := wValBaixado +
+          + StrToFloat(Trim(FContasReceberBaixa.MEValorBaixa.Text));
+        try
+          FContasReceberBaixa.SBBaixaClick(self);
+        except
+        end;
+        FContasReceberBaixa.PCBaixa.ActivePageIndex := 0;
+        DMContasReceber.QContasReceberBaixa.Next;
+      end;
+
+      // Fez alguma baixa
+      if RoundTo(wValorBaixa, -2) = RoundTo(wValBaixado, -2) then
+        PResumoDevCRIndicador.Color := clGreen
+      else
+        PResumoDevCRIndicador.Color := clRed;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.FmCadastro1BtCadastroClick(Sender: TObject);
+begin
+  FmCadastro1.BtCadastroClick(Sender);
+  FmCadastro1MeCadastroExit(sender);
+end;
+
+procedure TFDevolucaoTroca.FmCadastro1MeCadastroExit(Sender: TObject);
+begin
+  FmCadastro1.MeCadastroExit(Sender);
+  if trim(FmCadastro1.MeCadastro.Text) <> '' then
+    btNotasListarClick(sender);
+end;
+
+procedure TFDevolucaoTroca.emitirNFDevolucao;
+var wTipoDocumento, wCpfCnpjCadastro, wCodNotaCab, wTituloCadastroCons, wNota: String;
+    wLoteNFe, wCodCadastro, wCodContaPagar: Integer;
+    wValDescontoTotal,wValMovimento, wDesconto: Real;
+    wExec: TExecutador;
+    wMovimentaEstoque: string;
+    wResult: Boolean;
+    wDataVencimento: TDateTime;
+begin
+  wValDescontoTotal := 0;
+  if (cbResumoDevNF.Enabled) and (cbResumoDevNF.Checked) then
+  begin
+    // Criação da Nota na NotaCab
+    with DMNotaEntrada, DMDevolucaoTroca, DMCadastro do
+    begin
+      wCodCadastro := QNotaSaidaConsCOD_CADASTRO.Value;
+      if (QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') or
+         (QNotaSaidaConsCOD_SERIE_MODELO.Value = '65') then
+      begin
+        wCpfCnpjCadastro := DMOracle.BuscaNome('SELECT NUM_CGC_CPF FROM TB_CADASTRO','COD_CADASTRO = ' + IntToStr(wCodCadastro));
+        while wCpfCnpjCadastro = '' do
+        begin
+          if FCadastroCons = nil then
+            FCadastroCons := TFCadastroCons.Create(Application);
+          wTituloCadastroCons := FCadastroCons.Caption;
+          FCadastroCons.Caption := 'Informe o cadastro completo do cliente para a devolução.';
+          if FCadastroCons.ShowModal <> mrOk then
+          begin
+            FCadastroCons.Caption := wTituloCadastroCons;
+            Abort;
+          end;
+          FCadastroCons.Caption := wTituloCadastroCons;
+          wCpfCnpjCadastro := QCadastroConsNUM_CGC_CPF.Value;
+          wCodCadastro := QCadastroConsCOD_CADASTRO.Value;
+        end;
+      end;
+
+      wCodNotaCab := DMOracle.BuscaNome('SELECT COD_NOTA_CAB FROM TB_NOTA_REFERENCIADA','COD_NOTA_CAB_REF = '+QNotaSaidaConsCOD_NOTA_CAB.Text);
+
+      QNotaEntrada.Close;
+      QNotaEntrada.SetVariable('PK', StrToInt('0'+wCodNotaCab));
+      QNotaEntrada.Open;
+
+      QItemNF.Close;
+      QItemNF.Open;
+
+      DMNfe.SetaNfe(QNotaEntradaDESC_CHAVE_ACESSO.Value,True);
+
+      DMOperacao.QOperacao.Close;
+      DMOperacao.QOperacao.SetVariable('PK', DMOracle.BuscaNome('SELECT COD_OPERACAO_ENTRADA FROM TB_OPERACAO','COD_OPERACAO = '+ QNotaSaidaConsCOD_OPERACAO.Text));
+      DMOperacao.QOperacao.Open;
+
+      if DMOperacao.QOperacaoCOD_SERIE.IsNull then
+        Raise Exception.Create('A série para nota fiscal não foi cadastrada');
+      if DMOperacao.QOperacaoCOD_SERIE_MODELO.IsNull then
+        Raise Exception.Create('O modelo da série para nota fiscal não foi cadastrado');
+
+      if (QNotaEntrada.RecordCount = 0) or (StrToInt('0' + DMNfe.QNfeSIT_NFE.Value) in SIT_NFE_ACEITO) or
+         ((QNotaEntradaCOD_SERIE_MODELO.Value <> '65') and (QNotaEntradaCOD_SERIE_MODELO.Value <> '55') and
+          (QNotaEntradaIND_SITUACAO.Value = '2')) then
+      begin
+        QNotaEntrada.Insert;
+        QNotaEntradaCOD_NOTA_CAB.Value := DMOracle.Sequencia('NOTA');
+        QNotaEntradaNUM_NOTA.Value := DMSerie.NumeroSerie(QNotaSaidaConsCOD_FILIAL.Value,DMOperacao.QOperacaoCOD_SERIE.Value,
+        DMOperacao.QOperacaoCOD_SERIE_MODELO.Value);
+      end
+      else
+      begin
+        QNotaEntrada.Edit;
+        QValeProduto.Close;
+        QValeProduto.ClearVariables;
+        QValeProduto.SetVariable('COD_NOTA_CAB_DEV', QNotaEntradaCOD_NOTA_CAB.Value);
+        QValeProduto.Open;
+
+        if QValeProduto.RecordCount > 0 then
+        begin
+          DMOracle.QExecSQL.close;
+          DMOracle.QExecSQL.SQL;
+          DMOracle.QExecSQL.SQL.Clear;
+          DMOracle.QExecSQL.SQL.Add('DELETE FROM TB_VALE_PRODUTO_ITEM WHERE COD_VALE_PRODUTO = ' + QValeProdutoCOD_VALE_PRODUTO.Text);
+          DMOracle.QExecSQL.ExecSQL;
+          QValeProduto.Delete;
+        end;
+        with DMOracle do
+        begin
+          QExecSQL.Close;
+          QExecSQL.SQL.Clear;
+          QExecSQL.SQL.Add('DELETE FROM TB_PAGAMENTO WHERE COD_NOTA_CAB = ' + QNotaEntradaCOD_NOTA_CAB.Text);
+          QExecSQL.ExecSQL;
+        end;
+        QItemNF.First;
+        while not QItemNF.Eof do
+          QItemNF.Delete;
+      end;
+
+      QNotaEntradaCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+      QNotaEntradaCOD_FILIAL.Value := QNotaSaidaConsCOD_FILIAL.Value;
+
+      QNotaEntradaCOD_VENDEDOR.Value := QNotaSaidaConsCOD_VENDEDOR.Value;
+
+      QNotaEntradaCOD_OPERACAO.Value := DMOperacao.QOperacaoCOD_OPERACAO.Value;
+      QNotaEntradaCOD_ESTADO.Value := QNotaSaidaConsCOD_ESTADO.Value;
+
+      QNotaEntradaCOD_CADASTRO.Value := wCodCadastro;
+
+      If (QNotaSaidaConsCOD_CADASTRO_PARCEIRO.Value <> 0) And (QNotaSaidaConsCOD_CADASTRO_PARCEIRO.Text <> '') Then
+         QNotaEntradaCOD_CADASTRO_Parceiro.Value := QNotaSaidaConsCOD_CADASTRO_PARCEIRO.Value;
+
+      QNotaEntradaCOD_SERIE.Value := DMOperacao.QOperacaoCOD_SERIE.Value;
+      QNotaEntradaCOD_SERIE_MODELO.Value := DMOperacao.QOperacaoCOD_SERIE_MODELO.Value;
+
+      QNotaEntradaCOD_MENSAGEM.Text := DMOperacao.QOperacaoCod_Mensagem.Text;
+
+      QNotaEntradaIND_SITUACAO.Value :='2';
+      if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'S') then
+        QNotaEntradaIND_CONDICAO_PAGTO.Value :='2'
+      else
+        QNotaEntradaIND_CONDICAO_PAGTO.Value := '3';
+      QNotaEntradaDT_EMISSAO.Value :=DMOracle.Dataserv;
+      QNotaEntradaDT_MOVIMENTO.Value :=DMOracle.DataHoraserv;
+      QNotaEntradaDT_RECEBIMENTO.Value :=DMOracle.Dataserv;
+      QNotaEntradaIND_ENTRADA_SAIDA.Value :='E';
+      QNotaEntradaIND_TIPO_FRETE.Value :='SEM';
+      QNotaEntradaCOD_DEPARTAMENTO.Value := DMUsuario.CodDepartamentoUsuario;
+
+      QNotaEntradaOBS.Value := 'DEV. REF. NF. NR. ' + FloatToStr(QNotaSaidaConsNUM_NOTA.Value);
+      QNotaEntradaIND_FINALIDADE_NFE.Value := 4;  //Finalidade de devolução
+
+      QNotaEntradaDT_USUARIO.Value :=DMOracle.DataHoraserv;
+      QNotaEntrada.Post;
+      QNotaEntrada.Edit;
+
+      QNotaReferenciada.Close;
+      QNotaReferenciada.Open;
+
+      if QNotaReferenciada.RecordCount = 0 then
+      begin
+        if (QNotaSaidaConsDESC_CHAVE_ACESSO.Value = '') and
+           ((QNotaSaidaConsCOD_SERIE_MODELO.Value = '55') or
+            (QNotaSaidaConsCOD_SERIE_MODELO.Value = '65')) then
+        begin
+          MessageDlg('A nota nº ' + QNotaSaidaConsNUM_NOTA.Text + ' não será referenciada pois não possui chave de acesso.', mtError, [mbOK],0);
+          Abort;
+        end;
+        if not((QNotaEntradaCOD_SERIE_MODELO.Value = '55') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '65') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '01') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '02') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '04') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '2B') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '2C') or
+           (QNotaEntradaCOD_SERIE_MODELO.Value = '2D') or
+           ((QNotaEntradaCOD_SERIE_MODELO.Value <> '55') and
+            (QNotaSaidaConsCOD_SERIE_MODELO.Value <> '55') and
+            (QNotaSaidaConsCOD_SERIE_MODELO.Value <> '65') and
+            (QNotaSaidaConsIND_SITUACAO.Value = '2'))) then
+        begin
+          MessageDlg('A nota nº ' + QNotaEntradaConsNUM_NOTA.Text + ' não será referenciada pois seu modelo diverge dos modelos aceitos: 55, 65, 01, 04, 2B, 2C e 2D.', mtError, [mbOK],0);
+          Abort;
+        end;
+      end
+      else
+      begin
+        QNotaReferenciada.First;
+        while not QNotaReferenciada.Eof do
+          QNotaReferenciada.Delete;
+      end;
+      try
+        QNotaReferenciada.Insert;
+        QNotaReferenciadaCOD_NOTA_CAB.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+        QNotaReferenciadaCOD_NOTA_CAB_REF.Value := QNotaSaidaConsCOD_NOTA_CAB.Value;
+        QNotaReferenciadaDESC_CHAVE_ACESSO.Value := Bib.LimpaNumero(QNotaSaidaConsDESC_CHAVE_ACESSO.Value);
+        QNotaReferenciadaNUM_NOTA.Value := QNotaSaidaConsNUM_NOTA.AsInteger;
+        QNotaReferenciadaCOD_SERIE.Value := QNotaSaidaConsCOD_SERIE.Value;
+        QNotaReferenciadaCOD_SERIE_MODELO.Value := QNotaSaidaConsCOD_SERIE_MODELO.Value;
+        QNotaReferenciadaDT_EMISSAO.Value := QNotaSaidaConsDT_EMISSAO.Value;
+        QNotaReferenciada.Post;
+      except
+        QNotaReferenciada.Cancel;
+        raise Exception.Create('Erro ao gravar nota referenciada.');
+      end;
+
+      // Criação dos itens da nota
+      CDSItensDevolucao.First;
+      while not CDSItensDevolucao.Eof do
+      begin
+        if CDSItensDevolucaoQT_DEVOLUCAO.Value > 0 then
+        begin
+          QItemNF.Insert;
+          QItemNFCOD_NOTA_ITEM.Value := DMOracle.Sequencia('NOTA_ITEM');
+          QItemNFCOD_NOTA_CAB.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+          QItemNFCOD_TRIBUTACAO.Value := CDSItensDevolucaoCOD_TRIBUTACAO.Value;
+          QItemNFQT_QUANTIDADE.Value := CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_TOTAL.Value := CDSItensDevolucaoQT_DEVOLUCAO.Value *
+                                    CDSItensDevolucaoVAL_UNITARIO.Value;
+          QItemNFVAL_IPI.Value := (CDSItensDevolucaoVAL_IPI.Value /
+                                   CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                   CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFPERC_COMISSAO.Value := CDSItensDevolucaoPERC_COMISSAO.Value;
+          QItemNFCOD_PRODUTO.Value := CDSItensDevolucaoCOD_PRODUTO.Value;
+          QItemNFCOD_LOTE_TIPO.Value := CDSItensDevolucaoCOD_LOTE_TIPO.Value;
+          QItemNFDESC_INF_ADICIONAL.Value := CDSItensDevolucaoDESC_INF_ADICIONAL.Value;
+          wValDescontoTotal := wValDescontoTotal + (CDSItensDevolucaoVAL_DESCONTO.Value /
+                                        CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                        CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_DESPESAS.Value := (CDSItensDevolucaoVAL_DESPESAS.Value /
+                                        CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                        CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_FRETE.Value := (CDSItensDevolucaoVAL_FRETE.Value /
+                                     CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                     CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_UNITARIO.Value := CDSItensDevolucaoVAL_UNITARIO.Value;
+          QItemNFVAL_ICM_BASE.Value := (CDSItensDevolucaoVAL_ICM_BASE.Value /
+                                        CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                        CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_ICM.Value := (CDSItensDevolucaoVAL_ICM.Value /
+                                   CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                   CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_CUSTO.Value := (CDSItensDevolucaoVAL_CUSTO.Value /
+                                   CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                   CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_BASE_SUBST.Value := (CDSItensDevolucaoVAL_BASE_SUBST.Value /
+                                         CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                         CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_ICMS_SUBST.Value := (CDSItensDevolucaoVAL_ICMS_SUBST.Value /
+                                         CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                         CDSItensDevolucaoQT_DEVOLUCAO.Value;
+
+          QItemNFCOD_CST_PIS.Value    := CDSItensDevolucaoCOD_CST_PIS.Value;
+          QItemNFCOD_CST_COFINS.Value := CDSItensDevolucaoCOD_CST_COFINS.Value;
+          QItemNFCOD_CST_IPI.Value    := CDSItensDevolucaoCOD_CST_IPI.Value;
+
+          with DMCadastro do  //para limpar dados de icms nos casos de PF e não contribuinte. - Marlon/Cleber 02-01-2020
+          begin
+            QCadastro.Close;
+            QCadastro.SetVariable('PK', QNotaEntradaCOD_CADASTRO.Value);
+            QCadastro.Open;
+
+            If (QCadastroIND_FISICA_JURIDICA.Value = 'F') or
+               ((QCadastroIND_FISICA_JURIDICA.Value = 'J') and
+                ((QCadastroNUM_INSCRICAO.Value = '') or
+                (QCadastroNUM_INSCRICAO.Value = 'ISENTO')) and
+                (QCadastroIND_CONTRIBUINTE.Value = 'NAO'))   then
+            begin
+              QItemNFCOD_TRIBUTACAO.Text := DMOracle.FastSelect('COD_TRIBUTACAO', 'TB_PRODUTO', 'COD_PRODUTO = ' + CDSItensDevolucaoCOD_PRODUTO.Text);
+              QItemNFVAL_ICM_BASE.Clear;
+              QItemNFVAL_ICM.Clear;
+            end;
+
+
+          end;
+
+          QItemNFVAL_PIS.Value := (CDSItensDevolucaoVAL_PIS.Value /
+                                   CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                   CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFVAL_CONFINS.Value := (CDSItensDevolucaoVAL_CONFINS.Value /
+                                       CDSItensDevolucaoQT_QUANTIDADE.Value) *
+                                       CDSItensDevolucaoQT_DEVOLUCAO.Value;
+          QItemNFCOD_NOTA_ITEM_ORIGEM.Value := CDSItensDevolucaoCOD_NOTA_ITEM.Value;
+
+
+
+          QItemNF.Post;
+        end;
+        CDSItensDevolucao.Next;
+      end;
+
+      PagamentosNFe4.GeraPagamentos('E');
+{Cria movimento na tabela conta_pagar_cab. Alex 08/04/2026  }
+      if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'S') then
+      begin
+        wValMovimento:= 0;
+        wDesconto:= 0;
+        cbResumoDevComprovante.Enabled := False;
+        cbResumoDevComprovante.Checked := False;
+        wDataVencimento := QNotaEntradaDT_EMISSAO.Value + 30;
+        wDesconto := (DMDevolucaoTroca.pValorTotalDevolucao) * (DMCadastro.QCadastroPERC_DESCONTO.Value/100);
+        wValMovimento := DMDevolucaoTroca.pValorTotalDevolucao - wDesconto;
+        wNota := QNotaEntradaCOD_NOTA_CAB.Text;
+        with DMOracle, DMUsuario do
+        begin
+          DMOracle.QExecSQL.close;
+          DMOracle.QExecSQL.SQL;
+          DMOracle.QExecSQL.SQL.Clear;
+          DMOracle.QExecSQL.SQL.Add('insert into tb_conta_pagar_cab (cod_conta_pagar_cab,cod_cadastro,num_titulo,');
+          DMOracle.QExecSQL.SQL.Add('num_parcela,dt_emissao,dt_vencimento,val_titulo,cod_usuario,cod_finalidade,');
+          DMOracle.QExecSQL.SQL.Add('cod_filial,cod_departamento,desc_tipo_documento,ind_situacao,cod_nota_cab,desc_observacao,ind_devolucao)');
+          DMOracle.QExecSQL.SQL.Add
+           ('Values(SQCONTA_PAGAR.NextVal,' + QNotaEntradaCOD_CADASTRO.Text + ',' + QNotaEntradaNUM_NOTA.Text + ',1,' + chr(39) + DateToStr(DATE) + chr(39) + ',');
+          DMOracle.QExecSQL.SQL.Add
+           (chr(39) + DateToStr(wDataVencimento) + chr(39) + ',' + StringReplace(FloatToStr(wValMovimento), ',', '.', [rfReplaceAll]) + ',' + QNotaEntradaCOD_USUARIO.Text + ',' );
+          DMOracle.QExecSQL.SQL.Add
+           (QUsuarioCOD_FINALIDADE_PAGAR.text + ',' + QNotaEntradaCOD_FILIAL.Text + ',' + QUsuarioCOD_DEPARTAMENTO.text + ', ''DEV'', ''ABERTO'' ,' + QNotaEntradaCOD_NOTA_CAB.Text);
+          DMOracle.QExecSQL.SQL.Add
+           (',' + chr(39) + 'REF. A NFe DE DEVOLUCAO: ' + QNotaEntradaNUM_NOTA.Text + chr(39) + ', ''S''' + ')');
+          DMOracle.QExecSQL.ExecSQL;
+        end;
+      end;
+
+      wExec := TExecutador.Create;
+      wExec.Adiciona('UPDATE TB_NOTA_CAB SET VAL_DESCONTO = ' + bib.TrocaVirgulaPorPonto(floatToStr(wValDescontoTotal)) + ' WHERE COD_NOTA_CAB = ' +
+                      QNotaEntradaCOD_NOTA_CAB.Text);
+      wExec.Executar(true, false);
+
+      wTipoDocumento := DMOracle.BuscaNome('SELECT IND_EMITE FROM TB_OPERACAO ','COD_OPERACAO='+FloatToStr(QNotaEntradaCod_Operacao.Value));
+
+      wLoteNFe := StrToInt('0'+ DMOracle.BuscaNome('SELECT ID_LOTE FROM TB_NF_ELETRONICA','COD_NOTA_CAB = '+QNotaEntradaCOD_NOTA_CAB.Text));
+
+      wResult := True;
+      If (wTipoDocumento = 'F') Then
+        wResult := FNotaImpressao.EmiteNF(QNotaEntradaCod_Nota_Cab.Value,'',wLoteNFe,true);
+      If (wTipoDocumento = 'P') and (DMParamSistema.CodEmpresa = 'PAULINHO') then
+        FNotaImpressao.EmiteNF(QNotaEntradaCod_Nota_Cab.Value);
+
+      if wResult then
+      begin
+        wMovimentaEstoque := DMOracle.FastSelect('IND_ESTOQUE', 'TB_OPERACAO', 'COD_OPERACAO = ' + QNotaEntradaCOD_OPERACAO.Text);
+        if wMovimentaEstoque = 'S' then
+          wMovimentaEstoque := DMOracle.FastSelect('IND_ESTOQUE', 'TB_FILIAL', 'COD_FILIAL = ' + QNotaEntradaCOD_FILIAL.Text);
+        if wMovimentaEstoque = 'S' then
+        begin
+          QItemNF.First;
+          while not QItemNF.Eof do
+          begin
+            DMEstoque.Atualiza_Estoque(
+              QNotaEntradaCOD_OPERACAO.Value
+              , QNotaEntradaCOD_FILIAL.Value
+              , QItemNFCOD_PRODUTO.Value
+              , QItemNFCOD_LOTE_TIPO.Value
+              , QItemNFQT_QUANTIDADE.Value
+              , QItemNFVAL_UNITARIO.Value
+              , QNotaEntradaDT_EMISSAO.Value
+              , QNotaEntradaDT_EMISSAO.Value
+              , QNotaEntradaCOD_CADASTRO.Text
+            );
+            QItemNF.Next;
+          end;
+        end;
+      end;
+    end;
+{Cria movimento na tabela conta_pagar_mov. Alex 08/04/2026}
+    if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'S') then
+    begin
+      with DMOracle,DMNotaEntrada do
+      begin
+        wCodContaPagar := StrToInt(fastselect('COD_CONTA_PAGAR_CAB','TB_CONTA_PAGAR_CAB','COD_NOTA_CAB = '+ wNota));
+        DMOracle.QExecSQL.close;
+        DMOracle.QExecSQL.SQL;
+        DMOracle.QExecSQL.SQL.Clear;
+        DMOracle.QExecSQL.SQL.Add
+         ('insert into tb_conta_pagar_mov(cod_conta_pagar_mov,cod_conta_pagar_cab,dt_movimento,val_movimento,ind_tipo_movimento,dt_usuario,cod_usuario)');
+        DMOracle.QExecSQL.SQL.Add
+         ('values(SQCONTA_PAGAR_MOV.NextVal,' + IntToStr(wCodContaPagar) + ',' + chr(39) + DateToStr(DATE) + chr(39) + ',' + StringReplace(FloatToStr(wValMovimento), ',', '.', [rfReplaceAll]) + ',' );
+        DMOracle.QExecSQL.SQL.Add
+         ('''PRINCIPAL'' ,' + chr(39) + DateToStr(DATE) + chr(39) + ',' + QNotaEntradaCOD_USUARIO.Text + ')' );
+        DMOracle.QExecSQL.ExecSQL;
+        DMOracle.DBCemapa.Commit;
+      end;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  if DMNotaEntrada.QNotaEntrada.Active then
+    excluirNFDevolucaoPendente;
+  DMDevolucaoTroca.QValeProduto.Close;
+  DMDevolucaoTroca.QValeProdutoItem.Close;
+end;
+
+procedure TFDevolucaoTroca.excluirNFDevolucaoPendente;
+begin
+  with DMNotaEntrada do
+    if  QNotaEntrada.Active and (QNotaEntrada.RecordCount = 0) and (not StrToInt('0' + DMNfe.QNfeSIT_NFE.Value) in SIT_NFE_ACEITO) then
+    begin
+      if QNotaEntradaIND_SITUACAO.Value = 'S' then
+        VoltaConfirmacao(QNotaEntradaCOD_NOTA_CAB.Value,'S','2');
+      ExcluiNota;
+      if (QNotaEntradaCOD_SERIE_MODELO.Value = '55') or
+         (QNotaEntradaCOD_SERIE_MODELO.Value = '65') then
+        begin
+          ShowMessage('A nota nº '+QNotaEntradaNUM_NOTA.Text+' não foi autorizada e será excluída. '+
+            'O sistema tentará inutilizar o nº ' + QNotaEntradaNUM_NOTA.Text + ', caso não seja possível, '+
+            'tente inutilizá-lo mais tarde.');
+          DMNfe.InutilizaNumeracaoNfe(QNotaEntradaCOD_FILIAL.Value, QNotaEntradaCOD_SERIE.Value,
+            QNotaEntradaNUM_NOTA.Value, QNotaEntradaNUM_NOTA.Value,QNotaEntradaCOD_ESTADO.Value,
+            'NUMERACAO DESCARTADA',DMNfe.QNfeIND_AMBIENTE_NFE.Value,
+            StrToInt(QNotaEntradaCOD_SERIE_MODELO.Value));
+        end;
+    end;
+end;
+
+procedure TFDevolucaoTroca.FmCadastro2BtCadastroClick(Sender: TObject);
+begin
+  FmCadastro2.BtCadastroClick(Sender);
+  FmCadastro2MeCadastroExit(sender);
+end;
+
+procedure TFDevolucaoTroca.BTValeListarClick(Sender: TObject);
+begin
+  if (Trim(FmCadastro2.MeCadastro.Text) = '') and
+     ((trim(MEDataEmissaoValeInicial.Text) = '') or
+      (trim(MEDataEmissaoValeFinal.Text) = '')) then
+  begin
+    MessageDlg('Informe o cliente ou o período', mtError,
+      [mbOk], 0);
+    Abort;
+  end;
+  with DMDevolucaoTroca do
+  begin
+    QValeProdutoCons.Close;
+    QValeProdutoCons.ClearVariables;
+    if (trim(MEDataEmissaoValeInicial.Text) <> '') and
+      (trim(MEDataEmissaoValeFinal.Text) <> '') then
+    begin
+      QValeProdutoCons.SetVariable('DT_INICIAL', MEDataEmissaoValeInicial.Text);
+      QValeProdutoCons.SetVariable('DT_FINAL', MEDataEmissaoValeFinal.Text);
+    end;
+    if Trim(FmCadastro2.MeCadastro.Text) <> '' then
+      QValeProdutoCons.SetVariable('COD_CADASTRO', trim(FmCadastro2.MeCadastro.Text));
+    if Trim(MeNumNotaVale.Text) <> '' then
+      QValeProdutoCons.SetVariable('NUM_NOTA', trim(MeNumNotaVale.Text));
+    QValeProdutoCons.SetVariable('TIPO_VALE', 'VALE-COMPRAS');
+    QValeProdutoCons.SetVariable('IND_VALIDO','S');
+    QValeProdutoCons.Open;
+  end;
+end;
+
+procedure TFDevolucaoTroca.acoesCopiaValeProduto;
+begin
+  if DMDevolucaoTroca.QValeProdutoCons.Active then
+  begin
+    if DMDevolucaoTroca.QValeProdutoCons.RecordCount = 0 then
+    begin
+      MessageDlg('Selecione um Vale-compras antes de clicar em Avançar.',
+      mtInformation, [mbOk], 0);
+      abort;
+    end;
+    if DMDevolucaoTroca.QValeProdutoConsIND_UTILIZADO.Value = 'S' then
+    begin
+      MessageDlg('Os vales na cor vermelha não estão mais disponíveis. O Vale Compras nº '+
+        DMDevolucaoTroca.QValeProdutoConsCOD_VALE_PRODUTO.Text + ' já foi utilizado na nota nº '+
+        DMDevolucaoTroca.QValeProdutoConsCOD_NOTA_CAB_TROCA.Text+'. Tente fazer o processo com outro vale.',
+      mtInformation, [mbOk], 0);
+      abort;
+    end;
+    FNotaImpressao.emitirValeProduto(DMDevolucaoTroca.QValeProdutoConsCOD_VALE_PRODUTO.Value);
+  end;
+end;
+
+procedure TFDevolucaoTroca.FmCadastro2MeCadastroExit(Sender: TObject);
+begin
+  FmCadastro2.MeCadastroExit(Sender);
+  if trim(FmCadastro2.MeCadastro.Text) <> '' then
+    BTValeListarClick(sender);
+end;
+
+procedure TFDevolucaoTroca.DBGrid3DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  if DMDevolucaoTroca.QValeProdutoConsIND_UTILIZADO.Value = 'S' then
+    DBGrid3.Canvas.Brush.Color := clRed;
+  DBGrid3.Canvas.FillRect(Rect);
+  DBGrid3.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TFDevolucaoTroca.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  if (Column.Field.FieldName = 'QT_DEVOLUCAO') then
+  begin
+    DBGrid1.Canvas.Brush.Color:= clWhite;
+    DBGrid1.Canvas.Font.Color:= clBlack;
+    DBGrid1.Canvas.FillRect(Rect);
+    DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
+end;
+
+function TFDevolucaoTroca.cadastraValeProduto: Boolean;
+begin
+  if (DMParamSistema.QParamSistemaIND_GERA_PARCELA_DEVOL.Value = 'N') then
+  begin
+    result := false;
+    try
+      DMOracle.DBCemapa.StartTransaction;
+      with DMDevolucaoTroca, DMNotaEntrada do
+      begin
+        QValeProdutoValida.Close;
+        QValeProdutoValida.ClearVariables;
+        QValeProdutoValida.SetVariable('COD_NOTA_CAB', QNotaSaidaConsCOD_NOTA_CAB.Value);
+        QValeProdutoValida.Open;
+
+        if (QValeProdutoValida.RecordCount = 0) or
+           (QValeProdutoValidaIND_VALIDO.Value = 'S') then
+        begin
+          QValeProduto.Insert;
+          QValeProdutoCOD_NOTA_CAB.Value := QNotaSaidaConsCOD_NOTA_CAB.Value;
+          QValeProdutoCOD_FILIAL.Value := QNotaSaidaConsCOD_FILIAL.Value;
+          QValeProdutoCOD_NOTA_CAB_DEV.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+          QValeProdutoCOD_CADASTRO.Value := QNotaEntradaCOD_CADASTRO.Value;
+          QValeProdutoDT_EMISSAO.Value := DMOracle.DataServ;
+          QValeProdutoVAL_VALOR_BAIXADO.Value := wValorBaixa;
+          QValeProdutoVAL_VALE_PRODUTO.Value := wValorValeProduto;
+          QValeProdutoIND_SITUACAO_VALE_PRESENTE.Value := 2; //emitido
+          If ( ((DMParamSistema.CodEmpresa = 'QUERENCIA') or (DMParamSistema.codEmpresa = 'AGROCAMPO') or (DMParamSistema.CodEmpresa = 'SCALA') )  and
+             (QValeProdutoVAL_VALE_PRODUTO.Value = 0)) then
+          Begin
+            QValeProdutoCOD_NOTA_CAB_TROCA.Value := QNotaEntradaCOD_NOTA_CAB.Value;
+
+          end;
+          QValeProduto.Post;
+          CDSItensDevolucao.First;
+          while not CDSItensDevolucao.Eof do
+          begin
+            if CDSItensDevolucaoQT_DEVOLUCAO.Value > 0 then                   
+            begin
+              QValeProdutoItem.Insert;
+              QValeProdutoItemCOD_VALE_PRODUTO.Value := QValeProdutoCOD_VALE_PRODUTO.Value;
+              QValeProdutoItemCOD_NOTA_ITEM.Value := CDSItensDevolucaoCOD_NOTA_ITEM.Value;
+              QValeProdutoItemQT_QUANTIDADE_DEVOLVIDA.Value := CDSItensDevolucaoQT_DEVOLUCAO.Value;
+              QValeProdutoItem.Post;
+            end;
+            CDSItensDevolucao.Next
+          end;
+        end;
+      end;
+      DMOracle.DBCemapa.Commit;
+      result := true;
+    except
+      on E : Exception Do
+        MessageDlg(E.ClassName + '. erro ao cadastrar o Vale Compras. ' + E.Message,
+        mtError, [mbOK],0);
+    end;
+  end;
+end;
+procedure TFDevolucaoTroca.btSerieConsClick(Sender: TObject);
+begin
+  if FSerieCons = Nil then
+    FSerieCons := TFSerieCons.Create(Application);
+  FSerieCons.BtProcurarClick(Sender);
+  if FSerieCons.ShowModal = MrOk then
+  begin
+    with DMSerie do
+    begin
+      MeSerie.Text :=
+        QSerieConsCOD_SERIE.Value;
+      MeModelo.Text :=
+        QSerieConsCOD_SERIE_MODELO.Value;
+    end;
+  end;
+end;
+
+procedure TFDevolucaoTroca.baixaCP(pValorBaixa: double; wCodNota, wCodCadastro: integer);
+var wValBaixado, wPercentualBaixa, wValor: double;
+begin
+  if FContaPagarBaixa = Nil then
+    FContaPagarBaixa := TFContaPagarBaixa.Create(Application);
+  with DMDevolucaoTroca, DMContasPagar do
+  begin
+    wValBaixado := 0;
+    wValor := pValorBaixa;
+
+    FContaPagarBaixa.pCodNotaCab:= wCodNota;
+    FContaPagarBaixa.pCodCadastro:= wCodCadastro;
+    FContaPagarBaixa.Tag := 1;
+    FContaPagarBaixa.MEDataBaixa.Text:= DateToStr(DMOracle.DataServ);
+    FContaPagarBaixa.SBProcuraClick(self);
+
+    while not QContasPagarBaixa.Eof do
+    begin
+      // Inicializa as variáveis de controle
+      FContaPagarBaixa.PCBaixa.ActivePageIndex := 1;
+      FContaPagarBaixa.Refresh;
+      Application.ProcessMessages;
+      FContaPagarBaixa.RGFormaPagto.ItemIndex := 2; //baixa contábil
+      QContasPagar_Mov.Close;
+      QContasPagar_Mov.Open;
+      QContasPagarBaixaMov.Close;
+      QContasPagarBaixaMov.Open;
+
+      FContaPagarBaixa.PCBaixaChange(self);
+
+      wPercentualBaixa := StrToFloat(Trim(FContaPagarBaixa.MEValorBaixa.Text)) * 100 /pValorBaixa;
+      wValBaixado:= StrToFloat(Trim(FContaPagarBaixa.MEValorBaixa.Text));
+
+
+//      wPercentualBaixa := pValorBaixa * 100 /wValorFaltaReceber;
+//      FContaPagarBaixa.MEValorBaixa.Text:= floatToStr(RoundTo( wValorBaixa * wPercentualBaixa / 100,-2));
+      FContaPagarBaixa.MEValorBaixa.Text:=  FloatToStr(RoundTo(wValor - wValBaixado, -2));
+
+
+//      wValBaixado := wValBaixado +  StrToFloat(Trim(FContaPagarBaixa.MEValorBaixa.Text));
+      try
+        FContaPagarBaixa.SBBaixaClick(self);
+      except
+      end;
+      FContaPagarBaixa.PCBaixa.ActivePageIndex := 0;
+      QContasPagarBaixa.Next;
+    end;
+  end;
+  // Fez alguma baixa
+  if RoundTo(wValorBaixa, -2) = RoundTo(wValBaixado, -2) then
+    ShowMessage('Baixado o(s) título(s) do Contas a Pagar!');
+end;
+
+end.

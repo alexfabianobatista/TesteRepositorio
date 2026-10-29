@@ -1,0 +1,35 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (Brasil)
+REPORT=Yes
+HLP=P_Bancos.hlp
+
+[FILES]
+P_Bancos.rtf
+
+[MAP]
+Baixa_de_Cheques=17
+Botão_Click=18
+Cadastro_de_Bancos=2
+Cadastro_de_Conciliação_Bancária=12
+Cadastro_de_Histórico=14
+Cadastro_de_Movimentos_Bancários=4
+Contabilização_Movimento_Bancário=22
+Emissão_de_Cheques=5
+Forma_Operação_Sistema=19
+Menu_Bancos=1
+Relacao_Cheques_Baixados=20
+Relação_de_Cheques_lançados_por_Conciliação=13
+Relação_de_Cheques_Pré_Datados=10
+Relação_de_Cópias_de_Cheques=11
+Relação_de_Históricos=15
+Relação_de_Lançamentos_de_Datas=6
+Relação_de_Lançamentos_em_Conta_Corrente=7
+Relação_de_Movimentos_e_Saldos=9
+Relação_do_Resumo_de_Lançamentos_no_Período=8
+Relatório_Movimentação_de_Histórico=21
+Saldos_Bancários=16
+
+[BAGGAGE]
+P_Bancos.rtf

@@ -1,0 +1,1093 @@
+unit UEstoque_cl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, DBTables, OracleData, OraTeste, math;
+
+type
+  TDMEstoque = class(TDataModule)                       
+    DSEstoqueCons: TDataSource;
+    DSEstoqueACons: TDataSource;
+    DSNotaACons: TDataSource;
+    DSPedidoACons: TDataSource;
+    DSOrdemCACons: TDataSource;
+    DSSomaPedido: TDataSource;
+    DSSomaOrdemC: TDataSource;
+    DSSomaNota: TDataSource;
+    QREstoque_Inventario: TOracleDataSet1;
+    QREstoque_InventarioDESC_LOTE: TStringField;
+    QREstoque_InventarioNUM_CLASSE: TIntegerField;
+    QREstoque_InventarioNUM_SUBCLASSE: TIntegerField;
+    QREstoque_InventarioCOD_CLASSE: TIntegerField;
+    QREstoque_InventarioCOD_TRIBUTACAO: TIntegerField;
+    QREstoque_InventarioNUM_EMBALAGEM: TFloatField;
+    QREstoque_InventarioDESC_UNIDADE: TStringField;
+    QREstoque_InventarioCOD_FILIAL: TIntegerField;
+    QREstoque_InventarioCOD_PRODUTO: TFloatField;
+    QREstoque_InventarioVAL_VAREJO: TFloatField;
+    QREstoque_InventarioVAL_ATACADO: TFloatField;
+    QREstoque_InventarioVL_CUSTO_MEDIO: TFloatField;
+    QREstoque_InventarioVL_ULTIMO_CUSTO: TFloatField;
+    QREstoque_InventarioQT_INVENTARIO: TFloatField;
+    QREstoque_InventarioDT_INVENTARIO: TDateTimeField;
+    QEstoque: TOracleDataSet1;
+    QEstoqueCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueCOD_FILIAL: TIntegerField;
+    QEstoqueCOD_PRODUTO: TFloatField;
+    QEstoqueVL_CUSTO_MEDIO: TFloatField;
+    QEstoqueVL_ULTIMO_CUSTO: TFloatField;
+    QEstoqueVL_CUSTO_DOLAR: TFloatField;
+    QEstoqueQT_QUANTIDADE: TFloatField;
+    QEstoqueDT_COMPRA: TDateTimeField;
+    QEstoqueDT_VENDA: TDateTimeField;
+    QEstoqueQT_COMPRA: TFloatField;
+    QEstoqueQT_MINIMO: TFloatField;
+    QEstoqueQT_MAXIMO: TFloatField;
+    QEstoqueQT_INVENTARIO: TFloatField;
+    QEstoqueDT_INVENTARIO: TDateTimeField;
+    QEstoquedesc_tipo_lote: TStringField;
+    QEstoquedesc_produto: TStringField;
+    QEstoquedesc_filial: TStringField;
+    QPedidoItemCons: TOracleDataSet1;
+    QPedidoItemConsCOD_PRODUTO: TFloatField;
+    QPedidoItemConsQT_PEDIDO: TFloatField;
+    QPedidoItemConsQT_ATENDIDO: TFloatField;
+    QPedidoItemConsQT_CANCELADO: TFloatField;
+    QPedidoItemConsVAL_UNITARIO: TFloatField;
+    QPedidoItemConsCOD_LOTE_TIPO: TIntegerField;
+    QPedidoItemConsCOD_PEDIDO_CAB: TIntegerField;
+    QPedidoItemConsNUM_PEDIDO: TIntegerField;
+    QPedidoItemConsDT_EMISSAO: TDateTimeField;
+    QPedidoItemConsCOD_CADASTRO: TIntegerField;
+    QPedidoItemConsCOD_FILIAL: TIntegerField;
+    QEstoqueCons: TOracleDataSet1;
+    QEstoqueConsDESC_FILIAL: TStringField;
+    QEstoqueConsNUM_FABRICANTE: TStringField;
+    QEstoqueConsDESC_UNIDADE: TStringField;
+    QEstoqueConsNUM_EMBALAGEM: TFloatField;
+    QEstoqueConsDESC_LOTE: TStringField;
+    QEstoqueConsDESC_PENEIRA: TStringField;
+    QEstoqueConsCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueConsCOD_FILIAL: TIntegerField;
+    QEstoqueConsCOD_PRODUTO: TFloatField;
+    QEstoqueConsVL_CUSTO_MEDIO: TFloatField;
+    QEstoqueConsVL_ULTIMO_CUSTO: TFloatField;
+    QEstoqueConsVL_CUSTO_DOLAR: TFloatField;
+    QEstoqueConsQT_QUANTIDADE: TFloatField;
+    QEstoqueConsDT_COMPRA: TDateTimeField;
+    QEstoqueConsDT_VENDA: TDateTimeField;
+    QEstoqueConsQT_COMPRA: TFloatField;
+    QEstoqueConsQT_MINIMO: TFloatField;
+    QEstoqueConsQT_MAXIMO: TFloatField;
+    QEstoqueConsQT_INVENTARIO: TFloatField;
+    QEstoqueConsDT_INVENTARIO: TDateTimeField;
+    QZeraInventario: TOracleDataSet1;
+    QREstoqueImplantado: TOracleDataSet1;
+    QREstoqueImplantadoCOD_ESTOQUE_MOV: TIntegerField;
+    QREstoqueImplantadoCOD_PRODUTO: TFloatField;
+    QREstoqueImplantadoCOD_LOTE_TIPO: TIntegerField;
+    QREstoqueImplantadoQT_MOVIMENTO: TFloatField;
+    QREstoqueImplantadoDT_MOVIMENTO: TDateTimeField;
+    QREstoqueImplantadoCOD_USUARIO: TIntegerField;
+    QREstoqueImplantadoCOD_FILIAL: TIntegerField;
+    QREstoqueImplantadoNOME: TStringField;
+    QREstoqueImplantadoDESC_LOTE: TStringField;
+    QREstoqueImplantadoDESC_FILIAL: TStringField;
+    QEstoqueACons: TOracleDataSet1;
+    QEstoqueAConsCOD_FILIAL: TIntegerField;
+    QEstoqueAConsCOD_PRODUTO: TFloatField;
+    QEstoqueAConsCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueAConsDESC_FILIAL: TStringField;
+    QEstoqueAConsDESC_LOTE: TStringField;
+    QEstoqueAConsVAL_VAREJO: TFloatField;
+    QEstoqueAConsVAL_ATACADO: TFloatField;
+    QEstoqueAConsNUM_EMBALAGEM: TFloatField;
+    QEstoqueAConsDESC_UNIDADE: TStringField;
+    QEstoqueAConsPRECO_PROMOCAO: TFloatField;
+    QEstoqueAConsDESC_COMPLEMENTO_PROMOCAO: TStringField;
+    QEstoqueAConsDT_PRECO_PRO_INI: TDateTimeField;
+    QEstoqueAConsDT_PRECO_PRO_FIN: TDateTimeField;
+    QEstoqueAConsNUM_CLASSE: TIntegerField;
+    QEstoqueAConsNUM_SUBCLASSE: TIntegerField;
+    QEstoqueAConsDESC_CLASSE: TStringField;
+    QEstoqueAConsVL_CUSTO_MEDIO: TFloatField;
+    QEstoqueAConsVL_ULTIMO_CUSTO: TFloatField;
+    QEstoqueAConsVL_CUSTO_DOLAR: TFloatField;
+    QEstoqueAConsDT_COMPRA: TDateTimeField;
+    QEstoqueAConsDT_VENDA: TDateTimeField;
+    QEstoqueAConsQT_COMPRA: TFloatField;
+    QEstoqueAConsQT_MINIMO: TFloatField;
+    QEstoqueAConsQT_MAXIMO: TFloatField;
+    QEstoqueAConsQtdeTotalOrdemC: TFloatField;
+    QEstoqueAConsQtdeTotalPedido: TFloatField;
+    QNotaACons: TOracleDataSet1;
+    QNotaAConsIND_TIPO: TStringField;
+    QNotaAConsSOMA: TFloatField;
+    QNotaAConsdesc_ind_tipo: TStringField;
+    QREstoque_Diferenca: TOracleDataSet1;
+    QAtualizaEstoque: TOracleDataSet1;
+    QEstoqueMov: TOracleDataSet1;
+    QEstoqueMovCOD_ESTOQUE_MOV: TIntegerField;
+    QEstoqueMovCOD_PRODUTO: TFloatField;
+    QEstoqueMovCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueMovQT_MOVIMENTO: TFloatField;
+    QEstoqueMovDT_MOVIMENTO: TDateTimeField;
+    QEstoqueMovCOD_FILIAL: TIntegerField;
+    QEstoqueMovCOD_USUARIO: TIntegerField;
+    QrEstoqueClasse: TOracleDataSet1;
+    QrEstoqueClasseCOD_PRODUTO: TFloatField;
+    QrEstoqueClasseCOD_CLASSE: TIntegerField;
+    QrEstoqueClasseQT_QUANTIDADE: TFloatField;
+    QrEstoqueClasseDT_COMPRA: TDateTimeField;
+    QrEstoqueClasseVL_CUSTO_MEDIO: TFloatField;
+    QrEstoqueClasseVL_ULTIMO_CUSTO: TFloatField;
+    QrEstoqueClasseDESC_CLASSE: TStringField;
+    QSomaPedido: TOracleDataSet1;
+    QSomaPedidoSOMAQTDE: TFloatField;
+    QSomaOrdemC: TOracleDataSet1;
+    QSomaOrdemCSOMAQTDE: TFloatField;
+    QSomaNota: TOracleDataSet1;
+    QSomaNotaSOMA: TFloatField;
+    QREstoqueProd_Min: TOracleDataSet1;
+    QREstoqueProd_MinCOD_LOTE_TIPO: TIntegerField;
+    QREstoqueProd_MinCOD_FILIAL: TIntegerField;
+    QREstoqueProd_MinCOD_PRODUTO: TFloatField;
+    QREstoqueProd_MinVL_CUSTO_MEDIO: TFloatField;
+    QREstoqueProd_MinVL_ULTIMO_CUSTO: TFloatField;
+    QREstoqueProd_MinVL_CUSTO_DOLAR: TFloatField;
+    QREstoqueProd_MinQT_QUANTIDADE: TFloatField;
+    QREstoqueProd_MinDT_COMPRA: TDateTimeField;
+    QREstoqueProd_MinDT_VENDA: TDateTimeField;
+    QREstoqueProd_MinQT_COMPRA: TFloatField;
+    QREstoqueProd_MinQT_MINIMO: TFloatField;
+    QREstoqueProd_MinQT_MAXIMO: TFloatField;
+    QREstoqueProd_MinQT_INVENTARIO: TFloatField;
+    QREstoqueProd_MinDT_INVENTARIO: TDateTimeField;
+    QREstoqueProd_MinCOD_CADASTRO: TIntegerField;
+    QREstoqueProd_MinDESC_LOTE: TStringField;
+    QrChecagemEstoque: TOracleDataSet1;
+    QrChecagemEstoqueNUM_NOTA: TFloatField;
+    QrChecagemEstoqueCOD_SERIE: TStringField;
+    QrChecagemEstoqueDT_EMISSAO: TDateTimeField;
+    QrChecagemEstoqueDT_RECEBIMENTO: TDateTimeField;
+    QrChecagemEstoqueNOME: TStringField;
+    QrChecagemEstoqueDESC_OPERACAO: TStringField;
+    QrChecagemEstoqueCOD_OPERACAO: TFloatField;
+    QrChecagemEstoqueQT_QUANTIDADE: TFloatField;
+    QrEstoque_Posicao: TOracleDataSet1;
+    QrEstoque_PosicaoCOD_PRODUTO: TFloatField;
+    QrEstoque_PosicaoQT_ESTOQUE: TFloatField;
+    QrEstoque_PosicaoQT_PEDIDO: TFloatField;
+    QrEstoque_PosicaoQT_FUTURA: TFloatField;
+    QrEstoque_PosicaoQT_COMPRA: TFloatField;
+    QREstoqueEntrSaida: TOracleDataSet1;
+    QREstoqueEntrSaidaNUM_NOTA: TFloatField;
+    QREstoqueEntrSaidaDT_EMISSAO: TDateTimeField;
+    QREstoqueEntrSaidaDESC_OPERACAO: TStringField;
+    QREstoqueEntrSaidaCOD_OPERACAO: TFloatField;
+    QREstoqueEntrSaidaIND_ENTRADA_SAIDA: TStringField;
+    QREstoqueEntrSaidaQT_QUANTIDADE: TFloatField;
+    QREstoqueClasseSint: TOracleDataSet1;
+    QREstoqueClasseSintCOD_CLASSE: TIntegerField;
+    QREstoqueClasseSintDESC_CLASSE: TStringField;
+    QREstoqueClasseSintQT_TOTAL: TFloatField;
+    QREstoqueClasseSintVALOR_TOTAL: TFloatField;
+    QrEstoqueClasse_Emb: TOracleDataSet1;
+    QrEstoqueClasse_EmbCOD_PRODUTO: TFloatField;
+    QrEstoqueClasse_EmbCOD_CLASSE: TIntegerField;
+    QrEstoqueClasse_EmbNUM_EMBALAGEM: TFloatField;
+    QrEstoqueClasse_EmbQT_QUANTIDADE: TFloatField;
+    QrEstoqueClasse_EmbDT_COMPRA: TDateTimeField;
+    QrEstoqueClasse_EmbVL_CUSTO_MEDIO: TFloatField;
+    QrEstoqueClasse_EmbVL_ULTIMO_CUSTO: TFloatField;
+    QrEstoqueClasse_EmbDESC_CLASSE: TStringField;
+    QrEstoqueClasse_EmbDESC_LOTE: TStringField;
+    QPContratoFechado: TOracleDataSet1;
+    QPContratoFechadoDESC_FILIAL: TStringField;
+    QPContratoFechadoSALDO: TFloatField;
+    QPContratoAberto: TOracleDataSet1;
+    QPContratoAbertoDESC_FILIAL: TStringField;
+    QPContratoAbertoSALDO: TFloatField;
+    QrEstoqueNegativo: TOracleDataSet1;
+    QrEstoqueNegativoCOD_FILIAL: TIntegerField;
+    QrEstoqueNegativoCOD_PRODUTO: TFloatField;
+    QrEstoqueNegativoQT_QUANTIDADE: TFloatField;
+    QrEstoqueNegativoCOD_LOTE_TIPO: TIntegerField;
+    QrEstoqueNegativoDESC_UNIDADE: TStringField;
+    QREstoqueProd_Max: TOracleDataSet1;
+    QREstoqueProd_MaxCOD_LOTE_TIPO: TIntegerField;
+    QREstoqueProd_MaxCOD_FILIAL: TIntegerField;
+    QREstoqueProd_MaxCOD_PRODUTO: TFloatField;
+    QREstoqueProd_MaxVL_CUSTO_MEDIO: TFloatField;
+    QREstoqueProd_MaxVL_ULTIMO_CUSTO: TFloatField;
+    QREstoqueProd_MaxVL_CUSTO_DOLAR: TFloatField;
+    QREstoqueProd_MaxQT_QUANTIDADE: TFloatField;
+    QREstoqueProd_MaxDT_COMPRA: TDateTimeField;
+    QREstoqueProd_MaxDT_VENDA: TDateTimeField;
+    QREstoqueProd_MaxQT_COMPRA: TFloatField;
+    QREstoqueProd_MaxQT_MINIMO: TFloatField;
+    QREstoqueProd_MaxQT_MAXIMO: TFloatField;
+    QREstoqueProd_MaxQT_INVENTARIO: TFloatField;
+    QREstoqueProd_MaxDT_INVENTARIO: TDateTimeField;
+    QREstoqueProd_MaxCOD_CADASTRO: TIntegerField;
+    QREstoqueProd_MaxDESC_LOTE: TStringField;
+    QPedidoAConsNOME: TStringField;
+    QPedidoAConsQTDE: TFloatField;
+    QEstoqueOEmpresa: TOracleDataSet1;
+    QEstoqueOEmpresaCOD_FILIAL: TIntegerField;
+    QEstoqueOEmpresaDESC_FILIAL: TStringField;
+    QEstoqueOEmpresaSOMA: TFloatField;
+    QOrdemCACons: TOracleDataSet1;
+    QOrdemCAConsNOME: TStringField;
+    QOrdemCAConsDT_ENTREGA: TDateTimeField;
+    QOrdemCAConsQTDE: TFloatField;
+    QAtualizaEstoqueNotas: TOracleDataSet1;
+    QAtualizaEstoqueNotasCOD_OPERACAO: TIntegerField;
+    QAtualizaEstoqueNotasIND_SITUACAO: TStringField;
+    QAtualizaEstoqueNotasCOD_FILIAL: TIntegerField;
+    QAtualizaEstoqueNotasDT_EMISSAO: TDateTimeField;
+    QAtualizaEstoqueNotasQT_QUANTIDADE: TFloatField;
+    QAtualizaEstoqueNotasCOD_PRODUTO: TFloatField;
+    QAtualizaEstoqueNotasCOD_LOTE_TIPO: TIntegerField;
+    QAtualizaEstoqueNotasIND_ESTOQUE: TStringField;
+    QEstoque_Posicao_Emb: TOracleDataSet1;
+    QEstoque_Posicao_EmbCOD_FILIAL: TIntegerField;
+    QEstoque_Posicao_EmbDESC_FILIAL: TStringField;
+    QEstoque_Posicao_EmbSQT_SALDO_EMB: TFloatField;
+    QPed_ItemBxa_Barra: TOracleDataSet1;
+    QPed_ItemBxa_BarraCOD_PEDIDO_ITEM: TIntegerField;
+    QPed_ItemBxa_BarraCOD_PEDIDO_CAB: TIntegerField;
+    QPed_ItemBxa_BarraCOD_PRODUTO: TFloatField;
+    QPed_ItemBxa_BarraCOD_TRIBUTACAO: TIntegerField;
+    QPed_ItemBxa_BarraQT_PEDIDO: TFloatField;
+    QPed_ItemBxa_BarraVAL_UNITARIO: TFloatField;
+    QPed_ItemBxa_BarraQT_ATENDIDO: TFloatField;
+    QPed_ItemBxa_BarraQT_CANCELADO: TFloatField;
+    QPed_ItemBxa_BarraPERC_DESCONTO: TFloatField;
+    QPed_ItemBxa_BarraCOD_LOTE_TIPO: TIntegerField;
+    QPed_ItemBxa_BarraPERC_COMISSAO: TFloatField;
+    QPed_ItemBxa_BarraCOD_PRODUTO_AUX: TIntegerField;
+    QEstoque_PosicaoFixar: TOracleDataSet1;
+    QEstoque_PosicaoFixarCOD_FILIAL: TFloatField;
+    QEstoque_PosicaoFixarDESC_FILIAL: TStringField;
+    QEstoque_PosicaoFixarSQUANTIDADE_FIXAR: TFloatField;
+    QEstoquePosicao: TOracleDataSet1;
+    QEstoquePosicaoCOD_FILIAL: TIntegerField;
+    QEstoquePosicaoDESC_FILIAL: TStringField;
+    QEstoquePosicaoQUANTIDADE: TFloatField;
+    QREstoqueCodigoBarra: TOracleDataSet1;
+    QrEstoqueClasseQT_COMPRA: TFloatField;
+    QEstoqueBaixar: TOracleDataSet1;
+    QEstoqueBaixarCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueBaixarCOD_PRODUTO: TFloatField;
+    QEstoqueBaixarCOD_PRODUTO_BAIXA: TIntegerField;
+    QEstoqueBaixarCOD_LOTE_TIPO_BAIXA: TIntegerField;
+    QrEstoqueClasseDT_VENCIMENTO: TDateTimeField;
+    QPedidoACons: TOracleDataSet1;
+    QREstoque_InventarioQT_QUANT: TFloatField;
+    QREstoque_Inventarioqt_quantidade: TFloatField;
+    QREstoque_nao_inventariado: TOracleDataSet1;
+    QREstoque_nao_inventariadoCOD_PRODUTO: TFloatField;
+    QREstoque_nao_inventariadoNUM_FABRICANTE: TStringField;
+    QREstoque_nao_inventariadoQT_QUANTIDADE: TFloatField;
+    QREstoque_nao_inventariadoVL_ULTIMO_CUSTO: TFloatField;
+    QREstoqueInventariado: TOracleDataSet1;
+    QREstoqueInventariadoCOD_PRODUTO: TFloatField;
+    QREstoqueInventariadoNUM_FABRICANTE: TStringField;
+    QREstoqueInventariadoQT_QUANTIDADE: TFloatField;
+    QREstoqueInventariadoVL_ULTIMO_CUSTO: TFloatField;
+    QEstoqueVL_CUSTO_INVENTARIO: TFloatField;
+    QRMovimentoEstoque: TOracleDataSet1;
+    QRMovimentoEstoqueNUM_NOTA: TIntegerField;
+    QRMovimentoEstoqueDT_EMISSAO: TDateTimeField;
+    QRMovimentoEstoqueNOME: TStringField;
+    QRMovimentoEstoqueDESC_CIDADE: TStringField;
+    QRMovimentoEstoqueDESC_OPERACAO: TStringField;
+    QRMovimentoEstoqueVAL_UNITARIO: TFloatField;
+    QRMovimentoEstoqueCOD_ESTADO: TStringField;
+    QRMovimentoEstoqueQUANTIDADE_ENTRADA: TFloatField;
+    QRMovimentoEstoqueQUANTIDADE_SAIDA: TFloatField;
+    QRMovimentoEstoqueCOD_FILIAL: TIntegerField;
+    QRMovimentoEstoqueDESC_FILIAL: TStringField;
+    QrEstoque_PosicaoCOD_FILIAL: TFloatField;
+    QrEstoque_Posicao_Sintetico: TOracleDataSet1;
+    FloatField1: TFloatField;
+    FloatField2: TFloatField;
+    FloatField3: TFloatField;
+    FloatField4: TFloatField;
+    FloatField5: TFloatField;
+    QRMovimentoEstoque1: TOracleDataSet1;
+    QRMovimentoEstoque1COD_OPERACAO: TIntegerField;
+    QRMovimentoEstoque1DESC_OPERACAO: TStringField;
+    QRMovimentoEstoque1QUANTIDADE: TFloatField;
+    QEstoqueConsIND_RETORNAVEL: TStringField;
+    QRMovEstoqueProduto: TOracleDataSet1;
+    QRMovEstoqueProdutoQT_ENTRADA: TFloatField;
+    QRMovEstoqueProdutoQT_SAIDA: TFloatField;
+    QRMovEstoqueProdutoCOD_PRODUTO: TFloatField;
+    QRMovEstoqueProdutoCOD_FILIAL: TFloatField;
+    QRMovEstoqueProduto1: TOracleDataSet1;
+    QRMovEstoqueProduto1NOME: TStringField;
+    QRMovEstoqueProduto1QT_NOTA_ITEM_OUT: TFloatField;
+    QRMovEstoqueProduto1QT_DEVOLVIDO_OUT: TFloatField;
+    QRMovEstoqueProduto1QT_NOTA_ITEM_EMP: TFloatField;
+    QRMovEstoqueProduto1QT_DEVOLVIDO_EMP: TFloatField;
+    QRMovEstoqueProdutoDESCRICAO: TStringField;
+    QRMovEstoqueProdutodesc_filial: TStringField;
+    QrEstoque_PosicaoQT_COMPRA_FUTURA: TFloatField;
+    QrEstoque_Posicao_SinteticoQT_COMPRA_FUTURA: TFloatField;
+    QRMovEstoqueProdutoQT_ESTOQUE_SQL: TFloatField;
+    QRMovEstoqueProdutoqt_estoque: TFloatField;
+    QREstoqueImplantadoVAL_VAREJO: TFloatField;
+    QEstoqueOEmpresaSOMA_EMP: TFloatField;
+    QrEstoqueNegativoNOME: TStringField;
+    QEstoqueProducao: TOracleDataSet1;
+    QEstoqueProducaoCOD_ESTOQUE_PRODUCAO: TIntegerField;
+    QEstoqueProducaoCOD_FILIAL: TIntegerField;
+    QEstoqueProducaoCOD_LOTE_TIPO: TIntegerField;
+    QEstoqueProducaoCOD_PRODUTO: TIntegerField;
+    QEstoqueProducaoQT_ESTOQUE_PRODUCAO: TFloatField;
+    QEstoqueProducaoNUM_CONTROLE: TIntegerField;
+    QEstoqueProducaoNUM_NOTA: TIntegerField;
+    QEstoqueProducaoDT_LANCAMENTO: TDateTimeField;
+    QEstoqueProducaoCOD_USUARIO: TIntegerField;
+    QEstoqueProducaoCOD_ORIGEM_PRODUCAO: TIntegerField;
+    QEstoqueProducaodesc_filial: TStringField;
+    QEstoqueProducaodesc_produto: TStringField;
+    QEstoqueProducaodesc_origem_producao: TStringField;
+    QEstoqueProducaodesc_tipo_lote: TStringField;
+    QEstoqueProducaoCons: TOracleDataSet1;
+    QEstoqueProducaoConsCOD_PRODUTO: TIntegerField;
+    QEstoqueProducaoConsCOD_FILIAL: TIntegerField;
+    QEstoqueProducaoConsDESC_FILIAL: TStringField;
+    QEstoqueProducaoConsDESC_ORIGEM_PRODUCAO: TStringField;
+    QEstoqueProducaoConsCOD_ESTOQUE_PRODUCAO: TIntegerField;
+    QEstoqueProducaoConsNUM_CONTROLE: TIntegerField;
+    QEstoqueProducaoConsQT_ESTOQUE_PRODUCAO: TFloatField;
+    QREstoqueProducao: TOracleDataSet1;
+    QREstoqueProducaoCOD_ESTOQUE_PRODUCAO: TIntegerField;
+    QREstoqueProducaoCOD_FILIAL: TIntegerField;
+    QREstoqueProducaoCOD_ORIGEM_PRODUCAO: TIntegerField;
+    QREstoqueProducaoCOD_LOTE_TIPO: TIntegerField;
+    QREstoqueProducaoCOD_PRODUTO: TIntegerField;
+    QREstoqueProducaoQT_ESTOQUE_PRODUCAO: TFloatField;
+    QREstoqueProducaoNUM_CONTROLE: TIntegerField;
+    QREstoqueProducaoNUM_NOTA: TIntegerField;
+    QREstoqueProducaoDT_LANCAMENTO: TDateTimeField;
+    QREstoqueProducaoCOD_USUARIO: TIntegerField;
+    QREstoqueProducaoDESC_FILIAL: TStringField;
+    QREstoqueProducaoDESC_ORIGEM_PRODUCAO: TStringField;
+    QREstoqueProducao2: TOracleDataSet1;
+    QREstoqueProducao2COD_ORIGEM_PRODUCAO: TIntegerField;
+    QREstoqueProducao2COD_PRODUTO: TIntegerField;
+    QREstoqueProducao2COD_FILIAL: TIntegerField;
+    QREstoqueProducao2QT_QUANTIDADE_PRODUCAO: TFloatField;
+    QREstoqueProducao2DESC_ORIGEM_PRODUCAO: TStringField;
+    QREstoqueProducao2QT_KILOS: TFloatField;
+    QEstoqueProducaoIND_TURNO: TStringField;
+    QEstoqueProducaoNUM_LINHA: TIntegerField;
+    QEstoqueMovCOD_MOTIVO: TIntegerField;
+    QREstoqueImplantadoCOD_MOTIVO: TIntegerField;
+    QrEstoqueClasse_EmbDESC_PRODUTO: TStringField;
+    QEstoqueAConsDESC_PRODUTO: TStringField;
+    QRMovEstoqueProdutoDESC_PRODUTO: TStringField;
+    QEstoqueConsDESC_PRODUTO: TStringField;
+    QRMovEstoqueProduto1DESC_PRODUTO: TStringField;
+    QrEstoqueClasseDESC_PRODUTO: TStringField;
+    QREstoqueImplantadoDESC_PRODUTO: TStringField;
+    QREstoque_InventarioDESC_PRODUTO: TStringField;
+    QREstoque_nao_inventariadoDESC_PRODUTO: TStringField;
+    QREstoqueInventariadoDESC_PRODUTO: TStringField;
+    QrEstoqueNegativoDESC_PRODUTO: TStringField;
+    QREstoqueProd_MaxDESC_PRODUTO: TStringField;
+    QPedidoItemConsDESC_PRODUTO: TStringField;
+    QRMovimentoEstoqueDESC_PRODUTO: TStringField;
+    QREstoqueProducao2DESC_PRODUTO: TStringField;
+    QREstoqueProd_MinDESC_PRODUTO: TStringField;
+    QrEstoque_Posicao_SinteticoDESC_PRODUTO: TStringField;
+    QREstoqueProducaoIND_TURNO: TStringField;
+    QREstoqueProducaoNUM_LINHA: TIntegerField;
+    QREstoqueProducaoDESC_PRODUTO: TStringField;
+    QEstoqueProducaoConsDESC_PRODUTO: TStringField;
+    QEstoqueAConsLUCRO: TFloatField;
+    QEstoqueConsDT_VENCIMENTO: TDateTimeField;
+    QREstoqueGrupoClasse: TOracleDataSet1;
+    QREstoqueGrupoClasseCOD_CLASSE: TFloatField;
+    QREstoqueGrupoClasseDESC_CLASSE: TStringField;
+    QREstoqueGrupoClasseQT_TOTAL: TFloatField;
+    QREstoqueGrupoClasseVALOR_TOTAL: TFloatField;
+    QREstoqueGrupoClasseQT_TOTAL_ANT: TFloatField;
+    QREstoqueGrupoClasseVALOR_TOTAL_ANT: TFloatField;
+    QAtualizaEstoqueNotasVAL_TOTAL: TFloatField;
+    QAtualizaEstoqueNotasIND_TIPO_OPERACAO: TStringField;
+    QEstoqueConsqt_futura: TFloatField;
+    QEstoqueConsqt_saldo: TFloatField;
+    QEstoqueConsqt_ordem_compra: TFloatField;
+    QEstoqueAtualizado: TOracleDataSet1;
+    QEstoqueAtualizadoDT_ESTOQUE_ATUALIZADO: TDateTimeField;
+    QBaixaEstoqueFormula: TOracleDataSet1;
+    QBaixaEstoqueFormulaCOD_PRODUTO: TIntegerField;
+    QBaixaEstoqueFormulaQT_ITEM: TFloatField;
+    QBaixaEstoqueFormulaCOD_LOTE_TIPO: TIntegerField;
+    QrEstoque_PosicaoDESC_PRODUTO: TStringField;
+    QREstoqueProducaoQT_EMBALAGEM: TFloatField;
+    QRMovEstoqueProdutoDESC_OPERACAO: TStringField;
+    QRMovEstoqueProdutoCOD_OPERACAO: TIntegerField;
+    QREstoqueProducao2volumes: TIntegerField;
+    QRMovimentoEstoqueDESC_CULTURA: TStringField;
+    QEstoqueProducaoCOD_EMBARQUE: TIntegerField;
+    QREstoqueImplantadoVL_ULTIMO_CUSTO: TFloatField;
+    QREstoque_InventarioNUM_FABRICANTE: TStringField;
+    QREstoqueProd_MinNUM_FABRICANTE: TStringField;
+    QREstoqueProd_MaxNUM_FABRICANTE: TStringField;
+    QEstoqueBaixarQT_BAIXA: TFloatField;
+    QEstoqueConsVL_ULTIMA_VENDA: TFloatField;
+    QEstoqueCOD_ULTIMO_FORNECEDOR: TIntegerField;
+    QEstoqueConsCOD_ULTIMO_FORNECEDOR: TIntegerField;
+    QEstoqueMovVL_CUSTO_MEDIO: TFloatField;
+    QREstoque_InventarioDESC_CNPJ_FILIAL: TStringField;
+    QREstoque_InventarioDESC_ENDERECO_FILIAL: TStringField;
+    QEstoqueDESC_LOCALIZACAO: TStringField;
+    QEstoqueConsVAL_VAREJO: TFloatField;
+    QEstoqueConsVAL_ATACADO: TFloatField;
+    QEstoqueConsDESC_LOCALIZACAO: TStringField;
+    QrEstoqueClasseNUM_CLASSE: TIntegerField;
+    QrEstoqueClasseNUM_SUBCLASSE: TIntegerField;
+    QREstoque_InventarioDESC_LOCALIZACAO: TStringField;
+    QEstoqueOEmpresaVAL_SOMA: TFloatField;
+    QEstoqueOEmpresaVAL_SOMA_EMP: TFloatField;
+    QREstoque_DiferencaCOD_LOTE_TIPO: TIntegerField;
+    QREstoque_DiferencaCOD_PRODUTO: TFloatField;
+    QREstoque_DiferencaNUM_FABRICANTE: TStringField;
+    QREstoque_DiferencaDESC_LOCALIZACAO: TStringField;
+    QREstoque_DiferencaDESC_CLASSE: TStringField;
+    QREstoque_DiferencaQT_QUANTIDADE: TFloatField;
+    QREstoque_DiferencaQT_INVENTARIO: TFloatField;
+    QREstoque_DiferencaDESC_PRODUTO: TStringField;
+    QREstoque_DiferencaDESC_LOTE: TStringField;
+    QPContratoAbertoCOD_FILIAL: TFloatField;
+    QPContratoFechadoCOD_FILIAL: TFloatField;
+    QREstoqueImplantadoNUM_FABRICANTE: TStringField;
+    QrEstoqueClasseNUM_GENERO_NCM: TStringField;
+    QrEstoqueClasseNUM_FABRICANTE: TStringField;
+    QEstoqueAConsQT_QUANTIDADE: TFloatField;
+    QBuscaLoteEstoque: TOracleDataSet1;
+    QBuscaLoteEstoqueCOD_LOTE_TIPO: TIntegerField;
+    QBuscaLoteEstoqueQT_QUANTIDADE: TFloatField;
+    QREstoque_InventarioCOD_LOTE_TIPO: TFloatField;
+    QREstoqueAgFilial: TOracleDataSet;
+    QREstoqueAgFilialCOD_PRODUTO: TFloatField;
+    QREstoqueAgFilialQT_QUANT: TFloatField;
+    QREstoqueAgFilialNUM_CLASSE: TIntegerField;
+    QREstoqueAgFilialNUM_SUBCLASSE: TIntegerField;
+    QREstoqueAgFilialCOD_CLASSE: TIntegerField;
+    QREstoqueAgFilialDESC_PRODUTO: TStringField;
+    QEstoqueVL_CUSTO_COMISSAO: TFloatField;
+    QContagemEstoque: TOracleDataSet1;
+    QContagemEstoqueCOD_CONTAGEM_ESTOQUE_CODBARRA: TIntegerField;
+    QContagemEstoqueCOD_PRODUTO: TIntegerField;
+    QContagemEstoqueCOD_LOTE_TIPO: TIntegerField;
+    QContagemEstoqueQT_QUANTIDADE: TIntegerField;
+    QContagemEstoqueDESC_PRODUTO: TStringField;
+    QContagemEstoqueCOD_FILIAL: TIntegerField;
+    QContagemEstoqueQT_ESTOQUE_ATUAL: TIntegerField;
+    QRContagemEstoque: TOracleDataSet;
+    QRContagemEstoqueCOD_CONTAGEM_ESTOQUE_CODBARRA: TIntegerField;
+    QRContagemEstoqueCOD_FILIAL: TIntegerField;
+    QRContagemEstoqueCOD_LOTE_TIPO: TIntegerField;
+    QRContagemEstoqueCOD_PRODUTO: TIntegerField;
+    QRContagemEstoqueDESC_PRODUTO: TStringField;
+    QRContagemEstoqueQT_QUANTIDADE: TIntegerField;
+    QRContagemEstoqueQT_ESTOQUE_ATUAL: TIntegerField;
+    QRContagemEstoquePOSITIVO: TFloatField;
+    QRContagemEstoqueDIFERENCA: TFloatField;
+    QrEstoqueClasse_EmbVAL_VAREJO: TFloatField;
+    QREstoqueInventariadoQT_INVENTARIO: TFloatField;
+    QEstoqueConsDT_ALTERACAO_PRECO: TDateTimeField;
+    QEstoqueCOD_USUARIO: TIntegerField;
+    procedure QEstoqueCalcFields(DataSet: TDataSet);
+    procedure QEstoqueBeforeEdit(DataSet: TDataSet);
+    procedure QEstoqueAfterInsert(DataSet: TDataSet);
+    procedure QEstoqueBeforePost(DataSet: TDataSet);
+    procedure QEstoqueBeforeInsert(DataSet: TDataSet);
+    procedure QNotaAConsCalcFields(DataSet: TDataSet);
+    procedure QEstoqueAConsCalcFields(DataSet: TDataSet);
+    procedure QEstoqueAConsAfterScroll(DataSet: TDataSet);
+    procedure QREstoque_InventarioCalcFields(DataSet: TDataSet);
+    procedure QRMovEstoqueProdutoCalcFields(DataSet: TDataSet);
+    procedure QEstoqueProducaoCalcFields(DataSet: TDataSet);
+    procedure QEstoqueProducaoAfterInsert(DataSet: TDataSet);
+    procedure QEstoqueProducaoQT_ESTOQUE_PRODUCAOValidate(Sender: TField);
+    procedure QEstoqueProducaoBeforePost(DataSet: TDataSet);
+    procedure QEstoqueConsCalcFields(DataSet: TDataSet);
+    procedure QREstoqueProducao2CalcFields(DataSet: TDataSet);
+    procedure QContagemEstoqueCalcFields(DataSet: TDataSet);
+    procedure QEstoqueMovBeforePost(DataSet: TDataSet);
+    procedure QEstoqueMovBeforeInsert(DataSet: TDataSet);
+    procedure QEstoqueMovBeforeEdit(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    fEstoque : Real;
+    fEstoque_Cons : Integer;   // Usado na Consulta Avançada do estoque
+    fInventario : Real;
+    fNrPagina : Integer;   // Usado na numeracao de pagina no inventario
+    fDt_inventario : String; // usado para calcular o estoque retroativo data de referencia inventario
+    Property pEstoque : Real Read fEstoque Write fEstoque;
+    Property pEstoque_Cons : Integer Read fEstoque_Cons Write fEstoque_Cons;  // usado na consulta avancada de estoque
+    Property pInventario : Real Read fInventario Write fInventario;
+    Property pNrPagina : Integer Read fNrPagina Write fNrPagina;
+    Property pDt_Inventario : String Read fDt_Inventario Write fDt_Inventario;
+    Procedure AtualizaEstoque(wOperacao,
+                              wCod_Filial : Integer;
+                              wCod_Produto : Real;
+                              wCod_Lote_Tipo: Integer;
+                              wQt_Quantidade,
+                              wVlrProduto : Real;
+                              wDtCompra,
+                              wDtVenda: TDateTime;
+                              pCadastro : String = '');
+    Procedure Atualiza_Estoque(wOperacao,
+                              wCod_Filial : Integer;
+                              wCod_Produto : Real;
+                              wCod_Lote_Tipo: Integer;
+                              wQt_Quantidade,
+                              wVlrProduto : Real;
+                              wDtCompra,
+                              wDtVenda: TDateTime;
+                              pCadastro : String = '');
+    procedure BuscaLotesEstoque(wFilial, wProduto: integer; wConsideraQT: boolean = true);
+  end;
+
+var
+  DMEstoque: TDMEstoque;
+  wold_qtd_inventario, wold_qtd_estoque, wold_vl_custo_medio:real;
+
+implementation
+
+uses UOracle_cl, UMoeda_cl, UUsuario_cl, UProduto_cl, UParamSistema_cl,
+  UOperacao_cl;
+
+{$R *.DFM}
+
+
+procedure TDMEstoque.QEstoqueCalcFields(DataSet: TDataSet);
+// var x, y: array of string;
+begin
+{  setLength(x, 3);
+  setLength(y, 3);
+
+  x[0] := 'SELECT DESC_PRODUTO FROM TB_PRODUTO WHERE COD_PRODUTO = '+FloatToStr(QEstoquecod_produto.value);
+  x[1] := 'SELECT DESC_FILIAL FROM TB_FILIAL WHERE COD_FILIAL = '+FloatToStr(QEstoquecod_filial.value);
+  x[2] := 'SELECT DESC_LOTE FROM TB_LOTE_TIPO WHERE COD_LOTE_TIPO = '+FloatToStr(QEstoquecod_lote_tipo.value);
+
+  DMOracle.BuscaNomes(x, y);
+
+  QEstoquedesc_produto.value:=Y[0];
+  QEstoquedesc_filial.value:=y[1];
+  QEstoquedesc_tipo_lote.value:=Y[2];
+}  
+end;
+
+procedure TDMEstoque.QEstoqueBeforeEdit(DataSet: TDataSet);
+begin
+  if not DMOracle.DBCemapa.InTransaction then
+     DMOracle.DBCemapa.StartTransaction;
+  wold_qtd_inventario:=Qestoqueqt_inventario.Value;
+  wold_qtd_estoque:=Qestoqueqt_quantidade.Value;
+  
+end;
+
+procedure TDMEstoque.QEstoqueAfterInsert(DataSet: TDataSet);
+begin
+  QEstoqueqt_quantidade.value:=0;
+  wold_qtd_estoque:=0;
+end;
+
+Procedure TDMEstoque.AtualizaEstoque(wOperacao,wCod_Filial: Integer; wCod_Produto : Real; wCod_Lote_Tipo:Integer;
+                                     wQt_Quantidade, wVlrProduto:Real;
+                                     wDtCompra,wDtVenda:TDateTime;
+                                     pCadastro : String = '');
+var wInd_Atu_Estoque, wInd_Tipo_Custo : String;
+    i : Integer;
+    wQtde_Baixar : Real;
+begin
+  // ********** OBSERVAÇÕES *************
+  (*
+    1. wOPERACAO = -1      Sempre Atualiza Custo e Estoque
+       Utilizado para atualizações de Estoque independente da Operação
+       Ex: Boletim ( Sistema Industrial ) - Não possui operação e sempre atualiza Estoque
+    2. wOPERACAO = -2      Sempre Atualiza Estoque nao atualiza custo
+       Utilizado para atualizações de Estoque independente da Operação
+       Ex: Boletim ( Sistema Industrial, implantacao de estoque ) - Não possui operação e sempre atualiza Estoque
+    3. wOperacao = -3      Somente atualiza Custo do produto (foi feito esta operacao para Diniz Filial 2
+  *)
+
+  If (DMParamSistema.QParamSistemaCod_Empresa.Value = 'CGS') then
+     If wCod_Filial <> 1 Then
+        wCod_Filial := 1;
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'ALIANCA' Then
+     If wCod_Filial <> 1 Then
+        wCod_Filial := 1;
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'DEION' Then
+     If wCod_Filial <> 1 Then
+        wCod_Filial := 1;
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'FURGOESMED' Then
+     If wCod_Filial <> 1 Then
+        wCod_Filial := 1;
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'STEIN' Then
+     If wCod_Filial <> 1 Then
+        wCod_Filial := 1;
+{  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'NIR' Then
+     If wCod_Filial = 5 Then
+        wCod_Filial := 1;} //Comentado 02/04/24. Solic. Marcos
+  QEstoque.AutoCalcFields := False;
+
+{ Comentado e movido para o final. Alex 27/02/2023
+  if (wCod_Produto > 0) and   // Se o produto for Serviço, não atualizar estoque.
+      (DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(wCod_Produto)) = 'SERVIÇO') then
+    Exit;}
+  // Verifica se Deve Atualizar Estoque
+  wInd_Atu_Estoque := DMOracle.BuscaNome('SELECT IND_ESTOQUE FROM TB_FILIAL',
+                                         'COD_FILIAL = ' + FloatToStr(wCod_Filial),True);
+  If wInd_Atu_Estoque = 'S' Then
+     wInd_Atu_Estoque := DMOracle.BuscaNome('SELECT IND_ESTOQUE FROM TB_OPERACAO',
+                                            'TB_OPERACAO.COD_OPERACAO = '+FloatToStr(wOperacao),True);
+  wInd_Tipo_Custo := DMOracle.BuscaNome('SELECT IND_CUSTO_NOTA FROM TB_OPERACAO',
+                                            'TB_OPERACAO.COD_OPERACAO = '+FloatToStr(wOperacao),True);
+  If wInd_Tipo_Custo = 'E' Then  // Significa que mantem o custo do estoque
+     wVlrProduto := 0;
+  If (wInd_Atu_Estoque = 'S') or (wOperacao = -1) or (wOperacao = -2) or (wOperacao = -3)  Then
+  begin
+    QEstoqueBaixar.Close;
+    QEstoqueBaixar.SetVariable('COD_PRODUTO',FloatToStr(wCod_Produto));
+    QEstoqueBaixar.Open;
+    If QEstoqueBaixarCod_Produto_Baixa.Text <> '' then
+     begin
+ //alterado Marcos 01/06/2011 p/ entrar prod.principal no estoque tbem nao só os a baixar
+      If ((DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TEMPERMED') OR
+          (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'PLOPES') OR
+          (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TOPGLASS')) then
+        Atualiza_Estoque(wOperacao,
+                        wCod_Filial,
+                        wCod_Produto,
+                        wCod_Lote_Tipo,
+                        wQt_Quantidade,
+                        wVlrProduto,
+                        wDtCompra,
+                        wDtVenda,
+                        pCadastro);
+
+      QEstoqueBaixar.First;
+      for i := 1 to QEstoqueBaixar.RecordCount do
+      begin
+        wCod_Produto  :=QEstoqueBaixarCod_produto_Baixa.Value;
+        wCod_Lote_Tipo:=QEstoqueBaixarCod_Lote_Tipo_Baixa.Value;
+        IF (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'TOPGLASS') then
+        Begin
+          if DMOracle.BuscaNome('SELECT IND_VENDAS FROM TB_OPERACAO','COD_OPERACAO ='+IntToStr(wOperacao)) = 'D' then
+            wQtde_Baixar := (wQt_Quantidade*QEstoqueBaixarQt_Baixa.Value)
+          else
+            wQtde_Baixar  :=(wQt_Quantidade*QEstoqueBaixarQt_Baixa.Value) * -1;
+        end
+        else
+          wQtde_Baixar  :=wQt_Quantidade*QEstoqueBaixarQt_Baixa.Value;
+        Atualiza_Estoque(wOperacao,
+                         wCod_Filial,
+                         wCod_Produto,
+                         wCod_Lote_Tipo,
+                         wQtde_Baixar,
+                         wVlrProduto,
+                         wDtCompra,
+                         wDtVenda,
+                         pCadastro);
+        QEstoqueBaixar.next;
+      end;
+      // Alterado por Dirceu 10/02/2001 para corrigir fantasmas
+      QEstoqueBaixar.Close;
+     end
+    Else
+    begin
+//Empresa Gesso WS irá utilizar produtos a baixar para os itens de mão de obra. Alex 27/02/2023
+    if (DMOracle.BuscaNome('SELECT IND_TIPO_PRODUTO FROM TB_PRODUTO', 'COD_PRODUTO = ' + FloatToStr(wCod_Produto)) <> 'SERVIÇO') then
+       Atualiza_Estoque(wOperacao,
+                        wCod_Filial,
+                        wCod_Produto,
+                        wCod_Lote_Tipo,
+                        wQt_Quantidade,
+                        wVlrProduto,
+                        wDtCompra,
+                        wDtVenda,
+                        pCadastro);
+    end;
+  End;
+  QEstoque.AutoCalcFields := True;
+end;
+
+procedure TDMEstoque.QEstoqueBeforePost(DataSet: TDataSet);
+var
+  wCod_Moeda_Custo :Double;
+  wCotacao :Double;
+begin
+  DMOracle.ValidaFilial(QEstoqueCOD_FILIAL.Text);
+  if (wold_qtd_inventario<>Qestoqueqt_inventario.value) And
+     (QestoqueDt_Inventario.Text = '') then
+  begin
+    QEstoquedt_inventario.value:=DMOracle.DataServ;
+  end;
+  wCod_Moeda_Custo := StrToFloat(DMOracle.BuscaNome('SELECT COD_MOEDA_CUSTO FROM TB_PARAM_SISTEMA','COD_MOEDA_CUSTO > 0'));
+  wCotacao := DMMoeda.MaiorCotacao(wCod_Moeda_Custo,DMOracle.DataServ );
+  if wCotacao > 0 then
+     QEstoqueVl_Custo_Dolar.Value := QEstoqueVl_Custo_Medio.Value / wCotacao
+  else
+    QEstoqueVl_Custo_Dolar.Value :=  0;
+  QEstoqueCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMEstoque.QEstoqueBeforeInsert(DataSet: TDataSet);
+begin
+  If Not DMOracle.DBCemapa.InTransaction then
+     DMOracle.DBCemapa.StartTransaction;
+  QEstoqueCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMEstoque.QNotaAConsCalcFields(DataSet: TDataSet);
+begin
+  If QNotaAConsInd_tipo.Value='COM_FUT' Then
+    QNotaAConsdesc_ind_tipo.Value:='COMPRA FUTURA';
+  If QNotaAConsInd_tipo.Value='VEN_FUT' Then
+    QNotaAConsdesc_ind_tipo.Value:='VENDA FUTURA';
+  If QNotaAConsInd_tipo.Value='EMP_FOR' Then
+    QNotaAConsdesc_ind_tipo.Value:='EMPRÉSTIMO FORNECEDOR';
+  If QNotaAConsInd_tipo.Value='EMP_CLI' Then
+    QNotaAConsdesc_ind_tipo.Value:='EMPRÉSTIMO CLIENTE';
+  If QNotaAConsInd_tipo.Value='CON_FOR' Then
+    QNotaAConsdesc_ind_tipo.Value:='CONSIGNAÇÃO FORNECEDOR';
+  If QNotaAConsInd_tipo.Value='CON_CLI' Then
+    QNotaAConsdesc_ind_tipo.Value:='CONSIGNAÇÃO CLIENTE';
+  If QNotaAConsInd_tipo.Value='DEP_EMP' Then
+    QNotaAConsdesc_ind_tipo.Value:='DEPÓSITO NA EMPRESA';
+  If QNotaAConsInd_tipo.Value='DEP_OUT' Then
+    QNotaAConsdesc_ind_tipo.Value:='DEPÓSITO OUTRAS EMPRESAS';
+end;
+
+procedure TDMEstoque.QEstoqueAConsCalcFields(DataSet: TDataSet);
+var
+  i:integer;
+begin
+  If pEstoque_Cons = 1 Then
+   Begin
+     QOrdemCACons.DisableControls;
+     QEstoqueAConsQtdeTotalOrdemC.Value:=0;
+     For i:=1 to QOrdemCACons.Recordcount do
+       Begin
+         QEstoqueAConsQtdeTotalOrdemC.Value:=QEstoqueAConsQtdeTotalOrdemC.Value+QOrdemCAconsQtde.Value;
+         QOrdemCACons.Next;
+       End;
+     QOrdemCACons.EnableControls;
+     If DMParamSistema.QParamSistemaCod_Empresa.Value <> 'ENCOPEL' Then
+     Begin
+       QPedidoACons.DisableControls;
+       QEstoqueAConsQtdeTotalPedido.Value:=0;
+       For i:=1 to QPedidoACons.Recordcount do
+         Begin
+           QEstoqueAConsQtdeTotalPedido.Value:=QEstoqueAConsQtdeTotalPedido.Value+QPedidoAconsQtde.Value;
+           QPedidoACons.Next;
+         End;
+       QPedidoACons.EnableControls;
+     End;
+  End;
+end;
+
+procedure TDMEstoque.QEstoqueAConsAfterScroll(DataSet: TDataSet);
+begin
+  If pEstoque_Cons = 1 Then
+  Begin
+    QNotaACons.Close;    // deixar setado esta opção para o calcfields e scrool da query qestoqueacons
+    QPedidoACons.Close;
+    QOrdemCACOns.Close;
+    QSomaPedido.Close;
+    QSomaNota.Close;
+    QSomaOrdemC.Close;
+    QNotaACons.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QSomaNota.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QPedidoACons.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QSomaPedido.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QOrdemCACons.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QSomaOrdemC.SetVariable('COD_FILIAL',QEstoqueAConsCod_Filial.Text);
+    QNotaACons.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QSomaNota.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QPedidoACons.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QSomaPedido.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QOrdemCACons.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QSomaOrdemC.SetVariable('COD_PRODUTO',QEstoqueAConsCod_Produto.Text);
+    QNotaACons.SetVariable('COD_LOTE_TIPO',QEstoqueAConsCod_Lote_Tipo.Text);
+    QSomaNota.SetVariable('COD_LOTE_TIPO',QEstoqueAConsCod_Lote_Tipo.Text);
+    QOrdemCACOns.Open;
+    QSomaOrdemC.Open;
+    If DMParamSistema.QParamSistemaCod_Empresa.Value <> 'ENCOPEL' Then
+     Begin
+       QNotaACons.Open;
+       QPedidoACons.Open;
+       QSomaPedido.Open;
+       QSomaNota.Open;
+     End;
+  End;
+end;
+
+Procedure TDMEstoque.Atualiza_Estoque(wOperacao,wCod_Filial : Integer; wCod_Produto : Real; wCod_Lote_Tipo : Integer;
+                                     wQt_Quantidade, wVlrProduto : Real;
+                                     wDtCompra,wDtVenda : TDateTime;
+                                     pCadastro : String = '');
+var wInd_Atu_Custo   : String;
+wVal_Fixo_Subst : Real;
+Begin
+  wVal_Fixo_Subst := 0;
+  try
+    QEstoque.AutoCalcFields := False;
+    QEstoque.Close;
+    QEstoque.SetVariable('COD_FILIAL',wCod_Filial);
+    QEstoque.SetVariable('COD_PRODUTO',wCod_Produto);
+    QEstoque.SetVariable('COD_LOTE_TIPO',wCod_Lote_Tipo);
+    QEstoque.Open;
+    if QEstoqueCod_Produto.Value > 0 then
+       QEstoque.Edit
+    else
+    begin
+      QEstoque.Insert;
+      QEstoqueCod_Filial.Value   := wCod_Filial;
+      QEstoqueCod_Produto.Value  := wCod_Produto;
+      QEstoqueCod_Lote_Tipo.Value:= wCod_Lote_Tipo;
+    end;
+
+    // Atualização de Custo
+    If wOperacao > 0 Then
+       wInd_Atu_Custo := DMOracle.BuscaNome('SELECT IND_CUSTO FROM TB_OPERACAO',
+                                         'TB_OPERACAO.COD_OPERACAO = '+FloatToStr(wOperacao),True);
+    If (wInd_Atu_Custo = 'S') or (wOperacao = -1) or (wOperacao = -3)  then
+    begin
+      if (wQt_Quantidade > 0) and (wVlrProduto < 0) then
+         raise Exception.Create('Valor negativo para quantidade positivo!');
+      if (wQt_Quantidade < 0) and (wVlrProduto > 0) then
+         raise Exception.Create('Valor positivo para quantidade negativo!');
+      if wQt_Quantidade > 0 then
+         if wVlrProduto <> 0 then
+            QEstoqueVl_Ultimo_Custo.Value := wVlrProduto/wQt_Quantidade;
+      if ((QEstoqueQt_Quantidade.Value + wQt_Quantidade) >= -0.02) And
+         ((QEstoqueQt_Quantidade.Value + wQt_Quantidade) <= 0.02) and
+         (DMParamSistema.QParamSistemaCOD_EMPRESA.Value <> 'ITATIBA') then
+         QEstoqueVl_Custo_Medio.Value := 0
+      else
+         if (wVlrProduto <> 0) and ((QEstoqueQt_Quantidade.Value+wQt_Quantidade) > 0) then
+            QEstoqueVl_Custo_Medio.Value := (QEstoqueVl_Custo_Medio.Value*QEstoqueQt_Quantidade.Value+wVlrProduto)/(QEstoqueQt_Quantidade.Value+wQt_Quantidade);
+
+         if QEstoqueVl_Custo_Medio.Value < 0 then //Dava erro quando o calculo do custo ficava negativo. Vanessa 02/08/2016
+            QEstoqueVl_Custo_Medio.Value := 0;
+
+      If (DMParamSistema.QParamSistemaInd_Custo.Value = 'ULTIMO') And (wVlrProduto > 0) Then   // ESTOQUE PELO ULTIMO CUSTO
+         If wQt_Quantidade > 0 Then
+            QEstoqueVl_Custo_Medio.Value := wVlrProduto/wQt_Quantidade
+         Else
+            QEstoqueVl_Custo_Medio.Value := wVlrProduto;
+      If wOperacao = -3 Then // somente atualiza custo medio
+       Begin
+         QEstoqueVl_Custo_Medio.Value := wVlrProduto;
+         QEstoqueVl_Ultimo_Custo.Value := wVlrProduto;
+       End;
+    //  if DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'RETIFOZ' then
+     // Begin
+    //    wVal_Fixo_Subst := ((((((wVlrProduto/wQt_quantidade) * 184.35)/100)*18)/100) - (((wVlrProduto/wQt_quantidade)*12)/100));
+     //   DMOracle.QExecSQL.SQL.Clear;
+     //   DMOracle.QExecSQL.SQL.Add('UPDATE TB_ESTOQUE SET VAL_SUBST_FIXA = '+ FLoatToStr(Trunc(wVal_Fixo_Subst)));
+     //   DMOracle.QExecSQL.SQL.Add('WHERE COD_PRODUTO = ' + FloatToStr(wCod_Produto));
+     //   DMOracle.QExecSQL.ExecSQL;
+     // End;
+
+    end;
+    // Fim Atualização de Custo
+    // Atualizar Estoque
+
+    QEstoqueQt_Quantidade.Value := (QEstoqueQt_Quantidade.Value) + (wQt_Quantidade);
+    if DMOracle.BuscaNome('SELECT IND_ESTOQUE_NEGATIVO FROM TB_FILIAL', 'COD_FILIAL = ' + inttostr(wCod_Filial)) = 'NAO' then
+      if QEstoqueQt_Quantidade.Value < 0 then
+      begin
+        raise Exception.Create('Erro! O Estoque não pode ficar negativo!'+#13+'Produto: '+FloatToStr(wCod_Produto)+'  Estoque= '+QEstoqueQt_Quantidade.Text);
+      end;
+    If (wDtCompra > 0) and (wQt_Quantidade>0) And (DMOperacao.QOperacaoInd_Compras.Value = 'C') then
+    begin
+      QEstoqueDt_Compra.Value := wDtCompra;
+      QEstoqueQt_Compra.Value := wQt_Quantidade;
+      If pCadastro <> '' Then
+         QEstoqueCod_Ultimo_Fornecedor.Value := StrToInt(pCadastro);
+    end;
+    if wDtVenda > 0 then
+       QEstoqueDt_Venda.Value := wDtVenda;
+    QEstoque.Post;
+    QEstoque.AutoCalcFields := True;
+  except
+     QEstoque.AutoCalcFields := True;
+     raise;
+  end;
+end;
+
+procedure TDMEstoque.QREstoque_InventarioCalcFields(DataSet: TDataSet);
+Var wEntrada,wSaida : String;
+begin
+ If StrToDate(pDt_Inventario) <> Date Then
+  Begin
+    wEntrada := DMOracle.BuscaNome('SELECT SUM(QT_QUANTIDADE) FROM TB_NOTA_CAB A,TB_NOTA_ITEM B,TB_OPERACAO C','A.COD_NOTA_CAB=B.COD_NOTA_CAB AND A.COD_OPERACAO=C.COD_OPERACAO AND A.IND_SITUACAO ='+
+                                  Chr(39) + '2' + Chr(39) + ' AND C.IND_TIPO_OPERACAO = ' + Chr(39) + 'E' + Chr(39) +
+                                  ' AND C.IND_ESTOQUE = ' + Chr(39) + 'S' + Chr(39) + ' AND A.COD_FILIAL = ' + QREstoque_InventarioCod_Filial.Text+
+                                  ' AND B.COD_PRODUTO = ' + QREstoque_InventarioCod_Produto.Text +
+                                  ' AND B.COD_LOTE_TIPO = ' + QREstoque_InventarioCod_Lote_Tipo.Text +
+                                  ' AND A.DT_RECEBIMENTO > ' + Chr(39) + pDt_Inventario + Chr(39));
+    wSaida := DMOracle.BuscaNome('SELECT SUM(QT_QUANTIDADE) FROM TB_NOTA_CAB A,TB_NOTA_ITEM B,TB_OPERACAO C','A.COD_NOTA_CAB=B.COD_NOTA_CAB AND A.COD_OPERACAO=C.COD_OPERACAO AND A.IND_SITUACAO ='+
+                                  Chr(39) + '2' + Chr(39) + ' AND C.IND_TIPO_OPERACAO = ' + Chr(39) + 'S' + Chr(39) +
+                                  ' AND C.IND_ESTOQUE = ' + Chr(39) + 'S' + Chr(39) + ' AND A.COD_FILIAL = ' + QREstoque_InventarioCod_Filial.Text+
+                                  ' AND B.COD_PRODUTO = ' + QREstoque_InventarioCod_Produto.Text +
+                                  ' AND B.COD_LOTE_TIPO = ' + QREstoque_InventarioCod_Lote_Tipo.Text +
+                                  ' AND A.DT_RECEBIMENTO > ' + Chr(39) + pDt_Inventario + Chr(39));
+  End;
+ QrEstoque_InventarioQt_Quantidade.Value := QrEstoque_InventarioQt_Quant.Value;
+ If wEntrada <> '' Then
+    QrEstoque_InventarioQt_Quantidade.Value := QrEstoque_InventarioQt_Quantidade.Value - StrToFloat(wEntrada);
+ If wSaida <> '' Then
+    QrEstoque_InventarioQt_Quantidade.Value := QrEstoque_InventarioQt_Quantidade.Value + StrToFloat(wSaida);
+end;
+
+procedure TDMEstoque.QRMovEstoqueProdutoCalcFields(DataSet: TDataSet);
+begin
+  If QRMovEstoqueProdutoDescricao.Value = 'PARCERIA' Then
+   Begin
+     QRMovEstoqueProdutoDesc_Filial.Value := DMOracle.BuscaNome('SELECT NOME FROM TB_CADASTRO',
+                                            'COD_CADASTRO = '+QRMovEstoqueProdutoCod_Filial.Text,True);
+     QRMovEstoqueProdutoQt_Estoque.Value := 0;//QRMovEstoqueProdutoQt_Entrada.Value - QRMovEstoqueProdutoQt_Saida.Value;
+   End
+  Else
+   Begin
+     QRMovEstoqueProdutoDesc_Filial.Value := QRMovEstoqueProdutoDescricao.Value;
+     QRMovEstoqueProdutoQt_Estoque.Value := QRMovEstoqueProdutoQt_Estoque_Sql.Value;
+   end;
+end;
+
+procedure TDMEstoque.QEstoqueProducaoCalcFields(DataSet: TDataSet);
+begin
+  if FloatToStr(QEstoqueProducaocod_produto.value) <> '' then
+    QEstoqueProducaodesc_produto.value:=DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO = '+FloatToStr(QEstoqueProducaocod_produto.value),True);
+  if FloatToStr(QEstoqueProducaocod_filial.value) <> '' then
+    QEstoqueProducaodesc_filial.value:=DMOracle.BuscaNome('SELECT DESC_FILIAL FROM TB_FILIAL','COD_FILIAL = '+FloatToStr(QEstoqueProducaocod_filial.value),True);
+  if FloatToStr(QEstoqueProducaocod_Lote_Tipo.value) <> '' then
+    QEstoqueProducaodesc_tipo_lote.value:=DMOracle.BuscaNome('SELECT DESC_LOTE FROM TB_LOTE_TIPO','COD_LOTE_TIPO='+FloatToStr(QEstoqueProducaocod_Lote_Tipo.value),True);
+  if FloatToStr(QEstoqueProducaocod_origem_Producao.value) <> '' then
+    QEstoqueProducaodesc_origem_producao.value:=DMOracle.BuscaNome('SELECT DESC_ORIGEM_PRODUCAO FROM TB_ORIGEM_PRODUCAO','COD_ORIGEM_PRODUCAO = '+FloatToStr(QEstoqueProducaocod_origem_Producao.value),True);
+end;
+
+procedure TDMEstoque.QEstoqueProducaoAfterInsert(DataSet: TDataSet);
+begin
+ { QEstoqueProducaoCod_Usuario.Value  :=DMUsuario.CodUsuarioCorrente;
+  QEstoqueProducaoDt_Lancamento.Value  :=Date;
+  QEstoqueProducaoCod_Filial.Value :=1;
+  QEstoqueProducaoCod_Lote_Tipo.Value :=1;   }
+end;
+
+procedure TDMEstoque.QEstoqueProducaoQT_ESTOQUE_PRODUCAOValidate(
+  Sender: TField);
+//var wQtPalete :Integer;
+begin
+{  if QEstoqueProducaoCod_Produto.Text <> '' then
+    if QEstoqueProducaoQt_Estoque_Producao.Text <> '' then
+    begin
+      wQtPalete:=StrToInt(DMOracle.BuscaNome('SELECT NUM_CX_PALETE FROM TB_PRODUTO','COD_PRODUTO = '+QEstoqueProducaoCod_Produto.Text));
+      if  QEstoqueProducaoQt_Estoque_Producao.Value > wQtPalete then
+        ShowMessage('Quantidade Informada superior a quantidade do Palete')
+      else
+        if  QEstoqueProducaoQt_Estoque_Producao.Value < wQtPalete then
+          ShowMessage('Quantidade Informada inferior a quantidade do Palete');
+    end;
+}    
+end;
+
+procedure TDMEstoque.QEstoqueProducaoBeforePost(DataSet: TDataSet);
+var wSituacao:String;
+begin
+  wSituacao := DMOracle.BuscaNome('SELECT IND_SITUACAO FROM TB_PRODUTO',' COD_PRODUTO = '+
+                                  QEstoqueProducaoCod_Produto.Text,True);
+  if wSituacao = 'FORA DE LINHA' then
+    raise exception.create('Produto = '+QEstoqueProducaoCod_Produto.Text+' fora de Linha');
+end;
+
+procedure TDMEstoque.QEstoqueConsCalcFields(DataSet: TDataSet);
+Var wAux : String;
+begin
+  If DMParamSistema.QParamSistemaCod_Empresa.Value = 'RADIO' Then
+   Begin
+     wAux := DMOracle.BuscaNome('SELECT SUM(TB_NOTA_AUX.QT_NOTA_ITEM - TB_NOTA_AUX.QT_ATENDIDO - TB_NOTA_AUX.QT_CANCELADO - TB_NOTA_AUX.QT_DEVOLVIDO) FROM TB_NOTA_AUX,TB_NOTA_ITEM',
+             ' TB_NOTA_ITEM.COD_NOTA_ITEM = TB_NOTA_AUX.COD_NOTA_ITEM AND TB_NOTA_AUX.COD_PRODUTO = '+ QEstoqueConsCod_Produto.Text + ' And IND_TIPO='+Chr(39) + 'VEN_FUT'+Chr(39) + ' AND COD_LOTE_TIPO='+
+               QEstoqueConsCod_Lote_Tipo.Text);
+     If wAux <> '' Then
+        QEstoqueConsQt_Futura.Value := StrToFloat(wAux);
+     wAux := DMOracle.BuscaNome('SELECT SUM(QT_PEDIDO - QT_ATENDIDO - QT_CANCELADO) FROM TB_ORDEM_COMPRA_ITEM',' COD_PRODUTO = '+
+                                  QEstoqueConsCod_Produto.Text);
+     If wAux <> '' Then
+        QEstoqueConsQt_Ordem_Compra.Value := StrToFloat(wAux);
+     QEstoqueConsQt_Saldo.Value := QEstoqueConsQt_Quantidade.Value + QEstoqueConsQt_Ordem_Compra.Value - QEstoqueConsQt_Futura.Value;
+   End;
+//   If DMParamSistema.QParamSistemaCod_Empresa.Value = 'INSIDE' Then
+//     QEstoqueConsdesc_localizacao.Value := DMOracle.BuscaNome('SELECT DESC_LOCALIZACAO FROM TB_PRODUTO','COD_PRODUTO='+QEstoqueConsCOD_PRODUTO.Text);
+
+end;
+
+procedure TDMEstoque.QREstoqueProducao2CalcFields(DataSet: TDataSet);
+var
+wVol :real;
+begin
+  wVol := StrToFloat(DMOracle.BuscaNome('SELECT NUM_VOLUMES FROM TB_PRODUTO','COD_PRODUTO = '+ QREstoqueProducao2COD_PRODUTO.Text,True));
+
+  If (DMParamSistema.QParamSistemaCOD_EMPRESA.Value = 'CGS') Then
+    If wVol > 1 then
+      DMEstoque.QREstoqueProducao2QT_QUANTIDADE_PRODUCAO.Value := DMEstoque.QREstoqueProducao2QT_QUANTIDADE_PRODUCAO.Value / wVol;
+end;
+
+procedure TDMEstoque.BuscaLotesEstoque(wFilial, wProduto: integer; wConsideraQT: boolean = true);
+begin
+  // Procedure utilizada para fazer baixa do estoque considerando todos os lotes do produto
+  // Retorna os lotes na ordem do mais antigo para o mais novo
+  // Popula a query QBuscaLoteEstoque com os dados
+
+  QBuscaLoteEstoque.Close;
+  QBuscaLoteEstoque.SetVariable('FILIAL', wFilial);
+  QBuscaLoteEstoque.SetVariable('PRODUTO', wProduto);
+  if wConsideraQT then
+    QBuscaLoteEstoque.SetVariable('QUANTIDADE', 'QT_QUANTIDADE > 0')
+  else
+    QBuscaLoteEstoque.SetVariable('QUANTIDADE', '1=1');
+  QBuscaLoteEstoque.Open;
+end;
+
+procedure TDMEstoque.QContagemEstoqueCalcFields(DataSet: TDataSet);
+begin
+  IF QContagemEstoqueCOD_PRODUTO.Text <> '' THEN
+    QContagemEstoquedesc_produto.Text := DMOracle.BuscaNome('SELECT DESC_PRODUTO FROM TB_PRODUTO','COD_PRODUTO = '+
+                                       QContagemEstoqueCOD_PRODUTO.Text);
+end;
+
+procedure TDMEstoque.QEstoqueMovBeforePost(DataSet: TDataSet);
+begin
+  DMOracle.ValidaFilial(QEstoqueMovCOD_FILIAL.Text);
+  QEstoqueMovCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMEstoque.QEstoqueMovBeforeInsert(DataSet: TDataSet);
+begin
+  QEstoqueMovCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+procedure TDMEstoque.QEstoqueMovBeforeEdit(DataSet: TDataSet);
+begin
+  QEstoqueMovCOD_USUARIO.Value := DMUsuario.CodUsuarioCorrente;
+end;
+
+end.

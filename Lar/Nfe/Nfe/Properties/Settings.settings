@@ -1,0 +1,150 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Nfe.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Nfe_homStatusServicoPR_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeStatusServicoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_prodStatusServidoPR_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeStatusServicoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_homRecepcaoPR_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRecepcaoPR_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRetRecepcaoPR_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeRetRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_homConsProtocoloPR_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeConsultaNF</Value>
+    </Setting>
+    <Setting Name="Nfe_prodConsProtocoloPR_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeConsultaNF</Value>
+    </Setting>
+    <Setting Name="Nfe_homCancelamentoPR_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeCancelamentoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_prodCancelamentoPR_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeCancelamentoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_homInutilizacaoPR_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeInutilizacaoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_prodInutilizacaoPR_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeInutilizacaoNF</Value>
+    </Setting>
+    <Setting Name="Nfe_homStatusServicoSP_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodStatusServicoSP_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.sp.gov.br/nfeweb/services/nfestatusservico.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homRecepcaoSP_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRecepcaoSP_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.sp.gov.br/nfeweb/services/nferecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homRetRecepcaoPR_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeRetRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_homRetRecepcaoSP_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRetRecepcaoSP_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.sp.gov.br/nfeweb/services/nferetrecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodConsProtocoloSP_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.pr.gov.br/NFENWebServices/services/nfeConsultaNF</Value>
+    </Setting>
+    <Setting Name="Nfe_homConsProtocoloSP_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nfeconsulta.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homCancelamentoSP_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodCancelamentoSP_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.sp.gov.br/nfeweb/services/nfecancelamento.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homInutilizacaoSP_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodInutilizacaoSP_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://nfe.fazenda.sp.gov.br/nfeweb/services/nfeinutilizacao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homStatusServicoScan_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeStatusServico/NfeStatusServico.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodStatusServicoScan_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeStatusServico/NfeStatusServico.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homRecepcaoScan_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeRecepcao/NfeRecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRecepcaoScan_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeRecepcao/NfeRecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homRetRecepcaoScan_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeRetRecepcao/NfeRetRecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRetRecepcaoScan_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeRetRecepcao/NfeRetRecepcao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homConsProtocoloScan_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeConsulta/NfeConsulta.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodConsProtocoloScan_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeConsulta/NfeConsulta.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homInutilizacaoScan_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeInutilizacao/NfeInutilizacao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodInutilizacaoScan_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeInutilizacao/NfeInutilizacao.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homCancelamentoScan_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://hom.nfe.fazenda.gov.br/SCAN/NfeCancelamento/NfeCancelamento.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_prodCancelamentoScan_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.scan.fazenda.gov.br/NfeCancelamento/NfeCancelamento.asmx</Value>
+    </Setting>
+    <Setting Name="Nfe_homStatusServicoMS_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeStatusServico</Value>
+    </Setting>
+    <Setting Name="Nfe_homRecepcaoMS_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_homRetRecepcaoMS_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeRetRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_homConsProtocoloMS_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeConsulta</Value>
+    </Setting>
+    <Setting Name="Nfe_homCancelamentoMS_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeCancelamento</Value>
+    </Setting>
+    <Setting Name="Nfe_homInutilizacaoMS_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://homologacao.nfe.ms.gov.br/homologacao/services/NfeInutilizacao</Value>
+    </Setting>
+    <Setting Name="Nfe_prodStatusServicoMS_NfeStatusServico" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeStatusServico</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRecepcaoMS_NfeRecepcao" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_prodRetRecepcaoMS_NfeRetRecepcaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeRetRecepcao</Value>
+    </Setting>
+    <Setting Name="Nfe_prodConsProtocoloMS_NfeConsultaService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeConsulta</Value>
+    </Setting>
+    <Setting Name="Nfe_prodCancelamentoMS_NfeCancelamentoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeCancelamento</Value>
+    </Setting>
+    <Setting Name="Nfe_prodInutilizacaoMS_NfeInutilizacaoService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://producao.nfe.ms.gov.br/producao/services/NfeInutilizacao</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

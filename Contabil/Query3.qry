@@ -1,0 +1,16 @@
+Ver 2.0,QBE - Integra Visual Database Builder,0, 10, 1600, 1106,,,,,
+ , , - Distinct & Quote,,,,,
+    1, - Number of Tables,-1, -1, 463, 333, 455, 123,,,,
+TB_HISTORICO_CONTABIL,TB_HISTORICO_CONTABIL,20, 10, 137, 135,,,,,
+    2, - Number of Columns,,,,,,
+COD_HISTORICO_CONTABIL,TB_HISTORICO_CONTABIL,                   1,     , ,,,
+     , - Number of Criteria,,,,,,
+DESC_HISTORICO_CONTABIL,TB_HISTORICO_CONTABIL,                   1,     , ,,,
+     , - Number of Criteria,,,,,,
+     , - Number of Joins,,,,,,
+
+"SELECT Statement"
+,,,,,,,
+SELECT	TB_HISTORICO_CONTABIL."COD_HISTORICO_CONTABIL" , 
+	TB_HISTORICO_CONTABIL."DESC_HISTORICO_CONTABIL"
+FROM	"TB_HISTORICO_CONTABIL" TB_HISTORICO_CONTABIL,,,,,,,

@@ -1,0 +1,28 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+LCID=0x416 0x0 0x0 ; Português (brasileiro)
+REPORT=Yes
+TITLE=Patrimonio
+HLP=P_Patrimonio.hlp
+
+[FILES]
+P_Patrimonio.rtf
+
+[MAP]
+Botao_Click=9
+cad_atividade=11
+cad_os=13
+cad_procedimento=12
+Cadastro_Ficha_Tecnica=4
+cadastro_funcionarios=6
+Cadastro_Patrimonio=2
+cadastro_prioridades=7
+Cadastro_Tipo_Equipamento=3
+categoria_profissional=5
+Forma_Operacao_Sistema=10
+Menu_Patrimonio=1
+tipo_servico=8
+
+[BAGGAGE]
+P_Patrimonio.rtf

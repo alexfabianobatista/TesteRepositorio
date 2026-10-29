@@ -1,0 +1,66 @@
+unit UDescontoAgricola_cl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, DBTables, OracleData, OraTeste;
+
+type
+  TDMDescontoAgricola = class(TDataModule)
+    QDescAgrCons: TOracleDataSet1;
+    QDescAgrConsPERC_UMIDADE: TFloatField;
+    QDescAgrConsCOD_PRODUTO: TFloatField;
+    QDescAgrConsPERC_DESCONTO: TFloatField;
+    QDescAgr: TOracleDataSet1;
+    QDescAgrCOD_PRODUTO: TFloatField;
+    QDescAgrPERC_UMIDADE: TFloatField;
+    QDescAgrPERC_DESCONTO: TFloatField;
+    QRDescAgr: TOracleDataSet1;
+    QDescAgrCOD_FILIAL: TIntegerField;
+    QDescAgrConsCOD_FILIAL: TIntegerField;
+    QRDescAgrCOD_PRODUTO: TFloatField;
+    QRDescAgrCOD_FILIAL: TIntegerField;
+    QRDescAgrPERC_UMIDADE: TFloatField;
+    QRDescAgrPERC_DESCONTO: TFloatField;
+    QDescAgrConsDESC_PRODUTO: TStringField;
+    QRDescAgrDESC_PRODUTO: TStringField;
+    QDescAgrCOD_USUARIO: TIntegerField;
+    procedure QDescAgrAfterPost(DataSet: TDataSet);
+    procedure QDescAgrBeforePost(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DMDescontoAgricola: TDMDescontoAgricola;
+
+implementation
+
+uses UOracle_cl,UUsuario_cl;
+
+{$R *.DFM}
+
+procedure TDMDescontoAgricola.QDescAgrAfterPost(DataSet: TDataSet);
+Var wCodigo ,wUmidade : Real;
+    wFilial : Integer;
+begin
+  wCodigo := QDescAgrCod_Produto.Value;
+  wUmidade := QDescAgrPerc_Umidade.Value;
+  wFilial := QDescAgrCod_Filial.Value;
+  QDescAgr.Close;
+  QDescAgr.SetVariable('PK',wCodigo);
+  QDescAgr.SetVariable('UMIDADE',wUmidade);
+  QDescAgr.SetVariable('FILIAL',wFilial);
+  QDescAgr.Open;
+end;
+
+procedure TDMDescontoAgricola.QDescAgrBeforePost(DataSet: TDataSet);
+begin
+  DMOracle.ValidaFilial(QDescAgrCOD_FILIAL.Text);
+  QDescAgrCOD_USUARIO.Value := dmusuario.codusuariocorrente;
+end;
+
+end.

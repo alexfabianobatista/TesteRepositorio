@@ -1,0 +1,248 @@
+object DMSuporte: TDMSuporte
+  OldCreateOrder = False
+  Left = 352
+  Top = 126
+  Height = 150
+  Width = 324
+  object QSuporte: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT TB_SUPORTE.*, ROWID FROM'
+      'TB_SUPORTE'
+      'WHERE TB_SUPORTE.COD_SUPORTE = :PK')
+    Variables.Data = {0300000001000000030000003A504B050000000000000000000000}
+    SequenceField.Field = 'COD_SUPORTE'
+    SequenceField.Sequence = 'SQSUPORTE'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000130000000B000000434F445F5355504F5254450100000000000C0000
+      00434F445F434144415354524F010000000000090000004E4F4D455F54454C41
+      0100000000000A000000434F445F46554E43414F01000000000014000000434F
+      445F414E414C495354415F5355504F5254450100000000000B0000004E4F4D45
+      5F4D4F44554C4F0100000000000B00000044545F414245525455524101000000
+      00000C0000004E4F4D455F434F4E5441544F0100000000000D00000044455343
+      5F50524F424C454D4100000000000011000000444553435F5449504F5F535550
+      4F5254450100000000000C000000444553435F534F4C5543414F000000000000
+      0D00000044545F46454348414D454E544F0100000000000C000000494E445F53
+      4954554143414F0100000000000F000000444553435F4F42534552564143414F
+      0000000000000E000000494E445F5052494F5249444144450100000000001200
+      0000494E445F415455414C495F454E56494144410100000000000B0000004454
+      5F48525F454E56494F0100000000000E000000434F445F434F4D4D49545F5356
+      4E0100000000000B000000434F445F5553554152494F010000000000}
+    Session = DMOracle.DBCemapa
+    AfterInsert = QSuporteAfterInsert
+    BeforePost = QSuporteBeforePost
+    Left = 40
+    Top = 24
+    object QSuporteCOD_SUPORTE: TIntegerField
+      FieldName = 'COD_SUPORTE'
+      Required = True
+    end
+    object QSuporteCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QSuporteNOME_TELA: TStringField
+      FieldName = 'NOME_TELA'
+      Required = True
+      Size = 30
+    end
+    object QSuporteCOD_FUNCAO: TIntegerField
+      FieldName = 'COD_FUNCAO'
+    end
+    object QSuporteCOD_ANALISTA_SUPORTE: TIntegerField
+      FieldName = 'COD_ANALISTA_SUPORTE'
+      Required = True
+    end
+    object QSuporteNOME_MODULO: TStringField
+      FieldName = 'NOME_MODULO'
+      Required = True
+      Size = 30
+    end
+    object QSuporteDT_ABERTURA: TDateTimeField
+      FieldName = 'DT_ABERTURA'
+      Required = True
+    end
+    object QSuporteNOME_CONTATO: TStringField
+      FieldName = 'NOME_CONTATO'
+      Required = True
+      Size = 45
+    end
+    object QSuporteDESC_PROBLEMA: TMemoField
+      FieldName = 'DESC_PROBLEMA'
+      Required = True
+      BlobType = ftOraClob
+    end
+    object QSuporteDESC_TIPO_SUPORTE: TStringField
+      FieldName = 'DESC_TIPO_SUPORTE'
+      Required = True
+      Size = 30
+    end
+    object QSuporteDESC_SOLUCAO: TMemoField
+      FieldName = 'DESC_SOLUCAO'
+      BlobType = ftOraClob
+    end
+    object QSuporteDT_FECHAMENTO: TDateTimeField
+      FieldName = 'DT_FECHAMENTO'
+    end
+    object QSuporteDESC_OBSERVACAO: TMemoField
+      FieldName = 'DESC_OBSERVACAO'
+      BlobType = ftOraClob
+    end
+    object QSuporteIND_PRIORIDADE: TIntegerField
+      FieldName = 'IND_PRIORIDADE'
+      Required = True
+    end
+    object QSuporteIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+    end
+    object QSuporteIND_ATUALI_ENVIADA: TStringField
+      FieldName = 'IND_ATUALI_ENVIADA'
+      Size = 3
+    end
+    object QSuporteDT_HR_ENVIO: TDateTimeField
+      FieldName = 'DT_HR_ENVIO'
+    end
+    object QSuporteCOD_COMMIT_SVN: TIntegerField
+      FieldName = 'COD_COMMIT_SVN'
+    end
+    object QSuporteCOD_USUARIO: TIntegerField
+      FieldName = 'COD_USUARIO'
+    end
+  end
+  object QSuporteCons: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  S.COD_SUPORTE,'
+      '  C.NOME NOME_CLIENTE,'
+      '  U.NOME NOME_USUARIO,'
+      '  TO_CHAR(S.DESC_PROBLEMA) DESC_PROBLEMA,'
+      '  S.NOME_TELA,'
+      '  S.NOME_MODULO,'
+      '  S.IND_SITUACAO,'
+      '  S.DT_ABERTURA,'
+      '  S.DT_FECHAMENTO,'
+      '  S.DESC_TIPO_SUPORTE'
+      'FROM'
+      '  TB_SUPORTE S'
+      'LEFT JOIN'
+      '  TB_CADASTRO C'
+      'ON'
+      '  C.COD_CADASTRO = S.COD_CADASTRO'
+      'LEFT JOIN'
+      '  TB_USUARIO U'
+      'ON'
+      '  U.COD_USUARIO = S.COD_ANALISTA_SUPORTE'
+      'WHERE'
+      '(:COD_SUPORTE IS NULL OR'
+      '  S.COD_SUPORTE = :COD_SUPORTE)'
+      'AND'
+      '(:CADASTRO IS NULL OR'
+      '  S.COD_CADASTRO = :CADASTRO)'
+      'AND'
+      '(:USUARIO IS NULL OR'
+      '  S.COD_ANALISTA_SUPORTE = :USUARIO)'
+      'AND'
+      '(:TELA IS NULL OR'
+      '  S.NOME_TELA LIKE :TELA || '#39'%'#39')'
+      'AND'
+      '(:FUNCAO IS NULL OR'
+      '  S.COD_FUNCAO = :FUNCAO)'
+      'AND'
+      '(:MODULO IS NULL OR'
+      '  S.NOME_MODULO LIKE :MODULO || '#39'%'#39')'
+      'AND'
+      '(:DT_ABERTURA_I IS NULL OR :DT_ABERTURA_F IS NULL OR'
+      '  S.DT_ABERTURA BETWEEN :DT_ABERTURA_I AND :DT_ABERTURA_F)'
+      'AND'
+      '(:DT_FECHAMENTO_I IS NULL OR :DT_FECHAMENTO_F IS NULL OR'
+      '  S.DT_FECHAMENTO BETWEEN :DT_FECHAMENTO_I AND :DT_FECHAMENTO_F)'
+      'AND'
+      '(:PROBLEMA IS NULL OR'
+      '  S.DESC_PROBLEMA LIKE '#39'%'#39' || :PROBLEMA || '#39'%'#39')'
+      'AND'
+      '(:TIPO_SUPORTE IS NULL OR'
+      '  S.DESC_TIPO_SUPORTE = :TIPO_SUPORTE)'
+      'AND'
+      '(:PRIORIDADE IS NULL OR'
+      '  S.IND_PRIORIDADE = :PRIORIDADE)'
+      'AND'
+      '(:SITUACAO IS NULL OR'
+      '  S.IND_SITUACAO = :SITUACAO)'
+      'ORDER BY'
+      '  IND_PRIORIDADE,'
+      '  DT_ABERTURA'
+      ''
+      ''
+      '')
+    Variables.Data = {
+      030000000E0000000C0000003A434F445F5355504F5254450300000000000000
+      00000000090000003A434144415354524F030000000000000000000000080000
+      003A5553554152494F030000000000000000000000050000003A54454C410500
+      00000000000000000000070000003A46554E43414F0300000000000000000000
+      00070000003A4D4F44554C4F0500000000000000000000000E0000003A44545F
+      41424552545552415F490C00000000000000000000000E0000003A44545F4142
+      4552545552415F460C0000000000000000000000100000003A44545F46454348
+      414D454E544F5F490C0000000000000000000000100000003A44545F46454348
+      414D454E544F5F460C0000000000000000000000090000003A50524F424C454D
+      410500000000000000000000000D0000003A5449504F5F5355504F5254450500
+      000000000000000000000B0000003A5052494F52494441444503000000000000
+      0000000000090000003A534954554143414F050000000000000000000000}
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      040000000A000000090000004E4F4D455F54454C410100000000000B0000004E
+      4F4D455F4D4F44554C4F0100000000000C000000494E445F534954554143414F
+      0100000000000C0000004E4F4D455F434C49454E54450100000000000C000000
+      4E4F4D455F5553554152494F0100000000000B000000434F445F5355504F5254
+      450100000000000D000000444553435F50524F424C454D410100000000000B00
+      000044545F41424552545552410100000000000D00000044545F46454348414D
+      454E544F01000000000011000000444553435F5449504F5F5355504F52544501
+      0000000000}
+    Session = DMOracle.DBCemapa
+    Left = 152
+    Top = 24
+    object QSuporteConsNOME_CLIENTE: TStringField
+      FieldName = 'NOME_CLIENTE'
+      Size = 60
+    end
+    object QSuporteConsNOME_USUARIO: TStringField
+      FieldName = 'NOME_USUARIO'
+      Size = 30
+    end
+    object QSuporteConsNOME_TELA: TStringField
+      FieldName = 'NOME_TELA'
+      Required = True
+      Size = 30
+    end
+    object QSuporteConsNOME_MODULO: TStringField
+      FieldName = 'NOME_MODULO'
+      Required = True
+      Size = 30
+    end
+    object QSuporteConsCOD_SUPORTE: TIntegerField
+      FieldName = 'COD_SUPORTE'
+      Required = True
+    end
+    object QSuporteConsDESC_PROBLEMA: TStringField
+      FieldName = 'DESC_PROBLEMA'
+      Size = 4000
+    end
+    object QSuporteConsDT_ABERTURA: TDateTimeField
+      FieldName = 'DT_ABERTURA'
+      Required = True
+    end
+    object QSuporteConsDT_FECHAMENTO: TDateTimeField
+      FieldName = 'DT_FECHAMENTO'
+      Required = True
+    end
+    object QSuporteConsIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Required = True
+    end
+    object QSuporteConsDESC_TIPO_SUPORTE: TStringField
+      FieldName = 'DESC_TIPO_SUPORTE'
+      Required = True
+      Size = 30
+    end
+  end
+end

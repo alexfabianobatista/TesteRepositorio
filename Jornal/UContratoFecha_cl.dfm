@@ -1,0 +1,400 @@
+object DMContratoFecha: TDMContratoFecha
+  OldCreateOrder = False
+  Left = 357
+  Top = 167
+  Height = 363
+  Width = 382
+  object QGeraCRCad: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '  ROWID,'
+      '  COD_CONTA_RECEBER_CAB,'
+      '  COD_FINALIDADE,'
+      '  COD_BANCO_AGENCIA,'
+      '  COD_FILIAL,'
+      '  NUM_TITULO,'
+      '  NUM_PARCELA,'
+      '  DESC_TIPO_DOCUMENTO,'
+      '  DT_MOVIMENTO,'
+      '  DT_BAIXA,'
+      '  DT_VENCIMENTO,'
+      '  DT_EMISSAO,'
+      '  DT_CAPITALIZACAO,'
+      '  DT_CAPITALIZACAO_MOEDA,'
+      '  VAL_TITULO,'
+      '  VAL_NEGOCIO,'
+      '  IND_ACEITE,'
+      '  IND_SITUACAO,'
+      '  DESC_OBSERVACAO,'
+      '  COD_NOTA_CAB,'
+      '  COD_CADASTRO,'
+      '  VAL_ORIGINAL,'
+      '  VAL_PROMISSORIA,'
+      '  VAL_JUROS,'
+      '  COD_DEPARTAMENTO,'
+      '  COD_CONTRATO_VEND,'
+      '  DESC_AVALISTA1,'
+      '  DESC_AVALISTA2,'
+      '  COD_VENDEDOR,'
+      '  COD_VENDEDOR1,'
+      '  PERC_COMISSAO,'
+      '  PERC_COMISSAO1,'
+      '  COD_NOSSO_NUMERO,'
+      '  IND_ENVIADO_BANCO,'
+      '  COD_CONTA_CORRENTE,'
+      '  COD_ORDEM_COMPRA_CAB,'
+      '  COD_OBRA_CONTRATO,'
+      '  IND_EMITIDO_CARNE,'
+      '  COD_OBRA_CONTRATO_MOV,'
+      '  NUM_OS,'
+      '  COD_ORDEM_SERVICO_CAB,'
+      '  DESC_OBS'
+      'FROM'
+      '  TB_CONTA_RECEBER_CAB'
+      'WHERE'
+      '  TB_CONTA_RECEBER_CAB.COD_CONTA_RECEBER_CAB = :PK')
+    Variables.Data = {0300000001000000030000003A504B030000000000000000000000}
+    SequenceField.Field = 'COD_CONTA_RECEBER_CAB'
+    SequenceField.Sequence = 'SQCONTA_RECEBER'
+    SequenceField.ApplyMoment = amOnNewRecord
+    QBEDefinition.QBEFieldDefs = {
+      04000000290000000A000000434F445F46494C49414C0100000000000C000000
+      434F445F434144415354524F0100000000000C000000434F445F56454E444544
+      4F520100000000000C000000494E445F534954554143414F0100000000001500
+      0000434F445F434F4E54415F524543454245525F4341420100000000000E0000
+      00434F445F46494E414C494441444501000000000011000000434F445F42414E
+      434F5F4147454E4349410100000000000A0000004E554D5F544954554C4F0100
+      000000000B0000004E554D5F50415243454C4101000000000013000000444553
+      435F5449504F5F444F43554D454E544F0100000000000C00000044545F4D4F56
+      494D454E544F0100000000000800000044545F42414958410100000000000D00
+      000044545F56454E43494D454E544F0100000000000A00000044545F454D4953
+      53414F0100000000001000000044545F4341504954414C495A4143414F010000
+      0000001600000044545F4341504954414C495A4143414F5F4D4F454441010000
+      0000000A00000056414C5F544954554C4F0100000000000B00000056414C5F4E
+      45474F43494F0100000000000A000000494E445F414345495445010000000000
+      0F000000444553435F4F42534552564143414F0100000000000C000000434F44
+      5F4E4F54415F4341420100000000000C00000056414C5F4F524947494E414C01
+      00000000000F00000056414C5F50524F4D4953534F5249410100000000000900
+      000056414C5F4A55524F5301000000000010000000434F445F44455041525441
+      4D454E544F01000000000011000000434F445F434F4E545241544F5F56454E44
+      0100000000000E000000444553435F4156414C49535441310100000000000E00
+      0000444553435F4156414C49535441320100000000000D000000434F445F5645
+      4E4445444F52310100000000000D000000504552435F434F4D495353414F0100
+      000000000E000000504552435F434F4D495353414F3101000000000010000000
+      434F445F4E4F53534F5F4E554D45524F01000000000011000000494E445F454E
+      564941444F5F42414E434F01000000000012000000434F445F434F4E54415F43
+      4F5252454E544501000000000014000000434F445F4F5244454D5F434F4D5052
+      415F43414201000000000011000000434F445F4F4252415F434F4E545241544F
+      01000000000011000000494E445F454D495449444F5F4341524E450100000000
+      0015000000434F445F4F4252415F434F4E545241544F5F4D4F56010000000000
+      060000004E554D5F4F5301000000000015000000434F445F4F5244454D5F5345
+      525649434F5F43414201000000000008000000444553435F4F42530100000000
+      00}
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    AfterOpen = QGeraCRCadAfterOpen
+    AfterClose = QGeraCRCadAfterClose
+    BeforeInsert = QGeraCRCadBeforeInsert
+    AfterInsert = QGeraCRCadAfterInsert
+    BeforeEdit = QGeraCRCadBeforeEdit
+    BeforePost = QGeraCRCadBeforePost
+    AfterPost = QGeraCRCadAfterPost
+    Left = 160
+    Top = 8
+    object QGeraCRCadCOD_CONTA_RECEBER_CAB: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_CAB'
+      Required = True
+    end
+    object QGeraCRCadCOD_FINALIDADE: TIntegerField
+      FieldName = 'COD_FINALIDADE'
+    end
+    object QGeraCRCadCOD_BANCO_AGENCIA: TIntegerField
+      FieldName = 'COD_BANCO_AGENCIA'
+    end
+    object QGeraCRCadCOD_FILIAL: TIntegerField
+      FieldName = 'COD_FILIAL'
+    end
+    object QGeraCRCadNUM_TITULO: TFloatField
+      FieldName = 'NUM_TITULO'
+    end
+    object QGeraCRCadNUM_PARCELA: TIntegerField
+      FieldName = 'NUM_PARCELA'
+    end
+    object QGeraCRCadDESC_TIPO_DOCUMENTO: TStringField
+      FieldName = 'DESC_TIPO_DOCUMENTO'
+      Size = 3
+    end
+    object QGeraCRCadDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+    end
+    object QGeraCRCadDT_BAIXA: TDateTimeField
+      FieldName = 'DT_BAIXA'
+    end
+    object QGeraCRCadDT_VENCIMENTO: TDateTimeField
+      FieldName = 'DT_VENCIMENTO'
+      Required = True
+    end
+    object QGeraCRCadDT_EMISSAO: TDateTimeField
+      FieldName = 'DT_EMISSAO'
+    end
+    object QGeraCRCadDT_CAPITALIZACAO: TDateTimeField
+      FieldName = 'DT_CAPITALIZACAO'
+    end
+    object QGeraCRCadDT_CAPITALIZACAO_MOEDA: TDateTimeField
+      FieldName = 'DT_CAPITALIZACAO_MOEDA'
+    end
+    object QGeraCRCadVAL_TITULO: TFloatField
+      FieldName = 'VAL_TITULO'
+    end
+    object QGeraCRCadVAL_NEGOCIO: TFloatField
+      FieldName = 'VAL_NEGOCIO'
+    end
+    object QGeraCRCadIND_ACEITE: TStringField
+      FieldName = 'IND_ACEITE'
+      Size = 3
+    end
+    object QGeraCRCadIND_SITUACAO: TStringField
+      FieldName = 'IND_SITUACAO'
+      Size = 13
+    end
+    object QGeraCRCadDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 50
+    end
+    object QGeraCRCadCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QGeraCRCadCOD_CADASTRO: TIntegerField
+      FieldName = 'COD_CADASTRO'
+      Required = True
+    end
+    object QGeraCRCadVAL_ORIGINAL: TFloatField
+      FieldName = 'VAL_ORIGINAL'
+    end
+    object QGeraCRCadVAL_PROMISSORIA: TFloatField
+      FieldName = 'VAL_PROMISSORIA'
+    end
+    object QGeraCRCadVAL_JUROS: TFloatField
+      FieldName = 'VAL_JUROS'
+    end
+    object QGeraCRCadCOD_DEPARTAMENTO: TIntegerField
+      FieldName = 'COD_DEPARTAMENTO'
+      Required = True
+    end
+    object QGeraCRCadCOD_CONTRATO_VEND: TIntegerField
+      FieldName = 'COD_CONTRATO_VEND'
+    end
+    object QGeraCRCadDESC_AVALISTA1: TStringField
+      FieldName = 'DESC_AVALISTA1'
+      Size = 40
+    end
+    object QGeraCRCadDESC_AVALISTA2: TStringField
+      FieldName = 'DESC_AVALISTA2'
+      Size = 40
+    end
+    object QGeraCRCadCOD_VENDEDOR: TIntegerField
+      FieldName = 'COD_VENDEDOR'
+    end
+    object QGeraCRCadCOD_VENDEDOR1: TIntegerField
+      FieldName = 'COD_VENDEDOR1'
+    end
+    object QGeraCRCadPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+      Required = True
+    end
+    object QGeraCRCadPERC_COMISSAO1: TFloatField
+      FieldName = 'PERC_COMISSAO1'
+      Required = True
+    end
+    object QGeraCRCadCOD_NOSSO_NUMERO: TStringField
+      FieldName = 'COD_NOSSO_NUMERO'
+      Size = 17
+    end
+    object QGeraCRCadIND_ENVIADO_BANCO: TStringField
+      FieldName = 'IND_ENVIADO_BANCO'
+      Size = 3
+    end
+    object QGeraCRCadCOD_CONTA_CORRENTE: TIntegerField
+      FieldName = 'COD_CONTA_CORRENTE'
+    end
+    object QGeraCRCadCOD_ORDEM_COMPRA_CAB: TIntegerField
+      FieldName = 'COD_ORDEM_COMPRA_CAB'
+    end
+    object QGeraCRCadCOD_OBRA_CONTRATO: TIntegerField
+      FieldName = 'COD_OBRA_CONTRATO'
+    end
+    object QGeraCRCadIND_EMITIDO_CARNE: TStringField
+      FieldName = 'IND_EMITIDO_CARNE'
+      Size = 3
+    end
+    object QGeraCRCadCOD_OBRA_CONTRATO_MOV: TIntegerField
+      FieldName = 'COD_OBRA_CONTRATO_MOV'
+    end
+    object QGeraCRCadNUM_OS: TIntegerField
+      FieldName = 'NUM_OS'
+    end
+    object QGeraCRCadCOD_ORDEM_SERVICO_CAB: TIntegerField
+      FieldName = 'COD_ORDEM_SERVICO_CAB'
+    end
+    object QGeraCRCadDESC_OBS: TStringField
+      FieldName = 'DESC_OBS'
+      Size = 1000
+    end
+  end
+  object QGeraCRMovCad: TOracleDataSet1
+    SQL.Strings = (
+      'SELECT'
+      '    ROWID,'
+      '    COD_CONTA_RECEBER_MOV,'
+      '    COD_CONTA_RECEBER_CAB,'
+      '    DT_MOVIMENTO,'
+      '    VAL_MOVIMENTO,'
+      '    DESC_OBSERVACAO,'
+      '    COD_USUARIO,'
+      '    DT_USUARIO,'
+      '    IND_TIPO_MOVIMENTO,'
+      '    COD_BCO_MOVIMENTO,'
+      '    COD_CAIXA_MOV,'
+      '    COD_LANCTO_CONTABIL_CRED,'
+      '    COD_LANCTO_CONTABIL_DEB,'
+      '    COD_NOTA_CAB,'
+      '    IND_DEVOLUCAO,'
+      '    IND_FORMA_PAGAMENTO,'
+      '    IND_TROCA'
+      'FROM'
+      '    TB_CONTA_RECEBER_MOV Tb_conta_receber_mov'
+      'WHERE'
+      
+        '     TB_CONTA_RECEBER_MOV.COD_CONTA_RECEBER_CAB = :COD_CONTA_REC' +
+        'EBER_CAB'
+      'ORDER  BY'
+      '    TB_CONTA_RECEBER_MOV.COD_CONTA_RECEBER_MOV'
+      ' '
+      ' '
+      ' ')
+    Variables.Data = {
+      0300000001000000160000003A434F445F434F4E54415F524543454245525F43
+      4142030000000000000000000000}
+    SequenceField.Field = 'COD_CONTA_RECEBER_MOV'
+    SequenceField.Sequence = 'SQCONTA_RECEBER_MOV'
+    SequenceField.ApplyMoment = amOnNewRecord
+    OracleDictionary.DefaultValues = True
+    QBEDefinition.QBEFieldDefs = {
+      040000001000000015000000434F445F434F4E54415F524543454245525F4D4F
+      5601000000000015000000434F445F434F4E54415F524543454245525F434142
+      0100000000000C00000044545F4D4F56494D454E544F0100000000000D000000
+      56414C5F4D4F56494D454E544F0100000000000F000000444553435F4F425345
+      52564143414F0100000000000B000000434F445F5553554152494F0100000000
+      000A00000044545F5553554152494F01000000000012000000494E445F544950
+      4F5F4D4F56494D454E544F01000000000011000000434F445F42434F5F4D4F56
+      494D454E544F0100000000000D000000434F445F43414958415F4D4F56010000
+      00000018000000434F445F4C414E43544F5F434F4E544142494C5F4352454401
+      000000000017000000434F445F4C414E43544F5F434F4E544142494C5F444542
+      0100000000000C000000434F445F4E4F54415F4341420100000000000D000000
+      494E445F4445564F4C5543414F01000000000013000000494E445F464F524D41
+      5F504147414D454E544F01000000000009000000494E445F54524F4341010000
+      000000}
+    Master = QGeraCRCad
+    MasterFields = 'COD_CONTA_RECEBER_CAB'
+    DetailFields = 'COD_CONTA_RECEBER_CAB'
+    RefreshOptions = [roAfterUpdate]
+    CommitOnPost = False
+    Session = DMOracle.DBCemapa
+    AfterInsert = QGeraCRMovCadAfterInsert
+    BeforeEdit = QGeraCRMovCadBeforeEdit
+    BeforePost = QGeraCRMovCadBeforePost
+    AfterPost = QGeraCRMovCadAfterPost
+    OnCalcFields = QGeraCRMovCadCalcFields
+    Left = 160
+    Top = 56
+    object QGeraCRMovCaddesc_caixa_banco: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'desc_caixa_banco'
+      Size = 30
+      Calculated = True
+    end
+    object QGeraCRMovCadCOD_CONTA_RECEBER_MOV: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_MOV'
+      Required = True
+    end
+    object QGeraCRMovCadCOD_CONTA_RECEBER_CAB: TIntegerField
+      FieldName = 'COD_CONTA_RECEBER_CAB'
+    end
+    object QGeraCRMovCadDT_MOVIMENTO: TDateTimeField
+      FieldName = 'DT_MOVIMENTO'
+      EditMask = '##/##/####'
+    end
+    object QGeraCRMovCadVAL_MOVIMENTO: TFloatField
+      FieldName = 'VAL_MOVIMENTO'
+      DisplayFormat = '#,##0.00'
+    end
+    object QGeraCRMovCadDESC_OBSERVACAO: TStringField
+      FieldName = 'DESC_OBSERVACAO'
+      Size = 50
+    end
+    object QGeraCRMovCadCOD_USUARIO: TIntegerField
+      FieldName = 'COD_USUARIO'
+    end
+    object QGeraCRMovCadDT_USUARIO: TDateTimeField
+      FieldName = 'DT_USUARIO'
+      EditMask = '##/##/####'
+    end
+    object QGeraCRMovCadIND_TIPO_MOVIMENTO: TStringField
+      FieldName = 'IND_TIPO_MOVIMENTO'
+      Required = True
+    end
+    object QGeraCRMovCadCOD_BCO_MOVIMENTO: TIntegerField
+      FieldName = 'COD_BCO_MOVIMENTO'
+    end
+    object QGeraCRMovCadCOD_CAIXA_MOV: TIntegerField
+      FieldName = 'COD_CAIXA_MOV'
+    end
+    object QGeraCRMovCadCOD_LANCTO_CONTABIL_CRED: TIntegerField
+      FieldName = 'COD_LANCTO_CONTABIL_CRED'
+    end
+    object QGeraCRMovCadCOD_LANCTO_CONTABIL_DEB: TIntegerField
+      FieldName = 'COD_LANCTO_CONTABIL_DEB'
+    end
+    object QGeraCRMovCadCOD_NOTA_CAB: TIntegerField
+      FieldName = 'COD_NOTA_CAB'
+    end
+    object QGeraCRMovCadIND_DEVOLUCAO: TStringField
+      FieldName = 'IND_DEVOLUCAO'
+      Size = 3
+    end
+    object QGeraCRMovCadIND_FORMA_PAGAMENTO: TStringField
+      FieldName = 'IND_FORMA_PAGAMENTO'
+      Size = 8
+    end
+    object QGeraCRMovCadIND_TROCA: TStringField
+      FieldName = 'IND_TROCA'
+      Size = 3
+    end
+  end
+  object CDSFechaGeraCR: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    Left = 40
+    Top = 8
+    Data = {
+      7E0000009619E0BD0100000018000000040000000000030000007E0018434F44
+      5F434F4E545241544F5F4A4F524E414C5F4954454D04000100000000000A4E55
+      4D5F45444943414F04000100000000001156414C5F434F4E54415F5245434542
+      455208000400000000000D44545F56454E43494D454E544F0400060000000000
+      0000}
+    object CDSFechaGeraCRCOD_CONTRATO_JORNAL_ITEM: TIntegerField
+      FieldName = 'COD_CONTRATO_JORNAL_ITEM'
+    end
+    object CDSFechaGeraCRNUM_EDICAO: TIntegerField
+      FieldName = 'NUM_EDICAO'
+    end
+    object CDSFechaGeraCRVAL_CONTA_RECEBER: TFloatField
+      FieldName = 'VAL_CONTA_RECEBER'
+      DisplayFormat = '#,##0.00'
+    end
+    object CDSFechaGeraCRDT_VENCIMENTO: TDateField
+      FieldName = 'DT_VENCIMENTO'
+    end
+  end
+end

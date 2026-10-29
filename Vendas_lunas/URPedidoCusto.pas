@@ -1,0 +1,49 @@
+unit URPedidoCusto;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  UTRELSIMPLES, QRExport, Qrctrls, QuickRpt, ExtCtrls;
+
+type
+  TFRPedidoCusto = class(TFTRelSimples)
+    QRGroup1: TQRGroup;
+    DetailBand1: TQRBand;
+    QRLPeriodo: TQRLabel;
+    QRLabel3: TQRLabel;
+    QRLabel4: TQRLabel;
+    QRLabel5: TQRLabel;
+    QRLabel6: TQRLabel;
+    QRLabel7: TQRLabel;
+    QRDBText1: TQRDBText;
+    QRDBText2: TQRDBText;
+    QRDBText3: TQRDBText;
+    QRDBText4: TQRDBText;
+    QRDBText5: TQRDBText;
+    QRDBText6: TQRDBText;
+    QRLabel8: TQRLabel;
+    QRDBText7: TQRDBText;
+    QRBand3: TQRBand;
+    QRLabel9: TQRLabel;
+    QRExpr1: TQRExpr;
+    QRExpr2: TQRExpr;
+    QRExpr3: TQRExpr;
+    QRExpr4: TQRExpr;
+    QRLFilial: TQRLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FRPedidoCusto: TFRPedidoCusto;
+
+implementation
+
+uses UPedido_cl;
+
+{$R *.DFM}
+
+end.
